@@ -12,7 +12,7 @@ The Code Size Ruleset contains a collection of rules that find code size related
   
     <rule name="CyclomaticComplexity"
           since="0.1"
-          message = "The {0} ''{1}'' has a Cyclomatic Complexity of {2}."
+          message = "The {0} {1}() has a Cyclomatic Complexity of {2}."
           class="PHP_PMD_Rule_CyclomaticComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#CyclomaticComplexity">
         <description>
