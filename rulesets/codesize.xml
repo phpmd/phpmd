@@ -11,7 +11,7 @@ The Code Size Ruleset contains a collection of rules that find code size related
     </description>
   
     <rule name="CyclomaticComplexity"
-          since="1.03"
+          since="0.1"
           message = "The {0} ''{1}'' has a Cyclomatic Complexity of {2}."
           class="PHP_PMD_Rule_CyclomaticComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#CyclomaticComplexity">
@@ -36,26 +36,26 @@ method entry.  The decision points are 'if', 'while', 'for', and 'case labels'. 
         <example>
             <![CDATA[
 // Cyclomatic Complexity = 12
-public class Foo {
-1   public void example()  {
-2       if (a == b)  {
-3           if (a1 == b1) {
+class Foo {
+1   public function example()  {
+2       if ($a == $b)  {
+3           if ($a1 == $b1) {
                 fiddle();
-4           } else if a2 == b2) {
+4           } else if ($a2 == $b2) {
                 fiddle();
             }  else {
                 fiddle();
             }
-5       } else if (c == d) {
-6           while (c == d) {
+5       } else if ($c == $d) {
+6           while ($c == $d) {
                 fiddle();
             }
-7        } else if (e == f) {
-8           for (int n = 0; n < h; n++) {
+7        } else if ($e == $f) {
+8           for ($n = 0; $n < $h; $n++) {
                 fiddle();
             }
         } else{
-            switch (z) {
+            switch ($z) {
 9               case 1:
                     fiddle();
                     break;
@@ -75,61 +75,88 @@ public class Foo {
             ]]>
         </example>
     </rule>
-<!-- 
-<rule name="NPathComplexity"
-      since="3.9"
-      message="The method {0}() has an NPath complexity of {1}"
-      class="net.sourceforge.pmd.rules.design.NpathComplexity"
-      externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#NPathComplexity">
-   <description>
-   The NPath complexity of a method is the number of acyclic execution paths through that method.
-   A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
-   </description>
-     <priority>3</priority>
-   <properties>
-    <property name="minimum" description="The npath reporting threshold" value="200"/>
-   </properties>
-    <example>
- <![CDATA[
- public class Foo {
-  void bar() {
-   // lots of complicated code
-  }
- }
- ]]>
-    </example>
-</rule>
 
- <rule name="ExcessiveMethodLength"
- 		 since="0.6"
-       message="Avoid really long methods."
-       class="net.sourceforge.pmd.rules.design.LongMethodRule"
-       externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#ExcessiveMethodLength">
-   <description>
+
+    <rule name="NPathComplexity"
+          since="0.1"
+          message="The {0} {1}() has an NPath complexity of {2}"
+          class="PHP_PMD_Rule_Design_NpathComplexity"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#NPathComplexity">
+        <description>
+The NPath complexity of a method is the number of acyclic execution paths through that method.
+A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The npath reporting threshold" value="200"/>
+        </properties>
+        <example>
+            <![CDATA[
+class Foo {
+    function bar() {
+        // lots of complicated code
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+
+    <rule name="ExcessiveMethodLength"
+ 	      since="0.1"
+          message="Avoid really long methods."
+          class="PHP_PMD_Rule_Design_LongMethod"
+          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessiveMethodLength">
+        <description>
 Violations of this rule usually indicate that the method is doing
 too much.  Try to reduce the method size by creating helper methods and removing any copy/pasted code.
-   </description>
-     <priority>3</priority>
-   <properties>
-    <property name="minimum" description="The method size reporting threshold" value="100"/>
-   </properties>
-   <example>
-<![CDATA[
-public class Foo {
- public void doSomething() {
-  System.out.println("Hello world!");
-  System.out.println("Hello world!");
-  // 98 copies omitted for brevity.
- }
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The method size reporting threshold" value="100"/>
+        </properties>
+        <example>
+            <![CDATA[
+class Foo {
+    public function doSomething() {
+        print("Hello world!" . PHP_EOL);
+        print("Hello world!" . PHP_EOL);
+        // 98 copies omitted for brevity.
+    }
 }
-]]>
-   </example>
+            ]]>
+        </example>
+    </rule>
 
- </rule>
+    <rule name="ExcessiveClassLength"
+ 	      since="0.6"
+          message="Avoid really long classes."
+          class="PHP_PMD_Rule_Design_LongClass"
+          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessiveClassLength">
+        <description>
+Long Class files are indications that the class may be trying to
+do too much.  Try to break it down, and reduce the size to something
+manageable.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The class size reporting threshold"  value="1000"/>
+        </properties>
+        <example>
+            <![CDATA[
+public class Foo {
+  public void bar() {
+    // 1000 lines of code
+  }
+}
+            ]]>
+        </example>
+    </rule>
 
 
+<!--     
  <rule name="ExcessiveParameterList"
- 		 since="0.9"
+         since="0.9"
        message="Avoid really long parameter lists."
        class="net.sourceforge.pmd.rules.design.LongParameterListRule"
           externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#ExcessiveParameterList">
@@ -154,100 +181,7 @@ public class Foo {
    </example>
 
  </rule>
-
-
- <rule name="ExcessiveClassLength"
- 		 since="0.6"
-       message="Avoid really long classes."
-       class="net.sourceforge.pmd.rules.design.LongClassRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#ExcessiveClassLength">
-   <description>
-Long Class files are indications that the class may be trying to
-do too much.  Try to break it down, and reduce the size to something
-manageable.
-   </description>
-     <priority>3</priority>
-       <properties>
-        <property name="minimum" description="The class size reporting threshold"  value="1000"/>
-       </properties>
-   <example>
-<![CDATA[
-public class Foo {
-  public void bar() {
-    // 1000 lines of code
-  }
-}
-]]>
-   </example>
- </rule>
-
-
-    <rule 	name="CyclomaticComplexity"
-    			since="1.03"
-      		message = "The {0} ''{1}'' has a Cyclomatic Complexity of {2}."
-	      	class="net.sourceforge.pmd.rules.CyclomaticComplexity"
-	      	externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#CyclomaticComplexity">
-   <description>
-   		<![CDATA[
-Complexity is determined by the number of decision points in a method plus one for the
-method entry.  The decision points are 'if', 'while', 'for', and 'case labels'.  Generally,
-1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity,
- and 11+ is very high complexity.
-		]]>
-   </description>
-   <priority>3</priority>
-   <properties>
-      <property name="reportLevel" description="The Cyclomatic Complexity reporting threshold"  value="10"/>
-      <property name="showClassesComplexity"
-      			description="Indicate if class average violation should be added to the report"
-      			value="true"/>
-      <property name="showMethodsComplexity"
-      			description="Indicate if class average violation should be added to the report"
-      			value="true"/>
-
-   </properties>
-   <example>
-<![CDATA[
-// Cyclomatic Complexity = 12
-public class Foo {
-1   public void example()  {
-2       if (a == b)  {
-3           if (a1 == b1) {
-                fiddle();
-4           } else if a2 == b2) {
-                fiddle();
-            }  else {
-                fiddle();
-            }
-5       } else if (c == d) {
-6           while (c == d) {
-                fiddle();
-            }
-7        } else if (e == f) {
-8           for (int n = 0; n < h; n++) {
-                fiddle();
-            }
-        } else{
-            switch (z) {
-9               case 1:
-                    fiddle();
-                    break;
-10              case 2:
-                    fiddle();
-                    break;
-11              case 3:
-                    fiddle();
-                    break;
-12              default:
-                    fiddle();
-                    break;
-            }
-        }
-    }
-}
-]]>
-   </example>
-</rule>
+ 
 
     <rule name="ExcessivePublicCount"
     since="1.04"
@@ -432,6 +366,3 @@ have more fine grained objects.
     </rule>
  -->
 </ruleset>
-
-
-

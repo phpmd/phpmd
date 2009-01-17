@@ -95,6 +95,12 @@ class PHP_PMD_Adapter_Metrics
         return array('PHP_Depend_Metrics_NodeAwareI');
     }
 
+    public function visitClass(PHP_Depend_Code_Class $node)
+    {
+        $this->_apply($node);
+        parent::visitClass($node);
+    }
+
     public function visitFunction(PHP_Depend_Code_Function $node)
     {
         $this->_apply($node);
