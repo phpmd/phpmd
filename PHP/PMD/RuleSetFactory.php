@@ -47,6 +47,8 @@
 
 require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/RuleSet.php';
+require_once 'PHP/PMD/RuleClassFileNotFoundException.php';
+require_once 'PHP/PMD/RuleClassNotFoundException.php';
 require_once 'PHP/PMD/RuleSetNotFoundException.php';
 
 /**
@@ -192,21 +194,37 @@ class PHP_PMD_RuleSetFactory
         }
     }
 
+    /**
+     * This method will create a single rule instance and add it to the given
+     * {@link PHP_PMD_RuleSet} object.
+     *
+     * @param PHP_PMD_RuleSet  $ruleSet  The parent rule-set instance.
+     * @param SimpleXMLElement $ruleNode The context rule-set xml node.
+     *
+     * @return void
+     * @throws PHP_PMD_RuleClassFileNotFoundException When a class file does not
+     *                                                exist.
+     * @throws PHP_PMD_RuleClassNotFoundException When a configured rule class
+     *                                            does not exist.
+     */
     private function _parseSingleRuleNode(PHP_PMD_RuleSet $ruleSet,
                                           SimpleXMLElement $ruleNode)
     {
         $className = (string) $ruleNode['class'];
         $fileName  = strtr($className, '_', '/') . '.php';
 
-        $fp = fopen($fileName, 'r', true); 
-        if ($fp === false) {
-            throw new RuntimeException('Cannot find class file for: ' . $className);
-        }
-
-        include_once $fileName;
-
         if (class_exists($className) === false) {
-            throw new RuntimeException('Cannot find class: ' . $className);
+            $fp = @fopen($fileName, 'r', true);
+            if ($fp === false) {
+                throw new PHP_PMD_RuleClassFileNotFoundException($className);
+            }
+            fclose($fp);
+
+            include_once $fileName;
+
+            if (class_exists($className) === false) {
+                throw new PHP_PMD_RuleClassNotFoundException($className);
+            }
         }
 
         /* @var $rule PHP_PMD_AbstractRule */
