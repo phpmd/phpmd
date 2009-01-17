@@ -144,7 +144,8 @@ class PHP_PMD_RuleSetFactory
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
 
-        if (($xml = simplexml_load_file($fileName)) === false) {
+        $xml = simplexml_load_file($fileName);
+        if ($xml === false) {
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
@@ -197,7 +198,8 @@ class PHP_PMD_RuleSetFactory
         $className = (string) $ruleNode['class'];
         $fileName  = strtr($className, '_', '/') . '.php';
 
-        if (($fp = fopen($fileName, 'r', true)) === false) {
+        $fp = fopen($fileName, 'r', true); 
+        if ($fp === false) {
             throw new RuntimeException('Cannot find class file for: ' . $className);
         }
 
