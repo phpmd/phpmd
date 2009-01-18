@@ -101,9 +101,20 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      *
      * @return string
      */
-    public function getPackage()
+    public function getPackageName()
     {
         return $this->_type->getPackage()->getName();
+    }
+
+    /**
+     * Returns the name of the parent type or <b>null</b> when this node has no
+     * parent type.
+     *
+     * @return string
+     */
+    public function getParentName()
+    {
+        return null;
     }
 
     /**

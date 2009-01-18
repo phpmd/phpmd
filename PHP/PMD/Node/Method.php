@@ -86,9 +86,20 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
      *
      * @return string
      */
-    public function getPackage()
+    public function getPackageName()
     {
         return $this->_method->getParent()->getPackage()->getName();
+    }
+
+    /**
+     * Returns the name of the parent type or <b>null</b> when this node has no
+     * parent type.
+     *
+     * @return string
+     */
+    public function getParentName()
+    {
+        return $this->_method->getParent()->getName();
     }
 }
 ?>
