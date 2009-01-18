@@ -74,11 +74,10 @@ class PHP_PMD_Rule_Design_NpathComplexity
         if ($npath < $this->getIntProperty('minimum')) {
             return;
         }
-
-        $type = explode('_', get_class($node));
-        $type = strtolower(array_pop($type));
-
-        $this->addViolation($node, array($type, $node->getName(), $npath));
+        
+        $this->addViolation($node, array($node->getType(), 
+                                         $node->getName(),
+                                         $npath));
     }
 }
 ?>
