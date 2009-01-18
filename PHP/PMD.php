@@ -58,6 +58,9 @@
  */
 final class PHP_PMD
 {
-
+    /**
+     * The current PHP_PMD version.
+     */
+    const VERSION = '@package_version@';
 }
 ?>
