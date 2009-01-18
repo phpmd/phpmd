@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,39 +46,71 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/AbstractNode.php';
 
 /**
- * This rule will detect to long methods, those methods are unreadable and in
- * many cases the result of copy and paste coding.
+ * Abstract base class for classes and interfaces.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_LongMethod
-       extends PHP_PMD_AbstractRule
-    implements PHP_PMD_Rule_IFunctionAware,
-               PHP_PMD_Rule_IMethodAware
+abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNode
 {
-    public function apply(PHP_PMD_AbstractNode $node)
+    /**
+     * The wrapped abstract type node.
+     *
+     * @var PHP_Depend_Code_AbstractType $_type 
+     */
+    private $_type = null;
+
+    public function __construct(PHP_Depend_Code_AbstractType $node)
     {
-        $loc = $node->getMetric('loc');
-        if ($loc < $this->getIntProperty('minimum')) {
-            return;
-        }
+        parent::__construct($node);
 
-        $type = explode('_', get_class($node));
-        $type = strtolower(array_pop($type));
-
-        $this->addViolation($node, array($type, $node->getName(), $loc));
+        $this->_type = $node;
     }
+
+    /**
+     * Returns the number of methods declared in this type.
+     *
+     * @return integer
+     */
+    public function getMethodCount()
+    {
+        return $this->_type->getMethods()->count();
+    }
+
+    /**
+     * Returns the number of constants declared in this type.
+     *
+     * @return integer
+     */
+    public function getConstantCount()
+    {
+        return $this->_type->getConstants()->count();
+    }
+
+    /**
+     * Returns the name of the parent package.
+     *
+     * @return string
+     */
+    public function getPackage()
+    {
+        return $this->_type->getPackage()->getName();
+    }
+
+    /**
+     * Returns the number of properties declared in this type.
+     *
+     * @return integer
+     */
+    public abstract function getPropertyCount();
 }
 ?>

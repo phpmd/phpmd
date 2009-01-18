@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,39 +46,30 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
 
 /**
- * This rule will detect to long methods, those methods are unreadable and in
- * many cases the result of copy and paste coding.
+ * Wrapper around PHP_Depend's interface objects.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_LongMethod
-       extends PHP_PMD_AbstractRule
-    implements PHP_PMD_Rule_IFunctionAware,
-               PHP_PMD_Rule_IMethodAware
+class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractClassOrInterface
 {
-    public function apply(PHP_PMD_AbstractNode $node)
+    /**
+     * Returns the number of properties declared in this type.
+     *
+     * @return integer
+     */
+    public function getPropertyCount()
     {
-        $loc = $node->getMetric('loc');
-        if ($loc < $this->getIntProperty('minimum')) {
-            return;
-        }
-
-        $type = explode('_', get_class($node));
-        $type = strtolower(array_pop($type));
-
-        $this->addViolation($node, array($type, $node->getName(), $loc));
+        return 0;
     }
 }
 ?>

@@ -68,19 +68,17 @@ class PHP_PMD_Rule_Design_NpathComplexity
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
-    public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        if (!isset($metrics['npath'])) {
-            return;
-        }
-        if ($metrics['npath'] < $this->getIntProperty('minimum')) {
+        $npath = $node->getMetric('npath');
+        if ($npath < $this->getIntProperty('minimum')) {
             return;
         }
 
         $type = explode('_', get_class($node));
         $type = strtolower(array_pop($type));
 
-        $this->addViolation($node, array($type, $node->getName(), $metrics['npath']));
+        $this->addViolation($node, array($type, $node->getName(), $npath));
     }
 }
 ?>

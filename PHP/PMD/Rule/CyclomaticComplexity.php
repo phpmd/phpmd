@@ -69,19 +69,17 @@ class PHP_PMD_Rule_CyclomaticComplexity
                PHP_PMD_Rule_IMethodAware
 {
 
-    public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        if (!isset($metrics['ccn2'])) {
-            return;
-        }
-        if ($metrics['ccn2'] < $this->getIntProperty('reportLevel')) {
+        $ccn = $node->getMetric('ccn2');
+        if ($ccn < $this->getIntProperty('reportLevel')) {
             return;
         }
 
         $type = explode('_', get_class($node));
         $type = strtolower(array_pop($type));
 
-        $this->addViolation($node, array($type, $node->getName(), $metrics['ccn2']));
+        $this->addViolation($node, array($type, $node->getName(), $ccn));
     }
 }
 ?>

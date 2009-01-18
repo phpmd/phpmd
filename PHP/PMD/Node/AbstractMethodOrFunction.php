@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,39 +46,49 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/AbstractNode.php';
 
 /**
- * This rule will detect to long methods, those methods are unreadable and in
- * many cases the result of copy and paste coding.
+ * Abstract base class for PHP_Depend function and method wrappers.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_LongMethod
-       extends PHP_PMD_AbstractRule
-    implements PHP_PMD_Rule_IFunctionAware,
-               PHP_PMD_Rule_IMethodAware
+abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNode
 {
-    public function apply(PHP_PMD_AbstractNode $node)
+    /**
+     * The wrapped callable instance.
+     *
+     * @var PHP_Depend_Code_AbstractCallable $_callable
+     */
+    private $_callable = null;
+
+    /**
+     * Constructs a new callable wrapper.
+     *
+     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
+     */
+    public function __construct(PHP_Depend_Code_AbstractCallable $node)
     {
-        $loc = $node->getMetric('loc');
-        if ($loc < $this->getIntProperty('minimum')) {
-            return;
-        }
+        parent::__construct($node);
 
-        $type = explode('_', get_class($node));
-        $type = strtolower(array_pop($type));
+        $this->_callable = $node;
+    }
 
-        $this->addViolation($node, array($type, $node->getName(), $loc));
+    /**
+     * Returns the number of parameters in the callable signature.
+     *
+     * @return integer
+     */
+    public function getParameterCount()
+    {
+        return $this->_callable->getParameters()->count();
     }
 }
 ?>

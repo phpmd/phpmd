@@ -336,7 +336,7 @@ abstract class PHP_PMD_AbstractRule
         return 0;
     }
 
-    protected function addViolation(PHP_Depend_Code_NodeI $node, array $args = array())
+    protected function addViolation(PHP_PMD_AbstractNode $node, array $args = array())
     {
         $search  = array();
         $replace = array();
@@ -348,6 +348,6 @@ abstract class PHP_PMD_AbstractRule
         echo str_replace($search, $replace, $this->_message), PHP_EOL;
     }
 
-    public abstract function apply(PHP_Depend_Code_NodeI $node, array $metrics);
+    public abstract function apply(PHP_PMD_AbstractNode $node);
 }
 ?>

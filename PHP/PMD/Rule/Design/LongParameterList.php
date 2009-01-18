@@ -67,9 +67,9 @@ class PHP_PMD_Rule_Design_LongParameterList
        implements PHP_PMD_Rule_IFunctionAware,
                   PHP_PMD_Rule_IMethodAware
 {
-    public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getParameters()->count() < $this->getIntProperty('minimum')) {
+        if ($node->getParameterCount() < $this->getIntProperty('minimum')) {
             return;
         }
 

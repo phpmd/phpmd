@@ -80,17 +80,17 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     private $_description = '';
 
     private $_applyTo = array(
-        'PHP_PMD_Rule_IClassAware'      =>  'PHP_Depend_Code_Class',
-        'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_Depend_Code_Function',
-        'PHP_PMD_Rule_InterfaceAwareI'  =>  'PHP_Depend_Code_Interface',
-        'PHP_PMD_Rule_IMethodAware'     =>  'PHP_Depend_Code_Method',
+        'PHP_PMD_Rule_IClassAware'      =>  'PHP_PMD_Node_Class',
+        'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_PMD_Node_Function',
+        'PHP_PMD_Rule_InterfaceAwareI'  =>  'PHP_PMD_Node_Interface',
+        'PHP_PMD_Rule_IMethodAware'     =>  'PHP_PMD_Node_Method',
     );
 
     private $_rules = array(
-        'PHP_Depend_Code_Class'      =>  array(),
-        'PHP_Depend_Code_Function'   =>  array(),
-        'PHP_Depend_Code_Interface'  =>  array(),
-        'PHP_Depend_Code_Method'     =>  array(),
+        'PHP_PMD_Node_Class'      =>  array(),
+        'PHP_PMD_Node_Function'   =>  array(),
+        'PHP_PMD_Node_Interface'  =>  array(),
+        'PHP_PMD_Node_Method'     =>  array(),
     );
 
     /**
@@ -204,7 +204,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         }
     }
 
-    public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
         // Current node type
         $className = get_class($node);
@@ -216,7 +216,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->_rules[$className] as $rule) {
-            $rule->apply($node, $metrics);
+            $rule->apply($node);
         }
     }
 

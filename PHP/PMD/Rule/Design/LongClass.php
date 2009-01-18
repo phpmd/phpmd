@@ -65,16 +65,14 @@ class PHP_PMD_Rule_Design_LongClass
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IClassAware
 {
-    public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        if (!isset($metrics['loc'])) {
-            return;
-        }
-        if ($metrics['loc'] < $this->getIntProperty('minimum')) {
+        $loc = $node->getMetric('loc');
+        if ($loc < $this->getIntProperty('minimum')) {
             return;
         }
 
-        $this->addViolation($node, array($node->getName(), $metrics['loc']));
+        $this->addViolation($node, array($node->getName(), $loc));
     }
 }
 ?>
