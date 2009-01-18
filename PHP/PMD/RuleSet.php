@@ -80,10 +80,10 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     private $_description = '';
 
     private $_applyTo = array(
-        'PHP_PMD_Rule_ClassAwareI'      =>  'PHP_Depend_Code_Class',
-        'PHP_PMD_Rule_FunctionAwareI'   =>  'PHP_Depend_Code_Function',
+        'PHP_PMD_Rule_IClassAware'      =>  'PHP_Depend_Code_Class',
+        'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_Depend_Code_Function',
         'PHP_PMD_Rule_InterfaceAwareI'  =>  'PHP_Depend_Code_Interface',
-        'PHP_PMD_Rule_MethodAwareI'     =>  'PHP_Depend_Code_Method',
+        'PHP_PMD_Rule_IMethodAware'     =>  'PHP_Depend_Code_Method',
     );
 
     private $_rules = array(

@@ -47,8 +47,8 @@
  */
 
 require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/FunctionAwareI.php';
-require_once 'PHP/PMD/Rule/MethodAwareI.php';
+require_once 'PHP/PMD/Rule/IFunctionAware.php';
+require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
  * This rule will check the NPath-complexity of a method or function against the
@@ -65,8 +65,8 @@ require_once 'PHP/PMD/Rule/MethodAwareI.php';
  */
 class PHP_PMD_Rule_Design_NpathComplexity
        extends PHP_PMD_AbstractRule
-    implements PHP_PMD_Rule_FunctionAwareI,
-               PHP_PMD_Rule_MethodAwareI
+    implements PHP_PMD_Rule_IFunctionAware,
+               PHP_PMD_Rule_IMethodAware
 {
     public function apply(PHP_Depend_Code_NodeI $node, array $metrics)
     {

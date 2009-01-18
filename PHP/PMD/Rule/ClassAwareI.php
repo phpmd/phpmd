@@ -58,7 +58,7 @@
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-interface PHP_PMD_Rule_ClassAwareI
+interface PHP_PMD_Rule_IClassAware
 {
 }
 ?>
