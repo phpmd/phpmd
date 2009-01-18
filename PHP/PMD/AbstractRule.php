@@ -336,7 +336,7 @@ abstract class PHP_PMD_AbstractRule
         return 0;
     }
 
-    protected function addViolation(PHP_Depend_Code_NodeI $node, array $args)
+    protected function addViolation(PHP_Depend_Code_NodeI $node, array $args = array())
     {
         $search  = array();
         $replace = array();

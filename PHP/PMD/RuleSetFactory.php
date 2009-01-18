@@ -151,7 +151,6 @@ class PHP_PMD_RuleSetFactory
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
-
             throw new RuntimeException(trim(libxml_get_last_error()->message));
         }
 
