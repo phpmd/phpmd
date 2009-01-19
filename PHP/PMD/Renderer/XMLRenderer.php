@@ -98,8 +98,11 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
             $writer->write(' endline="' . $violation->getEndLine() . '"');
             $writer->write(' rule="' . $rule->getName() . '"');
             $writer->write(' ruleset="' . $rule->getRuleSetName() . '"');
-            $writer->write(' package="' . $violation->getPackageName() . '"');
-            $writer->write(' externalInfoUrl="' . $rule->getExternalInfoUrl() . '"');
+            
+            $this->_maybeAdd('package', $violation->getPackageName());
+            $this->_maybeAdd('externalInfoUrl', $rule->getExternalInfoUrl());
+
+            $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);
             $writer->write('      ' . $violation->getDescription() . PHP_EOL);
             $writer->write('    </violation>' . PHP_EOL);
@@ -116,6 +119,14 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
     public function end()
     {
 
+    }
+
+    private function _maybeAdd($attr, $value)
+    {
+        if ($value === null || trim($value) === '') {
+            return;
+        }
+        $this->getWriter()->write(' ' . $attr . '"' . $value . '"');
     }
 }
 ?>
