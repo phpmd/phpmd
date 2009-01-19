@@ -79,6 +79,13 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     private $_description = '';
 
+    /**
+     * The violation report used by the rule-set.
+     *
+     * @var PHP_PMD_Report $_report
+     */
+    private $_report = null;
+
     private $_applyTo = array(
         'PHP_PMD_Rule_IClassAware'      =>  'PHP_PMD_Node_Class',
         'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_PMD_Node_Function',
@@ -160,6 +167,28 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     }
 
     /**
+     * Returns the violation report used by the rule-set.
+     *
+     * @return PHP_PMD_Report
+     */
+    public function getReport()
+    {
+        return $this->_report;
+    }
+
+    /**
+     * Sets the violation report used by the rule-set.
+     *
+     * @param PHP_PMD_Report $report The violation report to use.
+     *
+     * @return void
+     */
+    public function setReport(PHP_PMD_Report $report)
+    {
+        $this->_report = $report;
+    }
+
+    /**
      * This method returns a rule by its name or <b>null</b> if it doesn't exist.
      *
      * @param string $name The rule name.
@@ -177,7 +206,8 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     }
 
     /**
-     * This method returns an iterator will all rules that belong to this rule-set.
+     * This method returns an iterator will all rules that belong to this
+     * rule-set.
      *
      * @return Iterator
      */
@@ -216,6 +246,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->_rules[$className] as $rule) {
+            $rule->setReport($this->_report);
             $rule->apply($node);
         }
     }

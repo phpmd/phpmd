@@ -78,9 +78,38 @@ class PHP_PMD_Adapter_Metrics
 
     private $_code = null;
 
+    /**
+     * The violation report used by this PHP_Depend adapter.
+     *
+     * @var PHP_PMD_Report $_report
+     */
+    private $_report = null;
+
     public function addRuleSet(PHP_PMD_RuleSet $ruleSet)
     {
         $this->_ruleSets[] = $ruleSet;
+    }
+
+    /**
+     * Returns the violation report used by the rule-set.
+     *
+     * @return PHP_PMD_Report
+     */
+    public function getReport()
+    {
+        return $this->_report;
+    }
+
+    /**
+     * Sets the violation report used by the rule-set.
+     *
+     * @param PHP_PMD_Report $report The violation report to use.
+     *
+     * @return void
+     */
+    public function setReport(PHP_PMD_Report $report)
+    {
+        $this->_report = $report;
     }
 
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
@@ -132,6 +161,7 @@ class PHP_PMD_Adapter_Metrics
     {
         $this->_collectMetrics($node);
         foreach ($this->_ruleSets as $ruleSet) {
+            $ruleSet->setReport($this->_report);
             $ruleSet->apply($node);
         }
     }

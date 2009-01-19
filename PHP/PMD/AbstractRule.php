@@ -45,6 +45,8 @@
  * @link      http://www.pdepend.org/php-pmd
  */
 
+require_once 'PHP/PMD/RuleViolation.php';
+
 /**
  * This is the abstract base class for pmd rules.
  *
@@ -59,7 +61,7 @@
 abstract class PHP_PMD_AbstractRule
 {
     /**
-     * The defaukt lowest rule priority.
+     * The default lowest rule priority.
      */
     const LOWEST_PRIORITY = 5;
 
@@ -138,6 +140,13 @@ abstract class PHP_PMD_AbstractRule
      * @var array(string=>string) $_properties
      */
     private $_properties = array();
+
+    /**
+     * The report for object for this rule.
+     *
+     * @var PHP_PMD_Report $_report
+     */
+    private $_report = null;
 
     /**
      * Returns the name for this rule instance.
@@ -316,6 +325,28 @@ abstract class PHP_PMD_AbstractRule
     }
 
     /**
+     * Returns the violation report for this rule.
+     *
+     * @return PHP_PMD_Report
+     */
+    public function getReport()
+    {
+        return $this->_report;
+    }
+
+    /**
+     * Sets the violation report for this rule.
+     *
+     * @param PHP_PMD_Report $report The report instance.
+     *
+     * @return void
+     */
+    public function setReport(PHP_PMD_Report $report)
+    {
+        $this->_report = $report;
+    }
+
+    /**
      * Adds a configuration property to this rule instance.
      *
      * @param string $name  The property name.
@@ -345,7 +376,10 @@ abstract class PHP_PMD_AbstractRule
             $replace[] = $value;
         }
 
-        echo str_replace($search, $replace, $this->_message), PHP_EOL;
+        $message = str_replace($search, $replace, $this->_message);
+
+        $ruleViolation = new PHP_PMD_RuleViolation($this, $node, $message);
+        $this->_report->addRuleViolation($ruleViolation);
     }
 
     public abstract function apply(PHP_PMD_AbstractNode $node);
