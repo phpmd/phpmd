@@ -101,6 +101,10 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
             
             $this->_maybeAdd('package', $violation->getPackageName());
             $this->_maybeAdd('externalInfoUrl', $rule->getExternalInfoUrl());
+            $this->_maybeAdd('function', $violation->getFunctionName());
+            $this->_maybeAdd('class', $violation->getClassName());
+            $this->_maybeAdd('method', $violation->getMethodName());
+            //$this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);
