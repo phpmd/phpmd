@@ -79,7 +79,7 @@ class Foo {
 
     <rule name="NPathComplexity"
           since="0.1"
-          message="The {0} {1}() has an NPath complexity of {2}"
+          message="The {0} {1}() has an NPath complexity of {2}."
           class="PHP_PMD_Rule_Design_NpathComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#NPathComplexity">
         <description>

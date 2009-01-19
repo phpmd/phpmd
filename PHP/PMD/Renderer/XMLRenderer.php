@@ -91,6 +91,18 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
                 $writer->write('  <file name="' . $fileName . '">' . PHP_EOL);
             }
 
+            $rule = $violation->getRule();
+
+            $writer->write('    <violation');
+            $writer->write(' beginline="' . $violation->getBeginLine() . '"');
+            $writer->write(' endline="' . $violation->getEndLine() . '"');
+            $writer->write(' rule="' . $rule->getName() . '"');
+            $writer->write(' ruleset="' . $rule->getRuleSetName() . '"');
+            $writer->write(' package="' . $violation->getPackageName() . '"');
+            $writer->write(' externalInfoUrl="' . $rule->getExternalInfoUrl() . '"');
+            $writer->write('>' . PHP_EOL);
+            $writer->write('      ' . $violation->getDescription() . PHP_EOL);
+            $writer->write('    </violation>' . PHP_EOL);
         }
 
         // Last file and at least one violation

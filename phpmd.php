@@ -25,7 +25,6 @@ $adapter = new PHP_PMD_Adapter_Metrics();
 $adapter->setReport($report);
 
 foreach ($ruleSets as $ruleSet) {
-    echo $ruleSet->getName(), PHP_EOL;
     $adapter->addRuleSet($ruleSet);
 }
 

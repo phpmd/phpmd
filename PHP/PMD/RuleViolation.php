@@ -146,7 +146,6 @@ class PHP_PMD_RuleViolation
      */
     public function getFileName()
     {
-        var_dump($this->_node->getNode()->getName());
         return $this->_node->getFileName();
     }
 
