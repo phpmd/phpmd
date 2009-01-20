@@ -45,6 +45,16 @@
  * @link      http://www.pdepend.org/php-pmd
  */
 
+require_once 'PHP/Depend.php';
+require_once 'PHP/Depend/Input/ExcludePathFilter.php';
+require_once 'PHP/Depend/Input/ExtensionFilter.php';
+
+require_once 'PHP/PMD/CommandLineOptions.php';
+require_once 'PHP/PMD/Report.php';
+require_once 'PHP/PMD/RuleSetFactory.php';
+require_once 'PHP/PMD/Adapter/Metrics.php';
+require_once 'PHP/PMD/Writer/Stream.php';
+
 /**
  * This is the main facade of the PHP PMD application
  *
@@ -62,5 +72,90 @@ final class PHP_PMD
      * The current PHP_PMD version.
      */
     const VERSION = '@package_version@';
+
+    /**
+     * List of valid file extensions for analyzed files.
+     *
+     * @var array(string) $_extensions
+     */
+    private $_extensions = array('php', 'php3', 'php4', 'php5', 'inc');
+
+    /**
+     * List of exclude directory patterns.
+     *
+     * @var array(string) $_excludes
+     */
+    private $_excludes = array('.git', '.svn', 'CVS');
+
+    public function processFiles($inputPath, array $renderers, 
+                                 PHP_PMD_RuleSetFactory $ruleSetFactory)
+    {
+        $ruleSets = $ruleSetFactory->createRuleSets($ruleSets);
+
+        $report = new PHP_PMD_Report();
+
+        $adapter = new PHP_PMD_Adapter_Metrics();
+        $adapter->setReport($report);
+
+        foreach ($ruleSets as $ruleSet) {
+            $adapter->addRuleSet($ruleSet);
+        }
+
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(realpath($inputPath));
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExcludePathFilter($this->_excludes));
+        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter($this->_extensions));
+        $pdepend->addLogger($adapter);
+
+        $report->start();
+
+        $pdepend->analyze();
+
+        $report->end();
+
+        foreach ($renderers as $renderer) {
+            $renderer->start();
+        }
+        
+        foreach ($renderers as $renderer) {
+            $renderer->renderReport($report);
+        }
+
+        foreach ($renderers as $renderer) {
+            $renderer->end();
+        }
+    }
+
+    /**
+     * Main method that starts a PHP_PMD run.
+     *
+     * @param array(string) $args The raw command line arguments.
+     *
+     * @return void
+     */
+    public static function main(array $args)
+    {
+        $opts = new PHP_PMD_CommandLineOptions($args);
+
+        // Create a report stream
+        if ($opts->getReportFile() === null) {
+            $stream = STDOUT;
+        } else {
+            $stream = fopen($opts->getReportFile(), 'wb');
+        }
+
+        // Create renderer and configure output
+        $renderer = $opts->createRenderer();
+        $renderer->setWriter(new PHP_PMD_Writer_Stream($stream));
+
+        // Create a rule set factory
+        $ruleSetFactory = new PHP_PMD_RuleSetFactory();
+
+        $phpmd = new PHP_PMD();
+        $phpmd->processFiles($opts->getInputPath(),
+                             array($renderer),
+                             $ruleSetFactory);
+
+    }
 }
 ?>
