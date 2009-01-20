@@ -59,7 +59,26 @@
  */
 class PHP_PMD_Report
 {
+    /**
+     * List of rule violations detected in the analyzed source code.
+     *
+     * @var array(PHP_PMD_RuleViolations) $_ruleViolations
+     */
     private $_ruleViolations = array();
+
+    /**
+     * The start time for this report.
+     *
+     * @var float $_startTime
+     */
+    private $_startTime = 0.0;
+
+    /**
+     * The end time for this report.
+     *
+     * @var float $_endTime
+     */
+    private $_endTime = 0.0;
 
     public function addRuleViolation(PHP_PMD_RuleViolation $violation)
     {
@@ -92,6 +111,31 @@ class PHP_PMD_Report
         }
 
         return new ArrayIterator($violations);
+    }
+
+    /**
+     * Starts the time tracking of this report instance.
+     *
+     * @return void
+     */
+    public function start()
+    {
+        $this->_startTime = microtime(true) * 1000.0;
+    }
+
+    /**
+     * Stops the time tracking of this report instance.
+     *
+     * @return void
+     */
+    public function end()
+    {
+        $this->_endTime = microtime(true) * 1000.0;
+    }
+
+    public function getElapsedTimeInMillis()
+    {
+        return round($this->_endTime - $this->_startTime);
     }
 }
 ?>
