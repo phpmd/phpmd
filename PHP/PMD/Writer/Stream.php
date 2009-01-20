@@ -62,25 +62,55 @@ require_once 'PHP/PMD/AbstractWriter.php';
  */
 class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
 {
+    /**
+     * The stream resource handle
+     *
+     * @var resource $_stream
+     */
     private $_stream = null;
 
+    /**
+     * Constructs a new stream writer instance.
+     *
+     * @param resource|string $streamResourceOrUri An existing resource handle
+     *                                             or a log file uri.
+     */
     public function __construct($streamResourceOrUri)
     {
         if (is_resource($streamResourceOrUri) === true) {
             $this->_stream = $streamResourceOrUri;
         } else {
-            
+            $dirName = dirname($streamResourceOrUri);
+            if (file_exists($dirName) === false) {
+                mkdir($dirName);
+            }
+            if (file_exists($dirName) === false) {
+                $message = 'Cannot find output directory "' . $dirName . '".';
+                throw new RuntimeException($message);
+            }
+
+            $this->_stream = fopen($streamResourceOrUri, 'wb');
         }
     }
 
+    /**
+     * The dtor closes the open output resource.
+     */
     public function __destruct()
     {
         if (is_resource($this->_stream) === true) {
-            fclose($this->_stream);
+            @fclose($this->_stream);
         }
         $this->_stream = null;
     }
 
+    /**
+     * Writes the given <b>$data</b> fragement to the wrapper output stream.
+     *
+     * @param string $data The data to write.
+     *
+     * @return void
+     */
     public function write($data)
     {
         fwrite($this->_stream, $data);

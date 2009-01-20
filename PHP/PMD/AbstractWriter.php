@@ -61,7 +61,7 @@ abstract class PHP_PMD_AbstractWriter
     /**
      * Writes a data string to the concrete output.
      *
-     * @param string $data The written data.
+     * @param string $data The data to write.
      *
      * @return void
      */
