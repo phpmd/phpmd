@@ -129,6 +129,7 @@ final class PHP_PMD
 
         $pdepend = $this->_createPhpDepend($inputPath);
         $pdepend->addLogger($adapter);
+        $pdepend->setSupportBadDocumentation();
         
         $report->start();
         $pdepend->analyze();

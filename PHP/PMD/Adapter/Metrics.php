@@ -131,17 +131,29 @@ class PHP_PMD_Adapter_Metrics
 
     public function visitClass(PHP_Depend_Code_Class $node)
     {
+        if ($node->getSourceFile()->getFileName() === null) {
+            return;
+        }
+
         $this->_apply(new PHP_PMD_Node_Class($node));
         parent::visitClass($node);
     }
 
     public function visitFunction(PHP_Depend_Code_Function $node)
     {
+        if ($node->getSourceFile()->getFileName() === null) {
+            return;
+        }
+
         $this->_apply(new PHP_PMD_Node_Function($node));
     }
 
     public function visitMethod(PHP_Depend_Code_Method $node)
     {
+        if ($node->getSourceFile()->getFileName() === null) {
+            return;
+        }
+
         $this->_apply(new PHP_PMD_Node_Method($node));
     }
 
