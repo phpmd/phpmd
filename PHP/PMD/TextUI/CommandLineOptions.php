@@ -49,7 +49,8 @@
 require_once 'PHP/PMD/AbstractRule.php';
 
 /**
- * 
+ * This is a helper class that collects the specified cli arguments and puts them
+ * into accessible properties.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -229,6 +230,19 @@ class PHP_PMD_TextUI_CommandLineOptions
         return $this->_ignore;
     }
 
+    /**
+     * Creates a report renderer instance based on the user's command line
+     * argument.
+     *
+     * Valid renderers are:
+     * <ul>
+     *   <li>xml</li>
+     * </ul>
+     *
+     * @return PHP_PMD_AbstractRenderer
+     * @throws InvalidArgumentException When the specified renderer does not
+     *                                  exist.
+     */
     public function createRenderer()
     {
         switch ($this->_reportFormat) {
@@ -260,6 +274,11 @@ class PHP_PMD_TextUI_CommandLineOptions
         }
     }
 
+    /**
+     * Returns usage information for the PHP_PMD command line interface.
+     *
+     * @return string
+     */
     public function usage()
     {
         return 'Mandatory arguments:' . PHP_EOL .

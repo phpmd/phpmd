@@ -111,6 +111,18 @@ final class PHP_PMD
         $this->_ignorePatterns = $ignorePatterns;
     }
 
+    /**
+     * This method will process all files that can be found in the given input
+     * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
+     * argument. The result will be passed to all given renderer instances.
+     *
+     * @param string                          $inputPath      File or directory
+     * @param string                          $ruleSets       Rule-sets to apply
+     * @param array(PHP_PMD_AbstractRenderer) $renderers      Report renderers
+     * @param PHP_PMD_RuleSetFactory          $ruleSetFactory The factory to use
+     *
+     * @return void
+     */
     public function processFiles($inputPath, 
                                  $ruleSets,
                                  array $renderers,

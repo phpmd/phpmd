@@ -63,6 +63,15 @@ require_once 'PHP/PMD/TextUI/CommandLineOptions.php';
  */
 class PHP_PMD_TextUI_Command
 {
+    /**
+     * This method creates a PHP_PMD instance and configures this object based
+     * on the user's input, then it starts the source analysis.
+     *
+     * @param PHP_PMD_TextUI_CommandLineOptions $opts The prepared command line
+     *                                                arguments.
+     *
+     * @return void
+     */
     public function run(PHP_PMD_TextUI_CommandLineOptions $opts)
     {
         // Create a report stream
@@ -98,6 +107,14 @@ class PHP_PMD_TextUI_Command
                              $ruleSetFactory);
     }
 
+    /**
+     * The main method that can be used by a calling shell script, the return
+     * value can be used as exit code.
+     *
+     * @param array $args The raw command line arguments array.
+     *
+     * @return integer
+     */
     public static function main(array $args)
     {
         try {
