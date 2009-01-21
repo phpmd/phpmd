@@ -87,10 +87,30 @@ abstract class PHP_PMD_AbstractRenderer
         $this->_writer = $writer;
     }
 
+    /**
+     * This method will be called on all renderers before the engine starts the
+     * real report processing.
+     *
+     * @return void
+     */
     public abstract function start();
 
+    /**
+     * This method will be called when the engine has finished the source analysis
+     * phase.
+     *
+     * @param PHP_PMD_Report $report The context violation report.
+     *
+     * @return void
+     */
     public abstract function renderReport(PHP_PMD_Report $report);
 
+    /**
+     * This method will be called the engine has finished the report processing
+     * for all registered renderers.
+     *
+     * @return void
+     */
     public abstract function end();
 }
 ?>

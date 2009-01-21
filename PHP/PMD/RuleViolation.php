@@ -36,25 +36,26 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.pdepend.org/pmd
  */
 
 /**
- * 
+ * This class is used as container for a single rule violation related to a source
+ * node.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.pdepend.org/pmd
  */
 class PHP_PMD_RuleViolation
 {
@@ -101,6 +102,13 @@ class PHP_PMD_RuleViolation
      */
     private $_functionName = null;
 
+    /**
+     * Constructs a new rule violation instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule             PHP_PMD rule for violation.
+     * @param PHP_PMD_AbstractNode $node             The source node of evil.
+     * @param string               $violationMessage The error/report message.
+     */
     public function __construct(PHP_PMD_AbstractRule $rule,
                                 PHP_PMD_AbstractNode $node,
                                 $violationMessage)

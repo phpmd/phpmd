@@ -72,21 +72,42 @@ abstract class PHP_PMD_AbstractNode
      */
     private $_metrics = null;
 
+    /**
+     * Constructs a new PHP_PMD node.
+     *
+     * @param PHP_Depend_Code_AbstractItem $node The wrapped PHP_Depend node.
+     */
     public function __construct(PHP_Depend_Code_AbstractItem $node)
     {
         $this->_node = $node;
     }
 
+    /**
+     * Returns the source name for this node, maybe a class or interface name,
+     * or a package, method, function name.
+     *
+     * @return string
+     */
     public function getName()
     {
         return $this->_node->getName();
     }
 
+    /**
+     * Returns the begin line for this node in the php source code file.
+     *
+     * @return integer
+     */
     public function getBeginLine()
     {
         return $this->_node->getStartLine();
     }
 
+    /**
+     * Returns the end line for this node in the php source code file.
+     *
+     * @return integer
+     */
     public function getEndLine()
     {
         return $this->_node->getEndLine();
@@ -102,6 +123,11 @@ abstract class PHP_PMD_AbstractNode
         return (string) $this->_node->getSourceFile();
     }
 
+    /**
+     * Returns the raw token stream for this node.
+     *
+     * @return array(PHP_Depend_Token)
+     */
     public function getTokens()
     {
         return $this->_node->getTokens();
@@ -165,7 +191,12 @@ abstract class PHP_PMD_AbstractNode
      * @return string
      */
     public abstract function getParentName();
-    
+
+    /**
+     * Returns the name of the parent package.
+     *
+     * @return string
+     */
     public abstract function getPackageName();
 }
 ?>

@@ -62,14 +62,34 @@ require_once 'PHP/PMD/AbstractRenderer.php';
  */
 class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
 {
+    /**
+     * Temporary property that holds the name of the last rendered file, it is
+     * used to detect the next processed file.
+     *
+     * @var string $_fileName
+     */
     private $_fileName = null;
 
+    /**
+     * This method will be called on all renderers before the engine starts the
+     * real report processing.
+     *
+     * @return void
+     */
     public function start()
     {
         $this->getWriter()->write('<?xml version="1.0" encoding="UTF-8" ?>');
         $this->getWriter()->write(PHP_EOL);
     }
 
+    /**
+     * This method will be called when the engine has finished the source analysis
+     * phase.
+     *
+     * @param PHP_PMD_Report $report The context violation report.
+     *
+     * @return void
+     */
     public function renderReport(PHP_PMD_Report $report)
     {
         $writer = $this->getWriter();
@@ -120,11 +140,26 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
         $writer->write('</pmd>' . PHP_EOL);
     }
 
+    /**
+     * This method will be called the engine has finished the report processing
+     * for all registered renderers.
+     *
+     * @return void
+     */
     public function end()
     {
 
     }
 
+    /**
+     * This method will write a xml attribute named <b>$attr</b> to the output
+     * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
+     *
+     * @param string $attr  The xml attribute name.
+     * @param string $value The attribute value.
+     *
+     * @return void
+     */
     private function _maybeAdd($attr, $value)
     {
         if ($value === null || trim($value) === '') {

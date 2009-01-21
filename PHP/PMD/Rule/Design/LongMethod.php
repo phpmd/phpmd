@@ -68,6 +68,14 @@ class PHP_PMD_Rule_Design_LongMethod
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
+    /**
+     * This method checks the lines of code length for the given function or
+     * methode node against a configured threshold.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
+     */
     public function apply(PHP_PMD_AbstractNode $node)
     {
         $loc = $node->getMetric('loc');

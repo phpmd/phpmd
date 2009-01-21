@@ -359,15 +359,37 @@ abstract class PHP_PMD_AbstractRule
         $this->_properties[$name] = $value;
     }
 
+    /**
+     * Returns the value of a configured property as an integer or throws an
+     * exception when no property with <b>$name</b> exists.
+     *
+     * @param string $name The property identifier.
+     *
+     * @return integer
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
+     */
     public function getIntProperty($name)
     {
         if (isset($this->_properties[$name])) {
             return (int) $this->_properties[$name];
         }
-        return 0;
+        throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
     }
 
-    protected function addViolation(PHP_PMD_AbstractNode $node, array $args = array())
+    /**
+     * This method adds a violation to all reports for this violation type and
+     * for the given <b>$node</b> instance.
+     *
+     * @param PHP_PMD_AbstractNode $node The node which has a violation of this
+     *                                   type.
+     * @param array(string)        $args Optional list of arguments that are
+     *                                   used to replace "{\d+}" placeholders in
+     *                                   the message text of this rule.
+     *
+     * @return void
+     */
+    protected function addViolation(PHP_PMD_AbstractNode $node,
+                                    array $args = array())
     {
         $search  = array();
         $replace = array();
@@ -382,6 +404,14 @@ abstract class PHP_PMD_AbstractRule
         $this->_report->addRuleViolation($ruleViolation);
     }
 
+    /**
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
+     *
+     * @param PHP_PMD_AbstractNode $node The current context for analysis.
+     *
+     * @return void
+     */
     public abstract function apply(PHP_PMD_AbstractNode $node);
 }
 ?>

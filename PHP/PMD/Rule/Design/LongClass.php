@@ -65,6 +65,14 @@ class PHP_PMD_Rule_Design_LongClass
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IClassAware
 {
+    /**
+     * This method checks the length of the given class node against a configured
+     * threshold.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
+     */
     public function apply(PHP_PMD_AbstractNode $node)
     {
         $loc = $node->getMetric('loc');

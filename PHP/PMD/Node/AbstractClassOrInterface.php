@@ -69,6 +69,11 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      */
     private $_type = null;
 
+    /**
+     * Constructs a new generic class or interface node.
+     *
+     * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
+     */
     public function __construct(PHP_Depend_Code_AbstractType $node)
     {
         parent::__construct($node);

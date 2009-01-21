@@ -68,6 +68,14 @@ class PHP_PMD_Rule_Design_NpathComplexity
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
+    /**
+     * This method checks the acyclic complexity for the given node against a
+     * configured threshold.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
+     */
     public function apply(PHP_PMD_AbstractNode $node)
     {
         $npath = $node->getMetric('npath');
