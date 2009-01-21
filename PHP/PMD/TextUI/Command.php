@@ -81,6 +81,17 @@ class PHP_PMD_TextUI_Command
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
 
         $phpmd = new PHP_PMD();
+
+        $extensions = $opts->getExtensions();
+        if ($extensions !== null) {
+            $phpmd->setFileExtensions(explode(',', $extensions));
+        }
+
+        $ignore = $opts->getIgnore();
+        if ($ignore !== null) {
+            $phpmd->setIgnorePattern(explode(',', $ignore));
+        }
+
         $phpmd->processFiles($opts->getInputPath(),
                              $opts->getRuleSets(),
                              array($renderer),

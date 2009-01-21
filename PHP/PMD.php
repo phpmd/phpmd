@@ -75,16 +75,41 @@ final class PHP_PMD
     /**
      * List of valid file extensions for analyzed files.
      *
-     * @var array(string) $_extensions
+     * @var array(string) $_fileExtensions
      */
-    private $_extensions = array('php', 'php3', 'php4', 'php5', 'inc');
+    private $_fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
 
     /**
      * List of exclude directory patterns.
      *
-     * @var array(string) $_excludes
+     * @var array(string) $_ignorePatterns
      */
-    private $_excludes = array('.git', '.svn', 'CVS');
+    private $_ignorePatterns = array('.git', '.svn', 'CVS');
+
+    /**
+     * Sets a list of filename extensions for valid php source code files.
+     *
+     * @param array(string) $fileExtensions Extensions without leading dot.
+     *
+     * @return void
+     */
+    public function setFileExtensions(array $fileExtensions)
+    {
+        $this->_fileExtensions = $fileExtensions;
+    }
+
+    /**
+     * Sets a list of ignore patterns that is used to exclude directories from
+     * the source analysis.
+     *
+     * @param array(string) $ignorePatterns List of ignore patterns.
+     *
+     * @return void
+     */
+    public function setIgnorePattern(array $ignorePatterns)
+    {
+        $this->_ignorePatterns = $ignorePatterns;
+    }
 
     public function processFiles($inputPath, 
                                  $ruleSets,
@@ -122,18 +147,25 @@ final class PHP_PMD
         }
     }
 
+    /**
+     * Creates the used PHP_Depend analyzer instance.
+     *
+     * @param string $inputPath The input filename or directory.
+     *
+     * @return PHP_Depend
+     */
     private function _createPhpDepend($inputPath)
     {
         $pdepend = new PHP_Depend();
         $pdepend->addDirectory(realpath($inputPath));
 
-        if (count($this->_excludes) > 0) {
-            $filter = new PHP_Depend_Input_ExcludePathFilter($this->_excludes);
+        if (count($this->_ignorePatterns) > 0) {
+            $filter = new PHP_Depend_Input_ExcludePathFilter($this->_ignorePatterns);
             $pdepend->addFileFilter($filter);
         }
 
-        if (count($this->_extensions) > 0) {
-            $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);
+        if (count($this->_fileExtensions) > 0) {
+            $filter = new PHP_Depend_Input_ExtensionFilter($this->_fileExtensions);
             $pdepend->addFileFilter($filter);
         }
 

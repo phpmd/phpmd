@@ -101,6 +101,20 @@ class PHP_PMD_TextUI_CommandLineOptions
      * @var string $_ruleSets
      */
     private $_ruleSets = null;
+
+    /**
+     * A string of comma-separated extensions for valid php source code filenames.
+     *
+     * @var string $_extensions
+     */
+    private $_extensions = null;
+
+    /**
+     * A string of comma-separated pattern that is used to exclude directories.
+     *
+     * @var string $_ignore
+     */
+    private $_ignore = null;
     
     /**
      * Constructs a new command line options instance.
@@ -129,6 +143,14 @@ class PHP_PMD_TextUI_CommandLineOptions
 
             case '--reportfile':
                 $this->_reportFile = array_shift($args);
+                break;
+
+            case '--extensions':
+                $this->_extensions = array_shift($args);
+                break;
+
+            case '--ignore':
+                $this->_ignore = array_shift($args);
                 break;
             }
         }
@@ -175,6 +197,38 @@ class PHP_PMD_TextUI_CommandLineOptions
         return $this->_ruleSets;
     }
 
+    /**
+     * Returns the minimum rule priority.
+     *
+     * @return integer
+     */
+    public function getMinimumPriority()
+    {
+        return $this->_minimumPriority;
+    }
+
+    /**
+     * Returns a string of comma-separated extensions for valid php source code
+     * filenames or <b>null</b> when this argument was not set.
+     *
+     * @return string
+     */
+    public function getExtensions()
+    {
+        return $this->_extensions;
+    }
+
+    /**
+     * Returns  string of comma-separated pattern that is used to exclude
+     * directories or <b>null</b> when this argument was not set.
+     *
+     * @return string
+     */
+    public function getIgnore()
+    {
+        return $this->_ignore;
+    }
+
     public function createRenderer()
     {
         switch ($this->_reportFormat) {
@@ -206,30 +260,23 @@ class PHP_PMD_TextUI_CommandLineOptions
         }
     }
 
-    /**
-     * Returns the minimum rule priority.
-     *
-     * @return integer
-     */
-    public function getMinimumPriority()
-    {
-        return $this->_minimumPriority;
-    }
-
     public function usage()
     {
-        return PHP_EOL . PHP_EOL .
-               'Mandatory arguments:' . PHP_EOL .
+        return 'Mandatory arguments:' . PHP_EOL .
                '1) A php source code filename or directory' . PHP_EOL .
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
                'filenames' . PHP_EOL . PHP_EOL .
                'Optional arguments that may be put after the mandatory arguments:' .
                PHP_EOL .
-               '"-minimumpriority: rule priority threshold; rules with lower ' .
-               'priority than they will not be used' . PHP_EOL .
-               '-reportfile: send report output to a file; default to STDOUT' .
-               PHP_EOL;
+               '--minimumpriority: rule priority threshold; rules with lower ' .
+               'priority than this will not be used' . PHP_EOL .
+               '--reportfile: send report output to a file; default to STDOUT' .
+               PHP_EOL .
+               '--extensions: comma-separated string of valid source code ' .
+               'filename extensions' . PHP_EOL .
+               '--ignore: comma-separated string of patterns that are used to ' .
+               'ignore directories' . PHP_EOL;
     }
 }
 ?>
