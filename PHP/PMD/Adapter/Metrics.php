@@ -72,10 +72,25 @@ class PHP_PMD_Adapter_Metrics
     implements PHP_Depend_Log_LoggerI,
                PHP_Depend_Log_CodeAwareI
 {
+    /**
+     * The analysing rule-set instance.
+     *
+     * @var array(PHP_PMD_RuleSet) $_ruleSets
+     */
     private $_ruleSets = array();
 
+    /**
+     * The metric containing analyzer instances.
+     *
+     * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
+     */
     private $_analyzers = array();
 
+    /**
+     * The raw PHP_Depend code nodes.
+     *
+     * @var PHP_Depend_Code_NodeIterator
+     */
     private $_code = null;
 
     /**
@@ -85,6 +100,13 @@ class PHP_PMD_Adapter_Metrics
      */
     private $_report = null;
 
+    /**
+     * Adds a new analysis rule-set to this adapter.
+     *
+     * @param PHP_PMD_RuleSet $ruleSet The new rule-set instance.
+     *
+     * @return void
+     */
     public function addRuleSet(PHP_PMD_RuleSet $ruleSet)
     {
         $this->_ruleSets[] = $ruleSet;
@@ -112,11 +134,25 @@ class PHP_PMD_Adapter_Metrics
         $this->_report = $report;
     }
 
+    /**
+     * Adds an analyzer to log. If this logger accepts the given analyzer it
+     * with return <b>true</b>, otherwise the return value is <b>false</b>.
+     *
+     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     *
+     * @return boolean
+     */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
         $this->_analyzers[] = $analyzer;
     }
 
+    /**
+     * Closes the logger process and writes the output file.
+     *
+     * @return void
+     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
+     */
     public function close()
     {
         foreach ($this->_code as $node) {
@@ -124,11 +160,25 @@ class PHP_PMD_Adapter_Metrics
         }
     }
 
+    /**
+     * Returns an <b>array</b> with accepted analyzer types. These types can be
+     * concrete analyzer classes or one of the descriptive analyzer interfaces.
+     *
+     * @return array(string)
+     */
     public function getAcceptedAnalyzers()
     {
         return array('PHP_Depend_Metrics_NodeAwareI');
     }
 
+    /**
+     * Visits a class node.
+     *
+     * @param PHP_Depend_Code_Class $node The current class node.
+     *
+     * @return void
+     * @see PHP_Depend_VisitorI::visitClass()
+     */
     public function visitClass(PHP_Depend_Code_Class $node)
     {
         if ($node->getSourceFile()->getFileName() === null) {
@@ -139,6 +189,14 @@ class PHP_PMD_Adapter_Metrics
         parent::visitClass($node);
     }
 
+    /**
+     * Visits a function node.
+     *
+     * @param PHP_Depend_Code_Function $node The current function node.
+     *
+     * @return void
+     * @see PHP_Depend_VisitorI::visitFunction()
+     */
     public function visitFunction(PHP_Depend_Code_Function $node)
     {
         if ($node->getSourceFile()->getFileName() === null) {
@@ -148,6 +206,14 @@ class PHP_PMD_Adapter_Metrics
         $this->_apply(new PHP_PMD_Node_Function($node));
     }
 
+    /**
+     * Visits a method node.
+     *
+     * @param PHP_Depend_Code_Class $node The method class node.
+     *
+     * @return void
+     * @see PHP_Depend_VisitorI::visitMethod()
+     */
     public function visitMethod(PHP_Depend_Code_Method $node)
     {
         if ($node->getSourceFile()->getFileName() === null) {
@@ -169,6 +235,13 @@ class PHP_PMD_Adapter_Metrics
         $this->_code = $code;
     }
 
+    /**
+     * Applies all rule-sets to the given <b>$node</b> instance.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source node.
+     *
+     * @return void
+     */
     private function _apply(PHP_PMD_AbstractNode $node)
     {
         $this->_collectMetrics($node);
@@ -178,6 +251,14 @@ class PHP_PMD_Adapter_Metrics
         }
     }
 
+    /**
+     * Collects the collected metrics for the given node and adds them to the
+     * <b>$node</b>.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source node.
+     *
+     * @return void
+     */
     private function _collectMetrics(PHP_PMD_AbstractNode $node)
     {
         $metrics = array();

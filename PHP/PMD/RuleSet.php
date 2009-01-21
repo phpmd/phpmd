@@ -46,7 +46,7 @@
  */
 
 /**
- *
+ * This class is a collection of concrete source analysis rules.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -86,6 +86,11 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     private $_report = null;
 
+    /**
+     * Mapping between marker interfaces and concrete context code node classes.
+     *
+     * @var array(string=>string) $_applyTo
+     */
     private $_applyTo = array(
         'PHP_PMD_Rule_IClassAware'      =>  'PHP_PMD_Node_Class',
         'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_PMD_Node_Function',
@@ -93,6 +98,11 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         'PHP_PMD_Rule_IMethodAware'     =>  'PHP_PMD_Node_Method',
     );
 
+    /**
+     * Mapping of rules that apply to a concrete code node type.
+     *
+     * @var array(string=>array) $_rules
+     */
     private $_rules = array(
         'PHP_PMD_Node_Class'      =>  array(),
         'PHP_PMD_Node_Function'   =>  array(),
@@ -225,6 +235,13 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         return new ArrayIterator($result);
     }
 
+    /**
+     * Adds a new rule to this rule-set.
+     *
+     * @param PHP_PMD_AbstractRule $rule Rule instance to add.
+     *
+     * @return void
+     */
     public function addRule(PHP_PMD_AbstractRule $rule)
     {
         foreach ($this->_applyTo as $applyTo => $type) {
@@ -234,6 +251,13 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         }
     }
 
+    /**
+     * Applies all registered rules that match against the concrete node type.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
+     */
     public function apply(PHP_PMD_AbstractNode $node)
     {
         // Current node type
@@ -251,6 +275,11 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         }
     }
 
+    /**
+     * Returns an iterator with all rules that are part of this rule-set.
+     *
+     * @return Iterator
+     */
     public function getIterator()
     {
         return $this->getRules();

@@ -80,6 +80,13 @@ class PHP_PMD_Report
      */
     private $_endTime = 0.0;
 
+    /**
+     * Adds a rule violation to this report.
+     *
+     * @param PHP_PMD_RuleViolation $violation The occured rule violation.
+     *
+     * @return void
+     */
     public function addRuleViolation(PHP_PMD_RuleViolation $violation)
     {
         $fileName = $violation->getFileName();
@@ -95,6 +102,11 @@ class PHP_PMD_Report
         $this->_ruleViolations[$fileName][$beginLine][] = $violation;
     }
 
+    /**
+     * Returns an iterator with all occured rule violations.
+     *
+     * @return Iterator
+     */
     public function getRuleViolations()
     {
         // First sort by file name
@@ -133,6 +145,11 @@ class PHP_PMD_Report
         $this->_endTime = microtime(true) * 1000.0;
     }
 
+    /**
+     * Returns the total time elapsed for the source analysis.
+     *
+     * @return float
+     */
     public function getElapsedTimeInMillis()
     {
         return round($this->_endTime - $this->_startTime);

@@ -36,13 +36,13 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.pdepend.org/pmd
  */
 
 require_once 'PHP/PMD/AbstractRule.php';
@@ -55,13 +55,13 @@ require_once 'PHP/PMD/RuleSetNotFoundException.php';
  * This factory class is used to create the {@link PHP_PMD_RuleSet} instance
  * that PHP_PMD will use to analyze the source code.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.pdepend.org/pmd
  */
 class PHP_PMD_RuleSetFactory
 {
@@ -74,8 +74,12 @@ class PHP_PMD_RuleSetFactory
      */
     private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
 
+    /**
+     * Constructs a new default rule-set factory instance.
+     */
     public function __construct()
     {
+        // PEAR installer workaround
         if (strpos($this->_location, '@data_dir') === 0) {
             $this->_location = dirname(__FILE__) . '/../../';
         }
@@ -93,6 +97,14 @@ class PHP_PMD_RuleSetFactory
         $this->_minimumPriority = $minimumPriority;
     }
 
+    /**
+     * Creates an array of rule-set instances for the given argument.
+     *
+     * @param string $ruleSetFileNames Comma-separated string of rule-set filenames
+     *                                 or identifier.
+     *
+     * @return array(PHP_PMD_RuleSet)
+     */
     public function createRuleSets($ruleSetFileNames)
     {
         $ruleSets = array();
@@ -106,12 +118,27 @@ class PHP_PMD_RuleSetFactory
         return $ruleSets;
     }
 
+    /**
+     * Creates a single rule-set instance for the given filename or identifier.
+     *
+     * @param string $ruleSetOrFileName The rule-set filename or identifier.
+     *
+     * @return PHP_PMD_RuleSet
+     */
     public function createSingleRuleSet($ruleSetOrFileName)
     {
         $fileName = $this->_createRuleSetFileName($ruleSetOrFileName);
         return $this->_parseRuleSetNode($fileName);
     }
 
+    /**
+     * This method creates the filename for a rule-set identifier or it returns
+     * the input when it is already a filename.
+     *
+     * @param string $ruleSetOrFileName The rule-set filename or identifier.
+     *
+     * @return string
+     */
     private function _createRuleSetFileName($ruleSetOrFileName)
     {
         if (file_exists($ruleSetOrFileName) === true) {
@@ -141,6 +168,13 @@ class PHP_PMD_RuleSetFactory
         throw new PHP_PMD_RuleSetNotFoundException($ruleSetOrFileName);
     }
 
+    /**
+     * This method parses the rule-set definition in the given file.
+     *
+     * @param string $fileName The filename of a rule-set definition.
+     *
+     * @return PHP_PMD_RuleSet
+     */
     private function _parseRuleSetNode($fileName)
     {
         // Hide error messages
@@ -169,6 +203,16 @@ class PHP_PMD_RuleSetFactory
         return $ruleSet;
     }
 
+    /**
+     * This method parses a single rule xml node. Bases on the structure of the
+     * xml node this method delegates the parsing process to another method in
+     * this class.
+     *
+     * @param PHP_PMD_RuleSet  $ruleSet The parent rule-set instance.
+     * @param SimpleXMLElement $node    The unparsed rule xml node.
+     *
+     * @return void
+     */
     private function _parseRuleNode(PHP_PMD_RuleSet $ruleSet,
                                     SimpleXMLElement $node)
     {
@@ -181,6 +225,15 @@ class PHP_PMD_RuleSetFactory
         }
     }
 
+    /**
+     * This method parses a complete rule set that was includes a reference in
+     * the currently parsed ruleset.
+     *
+     * @param PHP_PMD_RuleSet  $ruleSet     The parent rule-set instance.
+     * @param SimpleXMLElement $ruleSetNode The unparsed rule xml node.
+     *
+     * @return void
+     */
     private function _parseRuleSetReferenceNode(PHP_PMD_RuleSet $ruleSet,
                                                 SimpleXMLElement $ruleSetNode)
     {
@@ -255,6 +308,15 @@ class PHP_PMD_RuleSetFactory
         }
     }
 
+    /**
+     * This method parses a single rule that was included from a different
+     * rule-set.
+     *
+     * @param PHP_PMD_RuleSet  $ruleSet  The parent rule-set instance.
+     * @param SimpleXMLElement $ruleNode The unparsed rule xml node.
+     *
+     * @return void
+     */
     private function _parseRuleReferenceNode(PHP_PMD_RuleSet $ruleSet,
                                              SimpleXMLElement $ruleNode)
     {
