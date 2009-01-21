@@ -36,28 +36,44 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_PMD
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.pdepend.org/pmd
+ * @category   PHP
+ * @package    PHP_PMD
+ * @subpackage TextUI
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/pmd
  */
+
+require_once 'PHP/PMD/AbstractRule.php';
 
 /**
  * 
  *
- * @category  PHP
- * @package   PHP_PMD
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.pdepend.org/pmd
+ * @category   PHP
+ * @package    PHP_PMD
+ * @subpackage TextUI
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_CommandLineOptions
+class PHP_PMD_TextUI_CommandLineOptions
 {
+    /**
+     * Error code for invalid input
+     */
+    const INPUT_ERROR = 23;
+
+    /**
+     * The minimum rule priority.
+     *
+     * @var integer $_minimumPriority
+     */
+    private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
+
     /**
      * A php source code filename or directory.
      *
@@ -71,6 +87,13 @@ class PHP_PMD_CommandLineOptions
      * @var string $_reportFormat
      */
     private $_reportFormat = null;
+
+    /**
+     * An optional filename for the generated report.
+     *
+     * @var string $_reportFile
+     */
+    private $_reportFile = null;
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
@@ -90,12 +113,25 @@ class PHP_PMD_CommandLineOptions
         array_shift($args);
 
         if (count($args) < 3) {
-            throw new InvalidArgumentException($this->usage());
+            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
         $this->_inputPath    = array_shift($args);
         $this->_reportFormat = array_shift($args);
         $this->_ruleSets     = array_shift($args);
+
+        while (($arg = array_shift($args)) !== null) {
+            switch ($arg) {
+
+            case '--minimumpriority':
+                $this->_minimumPriority = (int) array_shift($args);
+                break;
+
+            case '--reportfile':
+                $this->_reportFile = array_shift($args);
+                break;
+            }
+        }
     }
 
     /**
@@ -118,9 +154,15 @@ class PHP_PMD_CommandLineOptions
         return $this->_reportFormat;
     }
 
+    /**
+     * Returns the output filename for a generated report or <b>null</b> when
+     * the report should be displayed in STDOUT.
+     *
+     * @return string
+     */
     public function getReportFile()
     {
-        return null;
+        return $this->_reportFile;
     }
 
     /**
@@ -151,6 +193,7 @@ class PHP_PMD_CommandLineOptions
                 if (is_resource($fp) === false) {
                     $message = 'Can\'t find the custom report class: '
                              . $this->_reportFormat;
+                    throw new InvalidArgumentException($message, self::INPUT_ERROR);
                 }
                 @fclose($fp);
 
@@ -159,8 +202,18 @@ class PHP_PMD_CommandLineOptions
                 return new $this->_reportFormat;
             }
             $message = 'Can\'t create report with format of ' . $this->_reportFormat;
-            throw new InvalidArgumentException($message);
+            throw new InvalidArgumentException($message, self::INPUT_ERROR);
         }
+    }
+
+    /**
+     * Returns the minimum rule priority.
+     *
+     * @return integer
+     */
+    public function getMinimumPriority()
+    {
+        return $this->_minimumPriority;
     }
 
     public function usage()
@@ -170,7 +223,13 @@ class PHP_PMD_CommandLineOptions
                '1) A php source code filename or directory' . PHP_EOL .
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
-               'filenames' . PHP_EOL . PHP_EOL;
+               'filenames' . PHP_EOL . PHP_EOL .
+               'Optional arguments that may be put after the mandatory arguments:' .
+               PHP_EOL .
+               '"-minimumpriority: rule priority threshold; rules with lower ' .
+               'priority than they will not be used' . PHP_EOL .
+               '-reportfile: send report output to a file; default to STDOUT' .
+               PHP_EOL;
     }
 }
 ?>

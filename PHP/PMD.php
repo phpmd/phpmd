@@ -49,7 +49,6 @@ require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
 
-require_once 'PHP/PMD/CommandLineOptions.php';
 require_once 'PHP/PMD/Report.php';
 require_once 'PHP/PMD/RuleSetFactory.php';
 require_once 'PHP/PMD/Adapter/Metrics.php';
@@ -87,7 +86,9 @@ final class PHP_PMD
      */
     private $_excludes = array('.git', '.svn', 'CVS');
 
-    public function processFiles($inputPath, array $renderers, 
+    public function processFiles($inputPath, 
+                                 $ruleSets,
+                                 array $renderers,
                                  PHP_PMD_RuleSetFactory $ruleSetFactory)
     {
         $ruleSets = $ruleSetFactory->createRuleSets($ruleSets);
@@ -101,16 +102,11 @@ final class PHP_PMD
             $adapter->addRuleSet($ruleSet);
         }
 
-        $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(realpath($inputPath));
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExcludePathFilter($this->_excludes));
-        $pdepend->addFileFilter(new PHP_Depend_Input_ExtensionFilter($this->_extensions));
+        $pdepend = $this->_createPhpDepend($inputPath);
         $pdepend->addLogger($adapter);
-
+        
         $report->start();
-
         $pdepend->analyze();
-
         $report->end();
 
         foreach ($renderers as $renderer) {
@@ -126,36 +122,22 @@ final class PHP_PMD
         }
     }
 
-    /**
-     * Main method that starts a PHP_PMD run.
-     *
-     * @param array(string) $args The raw command line arguments.
-     *
-     * @return void
-     */
-    public static function main(array $args)
+    private function _createPhpDepend($inputPath)
     {
-        $opts = new PHP_PMD_CommandLineOptions($args);
+        $pdepend = new PHP_Depend();
+        $pdepend->addDirectory(realpath($inputPath));
 
-        // Create a report stream
-        if ($opts->getReportFile() === null) {
-            $stream = STDOUT;
-        } else {
-            $stream = fopen($opts->getReportFile(), 'wb');
+        if (count($this->_excludes) > 0) {
+            $filter = new PHP_Depend_Input_ExcludePathFilter($this->_excludes);
+            $pdepend->addFileFilter($filter);
         }
 
-        // Create renderer and configure output
-        $renderer = $opts->createRenderer();
-        $renderer->setWriter(new PHP_PMD_Writer_Stream($stream));
+        if (count($this->_extensions) > 0) {
+            $filter = new PHP_Depend_Input_ExtensionFilter($this->_extensions);
+            $pdepend->addFileFilter($filter);
+        }
 
-        // Create a rule set factory
-        $ruleSetFactory = new PHP_PMD_RuleSetFactory();
-
-        $phpmd = new PHP_PMD();
-        $phpmd->processFiles($opts->getInputPath(),
-                             array($renderer),
-                             $ruleSetFactory);
-
+        return $pdepend;
     }
 }
 ?>
