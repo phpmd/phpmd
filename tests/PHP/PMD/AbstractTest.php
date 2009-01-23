@@ -3,7 +3,7 @@
  * This file is part of PHP_PMD.
  *
  * PHP Version 5
- *
+ * 
  * Copyright (c) 2009, Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -68,6 +68,53 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     private static $_filesDirectory = null;
 
     /**
+     * Original directory is used to reset a changed working directory.
+     *
+     * @return void
+     */
+    private static $_originalWorkingDirectory = null;
+
+    /**
+     * Resets a changed working directory.
+     *
+     * @return void
+     */
+    protected function tearDown()
+    {
+        if (self::$_originalWorkingDirectory !== null) {
+            chdir(self::$_originalWorkingDirectory);
+        }
+
+        self::$_originalWorkingDirectory = null;
+
+        parent::tearDown();
+    }
+
+    /**
+     * Creates a mocked method node instance.
+     *
+     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param mixed  $value  The expected metric return value.
+     *
+     * @return PHP_PMD_Node_Method
+     */
+    protected function getMethodMock($metric, $value = null)
+    {
+        include_once 'PHP/Depend/Code/Method.php';
+        include_once 'PHP/PMD/Node/Method.php';
+
+        $node = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
+
+        $method = $this->getMock('PHP_PMD_Node_Method', array(), array($node));
+        $method->expects($this->atLeastOnce())
+               ->method('getMetric')
+               ->with($this->equalTo($metric))
+               ->will($this->returnValue($value));
+
+        return $method;
+    }
+
+    /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
      *
@@ -75,15 +122,39 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function init()
     {
-        self::$_filesDirectory = dirname(__FILE__);
+        self::$_filesDirectory = dirname(__FILE__) . '/_files';
 
-        if (strpos('@package_version@', '@package_version') === false) {
-            return;
+        // file can contain test rule implementations.
+        $include = self::$_filesDirectory;
+
+        // Check pear installation
+        if (strpos('@package_version@', '@package_version') === 0) {
+            $include .= PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../../');
         }
 
         // Configure include path
-        $include = realpath(dirname(__FILE__) . '/../../../');
         set_include_path(get_include_path() . PATH_SEPARATOR . $include);
+
+        // Include PHP_PMD main file to get the whitelist directory
+        include_once 'PHP/PMD.php';
+        $ref = new ReflectionClass('PHP_PMD');
+
+        // Set source whitelist
+        PHPUnit_Util_Filter::addDirectoryToWhitelist(dirname($ref->getFileName()));
+    }
+
+    /**
+     * Changes the working directory for a single test.
+     *
+     * @param string $localPath The temporary working directory.
+     *
+     * @return void
+     */
+    protected static function changeWorkingDirectory($localPath = '')
+    {
+        self::$_originalWorkingDirectory = getcwd();
+
+        chdir(self::createFileUri($localPath));
     }
 
     /**
@@ -93,7 +164,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return string
      */
-    protected static function createFileUri($localPath)
+    protected static function createFileUri($localPath = '')
     {
         return self::$_filesDirectory . '/' . $localPath;
     }
