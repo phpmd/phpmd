@@ -240,7 +240,7 @@ class PHP_PMD_RuleSetFactory
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($this->_minimumPriority);
 
-        $rules = $ruleSetFactory->createRuleSets((string) $ruleSetNode['ref']);
+        $rules = $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
         foreach ($rules as $rule) {
             $ruleSet->addRule($rule);
         }
@@ -329,8 +329,8 @@ class PHP_PMD_RuleSetFactory
 
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
 
-        $ruleSet = $ruleSetFactory->createSingleRuleSet($fileName);
-        $rule    = $ruleSet->getRuleByName($ruleName);
+        $ruleSetRef = $ruleSetFactory->createSingleRuleSet($fileName);
+        $rule       = $ruleSetRef->getRuleByName($ruleName);
 
         if (trim($ruleNode['name']) !== '') {
             $rule->setName((string) $ruleNode['name']);

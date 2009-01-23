@@ -115,6 +115,37 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked report instance.
+     *
+     * @param integer $expectedInvokes Number of expected invokes.
+     *
+     * @return PHP_PMD_Report
+     */
+    protected function getReportMock($expectedInvokes = -1)
+    {
+        $expects = null;
+        if ($expectedInvokes < 0) {
+            $expects = $this->atLeastOnce();
+        } else if ($expectedInvokes === 0) {
+            $expects = $this->never();
+        } else if ($expectedInvokes === 1) {
+            $expects = $this->once();
+        } else {
+            $expects = $this->exactly($expectedInvokes);
+        }
+
+        $report = $this->getMock('PHP_PMD_Report');
+        $method = $report->expects($expects)
+                         ->method('addRuleViolation');
+
+        if ($expectedInvokes !== 0) {
+            $method->with($this->isInstanceOf('PHP_PMD_RuleViolation'));
+        }
+
+        return $report;
+    }
+
+    /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
      *
