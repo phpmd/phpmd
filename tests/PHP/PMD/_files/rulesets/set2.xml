@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Second Test RuleSet"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>Second description...</description>
+    
+    <rule name="RuleOneInSecondRuleSet"
+          since="0.1"
+          message="Test message"
+          class="TestRules_TestRule"
+          externalInfoUrl="http://phpmd.org/">
+        <description>...</description>
+        <priority>1</priority>
+        <properties />
+    </rule>
+    <rule name="RuleTwoInSecondRuleSet"
+          since="0.1"
+          message="Test message"
+          class="TestRules_TestRule"
+          externalInfoUrl="http://phpmd.org/">
+        <description>...</description>
+        <priority>5</priority>
+        <properties />
+    </rule>
+</ruleset>
