@@ -46,18 +46,12 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_Rule_Design_AllTests::main');
-}
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
+require_once 'PHP/PMD/Rule/Design/LongMethod.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the excessive long method rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -68,35 +62,57 @@ require_once dirname(__FILE__) . '/LongMethodTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_LongMethodTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Test suite main method.
+     * Tests that the rule applies for a value greater than the configured
+     * threshold.
      *
      * @return void
      */
-    public static function main()
+    public function testRuleAppliesForValueGreaterThanThreshold()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $method = $this->getMethodMock('loc', 42);
+        $report = $this->getReportMock(1);
+
+        $rule = new PHP_PMD_Rule_Design_LongMethod();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '41');
+        $rule->apply($method);
     }
 
     /**
-     * Creates a phpunit test suite.
+     * Test that the rule applies for a value that is equal with the configured
+     * threshold.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testRuleAppliesForValueEqualToThreshold()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $method = $this->getMethodMock('loc', 42);
+        $report = $this->getReportMock(1);
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-
-        return $suite;
+        $rule = new PHP_PMD_Rule_Design_LongMethod();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '42');
+        $rule->apply($method);
     }
-}
 
-if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_Design_AllTests::main') {
-    PHP_PMD_Rule_Design_AllTests::main();
+    /**
+     * Tests that the rule does not apply when the value is at least one lower
+     * than the threshold.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForValueLowerThanThreshold()
+    {
+        $method = $this->getMethodMock('loc', 22);
+        $report = $this->getReportMock(0);
+
+        $rule = new PHP_PMD_Rule_Design_LongMethod();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '23');
+        $rule->apply($method);
+    }
 }
 ?>
