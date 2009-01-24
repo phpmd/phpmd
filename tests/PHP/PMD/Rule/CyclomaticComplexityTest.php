@@ -73,7 +73,7 @@ class PHP_PMD_Rule_CyclomaticComplexityTest extends PHP_PMD_AbstractTest
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
         $method = $this->getMethodMock('ccn2', 42);
-        $report = $this->getReportMock();
+        $report = $this->getReportMock(1);
 
         $rule = new PHP_PMD_Rule_CyclomaticComplexity();
         $rule->setReport($report);
@@ -90,7 +90,7 @@ class PHP_PMD_Rule_CyclomaticComplexityTest extends PHP_PMD_AbstractTest
     public function testRuleAppliesForValueEqualToThreshold()
     {
         $method = $this->getMethodMock('ccn2', 42);
-        $report = $this->getReportMock();
+        $report = $this->getReportMock(1);
 
         $rule = new PHP_PMD_Rule_CyclomaticComplexity();
         $rule->setReport($report);
@@ -98,6 +98,12 @@ class PHP_PMD_Rule_CyclomaticComplexityTest extends PHP_PMD_AbstractTest
         $rule->apply($method);
     }
 
+    /**
+     * Tests that the rule does not apply when the value is at least one lower
+     * than the threshold.
+     *
+     * @return void
+     */
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {
         $method = $this->getMethodMock('ccn2', 22);
