@@ -47,17 +47,16 @@
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_Rule_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_Rule_Design_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__) . '/CyclomaticComplexityTest.php';
-require_once dirname(__FILE__) . '/Design/AllTests.php';
+require_once dirname(__FILE__) . '/LongClassTest.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule package.
+ * Main test suite for the PHP_PMD_Rule_Design package.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -68,7 +67,7 @@ require_once dirname(__FILE__) . '/Design/AllTests.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_AllTests
+class PHP_PMD_Rule_Design_AllTests
 {
     /**
      * Test suite main method.
@@ -87,17 +86,15 @@ class PHP_PMD_Rule_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule - Tests');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
 
-        $suite->addTestSuite('PHP_PMD_Rule_CyclomaticComplexityTest');
-
-        $suite->addTest(PHP_PMD_Rule_Design_AllTests::suite());
+        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_AllTests::main') {
-    PHP_PMD_Rule_AllTests::main();
+if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_Design_AllTests::main') {
+    PHP_PMD_Rule_Design_AllTests::main();
 }
 ?>

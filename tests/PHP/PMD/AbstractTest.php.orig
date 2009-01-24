@@ -36,68 +36,71 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @subpackage Rule
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    SVN: $Id$
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   SVN: $Id$
+ * @link      http://www.pdepend.org/pmd
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_Rule_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/CyclomaticComplexityTest.php';
-require_once dirname(__FILE__) . '/Design/AllTests.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule package.
+ * Abstract base class for PHP_PMD test cases.
  *
- * @category   PHP
- * @package    PHP_PMD
- * @subpackage Rule
- * @author     Manuel Pichler <mapi@pdepend.org>
- * @copyright  2009 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    Release: @package_version@
- * @link       http://www.pdepend.org/pmd
+ * @category  PHP
+ * @package   PHP_PMD
+ * @author    Manuel Pichler <mapi@pdepend.org>
+ * @copyright 2009 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version   Release: @package_version@
+ * @link      http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_AllTests
+abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Test suite main method.
+     * Directory with test files.
+     *
+     * @var string $_filesDirectory
+     */
+    private static $_filesDirectory = null;
+
+    /**
+     * This method initializes the test environment, it configures the files
+     * directory and sets the include_path for svn versions.
      *
      * @return void
      */
-    public static function main()
+    public static function init()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        self::$_filesDirectory = dirname(__FILE__);
+
+        if (strpos('@package_version@', '@package_version') === false) {
+            return;
+        }
+
+        // Configure include path
+        $include = realpath(dirname(__FILE__) . '/../../../');
+        set_include_path(get_include_path() . PATH_SEPARATOR . $include);
     }
 
     /**
-     * Creates a phpunit test suite.
+     * Creates a full filename for a test content in the <em>_files</b> directory.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param string $localPath The local path within the <em>_files</b> dir.
+     *
+     * @return string
      */
-    public static function suite()
+    protected static function createFileUri($localPath)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Rule_CyclomaticComplexityTest');
-
-        $suite->addTest(PHP_PMD_Rule_Design_AllTests::suite());
-
-        return $suite;
+        return self::$_filesDirectory . '/' . $localPath;
     }
 }
 
-if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_AllTests::main') {
-    PHP_PMD_Rule_AllTests::main();
-}
+/**
+ * Init the test environment.
+ */
+PHP_PMD_AbstractTest::init();
 ?>
