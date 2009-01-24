@@ -48,6 +48,8 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
+require_once 'PHP/PMD/Rule/Design/LongClass.php';
+
 /**
  * Test case for the excessive long class rule.
  *
@@ -62,5 +64,55 @@ require_once dirname(__FILE__) . '/../../AbstractTest.php';
  */
 class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
 {
+    /**
+     * Tests that the rule applies for a value greater than the configured
+     * threshold.
+     *
+     * @return void
+     */
+    public function testRuleAppliesForValueGreaterThanThreshold()
+    {
+        $class  = $this->getClassMock('loc', 42);
+        $report = $this->getReportMock(1);
+
+        $rule = new PHP_PMD_Rule_Design_LongClass();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '41');
+        $rule->apply($class);
+    }
+
+    /**
+     * Test that the rule applies for a value that is equal with the configured
+     * threshold.
+     *
+     * @return void
+     */
+    public function testRuleAppliesForValueEqualToThreshold()
+    {
+        $class  = $this->getClassMock('loc', 42);
+        $report = $this->getReportMock(1);
+
+        $rule = new PHP_PMD_Rule_Design_LongClass();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '42');
+        $rule->apply($class);
+    }
+
+    /**
+     * Tests that the rule does not apply when the value is at least one lower
+     * than the threshold.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForValueLowerThanThreshold()
+    {
+        $class  = $this->getClassMock('loc', 22);
+        $report = $this->getReportMock(0);
+
+        $rule = new PHP_PMD_Rule_Design_LongClass();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '23');
+        $rule->apply($class);
+    }
 }
 ?>
