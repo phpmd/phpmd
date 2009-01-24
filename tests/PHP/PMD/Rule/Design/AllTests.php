@@ -55,6 +55,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once dirname(__FILE__) . '/LongClassTest.php';
 require_once dirname(__FILE__) . '/LongMethodTest.php';
+require_once dirname(__FILE__) . '/NpathComplexityTest.php';
 
 /**
  * Main test suite for the PHP_PMD_Rule_Design package.
@@ -91,6 +92,7 @@ class PHP_PMD_Rule_Design_AllTests
 
         $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
         $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
+        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
 
         return $suite;
     }
