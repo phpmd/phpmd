@@ -91,6 +91,30 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked class node instance.
+     *
+     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param mixed  $value  The expected metric return value.
+     *
+     * @return PHP_PMD_Node_Class
+     */
+    public function getClassMock($metric, $value = null)
+    {
+        include_once 'PHP/Depend/Code/Class.php';
+        include_once 'PHP/PMD/Node/Class.php';
+
+        $node = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+
+        $class = $this->getMock('PHP_PMD_Node_Class', array(), array($node));
+        $class->expects($this->atLeastOnce())
+              ->method('getMetric')
+              ->with($this->equalTo($metric))
+              ->will($this->returnValue($value));
+
+        return $class;
+    }
+
+    /**
      * Creates a mocked method node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
