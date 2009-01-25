@@ -98,7 +98,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_PMD_Node_Class
      */
-    public function getClassMock($metric, $value = null)
+    protected function getClassMock($metric, $value = null)
     {
         include_once 'PHP/Depend/Code/Class.php';
         include_once 'PHP/PMD/Node/Class.php';
@@ -147,6 +147,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function getReportMock($expectedInvokes = -1)
     {
+        include_once 'PHP/PMD/Report.php';
+
         $expects = null;
         if ($expectedInvokes < 0) {
             $expects = $this->atLeastOnce();
@@ -167,6 +169,40 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         return $report;
+    }
+
+    /**
+     * Creates a mocked rul violation instance.
+     *
+     * @param string  $fileName  The source code filename.
+     * @param integer $beginLine The first line where the violation context begins.
+     * @param integer $endLine   The last line where the violation context ends.
+     *
+     * @return PHP_PMD_RuleViolation
+     */
+    protected function getRuleViolationMock($fileName = '/foo/bar.php',
+                                            $beginLine = 23,
+                                            $endLine = 42)
+    {
+        include_once 'PHP/PMD/RuleViolation.php';
+
+        $ruleViolation = $this->getMock('PHP_PMD_RuleViolation', 
+                                         array(),
+                                         array(null, null, null),
+                                         '',
+                                         false);
+
+        $ruleViolation->expects($this->any())
+                      ->method('getFileName')
+                      ->will($this->returnValue($fileName));
+        $ruleViolation->expects($this->any())
+                      ->method('getBeginLine')
+                      ->will($this->returnValue($beginLine));
+        $ruleViolation->expects($this->any())
+                      ->method('getEndLine')
+                      ->will($this->returnValue($endLine));
+
+        return $ruleViolation;
     }
 
     /**

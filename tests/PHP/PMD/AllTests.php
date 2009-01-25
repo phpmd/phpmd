@@ -52,6 +52,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once dirname(__FILE__) . '/ReportTest.php';
 require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
 require_once dirname(__FILE__) . '/Rule/AllTests.php';
 
@@ -87,6 +88,7 @@ class PHP_PMD_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
 
+        $suite->addTestSuite('PHP_PMD_ReportTest');
         $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest'); 
 
         $suite->addTest(PHP_PMD_Rule_AllTests::suite());
