@@ -100,12 +100,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric, $value = null)
     {
-        include_once 'PHP/Depend/Code/Class.php';
         include_once 'PHP/PMD/Node/Class.php';
 
-        $node = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
-
-        $class = $this->getMock('PHP_PMD_Node_Class', array(), array($node));
+        $class = $this->getMock('PHP_PMD_Node_Class', array(), array(null), '', false);
         $class->expects($this->atLeastOnce())
               ->method('getMetric')
               ->with($this->equalTo($metric))
@@ -124,12 +121,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function getMethodMock($metric, $value = null)
     {
-        include_once 'PHP/Depend/Code/Method.php';
         include_once 'PHP/PMD/Node/Method.php';
 
-        $node = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
-
-        $method = $this->getMock('PHP_PMD_Node_Method', array(), array($node));
+        $method = $this->getMock('PHP_PMD_Node_Method', array(), array(null), '', false);
         $method->expects($this->atLeastOnce())
                ->method('getMetric')
                ->with($this->equalTo($metric))
