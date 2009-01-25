@@ -166,6 +166,27 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked rule-set instance.
+     *
+     * @param string $expectedClass Optional class name for apply() expected at
+     *                              least once.
+     *
+     * @return PHP_PMD_RuleSet
+     */
+    protected function getRuleSetMock($expectedClass = null)
+    {
+        $ruleSet = $this->getMock('PHP_PMD_RuleSet');
+        if ($expectedClass === null) {
+            $ruleSet->expects($this->never())->method('apply');
+        } else {
+            $ruleSet->expects($this->atLeastOnce())
+                    ->method('apply')
+                    ->with($this->isInstanceOf($expectedClass));
+        }
+        return $ruleSet;
+    }
+
+    /**
      * Creates a mocked rul violation instance.
      *
      * @param string  $fileName  The source code filename.
