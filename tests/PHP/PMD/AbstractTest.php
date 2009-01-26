@@ -235,6 +235,33 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Asserts the actual xml output matches against the expected file.
+     *
+     * @param string $actualOutput     Generated xml output.
+     * @param string $expectedFileName File with expected xml result.
+     *
+     * @return void
+     */
+    public static function assertXmlEquals($actualOutput, $expectedFileName)
+    {
+        $actual = simplexml_load_string($actualOutput);
+        // Remove dynamic timestamp and duration attribute
+        if (isset($actual['timestamp'])) {
+            $actual['timestamp'] = '';
+        }
+        if (isset($actual['duration'])) {
+            $actual['duration'] = '';
+        }
+
+        $expected = file_get_contents(self::createFileUri($expectedFileName));
+
+        self::assertXmlStringEqualsXmlString(
+            str_replace(array(" ", "\n", "\r", "\t"), '', $expected),
+            str_replace(array(" ", "\n", "\r", "\t"), '', $actual->saveXML())
+        );
+    }
+
+    /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
      *

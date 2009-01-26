@@ -45,22 +45,14 @@
  * @link      http://www.pdepend.org/pmd
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_AllTests::main');
-}
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
-require_once dirname(__FILE__) . '/PMDTest.php';
-require_once dirname(__FILE__) . '/ReportTest.php';
-require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
-require_once dirname(__FILE__) . '/Adapter/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Rule/AllTests.php';
+require_once 'PHP/PMD.php';
+require_once 'PHP/PMD/RuleSetFactory.php';
+require_once 'PHP/PMD/Renderer/XMLRenderer.php';
 
 /**
- * Main test suite for the complete PHP_PMD application.
+ * Test case for the main PHP_PMD class.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -70,40 +62,41 @@ require_once dirname(__FILE__) . '/Rule/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.pdepend.org/pmd
  */
-class PHP_PMD_AllTests
+class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Test suite main method.
-     * 
+     * Includes the write stub class.
+     *
      * @return void
      */
-    public static function main()
+    protected function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
+        parent::setUp();
 
-    /**
-     * Creates a phpunit test suite.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
+        // Import writer stub
+        include_once self::createFileUri('stubs/WriterStub.php');
+    }
+    
+    public function testRunWithDefaultSettings()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
+        self::changeWorkingDirectory();
 
-        $suite->addTestSuite('PHP_PMD_PMDTest');
-        $suite->addTestSuite('PHP_PMD_ReportTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest'); 
+        $writer = new PHP_PMD_Stubs_WriterStub();
 
-        $suite->addTest(PHP_PMD_Adapter_AllTests::suite());
-        $suite->addTest(PHP_PMD_Renderer_AllTests::suite());
-        $suite->addTest(PHP_PMD_Rule_AllTests::suite());
+        $inputPath = self::createFileUri('source');
+        $ruleSetFactory = new PHP_PMD_RuleSetFactory();
+        $ruleSets = 'pmd-refset1';
 
-        return $suite;
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter($writer);
+
+        $renderers = array($renderer);
+
+        $phpmd = new PHP_PMD();
+
+        $phpmd->processFiles($inputPath, $ruleSets, $renderers, $ruleSetFactory);
+
+        echo $writer->getData();
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_PMD_AllTests::main') {
-    PHP_PMD_AllTests::main();
 }
 ?>

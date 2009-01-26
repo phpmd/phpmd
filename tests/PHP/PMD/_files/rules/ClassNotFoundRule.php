@@ -1,0 +1,3 @@
+<?php
+// Nothing, no class :-)
+?>

@@ -138,7 +138,7 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
         usleep(50000); // 50 Milli Seconds
         $report->end();
 
-        $time = (microtime(true) - $start) * 1000.0;
+        $time = ceil((microtime(true) - $start) * 1000.0);
 
         $this->assertGreaterThanOrEqual(50.0, $report->getElapsedTimeInMillis());
         $this->assertLessThanOrEqual($time, $report->getElapsedTimeInMillis());

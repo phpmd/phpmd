@@ -9,7 +9,7 @@
     <rule name="ClassNotFoundRule"
           since="0.1"
           message="Test message"
-          class="TestRules_ClassNotFoundRule"
+          class="rules_ClassNotFoundRule"
           externalInfoUrl="http://phpmd.org/">
     </rule>
 </ruleset>

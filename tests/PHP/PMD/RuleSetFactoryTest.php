@@ -264,7 +264,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 
         $this->setExpectedException(
             'PHP_PMD_RuleClassFileNotFoundException',
-            'Cannot load source file for class: TestRules_ClassFileNotFoundRule'
+            'Cannot load source file for class: rules_ClassFileNotFoundRule'
         );
 
         $factory->createRuleSets($fileName);
@@ -283,7 +283,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 
         $this->setExpectedException(
             'PHP_PMD_RuleClassNotFoundException',
-            'Cannot find rule class: TestRules_ClassNotFoundRule'
+            'Cannot find rule class: rules_ClassNotFoundRule'
         );
 
         $factory->createRuleSets($fileName);

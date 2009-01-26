@@ -105,16 +105,7 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
-        $actual = simplexml_load_string($writer->getData());
-        // Remove dynamic timestamp attribute
-        $actual['timestamp'] = '';
-
-        $expected = file_get_contents(self::createFileUri('renderer/xml_renderer_expected1.xml'));
-
-        $this->assertXmlStringEqualsXmlString(
-            str_replace(array(" ", "\n", "\r", "\t"), '', $expected),
-            str_replace(array(" ", "\n", "\r", "\t"), '', $actual->saveXML())
-        );
+        $this->assertXmlEquals($writer->getData(), 'renderer/xml_renderer_expected1.xml');
     }
 }
 ?>
