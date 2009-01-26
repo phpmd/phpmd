@@ -107,7 +107,7 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
 
         $actual = simplexml_load_string($writer->getData());
         // Remove dynamic timestamp attribute
-        unset($actual['timestamp']);
+        $actual['timestamp'] = '';
 
         $expected = file_get_contents(self::createFileUri('renderer/xml_renderer_expected1.xml'));
 
