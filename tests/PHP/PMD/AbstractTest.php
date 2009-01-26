@@ -192,12 +192,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string  $fileName  The source code filename.
      * @param integer $beginLine The first line where the violation context begins.
      * @param integer $endLine   The last line where the violation context ends.
+     * @param object  $rule      A rule instance to return.
      *
      * @return PHP_PMD_RuleViolation
      */
     protected function getRuleViolationMock($fileName = '/foo/bar.php',
                                             $beginLine = 23,
-                                            $endLine = 42)
+                                            $endLine = 42,
+                                            $rule = null)
     {
         include_once 'PHP/PMD/RuleViolation.php';
 
@@ -207,6 +209,15 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
                                          '',
                                          false);
 
+        if ($rule === null) {
+            include_once self::createFileUri('stubs/RuleStub.php');
+
+            $rule = new PHP_PMD_Stubs_RuleStub();
+        }
+
+        $ruleViolation->expects($this->any())
+                      ->method('getRule')
+                      ->will($this->returnValue($rule));
         $ruleViolation->expects($this->any())
                       ->method('getFileName')
                       ->will($this->returnValue($fileName));
