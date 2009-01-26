@@ -165,7 +165,7 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
         if ($value === null || trim($value) === '') {
             return;
         }
-        $this->getWriter()->write(' ' . $attr . '"' . $value . '"');
+        $this->getWriter()->write(' ' . $attr . '="' . $value . '"');
     }
 }
 ?>
