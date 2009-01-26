@@ -254,6 +254,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $expected = file_get_contents(self::createFileUri($expectedFileName));
+        $expected = str_replace('#{rootDirectory}', dirname(__FILE__), $expected);
 
         self::assertXmlStringEqualsXmlString(
             str_replace(array(" ", "\n", "\r", "\t"), '', $expected),

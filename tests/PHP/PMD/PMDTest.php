@@ -76,27 +76,28 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         // Import writer stub
         include_once self::createFileUri('stubs/WriterStub.php');
     }
-    
-    public function testRunWithDefaultSettings()
+
+    /**
+     * Tests the main PHP_PMD interface with default settings an a xml-renderer.
+     *
+     * @return void
+     */
+    public function testRunWithDefaultSettingsAndXmlRenderer()
     {
         self::changeWorkingDirectory();
 
         $writer = new PHP_PMD_Stubs_WriterStub();
 
-        $inputPath = self::createFileUri('source');
-        $ruleSetFactory = new PHP_PMD_RuleSetFactory();
-        $ruleSets = 'pmd-refset1';
-
         $renderer = new PHP_PMD_Renderer_XMLRenderer();
         $renderer->setWriter($writer);
 
-        $renderers = array($renderer);
-
         $phpmd = new PHP_PMD();
+        $phpmd->processFiles(self::createFileUri('source'),
+                             'pmd-refset1',
+                             $renderers = array($renderer),
+                             new PHP_PMD_RuleSetFactory());
 
-        $phpmd->processFiles($inputPath, $ruleSets, $renderers, $ruleSetFactory);
-
-        echo $writer->getData();
+        $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
     }
 }
 ?>
