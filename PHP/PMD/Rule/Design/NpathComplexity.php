@@ -82,8 +82,8 @@ class PHP_PMD_Rule_Design_NpathComplexity
         if ($npath < $this->getIntProperty('minimum')) {
             return;
         }
-        
-        $this->addViolation($node, array($node->getType(), 
+
+        $this->addViolation($node, array($node->getType(),
                                          $node->getName(),
                                          $npath));
     }

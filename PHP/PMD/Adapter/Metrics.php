@@ -113,16 +113,6 @@ class PHP_PMD_Adapter_Metrics
     }
 
     /**
-     * Returns the violation report used by the rule-set.
-     *
-     * @return PHP_PMD_Report
-     */
-    public function getReport()
-    {
-        return $this->_report;
-    }
-
-    /**
      * Sets the violation report used by the rule-set.
      *
      * @param PHP_PMD_Report $report The violation report to use.
