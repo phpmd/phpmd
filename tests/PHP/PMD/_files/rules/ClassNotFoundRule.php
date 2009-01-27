@@ -1,3 +1,3 @@
 <?php
-// Nothing, no class :-)
+// Nothing, no class :-) 
 ?>
