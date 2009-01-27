@@ -1,3 +1,5 @@
 nbproject
 catalog.xml
 .settings
+.buildpath
+.project
