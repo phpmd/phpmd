@@ -3,7 +3,7 @@
 
 // PEAR installation workaround
 if (strpos('@package_version@', '@package_version') === 0) {
-    set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+    set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . PATH_SEPARATOR . dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'pdepend');
 }
 
 // Check php setup for cli arguments
