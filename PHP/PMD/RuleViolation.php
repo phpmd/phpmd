@@ -88,13 +88,6 @@ class PHP_PMD_RuleViolation
     private $_methodName = null;
 
     /**
-     * The name of a field or <b>null</b> when this violation has no field context.
-     *
-     * @var string $_fieldName
-     */
-    private $_fieldName = null;
-
-    /**
      * The name of a function or <b>null</b> when this violation has no function
      * context.
      *
@@ -109,10 +102,11 @@ class PHP_PMD_RuleViolation
      * @param PHP_PMD_AbstractNode $node             The source node of evil.
      * @param string               $violationMessage The error/report message.
      */
-    public function __construct(PHP_PMD_AbstractRule $rule,
-                                PHP_PMD_AbstractNode $node,
-                                $violationMessage)
-    {
+    public function __construct(
+        PHP_PMD_AbstractRule $rule,
+        PHP_PMD_AbstractNode $node,
+        $violationMessage
+    ) {
         $this->_rule        = $rule;
         $this->_node        = $node;
         $this->_description = $violationMessage;
@@ -220,4 +214,3 @@ class PHP_PMD_RuleViolation
         return $this->_functionName;
     }
 }
-?>
