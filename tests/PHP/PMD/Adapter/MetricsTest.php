@@ -230,4 +230,3 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
         return $file;
     }
 }
-?>

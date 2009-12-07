@@ -100,4 +100,3 @@ class PHP_PMD_Rule_AllTests
 if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_AllTests::main') {
     PHP_PMD_Rule_AllTests::main();
 }
-?>

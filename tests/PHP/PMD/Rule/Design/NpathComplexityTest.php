@@ -115,4 +115,3 @@ class PHP_PMD_Rule_Design_NpathComplexityTest extends PHP_PMD_AbstractTest
         $rule->apply($method);
     }
 }
-?>

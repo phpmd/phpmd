@@ -239,7 +239,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      */
-    public function testCreateRuleSetsFailsWithExpectedExceptionForInvalidIdentifier()
+    public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
     {
         $factory = new PHP_PMD_RuleSetFactory();
 
@@ -257,7 +257,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      */
-    public function testCreateRuleSetFailsWithExpectedExceptionWhenClassFileNotInIncludePath()
+    public function testCreateRuleSetThrowsExceptionWhenClassFileNotInIncludePath()
     {
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
         $factory  = new PHP_PMD_RuleSetFactory();
@@ -276,7 +276,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      */
-    public function testCreateRuleSetFailsWithExpectedExceptionWhenFileDoesNotContainExpectedClass()
+    public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory  = new PHP_PMD_RuleSetFactory();
@@ -289,4 +289,3 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         $factory->createRuleSets($fileName);
     }
 }
-?>

@@ -100,4 +100,3 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
     }
 }
-?>

@@ -101,4 +101,3 @@ class PHP_PMD_Rule_Design_AllTests
 if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Rule_Design_AllTests::main') {
     PHP_PMD_Rule_Design_AllTests::main();
 }
-?>

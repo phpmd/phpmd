@@ -106,4 +106,3 @@ class PHP_PMD_AllTests
 if (PHPUnit_MAIN_METHOD === 'PHP_PMD_AllTests::main') {
     PHP_PMD_AllTests::main();
 }
-?>

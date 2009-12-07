@@ -144,4 +144,3 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
         $this->assertLessThanOrEqual($time, $report->getElapsedTimeInMillis());
     }
 }
-?>
