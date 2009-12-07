@@ -69,4 +69,3 @@ class PHP_PMD_RuleClassFileNotFoundException extends RuntimeException
         parent::__construct('Cannot load source file for class: ' . $className);
     }
 }
-?>

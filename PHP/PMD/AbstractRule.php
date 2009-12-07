@@ -388,9 +388,10 @@ abstract class PHP_PMD_AbstractRule
      *
      * @return void
      */
-    protected function addViolation(PHP_PMD_AbstractNode $node,
-                                    array $args = array())
-    {
+    protected function addViolation(
+        PHP_PMD_AbstractNode $node,
+        array $args = array()
+    ) {
         $search  = array();
         $replace = array();
         foreach ($args as $index => $value) {
@@ -414,4 +415,3 @@ abstract class PHP_PMD_AbstractRule
      */
     public abstract function apply(PHP_PMD_AbstractNode $node);
 }
-?>

@@ -405,4 +405,3 @@ class PHP_PMD_RuleSetFactory
         }
     }
 }
-?>

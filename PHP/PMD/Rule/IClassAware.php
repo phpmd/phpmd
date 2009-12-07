@@ -61,4 +61,3 @@
 interface PHP_PMD_Rule_IClassAware
 {
 }
-?>

@@ -298,4 +298,3 @@ class PHP_PMD_TextUI_CommandLineOptions
                'ignore directories' . PHP_EOL;
     }
 }
-?>

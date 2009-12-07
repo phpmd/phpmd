@@ -68,4 +68,3 @@ class PHP_PMD_RuleClassNotFoundException extends RuntimeException
         parent::__construct('Cannot find rule class: ' . $className);
     }
 }
-?>

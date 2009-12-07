@@ -260,4 +260,3 @@ class PHP_PMD_Adapter_Metrics
         $node->setMetrics($metrics);
     }
 }
-?>

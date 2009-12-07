@@ -116,4 +116,3 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
         fwrite($this->_stream, $data);
     }
 }
-?>

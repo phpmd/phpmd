@@ -113,4 +113,3 @@ abstract class PHP_PMD_AbstractRenderer
      */
     public abstract function end();
 }
-?>

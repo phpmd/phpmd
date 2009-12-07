@@ -89,4 +89,3 @@ class PHP_PMD_Rule_Design_LongMethod
         $this->addViolation($node, array($type, $node->getName(), $loc));
     }
 }
-?>

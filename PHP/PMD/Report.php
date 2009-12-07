@@ -155,4 +155,3 @@ class PHP_PMD_Report
         return round($this->_endTime - $this->_startTime);
     }
 }
-?>

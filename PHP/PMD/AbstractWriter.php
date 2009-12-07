@@ -67,4 +67,3 @@ abstract class PHP_PMD_AbstractWriter
      */
     public abstract function write($data);
 }
-?>

@@ -84,4 +84,3 @@ class PHP_PMD_Rule_Design_LongParameterList
         $this->addViolation($node);
     }
 }
-?>

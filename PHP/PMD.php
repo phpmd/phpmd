@@ -123,11 +123,12 @@ final class PHP_PMD
      *
      * @return void
      */
-    public function processFiles($inputPath, 
-                                 $ruleSets,
-                                 array $renderers,
-                                 PHP_PMD_RuleSetFactory $ruleSetFactory)
-    {
+    public function processFiles(
+        $inputPath,
+        $ruleSets,
+        array $renderers,
+        PHP_PMD_RuleSetFactory $ruleSetFactory
+    ) {
         $ruleSets = $ruleSetFactory->createRuleSets($ruleSets);
 
         $report = new PHP_PMD_Report();
@@ -185,4 +186,3 @@ final class PHP_PMD
         return $pdepend;
     }
 }
-?>

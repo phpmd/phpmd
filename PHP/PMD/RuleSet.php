@@ -285,4 +285,3 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         return $this->getRules();
     }
 }
-?>

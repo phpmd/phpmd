@@ -68,4 +68,3 @@ class PHP_PMD_RuleSetNotFoundException extends RuntimeException
         parent::__construct('Cannot find specified rule-set "' . $ruleSet . '".');
     }
 }
-?>
