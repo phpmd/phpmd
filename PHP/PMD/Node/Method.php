@@ -63,13 +63,6 @@ require_once 'PHP/PMD/Node/AbstractMethodOrFunction.php';
 class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
 {
     /**
-     * The wrapped method instance.
-     *
-     * @var PHP_Depend_Code_Method $_method
-     */
-    private $_method = null;
-
-    /**
      * Constructs a new method wrapper.
      *
      * @param PHP_Depend_Code_Method $node The wrapped method object.
@@ -77,8 +70,6 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
     public function __construct(PHP_Depend_Code_Method $node)
     {
         parent::__construct($node);
-
-        $this->_method = $node;
     }
 
     /**
@@ -88,7 +79,7 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
      */
     public function getPackageName()
     {
-        return $this->_method->getParent()->getPackage()->getName();
+        return $this->getNode()->getParent()->getPackage()->getName();
     }
 
     /**
@@ -99,7 +90,6 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
      */
     public function getParentName()
     {
-        return $this->_method->getParent()->getName();
+        return $this->getNode()->getParent()->getName();
     }
 }
-?>

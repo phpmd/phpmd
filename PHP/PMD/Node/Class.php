@@ -63,13 +63,6 @@ require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
 class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
 {
     /**
-     * The wrapped PHP_Depend class object.
-     *
-     * @var PHP_Depend_Code_Class $_class
-     */
-    private $_class = null;
-
-    /**
      * Constructs a new class wrapper node.
      *
      * @param PHP_Depend_Code_Class $node The wrapped class object.
@@ -77,8 +70,6 @@ class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
     public function __construct(PHP_Depend_Code_Class $node)
     {
         parent::__construct($node);
-
-        $this->_class = $node;
     }
 
     /**
@@ -88,7 +79,6 @@ class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
      */
     public function getPropertyCount()
     {
-        return $this->_class->getProperties()->count();
+        return $this->getNode()->getProperties()->count();
     }
 }
-?>

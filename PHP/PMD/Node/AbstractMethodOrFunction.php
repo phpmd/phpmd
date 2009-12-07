@@ -63,13 +63,6 @@ require_once 'PHP/PMD/AbstractNode.php';
 abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNode
 {
     /**
-     * The wrapped callable instance.
-     *
-     * @var PHP_Depend_Code_AbstractCallable $_callable
-     */
-    private $_callable = null;
-
-    /**
      * Constructs a new callable wrapper.
      *
      * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
@@ -77,8 +70,6 @@ abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNod
     public function __construct(PHP_Depend_Code_AbstractCallable $node)
     {
         parent::__construct($node);
-
-        $this->_callable = $node;
     }
 
     /**
@@ -88,7 +79,6 @@ abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNod
      */
     public function getParameterCount()
     {
-        return $this->_callable->getParameters()->count();
+        return $this->getNode()->getParameters()->count();
     }
 }
-?>

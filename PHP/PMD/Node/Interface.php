@@ -72,4 +72,3 @@ class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractClassOrInterface
         return 0;
     }
 }
-?>

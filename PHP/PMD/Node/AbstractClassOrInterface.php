@@ -63,13 +63,6 @@ require_once 'PHP/PMD/AbstractNode.php';
 abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNode
 {
     /**
-     * The wrapped abstract type node.
-     *
-     * @var PHP_Depend_Code_AbstractType $_type 
-     */
-    private $_type = null;
-
-    /**
      * Constructs a new generic class or interface node.
      *
      * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
@@ -77,8 +70,6 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
     public function __construct(PHP_Depend_Code_AbstractType $node)
     {
         parent::__construct($node);
-
-        $this->_type = $node;
     }
 
     /**
@@ -88,7 +79,7 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      */
     public function getMethodCount()
     {
-        return $this->_type->getMethods()->count();
+        return $this->getNode()->getMethods()->count();
     }
 
     /**
@@ -98,7 +89,7 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      */
     public function getConstantCount()
     {
-        return $this->_type->getConstants()->count();
+        return $this->getNode()->getConstants()->count();
     }
 
     /**
@@ -108,7 +99,7 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      */
     public function getPackageName()
     {
-        return $this->_type->getPackage()->getName();
+        return $this->getNode()->getPackage()->getName();
     }
 
     /**
@@ -129,4 +120,3 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
      */
     public abstract function getPropertyCount();
 }
-?>

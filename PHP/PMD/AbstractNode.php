@@ -199,4 +199,3 @@ abstract class PHP_PMD_AbstractNode
      */
     public abstract function getPackageName();
 }
-?>
