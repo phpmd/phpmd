@@ -444,6 +444,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_RuleSetFactory
+     * @covers PHP_PMD_RuleSetNotFoundException
      * @group phpmd
      * @group unittest
      */
@@ -465,6 +466,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_RuleSetFactory
+     * @covers PHP_PMD_RuleClassFileNotFoundException
      * @group phpmd
      * @group unittest
      */
@@ -487,6 +489,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_RuleSetFactory
+     * @covers PHP_PMD_RuleClassNotFoundException
      * @group phpmd
      * @group unittest
      */
