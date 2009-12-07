@@ -83,9 +83,13 @@ class PHP_PMD_Rule_Design_NpathComplexity
             return;
         }
 
-        $this->addViolation($node, array($node->getType(),
-                                         $node->getName(),
-                                         $npath));
+        $this->addViolation(
+            $node,
+            array(
+                $node->getType(),
+                $node->getName(),
+                $npath
+            )
+        );
     }
 }
-?>

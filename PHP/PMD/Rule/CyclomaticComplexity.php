@@ -86,4 +86,3 @@ class PHP_PMD_Rule_CyclomaticComplexity
         $this->addViolation($node, array($node->getType(), $node->getName(), $ccn));
     }
 }
-?>
