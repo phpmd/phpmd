@@ -63,132 +63,293 @@ require_once 'PHP/PMD/RuleSetFactory.php';
 class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Tests that the factory creates a rule-set instance for qualified filename.
+     * testCreateRuleSetsReturnsArray
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateSingleRuleSetForQualifiedFileName()
+    public function testCreateRuleSetsReturnsArray()
     {
-        $fileName = self::createFileUri('rulesets/set1.xml');
-        $factory  = new PHP_PMD_RuleSetFactory();
-
-        $ruleSets = $factory->createRuleSets($fileName);
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         $this->assertType('array', $ruleSets);
-        $this->assertSame(1, count($ruleSets));
-
-        $ruleSet = $ruleSets[0];
-        $this->assertType('PHP_PMD_RuleSet', $ruleSet);
-        $this->assertSame('First Test RuleSet', $ruleSet->getName());
-        $this->assertSame('First description...', $ruleSet->getDescription());
     }
 
     /**
-     * Tests that the factory creates two rule-sets for qualfieid filenames.
+     * testCreateRuleSetsForSingleFileReturnsArrayWithOneElement
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateTwoRuleSetsForQualifiedFileNames()
+    public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement()
     {
-        $fileName1 = self::createFileUri('rulesets/set1.xml');
-        $fileName2 = self::createFileUri('rulesets/set2.xml');
-        $fileNames = $fileName1 . ',' . $fileName2;
-        
-        $factory  = new PHP_PMD_RuleSetFactory();
-
-        $ruleSets = $factory->createRuleSets($fileNames);
-        $this->assertType('array', $ruleSets);
-        $this->assertSame(2, count($ruleSets));
-
-        $ruleSet1 = $ruleSets[0];
-        $this->assertType('PHP_PMD_RuleSet', $ruleSet1);
-        $this->assertSame('First Test RuleSet', $ruleSet1->getName());
-        $this->assertSame('First description...', $ruleSet1->getDescription());
-
-        $ruleSet2 = $ruleSets[1];
-        $this->assertType('PHP_PMD_RuleSet', $ruleSet2);
-        $this->assertSame('Second Test RuleSet', $ruleSet2->getName());
-        $this->assertSame('Second description...', $ruleSet2->getDescription());
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $this->assertEquals(1, count($ruleSets));
     }
 
     /**
-     * Tests that the factory detects rule set file in the current working
-     * directory.
+     * testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetForCustomFileName()
+    public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance()
     {
-        self::changeWorkingDirectory();
-
-        $factory  = new PHP_PMD_RuleSetFactory();
-        $ruleSets = $factory->createRuleSets('rulesets/set1.xml');
-
-        $this->assertType('array', $ruleSets);
-        $this->assertSame(1, count($ruleSets));
-        $this->assertSame('First Test RuleSet', $ruleSets[0]->getName());
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $this->assertType('PHP_PMD_RuleSet', $ruleSets[0]);
     }
 
     /**
-     * Tests that the factory handles a referenced rule@ref attribute correct.
+     * testCreateRuleSetsConfiguresExpectedRuleSetName
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetWithRuleSetReferenceNodes()
+    public function testCreateRuleSetsConfiguresExpectedRuleSetName()
     {
-        self::changeWorkingDirectory();
-        $fileName = self::createFileUri('rulesets/refset1.xml');
-
-        $factory  = new PHP_PMD_RuleSetFactory();
-        $ruleSets = $factory->createRuleSets($fileName);
-
-        $this->assertType('array', $ruleSets);
-        $this->assertSame(1, count($ruleSets));
-        $this->assertSame('First Test RuleSet', $ruleSets[0]->getName());
-
-        $count = 0;
-        foreach ($ruleSets[0]->getRules() as $rule) {
-            $this->assertType('PHP_PMD_AbstractRule', $rule);
-            ++$count;
-        }
-        $this->assertSame(4, $count);
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
     }
 
     /**
-     * Tests that the factory handles a referenced rule@ref attribute correct.
+     * testCreateRuleSetsConfiguresExpectedRuleSetName
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetWithRuleReferenceNodes()
+    public function testCreateRuleSetsConfiguresExpectedRuleSetDescription()
     {
-        self::changeWorkingDirectory();
-        $fileName = self::createFileUri('rulesets/refset2.xml');
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $this->assertEquals('First description...', $ruleSets[0]->getDescription());
+    }
 
-        $factory  = new PHP_PMD_RuleSetFactory();
-        $ruleSets = $factory->createRuleSets($fileName);
-
-        $this->assertType('array', $ruleSets);
-        $this->assertSame(1, count($ruleSets));
-        $this->assertSame('Second Test RuleSet', $ruleSets[0]->getName());
-
-        $expectedRules = array(
-            'RuleTwoInFirstRuleSet'   =>  true,
-            'RuleOneInSecondRuleSet'  =>  true
+    /**
+     * testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements()
+    {
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+            'rulesets/set1.xml',
+            'rulesets/set2.xml'
         );
-        foreach ($ruleSets[0]->getRules() as $rule) {
-            $this->assertType('PHP_PMD_AbstractRule', $rule);
-            $this->assertArrayHasKey($rule->getName(), $expectedRules);
+        $this->assertEquals(2, count($ruleSets));
+    }
 
-            unset($expectedRules[$rule->getName()]);
+    /**
+     * testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances()
+    {
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+            'rulesets/set1.xml',
+            'rulesets/set2.xml'
+        );
+        $this->assertType('PHP_PMD_RuleSet', $ruleSets[0]);
+        $this->assertType('PHP_PMD_RuleSet', $ruleSets[1]);
+    }
+
+    /**
+     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames()
+    {
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+            'rulesets/set1.xml',
+            'rulesets/set2.xml'
+        );
+        $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        $this->assertEquals('Second Test RuleSet', $ruleSets[1]->getName());
+    }
+
+    /**
+     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions()
+    {
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+            'rulesets/set1.xml',
+            'rulesets/set2.xml'
+        );
+        $this->assertSame('First description...', $ruleSets[0]->getDescription());
+        $this->assertSame('Second description...', $ruleSets[1]->getDescription());
+    }
+
+    /**
+     * testCreateRuleSetsForSingleLocalFileNameReturnsArray
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForLocalFileNameReturnsArray()
+    {
+        self::changeWorkingDirectory();
+        
+        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $this->assertType('array', $ruleSets);
+    }
+
+    /**
+     * testCreateRuleSetsForSingleLocalFileNameReturnsArrayWithOneElement
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $this->assertEquals(1, count($ruleSets));
+    }
+
+    /**
+     * testCreateRuleSetsForSingleLocalFileNameConfiguresExpectedRuleSetName
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsForLocalFileNameConfiguresExpectedRuleSetName()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+    }
+
+    /**
+     * testCreateRuleSetsWithReferenceContainsExpectedRuleSet
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithReferenceContainsExpectedRuleSet()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+    }
+
+    /**
+     * testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $this->assertEquals(4, iterator_count($ruleSets[0]));
+    }
+
+    /**
+     * testCreateRuleSetsForLocalFileWithRuleSetReferenceNodes
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithReferenceContainsRuleInstances()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $this->assertType('PHP_PMD_AbstractRule', $ruleSets[0]->getRules()->current());
+    }
+
+    /**
+     * testCreateRuleSetsWithReferenceContainsExpectedRules
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithReferenceContainsExpectedRules()
+    {
+        self::changeWorkingDirectory();
+
+        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset2.xml');
+
+        $actual   = array();
+        $expected = array('RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet');
+        
+        foreach ($ruleSets[0]->getRules() as $rule) {
+            $actual[] = $rule->getName();
         }
-        $this->assertSame(0, count($expectedRules));
+        
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * testCreateSingleRuleSetReturnsRuleSetInstance
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateSingleRuleSetReturnsRuleSetInstance()
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new PHP_PMD_RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet('set1');
+        
+        $this->assertType('PHP_PMD_RuleSet', $ruleSet);
     }
 
     /**
      * Tests that the rule-set factory applies a set priority filter correct.
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetWithSpecifiedPriority()
+    public function testCreateRuleSetWithSpecifiedPriorityOnlyContainsMatchingRules()
     {
         self::changeWorkingDirectory();
 
@@ -196,41 +357,85 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         $factory->setMinimumPriority(2);
 
         $ruleSet = $factory->createSingleRuleSet('set1');
-        $this->assertType('PHP_PMD_RuleSet', $ruleSet);
-
-        $count = 0;
-        foreach ($ruleSet as $rule) {
-            ++$count;
-        }
-        $this->assertSame(1, $count);
+        $this->assertSame(1, iterator_count($ruleSet->getRules()));
     }
 
     /**
-     * Tests that you can overwrite settings like description, priority etc. for
-     * included rules.
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetWithRuleReferenceThatOverwritesSettings()
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting()
     {
         self::changeWorkingDirectory();
 
         $factory  = new PHP_PMD_RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset3');
 
-        $this->assertType('array', $ruleSets);
-        $this->assertSame(1, count($ruleSets));
-        $this->assertSame('Third Test RuleSet', $ruleSets[0]->getName());
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertSame(-42, $rule->getPriority());
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        $this->assertType('PHP_PMD_AbstractRule', $rule);
-        $this->assertSame(-42, $rule->getPriority());
         $this->assertSame('description 42', $rule->getDescription());
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset3');
+
+        $rule = $ruleSets[0]->getRules()->current();
         $this->assertSame(42, $rule->getIntProperty('foo'));
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset3');
+
+        $rule = $ruleSets[0]->getRules()->current();
 
         $examples = $rule->getExamples();
-        $this->assertSame(1, count($examples));
-        $this->assertSame('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
+        $this->assertEquals('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
     }
 
     /**
@@ -238,6 +443,9 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * identifier.
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
     {
@@ -256,8 +464,11 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * for the configured rule does not exist.
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
-    public function testCreateRuleSetThrowsExceptionWhenClassFileNotInIncludePath()
+    public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
         $factory  = new PHP_PMD_RuleSetFactory();
@@ -275,6 +486,9 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * cannot be found.
      *
      * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
@@ -287,5 +501,37 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         );
 
         $factory->createRuleSets($fileName);
+    }
+
+    /**
+     * Invokes the <b>createRuleSets()</b> of the {@link PHP_PMD_RuleSetFactory}
+     * class.
+     *
+     * @param string $file At least one rule configuration file name. You can
+     *        also pass multiple parameters with ruleset configuration files.
+     *
+     * @return array(PHP_PMD_RuleSet)
+     */
+    private function _createRuleSetsFromAbsoluteFiles($file)
+    {
+        $files = func_get_args();
+        $files = array_map(array(__CLASS__, 'createFileUri'), $files);
+
+        return call_user_func_array(array($this, '_createRuleSetsFromFiles'), $files);
+    }
+
+    /**
+     * Invokes the <b>createRuleSets()</b> of the {@link PHP_PMD_RuleSetFactory}
+     * class.
+     *
+     * @param string $file At least one rule configuration file name. You can
+     *        also pass multiple parameters with ruleset configuration files.
+     *
+     * @return array(PHP_PMD_RuleSet)
+     */
+    private function _createRuleSetsFromFiles($file)
+    {
+        $factory = new PHP_PMD_RuleSetFactory();
+        return $factory->createRuleSets(join(',', func_get_args()));
     }
 }

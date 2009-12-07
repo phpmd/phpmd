@@ -92,10 +92,12 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         $renderer->setWriter($writer);
 
         $phpmd = new PHP_PMD();
-        $phpmd->processFiles(self::createFileUri('source'),
-                             'pmd-refset1',
-                             $renderers = array($renderer),
-                             new PHP_PMD_RuleSetFactory());
+        $phpmd->processFiles(
+            self::createFileUri('source'),
+            'pmd-refset1',
+            $renderers = array($renderer),
+            new PHP_PMD_RuleSetFactory()
+        );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
     }

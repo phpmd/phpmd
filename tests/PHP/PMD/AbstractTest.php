@@ -277,11 +277,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         // Check pear installation
         if (strpos('@package_version@', '@package_version') === 0) {
-            $include .= PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../../');
+            $include .= PATH_SEPARATOR . 
+                        realpath(dirname(__FILE__) . '/../../../') .
+                        PATH_SEPARATOR .
+                        realpath(dirname(__FILE__) . '/../../../lib/pdepend');
         }
 
         // Configure include path
-        set_include_path(get_include_path() . PATH_SEPARATOR . $include);
+        set_include_path($include . PATH_SEPARATOR . get_include_path());
 
         // Include PHP_PMD main file to get the whitelist directory
         include_once 'PHP/PMD.php';
