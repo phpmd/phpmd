@@ -101,10 +101,12 @@ class PHP_PMD_TextUI_Command
             $phpmd->setIgnorePattern(explode(',', $ignore));
         }
 
-        $phpmd->processFiles($opts->getInputPath(),
-                             $opts->getRuleSets(),
-                             array($renderer),
-                             $ruleSetFactory);
+        $phpmd->processFiles(
+            $opts->getInputPath(),
+            $opts->getRuleSets(),
+            array($renderer),
+            $ruleSetFactory
+        );
     }
 
     /**
@@ -129,4 +131,3 @@ class PHP_PMD_TextUI_Command
         return 0;
     }
 }
-?>
