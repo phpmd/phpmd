@@ -65,12 +65,18 @@ require_once 'PHP/PMD/RuleSetNotFoundException.php';
  */
 class PHP_PMD_RuleSetFactory
 {
+    /**
+     * The data directory set by PEAR or a dynamic property set within the class
+     * constructor.
+     *
+     * @var string
+     */
     private $_location = '@data_dir@';
 
     /**
      * The minimum priority for rules to load.
      *
-     * @var integer $_minPriority
+     * @var integer
      */
     private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
 
@@ -213,9 +219,10 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleNode(PHP_PMD_RuleSet $ruleSet,
-                                    SimpleXMLElement $node)
-    {
+    private function _parseRuleNode(
+        PHP_PMD_RuleSet $ruleSet,
+        SimpleXMLElement $node
+    ) {
         if (substr($node['ref'], -3, 3) === 'xml') {
             $this->_parseRuleSetReferenceNode($ruleSet, $node);
         } else if ('' === (string) $node['ref']) {
@@ -234,9 +241,10 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleSetReferenceNode(PHP_PMD_RuleSet $ruleSet,
-                                                SimpleXMLElement $ruleSetNode)
-    {
+    private function _parseRuleSetReferenceNode(
+        PHP_PMD_RuleSet $ruleSet,
+        SimpleXMLElement $ruleSetNode
+    ) {
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($this->_minimumPriority);
 
@@ -259,9 +267,10 @@ class PHP_PMD_RuleSetFactory
      * @throws PHP_PMD_RuleClassNotFoundException When a configured rule class
      *                                            does not exist.
      */
-    private function _parseSingleRuleNode(PHP_PMD_RuleSet $ruleSet,
-                                          SimpleXMLElement $ruleNode)
-    {
+    private function _parseSingleRuleNode(
+        PHP_PMD_RuleSet $ruleSet,
+        SimpleXMLElement $ruleNode
+    ) {
         $className = (string) $ruleNode['class'];
         $fileName  = strtr($className, '_', '/') . '.php';
 
@@ -317,9 +326,10 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleReferenceNode(PHP_PMD_RuleSet $ruleSet,
-                                             SimpleXMLElement $ruleNode)
-    {
+    private function _parseRuleReferenceNode(
+        PHP_PMD_RuleSet $ruleSet,
+        SimpleXMLElement $ruleNode
+    ) {
         $ref = (string) $ruleNode['ref'];
 
         $fileName = substr($ref, 0, strpos($ref, '.xml/') + 4);
@@ -378,9 +388,10 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parsePropertiesNode(PHP_PMD_AbstractRule $rule,
-                                          SimpleXMLElement $propertiesNode)
-    {
+    private function _parsePropertiesNode(
+        PHP_PMD_AbstractRule $rule,
+        SimpleXMLElement $propertiesNode
+    ) {
         foreach ($propertiesNode->children() as $node) {
             if ($node->getName() !== 'property') {
                 continue;
