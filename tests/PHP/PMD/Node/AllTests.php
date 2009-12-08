@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Adapter
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -48,21 +48,21 @@
 
 require_once 'PHPUnit/Framework.php';
 
-require_once dirname(__FILE__) . '/MetricsTest.php';
+//require_once dirname(__FILE__) . '/MetricsTest.php';
 
 /**
- * Main test suite for the PHP_PMD_Adapter package.
+ * Main test suite for the PHP_PMD_Node package.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Adapter
+ * @subpackage Node
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Adapter_AllTests
+class PHP_PMD_Node_AllTests
 {
     /**
      * Creates a phpunit test suite.
@@ -71,9 +71,9 @@ class PHP_PMD_Adapter_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Adapter - Tests');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Node - Tests');
 
-        $suite->addTestSuite('PHP_PMD_Adapter_MetricsTest');
+        //$suite->addTestSuite('PHP_PMD_Node_MetricsTest');
 
         return $suite;
     }

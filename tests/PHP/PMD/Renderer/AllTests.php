@@ -46,12 +46,7 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'PHP_PMD_Renderer_AllTests::main');
-}
-
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/XMLRendererTest.php';
 
@@ -70,16 +65,6 @@ require_once dirname(__FILE__) . '/XMLRendererTest.php';
 class PHP_PMD_Renderer_AllTests
 {
     /**
-     * Test suite main method.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-
-    /**
      * Creates a phpunit test suite.
      *
      * @return PHPUnit_Framework_TestSuite
@@ -92,8 +77,4 @@ class PHP_PMD_Renderer_AllTests
 
         return $suite;
     }
-}
-
-if (PHPUnit_MAIN_METHOD === 'PHP_PMD_Renderer_AllTests::main') {
-    PHP_PMD_Renderer_AllTests::main();
 }

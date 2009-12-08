@@ -16,4 +16,3 @@ class rules_TestRule
         $this->node = $node;
     }
 }
-?>

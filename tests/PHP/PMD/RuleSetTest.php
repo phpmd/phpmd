@@ -45,19 +45,15 @@
  * @link      http://www.pdepend.org/pmd
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once dirname(__FILE__) . '/PMDTest.php';
-require_once dirname(__FILE__) . '/ReportTest.php';
-require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
-require_once dirname(__FILE__) . '/RuleSetTest.php';
-require_once dirname(__FILE__) . '/Adapter/AllTests.php';
-require_once dirname(__FILE__) . '/Node/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Rule/AllTests.php';
+require_once dirname(__FILE__) . '/_files/rules/TestRule.php';
+
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/RuleSet.php';
 
 /**
- * Main test suite for the complete PHP_PMD application.
+ * Test case for the {@link PHP_PMD_RuleSet} class.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -67,27 +63,55 @@ require_once dirname(__FILE__) . '/Rule/AllTests.php';
  * @version   Release: @package_version@
  * @link      http://www.pdepend.org/pmd
  */
-class PHP_PMD_AllTests
+class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
      */
-    public static function suite()
+    public function testGetRuleByNameReturnsNullWhenNoMatchingRuleExists()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
+        $ruleSet = $this->_createRuleSetFixture();
+        $this->assertNull($ruleSet->getRuleByName(__FUNCTION__));
+    }
 
-        $suite->addTestSuite('PHP_PMD_PMDTest');
-        $suite->addTestSuite('PHP_PMD_ReportTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetTest');
+    /**
+     * testGetRuleByNameReturnsMatchingRuleInstance
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testGetRuleByNameReturnsMatchingRuleInstance()
+    {
+        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
+        $rule    = $ruleSet->getRuleByName(__CLASS__);
 
-        $suite->addTest(PHP_PMD_Adapter_AllTests::suite());
-        $suite->addTest(PHP_PMD_Node_AllTests::suite());
-        $suite->addTest(PHP_PMD_Renderer_AllTests::suite());
-        $suite->addTest(PHP_PMD_Rule_AllTests::suite());
+        $this->assertEquals(__CLASS__, $rule->getName());
+    }
 
-        return $suite;
+    /**
+     * Creates a rule set instance with a variable amount of appended rule
+     * objects.
+     *
+     * @param string $name Variable number of rule identifiers.
+     *
+     * @return PHP_PMD_AbstractRule
+     */
+    private function _createRuleSetFixture($name = null)
+    {
+        $ruleSet = new PHP_PMD_RuleSet();
+        for ($i = 0; $i < func_num_args(); ++$i) {
+            $rule = new rules_TestRule();
+            $rule->setName(func_get_arg($i));
+
+            $ruleSet->addRule($rule);
+        }
+        return $ruleSet;
     }
 }
