@@ -50,6 +50,7 @@ require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/LongClassTest.php';
 require_once dirname(__FILE__) . '/LongMethodTest.php';
+require_once dirname(__FILE__) . '/LongParameterListTest.php';
 require_once dirname(__FILE__) . '/NpathComplexityTest.php';
 
 /**
@@ -77,6 +78,7 @@ class PHP_PMD_Rule_Design_AllTests
 
         $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
         $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
+        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
         $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
 
         return $suite;

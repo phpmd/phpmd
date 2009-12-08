@@ -119,17 +119,57 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_PMD_Node_Method
      */
-    protected function getMethodMock($metric, $value = null)
+    protected function getMethodMock($metric = null, $value = null)
     {
         include_once 'PHP/PMD/Node/Method.php';
 
-        $method = $this->getMock('PHP_PMD_Node_Method', array(), array(null), '', false);
-        $method->expects($this->atLeastOnce())
-               ->method('getMetric')
-               ->with($this->equalTo($metric))
-               ->will($this->returnValue($value));
+        return $this->initFunctionOrMethod(
+            $this->getMock('PHP_PMD_Node_Method', array(), array(null), '', false),
+            $metric,
+            $value
+        );
+    }
 
-        return $method;
+    /**
+     * Creates a mocked function node instance.
+     *
+     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param mixed  $value  The expected metric return value.
+     *
+     * @return PHP_PMD_Node_Function
+     */
+    protected function createFunctionMock($metric = null, $value = null)
+    {
+        include_once 'PHP/PMD/Node/Function.php';
+
+        return $this->initFunctionOrMethod(
+            $this->getMock('PHP_PMD_Node_Function', array(), array(null), '', false),
+            $metric,
+            $value
+        );
+    }
+
+    /**
+     * Initializes the getMetric() method of the given function or methode node.
+     *
+     * @param PHP_PMD_Node_Function|PHP_PMD_Node_Method $mock   Mock instance.
+     * @param string                                    $metric Metric acronym.
+     * @param mixed                                     $value  Expected value.
+     *
+     * @return PHP_PMD_Node_Function|PHP_PMD_Node_Method
+     */
+    protected function initFunctionOrMethod($mock, $metric, $value)
+    {
+        if ($metric === null) {
+            return $mock;
+        }
+
+        $mock->expects($this->atLeastOnce())
+            ->method('getMetric')
+            ->with($this->equalTo($metric))
+            ->will($this->returnValue($value));
+
+        return $mock;
     }
 
     /**
@@ -156,11 +196,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         $report = $this->getMock('PHP_PMD_Report');
         $method = $report->expects($expects)
-                         ->method('addRuleViolation');
-
-        if ($expectedInvokes !== 0) {
-            $method->with($this->isInstanceOf('PHP_PMD_RuleViolation'));
-        }
+            ->method('addRuleViolation');
 
         return $report;
     }
@@ -196,18 +232,21 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_PMD_RuleViolation
      */
-    protected function getRuleViolationMock($fileName = '/foo/bar.php',
-                                            $beginLine = 23,
-                                            $endLine = 42,
-                                            $rule = null)
-    {
+    protected function getRuleViolationMock(
+        $fileName = '/foo/bar.php',
+        $beginLine = 23,
+        $endLine = 42,
+        $rule = null
+    ) {
         include_once 'PHP/PMD/RuleViolation.php';
 
-        $ruleViolation = $this->getMock('PHP_PMD_RuleViolation', 
-                                         array(),
-                                         array(null, null, null),
-                                         '',
-                                         false);
+        $ruleViolation = $this->getMock(
+            'PHP_PMD_RuleViolation',
+            array(),
+            array(null, null, null),
+            '',
+            false
+        );
 
         if ($rule === null) {
             include_once self::createFileUri('stubs/RuleStub.php');
@@ -216,20 +255,20 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $ruleViolation->expects($this->any())
-                      ->method('getRule')
-                      ->will($this->returnValue($rule));
+            ->method('getRule')
+            ->will($this->returnValue($rule));
         $ruleViolation->expects($this->any())
-                      ->method('getFileName')
-                      ->will($this->returnValue($fileName));
+            ->method('getFileName')
+            ->will($this->returnValue($fileName));
         $ruleViolation->expects($this->any())
-                      ->method('getBeginLine')
-                      ->will($this->returnValue($beginLine));
+            ->method('getBeginLine')
+            ->will($this->returnValue($beginLine));
         $ruleViolation->expects($this->any())
-                      ->method('getEndLine')
-                      ->will($this->returnValue($endLine));
+            ->method('getEndLine')
+            ->will($this->returnValue($endLine));
         $ruleViolation->expects($this->any())
-                      ->method('getPackageName')
-                      ->will($this->returnValue('TestStubPackage'));
+            ->method('getPackageName')
+            ->will($this->returnValue('TestStubPackage'));
 
         return $ruleViolation;
     }
