@@ -63,6 +63,40 @@ require_once 'PHP/PMD/RuleSetFactory.php';
 class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 {
     /**
+     * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory::_createRuleSetFileName
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets()
+    {
+        $factory = new PHP_PMD_RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet('codesize');
+
+        $this->assertContains('The Code Size Ruleset', $ruleSet->getDescription());
+    }
+
+    /**
+     * testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory::_createRuleSetFileName
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory()
+    {
+        self::changeWorkingDirectory('rulesets');
+
+        $factory = new PHP_PMD_RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet('set1.xml');
+
+        $this->assertEquals('First description...', $ruleSet->getDescription());
+    }
+
+    /**
      * testCreateRuleSetsReturnsArray
      *
      * @return void
@@ -439,6 +473,63 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesNameSetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset4');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertEquals('Name overwritten', $rule->getName());
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset4');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertEquals('Message overwritten', $rule->getMessage());
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset4');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertEquals('http://example.com/overwritten', $rule->getExternalInfoUrl());
+    }
+
+    /**
      * Tests that the factory throws the expected exception for an invalid ruleset
      * identifier.
      *
@@ -503,6 +594,25 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
             'Cannot find rule class: rules_ClassNotFoundRule'
         );
 
+        $factory->createRuleSets($fileName);
+    }
+
+    /**
+     * Tests that the factory throws the expected exception when a rule class
+     * cannot be found.
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @covers PHP_PMD_RuleClassNotFoundException
+     * @group phpmd
+     * @group unittest
+     * @expectedException \RuntimeException
+     */
+    public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
+    {
+        $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
+
+        $factory = new PHP_PMD_RuleSetFactory();
         $factory->createRuleSets($fileName);
     }
 

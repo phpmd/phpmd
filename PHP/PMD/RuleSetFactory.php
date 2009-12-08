@@ -388,15 +388,28 @@ class PHP_PMD_RuleSetFactory
         SimpleXMLElement $propertiesNode
     ) {
         foreach ($propertiesNode->children() as $node) {
-            if ($node->getName() !== 'property') {
-                continue;
+            if ($node->getName() === 'property') {
+                $this->_addProperty($rule, $node);
             }
+        }
+    }
 
-            $name  = trim($node['name']);
-            $value = trim($node['value']);
-            if ($name !== '' && $value !== '') {
-                $rule->addProperty($name, $value);
-            }
+    /**
+     * Adds an additional propery to the given <b>$rule</b> instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule The context rule object.
+     * @param SimpleXMLElement     $node The raw xml property node.
+     *
+     * @return void
+     */
+    private function _addProperty(
+        PHP_PMD_AbstractRule $rule,
+        SimpleXMLElement $node
+    ) {
+        $name  = trim($node['name']);
+        $value = trim($node['value']);
+        if ($name !== '' && $value !== '') {
+            $rule->addProperty($name, $value);
         }
     }
 }
