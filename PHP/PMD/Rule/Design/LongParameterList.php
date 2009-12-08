@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -55,14 +55,14 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_LongParameterList 
+class PHP_PMD_Rule_Design_LongParameterList
        extends PHP_PMD_AbstractRule
        implements PHP_PMD_Rule_IFunctionAware,
                   PHP_PMD_Rule_IMethodAware

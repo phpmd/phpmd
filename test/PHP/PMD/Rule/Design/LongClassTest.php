@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -55,7 +55,7 @@ require_once 'PHP/PMD/Rule/Design/LongClass.php';
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
