@@ -161,11 +161,6 @@ class PHP_PMD_RuleSetFactory
             return $fileName;
         }
 
-        $fileName = getcwd() . '/' . $ruleSetOrFileName;
-        if (file_exists($fileName) === true) {
-            return $fileName;
-        }
-
         $fileName = getcwd() . '/rulesets/' . $ruleSetOrFileName . '.xml';
         if (file_exists($fileName) === true) {
             return $fileName;
