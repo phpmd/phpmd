@@ -105,6 +105,9 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertXmlEquals($writer->getData(), 'renderer/xml_renderer_expected1.xml');
+        $this->assertXmlEquals(
+            $writer->getData(),
+            'renderer/xml_renderer_expected1.xml'
+        );
     }
 }
