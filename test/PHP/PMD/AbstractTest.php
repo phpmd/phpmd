@@ -317,7 +317,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         // Check pear installation
         if (strpos('@package_version@', '@package_version') === 0) {
             $include .= PATH_SEPARATOR . 
-                        realpath(dirname(__FILE__) . '/../../../') .
+                        realpath(dirname(__FILE__) . '/../../../source') .
                         PATH_SEPARATOR .
                         realpath(dirname(__FILE__) . '/../../../lib/pdepend');
         }

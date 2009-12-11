@@ -1,0 +1,10 @@
+<?php
+Phar::mapPhar( '${archive.alias}' );
+// Configure phar include paths
+set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . 'phar://${archive.alias}/lib/pdepend');
+// Load command line utility
+include_once 'phar://${archive.alias}/PHP/PMD/TextUI/Command.php';
+// Run command line interface
+PHP_PMD_TextUI_Command::main($argv);
+__HALT_COMPILER();
+?>

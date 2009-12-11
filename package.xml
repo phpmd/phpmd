@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="2.0"
+         xmlns="http://pear.php.net/dtd/package-2.0"
+         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+                             http://pear.php.net/dtd/tasks-1.0.xsd
+                             http://pear.php.net/dtd/package-2.0
+                             http://pear.php.net/dtd/package-2.0.xsd">
+
+    <name>PHP_PMD</name>
+    <channel>pear.pdepend.org</channel>
+    <summary>PHP Mess Detector</summary>
+    <description>
+        The PHP Mess Detector aims to be a simplified PHP port of the well known
+        Java Tool PMD. This project uses PHP_Depend to measure several software
+        metrics from given source code, then it compares the calculated values
+        with customizeable thresholds and reports all suspect software artifacts
+    </description>
+    <lead>
+        <name>Manuel Pichler</name>
+        <user>mapi</user>
+        <email>mapi@pdepend.org</email>
+        <active>yes</active>
+    </lead>
+    <date>1970-01-01</date>
+    <version>
+        <release>0.0.0</release>
+        <api>0.0.0</api>
+    </version>
+    <stability>
+        <release>devel</release>
+        <api>devel</api>
+    </stability>
+    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+        - Initial release of the PHP Mess Detector.
+    </notes>
+    <contents>
+        <dir name="/">
+            <dir name="PHP">
+                <dir name="PMD">
+                    <dir name="Adapter">
+                        <file name="Metrics.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <dir name="Node">
+                        <file name="AbstractClassOrInterface.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="AbstractMethodOrFunction.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Class.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Function.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Interface.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Method.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <dir name="Renderer">
+                        <file name="XMLRenderer.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <dir name="Rule">
+                        <dir name="Design">
+                            <file name="LongClass.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="LongMethod.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="LongParameterList.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="NpathComplexity.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                        </dir>
+                        <file name="CyclomaticComplexity.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="IClassAware.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="IFunctionAware.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="IMethodAware.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <dir name="TextUI">
+                        <file name="CommandLineOptions.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Command.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <dir name="Writer">
+                        <file name="Stream.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                    </dir>
+                    <file name="AbstractNode.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="AbstractRenderer.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="AbstractRule.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="AbstractWriter.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="Report.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleClassFileNotFoundException.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleClassNotFoundException.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleSetFactory.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleSetNotFoundException.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleSet.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                    <file name="RuleViolation.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
+                </dir>
+                <file name="PMD.php" role="php">
+                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                </file>
+            </dir>
+
+            <file name="phpmd.php" role="script">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
+            </file>
+        </dir>
+    </contents>
+    
+    <dependencies>
+        <required>
+            <php>
+                <min>5.2.0</min>
+            </php>
+            <pearinstaller>
+                <min>1.6.0</min>
+            </pearinstaller>
+            <package>
+                <name>PHP_Depend</name>
+                <channel>pear.pdepend.org</channel>
+                <min>0.9.7</min>
+            </package>
+            <extension>
+                <name>pcre</name>
+            </extension>
+            <extension>
+                <name>spl</name>
+            </extension>
+            <extension>
+                <name>dom</name>
+            </extension>
+        </required>
+    </dependencies>
+
+    <phprelease />
+
+    <changelog />
+
+</package>
