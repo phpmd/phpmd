@@ -16,4 +16,16 @@
     -->
     <target name="build" depends="test" description="Primary build: PHP Mess Detector" />
 
+    <!--
+        Hook method for copying files for the project's xyz archive format.
+
+        Parameters:
+            output.dir      Output directory for the temporary build tree.
+    -->
+    <target name="do-copy-files-for-xyz-archive">
+        <copy todir="${output.dir}/rulesets">
+            <fileset dir="${basedir}/rulesets" />
+        </copy>
+    </target>
+
 </project>
