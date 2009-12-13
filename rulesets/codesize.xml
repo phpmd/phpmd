@@ -210,33 +210,34 @@ public class Foo {
     ]]>
     </example>
     </rule>
-
+-->
     <rule name="TooManyFields"
-    		 since="3.0"
+          since="0.1"
           message="Too many fields"
-          class="net.sourceforge.pmd.rules.design.TooManyFields"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#TooManyFields">
-      <description>
-Classes that have too many fields could be redesigned to have fewer fields, possibly
- through some nested object grouping of some of the information.  For example, a class with
- city/state/zip fields could instead have one Address field.
-      </description>
+          class="PHP_PMD_Rule_Design_TooManyFields"
+          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#TooManyFields">
+        <description>
+Classes that have too many fields could be redesigned to have fewer fields,
+possibly through some nested object grouping of some of the information. For
+example, a class with city/state/zip fields could instead have one Address
+field.
+        </description>
         <priority>3</priority>
-      <properties>
-       <property name="maxfields"  description="The field count reporting threshold " value="15"/>
-      </properties>
-      <example>
-   <![CDATA[
+        <properties>
+            <property name="maxfields"  description="The field count reporting threshold " value="15"/>
+        </properties>
+        <example>
+            <![CDATA[
 public class Person {
    String one;
    int two;
    int three;
    [... many more public fields ...]
 }
-   ]]>
-      </example>
+            ]]>
+        </example>
     </rule>
-
+<!--
 <rule name="NcssMethodCount" message="The method {0}() has an NCSS line count of {1}"
    since="3.9"
    class="net.sourceforge.pmd.rules.codesize.NcssMethodCount"

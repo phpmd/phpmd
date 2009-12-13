@@ -46,17 +46,12 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
+require_once 'PHP/PMD/Rule/Design/TooManyFields.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the too many methods rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,24 +62,56 @@ require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_TooManyFieldsTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @covers PHP_PMD_Rule_Design_TooManyFields
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
      */
-    public static function suite()
+    public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $rule = new PHP_PMD_Rule_Design_TooManyFields();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxfields', '42');
+        $rule->apply($this->getClassMock('vars', 23));
+    }
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
+    /**
+     * testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold
+     *
+     * @covers PHP_PMD_Rule_Design_TooManyFields
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold()
+    {
+        $rule = new PHP_PMD_Rule_Design_TooManyFields();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxfields', '42');
+        $rule->apply($this->getClassMock('vars', 42));
+    }
 
-        return $suite;
+    /**
+     * testRuleAppliesToClassesWithMoreFieldsThanThreshold
+     *
+     * @covers PHP_PMD_Rule_Design_TooManyFields
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
+     */
+    public function testRuleAppliesToClassesWithMoreFieldsThanThreshold()
+    {
+        $rule = new PHP_PMD_Rule_Design_TooManyFields();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('maxfields', '23');
+        $rule->apply($this->getClassMock('vars', 42));
     }
 }

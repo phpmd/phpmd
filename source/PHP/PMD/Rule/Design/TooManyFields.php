@@ -46,17 +46,11 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * This rule class will detect all classes with too much fields.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,24 +61,23 @@ require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_TooManyFields
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * Creates a phpunit test suite.
+     * This method checks the number of methods with in a given class and checks
+     * this number against a configured threshold.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-
-        return $suite;
+        if ($node->getMetric('vars') <= $this->getIntProperty('maxfields')) {
+            return;
+        }
+        $this->addViolation($node);
     }
 }
