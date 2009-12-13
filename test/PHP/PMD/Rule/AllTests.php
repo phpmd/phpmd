@@ -49,6 +49,7 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/CyclomaticComplexityTest.php';
+require_once dirname(__FILE__) . '/ExcessivePublicCountTest.php';
 require_once dirname(__FILE__) . '/Design/AllTests.php';
 
 /**
@@ -75,6 +76,7 @@ class PHP_PMD_Rule_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule - Tests');
 
         $suite->addTestSuite('PHP_PMD_Rule_CyclomaticComplexityTest');
+        $suite->addTestSuite('PHP_PMD_Rule_ExcessivePublicCountTest');
 
         $suite->addTest(PHP_PMD_Rule_Design_AllTests::suite());
 

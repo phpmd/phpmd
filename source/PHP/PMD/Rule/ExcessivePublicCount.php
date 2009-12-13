@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,66 +46,38 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IFunctionAware.php';
+require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
- * Wrapper around PHP_Depend's class objects.
+ * This rule checks the number of public methods and fields in a given class.
+ * Then it compares the number of public members against a configured threshold.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
+class PHP_PMD_Rule_ExcessivePublicCount extends PHP_PMD_AbstractRule
 {
     /**
-     * Constructs a new class wrapper node.
+     * This method checks the number of public fields and methods in the given
+     * class and checks that value against a configured threshold.
      *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        parent::__construct($node);
-    }
-
-    /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
-     *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
-     */
-    public function getMetric($name)
-    {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
+        if ($node->getMetric('nopm') < $this->getIntProperty('minimum')) {
+            return;
         }
-        return parent::getMetric($name);
-    }
-
-    /**
-     * Returns the number of public fields and/or methods in the context class.
-     *
-     * @return integer
-     */
-    private function _numberOfPublicMembers()
-    {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        $this->addViolation($node);
     }
 }

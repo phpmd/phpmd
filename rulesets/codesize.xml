@@ -144,8 +144,8 @@ manageable.
         </properties>
         <example>
             <![CDATA[
-public class Foo {
-  public void bar() {
+class Foo {
+  public function bar() {
     // 1000 lines of code
   }
 }
@@ -169,10 +169,10 @@ wrap the numerous parameters.  Basically, try to group the parameters together.
         </properties>
         <example>
             <![CDATA[
-public class Foo {
-    public void addData(
-        int p0, int p1, int p2, int p3, int p4, int p5,
-        int p5, int p6, int p7, int p8, int p9, int p10) {
+class Foo {
+    public function addData(
+        $p0, $p1, $p2, $p3, $p4, $p5,
+        $p5, $p6, $p7, $p8, $p9, $p10) {
     }
 }
             ]]>
@@ -180,32 +180,32 @@ public class Foo {
 
     </rule>
 
-<!--
-
     <rule name="ExcessivePublicCount"
-    since="1.04"
-    message="This class has a bunch of public methods and attributes"
-    class="net.sourceforge.pmd.rules.ExcessivePublicCount"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/codesize.html#ExcessivePublicCount">
-    <description>
-A large number of public methods and attributes declared in a class can indicate the
- class may need to be broken up as increased effort will be required to thoroughly test it.
-    </description>
-    <priority>3</priority>
-    <properties>
-    <property name="minimum"  description="The public item reporting threshold" value="45"/>
-    </properties>
-    <example>
-    <![CDATA[
+          since="0.1"
+          message="This class has a bunch of public methods and attributes"
+          class="PHP_PMD_Rule_ExcessivePublicCount"
+          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessivePublicCount">
+        <description>
+A large number of public methods and attributes declared in a class can indicate
+the class may need to be broken up as increased effort will be required to
+thoroughly test it.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum"  description="The public item reporting threshold" value="45"/>
+        </properties>
+        <example>
+            <![CDATA[
 public class Foo {
- public String value;
- public Bar something;
- public Variable var;
- // [... more more public attributes ...]
- public void doWork() {}
- public void doMoreWork() {}
- public void doWorkAgain() {}
- // [... more more public methods ...]
+    public $value;
+    public $something;
+    public $var;
+    // [... more more public attributes ...]
+
+    public function doWork() {}
+    public function doMoreWork() {}
+    public function doWorkAgain() {}
+    // [... more more public methods ...]
 }
     ]]>
     </example>
@@ -228,11 +228,11 @@ field.
         </properties>
         <example>
             <![CDATA[
-public class Person {
-   String one;
-   int two;
-   int three;
-   [... many more public fields ...]
+class Person {
+   protected $one;
+   private $_two;
+   private $_three;
+   [... many more fields ...]
 }
             ]]>
         </example>

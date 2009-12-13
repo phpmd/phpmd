@@ -62,13 +62,4 @@ require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
  */
 class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractClassOrInterface
 {
-    /**
-     * Returns the number of properties declared in this type.
-     *
-     * @return integer
-     */
-    public function getPropertyCount()
-    {
-        return 0;
-    }
 }

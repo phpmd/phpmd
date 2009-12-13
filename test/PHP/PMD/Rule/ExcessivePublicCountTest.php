@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,66 +46,72 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Rule/ExcessivePublicCount.php';
 
 /**
- * Wrapper around PHP_Depend's class objects.
+ * Test case for the excessive use of public members rule.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
+class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new class wrapper node.
+     * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold
      *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * @covers PHP_PMD_Rule_ExcessivePublicCount
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold()
     {
-        parent::__construct($node);
+        $rule = new PHP_PMD_Rule_ExcessivePublicCount();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nopm', 23));
     }
 
     /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
+     * testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold
      *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
+     * @covers PHP_PMD_Rule_ExcessivePublicCount
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
      */
-    public function getMetric($name)
+    public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold()
     {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
-        }
-        return parent::getMetric($name);
+        $rule = new PHP_PMD_Rule_ExcessivePublicCount();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nopm', 42));
     }
 
     /**
-     * Returns the number of public fields and/or methods in the context class.
+     * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
      *
-     * @return integer
+     * @covers PHP_PMD_Rule_ExcessivePublicCount
+     * @group phpmd
+     * @group phpmd::rules
+     * @group phpmd::rules::design
+     * @group unittest
      */
-    private function _numberOfPublicMembers()
+    public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold()
     {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        $rule = new PHP_PMD_Rule_ExcessivePublicCount();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('minimum', '23');
+        $rule->apply($this->getClassMock('nopm', 42));
     }
 }

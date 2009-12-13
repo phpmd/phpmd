@@ -117,11 +117,4 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
     {
         return null;
     }
-
-    /**
-     * Returns the number of properties declared in this type.
-     *
-     * @return integer
-     */
-    public abstract function getPropertyCount();
 }
