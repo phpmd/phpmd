@@ -98,16 +98,17 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_PMD_Node_Class
      */
-    protected function getClassMock($metric, $value = null)
+    protected function getClassMock($metric = null, $value = null)
     {
         include_once 'PHP/PMD/Node/Class.php';
 
         $class = $this->getMock('PHP_PMD_Node_Class', array(), array(null), '', false);
-        $class->expects($this->atLeastOnce())
-              ->method('getMetric')
-              ->with($this->equalTo($metric))
-              ->will($this->returnValue($value));
-
+        if ($metric !== null) {
+            $class->expects($this->atLeastOnce())
+                ->method('getMetric')
+                ->with($this->equalTo($metric))
+                ->will($this->returnValue($value));
+        }
         return $class;
     }
 

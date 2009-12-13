@@ -62,28 +62,36 @@ class PHP_PMD_RuleViolation
     /**
      * The rule that causes this violation.
      *
-     * @var PHP_PMD_AbstractRule $_rule
+     * @var PHP_PMD_AbstractRule
      */
     private $_rule = null;
 
     /**
      * The context code node for this rule violation.
      *
-     * @var PHP_PMD_AbstractNode $_node
+     * @var PHP_PMD_AbstractNode 
      */
     private $_node = null;
 
     /**
      * The description/message text that describes the violation.
      * 
-     * @var string $_description
+     * @var string
      */
     private $_description = '';
 
     /**
-     * The name of a method or <b>null</b> when this violation has no method context.
+     * Name of the owning/context class or interface of this violation.
      *
-     * @var string $_methodName
+     * @var string
+     */
+    private $_className = null;
+
+    /**
+     * The name of a method or <b>null</b> when this violation has no method
+     * context.
+     *
+     * @var string
      */
     private $_methodName = null;
 
@@ -91,7 +99,7 @@ class PHP_PMD_RuleViolation
      * The name of a function or <b>null</b> when this violation has no function
      * context.
      *
-     * @var string $_functionName
+     * @var string
      */
     private $_functionName = null;
 
@@ -110,14 +118,14 @@ class PHP_PMD_RuleViolation
         $this->_rule        = $rule;
         $this->_node        = $node;
         $this->_description = $violationMessage;
-        $this->_className   = $node->getParentName();
 
-        if ($node->getParentName() === null) {
-            $this->_functionName = $node->getName();
+        if ($node instanceof PHP_PMD_Node_AbstractClassOrInterface) {
+            $this->_className = $node->getName();
+        } else if ($node instanceof PHP_PMD_Node_Method) {
+            $this->_className  = $node->getParentName();
+            $this->_methodName = $node->getName();
         } else {
-            if ($node instanceof PHP_PMD_Node_Method) {
-                $this->_methodName = $node->getName();
-            }
+            $this->_functionName = $node->getName();
         }
     }
 
@@ -189,7 +197,7 @@ class PHP_PMD_RuleViolation
      */
     public function getClassName()
     {
-        return $this->_node->getParentName();
+        return $this->_className;
     }
 
     /**

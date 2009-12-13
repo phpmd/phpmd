@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,82 +46,66 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * Abstract base class for classes and interfaces.
+ * This rule class will detect all classes with too much methods.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule_Design
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNode
+class PHP_PMD_Rule_Design_TooManyMethods
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * Constructs a new generic class or interface node.
+     * Regular expression that filter all methods that are ignored by this rule.
      *
-     * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
+     * @var string
      */
-    public function __construct(PHP_Depend_Code_AbstractType $node)
-    {
-        parent::__construct($node);
-    }
+    private $_ignoreRegexp = '(^(set|get))i';
 
     /**
-     * Returns an array with the names of all methods within this class or
-     * interface node.
+     * This method checks the number of methods with in a given class and checks
+     * this number against a configured threshold.
      *
-     * @return array(string)
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public function getMethodNames()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        $names = array();
-        foreach ($this->getNode()->getMethods() as $method) {
-            $names[] = $method->getName();
+        if ($node->getMetric('nom') < $this->getIntProperty('maxmethods')) {
+            return;
         }
-        return $names;
+        if ($this->_countMethods($node) < $this->getIntProperty('maxmethods')) {
+            return;
+        }
+        $this->addViolation($node);
     }
 
     /**
-     * Returns the number of constants declared in this type.
+     * Counts all methods within the given class/interface node.
+     *
+     * @param PHP_PMD_Node_AbstractClassOrInterface $node The context class node.
      *
      * @return integer
      */
-    public function getConstantCount()
+    private function _countMethods(PHP_PMD_Node_AbstractClassOrInterface $node)
     {
-        return $this->getNode()->getConstants()->count();
+        $count = 0;
+        foreach ($node->getMethodNames() as $name) {
+            if (preg_match($this->_ignoreRegexp, $name) === 0) {
+                ++$count;
+            }
+        }
+        return $count;
     }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return $this->getNode()->getPackage()->getName();
-    }
-
-    /**
-     * Returns the name of the parent type or <b>null</b> when this node has no
-     * parent type.
-     *
-     * @return string
-     */
-    public function getParentName()
-    {
-        return null;
-    }
-
-    /**
-     * Returns the number of properties declared in this type.
-     *
-     * @return integer
-     */
-    public abstract function getPropertyCount();
 }
