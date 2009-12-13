@@ -82,7 +82,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleAppliesToClassesWithSameNumberOfMethodsAsThreshold
+     * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
      *
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
@@ -90,12 +90,12 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
      * @group phpmd::rules::design
      * @group unittest
      */
-    public function testRuleAppliesToClassesWithSameNumberOfMethodsAsThreshold()
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
     {
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '42');
-        $rule->apply($this->_createClassMock(42, array_fill(0, 42, __FUNCTION__)));
+        $rule->apply($this->_createClassMock(42));
     }
 
     /**
@@ -128,7 +128,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('maxmethods', '1');
         $rule->apply($this->_createClassMock(2, array('invoke', 'getClass')));
     }
 
@@ -145,7 +145,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('maxmethods', '1');
         $rule->apply($this->_createClassMock(2, array('invoke', 'setClass')));
     }
 
@@ -162,7 +162,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('maxmethods', '3');
+        $rule->addProperty('maxmethods', '2');
         $rule->apply($this->_createClassMock(3, array('invoke', 'getClass', 'setClass')));
     }
 
