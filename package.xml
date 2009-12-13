@@ -205,6 +205,11 @@
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
                 <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
             </file>
+
+            <file name="phpmd.bat" role="script">
+                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
+            </file>
         </dir>
     </contents>
     
@@ -233,7 +238,24 @@
         </required>
     </dependencies>
 
-    <phprelease />
+    <phprelease>
+        <installconditions>
+            <os>
+                <name>windows</name>
+            </os>
+        </installconditions>
+        <filelist>
+            <install as="phpmd" name="phpmd.php"/>
+            <install as="phpmd.bat" name="phpmd.bat"/>
+        </filelist>
+    </phprelease>
+
+    <phprelease>
+        <filelist>
+            <install as="phpmd" name="phpmd.php"/>
+            <ignore name="phpmd.bat"/>
+        </filelist>
+    </phprelease>
 
     <changelog />
 
