@@ -9,7 +9,7 @@
                              http://pear.php.net/dtd/package-2.0.xsd">
 
     <name>PHP_PMD</name>
-    <channel>pear.pdepend.org</channel>
+    <channel>pear.phpmd.org</channel>
     <summary>PHP Mess Detector</summary>
     <description>
         The PHP Mess Detector aims to be a simplified PHP port of the well known
