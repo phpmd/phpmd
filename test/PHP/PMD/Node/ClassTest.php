@@ -46,12 +46,14 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/ClassTest.php';
+require_once 'PHP/PMD/Node/Class.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Main test suite for the PHP_PMD_Node package.
+ * Test case for the class node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -62,19 +64,25 @@ require_once dirname(__FILE__) . '/ClassTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Node_AllTests
+class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testGetMethodNamesReturnsExpectedResult
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_Node_Class
+     * @covers PHP_PMD_Node_AbstractClassOrInterface
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public static function suite()
+    public function testGetMethodNamesReturnsExpectedResult()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Node - Tests');
+        $class = new PHP_Depend_Code_Class(null);
+        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
+        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
-        $suite->addTestSuite('PHP_PMD_Node_ClassTest');
-
-        return $suite;
+        $node = new PHP_PMD_Node_Class($class);
+        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
     }
 }
