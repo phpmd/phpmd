@@ -36,39 +36,33 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_PMD
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://www.pdepend.org/pmd
+ * @category   PHP
+ * @package    PHP_PMD
+ * @subpackage Regression
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    SVN: $Id$
+ * @link       http://www.pdepend.org/pmd
  */
 
 require_once 'PHPUnit/Framework.php';
 
-require_once dirname(__FILE__) . '/PMDTest.php';
-require_once dirname(__FILE__) . '/ReportTest.php';
-require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
-require_once dirname(__FILE__) . '/RuleSetTest.php';
-require_once dirname(__FILE__) . '/Adapter/AllTests.php';
-require_once dirname(__FILE__) . '/Node/AllTests.php';
-require_once dirname(__FILE__) . '/Regression/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Rule/AllTests.php';
+require_once dirname(__FILE__) . '/AcceptsFilesAndDirectoriesAsInputTicket001Test.php';
 
 /**
- * Main test suite for the complete PHP_PMD application.
+ * Main test suite for the PHP_PMD_Regression package.
  *
- * @category  PHP
- * @package   PHP_PMD
- * @author    Manuel Pichler <mapi@pdepend.org>
- * @copyright 2009 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://www.pdepend.org/pmd
+ * @category   PHP
+ * @package    PHP_PMD
+ * @subpackage Regression
+ * @author     Manuel Pichler <mapi@pdepend.org>
+ * @copyright  2009 Manuel Pichler. All rights reserved.
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_AllTests
+class PHP_PMD_Regression_AllTests
 {
     /**
      * Creates a phpunit test suite.
@@ -77,18 +71,9 @@ class PHP_PMD_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
+        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Regression - Tests');
 
-        $suite->addTestSuite('PHP_PMD_PMDTest');
-        $suite->addTestSuite('PHP_PMD_ReportTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetTest');
-
-        $suite->addTest(PHP_PMD_Adapter_AllTests::suite());
-        $suite->addTest(PHP_PMD_Node_AllTests::suite());
-        $suite->addTest(PHP_PMD_Regression_AllTests::suite());
-        $suite->addTest(PHP_PMD_Renderer_AllTests::suite());
-        $suite->addTest(PHP_PMD_Rule_AllTests::suite());
+        $suite->addTestSuite('PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test');
 
         return $suite;
     }

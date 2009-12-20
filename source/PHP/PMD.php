@@ -171,7 +171,13 @@ final class PHP_PMD
     private function _createPhpDepend($inputPath)
     {
         $pdepend = new PHP_Depend();
-        $pdepend->addDirectory(realpath($inputPath));
+
+        $path = realpath($inputPath);
+        if (is_dir($path)) {
+            $pdepend->addDirectory($path);
+        } else {
+            $pdepend->addFile($path);
+        }
 
         if (count($this->_ignorePatterns) > 0) {
             $filter = new PHP_Depend_Input_ExcludePathFilter($this->_ignorePatterns);

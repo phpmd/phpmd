@@ -81,6 +81,9 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * Tests the main PHP_PMD interface with default settings an a xml-renderer.
      *
      * @return void
+     * @covers \PHP_PMD::processFiles
+     * @group phpmd
+     * @group unittest
      */
     public function testRunWithDefaultSettingsAndXmlRenderer()
     {
@@ -100,5 +103,63 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
+    }
+
+    /**
+     * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
+     *
+     * @return void
+     * @covers \PHP_PMD::processFiles
+     * @covers \PHP_PMD::_createPhpDepend
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory()
+    {
+        self::changeWorkingDirectory();
+
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter($writer);
+
+        $phpmd = new PHP_PMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/ccn_function.php'),
+            'pmd-refset1',
+            $renderers = array($renderer),
+            new PHP_PMD_RuleSetFactory()
+        );
+
+        $this->assertXmlEquals($writer->getData(), 'pmd/single-directory.xml');
+    }
+
+    /**
+     * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
+     *
+     * @return void
+     * @covers \PHP_PMD::processFiles
+     * @covers \PHP_PMD::_createPhpDepend
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile()
+    {
+        self::changeWorkingDirectory();
+
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter($writer);
+
+        $phpmd = new PHP_PMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/ccn_function.php'),
+            'pmd-refset1',
+            $renderers = array($renderer),
+            new PHP_PMD_RuleSetFactory()
+        );
+
+        $this->assertXmlEquals($writer->getData(), 'pmd/single-file.xml');
     }
 }
