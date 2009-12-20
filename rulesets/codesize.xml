@@ -106,7 +106,7 @@ class Foo {
  	      since="0.1"
           message="Avoid really long methods."
           class="PHP_PMD_Rule_Design_LongMethod"
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessiveMethodLength">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#ExcessiveMethodLength">
         <description>
 Violations of this rule usually indicate that the method is doing
 too much.  Try to reduce the method size by creating helper methods and removing any copy/pasted code.
@@ -132,7 +132,7 @@ class Foo {
  	      since="0.1"
           message="Avoid really long classes."
           class="PHP_PMD_Rule_Design_LongClass"
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessiveClassLength">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#ExcessiveClassLength">
         <description>
 Long Class files are indications that the class may be trying to
 do too much.  Try to break it down, and reduce the size to something
@@ -158,7 +158,7 @@ class Foo {
           since="0.1"
           message="Avoid really long parameter lists."
           class="PHP_PMD_Rule_Design_LongParameterList"
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessiveParameterList">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#ExcessiveParameterList">
         <description>
 Long parameter lists can indicate that a new object should be created to
 wrap the numerous parameters.  Basically, try to group the parameters together.
@@ -184,7 +184,7 @@ class Foo {
           since="0.1"
           message="This class has a bunch of public methods and attributes"
           class="PHP_PMD_Rule_ExcessivePublicCount"
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#ExcessivePublicCount">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#ExcessivePublicCount">
         <description>
 A large number of public methods and attributes declared in a class can indicate
 the class may need to be broken up as increased effort will be required to
@@ -215,7 +215,7 @@ public class Foo {
           since="0.1"
           message="Too many fields"
           class="PHP_PMD_Rule_Design_TooManyFields"
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#TooManyFields">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#TooManyFields">
         <description>
 Classes that have too many fields could be redesigned to have fewer fields,
 possibly through some nested object grouping of some of the information. For
@@ -335,7 +335,7 @@ public class Foo extends Bar {
           since="0.1"
           class="PHP_PMD_Rule_Design_TooManyMethods"
           message="This class has too many methods, consider refactoring it."
-          externalInfoUrl="http://www.phpmd.org/rules/codesize.html#TooManyMethods">
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#TooManyMethods">
         <description>
             <![CDATA[
 A class with too many methods is probably a good suspect for refactoring, in
