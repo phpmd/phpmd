@@ -606,7 +606,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * @covers PHP_PMD_RuleClassNotFoundException
      * @group phpmd
      * @group unittest
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
@@ -644,7 +644,9 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     private function _createRuleSetsFromFiles($file)
     {
+        $args = func_get_args();
+
         $factory = new PHP_PMD_RuleSetFactory();
-        return $factory->createRuleSets(join(',', func_get_args()));
+        return $factory->createRuleSets(join(',', $args));
     }
 }
