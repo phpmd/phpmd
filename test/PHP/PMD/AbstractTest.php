@@ -91,6 +91,71 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Parses the first method found in a source file related to the calling
+     * test method.
+     *
+     * @return PHP_PMD_Node_Method
+     */
+    protected function parseMethod()
+    {
+        $method = $this->_parseTestCaseSource()
+            ->getTypes()
+            ->current()
+            ->getMethods()
+            ->current();
+        
+        return new PHP_PMD_Node_Method($method);
+    }
+
+    /**
+     * Parses the source code for the calling test method and returns the first
+     * package node found in the parsed file.
+     *
+     * @return PHP_Depend_Code_Package
+     */
+    private function _parseTestCaseSource()
+    {
+        foreach (debug_backtrace() as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                break;
+            }
+        }
+        
+        $sourceFile = sprintf(
+            '%s/_files/%s/%s.php',
+            dirname(__FILE__),
+            strtr(substr($frame['class'], 8, -4), '_', '/'),
+            $frame['function']
+        );
+        return $this->_parseSource($sourceFile);
+    }
+
+    /**
+     * Parses the source of the given file and returns the first package found
+     * in that file.
+     *
+     * @param string $sourceFile Name of the test source file.
+     *
+     * @return PHP_Depend_Code_Package
+     */
+    private function _parseSource($sourceFile)
+    {
+        include_once 'PHP/Depend/Parser.php';
+        include_once 'PHP/Depend/Builder/Default.php';
+        include_once 'PHP/Depend/Tokenizer/Internal.php';
+
+        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer->setSourceFile($sourceFile);
+
+        $builder =  new PHP_Depend_Builder_Default();
+
+        $parser = new PHP_Depend_Parser($tokenizer, $builder);
+        $parser->parse();
+
+        return $builder->getPackages()->current();
+    }
+
+    /**
      * Creates a mocked class node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.

@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,60 +46,101 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Rule/UnusedLocalVariable.php';
 
 /**
- * Abstract base class for PHP_Depend function and method wrappers.
+ * Test case for the unused local variable rule.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNode
+class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new callable wrapper.
+     * testRuleAppliesToUnusedLocalVariable
      *
-     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
      */
-    public function __construct(PHP_Depend_Code_AbstractCallable $node)
+    public function testRuleAppliesToUnusedLocalVariable()
     {
-        parent::__construct($node);
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->parseMethod());
     }
 
     /**
-     * The magic call method is used to pipe requests from rules direct
-     * to the underlying PHP_Depend ast node.
+     * testRuleDoesNotApplyToThisVariable
      *
-     * @param string $name Name of the invoked method.
-     * @param array  $args Optional method arguments.
-     *
-     * @return mixed
-     * @throws BadMethodCallException When the underlying PHP_Depend node 
-     *         does not contain a method named <b>$name</b>.
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
      */
-    public function __call($name, array $args)
+    public function testRuleDoesNotApplyToThisVariable()
     {
-        if (method_exists($this->getNode(), $name)) {
-            return call_user_func_array(array($this->getNode(), $name), $args);
-        }
-        throw new BadMethodCallException(
-            sprintf('Invalid method %s() called.', $name)
-        );
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->parseMethod());
     }
 
     /**
-     * Returns the number of parameters in the callable signature.
+     * testRuleDoesNotApplyToStaticProperty
      *
-     * @return integer
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
      */
-    public function getParameterCount()
+    public function testRuleDoesNotApplyToStaticProperty()
     {
-        return $this->getNode()->getParameters()->count();
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->parseMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToDynamicProperty
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToDynamicProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->parseMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToUnusedParameters
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToUnusedParameters()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->parseMethod());
     }
 }

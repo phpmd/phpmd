@@ -46,10 +46,13 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Node/Method.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Abstract base class for PHP_Depend function and method wrappers.
+ * Test case for the method node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,46 +63,41 @@ require_once 'PHP/PMD/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNode
+class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new callable wrapper.
+     * testMagicCallDelegatesToWrappedPHPDependMethod
      *
-     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
+     * @return void
+     * @covers PHP_PMD_Node_AbstractMethodOrFunction::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function __construct(PHP_Depend_Code_AbstractCallable $node)
+    public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
-        parent::__construct($node);
+        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
+        $method->expects($this->once())
+            ->method('getStartLine');
+
+        $node = new PHP_PMD_Node_Method($method);
+        $node->getStartLine();
     }
 
     /**
-     * The magic call method is used to pipe requests from rules direct
-     * to the underlying PHP_Depend ast node.
+     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
-     * @param string $name Name of the invoked method.
-     * @param array  $args Optional method arguments.
-     *
-     * @return mixed
-     * @throws BadMethodCallException When the underlying PHP_Depend node 
-     *         does not contain a method named <b>$name</b>.
+     * @return void
+     * @covers PHP_PMD_Node_AbstractMethodOrFunction::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     * @expectedException BadMethodCallException
      */
-    public function __call($name, array $args)
+    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        if (method_exists($this->getNode(), $name)) {
-            return call_user_func_array(array($this->getNode(), $name), $args);
-        }
-        throw new BadMethodCallException(
-            sprintf('Invalid method %s() called.', $name)
-        );
-    }
+        $node = new PHP_PMD_Node_Method(new PHP_Depend_Code_Method(null));
+        $node->getFooBar();
 
-    /**
-     * Returns the number of parameters in the callable signature.
-     *
-     * @return integer
-     */
-    public function getParameterCount()
-    {
-        return $this->getNode()->getParameters()->count();
     }
 }
