@@ -141,17 +141,6 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
     }
 
     /**
-     * This method will be called the engine has finished the report processing
-     * for all registered renderers.
-     *
-     * @return void
-     */
-    public function end()
-    {
-
-    }
-
-    /**
      * This method will write a xml attribute named <b>$attr</b> to the output
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *

@@ -93,7 +93,10 @@ abstract class PHP_PMD_AbstractRenderer
      *
      * @return void
      */
-    public abstract function start();
+    public function start()
+    {
+        // Just a hook
+    }
 
     /**
      * This method will be called when the engine has finished the source analysis
@@ -111,5 +114,8 @@ abstract class PHP_PMD_AbstractRenderer
      *
      * @return void
      */
-    public abstract function end();
+    public function end()
+    {
+        // Just a hook
+    }
 }
