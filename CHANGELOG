@@ -1,0 +1,10 @@
+phpmd-0.2.0 ()
+==============
+
+- Closes #3: Text renderer implemented.
+
+
+phpmd-0.1.0 (2009/12/20)
+========================
+
+- Initial release

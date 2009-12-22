@@ -69,8 +69,7 @@ class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
      *
      * @covers PHP_PMD_Rule_ExcessivePublicCount
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold()
@@ -86,8 +85,7 @@ class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
      *
      * @covers PHP_PMD_Rule_ExcessivePublicCount
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold()
@@ -103,8 +101,7 @@ class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
      *
      * @covers PHP_PMD_Rule_ExcessivePublicCount
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold()

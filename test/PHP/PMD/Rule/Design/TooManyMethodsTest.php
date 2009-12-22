@@ -67,10 +67,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
@@ -84,10 +85,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
@@ -101,10 +103,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassesWithMoreMethodsThanThreshold
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
@@ -118,10 +121,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleIgnoresGetterMethodsInTest
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleIgnoresGetterMethodsInTest()
@@ -135,10 +139,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleIgnoresSetterMethodsInTest
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleIgnoresSetterMethodsInTest()
@@ -152,10 +157,11 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleIgnoresGetterAndSetterMethodsInTest
      *
+     * @return void
      * @covers PHP_PMD_Rule_Design_TooManyMethods
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testRuleIgnoresGetterAndSetterMethodsInTest()

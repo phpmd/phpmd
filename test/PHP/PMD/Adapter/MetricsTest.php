@@ -68,6 +68,10 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
+     * @covers PHP_PMD_Adapter_Metrics
+     * @group phpmd
+     * @group phpmd::adapter
+     * @group unittest
      */
     public function testAdapterDelegatesClassNodeToRuleSet()
     {
@@ -82,6 +86,10 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
      * code file to a registered rule-set.
      *
      * @return void
+     * @covers PHP_PMD_Adapter_Metrics
+     * @group phpmd
+     * @group phpmd::adapter
+     * @group unittest
      */
     public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet()
     {
@@ -95,6 +103,10 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
+     * @covers PHP_PMD_Adapter_Metrics
+     * @group phpmd
+     * @group phpmd::adapter
+     * @group unittest
      */
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
@@ -122,6 +134,10 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
+     * @covers PHP_PMD_Adapter_Metrics
+     * @group phpmd
+     * @group phpmd::adapter
+     * @group unittest
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
@@ -136,6 +152,10 @@ class PHP_PMD_Adapter_MetricsTest extends PHP_PMD_AbstractTest
      * code file to a registered rule-set.
      *
      * @return void
+     * @covers PHP_PMD_Adapter_Metrics
+     * @group phpmd
+     * @group phpmd::adapter
+     * @group unittest
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
     {

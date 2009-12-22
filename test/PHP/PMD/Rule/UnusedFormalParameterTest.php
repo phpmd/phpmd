@@ -70,7 +70,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToFunctionUnusedFormalParameter()
@@ -86,7 +86,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToMultipleFunctionUnusedFormalParameter()
@@ -102,7 +102,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToMethodUnusedFormalParameter()
@@ -118,7 +118,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleAppliesToMultipleMethodUnusedFormalParameter()
@@ -134,7 +134,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleDoesNotApplyToAbstractMethodFormalParameter()
@@ -150,7 +150,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleDoesNotApplyToInterfaceMethodFormalParameter()
@@ -166,7 +166,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
-     * @group phpmd::rules
+     * @group phpmd::rule
      * @group unittest
      */
     public function testRuleDoesNotApplyToInnerFunctionDeclaration()

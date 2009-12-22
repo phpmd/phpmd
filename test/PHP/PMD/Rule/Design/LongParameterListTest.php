@@ -70,8 +70,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum()
@@ -88,8 +88,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyReportsMethodsWithIdenticalParametersAndMinimum()
@@ -106,8 +106,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyReportsMethodsWithMoreParametersThanMinimum()
@@ -124,8 +124,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum()
@@ -142,8 +142,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum()
@@ -160,8 +160,8 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      * @return void
      * @covers PHP_PMD_Rule_Design_LongParameterList
      * @group phpmd
-     * @group phpmd::rules
-     * @group phpmd::rules::design
+     * @group phpmd::rule
+     * @group phpmd::rule::design
      * @group unittest
      */
     public function testApplyReportsFunctionsWithMoreParametersThanMinimum()

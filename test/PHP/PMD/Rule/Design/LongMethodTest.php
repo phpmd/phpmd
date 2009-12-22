@@ -69,6 +69,11 @@ class PHP_PMD_Rule_Design_LongMethodTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
      */
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
@@ -86,6 +91,11 @@ class PHP_PMD_Rule_Design_LongMethodTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
      */
     public function testRuleAppliesForValueEqualToThreshold()
     {
@@ -103,6 +113,11 @@ class PHP_PMD_Rule_Design_LongMethodTest extends PHP_PMD_AbstractTest
      * than the threshold.
      *
      * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {

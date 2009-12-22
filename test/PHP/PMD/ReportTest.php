@@ -67,6 +67,9 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
      * files.
      *
      * @return void
+     * @covers PHP_PMD_Report
+     * @group phpmd
+     * @group unittest
      */
     public function testReportReturnsAListWithAllRuleViolations()
     {
@@ -93,6 +96,9 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
      * Tests that the report returns the result by the violation line number.
      *
      * @return void
+     * @covers PHP_PMD_Report
+     * @group phpmd
+     * @group unittest
      */
     public function testReportSortsResultByLineNumber()
     {
@@ -128,6 +134,9 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
      * Tests that the timer method returns the expected result.
      *
      * @return void
+     * @covers PHP_PMD_Report
+     * @group phpmd
+     * @group unittest
      */
     public function testReportTimerReturnsMilliSeconds()
     {
