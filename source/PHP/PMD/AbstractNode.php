@@ -124,16 +124,6 @@ abstract class PHP_PMD_AbstractNode
     }
 
     /**
-     * Returns the raw token stream for this node.
-     *
-     * @return array(PHP_Depend_Token)
-     */
-    public function getTokens()
-    {
-        return $this->_node->getTokens();
-    }
-
-    /**
      * Returns the wrapped PHP_Depend node instance.
      *
      * @return PHP_Depend_Code_AbstractItem
