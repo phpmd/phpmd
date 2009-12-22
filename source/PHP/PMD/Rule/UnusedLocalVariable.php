@@ -79,8 +79,8 @@ class PHP_PMD_Rule_UnusedLocalVariable
     private $_images = array();
 
     /**
-     * This method checks the cyclomatic complexity for the given node against
-     * a configured threshold.
+     * This method checks that all local variables within the given function or
+     * method are used at least one time.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
