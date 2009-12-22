@@ -67,7 +67,10 @@ require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_UnusedFormalParameter extends PHP_PMD_AbstractRule
+class PHP_PMD_Rule_UnusedFormalParameter
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IFunctionAware,
+               PHP_PMD_Rule_IMethodAware
 {
     private $_images = array();
 
