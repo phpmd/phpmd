@@ -78,9 +78,13 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * Tests that the renderer creates the expected number of xml elements.
+     * testRendererCreatesExpectedNumberOfXmlElements
      *
      * @return void
+     * @covers PHP_PMD_Renderer_XMLRenderer
+     * @group phpmd
+     * @group phpmd::renderer
+     * @group unittest
      */
     public function testRendererCreatesExpectedNumberOfXmlElements()
     {
