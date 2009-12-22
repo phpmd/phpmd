@@ -251,6 +251,10 @@ class PHP_PMD_TextUI_CommandLineOptions
             include_once 'PHP/PMD/Renderer/XMLRenderer.php';
             return new PHP_PMD_Renderer_XMLRenderer();
 
+        case 'text':
+            include_once 'PHP/PMD/Renderer/TextRenderer.php';
+            return new PHP_PMD_Renderer_TextRenderer();
+
         default:
             if ($this->_reportFormat !== '') {
 
