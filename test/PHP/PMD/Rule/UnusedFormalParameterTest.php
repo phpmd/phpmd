@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/PMD/Rule/UnusedLocalVariable.php';
+require_once 'PHP/PMD/Rule/UnusedFormalParameter.php';
 
 /**
- * Test case for the unused local variable rule.
+ * Test case for the unused formal parameter rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -62,85 +62,117 @@ require_once 'PHP/PMD/Rule/UnusedLocalVariable.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
 {
     /**
-     * testRuleAppliesToUnusedLocalVariable
+     * testRuleAppliesToFunctionUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
      * @group phpmd::rules
      * @group unittest
      */
-    public function testRuleAppliesToUnusedLocalVariable()
+    public function testRuleAppliesToFunctionUnusedFormalParameter()
     {
-        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToMultipleFunctionUnusedFormalParameter
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testRuleAppliesToMultipleFunctionUnusedFormalParameter()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToMethodUnusedFormalParameter
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testRuleAppliesToMethodUnusedFormalParameter()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
 
     /**
-     * testRuleDoesNotApplyToThisVariable
+     * testRuleAppliesToMultipleMethodUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
      * @group phpmd::rules
      * @group unittest
      */
-    public function testRuleDoesNotApplyToThisVariable()
+    public function testRuleAppliesToMultipleMethodUnusedFormalParameter()
     {
-        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(2));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToAbstractMethodFormalParameter
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToAbstractMethodFormalParameter()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
 
     /**
-     * testRuleDoesNotApplyToStaticProperty
+     * testRuleDoesNotApplyToInterfaceMethodFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
      * @group phpmd::rules
      * @group unittest
      */
-    public function testRuleDoesNotApplyToStaticProperty()
+    public function testRuleDoesNotApplyToInterfaceMethodFormalParameter()
     {
-        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
 
     /**
-     * testRuleDoesNotApplyToDynamicProperty
+     * testRuleDoesNotApplyToInnerFunctionDeclaration
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
      * @group phpmd::rules
      * @group unittest
      */
-    public function testRuleDoesNotApplyToDynamicProperty()
+    public function testRuleDoesNotApplyToInnerFunctionDeclaration()
     {
-        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToUnusedParameters
-     *
-     * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @group phpmd
-     * @group phpmd::rules
-     * @group unittest
-     */
-    public function testRuleDoesNotApplyToUnusedParameters()
-    {
-        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
+        $rule->apply($this->getFunction());
     }
 }

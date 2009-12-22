@@ -92,4 +92,15 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractMethodOrFunction
     {
         return $this->getNode()->getParent()->getName();
     }
+
+    /**
+     * Returns <b>true</b> when the underlying method is declared as abstract or
+     * is declared as child of an interface.
+     *
+     * @return boolean
+     */
+    public function isAbstract()
+    {
+        return $this->getNode()->isAbstract();
+    }
 }

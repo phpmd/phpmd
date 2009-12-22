@@ -91,13 +91,15 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Parses the first method found in a source file related to the calling
+     * Returns the first method found in a source file related to the calling
      * test method.
      *
      * @return PHP_PMD_Node_Method
      */
-    protected function parseMethod()
+    protected function getMethod()
     {
+        include_once 'PHP/PMD/Node/Method.php';
+
         $method = $this->_parseTestCaseSource()
             ->getTypes()
             ->current()
@@ -105,6 +107,23 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             ->current();
         
         return new PHP_PMD_Node_Method($method);
+    }
+
+    /**
+     * Returns the first function found in a source files related to the calling
+     * test method.
+     *
+     * @return PHP_PMD_Node_Function
+     */
+    protected function getFunction()
+    {
+        include_once 'PHP/PMD/Node/Function.php';
+
+        $function = $this->_parseTestCaseSource()
+            ->getFunctions()
+            ->current();
+
+        return new PHP_PMD_Node_Function($function);
     }
 
     /**

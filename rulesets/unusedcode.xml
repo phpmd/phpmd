@@ -33,7 +33,7 @@ public class Something {
   </rule>
 -->
     <rule name="UnusedLocalVariable"
-		  since="0.2"
+          since="0.2"
           message="Avoid unused local variables such as ''{0}''."
           class="PHP_PMD_Rule_UnusedLocalVariable"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#UnusedLocalVariable">
@@ -69,26 +69,28 @@ public class Something {
 ]]>
     </example>
   </rule>
-
-
-  <rule name="UnusedFormalParameter"
-  		  since="0.8"
-        message="Avoid unused {0} parameters such as ''{1}''."
-        class="net.sourceforge.pmd.rules.UnusedFormalParameterRule"
-        externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter">
-    <description>
-Avoid passing parameters to methods or constructors and then not using those parameters.
-    </description>
-      <priority>3</priority>
-
-    <example>
-<![CDATA[
-public class Foo {
- private void bar(String howdy) {
-  // howdy is not used
- }
-]]>
-    </example>
-  </rule>
 -->
+
+    <rule name="UnusedFormalParameter"
+          since="0.2"
+          message="Avoid unused parameters such as ''{1}''."
+          class="PHP_PMD_Rule_UnusedFormalParameter"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter">
+        <description>
+Avoid passing parameters to methods or constructors and then not using those parameters.
+        </description>
+        <priority>3</priority>
+        <example>
+<![CDATA[
+class Foo
+{
+    private function bar($howdy)
+    {
+        // $howdy is not used
+    }
+}
+]]>
+        </example>
+    </rule>
+
 </ruleset>
