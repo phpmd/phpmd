@@ -81,6 +81,22 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testInnerFunctionParametersDoNotHideUnusedVariables
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rules
+     * @group unittest
+     */
+    public function testInnerFunctionParametersDoNotHideUnusedVariables()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
      * testRuleDoesNotApplyToThisVariable
      *
      * @return void

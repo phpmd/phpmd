@@ -50,6 +50,7 @@ require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/IMethodAware.php';
 
+require_once 'PHP/Depend/Code/ASTFormalParameters.php';
 require_once 'PHP/Depend/Code/ASTVariable.php';
 require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
 
@@ -112,12 +113,17 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */ 
     private function _collectParameters(PHP_PMD_Node_AbstractMethodOrFunction $node)
     {
-        $parameters = $node->findChildrenOfType(
+        // Get formal parameter container
+        $parameters = $node->getFirstChildOfType(
+            PHP_Depend_Code_ASTFormalParameters::CLAZZ
+        );
+
+        $declarators = $parameters->findChildrenOfType(
             PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
         );
-        foreach ($parameters as $parameter) {
-            $this->_images[] = $parameter->getImage();
-            $this->_images[] = $parameter->getImage();
+        foreach ($declarators as $declarator) {
+            $this->_images[] = $declarator->getImage();
+            $this->_images[] = $declarator->getImage();
         }
     }
 
