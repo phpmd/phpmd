@@ -46,13 +46,12 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/TextRendererTest.php';
-require_once dirname(__FILE__) . '/XMLRendererTest.php';
+require_once 'PHP/PMD/Renderer/TextRenderer.php';
 
 /**
- * Main test suite for the PHP_PMD_Renderer package
+ * Test case for the text renderer implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -63,20 +62,59 @@ require_once dirname(__FILE__) . '/XMLRendererTest.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Renderer_AllTests
+class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * Includes the write stub class.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    protected function setUp()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Renderer - Tests');
+        parent::setUp();
 
-        $suite->addTestSuite('PHP_PMD_Renderer_TextRendererTest');
-        $suite->addTestSuite('PHP_PMD_Renderer_XMLRendererTest');
+        // Import writer stub
+        include_once self::createFileUri('stubs/WriterStub.php');
+    }
 
-        return $suite;
+    /**
+     * testRendererCreatesExpectedNumberOfTextEntries
+     *
+     * @return void
+     * @covers PHP_PMD_Renderer_TextRenderer
+     * @group phpmd
+     * @group phpmd::renderer
+     * @group unittest
+     */
+    public function testRendererCreatesExpectedNumberOfTextEntries()
+    {
+        // Create a writer instance.
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $violations = array(
+            $this->getRuleViolationMock('/bar.php', 1),
+            $this->getRuleViolationMock('/foo.php', 2),
+            $this->getRuleViolationMock('/foo.php', 3),
+        );
+
+        $report = $this->getReportMock(0);
+        $report->expects($this->once())
+               ->method('getRuleViolations')
+               ->will($this->returnValue(new ArrayIterator($violations)));
+
+        $renderer = new PHP_PMD_Renderer_TextRenderer();
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            PHP_EOL .
+            "/bar.php:1\t" . PHP_EOL .
+            "/foo.php:2\t" . PHP_EOL .
+            "/foo.php:3\t" . PHP_EOL,
+            $writer->getData()
+        );
     }
 }
