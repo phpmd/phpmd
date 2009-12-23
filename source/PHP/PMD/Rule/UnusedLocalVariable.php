@@ -50,10 +50,6 @@ require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/IMethodAware.php';
 
-require_once 'PHP/Depend/Code/ASTFormalParameters.php';
-require_once 'PHP/Depend/Code/ASTVariable.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-
 /**
  * This rule collects all local variables within a given function or method
  * that are not used by any code in the analyzed source artifact.
@@ -91,39 +87,36 @@ class PHP_PMD_Rule_UnusedLocalVariable
     {
         $this->_images = array();
 
-        $this->_collectParameters($node);
         $this->_collectVariables($node);
+        $this->_removeParameters($node);
         
-        foreach (array_count_values($this->_images) as $image => $count) {
-            if ($count === 1) {
-                $this->addViolation($node, array($image));
+        foreach ($this->_images as $image => $nodes) {
+            if (count($nodes) === 1) {
+                $this->addViolation(reset($nodes), array($image));
             }
         }
     }
 
     /**
-     * This method collects all formal parameters of the given method
-     * or/and function node and it stores the parameter's image in the
-     * <b>$_images</b> property.
+     * This method removes all variables from the <b>$_images</b> property that
+     * are also found in the formal parameters of the given method or/and
+     * function node.
      *
      * @param PHP_PMD_Node_AbstractMethodOrFunction $node The currently
      *        analyzed method/function node.
      *
      * @return void
      */ 
-    private function _collectParameters(PHP_PMD_Node_AbstractMethodOrFunction $node)
+    private function _removeParameters(PHP_PMD_Node_AbstractMethodOrFunction $node)
     {
         // Get formal parameter container
-        $parameters = $node->getFirstChildOfType(
-            PHP_Depend_Code_ASTFormalParameters::CLAZZ
-        );
+        $parameters = $node->getFirstChildOfType('FormalParameters');
 
-        $declarators = $parameters->findChildrenOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
+        // Now get all declarators in the formal parameters container
+        $declarators = $parameters->findChildrenOfType('VariableDeclarator');
+        
         foreach ($declarators as $declarator) {
-            $this->_images[] = $declarator->getImage();
-            $this->_images[] = $declarator->getImage();
+            unset($this->_images[$declarator->getImage()]);
         }
     }
 
@@ -139,24 +132,37 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     private function _collectVariables(PHP_PMD_Node_AbstractMethodOrFunction $node)
     {
-        $variables = $node->findChildrenOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
-        foreach ($variables as $variable) {
+        foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ($this->_accept($variable)) {
-                $this->_images[] = $variable->getImage();
+                $this->_collectVariable($variable);
             }
         }
+    }
+
+    /**
+     * Stores the given variable node in an internal list of found variables.
+     *
+     * @param PHP_PMD_Node_ASTNode $node The context variable node.
+     *
+     * @return void
+     */
+    private function _collectVariable(PHP_PMD_Node_ASTNode $node)
+    {
+        if (!isset($this->_images[$node->getImage()])) {
+            $this->_images[$node->getImage()] = array();
+        }
+        $this->_images[$node->getImage()][] = $node;
     }
 
     /**
      * This method will return <b>true</b> when the given variable node
      * should be tracked during the analyze phase.
      *
-     * @param PHP_Depend_Code_ASTVariable $variable The currently analyzed
-     *        variable node.
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
      *
      * @return boolean
      */
-    private function _accept(PHP_Depend_Code_ASTVariable $variable)
+    private function _accept(PHP_PMD_AbstractNode $variable)
     {
         return $this->_isNotThis($variable) && $this->_isNotStaticPostfix($variable);
     }
@@ -165,12 +171,11 @@ class PHP_PMD_Rule_UnusedLocalVariable
      * This method will return <b>true</b> when the given variable node
      * is not a reference to the objects <b>$this</b> context.
      *
-     * @param PHP_Depend_Code_ASTVariable $variable The currently analyzed
-     *        variable node.
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
      *
      * @return boolean
      */
-    private function _isNotThis(PHP_Depend_Code_ASTVariable $variable)
+    private function _isNotThis(PHP_PMD_AbstractNode $variable)
     {
         return ($variable->getImage() !== '$this');
     }
@@ -179,15 +184,14 @@ class PHP_PMD_Rule_UnusedLocalVariable
      * This method will return <b>true</b> when the given variable node is
      * not the child of a property postfix node.
      *
-     * @param PHP_Depend_Code_ASTVariable $variable The currently analyzed
-     *        variable node.
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
      *
      * @return boolean
      */
-    private function _isNotStaticPostfix(PHP_Depend_Code_ASTVariable $variable)
+    private function _isNotStaticPostfix(PHP_PMD_AbstractNode $variable)
     {
         $parent = $variable->getParent();
-        if ($parent instanceof PHP_Depend_Code_ASTPropertyPostfix) {
+        if (is_object($parent) && $parent->isInstanceOf('PropertyPostfix')) {
             return !($parent->getParent()->getImage() === '::');
         }
         return true;

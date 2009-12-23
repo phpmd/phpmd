@@ -50,10 +50,6 @@ require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/IMethodAware.php';
 
-require_once 'PHP/Depend/Code/ASTFormalParameters.php';
-require_once 'PHP/Depend/Code/ASTVariable.php';
-require_once 'PHP/Depend/Code/ASTVariableDeclarator.php';
-
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
@@ -72,7 +68,12 @@ class PHP_PMD_Rule_UnusedFormalParameter
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
-    private $_images = array();
+    /**
+     * Collected ast nodes.
+     *
+     * @var array(string=>PHP_PMD_Node_ASTNode)
+     */
+    private $_nodes = array();
 
     /**
      * This method checks that all parameters of a given function or method are
@@ -88,13 +89,13 @@ class PHP_PMD_Rule_UnusedFormalParameter
             return;
         }
 
-        $this->_images = array();
+        $this->_nodes = array();
 
         $this->_collectParameters($node);
         $this->_removeUsedParameters($node);
 
-        foreach ($this->_images as $image) {
-            $this->addViolation($node, array($image));
+        foreach ($this->_nodes as $node) {
+            $this->addViolation($node, array($node->getImage()));
         }
     }
 
@@ -124,17 +125,13 @@ class PHP_PMD_Rule_UnusedFormalParameter
     private function _collectParameters(PHP_PMD_AbstractNode $node)
     {
         // First collect the formal parameters container
-        $parameters = $node->getFirstChildOfType(
-            PHP_Depend_Code_ASTFormalParameters::CLAZZ
-        );
+        $parameters = $node->getFirstChildOfType('FormalParameters');
 
         // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType(
-            PHP_Depend_Code_ASTVariableDeclarator::CLAZZ
-        );
+        $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
         foreach ($declarators as $declarator) {
-            $this->_images[$declarator->getImage()] = $declarator->getImage();
+            $this->_nodes[$declarator->getImage()] = $declarator;
         }
     }
 
@@ -149,9 +146,9 @@ class PHP_PMD_Rule_UnusedFormalParameter
      */
     private function _removeUsedParameters(PHP_PMD_AbstractNode $node)
     {
-        $variables = $node->findChildrenOfType(PHP_Depend_Code_ASTVariable::CLAZZ);
+        $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            unset($this->_images[$variable->getImage()]);
+            unset($this->_nodes[$variable->getImage()]);
         }
     }
 }

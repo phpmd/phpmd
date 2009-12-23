@@ -124,7 +124,7 @@ class PHP_PMD_RuleViolation
         } else if ($node instanceof PHP_PMD_Node_Method) {
             $this->_className  = $node->getParentName();
             $this->_methodName = $node->getName();
-        } else {
+        } else if ($node instanceof PHP_PMD_Node_Function) {
             $this->_functionName = $node->getName();
         }
     }

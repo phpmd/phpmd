@@ -34,9 +34,9 @@ public class Something {
 -->
     <rule name="UnusedLocalVariable"
           since="0.2"
-          message="Avoid unused local variables such as ''{0}''."
+          message="Avoid unused local variables such as '{0}'."
           class="PHP_PMD_Rule_UnusedLocalVariable"
-          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#UnusedLocalVariable">
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable">
         <description>
 Detects when a local variable is declared and/or assigned, but not used.
         </description>
@@ -73,7 +73,7 @@ public class Something {
 
     <rule name="UnusedFormalParameter"
           since="0.2"
-          message="Avoid unused parameters such as ''{1}''."
+          message="Avoid unused parameters such as '{0}'."
           class="PHP_PMD_Rule_UnusedFormalParameter"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter">
         <description>

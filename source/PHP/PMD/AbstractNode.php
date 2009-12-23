@@ -45,6 +45,8 @@
  * @link      http://www.pdepend.org/pmd
  */
 
+require_once 'PHP/PMD/Node/ASTNode.php';
+
 /**
  * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper
  * around PHP_Depend's object model.
@@ -61,7 +63,7 @@ abstract class PHP_PMD_AbstractNode
 {
     /**
      *
-     * @var PHP_Depend_Code_AbstractItem $node
+     * @var PHP_Depend_Code_AbstractItem|PHP_Depend_Code_ASTNode $node
      */
     private $_node = null;
 
@@ -75,11 +77,85 @@ abstract class PHP_PMD_AbstractNode
     /**
      * Constructs a new PHP_PMD node.
      *
-     * @param PHP_Depend_Code_AbstractItem $node The wrapped PHP_Depend node.
+     * @param PHP_Depend_Code_AbstractItem|PHP_Depend_Code_ASTNode $node The wrapped
+     *        PHP_Depend ast node instance or item object.
      */
-    public function __construct(PHP_Depend_Code_AbstractItem $node)
+    public function __construct($node)
     {
         $this->_node = $node;
+    }
+
+    /**
+     * Returns the parent of this node or <b>null</b> when no parent node
+     * exists.
+     *
+     * @return PHP_PMD_AbstractNode
+     */
+    public function getParent()
+    {
+        if (($node = $this->_node->getParent()) === null) {
+            return null;
+        }
+        return new PHP_PMD_Node_ASTNode($node, $this->getFileName());
+    }
+
+    /**
+     * Returns the first child of the given type or <b>null</b> when this node
+     * has no child of the given type.
+     *
+     * @param string $type The searched child type.
+     *
+     * @return PHP_PMD_AbstractNode
+     */
+    public function getFirstChildOfType($type)
+    {
+        $node = $this->_node->getFirstChildOfType('PHP_Depend_Code_AST' . $type);
+        if ($node === null) {
+            return null;
+        }
+        return new PHP_PMD_Node_ASTNode($node, $this->getFileName());
+    }
+
+    /**
+     * Searches recursive for all children of this node that are of the given
+     * type.
+     *
+     * @param string $type The searched child type.
+     *
+     * @return array(PHP_PMD_AbstractNode)
+     */
+    public function findChildrenOfType($type)
+    {
+        $children = $this->_node->findChildrenOfType('PHP_Depend_Code_AST' . $type);
+
+        $nodes = array();
+        foreach ($children as $child) {
+            $nodes[] = new PHP_PMD_Node_ASTNode($child, $this->getFileName());
+        }
+        return $nodes;
+    }
+
+    /**
+     * Tests if this node represents the the given type.
+     *
+     * @param string $type The expected node type.
+     *
+     * @return boolean
+     */
+    public function isInstanceOf($type)
+    {
+        $class = 'PHP_Depend_Code_AST' . $type;
+        return ($this->_node instanceof $class);
+    }
+
+    /**
+     * Returns the image of the underlying node.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->_node->getImage();
     }
 
     /**
