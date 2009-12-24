@@ -89,7 +89,55 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * @group phpmd::rule
      * @group unittest
      */
+    public function testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesToUnusedPrivateStaticField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
     public function testRuleAppliesToUnusedPrivateStaticField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent()
     {
         $rule = new PHP_PMD_Rule_UnusedPrivateField();
         $rule->setReport($this->getReportMock(1));
@@ -106,6 +154,86 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedPublicField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToUnusedProtectedField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToUnusedProtectedField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToThisAccessedPrivateField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToThisAccessedPrivateField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToSelfAccessedPrivateField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToSelfAccessedPrivateField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToStaticAccessedPrivateField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToStaticAccessedPrivateField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToClassNameAccessedPrivateField
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToClassNameAccessedPrivateField()
     {
         $rule = new PHP_PMD_Rule_UnusedPrivateField();
         $rule->setReport($this->getReportMock(0));
