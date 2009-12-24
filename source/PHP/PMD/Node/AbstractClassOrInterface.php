@@ -73,6 +73,65 @@ abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNod
     }
 
     /**
+     * Searches recursive for the first node of the given type.
+     *
+     * @param string $type The searched node type.
+     *
+     * @return PHP_PMD_Node_AbstractNode
+     * @todo Remove this workaround method until PHP_Depend 0.9.9 is available
+     *       and supports recursive node search.
+     */
+    public function getFirstChildOfType($type)
+    {
+        if (is_object($child = parent::getFirstChildOfType($type))) {
+            return $child;
+        }
+
+        foreach ($this->getMethods() as $method) {
+            if (is_object($child = $method->getFirstChildOfType($type))) {
+                return $child;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Searches recursive for all nodes of the given type.
+     *
+     * @param string $type The searched node type.
+     *
+     * @return array(PHP_PMD_Node_AbstractNode)
+     * @todo Remove this workaround method until PHP_Depend 0.9.9 is available
+     *       and supports recursive node search.
+     */
+    public function findChildrenOfType($type)
+    {
+        $children = parent::findChildrenOfType($type);
+        foreach ($this->getMethods() as $method) {
+            foreach ($method->findChildrenOfType($type) as $child) {
+                $children[] = $child;
+            }
+        }
+        return $children;
+    }
+
+    /**
+     * Returns an <b>array</b> with all methods defined in the context class or
+     * interface.
+     *
+     * @return array(PHP_PMD_Node_Method)
+     */
+    public function getMethods()
+    {
+        $methods = array();
+        foreach ($this->getNode()->getMethods() as $method) {
+            $methods[] = new PHP_PMD_Node_Method($method);
+        }
+        return $methods;
+    }
+
+    /**
      * Returns an array with the names of all methods within this class or
      * interface node.
      *

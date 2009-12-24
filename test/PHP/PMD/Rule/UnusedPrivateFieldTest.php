@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,91 +46,69 @@
  * @link       http://www.pdepend.org/pmd
  */
 
-require_once 'PHP/PMD/Node/AbstractMethodOrFunction.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Rule/UnusedPrivateField.php';
 
 /**
- * Wrapper around a PHP_Depend ast node.
+ * Test case for the unused private field rule.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Node
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@pdepend.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
+class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
 {
     /**
-     * The source file of this node.
+     * testRuleAppliesToUnusedPrivateField
      *
-     * @var string
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
      */
-    private $_fileName = null;
-
-    /**
-     * Constructs a new ast node instance.
-     *
-     * @param PHP_Depend_Code_ASTNode $node     The context ast node.
-     * @param string                  $fileName The source file name.
-     */
-    public function __construct(PHP_Depend_Code_ASTNode $node, $fileName)
+    public function testRuleAppliesToUnusedPrivateField()
     {
-        parent::__construct($node);
-
-        $this->_fileName = $fileName;
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
     }
 
     /**
-     * Returns the source name for this node, maybe a class or interface name,
-     * or a package, method, function name.
+     * testRuleAppliesToUnusedPrivateStaticField
      *
-     * @return string
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
      */
-    public function getName()
+    public function testRuleAppliesToUnusedPrivateStaticField()
     {
-        return $this->getImage();
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
     }
 
     /**
-     * Returns the image of the underlying node.
+     * testRuleDoesNotApplyToUnusedPublicField
      *
-     * @return string
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
      */
-    public function getImage()
+    public function testRuleDoesNotApplyToUnusedPublicField()
     {
-        return $this->getNode()->getImage();
-    }
-
-    /**
-     * Returns the name of the declaring source file.
-     *
-     * @return string
-     */
-    public function getFileName()
-    {
-        return $this->_fileName;
-    }
-
-    /**
-     * Returns the name of the parent type or <b>null</b> when this node has no
-     * parent type.
-     *
-     * @return string
-     */
-    public function getParentName()
-    {
-        return null;
-    }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return null;
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
     }
 }

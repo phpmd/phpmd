@@ -91,6 +91,23 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first class found in a source file related to the calling
+     * test method.
+     *
+     * @return PHP_PMD_Node_Class
+     */
+    protected function getClass()
+    {
+        include_once 'PHP/PMD/Node/Class.php';
+
+        $class = $this->_parseTestCaseSource()
+            ->getClasses()
+            ->current();
+
+        return new PHP_PMD_Node_Class($class);
+    }
+
+    /**
      * Returns the first method found in a source file related to the calling
      * test method.
      *

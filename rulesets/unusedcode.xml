@@ -1,37 +1,39 @@
 <?xml version="1.0"?>
 
 <ruleset name="Unused Code Rules"
-    xmlns="http://pmd.sf.net/ruleset/1.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
-  <description>
-The Unused Code Ruleset contains a collection of rules that find unused code.
-  </description>
-<!--
-  <rule name="UnusedPrivateField"
-  		  since="0.1"
-        message="Avoid unused private fields such as ''{0}''."
-        class="net.sourceforge.pmd.rules.UnusedPrivateFieldRule"
-        externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateField">
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
     <description>
-Detects when a private field is declared and/or assigned a value, but not used.
+The Unused Code Ruleset contains a collection of rules that find unused code.
     </description>
-      <priority>3</priority>
-    <example>
+
+    <rule name="UnusedPrivateField"
+          since="0.2"
+          message="Avoid unused private fields such as '{0}'."
+          class="PHP_PMD_Rule_UnusedPrivateField"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield">
+        <description>
+Detects when a private field is declared and/or assigned a value, but not used.
+        </description>
+        <priority>3</priority>
+        <example>
 <![CDATA[
-public class Something {
-  private static int FOO = 2; // Unused
-  private int i = 5; // Unused
-  private int j = 6;
-  public int addOne() {
-    return j++;
-  }
+class Something
+{
+    private static $FOO = 2; // Unused
+    private $i = 5; // Unused
+    private $j = 6;
+    public function addOne()
+    {
+        return j++;
+    }
 }
 ]]>
-    </example>
-  </rule>
--->
+        </example>
+    </rule>
+
     <rule name="UnusedLocalVariable"
           since="0.2"
           message="Avoid unused local variables such as '{0}'."

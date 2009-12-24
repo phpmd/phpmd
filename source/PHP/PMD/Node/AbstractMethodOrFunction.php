@@ -73,27 +73,6 @@ abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_AbstractNod
     }
 
     /**
-     * The magic call method is used to pipe requests from rules direct
-     * to the underlying PHP_Depend ast node.
-     *
-     * @param string $name Name of the invoked method.
-     * @param array  $args Optional method arguments.
-     *
-     * @return mixed
-     * @throws BadMethodCallException When the underlying PHP_Depend node 
-     *         does not contain a method named <b>$name</b>.
-     */
-    public function __call($name, array $args)
-    {
-        if (method_exists($this->getNode(), $name)) {
-            return call_user_func_array(array($this->getNode(), $name), $args);
-        }
-        throw new BadMethodCallException(
-            sprintf('Invalid method %s() called.', $name)
-        );
-    }
-
-    /**
      * Returns the number of parameters in the callable signature.
      *
      * @return integer
