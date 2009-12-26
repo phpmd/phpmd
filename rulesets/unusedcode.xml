@@ -27,7 +27,7 @@ class Something
     private $j = 6;
     public function addOne()
     {
-        return j++;
+        return $this->j++;
     }
 }
 ]]>
@@ -46,32 +46,33 @@ Detects when a local variable is declared and/or assigned, but not used.
         <example>
 <![CDATA[
 class Foo {
-    public function doSomething() {
+    public function doSomething()
+    {
         $i = 5; // Unused
     }
 }
 ]]>
         </example>
     </rule>
-<!--
+
     <rule name="UnusedPrivateMethod"
-    	  since="0.7"
-        message="Avoid unused private methods such as ''{0}''."
-        class="net.sourceforge.pmd.rules.UnusedPrivateMethodRule"
-        externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod">
-    <description>
+          since="0.2"
+          message="Avoid unused private methods such as '{0}'."
+          class="PHP_PMD_Rule_UnusedPrivateMethod"
+          externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod">
+        <description>
 Unused Private Method detects when a private method is declared but is unused.
-    </description>
+        </description>
         <priority>3</priority>
-    <example>
+        <example>
 <![CDATA[
-public class Something {
- private void foo() {} // unused
+class Something
+{
+    private function foo() {} // unused
 }
 ]]>
-    </example>
-  </rule>
--->
+        </example>
+    </rule>
 
     <rule name="UnusedFormalParameter"
           since="0.2"

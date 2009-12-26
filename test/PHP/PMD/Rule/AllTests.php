@@ -53,6 +53,7 @@ require_once dirname(__FILE__) . '/ExcessivePublicCountTest.php';
 require_once dirname(__FILE__) . '/UnusedFormalParameterTest.php';
 require_once dirname(__FILE__) . '/UnusedLocalVariableTest.php';
 require_once dirname(__FILE__) . '/UnusedPrivateFieldTest.php';
+require_once dirname(__FILE__) . '/UnusedPrivateMethodTest.php';
 
 require_once dirname(__FILE__) . '/Design/AllTests.php';
 
@@ -84,6 +85,7 @@ class PHP_PMD_Rule_AllTests
         $suite->addTestSuite('PHP_PMD_Rule_UnusedFormalParameterTest');
         $suite->addTestSuite('PHP_PMD_Rule_UnusedLocalVariableTest');
         $suite->addTestSuite('PHP_PMD_Rule_UnusedPrivateFieldTest');
+        $suite->addTestSuite('PHP_PMD_Rule_UnusedPrivateMethodTest');
 
         $suite->addTest(PHP_PMD_Rule_Design_AllTests::suite());
 

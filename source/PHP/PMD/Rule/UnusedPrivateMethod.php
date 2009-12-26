@@ -50,7 +50,7 @@ require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * This rule collects all private fields in a class that aren't used in any
+ * This rule collects all private methods in a class that aren't used in any
  * method of the analyzed class.
  *
  * @category   PHP
@@ -62,128 +62,103 @@ require_once 'PHP/PMD/Rule/IClassAware.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Rule_UnusedPrivateField
+class PHP_PMD_Rule_UnusedPrivateMethod
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * Collected private fields/variable declarators in the currently processed
-     * class.
-     *
-     * @var array(string=>PHP_PMD_Node_ASTNode)
-     */
-    private $_fields = array();
-
-    /**
-     * This method checks that all private class properties are at least accessed
+     * This method checks that all private class methods are at least accessed
      * by one method.
      *
-     * @param PHP_PMD_AbstractNode $node The context source code node.
+     * @param PHP_PMD_AbstractNode $class The context source code node.
      *
      * @return void
      */
-    public function apply(PHP_PMD_AbstractNode $node)
+    public function apply(PHP_PMD_AbstractNode $class)
     {
-        foreach ($this->_collectUnusedPrivateFields($node) as $field) {
-            $this->addViolation($field, array($field->getImage()));
+        foreach ($this->_collectUnusedPrivateMethods($class) as $node) {
+            $this->addViolation($node, array($node->getImage()));
         }
     }
 
     /**
-     * This method collects all private fields that aren't used by any class
-     * method.
+     * This method collects all methods in the given class that are declared
+     * as private and are not used in the same class' context.
      *
-     * @param PHP_PMD_Node_Class $class The context class node.
+     * @param PHP_PMD_Node_Class $class The context class instance.
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectUnusedPrivateFields(PHP_PMD_Node_Class $class)
+    private function _collectUnusedPrivateMethods(PHP_PMD_Node_Class $class)
     {
-        $this->_fields = array();
-
-        $this->_collectPrivateFields($class);
-        $this->_removeUsedFields($class);
-
-        return $this->_fields;
+        $methods = $this->_collectPrivateMethods($class);
+        return $this->_removeUsedMethods($class, $methods);
     }
 
     /**
-     * This method collects all private fields in the given class and stores
-     * them in the <b>$_fields</b> property.
+     * Collects all private methods declared in the given class node.
      *
      * @param PHP_PMD_Node_Class $class The context class instance.
      *
-     * @return void
+     * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectPrivateFields(PHP_PMD_Node_Class $class)
+    private function _collectPrivateMethods(PHP_PMD_Node_Class $class)
     {
-        foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
-            if ($declaration->isPrivate()) {
-                $this->_collectPrivateField($declaration);
+        $methods = array();
+        foreach ($class->getMethods() as $method) {
+            if ($this->_acceptMethod($class, $method)) {
+                $methods[strtolower($method->getImage())] = $method;
             }
         }
+        return $methods;
     }
 
     /**
-     * This method extracts all variable declarators from the given field
-     * declaration and stores them in the <b>$_fields</b> property.
+     * This method removes all used methods from the given methods array.
      *
-     * @param PHP_PMD_Node_ASTNode $declaration The context field declaration.
+     * @param PHP_PMD_Node_Class         $class   The context class instance.
+     * @param array(PHP_PMD_Node_Method) $methods All collected private methods.
      *
-     * @return void
+     * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectPrivateField(PHP_PMD_Node_ASTNode $declaration)
+    private function _removeUsedMethods(PHP_PMD_Node_Class $class, array $methods)
     {
-        $fields = $declaration->findChildrenOfType('VariableDeclarator');
-        foreach ($fields as $field) {
-            $this->_fields[$field->getImage()] = $field;
-        }
-    }
-
-    /**
-     * This method extracts all property postfix nodes from the given class and
-     * removes all fields from the <b>$_fields</b> property that are accessed by
-     * one of the postfix nodes.
-     *
-     * @param PHP_PMD_Node_Class $class The context class instance.
-     *
-     * @return void
-     */
-    private function _removeUsedFields(PHP_PMD_Node_Class $class)
-    {
-        foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
+        foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
             if ($this->_isClassScope($class, $postfix)) {
-                $this->_removeUsedField($postfix);
+                unset($methods[strtolower($postfix->getImage())]);
             }
         }
+        return $methods;
     }
 
     /**
-     * This method removes the field from the <b>$_fields</b> property that is
-     * accessed through the given property postfix node.
+     * Returns <b>true</b> when the given method should be used for this rule's
+     * analysis.
      *
-     * @param PHP_PMD_Node_ASTNode $postfix The context postfix node.
+     * @param PHP_PMD_Node_Class  $class  The context class instance.
+     * @param PHP_PMD_Node_Method $method The context method instance.
      *
-     * @return void
+     * @return boolean
      */
-    private function _removeUsedField(PHP_PMD_Node_ASTNode $postfix)
-    {
-        // TODO: Change this to isStatic() when PHP_Depend 0.9.9 is available
-        if ($postfix->getParent()->getImage() === '::') {
-            $image = $postfix->getImage();
-        } else {
-            $image = '$' . $postfix->getImage();
-        }
-
-        unset($this->_fields[$image]);
+    private function _acceptMethod(
+        PHP_PMD_Node_Class $class,
+        PHP_PMD_Node_Method $method
+    ) {
+        return (
+            $method->isPrivate() &&
+            strcasecmp($method->getImage(), $class->getImage()) !== 0 &&
+            strcasecmp($method->getImage(), '__construct') !== 0 &&
+            strcasecmp($method->getImage(), '__destruct') !== 0 &&
+            strcasecmp($method->getImage(), '__clone') !== 0
+        );
     }
 
     /**
-     * This method checks that the given property postfix is accessed on an
+     * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
      * @param PHP_PMD_Node_Class   $class   The context class node instance.
-     * @param PHP_PMD_Node_ASTNode $postfix The context property postfix node.
+     * @param PHP_PMD_Node_ASTNode $postfix The context method postfix node.
      *
      * @return boolean
      */
