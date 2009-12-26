@@ -67,6 +67,8 @@ class PHP_PMD_Rule_UnusedPrivateField
     implements PHP_PMD_Rule_IClassAware
 {
     /**
+     * Collected private fields/variable declarators in the currently processed
+     * class.
      *
      * @var array(string=>PHP_PMD_Node_ASTNode)
      */
