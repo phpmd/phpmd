@@ -1,7 +1,9 @@
 phpmd-0.2.0 ()
 ==============
 
-- Closes #3: Text renderer implemented.
+- Implemented #2: Support for unused code fules completed. Implemented in svn
+  revision #134.
+- Implemented #3: Text renderer implemented.
 
 
 phpmd-0.1.0 (2009/12/20)
