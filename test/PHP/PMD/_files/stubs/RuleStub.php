@@ -71,6 +71,7 @@ class PHP_PMD_Stubs_RuleStub extends PHP_PMD_AbstractRule
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')
     {
         $this->setName($ruleName);
+        $this->setExternalInfoUrl('http://phpmd.org/rules/index.html');
         $this->setRuleSetName($ruleSetName);
         $this->setSince('42.23');
         $this->setDescription('Simple rule stub');
