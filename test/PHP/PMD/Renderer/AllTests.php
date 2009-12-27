@@ -48,6 +48,7 @@
 
 require_once 'PHPUnit/Framework.php';
 
+require_once dirname(__FILE__) . '/HTMLRendererTest.php';
 require_once dirname(__FILE__) . '/TextRendererTest.php';
 require_once dirname(__FILE__) . '/XMLRendererTest.php';
 
@@ -74,6 +75,7 @@ class PHP_PMD_Renderer_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Renderer - Tests');
 
+        $suite->addTestSuite('PHP_PMD_Renderer_HTMLRendererTest');
         $suite->addTestSuite('PHP_PMD_Renderer_TextRendererTest');
         $suite->addTestSuite('PHP_PMD_Renderer_XMLRendererTest');
 

@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/PMD/Renderer/TextRenderer.php';
+require_once 'PHP/PMD/Renderer/HTMLRenderer.php';
 
 /**
- * Test case for the text renderer implementation.
+ * Test case for the html renderer implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -62,7 +62,7 @@ require_once 'PHP/PMD/Renderer/TextRenderer.php';
  * @version    Release: @package_version@
  * @link       http://www.pdepend.org/pmd
  */
-class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Renderer_HTMLRendererTest extends PHP_PMD_AbstractTest
 {
     /**
      * Includes the write stub class.
@@ -81,12 +81,12 @@ class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
      * testRendererCreatesExpectedNumberOfTextEntries
      *
      * @return void
-     * @covers PHP_PMD_Renderer_TextRenderer
+     * @covers PHP_PMD_Renderer_HTMLRenderer
      * @group phpmd
      * @group phpmd::renderer
      * @group unittest
      */
-    public function testRendererCreatesExpectedNumberOfTextEntries()
+    public function testRendererCreatesExpectedHtmlTableRow()
     {
         // Create a writer instance.
         $writer = new PHP_PMD_Stubs_WriterStub();
@@ -102,18 +102,20 @@ class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
                ->method('getRuleViolations')
                ->will($this->returnValue(new ArrayIterator($violations)));
 
-        $renderer = new PHP_PMD_Renderer_TextRenderer();
+        $renderer = new PHP_PMD_Renderer_HTMLRenderer();
         $renderer->setWriter($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
-            PHP_EOL .
-            "/bar.php:1\tTest description" . PHP_EOL .
-            "/foo.php:2\tTest description" . PHP_EOL .
-            "/foo.php:3\tTest description" . PHP_EOL,
+        $this->assertContains(
+            '<tr>' . PHP_EOL .
+            '<td align="center">2</td>' . PHP_EOL .
+            '<td>/foo.php</td>' . PHP_EOL .
+            '<td align="center" width="5%">2</td>' . PHP_EOL .
+            '<td><a href="http://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
+            '</tr>',
             $writer->getData()
         );
     }
