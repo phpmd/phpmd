@@ -110,7 +110,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers \PHP_PMD::processFiles
-     * @covers \PHP_PMD::_createPhpDepend
      * @group phpmd
      * @group unittest
      */
@@ -139,7 +138,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers \PHP_PMD::processFiles
-     * @covers \PHP_PMD::_createPhpDepend
      * @group phpmd
      * @group unittest
      */

@@ -48,10 +48,10 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/PMDTest.php';
+require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ReportTest.php';
 require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
 require_once dirname(__FILE__) . '/RuleSetTest.php';
-require_once dirname(__FILE__) . '/Adapter/AllTests.php';
 require_once dirname(__FILE__) . '/Node/AllTests.php';
 require_once dirname(__FILE__) . '/Regression/AllTests.php';
 require_once dirname(__FILE__) . '/Renderer/AllTests.php';
@@ -80,11 +80,11 @@ class PHP_PMD_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
 
         $suite->addTestSuite('PHP_PMD_PMDTest');
+        $suite->addTestSuite('PHP_PMD_ParserTest');
         $suite->addTestSuite('PHP_PMD_ReportTest');
         $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');
         $suite->addTestSuite('PHP_PMD_RuleSetTest');
 
-        $suite->addTest(PHP_PMD_Adapter_AllTests::suite());
         $suite->addTest(PHP_PMD_Node_AllTests::suite());
         $suite->addTest(PHP_PMD_Regression_AllTests::suite());
         $suite->addTest(PHP_PMD_Renderer_AllTests::suite());

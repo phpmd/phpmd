@@ -45,11 +45,8 @@
  * @link      http://www.pdepend.org/php-pmd
  */
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExcludePathFilter.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-
 require_once 'PHP/PMD/Report.php';
+require_once 'PHP/PMD/ParserFactory.php';
 require_once 'PHP/PMD/RuleSetFactory.php';
 require_once 'PHP/PMD/Adapter/Metrics.php';
 require_once 'PHP/PMD/Writer/Stream.php';
@@ -75,16 +72,44 @@ final class PHP_PMD
     /**
      * List of valid file extensions for analyzed files.
      *
-     * @var array(string) $_fileExtensions
+     * @var array(string)
      */
     private $_fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
 
     /**
      * List of exclude directory patterns.
      *
-     * @var array(string) $_ignorePatterns
+     * @var array(string)
      */
-    private $_ignorePatterns = array('.git', '.svn', 'CVS');
+    private $_ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg');
+
+    /**
+     * The input source file or directory.
+     *
+     * @var string
+     */
+    private $_inputPath = null;
+
+    /**
+     * Returns the input source file or directory path.
+     *
+     * @return string
+     */
+    public function getInputPath()
+    {
+        return $this->_inputPath;
+    }
+
+    /**
+     * Returns an array with valid php source file extensions.
+     *
+     * @return array(string)
+     * @since 0.2.0
+     */
+    public function getFileExtensions()
+    {
+        return $this->_fileExtensions;
+    }
 
     /**
      * Sets a list of filename extensions for valid php source code files.
@@ -96,6 +121,17 @@ final class PHP_PMD
     public function setFileExtensions(array $fileExtensions)
     {
         $this->_fileExtensions = $fileExtensions;
+    }
+
+    /**
+     * Returns an array with string patterns that mark a file path as invalid.
+     *
+     * @return array(string)
+     * @since 0.2.0
+     */
+    public function getIgnorePattern()
+    {
+        return $this->_ignorePatterns;
     }
 
     /**
@@ -129,23 +165,19 @@ final class PHP_PMD
         array $renderers,
         PHP_PMD_RuleSetFactory $ruleSetFactory
     ) {
-        $ruleSets = $ruleSetFactory->createRuleSets($ruleSets);
+        $this->_inputPath = $inputPath;
 
         $report = new PHP_PMD_Report();
 
-        $adapter = new PHP_PMD_Adapter_Metrics();
-        $adapter->setReport($report);
+        $factory = new PHP_PMD_ParserFactory();
+        $parser  = $factory->create($this);
 
-        foreach ($ruleSets as $ruleSet) {
-            $adapter->addRuleSet($ruleSet);
+        foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
+            $parser->addRuleSet($ruleSet);
         }
 
-        $pdepend = $this->_createPhpDepend($inputPath);
-        $pdepend->addLogger($adapter);
-        $pdepend->setSupportBadDocumentation();
-        
         $report->start();
-        $pdepend->analyze();
+        $parser->parse($report);
         $report->end();
 
         foreach ($renderers as $renderer) {
@@ -159,36 +191,5 @@ final class PHP_PMD
         foreach ($renderers as $renderer) {
             $renderer->end();
         }
-    }
-
-    /**
-     * Creates the used PHP_Depend analyzer instance.
-     *
-     * @param string $inputPath The input filename or directory.
-     *
-     * @return PHP_Depend
-     */
-    private function _createPhpDepend($inputPath)
-    {
-        $pdepend = new PHP_Depend();
-
-        $path = realpath($inputPath);
-        if (is_dir($path)) {
-            $pdepend->addDirectory($path);
-        } else {
-            $pdepend->addFile($path);
-        }
-
-        if (count($this->_ignorePatterns) > 0) {
-            $filter = new PHP_Depend_Input_ExcludePathFilter($this->_ignorePatterns);
-            $pdepend->addFileFilter($filter);
-        }
-
-        if (count($this->_fileExtensions) > 0) {
-            $filter = new PHP_Depend_Input_ExtensionFilter($this->_fileExtensions);
-            $pdepend->addFileFilter($filter);
-        }
-
-        return $pdepend;
     }
 }
