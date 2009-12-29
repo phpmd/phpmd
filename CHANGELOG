@@ -1,10 +1,11 @@
-phpmd-0.2.0 ()
-==============
+phpmd-0.2.0 (2009/12/30)
+========================
 
 - Implemented #2: Support for unused code fules completed, implemented in svn
   revision #134.
 - Implemented #3: Text renderer implemented.
 - Implemented #4: Implement a html renderer, implemented in svn revision #139.
+- Several performance improvements.
 
 
 phpmd-0.1.0 (2009/12/20)

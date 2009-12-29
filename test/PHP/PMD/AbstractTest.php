@@ -100,11 +100,12 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     {
         include_once 'PHP/PMD/Node/Class.php';
 
-        $class = $this->_parseTestCaseSource()
-            ->getClasses()
-            ->current();
-
-        return new PHP_PMD_Node_Class($class);
+        return new PHP_PMD_Node_Class(
+            $this->_getNodeForCallingTestCase(
+                $this->_parseTestCaseSource()
+                    ->getClasses()
+            )
+        );
     }
 
     /**
@@ -116,14 +117,15 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     protected function getMethod()
     {
         include_once 'PHP/PMD/Node/Method.php';
-
-        $method = $this->_parseTestCaseSource()
-            ->getTypes()
-            ->current()
-            ->getMethods()
-            ->current();
         
-        return new PHP_PMD_Node_Method($method);
+        return new PHP_PMD_Node_Method(
+            $this->_getNodeForCallingTestCase(
+                $this->_parseTestCaseSource()
+                    ->getTypes()
+                    ->current()
+                    ->getMethods()
+            )
+        );
     }
 
     /**
@@ -136,11 +138,12 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     {
         include_once 'PHP/PMD/Node/Function.php';
 
-        $function = $this->_parseTestCaseSource()
-            ->getFunctions()
-            ->current();
-
-        return new PHP_PMD_Node_Function($function);
+        return new PHP_PMD_Node_Function(
+            $this->_getNodeForCallingTestCase(
+                $this->_parseTestCaseSource()
+                    ->getFunctions()
+            )
+        );
     }
 
     /**
@@ -151,12 +154,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     private function _parseTestCaseSource()
     {
-        foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
-                break;
-            }
-        }
-        
+        $frame = $this->_getCallingTestCase();
+
         $sourceFile = sprintf(
             '%s/_files/%s/%s.php',
             dirname(__FILE__),
@@ -164,6 +163,39 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             $frame['function']
         );
         return $this->_parseSource($sourceFile);
+    }
+
+    /**
+     * Returns the trace frame of the calling test case.
+     *
+     * @return array
+     */
+    private function _getCallingTestCase()
+    {
+        foreach (debug_backtrace() as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return $frame;
+            }
+        }
+        throw new ErrorException('Cannot locate calling test case.');
+    }
+
+    /**
+     * Returns the PHP_Depend node for the calling test case.
+     *
+     * @param Iterator $nodes The raw input iterator.
+     *
+     * @return PHP_Depend_Code_AbstractItem
+     */
+    private function _getNodeForCallingTestCase(Iterator $nodes)
+    {
+        $frame = $this->_getCallingTestCase();
+        foreach ($nodes as $node) {
+            if ($node->getName() === $frame['function']) {
+                return $node;
+            }
+        }
+        throw new ErrorException('Cannot locate node for test case.');
     }
 
     /**
