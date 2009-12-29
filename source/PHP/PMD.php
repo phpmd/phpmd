@@ -48,7 +48,6 @@
 require_once 'PHP/PMD/Report.php';
 require_once 'PHP/PMD/ParserFactory.php';
 require_once 'PHP/PMD/RuleSetFactory.php';
-require_once 'PHP/PMD/Adapter/Metrics.php';
 require_once 'PHP/PMD/Writer/Stream.php';
 
 /**
