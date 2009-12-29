@@ -1,4 +1,5 @@
 build
+cachegrind.out.*
 lib
 nbproject
 setup
