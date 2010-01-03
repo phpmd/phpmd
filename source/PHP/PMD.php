@@ -61,7 +61,7 @@ require_once 'PHP/PMD/Writer/Stream.php';
  * @version   Release: @package_version@
  * @link      http://www.pdepend.org/php-pmd
  */
-final class PHP_PMD
+class PHP_PMD
 {
     /**
      * The current PHP_PMD version.
