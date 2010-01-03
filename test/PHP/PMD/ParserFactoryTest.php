@@ -130,7 +130,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
         $uri1 = $this->createFileUri('ParserFactory/File');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getInput'));
         $phpmd->expects($this->once())
             ->method('getInput')
             ->will($this->returnValue($uri1 . ',' . $uri2));
@@ -157,7 +157,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
         $uri1 = $this->createFileUri('ParserFactory/File/Test.php');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getInput'));
         $phpmd->expects($this->once())
             ->method('getInput')
             ->will($this->returnValue($uri1 . ',' . $uri2));
