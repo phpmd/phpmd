@@ -48,6 +48,7 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/PMDTest.php';
+require_once dirname(__FILE__) . '/ParserFactoryTest.php';
 require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ReportTest.php';
 require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
@@ -80,6 +81,7 @@ class PHP_PMD_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
 
         $suite->addTestSuite('PHP_PMD_PMDTest');
+        $suite->addTestSuite('PHP_PMD_ParserFactoryTest');
         $suite->addTestSuite('PHP_PMD_ParserTest');
         $suite->addTestSuite('PHP_PMD_ReportTest');
         $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');

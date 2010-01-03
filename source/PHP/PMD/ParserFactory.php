@@ -65,11 +65,11 @@ require_once 'PHP/Depend/Input/ExtensionFilter.php';
 class PHP_PMD_ParserFactory
 {
     /**
-     * Creates the used PHP_Depend analyzer instance.
+     * Creates the used PHP_PMD_Parser analyzer instance.
      *
      * @param PHP_PMD $phpmd The context php mess detector instance.
      *
-     * @return PHP_Depend
+     * @return PHP_PMD_Parser
      */
     public function create(PHP_PMD $phpmd)
     {
@@ -133,7 +133,7 @@ class PHP_PMD_ParserFactory
      */
     private function _initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
-        $path = realpath($phpmd->getInputPath());
+        $path = realpath($phpmd->getInput());
         if (is_dir($path)) {
             $pdepend->addDirectory($path);
         } else {

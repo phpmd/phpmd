@@ -61,7 +61,7 @@ require_once 'PHP/PMD/Writer/Stream.php';
  * @version   Release: @package_version@
  * @link      http://www.pdepend.org/php-pmd
  */
-final class PHP_PMD
+class PHP_PMD
 {
     /**
      * The current PHP_PMD version.
@@ -87,16 +87,16 @@ final class PHP_PMD
      *
      * @var string
      */
-    private $_inputPath = null;
+    private $_input = null;
 
     /**
      * Returns the input source file or directory path.
      *
      * @return string
      */
-    public function getInputPath()
+    public function getInput()
     {
-        return $this->_inputPath;
+        return $this->_input;
     }
 
     /**
@@ -164,7 +164,7 @@ final class PHP_PMD
         array $renderers,
         PHP_PMD_RuleSetFactory $ruleSetFactory
     ) {
-        $this->_inputPath = $inputPath;
+        $this->_input = $inputPath;
 
         $report = new PHP_PMD_Report();
 
