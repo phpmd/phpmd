@@ -1,3 +1,9 @@
+phpmd-0.2.1 (2010/01/04)
+========================
+
+- Implemented #5: Allow multiple input files/directories. Implemented in svn
+  revision #158.
+
 phpmd-0.2.0 (2009/12/30)
 ========================
 
