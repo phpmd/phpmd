@@ -133,11 +133,12 @@ class PHP_PMD_ParserFactory
      */
     private function _initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
-        $path = realpath($phpmd->getInput());
-        if (is_dir($path)) {
-            $pdepend->addDirectory($path);
-        } else {
-            $pdepend->addFile($path);
+        foreach (explode(',', $phpmd->getInput()) as $path) {
+            if (is_dir(trim($path))) {
+                $pdepend->addDirectory(trim($path));
+            } else {
+                $pdepend->addFile(trim($path));
+            }
         }
     }
 

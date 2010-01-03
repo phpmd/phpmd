@@ -116,6 +116,60 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testFactoryConfiguresMultipleInputDirectories
+     *
+     * @return void
+     * @covers PHP_PMD_ParserFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testFactoryConfiguresMultipleInputDirectories()
+    {
+        $factory = new PHP_PMD_ParserFactory();
+
+        $uri1 = $this->createFileUri('ParserFactory/File');
+        $uri2 = $this->createFileUri('ParserFactory/Directory');
+
+        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd->expects($this->once())
+            ->method('getInput')
+            ->will($this->returnValue($uri1 . ',' . $uri2));
+
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class', 2);
+
+        $parser = $factory->create($phpmd);
+        $parser->addRuleSet($ruleSet);
+        $parser->parse($this->getReportMock(0));
+    }
+
+    /**
+     * testFactoryConfiguresMultipleInputFilesAndDirectories
+     *
+     * @return void
+     * @covers PHP_PMD_ParserFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testFactoryConfiguresMultipleInputFilesAndDirectories()
+    {
+        $factory = new PHP_PMD_ParserFactory();
+
+        $uri1 = $this->createFileUri('ParserFactory/File/Test.php');
+        $uri2 = $this->createFileUri('ParserFactory/Directory');
+
+        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd->expects($this->once())
+            ->method('getInput')
+            ->will($this->returnValue($uri1 . ',' . $uri2));
+
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class', 2);
+
+        $parser = $factory->create($phpmd);
+        $parser->addRuleSet($ruleSet);
+        $parser->parse($this->getReportMock(0));
+    }
+
+    /**
      * testFactoryConfiguresIgnorePattern
      *
      * @return void
