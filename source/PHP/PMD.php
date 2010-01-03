@@ -87,7 +87,7 @@ class PHP_PMD
      *
      * @var string
      */
-    private $_inputPath = null;
+    private $_input = null;
 
     /**
      * Returns the input source file or directory path.
@@ -96,7 +96,7 @@ class PHP_PMD
      */
     public function getInput()
     {
-        return $this->_inputPath;
+        return $this->_input;
     }
 
     /**
@@ -164,7 +164,7 @@ class PHP_PMD
         array $renderers,
         PHP_PMD_RuleSetFactory $ruleSetFactory
     ) {
-        $this->_inputPath = $inputPath;
+        $this->_input = $inputPath;
 
         $report = new PHP_PMD_Report();
 
