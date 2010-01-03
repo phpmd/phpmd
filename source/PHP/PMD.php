@@ -94,7 +94,7 @@ final class PHP_PMD
      *
      * @return string
      */
-    public function getInputPath()
+    public function getInput()
     {
         return $this->_inputPath;
     }

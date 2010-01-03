@@ -133,7 +133,7 @@ class PHP_PMD_ParserFactory
      */
     private function _initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
-        $path = realpath($phpmd->getInputPath());
+        $path = realpath($phpmd->getInput());
         if (is_dir($path)) {
             $pdepend->addDirectory($path);
         } else {
