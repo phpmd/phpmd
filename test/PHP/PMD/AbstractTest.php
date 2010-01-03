@@ -340,16 +340,17 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $expectedClass Optional class name for apply() expected at
      *                              least once.
+     * @param mixed  $count         How often should apply() be called?
      *
      * @return PHP_PMD_RuleSet
      */
-    protected function getRuleSetMock($expectedClass = null)
+    protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
         $ruleSet = $this->getMock('PHP_PMD_RuleSet');
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
-            $ruleSet->expects($this->atLeastOnce())
+            $ruleSet->expects($count === '*' ? $this->atLeastOnce() : $this->exactly($count))
                     ->method('apply')
                     ->with($this->isInstanceOf($expectedClass));
         }
