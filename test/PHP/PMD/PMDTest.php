@@ -4,11 +4,7 @@
  *
  * PHP Version 5
  *
-<<<<<<< HEAD
  * Copyright (c) 2009-2010, Manuel Pichler <mapi@pdepend.org>.
-=======
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
->>>>>>> 0.2.x
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,15 +38,11 @@
  *
  * @category  PHP
  * @package   PHP_PMD
-<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
-=======
- * @author    Manuel Pichler <mapi@phpmd.org>
->>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://phpmd.org
+ * @link      http://www.pdepend.org/pmd
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
@@ -64,15 +56,11 @@ require_once 'PHP/PMD/Renderer/XMLRenderer.php';
  *
  * @category  PHP
  * @package   PHP_PMD
-<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
-=======
- * @author    Manuel Pichler <mapi@phpmd.org>
->>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://phpmd.org
+ * @link      http://www.pdepend.org/pmd
  */
 class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
 {

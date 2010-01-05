@@ -4,11 +4,7 @@
  *
  * PHP Version 5
  *
-<<<<<<< HEAD
  * Copyright (c) 2009-2010, Manuel Pichler <mapi@pdepend.org>.
-=======
- * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
->>>>>>> 0.2.x
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,15 +38,11 @@
  *
  * @category  PHP
  * @package   PHP_PMD
-<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
-=======
- * @author    Manuel Pichler <mapi@phpmd.org>
->>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://phpmd.org
+ * @link      http://www.pdepend.org/pmd
  */
 
 /**
@@ -58,15 +50,11 @@
  *
  * @category  PHP
  * @package   PHP_PMD
-<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
-=======
- * @author    Manuel Pichler <mapi@phpmd.org>
->>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://phpmd.org
+ * @link      http://www.pdepend.org/pmd
  */
 class PHP_PMD_RuleSet implements IteratorAggregate
 {
@@ -272,25 +260,16 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        foreach ($this->_rules as $interfaceName => $rules) {
-            if ($node instanceof $interfaceName) {
-                $this->_applyRules($node, $rules);
-            }
-        }
-    }
+        // Current node type
+        $className = get_class($node);
 
-    /**
-     * This method applies all rules in the <b>$rules</b> array to the given
-     * node instance.
-     *
-     * @param PHP_PMD_AbstractNode        $node  The context source node instance.
-     * @param array(PHP_PMD_AbstractRule) $rules List of rules to apply on that node.
-     *
-     * @return void
-     */
-    private function _applyRules(PHP_PMD_AbstractNode $node, array $rules)
-    {
-        foreach ($rules as $rule) {
+        // Check for valid node type
+        if (!isset($this->_rules[$className])) {
+            return;
+        }
+
+        // Apply all rules to this node
+        foreach ($this->_rules[$className] as $rule) {
             $rule->setReport($this->_report);
             $rule->apply($node);
         }
