@@ -43,7 +43,7 @@
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/pmd
+ * @link       http://phpmd.org
  */
 
 require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
@@ -58,7 +58,7 @@ require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/pmd
+ * @link       http://phpmd.org
  */
 class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractClassOrInterface
 {

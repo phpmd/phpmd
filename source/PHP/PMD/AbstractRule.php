@@ -42,7 +42,7 @@
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.pdepend.org/php-pmd
+ * @link      http://phpmd.org
  */
 
 require_once 'PHP/PMD/RuleViolation.php';
@@ -56,7 +56,7 @@ require_once 'PHP/PMD/RuleViolation.php';
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.pdepend.org/php-pmd
+ * @link      http://phpmd.org
  */
 abstract class PHP_PMD_AbstractRule
 {
