@@ -48,6 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once dirname(__FILE__) . '/_files/rules/TestRule.php';
+require_once dirname(__FILE__) . '/_files/stubs/ClassStub.php';
 
 require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/RuleSet.php';
@@ -93,6 +94,66 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
         $rule    = $ruleSet->getRuleByName(__CLASS__);
 
         $this->assertEquals(__CLASS__, $rule->getName());
+    }
+
+    /**
+     * testRuleSetDoesNotApplyFunctionToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetDoesNotApplyFunctionToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply($this->createFunctionMock());
+
+        $this->assertNull($rule->node);
+    }
+
+    /**
+     * testRuleSetDoesNotApplyMethodToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetDoesNotApplyMethodToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply($this->getMethodMock());
+
+        $this->assertNull($rule->node);
+    }
+
+    /**
+     * testRuleSetAppliesClassToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetAppliesClassToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply(new PHP_PMD_Stubs_ClassStub());
+
+        $this->assertType('PHP_PMD_Node_Class', $rule->node);
     }
 
     /**
