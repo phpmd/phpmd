@@ -111,7 +111,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
         $set = new PHP_PMD_RuleSet();
         $set->addRule($rule);
         $set->setReport($this->getReportMock(0));
-        $set->apply($this->createFunctionMock());
+        $set->apply($this->getFunctionMock());
 
         $this->assertNull($rule->node);
     }

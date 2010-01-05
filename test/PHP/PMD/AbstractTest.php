@@ -272,7 +272,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_PMD_Node_Function
      */
-    protected function createFunctionMock($metric = null, $value = null)
+    protected function getFunctionMock($metric = null, $value = null)
     {
         include_once 'PHP/PMD/Node/Function.php';
 
