@@ -4,7 +4,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2009, Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2009, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
  * @category   PHP
  * @package    PHP_PMD
  * @subpackage Rule
- * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
@@ -56,7 +56,7 @@ require_once 'PHP/PMD/Rule/UnusedFormalParameter.php';
  * @category   PHP
  * @package    PHP_PMD
  * @subpackage Rule
- * @author     Manuel Pichler <mapi@pdepend.org>
+ * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
