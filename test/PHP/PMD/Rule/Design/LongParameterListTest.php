@@ -193,7 +193,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      */
     private function _createFunction($parameterCount)
     {
-        return $this->_initFunctionOrMethod($this->getFunctionMock(), $parameterCount);
+        return $this->_initFunctionOrMethod($this->createFunctionMock(), $parameterCount);
     }
 
     /**
