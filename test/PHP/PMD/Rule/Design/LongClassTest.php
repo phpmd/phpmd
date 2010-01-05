@@ -4,7 +4,11 @@
  *
  * PHP Version 5
  *
+<<<<<<< HEAD
  * Copyright (c) 2009-2010, Manuel Pichler <mapi@pdepend.org>.
+=======
+ * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+>>>>>>> 0.2.x
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,11 +43,15 @@
  * @category   PHP
  * @package    PHP_PMD
  * @subpackage Rule_Design
+<<<<<<< HEAD
  * @author     Manuel Pichler <mapi@pdepend.org>
+=======
+ * @author     Manuel Pichler <mapi@phpmd.org>
+>>>>>>> 0.2.x
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://www.pdepend.org/pmd
+ * @link       http://phpmd.org
  */
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
@@ -56,11 +64,15 @@ require_once 'PHP/PMD/Rule/Design/LongClass.php';
  * @category   PHP
  * @package    PHP_PMD
  * @subpackage Rule_Design
+<<<<<<< HEAD
  * @author     Manuel Pichler <mapi@pdepend.org>
+=======
+ * @author     Manuel Pichler <mapi@phpmd.org>
+>>>>>>> 0.2.x
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://www.pdepend.org/pmd
+ * @link       http://phpmd.org
  */
 class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
 {
@@ -69,7 +81,7 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_Design_LongClass
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::design
@@ -91,7 +103,7 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_Design_LongClass
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::design
@@ -113,7 +125,7 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * than the threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_Design_LongClass
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::design

@@ -4,7 +4,11 @@
  *
  * PHP Version 5
  *
+<<<<<<< HEAD
  * Copyright (c) 2009-2010, Manuel Pichler <mapi@pdepend.org>.
+=======
+ * Copyright (c) 2009-2010, Manuel Pichler <mapi@phpmd.org>.
+>>>>>>> 0.2.x
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,16 +42,21 @@
  *
  * @category  PHP
  * @package   PHP_PMD
+<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
+=======
+ * @author    Manuel Pichler <mapi@phpmd.org>
+>>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
- * @link      http://www.pdepend.org/pmd
+ * @link      http://phpmd.org
  */
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once dirname(__FILE__) . '/_files/rules/TestRule.php';
+require_once dirname(__FILE__) . '/_files/stubs/ClassStub.php';
 
 require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/RuleSet.php';
@@ -57,11 +66,15 @@ require_once 'PHP/PMD/RuleSet.php';
  *
  * @category  PHP
  * @package   PHP_PMD
+<<<<<<< HEAD
  * @author    Manuel Pichler <mapi@pdepend.org>
+=======
+ * @author    Manuel Pichler <mapi@phpmd.org>
+>>>>>>> 0.2.x
  * @copyright 2009-2010 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
- * @link      http://www.pdepend.org/pmd
+ * @link      http://phpmd.org
  */
 class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
 {
@@ -93,6 +106,66 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
         $rule    = $ruleSet->getRuleByName(__CLASS__);
 
         $this->assertEquals(__CLASS__, $rule->getName());
+    }
+
+    /**
+     * testRuleSetDoesNotApplyFunctionToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetDoesNotApplyFunctionToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply($this->getFunctionMock());
+
+        $this->assertNull($rule->node);
+    }
+
+    /**
+     * testRuleSetDoesNotApplyMethodToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetDoesNotApplyMethodToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply($this->getMethodMock());
+
+        $this->assertNull($rule->node);
+    }
+
+    /**
+     * testRuleSetAppliesClassToClassAwareRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSet
+     * @group phpmd
+     * @group unittest
+     */
+    public function testRuleSetAppliesClassToClassAwareRule()
+    {
+        $rule = new rules_TestRule();
+
+        $set = new PHP_PMD_RuleSet();
+        $set->addRule($rule);
+        $set->setReport($this->getReportMock(0));
+        $set->apply(new PHP_PMD_Stubs_ClassStub());
+
+        $this->assertType('PHP_PMD_Node_Class', $rule->node);
     }
 
     /**
