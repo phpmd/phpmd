@@ -64,6 +64,12 @@ require_once 'PHP/PMD/TextUI/CommandLineOptions.php';
 class PHP_PMD_TextUI_Command
 {
     /**
+     * Exit codes used by the phpmd command line tool.
+     */
+    const EXIT_SUCCESS   = 0,
+          EXIT_EXCEPTION = 1;
+
+    /**
      * This method creates a PHP_PMD instance and configures this object based
      * on the user's input, then it starts the source analysis.
      *
@@ -125,9 +131,10 @@ class PHP_PMD_TextUI_Command
             $cmd = new PHP_PMD_TextUI_Command();
             $cmd->run($opts);
         } catch (Exception $e) {
-            echo $e->getMessage(), PHP_EOL;
-            return $e->getCode();
+            fwrite(STDERR, $e->getMessage());
+            fwrite(STDERR, PHP_EOL);
+            return self::EXIT_EXCEPTION;
         }
-        return 0;
+        return self::EXIT_SUCCESS;
     }
 }

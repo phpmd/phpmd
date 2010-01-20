@@ -1,3 +1,9 @@
+phpmd-0.2.2 (2010/01/20)
+========================
+
+- Small change to the command line interface, which did not return an
+  exit code != 0 when an exception occured.
+
 phpmd-0.2.1 (2010/01/05)
 ========================
 

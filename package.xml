@@ -34,7 +34,8 @@
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
-        - Initial release of the PHP Mess Detector.
+- Small change to the command line interface, which did not return an
+  exit code != 0 when an exception occured.
     </notes>
     <contents>
         <dir name="/">
