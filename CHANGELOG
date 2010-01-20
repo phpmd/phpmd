@@ -1,8 +1,14 @@
+phpmd-0.2.2 (2010/01/20)
+========================
+
+- Small change to the command line interface, which did not return an
+  exit code != 0 when an exception occured.
+
 phpmd-0.2.1 (2010/01/05)
 ========================
 
 - Implemented #5: Allow multiple input files/directories. Implemented in svn
-  revision #158. 
+  revision #158.
 - Tested: Additional unit tests for multiple components added.
 
 phpmd-0.2.0 (2009/12/30)
