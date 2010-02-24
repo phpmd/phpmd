@@ -38,7 +38,7 @@
   as unused when used inside double quoted string. Fixed in svn 
   revision #187.
 - Implemented #10: Support for exclude element in rule-set files added.
-  Implemented in svn revision #188.
+  Implemented in svn revision #189.
     </notes>
     <contents>
         <dir name="/">
