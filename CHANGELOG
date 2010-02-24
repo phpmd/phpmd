@@ -1,3 +1,10 @@
+phpmd-0.2.3 (2010/     )
+========================
+
+- Fixed #7: UnusedLocalVariable ruleset incorrectly flags variables
+  as unused when used inside double quoted string. Fixed in svn
+  revision #187.
+
 phpmd-0.2.2 (2010/01/20)
 ========================
 
