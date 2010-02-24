@@ -242,13 +242,50 @@ class PHP_PMD_RuleSetFactory
         PHP_PMD_RuleSet $ruleSet,
         SimpleXMLElement $ruleSetNode
     ) {
+        $rules = $this->_parseRuleSetReference($ruleSetNode);
+        foreach ($rules as $rule) {
+            if ($this->_isIncluded($rule, $ruleSetNode)) {
+                $ruleSet->addRule($rule);
+            }
+        }
+    }
+
+    /**
+     * Parses a rule-set xml file referenced by the given rule-set xml element.
+     *
+     * @param SimpleXMLElement $ruleSetNode The context rule-set xml element.
+     *
+     * @return PHP_PMD_RuleSet
+     * @since 0.2.3
+     */
+    private function _parseRuleSetReference(SimpleXMLElement $ruleSetNode)
+    {
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($this->_minimumPriority);
 
-        $rules = $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
-        foreach ($rules as $rule) {
-            $ruleSet->addRule($rule);
+        return $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
+    }
+
+    /**
+     * Checks if the given rule is included/not excluded by the given rule-set
+     * reference node.
+     *
+     * @param PHP_PMD_AbstractRule $rule        The currently processed rule.
+     * @param SimpleXMLElement     $ruleSetNode The context rule-set xml element.
+     *
+     * @return boolean
+     * @since 0.2.3
+     */
+    private function _isIncluded(
+        PHP_PMD_AbstractRule $rule,
+        SimpleXMLElement $ruleSetNode
+    ) {
+        foreach ($ruleSetNode->exclude as $exclude) {
+            if ($rule->getName() === (string) $exclude['name']) {
+                return false;
+            }
         }
+        return true;
     }
 
     /**
