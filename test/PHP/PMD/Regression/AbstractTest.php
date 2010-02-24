@@ -81,6 +81,6 @@ class PHP_PMD_Regression_AbstractTest extends PHP_PMD_AbstractTest
         if ($localPath === '') {
             $localPath = $trace[1]['function'] . '.php';
         }
-        return parent::createFileUri('regression/' . $ticket . '/' . $localPath);
+        return parent::createFileUri('Regression/' . $ticket . '/' . $localPath);
     }
 }

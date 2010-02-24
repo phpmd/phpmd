@@ -156,10 +156,16 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $frame = $this->_getCallingTestCase();
 
+        if (preg_match('(_([^_]+)_[^_]+[a-z]([0-9]+)Test)i', $frame['class'], $match)) {
+            $localPath = $match[1] . '/' . $match[2];
+        } else {
+            $localPath = strtr(substr($frame['class'], 8, -4), '_', '/');
+        }
+
         $sourceFile = sprintf(
             '%s/_files/%s/%s.php',
             dirname(__FILE__),
-            strtr(substr($frame['class'], 8, -4), '_', '/'),
+            $localPath,
             $frame['function']
         );
         return $this->_parseSource($sourceFile);
