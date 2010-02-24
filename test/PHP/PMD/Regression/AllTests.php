@@ -49,6 +49,7 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/AcceptsFilesAndDirectoriesAsInputTicket001Test.php';
+require_once dirname(__FILE__) . '/InvalidUnusedLocalVariableAndFormalParameterTicket007Test.php';
 
 /**
  * Main test suite for the PHP_PMD_Regression package.
@@ -74,6 +75,7 @@ class PHP_PMD_Regression_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Regression - Tests');
 
         $suite->addTestSuite('PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test');
+        $suite->addTestSuite('PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Test');
 
         return $suite;
     }
