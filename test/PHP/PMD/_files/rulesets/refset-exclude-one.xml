@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Fourth Test RuleSet"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>First description...</description>
+
+    <rule name="Exclude one rule"
+          message="Exclude one rule"
+          externalInfoUrl="http://example.com/exclude-one-rule"
+          ref="rulesets/set1.xml">
+        <exclude name="RuleTwoInFirstRuleSet" />
+    </rule>
+</ruleset>

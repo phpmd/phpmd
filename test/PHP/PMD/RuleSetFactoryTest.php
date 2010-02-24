@@ -530,6 +530,44 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset-exclude-one');
+
+        $rules = $ruleSets[0]->getRules();
+        $this->assertEquals(1, iterator_count($rules));
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset-exclude-all');
+
+        $rules = $ruleSets[0]->getRules();
+        $this->assertEquals(0, iterator_count($rules));
+    }
+
+    /**
      * Tests that the factory throws the expected exception for an invalid ruleset
      * identifier.
      *
