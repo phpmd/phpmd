@@ -15,6 +15,7 @@
         <description>...</description>
         <priority>3</priority>
         <properties />
+        <example>testCreateRuleWithExpectedExample</example>
     </rule>
     <rule name="RuleTwoInFirstRuleSet"
           since="0.1"

@@ -414,6 +414,44 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testCreateRuleWithExpectedExample
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleWithExpectedExample()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('set1');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertEquals(array(__FUNCTION__), $rule->getExamples());
+    }
+
+    /**
+     * testCreateRuleWithExpectedMultipleExamples
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testCreateRuleWithExpectedMultipleExamples()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('set2');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertEquals(array(__FUNCTION__ . 'One', __FUNCTION__ . 'Two'), $rule->getExamples());
+    }
+
+    /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
      *
      * @return void
