@@ -35,69 +35,58 @@ class Something {
         </example>
     </rule>
 
-<!--
-  <rule name="LongVariable"
-  		  since="0.3"
-        message="Avoid excessively long variable names like {0}"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#LongVariable">
-    <description>
+
+    <rule name="LongVariable"
+          since="0.2"
+          message="Avoid excessively long variable names like {0}"
+          class="PHP_PMD_Rule_Naming_LongVariable"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable">
+        <description>
 Detects when a field, formal or local variable is declared with a long name.
-    </description>
-      <priority>3</priority>
-      <properties>
-          <property name="minimum" description="The variable length reporting threshold" value="17"/>
-          <property name="xpath" pluginname="true">
-              <value>
-                  <![CDATA[
-//VariableDeclaratorId[string-length(@Image) > $minimum]
-                  ]]>
-              </value>
-          </property>
-      </properties>
-    <example>
-<![CDATA[
-public class Something {
-  int reallyLongIntName = -3;  // VIOLATION - Field
-  public static void main( String argumentsList[] ) { // VIOLATION - Formal
-    int otherReallyLongName = -5; // VIOLATION - Local
-    for (int interestingIntIndex = 0;  // VIOLATION - For
-             interestingIntIndex < 10;
-             interestingIntIndex ++ ) {
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The variable length reporting threshold" value="17"/>
+        </properties>
+        <example>
+            <![CDATA[
+class Something {
+    protected $reallyLongIntName = -3;  // VIOLATION - Field
+    public static function main( array $argumentsList[] ) { // VIOLATION - Formal
+        $otherReallyLongName = -5; // VIOLATION - Local
+        for ($interestingIntIndex = 0;  // VIOLATION - For
+             $interestingIntIndex < 10;
+             $interestingIntIndex++ ) {
+        }
     }
 }
 ]]>
-    </example>
-  </rule>
+        </example>
+    </rule>
 
-  <rule name="ShortMethodName"
-  		  since="0.3"
-        message="Avoid using short method names"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#ShortMethodName">
-     <description>
+    <rule name="ShortMethodName"
+          since="0.2"
+          message="Avoid using short method names like {0}::{1}()"
+          class="PHP_PMD_Rule_Naming_ShortMethodName"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#shortmethodname">
+        <description>
 Detects when very short method names are used.
-     </description>
-      <priority>3</priority>
-      <properties>
-          <property name="xpath">
-              <value>
-                  <![CDATA[
-//MethodDeclarator[string-length(@Image) < 3]
-                  ]]>
-              </value>
-          </property>
-      </properties>
-     <example>
-<![CDATA[
-public class ShortMethod {
-  public void a( int i ) { // Violation
-  }
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="Minimum length for a method or function name" value="3"/>
+        </properties>
+        <example>
+            <![CDATA[
+class ShortMethod {
+    public function a( $index ) { // Violation
+    }
 }
-]]>
-     </example>
-  </rule>
+            ]]>
+        </example>
+    </rule>
 
+<!--
 
     <rule name="VariableNamingConventions"
     since="1.2"

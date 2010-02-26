@@ -48,10 +48,10 @@
 
 require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once 'PHP/PMD/Rule/Naming/ShortVariable.php';
+require_once 'PHP/PMD/Rule/Naming/LongVariable.php';
 
 /**
- * Test case for the really short variable, parameter and property name rule.
+ * Test case for the really long variable, parameter and property name rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -62,40 +62,40 @@ require_once 'PHP/PMD/Rule/Naming/ShortVariable.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
 {
     /**
-     * testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold
+     * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold()
+    public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
 
     /**
-     * testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
+     * testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 2);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -104,7 +104,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -112,62 +112,62 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 6);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
 
     /**
-     * testRuleAppliesToFunctionParameterWithNameShorterThanThreshold
+     * testRuleAppliesToFunctionParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToFunctionParameterWithNameShorterThanThreshold()
+    public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
 
     /**
-     * testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold
+     * testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
 
     /**
-     * testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold
+     * testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold()
+    public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(1));
 
         $class = $this->getClass();
@@ -182,7 +182,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -190,44 +190,44 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 6);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold
+     * testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 2);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleAppliesToMethodParameterWithNameShorterThanThreshold
+     * testRuleAppliesToMethodParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToMethodParameterWithNameShorterThanThreshold()
+    public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 3);
         $rule->setReport($this->getReportMock(1));
 
         $class = $this->getClass();
@@ -239,37 +239,37 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold
+     * testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 2);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleAppliesToFieldWithNameShorterThanThreshold
+     * testRuleAppliesToFieldWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToFieldWithNameShorterThanThreshold()
+    public function testRuleAppliesToFieldWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
@@ -278,7 +278,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToFieldWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -286,44 +286,44 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 6);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleNotAppliesToFieldWithNameGreaterThanThreshold
+     * testRuleNotAppliesToFieldWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleNotAppliesToFieldWithNameGreaterThanThreshold()
+    public function testRuleNotAppliesToFieldWithNameShorterThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 2);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 8);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold
+     * testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
      * @group unittest
      */
-    public function testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold()
+    public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 3);
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();
@@ -335,46 +335,10 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleNotAppliesToShortVariableNameAsForLoopIndex
-     *
-     * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
-     */
-    public function testRuleNotAppliesToShortVariableNameAsForLoopIndex()
-    {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getFunction());
-    }
-
-    /**
-     * testRuleNotAppliesToShortVariableNameInCatchStatement
-     *
-     * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
-     */
-    public function testRuleNotAppliesToShortVariableNameInCatchStatement()
-    {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getFunction());
-    }
-
-    /**
      * testRuleNotAppliesToStaticMembersAccessedInMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -382,8 +346,8 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 3);
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
@@ -392,7 +356,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToIdenticalVariableOnlyOneTime
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -400,8 +364,8 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
@@ -410,7 +374,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @covers PHP_PMD_Rule_Naming_LongVariable
      * @group phpmd
      * @group phpmd::rule
      * @group phpmd::rule::naming
@@ -418,8 +382,8 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes()
     {
-        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
-        $rule->addProperty('minimum', 3);
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();

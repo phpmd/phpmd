@@ -46,14 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/LongVariableTest.php';
-require_once dirname(__FILE__) . '/ShortMethodNameTest.php';
-require_once dirname(__FILE__) . '/ShortVariableTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Naming package.
+ * This rule class will detect methods and functions with very short names.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -64,27 +62,25 @@ require_once dirname(__FILE__) . '/ShortVariableTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
+class PHP_PMD_Rule_Naming_ShortMethodName
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IMethodAware,
+               PHP_PMD_Rule_IFunctionAware
 {
     /**
-     * Constructs a new test suite.
-     */
-    public function __construct()
-    {
-        $this->setName('PHP_PMD_Rule_Naming - Tests');
-
-        $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
-    }
-
-    /**
-     * Creates a phpunit test suite.
+     * Extracts all variable and variable declarator nodes from the given node
+     * and checks the variable name length against the configured minimum
+     * length.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        return new PHP_PMD_Rule_Naming_AllTests();
+        if ($this->getIntProperty('minimum') <= strlen($node->getName())) {
+            return;
+        }
+        $this->addViolation($node, array($node->getParentName(), $node->getName()));
     }
 }
