@@ -103,7 +103,7 @@ class Foo {
 
 
     <rule name="ExcessiveMethodLength"
- 	      since="0.1"
+          since="0.1"
           message="Avoid really long methods."
           class="PHP_PMD_Rule_Design_LongMethod"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
@@ -129,7 +129,7 @@ class Foo {
     </rule>
 
     <rule name="ExcessiveClassLength"
- 	      since="0.1"
+ 	  since="0.1"
           message="Avoid really long classes."
           class="PHP_PMD_Rule_Design_LongClass"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
@@ -208,7 +208,7 @@ public class Foo {
     // [... more more public methods ...]
 }
     ]]>
-    </example>
+        </example>
     </rule>
 
     <rule name="TooManyFields"
