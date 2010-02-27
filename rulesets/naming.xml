@@ -46,7 +46,7 @@ Detects when a field, formal or local variable is declared with a long name.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maximum" description="The variable length reporting threshold" value="17"/>
+            <property name="maximum" description="The variable length reporting threshold" value="20"/>
         </properties>
         <example>
             <![CDATA[
@@ -83,6 +83,28 @@ class ShortMethod {
     }
 }
             ]]>
+        </example>
+    </rule>
+
+    <rule name="ConstructorWithNameAsEnclosingClass"
+          since="0.2"
+          message="Classes should not have a constructor method with the same name as the class"
+          class="PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#constructorwithnameasenclosingclass">
+        <description>
+A constructor method should not have the same name as the enclosing class, consider
+to use the PHP 5 __construct method.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+class MyClass {
+     // this is bad because it is PHP 4 style
+    public function MyClass() {}
+    // this is good because it is a PHP 5 constructor
+    public function __construct() {}
+}
+    ]]>
         </example>
     </rule>
 
@@ -193,27 +215,6 @@ Avoid using dollar signs in variable/method/class/interface names.
  public class Fo$o {  // yikes!
  }
    ]]>
-       </example>
-     </rule>
-
-    <rule name="MethodWithSameNameAsEnclosingClass"
-    		 since="1.5"
-          message="Classes should not have non-constructor methods with the same name as the class"
-          class="net.sourceforge.pmd.rules.MethodWithSameNameAsEnclosingClass"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#MethodWithSameNameAsEnclosingClass">
-       <description>
-Non-constructor methods should not have the same name as the enclosing class.
-       </description>
-        <priority>3</priority>
-       <example>
-    <![CDATA[
-public class MyClass {
- // this is bad because it is a method
- public void MyClass() {}
- // this is OK because it is a constructor
- public MyClass() {}
-}
-    ]]>
        </example>
      </rule>
 
