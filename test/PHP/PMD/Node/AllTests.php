@@ -49,9 +49,9 @@
 require_once 'PHPUnit/Framework.php';
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
-require_once dirname(__FILE__) . '/ClassTest.php';
-require_once dirname(__FILE__) . '/FunctionTest.php';
-require_once dirname(__FILE__) . '/MethodTest.php';
+require_once dirname(__FILE__) . '/CodeClassTest.php';
+require_once dirname(__FILE__) . '/CodeFunctionTest.php';
+require_once dirname(__FILE__) . '/CodeMethodTest.php';
 
 /**
  * Main test suite for the PHP_PMD_Node package.
@@ -77,9 +77,9 @@ class PHP_PMD_Node_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Node - Tests');
 
         $suite->addTestSuite('PHP_PMD_Node_ASTNodeTest');
-        $suite->addTestSuite('PHP_PMD_Node_ClassTest');
-        $suite->addTestSuite('PHP_PMD_Node_FunctionTest');
-        $suite->addTestSuite('PHP_PMD_Node_MethodTest');
+        $suite->addTestSuite('PHP_PMD_Node_CodeClassTest');
+        $suite->addTestSuite('PHP_PMD_Node_CodeFunctionTest');
+        $suite->addTestSuite('PHP_PMD_Node_CodeMethodTest');
 
         return $suite;
     }

@@ -48,11 +48,12 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/PMD/Node/Function.php';
-require_once 'PHP/Depend/Code/Function.php';
+require_once 'PHP/PMD/Node/CodeClass.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Test case for the function node implementation.
+ * Test case for the class node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -63,41 +64,25 @@ require_once 'PHP/Depend/Code/Function.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Node_CodeClassTest extends PHP_PMD_AbstractTest
 {
     /**
-     * testMagicCallDelegatesToWrappedPHPDependFunction
+     * testGetMethodNamesReturnsExpectedResult
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
+     * @covers PHP_PMD_Node_CodeClass
+     * @covers PHP_PMD_Node_AbstractCodeType
      * @group phpmd
      * @group phpmd::node
      * @group unittest
      */
-    public function testMagicCallDelegatesToWrappedPHPDependFunction()
+    public function testGetMethodNamesReturnsExpectedResult()
     {
-        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null));
-        $function->expects($this->once())
-            ->method('getStartLine');
+        $class = new PHP_Depend_Code_Class(null);
+        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
+        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
-        $node = new PHP_PMD_Node_Function($function);
-        $node->getStartLine();
-    }
-
-    /**
-     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     *
-     * @return void
-     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
-     * @expectedException BadMethodCallException
-     */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
-    {
-        $node = new PHP_PMD_Node_Function(new PHP_Depend_Code_Function(null));
-        $node->getFooBar();
-
+        $node = new PHP_PMD_Node_CodeClass($class);
+        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
     }
 }

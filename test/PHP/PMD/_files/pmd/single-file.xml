@@ -5,7 +5,7 @@
       The function ccn_function() has a Cyclomatic Complexity of 12.
     </violation>
   </file>
-  <file name="#{rootDirectory}/_files/source/npath_method.php4">
+  <file name="#{rootDirectory}/_files/source/npath_CodeMethod.php4">
     <violation beginline="6" endline="13" rule="NPathComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#NPathComplexity" class="NPathClass" method="doSomething" priority="3">
       The method doSomething() has an NPath complexity of 80.
     </violation>

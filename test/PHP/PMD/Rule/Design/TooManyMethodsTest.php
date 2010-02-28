@@ -178,7 +178,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
      * @param integer       $numberOfMethods Number of methods metric value.
      * @param array(string) $methodNames     Name of all methods.
      *
-     * @return PHP_PMD_Node_Class
+     * @return PHP_PMD_Node_CodeClass
      */
     private function _createClassMock($numberOfMethods, array $methodNames = null)
     {

@@ -108,7 +108,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
      */
     private function _isAbstractMethod(PHP_PMD_AbstractNode $node)
     {
-        if ($node instanceof PHP_PMD_Node_Method) {
+        if ($node instanceof PHP_PMD_Node_CodeMethod) {
             return $node->isAbstract();
         }
         return false;

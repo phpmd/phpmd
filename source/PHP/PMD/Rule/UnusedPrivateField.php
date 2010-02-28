@@ -93,11 +93,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      * This method collects all private fields that aren't used by any class
      * method.
      *
-     * @param PHP_PMD_Node_Class $class The context class node.
+     * @param PHP_PMD_Node_CodeClass $class The context class node.
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectUnusedPrivateFields(PHP_PMD_Node_Class $class)
+    private function _collectUnusedPrivateFields(PHP_PMD_Node_CodeClass $class)
     {
         $this->_fields = array();
 
@@ -111,11 +111,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      * This method collects all private fields in the given class and stores
      * them in the <b>$_fields</b> property.
      *
-     * @param PHP_PMD_Node_Class $class The context class instance.
+     * @param PHP_PMD_Node_CodeClass $class The context class instance.
      *
      * @return void
      */
-    private function _collectPrivateFields(PHP_PMD_Node_Class $class)
+    private function _collectPrivateFields(PHP_PMD_Node_CodeClass $class)
     {
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
             if ($declaration->isPrivate()) {
@@ -145,11 +145,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      * removes all fields from the <b>$_fields</b> property that are accessed by
      * one of the postfix nodes.
      *
-     * @param PHP_PMD_Node_Class $class The context class instance.
+     * @param PHP_PMD_Node_CodeClass $class The context class instance.
      *
      * @return void
      */
-    private function _removeUsedFields(PHP_PMD_Node_Class $class)
+    private function _removeUsedFields(PHP_PMD_Node_CodeClass $class)
     {
         foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
             if ($this->_isClassScope($class, $postfix)) {
@@ -182,13 +182,13 @@ class PHP_PMD_Rule_UnusedPrivateField
      * This method checks that the given property postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param PHP_PMD_Node_Class   $class   The context class node instance.
+     * @param PHP_PMD_Node_CodeClass   $class   The context class node instance.
      * @param PHP_PMD_Node_ASTNode $postfix The context property postfix node.
      *
      * @return boolean
      */
     private function _isClassScope(
-        PHP_PMD_Node_Class $class,
+        PHP_PMD_Node_CodeClass $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {
         $prefix = $postfix->getParent()->getChild(0);

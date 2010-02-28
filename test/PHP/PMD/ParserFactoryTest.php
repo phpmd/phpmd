@@ -82,7 +82,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri));
 
-        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class');
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_CodeClass');
         
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
@@ -108,7 +108,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri));
 
-        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class');
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_CodeClass');
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
@@ -135,7 +135,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri1 . ',' . $uri2));
 
-        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class', 2);
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_CodeClass', 2);
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
@@ -162,7 +162,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri1 . ',' . $uri2));
 
-        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_Class', 2);
+        $ruleSet = $this->getRuleSetMock('PHP_PMD_Node_CodeClass', 2);
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);

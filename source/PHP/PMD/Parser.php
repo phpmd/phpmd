@@ -49,9 +49,9 @@ require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 
-require_once 'PHP/PMD/Node/Class.php';
-require_once 'PHP/PMD/Node/Function.php';
-require_once 'PHP/PMD/Node/Method.php';
+require_once 'PHP/PMD/Node/CodeClass.php';
+require_once 'PHP/PMD/Node/CodeFunction.php';
+require_once 'PHP/PMD/Node/CodeMethod.php';
 
 /**
  * Simple wrapper around the php depend engine.
@@ -204,7 +204,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Class($node));
+        $this->_apply(new PHP_PMD_Node_CodeClass($node));
         parent::visitClass($node);
     }
 
@@ -222,13 +222,13 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Function($node));
+        $this->_apply(new PHP_PMD_Node_CodeFunction($node));
     }
 
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $node The method class node.
+     * @param PHP_Depend_Code_Method $node The method class node.
      *
      * @return void
      * @see PHP_Depend_VisitorI::visitMethod()
@@ -239,7 +239,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Method($node));
+        $this->_apply(new PHP_PMD_Node_CodeMethod($node));
     }
 
     /**

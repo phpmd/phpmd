@@ -93,7 +93,7 @@ class PHP_PMD_RuleViolation
      *
      * @var string
      */
-    private $_methodName = null;
+    private $_CodeMethodName = null;
 
     /**
      * The name of a function or <b>null</b> when this violation has no function
@@ -121,10 +121,10 @@ class PHP_PMD_RuleViolation
 
         if ($node instanceof PHP_PMD_Node_AbstractCodeType) {
             $this->_className = $node->getName();
-        } else if ($node instanceof PHP_PMD_Node_Method) {
+        } else if ($node instanceof PHP_PMD_Node_CodeMethod) {
             $this->_className  = $node->getParentName();
-            $this->_methodName = $node->getName();
-        } else if ($node instanceof PHP_PMD_Node_Function) {
+            $this->_CodeMethodName = $node->getName();
+        } else if ($node instanceof PHP_PMD_Node_CodeFunction) {
             $this->_functionName = $node->getName();
         }
     }
@@ -208,7 +208,7 @@ class PHP_PMD_RuleViolation
      */
     public function getMethodName()
     {
-        return $this->_methodName;
+        return $this->_CodeMethodName;
     }
 
     /**

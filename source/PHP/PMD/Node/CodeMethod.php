@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCodeType.php';
+require_once 'PHP/PMD/Node/AbstractCodeCallable.php';
 
 /**
- * Wrapper around PHP_Depend's class objects.
+ * Wrapper around a PHP_Depend method node.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,52 +60,47 @@ require_once 'PHP/PMD/Node/AbstractCodeType.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractCodeType
+class PHP_PMD_Node_CodeMethod extends PHP_PMD_Node_AbstractCodeCallable
 {
     /**
-     * Constructs a new class wrapper node.
+     * Constructs a new method wrapper.
      *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * @param PHP_Depend_Code_CodeMethod $node The wrapped method object.
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function __construct(PHP_Depend_Code_Method $node)
     {
         parent::__construct($node);
     }
 
     /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
+     * Returns the name of the parent package.
      *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
+     * @return string
      */
-    public function getMetric($name)
+    public function getPackageName()
     {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
-        }
-        return parent::getMetric($name);
+        return $this->getNode()->getParent()->getPackage()->getName();
     }
 
     /**
-     * Returns the number of public fields and/or methods in the context class.
+     * Returns the name of the parent type or <b>null</b> when this node has no
+     * parent type.
      *
-     * @return integer
+     * @return string
      */
-    private function _numberOfPublicMembers()
+    public function getParentName()
     {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        return $this->getNode()->getParent()->getName();
+    }
+
+    /**
+     * Returns <b>true</b> when the underlying method is declared as abstract or
+     * is declared as child of an interface.
+     *
+     * @return boolean
+     */
+    public function isAbstract()
+    {
+        return $this->getNode()->isAbstract();
     }
 }

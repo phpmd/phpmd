@@ -76,13 +76,13 @@ abstract class PHP_PMD_Node_AbstractCodeType extends PHP_PMD_Node_AbstractCodeNo
      * Returns an <b>array</b> with all methods defined in the context class or
      * interface.
      *
-     * @return array(PHP_PMD_Node_Method)
+     * @return array(PHP_PMD_Node_CodeMethod)
      */
     public function getMethods()
     {
         $methods = array();
         foreach ($this->getNode()->getMethods() as $method) {
-            $methods[] = new PHP_PMD_Node_Method($method);
+            $methods[] = new PHP_PMD_Node_CodeMethod($method);
         }
         return $methods;
     }

@@ -48,7 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once 'PHP/PMD/Node/Method.php';
+require_once 'PHP/PMD/Node/CodeMethod.php';
 require_once 'PHP/Depend/Code/Method.php';
 
 /**
@@ -63,7 +63,7 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Node_CodeMethodTest extends PHP_PMD_AbstractTest
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependMethod
@@ -80,7 +80,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
         $method->expects($this->once())
             ->method('getStartLine');
 
-        $node = new PHP_PMD_Node_Method($method);
+        $node = new PHP_PMD_Node_CodeMethod($method);
         $node->getStartLine();
     }
 
@@ -96,7 +96,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        $node = new PHP_PMD_Node_Method(new PHP_Depend_Code_Method(null));
+        $node = new PHP_PMD_Node_CodeMethod(new PHP_Depend_Code_Method(null));
         $node->getFooBar();
 
     }

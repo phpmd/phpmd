@@ -177,7 +177,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      *
      * @param integer $parameterCount Number of method parameters.
      *
-     * @return PHP_PMD_Node_Method
+     * @return PHP_PMD_Node_CodeMethod
      */
     private function _createMethod($parameterCount)
     {
@@ -189,7 +189,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      *
      * @param integer $parameterCount Number of function parameters.
      *
-     * @return PHP_PMD_Node_Function
+     * @return PHP_PMD_Node_CodeFunction
      */
     private function _createFunction($parameterCount)
     {
@@ -199,10 +199,10 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
     /**
      * Initializes the getParameterCount() method of the given callable.
      *
-     * @param PHP_PMD_Node_Function|PHP_PMD_Node_Method $mock Mocked callable.
+     * @param PHP_PMD_Node_CodeFunction|PHP_PMD_Node_CodeMethod $mock Mocked callable.
      * @param integer $parameterCount Number of parameters.
      *
-     * @return PHP_PMD_Node_Function|PHP_PMD_Node_Method
+     * @return PHP_PMD_Node_CodeFunction|PHP_PMD_Node_CodeMethod
      */
     private function _initFunctionOrMethod($mock, $parameterCount)
     {

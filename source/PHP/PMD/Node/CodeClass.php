@@ -46,14 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/PMD/Node/Class.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/PMD/Node/AbstractCodeType.php';
 
 /**
- * Test case for the class node implementation.
+ * Wrapper around PHP_Depend's class objects.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -64,25 +60,52 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Node_CodeClass extends PHP_PMD_Node_AbstractCodeType
 {
     /**
-     * testGetMethodNamesReturnsExpectedResult
+     * Constructs a new class wrapper node.
      *
-     * @return void
-     * @covers PHP_PMD_Node_Class
-     * @covers PHP_PMD_Node_AbstractCodeType
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
+     * @param PHP_Depend_Code_Class $node The wrapped class object.
      */
-    public function testGetMethodNamesReturnsExpectedResult()
+    public function __construct(PHP_Depend_Code_Class $node)
     {
-        $class = new PHP_Depend_Code_Class(null);
-        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
-        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
+        parent::__construct($node);
+    }
 
-        $node = new PHP_PMD_Node_Class($class);
-        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
+    /**
+     * This method will return the metric value for the given identifier or
+     * <b>null</b> when no such metric exists.
+     *
+     * @param string $name The metric name or abbreviation.
+     *
+     * @return mixed
+     */
+    public function getMetric($name)
+    {
+        if ($name === 'nopm') {
+            return $this->_numberOfPublicMembers();
+        }
+        return parent::getMetric($name);
+    }
+
+    /**
+     * Returns the number of public fields and/or methods in the context class.
+     *
+     * @return integer
+     */
+    private function _numberOfPublicMembers()
+    {
+        $numberOfPublicMembers = 0;
+        foreach ($this->getNode()->getMethods() as $method) {
+            if ($method->isPublic()) {
+                ++$numberOfPublicMembers;
+            }
+        }
+        foreach ($this->getNode()->getProperties() as $property) {
+            if ($property->isPublic()) {
+                ++$numberOfPublicMembers;
+            }
+        }
+        return $numberOfPublicMembers;
     }
 }
