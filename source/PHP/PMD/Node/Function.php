@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractMethodOrFunction.php';
+require_once 'PHP/PMD/Node/AbstractCodeCallable.php';
 
 /**
  * Wrapper around a PHP_Depend function node.
@@ -60,7 +60,7 @@ require_once 'PHP/PMD/Node/AbstractMethodOrFunction.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Function extends PHP_PMD_Node_AbstractMethodOrFunction
+class PHP_PMD_Node_Function extends PHP_PMD_Node_AbstractCodeCallable
 {
     /**
      * Constructs a new function wrapper.

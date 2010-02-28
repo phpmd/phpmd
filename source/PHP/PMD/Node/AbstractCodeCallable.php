@@ -60,7 +60,7 @@ require_once 'PHP/PMD/Node/AbstractCodeNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_Node_AbstractCodeNode
+abstract class PHP_PMD_Node_AbstractCodeCallable extends PHP_PMD_Node_AbstractCodeNode
 {
     /**
      * Constructs a new callable wrapper.

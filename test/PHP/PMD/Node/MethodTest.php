@@ -69,7 +69,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testMagicCallDelegatesToWrappedPHPDependMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractMethodOrFunction::__call
+     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
      * @group phpmd
      * @group phpmd::node
      * @group unittest
@@ -88,7 +88,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractMethodOrFunction::__call
+     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
      * @group phpmd
      * @group phpmd::node
      * @group unittest
