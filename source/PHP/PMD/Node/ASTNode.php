@@ -89,6 +89,7 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
      * @param PHP_PMD_AbstractRule $rule The context rule instance.
      * 
      * @return boolean
+     * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
     public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
     {
