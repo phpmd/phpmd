@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
+require_once 'PHP/PMD/Node/AbstractCodeType.php';
 
 /**
  * Wrapper around PHP_Depend's class objects.
@@ -60,7 +60,7 @@ require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractClassOrInterface
+class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractCodeType
 {
     /**
      * Constructs a new class wrapper node.

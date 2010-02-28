@@ -46,10 +46,8 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCodeNode.php';
-
 /**
- * Abstract base class for PHP_Depend function and method wrappers.
+ * Simple code annotation class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,25 +58,68 @@ require_once 'PHP/PMD/Node/AbstractCodeNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_Node_AbstractCodeNode
+class PHP_PMD_Node_CodeAnnotation
 {
     /**
-     * Constructs a new callable wrapper.
-     *
-     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
+     * Name of the suppress warnings annotation.
      */
-    public function __construct(PHP_Depend_Code_AbstractCallable $node)
+    const SUPPRESS_ANNOTATION = 'SuppressWarnings';
+
+    /**
+     * The annotation name.
+     *
+     * @var string
+     */
+    private $_name = null;
+
+    /**
+     * The annotation value.
+     *
+     * @var string
+     */
+    private $_value = null;
+
+    /**
+     * Constructs a new annotation instance.
+     *
+     * @param string $name  The annotation name.
+     * @param string $value The supplied annotation value.
+     */
+    public function __construct($name, $value)
     {
-        parent::__construct($node);
+        $this->_name  = $name;
+        $this->_value = trim($value, '" ');
     }
 
     /**
-     * Returns the number of parameters in the callable signature.
+     * Checks if this annotation suppresses the given rule.
      *
-     * @return integer
+     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     *
+     * @return boolean
      */
-    public function getParameterCount()
+    public function suppresses(PHP_PMD_AbstractRule $rule)
     {
-        return $this->getNode()->getParameters()->count();
+        if ($this->_name === self::SUPPRESS_ANNOTATION) {
+            return $this->_suppresses($rule);
+        }
+        return false;
+    }
+
+    /**
+     * Checks if this annotation suppresses the given rule.
+     *
+     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     *
+     * @return boolean
+     */
+    private function _suppresses(PHP_PMD_AbstractRule $rule)
+    {
+        if (in_array($this->_value, array('PHPMD', 'PMD'))) {
+            return true;
+        } else if (strpos($match[1], 'PMD.' . $rule->getName()) !== false) {
+            return true;
+        }
+        return (stripos($rule->getName(), $match[1]) !== false);
     }
 }

@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCodeNode.php';
+require_once 'PHP/PMD/Node/CodeAnnotation.php';
 
 /**
- * Abstract base class for PHP_Depend function and method wrappers.
+ * Collection of code annotations.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,25 +60,52 @@ require_once 'PHP/PMD/Node/AbstractCodeNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractMethodOrFunction extends PHP_PMD_Node_AbstractCodeNode
+class PHP_PMD_Node_CodeAnnotations
 {
     /**
-     * Constructs a new callable wrapper.
+     * Detected annotations.
      *
-     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
+     * @var array(PHP_PMD_Node_CodeAnnotation)
      */
-    public function __construct(PHP_Depend_Code_AbstractCallable $node)
-    {
-        parent::__construct($node);
-    }
+    private $_annotations = array();
 
     /**
-     * Returns the number of parameters in the callable signature.
+     * Regexp used to extract code annotations.
      *
-     * @return integer
+     * @var string
      */
-    public function getParameterCount()
+    private $_regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
+
+    /**
+     * Constructs a new collection instance.
+     *
+     * @param PHP_PMD_AbstractNode $node The context/parent node.
+     */
+    public function __construct(PHP_PMD_AbstractNode $node)
     {
-        return $this->getNode()->getParameters()->count();
+        preg_match_all($this->_regexp, $node->getDocComment(), $matches);
+        foreach (array_keys($matches[0]) as $i) {
+            $name  = $matches[1][$i];
+            $value = trim($matches[2][$i], '" ');
+
+            $this->_annotations[] = new PHP_PMD_Node_CodeAnnotation($name, $value);
+        }
+    }
+    
+    /**
+     * Checks if one of the annotations suppresses the given rule.
+     *
+     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     *
+     * @return boolean
+     */
+    public function suppresses(PHP_PMD_AbstractRule $rule)
+    {
+        foreach ($this->_annotations as $annotation) {
+            if ($annotation->suppresses($rule)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

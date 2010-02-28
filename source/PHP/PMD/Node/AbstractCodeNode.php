@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
+require_once 'PHP/PMD/AbstractNode.php';
 
 /**
- * Wrapper around PHP_Depend's interface objects.
+ * Abstract base class for all code nodes.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,6 +60,28 @@ require_once 'PHP/PMD/Node/AbstractClassOrInterface.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractClassOrInterface
+abstract class PHP_PMD_Node_AbstractCodeNode extends PHP_PMD_AbstractNode
 {
+    /**
+     * Annotations associated with node instance.
+     *
+     * @var PHP_PMD_Node_CodeAnnotations
+     */
+    private $_annotations = null;
+
+    /**
+     * Checks if this node has a suppressed annotation for the given rule
+     * instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     *
+     * @return boolean
+     */
+    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    {
+        if ($this->_annotations === null) {
+            $this->_annotations = new PHP_PMD_Node_CodeAnnotations($this);
+        }
+        return $this->_annotations->suppresses($rule);
+    }
 }

@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once 'PHP/PMD/Node/AbstractCodeNode.php';
 
 /**
  * Abstract base class for classes and interfaces.
@@ -60,7 +60,7 @@ require_once 'PHP/PMD/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNode
+abstract class PHP_PMD_Node_AbstractCodeType extends PHP_PMD_Node_AbstractCodeNode
 {
     /**
      * Constructs a new generic class or interface node.

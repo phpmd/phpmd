@@ -71,7 +71,7 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Node_Class
-     * @covers PHP_PMD_Node_AbstractClassOrInterface
+     * @covers PHP_PMD_Node_AbstractCodeType
      * @group phpmd
      * @group phpmd::node
      * @group unittest
