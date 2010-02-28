@@ -117,9 +117,9 @@ class PHP_PMD_Node_CodeAnnotation
     {
         if (in_array($this->_value, array('PHPMD', 'PMD'))) {
             return true;
-        } else if (strpos($match[1], 'PMD.' . $rule->getName()) !== false) {
+        } else if (strpos($this->_value, 'PMD.' . $rule->getName()) !== false) {
             return true;
         }
-        return (stripos($rule->getName(), $match[1]) !== false);
+        return (stripos($rule->getName(), $this->_value) !== false);
     }
 }
