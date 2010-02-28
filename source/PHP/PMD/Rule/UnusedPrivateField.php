@@ -182,8 +182,8 @@ class PHP_PMD_Rule_UnusedPrivateField
      * This method checks that the given property postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param PHP_PMD_Node_CodeClass   $class   The context class node instance.
-     * @param PHP_PMD_Node_ASTNode $postfix The context property postfix node.
+     * @param PHP_PMD_Node_CodeClass $class   The context class node instance.
+     * @param PHP_PMD_Node_ASTNode   $postfix The context property postfix node.
      *
      * @return boolean
      */
