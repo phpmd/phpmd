@@ -46,10 +46,15 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/CodeAnnotation.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Node/Class.php';
+require_once 'PHP/Depend/Code/Class.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Collection of code annotations.
+ * Test case for the class node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,52 +65,46 @@ require_once 'PHP/PMD/Node/CodeAnnotation.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_CodeAnnotations
+class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Detected annotations.
+     * testGetMethodNamesReturnsExpectedResult
      *
-     * @var array(PHP_PMD_Node_CodeAnnotation)
+     * @return void
+     * @covers PHP_PMD_Node_Class
+     * @covers PHP_PMD_Node_AbstractType
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    private $_annotations = array();
-
-    /**
-     * Regexp used to extract code annotations.
-     *
-     * @var string
-     */
-    private $_regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
-
-    /**
-     * Constructs a new collection instance.
-     *
-     * @param PHP_PMD_AbstractNode $node The context/parent node.
-     */
-    public function __construct(PHP_PMD_AbstractNode $node)
+    public function testGetMethodNamesReturnsExpectedResult()
     {
-        preg_match_all($this->_regexp, $node->getDocComment(), $matches);
-        foreach (array_keys($matches[0]) as $i) {
-            $name  = $matches[1][$i];
-            $value = trim($matches[2][$i], '" ');
+        $class = new PHP_Depend_Code_Class(null);
+        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
+        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
 
-            $this->_annotations[] = new PHP_PMD_Node_CodeAnnotation($name, $value);
-        }
+        $node = new PHP_PMD_Node_Class($class);
+        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
     }
-    
+
     /**
-     * Checks if one of the annotations suppresses the given rule.
+     * testHasSuppressWarningsAnnotationForReturnsTrue
      *
-     * @param PHP_PMD_AbstractRule $rule The rule to check.
-     *
-     * @return boolean
+     * @return void
+     * @covers PHP_PMD_Node_AbstractNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function suppresses(PHP_PMD_AbstractRule $rule)
+    public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {
-        foreach ($this->_annotations as $annotation) {
-            if ($annotation->suppresses($rule)) {
-                return true;
-            }
-        }
-        return false;
+        $class = new PHP_Depend_Code_Class(null);
+        $class->setDocComment('/** @SuppressWarnings("PMD") */');
+        
+        $rule = $this->getMock('PHP_PMD_AbstractRule');
+        
+        $node = new PHP_PMD_Node_Class($class);
+        
+        $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
     }
 }

@@ -85,11 +85,11 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      * This method collects all methods in the given class that are declared
      * as private and are not used in the same class' context.
      *
-     * @param PHP_PMD_Node_CodeClass $class The context class instance.
+     * @param PHP_PMD_Node_Class $class The context class instance.
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectUnusedPrivateMethods(PHP_PMD_Node_CodeClass $class)
+    private function _collectUnusedPrivateMethods(PHP_PMD_Node_Class $class)
     {
         $methods = $this->_collectPrivateMethods($class);
         return $this->_removeUsedMethods($class, $methods);
@@ -98,11 +98,11 @@ class PHP_PMD_Rule_UnusedPrivateMethod
     /**
      * Collects all private methods declared in the given class node.
      *
-     * @param PHP_PMD_Node_CodeClass $class The context class instance.
+     * @param PHP_PMD_Node_Class $class The context class instance.
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectPrivateMethods(PHP_PMD_Node_CodeClass $class)
+    private function _collectPrivateMethods(PHP_PMD_Node_Class $class)
     {
         $methods = array();
         foreach ($class->getMethods() as $method) {
@@ -116,13 +116,13 @@ class PHP_PMD_Rule_UnusedPrivateMethod
     /**
      * This method removes all used methods from the given methods array.
      *
-     * @param PHP_PMD_Node_CodeClass         $class   The context class instance.
-     * @param array(PHP_PMD_Node_CodeMethod) $methods All collected private methods.
+     * @param PHP_PMD_Node_Class         $class   The context class instance.
+     * @param array(PHP_PMD_Node_Method) $methods All collected private methods.
      *
      * @return array(PHP_PMD_AbstractNode)
      */
     private function _removeUsedMethods(
-        PHP_PMD_Node_CodeClass $class,
+        PHP_PMD_Node_Class $class,
         array $methods
     ) {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
@@ -137,14 +137,14 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
      *
-     * @param PHP_PMD_Node_CodeClass  $class  The context class instance.
-     * @param PHP_PMD_Node_CodeMethod $method The context method instance.
+     * @param PHP_PMD_Node_Class  $class  The context class instance.
+     * @param PHP_PMD_Node_Method $method The context method instance.
      *
      * @return boolean
      */
     private function _acceptMethod(
-        PHP_PMD_Node_CodeClass $class,
-        PHP_PMD_Node_CodeMethod $method
+        PHP_PMD_Node_Class $class,
+        PHP_PMD_Node_Method $method
     ) {
         return (
             $method->isPrivate() &&
@@ -159,13 +159,13 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param PHP_PMD_Node_CodeClass $class   The context class node instance.
-     * @param PHP_PMD_Node_ASTNode   $postfix The context method postfix node.
+     * @param PHP_PMD_Node_Class   $class   The context class node instance.
+     * @param PHP_PMD_Node_ASTNode $postfix The context method postfix node.
      *
      * @return boolean
      */
     private function _isClassScope(
-        PHP_PMD_Node_CodeClass $class,
+        PHP_PMD_Node_Class $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {
         $prefix = $postfix->getParent()->getChild(0);

@@ -94,13 +94,13 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first class found in a source file related to the calling
      * test method.
      *
-     * @return PHP_PMD_Node_CodeClass
+     * @return PHP_PMD_Node_Class
      */
     protected function getClass()
     {
-        include_once 'PHP/PMD/Node/CodeClass.php';
+        include_once 'PHP/PMD/Node/Class.php';
 
-        return new PHP_PMD_Node_CodeClass(
+        return new PHP_PMD_Node_Class(
             $this->_getNodeForCallingTestCase(
                 $this->_parseTestCaseSource()
                     ->getClasses()
@@ -112,13 +112,13 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return PHP_PMD_Node_CodeMethod
+     * @return PHP_PMD_Node_Method
      */
     protected function getMethod()
     {
-        include_once 'PHP/PMD/Node/CodeMethod.php';
+        include_once 'PHP/PMD/Node/Method.php';
         
-        return new PHP_PMD_Node_CodeMethod(
+        return new PHP_PMD_Node_Method(
             $this->_getNodeForCallingTestCase(
                 $this->_parseTestCaseSource()
                     ->getTypes()
@@ -132,13 +132,13 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the first function found in a source files related to the calling
      * test method.
      *
-     * @return PHP_PMD_Node_CodeFunction
+     * @return PHP_PMD_Node_Function
      */
     protected function getFunction()
     {
-        include_once 'PHP/PMD/Node/CodeFunction.php';
+        include_once 'PHP/PMD/Node/Function.php';
 
-        return new PHP_PMD_Node_CodeFunction(
+        return new PHP_PMD_Node_Function(
             $this->_getNodeForCallingTestCase(
                 $this->_parseTestCaseSource()
                     ->getFunctions()
@@ -235,13 +235,13 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $metric The metric acronym used by PHP_Depend.
      * @param mixed  $value  The expected metric return value.
      *
-     * @return PHP_PMD_Node_CodeClass
+     * @return PHP_PMD_Node_Class
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        include_once 'PHP/PMD/Node/CodeClass.php';
+        include_once 'PHP/PMD/Node/Class.php';
 
-        $class = $this->getMock('PHP_PMD_Node_CodeClass', array(), array(null), '', false);
+        $class = $this->getMock('PHP_PMD_Node_Class', array(), array(null), '', false);
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
                 ->method('getMetric')
@@ -257,14 +257,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $metric The metric acronym used by PHP_Depend.
      * @param mixed  $value  The expected metric return value.
      *
-     * @return PHP_PMD_Node_CodeMethod
+     * @return PHP_PMD_Node_Method
      */
     protected function getMethodMock($metric = null, $value = null)
     {
-        include_once 'PHP/PMD/Node/CodeMethod.php';
+        include_once 'PHP/PMD/Node/Method.php';
 
         return $this->initFunctionOrMethod(
-            $this->getMock('PHP_PMD_Node_CodeMethod', array(), array(null), '', false),
+            $this->getMock('PHP_PMD_Node_Method', array(), array(null), '', false),
             $metric,
             $value
         );
@@ -276,14 +276,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * @param string $metric The metric acronym used by PHP_Depend.
      * @param mixed  $value  The expected metric return value.
      *
-     * @return PHP_PMD_Node_CodeFunction
+     * @return PHP_PMD_Node_Function
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
-        include_once 'PHP/PMD/Node/CodeFunction.php';
+        include_once 'PHP/PMD/Node/Function.php';
 
         return $this->initFunctionOrMethod(
-            $this->getMock('PHP_PMD_Node_CodeFunction', array(), array(null), '', false),
+            $this->getMock('PHP_PMD_Node_Function', array(), array(null), '', false),
             $metric,
             $value
         );
@@ -292,11 +292,11 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Initializes the getMetric() method of the given function or methode node.
      *
-     * @param PHP_PMD_Node_CodeFunction|PHP_PMD_Node_CodeMethod $mock   Mock instance.
+     * @param PHP_PMD_Node_Function|PHP_PMD_Node_Method $mock   Mock instance.
      * @param string                                    $metric Metric acronym.
      * @param mixed                                     $value  Expected value.
      *
-     * @return PHP_PMD_Node_CodeFunction|PHP_PMD_Node_CodeMethod
+     * @return PHP_PMD_Node_Function|PHP_PMD_Node_Method
      */
     protected function initFunctionOrMethod($mock, $metric, $value)
     {
@@ -339,6 +339,18 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             ->method('addRuleViolation');
 
         return $report;
+    }
+
+    /**
+     * Creates a mocked {@link PHP_PMD_AbstractRule} instance.
+     *
+     * @return PHP_PMD_AbstractRule
+     */
+    protected function getRuleMock()
+    {
+        include_once 'PHP/PMD/AbstractRule.php';
+
+        return $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
     }
 
     /**

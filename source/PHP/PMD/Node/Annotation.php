@@ -58,7 +58,7 @@
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_CodeAnnotation
+class PHP_PMD_Node_Annotation
 {
     /**
      * Name of the suppress warnings annotation.

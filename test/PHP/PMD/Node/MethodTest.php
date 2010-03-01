@@ -46,10 +46,13 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCodeNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Node/Method.php';
+require_once 'PHP/Depend/Code/Method.php';
 
 /**
- * Abstract base class for classes and interfaces.
+ * Test case for the method node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,76 +63,41 @@ require_once 'PHP/PMD/Node/AbstractCodeNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractCodeType extends PHP_PMD_Node_AbstractCodeNode
+class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new generic class or interface node.
+     * testMagicCallDelegatesToWrappedPHPDependMethod
      *
-     * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
+     * @return void
+     * @covers PHP_PMD_Node_AbstractCallable::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function __construct(PHP_Depend_Code_AbstractType $node)
+    public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
-        parent::__construct($node);
+        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
+        $method->expects($this->once())
+            ->method('getStartLine');
+
+        $node = new PHP_PMD_Node_Method($method);
+        $node->getStartLine();
     }
 
     /**
-     * Returns an <b>array</b> with all methods defined in the context class or
-     * interface.
+     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
-     * @return array(PHP_PMD_Node_CodeMethod)
+     * @return void
+     * @covers PHP_PMD_Node_AbstractCallable::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     * @expectedException BadMethodCallException
      */
-    public function getMethods()
+    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        $methods = array();
-        foreach ($this->getNode()->getMethods() as $method) {
-            $methods[] = new PHP_PMD_Node_CodeMethod($method);
-        }
-        return $methods;
-    }
+        $node = new PHP_PMD_Node_Method(new PHP_Depend_Code_Method(null));
+        $node->getFooBar();
 
-    /**
-     * Returns an array with the names of all methods within this class or
-     * interface node.
-     *
-     * @return array(string)
-     */
-    public function getMethodNames()
-    {
-        $names = array();
-        foreach ($this->getNode()->getMethods() as $method) {
-            $names[] = $method->getName();
-        }
-        return $names;
-    }
-
-    /**
-     * Returns the number of constants declared in this type.
-     *
-     * @return integer
-     */
-    public function getConstantCount()
-    {
-        return $this->getNode()->getConstants()->count();
-    }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return $this->getNode()->getPackage()->getName();
-    }
-
-    /**
-     * Returns the name of the parent type or <b>null</b> when this node has no
-     * parent type.
-     *
-     * @return string
-     */
-    public function getParentName()
-    {
-        return null;
     }
 }

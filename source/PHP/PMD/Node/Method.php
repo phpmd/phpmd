@@ -46,13 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/PMD/Node/CodeMethod.php';
-require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/PMD/Node/AbstractCallable.php';
 
 /**
- * Test case for the method node implementation.
+ * Wrapper around a PHP_Depend method node.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -63,41 +60,47 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_CodeMethodTest extends PHP_PMD_AbstractTest
+class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
 {
     /**
-     * testMagicCallDelegatesToWrappedPHPDependMethod
+     * Constructs a new method wrapper.
      *
-     * @return void
-     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
+     * @param PHP_Depend_Code_CodeMethod $node The wrapped method object.
      */
-    public function testMagicCallDelegatesToWrappedPHPDependMethod()
+    public function __construct(PHP_Depend_Code_Method $node)
     {
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
-        $method->expects($this->once())
-            ->method('getStartLine');
-
-        $node = new PHP_PMD_Node_CodeMethod($method);
-        $node->getStartLine();
+        parent::__construct($node);
     }
 
     /**
-     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
+     * Returns the name of the parent package.
      *
-     * @return void
-     * @covers PHP_PMD_Node_AbstractCodeCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
-     * @expectedException BadMethodCallException
+     * @return string
      */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
+    public function getPackageName()
     {
-        $node = new PHP_PMD_Node_CodeMethod(new PHP_Depend_Code_Method(null));
-        $node->getFooBar();
+        return $this->getNode()->getParent()->getPackage()->getName();
+    }
 
+    /**
+     * Returns the name of the parent type or <b>null</b> when this node has no
+     * parent type.
+     *
+     * @return string
+     */
+    public function getParentName()
+    {
+        return $this->getNode()->getParent()->getName();
+    }
+
+    /**
+     * Returns <b>true</b> when the underlying method is declared as abstract or
+     * is declared as child of an interface.
+     *
+     * @return boolean
+     */
+    public function isAbstract()
+    {
+        return $this->getNode()->isAbstract();
     }
 }

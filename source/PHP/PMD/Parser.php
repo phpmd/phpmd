@@ -49,9 +49,9 @@ require_once 'PHP/Depend/Log/LoggerI.php';
 require_once 'PHP/Depend/Log/CodeAwareI.php';
 require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 
-require_once 'PHP/PMD/Node/CodeClass.php';
-require_once 'PHP/PMD/Node/CodeFunction.php';
-require_once 'PHP/PMD/Node/CodeMethod.php';
+require_once 'PHP/PMD/Node/Class.php';
+require_once 'PHP/PMD/Node/Function.php';
+require_once 'PHP/PMD/Node/Method.php';
 
 /**
  * Simple wrapper around the php depend engine.
@@ -204,7 +204,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_CodeClass($node));
+        $this->_apply(new PHP_PMD_Node_Class($node));
         parent::visitClass($node);
     }
 
@@ -222,7 +222,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_CodeFunction($node));
+        $this->_apply(new PHP_PMD_Node_Function($node));
     }
 
     /**
@@ -239,7 +239,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_CodeMethod($node));
+        $this->_apply(new PHP_PMD_Node_Method($node));
     }
 
     /**

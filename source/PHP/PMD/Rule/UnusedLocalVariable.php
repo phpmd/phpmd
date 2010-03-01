@@ -102,12 +102,12 @@ class PHP_PMD_Rule_UnusedLocalVariable
      * are also found in the formal parameters of the given method or/and
      * function node.
      *
-     * @param PHP_PMD_Node_AbstractCodeCallable $node The currently
+     * @param PHP_PMD_Node_AbstractCallable $node The currently
      *        analyzed method/function node.
      *
      * @return void
      */ 
-    private function _removeParameters(PHP_PMD_Node_AbstractCodeCallable $node)
+    private function _removeParameters(PHP_PMD_Node_AbstractCallable $node)
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType('FormalParameters');
@@ -125,12 +125,12 @@ class PHP_PMD_Rule_UnusedLocalVariable
      * method/function node and stores their image in the <b>$_images</b>
      * property.
      *
-     * @param PHP_PMD_Node_AbstractCodeCallable $node The currently
+     * @param PHP_PMD_Node_AbstractCallable $node The currently
      *        analyzed method/function node.
      *
      * @return void
      */
-    private function _collectVariables(PHP_PMD_Node_AbstractCodeCallable $node)
+    private function _collectVariables(PHP_PMD_Node_AbstractCallable $node)
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ($this->_accept($variable)) {

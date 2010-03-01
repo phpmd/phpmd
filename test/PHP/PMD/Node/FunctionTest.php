@@ -46,10 +46,13 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Node/Function.php';
+require_once 'PHP/Depend/Code/Function.php';
 
 /**
- * Abstract base class for all code nodes.
+ * Test case for the function node implementation.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,28 +63,41 @@ require_once 'PHP/PMD/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractCodeNode extends PHP_PMD_AbstractNode
+class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Annotations associated with node instance.
+     * testMagicCallDelegatesToWrappedPHPDependFunction
      *
-     * @var PHP_PMD_Node_CodeAnnotations
+     * @return void
+     * @covers PHP_PMD_Node_AbstractCallable::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    private $_annotations = null;
+    public function testMagicCallDelegatesToWrappedPHPDependFunction()
+    {
+        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null));
+        $function->expects($this->once())
+            ->method('getStartLine');
+
+        $node = new PHP_PMD_Node_Function($function);
+        $node->getStartLine();
+    }
 
     /**
-     * Checks if this node has a suppressed annotation for the given rule
-     * instance.
+     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
-     * @param PHP_PMD_AbstractRule $rule The context rule instance.
-     *
-     * @return boolean
+     * @return void
+     * @covers PHP_PMD_Node_AbstractCallable::__call
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     * @expectedException BadMethodCallException
      */
-    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        if ($this->_annotations === null) {
-            $this->_annotations = new PHP_PMD_Node_CodeAnnotations($this);
-        }
-        return $this->_annotations->suppresses($rule);
+        $node = new PHP_PMD_Node_Function(new PHP_Depend_Code_Function(null));
+        $node->getFooBar();
+
     }
 }

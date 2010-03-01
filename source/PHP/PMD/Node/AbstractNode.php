@@ -46,14 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once dirname(__FILE__) . '/../AbstractTest.php';
-
-require_once 'PHP/PMD/Node/CodeClass.php';
-require_once 'PHP/Depend/Code/Class.php';
-require_once 'PHP/Depend/Code/Method.php';
+require_once 'PHP/PMD/AbstractNode.php';
 
 /**
- * Test case for the class node implementation.
+ * Abstract base class for all code nodes.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -64,25 +60,28 @@ require_once 'PHP/Depend/Code/Method.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_CodeClassTest extends PHP_PMD_AbstractTest
+abstract class PHP_PMD_Node_AbstractNode extends PHP_PMD_AbstractNode
 {
     /**
-     * testGetMethodNamesReturnsExpectedResult
+     * Annotations associated with node instance.
      *
-     * @return void
-     * @covers PHP_PMD_Node_CodeClass
-     * @covers PHP_PMD_Node_AbstractCodeType
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
+     * @var PHP_PMD_Node_Annotations
      */
-    public function testGetMethodNamesReturnsExpectedResult()
-    {
-        $class = new PHP_Depend_Code_Class(null);
-        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
-        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
+    private $_annotations = null;
 
-        $node = new PHP_PMD_Node_CodeClass($class);
-        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
+    /**
+     * Checks if this node has a suppressed annotation for the given rule
+     * instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     *
+     * @return boolean
+     */
+    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    {
+        if ($this->_annotations === null) {
+            $this->_annotations = new PHP_PMD_Node_Annotations($this);
+        }
+        return $this->_annotations->suppresses($rule);
     }
 }

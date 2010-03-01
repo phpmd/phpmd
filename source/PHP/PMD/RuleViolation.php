@@ -119,12 +119,12 @@ class PHP_PMD_RuleViolation
         $this->_node        = $node;
         $this->_description = $violationMessage;
 
-        if ($node instanceof PHP_PMD_Node_AbstractCodeType) {
+        if ($node instanceof PHP_PMD_Node_AbstractType) {
             $this->_className = $node->getName();
-        } else if ($node instanceof PHP_PMD_Node_CodeMethod) {
+        } else if ($node instanceof PHP_PMD_Node_Method) {
             $this->_className  = $node->getParentName();
             $this->_CodeMethodName = $node->getName();
-        } else if ($node instanceof PHP_PMD_Node_CodeFunction) {
+        } else if ($node instanceof PHP_PMD_Node_Function) {
             $this->_functionName = $node->getName();
         }
     }

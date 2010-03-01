@@ -46,7 +46,7 @@
  */
 
 require_once 'PHP/PMD/Node/ASTNode.php';
-require_once 'PHP/PMD/Node/CodeAnnotations.php';
+require_once 'PHP/PMD/Node/Annotations.php';
 
 /**
  * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper

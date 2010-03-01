@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCodeType.php';
+require_once 'PHP/PMD/Node/AbstractNode.php';
 
 /**
- * Wrapper around PHP_Depend's class objects.
+ * Abstract base class for PHP_Depend function and method wrappers.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,52 +60,25 @@ require_once 'PHP/PMD/Node/AbstractCodeType.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_CodeClass extends PHP_PMD_Node_AbstractCodeType
+abstract class PHP_PMD_Node_AbstractCallable extends PHP_PMD_Node_AbstractNode
 {
     /**
-     * Constructs a new class wrapper node.
+     * Constructs a new callable wrapper.
      *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function __construct(PHP_Depend_Code_AbstractCallable $node)
     {
         parent::__construct($node);
     }
 
     /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
-     *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
-     */
-    public function getMetric($name)
-    {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
-        }
-        return parent::getMetric($name);
-    }
-
-    /**
-     * Returns the number of public fields and/or methods in the context class.
+     * Returns the number of parameters in the callable signature.
      *
      * @return integer
      */
-    private function _numberOfPublicMembers()
+    public function getParameterCount()
     {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        return $this->getNode()->getParameters()->count();
     }
 }

@@ -75,7 +75,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     public function testAdapterDelegatesClassNodeToRuleSet()
     {
         $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_CodeClass'));
+        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Class'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($this->getPHPDependClassMock());
     }
@@ -108,7 +108,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
         $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_CodeMethod'));
+        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Method'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock());
     }
@@ -141,7 +141,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
         $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_CodeFunction'));
+        $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Function'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock());
     }
