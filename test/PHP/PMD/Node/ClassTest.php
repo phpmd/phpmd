@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/Depend/Code/Class.php';
 require_once 'PHP/Depend/Code/Method.php';
@@ -71,7 +72,7 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Node_Class
-     * @covers PHP_PMD_Node_AbstractClassOrInterface
+     * @covers PHP_PMD_Node_AbstractType
      * @group phpmd
      * @group phpmd::node
      * @group unittest
@@ -84,5 +85,26 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
 
         $node = new PHP_PMD_Node_Class($class);
         $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
+    }
+
+    /**
+     * testHasSuppressWarningsAnnotationForReturnsTrue
+     *
+     * @return void
+     * @covers PHP_PMD_Node_AbstractNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testHasSuppressWarningsAnnotationForReturnsTrue()
+    {
+        $class = new PHP_Depend_Code_Class(null);
+        $class->setDocComment('/** @SuppressWarnings("PMD") */');
+        
+        $rule = $this->getMock('PHP_PMD_AbstractRule');
+        
+        $node = new PHP_PMD_Node_Class($class);
+        
+        $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
     }
 }

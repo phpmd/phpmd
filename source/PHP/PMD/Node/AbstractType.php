@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractType.php';
+require_once 'PHP/PMD/Node/AbstractNode.php';
 
 /**
- * Wrapper around PHP_Depend's class objects.
+ * Abstract base class for classes and interfaces.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,52 +60,76 @@ require_once 'PHP/PMD/Node/AbstractType.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractType
+abstract class PHP_PMD_Node_AbstractType extends PHP_PMD_Node_AbstractNode
 {
     /**
-     * Constructs a new class wrapper node.
+     * Constructs a new generic class or interface node.
      *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function __construct(PHP_Depend_Code_AbstractType $node)
     {
         parent::__construct($node);
     }
 
     /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
+     * Returns an <b>array</b> with all methods defined in the context class or
+     * interface.
      *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
+     * @return array(PHP_PMD_Node_Method)
      */
-    public function getMetric($name)
+    public function getMethods()
     {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
+        $methods = array();
+        foreach ($this->getNode()->getMethods() as $method) {
+            $methods[] = new PHP_PMD_Node_Method($method);
         }
-        return parent::getMetric($name);
+        return $methods;
     }
 
     /**
-     * Returns the number of public fields and/or methods in the context class.
+     * Returns an array with the names of all methods within this class or
+     * interface node.
+     *
+     * @return array(string)
+     */
+    public function getMethodNames()
+    {
+        $names = array();
+        foreach ($this->getNode()->getMethods() as $method) {
+            $names[] = $method->getName();
+        }
+        return $names;
+    }
+
+    /**
+     * Returns the number of constants declared in this type.
      *
      * @return integer
      */
-    private function _numberOfPublicMembers()
+    public function getConstantCount()
     {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        return $this->getNode()->getConstants()->count();
+    }
+
+    /**
+     * Returns the name of the parent package.
+     *
+     * @return string
+     */
+    public function getPackageName()
+    {
+        return $this->getNode()->getPackage()->getName();
+    }
+
+    /**
+     * Returns the name of the parent type or <b>null</b> when this node has no
+     * parent type.
+     *
+     * @return string
+     */
+    public function getParentName()
+    {
+        return null;
     }
 }

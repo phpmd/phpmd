@@ -225,7 +225,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     /**
      * Creates a mocked PHP_Depend method instance.
      *
-     * @return PHP_Depend_Code_Method
+     * @return PHP_Depend_Code_CodeMethod
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {

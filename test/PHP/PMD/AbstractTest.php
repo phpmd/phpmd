@@ -342,6 +342,18 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked {@link PHP_PMD_AbstractRule} instance.
+     *
+     * @return PHP_PMD_AbstractRule
+     */
+    protected function getRuleMock()
+    {
+        include_once 'PHP/PMD/AbstractRule.php';
+
+        return $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
+    }
+
+    /**
      * Creates a mocked rule-set instance.
      *
      * @param string $expectedClass Optional class name for apply() expected at

@@ -121,8 +121,10 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _removeUsedMethods(PHP_PMD_Node_Class $class, array $methods)
-    {
+    private function _removeUsedMethods(
+        PHP_PMD_Node_Class $class,
+        array $methods
+    ) {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
             if ($this->_isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);

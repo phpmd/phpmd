@@ -46,10 +46,13 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/Node/ASTNode.php';
+require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
- * Wrapper around a PHP_Depend ast node.
+ * Test case for the {@link PHP_PMD_Node_ASTNode} class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,91 +63,96 @@ require_once 'PHP/PMD/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
+class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
 {
     /**
-     * The source file of this node.
+     * testGetImageDelegatesToGetImageMethodOfWrappedNode
      *
-     * @var string
+     * @return void
+     * @covers PHP_PMD_Node_ASTNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    private $_fileName = null;
-
-    /**
-     * Constructs a new ast node instance.
-     *
-     * @param PHP_Depend_Code_ASTNode $node     The context ast node.
-     * @param string                  $fileName The source file name.
-     */
-    public function __construct(PHP_Depend_Code_ASTNode $node, $fileName)
+    public function testGetImageDelegatesToGetImageMethodOfWrappedNode()
     {
-        parent::__construct($node);
+        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock->expects($this->once())
+            ->method('getImage');
 
-        $this->_fileName = $fileName;
+        $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
+        $node->getImage();
     }
 
     /**
-     * Checks if this node has a suppressed annotation for the given rule
-     * instance.
+     * testGetNameDelegatesToGetImageMethodOfWrappedNode
      *
-     * @param PHP_PMD_AbstractRule $rule The context rule instance.
-     * 
-     * @return boolean
-     * @SuppressWarnings("PMD.UnusedFormalParameter")
+     * @return void
+     * @covers PHP_PMD_Node_ASTNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    public function testGetNameDelegatesToGetImageMethodOfWrappedNode()
     {
-        return false;
+        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock->expects($this->once())
+            ->method('getImage');
+
+        $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
+        $node->getName();
     }
 
     /**
-     * Returns the source name for this node, maybe a class or interface name,
-     * or a package, method, function name.
+     * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
      *
-     * @return string
+     * @return void
+     * @covers PHP_PMD_Node_ASTNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function getName()
+    public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse()
     {
-        return $this->getImage();
+        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+
+        $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
+        $rule = $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
+
+        $this->assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
-     * Returns the image of the underlying node.
+     * testGetParentNameReturnsNull
      *
-     * @return string
+     * @return void
+     * @covers PHP_PMD_Node_ASTNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function getImage()
+    public function testGetParentNameReturnsNull()
     {
-        return $this->getNode()->getImage();
+        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
+
+        $this->assertNull($node->getParentName());
     }
 
     /**
-     * Returns the name of the declaring source file.
+     * testGetPackageNameReturnsNull
      *
-     * @return string
+     * @return void
+     * @covers PHP_PMD_Node_ASTNode
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
      */
-    public function getFileName()
+    public function testGetPackageNameReturnsNull()
     {
-        return $this->_fileName;
-    }
+        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
 
-    /**
-     * Returns the name of the parent type or <b>null</b> when this node has no
-     * parent type.
-     *
-     * @return string
-     */
-    public function getParentName()
-    {
-        return null;
-    }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return null;
+        $this->assertNull($node->getPackageName());
     }
 }

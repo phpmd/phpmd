@@ -46,10 +46,8 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractType.php';
-
 /**
- * Wrapper around PHP_Depend's class objects.
+ * Simple code annotation class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,52 +58,68 @@ require_once 'PHP/PMD/Node/AbstractType.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractType
+class PHP_PMD_Node_Annotation
 {
     /**
-     * Constructs a new class wrapper node.
-     *
-     * @param PHP_Depend_Code_Class $node The wrapped class object.
+     * Name of the suppress warnings annotation.
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    const SUPPRESS_ANNOTATION = 'SuppressWarnings';
+
+    /**
+     * The annotation name.
+     *
+     * @var string
+     */
+    private $_name = null;
+
+    /**
+     * The annotation value.
+     *
+     * @var string
+     */
+    private $_value = null;
+
+    /**
+     * Constructs a new annotation instance.
+     *
+     * @param string $name  The annotation name.
+     * @param string $value The supplied annotation value.
+     */
+    public function __construct($name, $value)
     {
-        parent::__construct($node);
+        $this->_name  = $name;
+        $this->_value = trim($value, '" ');
     }
 
     /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
+     * Checks if this annotation suppresses the given rule.
      *
-     * @param string $name The metric name or abbreviation.
+     * @param PHP_PMD_AbstractRule $rule The rule to check.
      *
-     * @return mixed
+     * @return boolean
      */
-    public function getMetric($name)
+    public function suppresses(PHP_PMD_AbstractRule $rule)
     {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
+        if ($this->_name === self::SUPPRESS_ANNOTATION) {
+            return $this->_suppresses($rule);
         }
-        return parent::getMetric($name);
+        return false;
     }
 
     /**
-     * Returns the number of public fields and/or methods in the context class.
+     * Checks if this annotation suppresses the given rule.
      *
-     * @return integer
+     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     *
+     * @return boolean
      */
-    private function _numberOfPublicMembers()
+    private function _suppresses(PHP_PMD_AbstractRule $rule)
     {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
+        if (in_array($this->_value, array('PHPMD', 'PMD'))) {
+            return true;
+        } else if (strpos($this->_value, 'PMD.' . $rule->getName()) !== false) {
+            return true;
         }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
+        return (stripos($rule->getName(), $this->_value) !== false);
     }
 }

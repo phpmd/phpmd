@@ -94,11 +94,11 @@ class PHP_PMD_Rule_Design_TooManyMethods
     /**
      * Counts all methods within the given class/interface node.
      *
-     * @param PHP_PMD_Node_AbstractClassOrInterface $node The context class node.
+     * @param PHP_PMD_Node_AbstractType $node The context class node.
      *
      * @return integer
      */
-    private function _countMethods(PHP_PMD_Node_AbstractClassOrInterface $node)
+    private function _countMethods(PHP_PMD_Node_AbstractType $node)
     {
         $count = 0;
         foreach ($node->getMethodNames() as $name) {

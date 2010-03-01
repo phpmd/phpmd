@@ -49,11 +49,11 @@
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
-                        <file name="AbstractClassOrInterface.php" role="php">
+                        <file name="AbstractType.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
-                        <file name="AbstractMethodOrFunction.php" role="php">
+                        <file name="AbstractCodeCallable.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
@@ -62,10 +62,6 @@
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
                         <file name="Function.php" role="php">
-                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-                        </file>
-                        <file name="Interface.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>

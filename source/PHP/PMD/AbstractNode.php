@@ -46,6 +46,7 @@
  */
 
 require_once 'PHP/PMD/Node/ASTNode.php';
+require_once 'PHP/PMD/Node/Annotations.php';
 
 /**
  * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper
@@ -285,6 +286,18 @@ abstract class PHP_PMD_AbstractNode
             $this->_metrics = $metrics;
         }
     }
+
+    /**
+     * Checks if this node has a suppressed annotation for the given rule
+     * instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     *
+     * @return boolean
+     */
+    public abstract function hasSuppressWarningsAnnotationFor(
+        PHP_PMD_AbstractRule $rule
+    );
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no

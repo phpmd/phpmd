@@ -51,7 +51,6 @@ require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
 
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/Node/Function.php';
-require_once 'PHP/PMD/Node/Interface.php';
 require_once 'PHP/PMD/Node/Method.php';
 
 /**
@@ -229,7 +228,7 @@ class PHP_PMD_Parser
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Class $node The method class node.
+     * @param PHP_Depend_Code_Method $node The method class node.
      *
      * @return void
      * @see PHP_Depend_VisitorI::visitMethod()

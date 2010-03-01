@@ -46,10 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+require_once 'PHP/PMD/Node/AbstractNode.php';
 
 /**
- * Abstract base class for classes and interfaces.
+ * Abstract base class for PHP_Depend function and method wrappers.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -60,76 +60,25 @@ require_once 'PHP/PMD/AbstractNode.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-abstract class PHP_PMD_Node_AbstractClassOrInterface extends PHP_PMD_AbstractNode
+abstract class PHP_PMD_Node_AbstractCallable extends PHP_PMD_Node_AbstractNode
 {
     /**
-     * Constructs a new generic class or interface node.
+     * Constructs a new callable wrapper.
      *
-     * @param PHP_Depend_Code_AbstractType $node The wrapped PHP_Depend node.
+     * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
      */
-    public function __construct(PHP_Depend_Code_AbstractType $node)
+    public function __construct(PHP_Depend_Code_AbstractCallable $node)
     {
         parent::__construct($node);
     }
 
     /**
-     * Returns an <b>array</b> with all methods defined in the context class or
-     * interface.
-     *
-     * @return array(PHP_PMD_Node_Method)
-     */
-    public function getMethods()
-    {
-        $methods = array();
-        foreach ($this->getNode()->getMethods() as $method) {
-            $methods[] = new PHP_PMD_Node_Method($method);
-        }
-        return $methods;
-    }
-
-    /**
-     * Returns an array with the names of all methods within this class or
-     * interface node.
-     *
-     * @return array(string)
-     */
-    public function getMethodNames()
-    {
-        $names = array();
-        foreach ($this->getNode()->getMethods() as $method) {
-            $names[] = $method->getName();
-        }
-        return $names;
-    }
-
-    /**
-     * Returns the number of constants declared in this type.
+     * Returns the number of parameters in the callable signature.
      *
      * @return integer
      */
-    public function getConstantCount()
+    public function getParameterCount()
     {
-        return $this->getNode()->getConstants()->count();
-    }
-
-    /**
-     * Returns the name of the parent package.
-     *
-     * @return string
-     */
-    public function getPackageName()
-    {
-        return $this->getNode()->getPackage()->getName();
-    }
-
-    /**
-     * Returns the name of the parent type or <b>null</b> when this node has no
-     * parent type.
-     *
-     * @return string
-     */
-    public function getParentName()
-    {
-        return null;
+        return $this->getNode()->getParameters()->count();
     }
 }
