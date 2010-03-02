@@ -94,6 +94,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     private $_applyTo = array(
         'PHP_PMD_Rule_IClassAware'      =>  'PHP_PMD_Node_Class',
         'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_PMD_Node_Function',
+        'PHP_PMD_Rule_IInterfaceAware'  =>  'PHP_PMD_Node_Interface',
         'PHP_PMD_Rule_IMethodAware'     =>  'PHP_PMD_Node_Method',
     );
 
@@ -105,6 +106,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     private $_rules = array(
         'PHP_PMD_Node_Class'      =>  array(),
         'PHP_PMD_Node_Function'   =>  array(),
+        'PHP_PMD_Node_Interface'  =>  array(),
         'PHP_PMD_Node_Method'     =>  array(),
     );
 

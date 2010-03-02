@@ -108,6 +108,26 @@ class MyClass {
         </example>
     </rule>
 
+    <rule name="ConstantNamingConventions"
+          since="0.2"
+          message="Constant {0} should be defined in uppercase"
+          class="PHP_PMD_Rule_Naming_ConstantNamingConventions"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#constantnamingconventions">
+        <description>
+Class/Interface constant nanmes should always be defined in uppercase.
+        </description>
+        <priority>4</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo {
+    const MY_NUM = 0; // ok
+    const myTest = ""; // fail
+}
+            ]]>
+        </example>
+    </rule>
+
 <!--
 
     <rule name="VariableNamingConventions"
@@ -199,126 +219,6 @@ public abstract class Foo { // should be AbstractFoo
 }
 ]]>
        </example>
-    </rule>
-
-    <rule name="AvoidDollarSigns"
-    		  since="1.5"
-           message="Avoid using dollar signs in variable/method/class/interface names"
-           class="net.sourceforge.pmd.rules.naming.AvoidDollarSigns"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#AvoidDollarSigns">
-       <description>
-Avoid using dollar signs in variable/method/class/interface names.
-       </description>
-         <priority>3</priority>
-       <example>
-   <![CDATA[
- public class Fo$o {  // yikes!
- }
-   ]]>
-       </example>
-     </rule>
-
-    <rule name="SuspiciousHashcodeMethodName"
-    		 since="1.5"
-          message="The method name and return type are suspiciously close to hashCode()"
-          class="net.sourceforge.pmd.rules.naming.SuspiciousHashcodeMethodName"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousHashcodeMethodName">
-       <description>
-The method name and return type are suspiciously close to hashCode(), which
-may mean you are intending to override the hashCode() method.
-       </description>
-        <priority>3</priority>
-       <example>
-    <![CDATA[
-public class Foo {
- public int hashcode() {
- // oops, this probably was supposed to be hashCode
- }
-}
-    ]]>
-       </example>
-     </rule>
-
-    <rule name="SuspiciousConstantFieldName"
-    		 since="2.0"
-          message="The field name indicates a constant but its modifiers do not"
-          class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousConstantFieldName">
-       <description>
-A field name is all in uppercase characters, which in Sun's Java naming
-conventions indicate a constant. However, the field is not final.
-       </description>
-       <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-<![CDATA[
-//ClassOrInterfaceDeclaration[@Interface='false']
- /ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/FieldDeclaration
-  [@Final='false']
-  [VariableDeclarator/VariableDeclaratorId[upper-case(@Image)=@Image]]
- ]]>
-                </value>
-            </property>
-        </properties>
-       <example>
-    <![CDATA[
-public class Foo {
- // this is bad, since someone could accidentally
- // do PI = 2.71828; which is actualy e
- // final double PI = 3.16; is ok
- double PI = 3.16;
-}
-    ]]>
-       </example>
-     </rule>
-
-    <rule
-        name="SuspiciousEqualsMethodName"
-        since="2.0"
-        message="The method name and parameter number are suspiciously close to equals(Object)"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousEqualsMethodName">
-        <description>
-The method name and parameter number are suspiciously close to
-equals(Object), which may mean you are intending to override the equals(Object)
-method.
-        </description>
-        <priority>2</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-        <![CDATA[
-//MethodDeclarator[
-(
-@Image = 'equals'
-  and count(FormalParameters/*) = 1
-  and not (FormalParameters/FormalParameter/Type/ReferenceType/ClassOrInterfaceType
-   [@Image = 'Object' or @Image = 'java.lang.Object'])
-)
-or
-@Image='equal'
- and count(FormalParameters/*) = 1
- and (FormalParameters/FormalParameter/Type/ReferenceType/ClassOrInterfaceType
-  [@Image = 'Object' or @Image = 'java.lang.Object'])
-
-]
-        ]]>
-                    </value>
-                 </property>
-              </properties>
-        <example>
-        <![CDATA[
-public class Foo {
- public int equals(Object o) {
- // oops, this probably was supposed to be boolean equals
- }
- public boolean equals(String s) {
- // oops, this probably was supposed to be equals(Object)
- }
-}
-        ]]>
-        </example>
     </rule>
 
     <rule name="AvoidFieldNameMatchingTypeName"

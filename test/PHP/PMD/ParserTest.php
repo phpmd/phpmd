@@ -74,10 +74,15 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDelegatesClassNodeToRuleSet()
     {
+        $mock = $this->getPHPDependClassMock();
+        $mock->expects($this->once())
+            ->method('isUserDefined')
+            ->will($this->returnValue(true));
+
         $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Class'));
         $adapter->setReport($this->getReportMock(0));
-        $adapter->visitClass($this->getPHPDependClassMock());
+        $adapter->visitClass($mock);
     }
 
     /**
@@ -91,10 +96,15 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet()
     {
+        $mock = $this->getPHPDependClassMock();
+        $mock->expects($this->once())
+            ->method('isUserDefined')
+            ->will($this->returnValue(false));
+
         $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
-        $adapter->visitClass($this->getPHPDependClassMock(null));
+        $adapter->visitClass($mock);
     }
 
     /**
@@ -180,16 +190,16 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_Depend_Code_Class
      */
-    protected function getPHPDependClassMock($fileName = '/foo/bar.php')
+    protected function getPHPDependClassMock()
     {
         include_once 'PHP/Depend/Code/Class.php';
 
         $class = $this->getMock('PHP_Depend_Code_Class',
                                 array(),
                                 array(null));
-        $class->expects($this->atLeastOnce())
+        $class->expects($this->any())
               ->method('getSourceFile')
-              ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
+              ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
         $class->expects($this->any())
               ->method('getConstants')
               ->will($this->returnValue(new ArrayIterator(array())));
