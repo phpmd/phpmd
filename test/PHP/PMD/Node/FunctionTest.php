@@ -98,6 +98,5 @@ class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
     {
         $node = new PHP_PMD_Node_Function(new PHP_Depend_Code_Function(null));
         $node->getFooBar();
-
     }
 }

@@ -37,6 +37,8 @@
 - Fixed #7: UnusedLocalVariable ruleset incorrectly flags variables
   as unused when used inside double quoted string. Fixed in svn 
   revision #187.
+- Implemented #9: Add support for "Suppress warnings" annotations.
+  Implemented in svn revision #200.
 - Implemented #10: Support for exclude element in rule-set files added.
   Implemented in svn revision #189.
     </notes>
@@ -49,11 +51,23 @@
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
+                        <file name="AbstractCallable.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="AbstractNode.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
                         <file name="AbstractType.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
-                        <file name="AbstractCodeCallable.php" role="php">
+                        <file name="Annotation.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Annotations.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
@@ -107,6 +121,24 @@
                                 <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                             </file>
                             <file name="TooManyMethods.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                        </dir>
+                        <dir name="Naming">
+                            <file name="ConstructorWithNameAsEnclosingClass.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="LongVariable.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="ShortMethodName.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="ShortVariable.php" role="php">
                                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
                                 <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                             </file>
@@ -200,15 +232,15 @@
                         <tasks:replace from="@package_version@" to="version" type="package-info"/>
                         <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                     </file>
+                    <file name="RuleSet.php" role="php">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                    </file>
                     <file name="RuleSetFactory.php" role="php">
                         <tasks:replace from="@package_version@" to="version" type="package-info"/>
                         <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                     </file>
                     <file name="RuleSetNotFoundException.php" role="php">
-                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                        <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-                    </file>
-                    <file name="RuleSet.php" role="php">
                         <tasks:replace from="@package_version@" to="version" type="package-info"/>
                         <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                     </file>
@@ -224,6 +256,9 @@
             </dir>
             <dir name="rulesets">
                 <file name="codesize.xml" role="data">
+                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
+                <file name="naming.xml" role="data">
                     <tasks:replace from="@package_version@" to="version" type="package-info"/>
                 </file>
                 <file name="unusedcode.xml" role="data">
