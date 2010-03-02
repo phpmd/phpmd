@@ -71,41 +71,4 @@ class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractType
     {
         parent::__construct($node);
     }
-
-    /**
-     * This method will return the metric value for the given identifier or
-     * <b>null</b> when no such metric exists.
-     *
-     * @param string $name The metric name or abbreviation.
-     *
-     * @return mixed
-     */
-    public function getMetric($name)
-    {
-        if ($name === 'nopm') {
-            return $this->_numberOfPublicMembers();
-        }
-        return parent::getMetric($name);
-    }
-
-    /**
-     * Returns the number of public fields and/or methods in the context class.
-     *
-     * @return integer
-     */
-    private function _numberOfPublicMembers()
-    {
-        $numberOfPublicMembers = 0;
-        foreach ($this->getNode()->getMethods() as $method) {
-            if ($method->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        foreach ($this->getNode()->getProperties() as $property) {
-            if ($property->isPublic()) {
-                ++$numberOfPublicMembers;
-            }
-        }
-        return $numberOfPublicMembers;
-    }
 }
