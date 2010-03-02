@@ -63,7 +63,9 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_ExcessivePublicCount extends PHP_PMD_AbstractRule
+class PHP_PMD_Rule_ExcessivePublicCount 
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IClassAware
 {
     /**
      * This method checks the number of public fields and methods in the given
@@ -75,7 +77,7 @@ class PHP_PMD_Rule_ExcessivePublicCount extends PHP_PMD_AbstractRule
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getMetric('nopm') < $this->getIntProperty('minimum')) {
+        if ($node->getMetric('cis') < $this->getIntProperty('minimum')) {
             return;
         }
         $this->addViolation($node);
