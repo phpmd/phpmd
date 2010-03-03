@@ -161,6 +161,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
     {
         return $this->_isChildOf($node, 'CatchStatement')
                 || $this->_isChildOf($node, 'ForInit')
+                || $this->_isChildOf($node, 'ForeachStatement')
                 || $this->_isChildOf($node, 'MemberPrimaryPrefix');
     }
 

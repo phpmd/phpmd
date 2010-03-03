@@ -353,6 +353,24 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleNotAppliesToShortVariableNameAsForeachLoopIndex
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ShortVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
+     */
+    public function testRuleNotAppliesToShortVariableNameAsForeachLoopIndex()
+    {
+        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
      * testRuleNotAppliesToShortVariableNameInCatchStatement
      *
      * @return void
