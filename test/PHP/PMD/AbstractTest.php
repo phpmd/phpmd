@@ -109,6 +109,24 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first interface found in a source file related to the calling
+     * test method.
+     *
+     * @return PHP_PMD_Node_Interface
+     */
+    protected function getInterface()
+    {
+        include_once 'PHP/PMD/Node/Interface.php';
+
+        return new PHP_PMD_Node_Interface(
+            $this->_getNodeForCallingTestCase(
+                $this->_parseTestCaseSource()
+                    ->getInterfaces()
+            )
+        );
+    }
+
+    /**
      * Returns the first method found in a source file related to the calling
      * test method.
      *

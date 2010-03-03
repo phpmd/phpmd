@@ -69,7 +69,8 @@ class PHP_PMD_Rule_Naming_ConstantNamingConventions
                PHP_PMD_Rule_IInterfaceAware
 {
     /**
-     *
+     * Extracts all constant declarations from the given node and tests that
+     * the image only contains upper case characters.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
