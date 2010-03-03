@@ -128,6 +128,39 @@ class Foo {
         </example>
     </rule>
 
+    <rule name="BooleanGetMethodName"
+          since="0.2"
+          message="A '{0}()' method which returns a boolean should be named 'is...()' or 'has...()'"
+          class="PHP_PMD_Rule_Naming_BooleanGetMethodName"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#booleangetmethodname">
+        <description>
+Looks for methods named 'getX()' with 'boolean' as the return type. The convention
+is to name these methods 'isX()' or 'hasX()'.
+        </description>
+        <priority>4</priority>
+        <properties>
+            <property name="checkParameterizedMethods" value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+class Foo {
+    /**
+     * @return boolean
+     */
+    public function getFoo() {} // bad
+    /**
+     * @return bool
+     */
+    public function isFoo(); // ok
+    /**
+     * @return boolean
+     */
+    public function getFoo($bar); // ok, unless checkParameterizedMethods=true
+}
+            ]]>
+        </example>
+    </rule>
+
 <!--
 
     <rule name="VariableNamingConventions"
@@ -293,33 +326,6 @@ public class ClassInDefaultPackage {
     </example>
   </rule>
 
-    <rule name="PackageCase"
-            since="3.3"
-            message="Package name contains upper case characters"
-            class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#PackageCase">
-        <description>
-    Detects when a package definition contains upper case characters.
-        </description>
-        <priority>3</priority>
-          <properties>
-              <property name="xpath" pluginname="true">
-                  <value>
-                      <![CDATA[
-//PackageDeclaration/Name[lower-case(@Image)!=@Image]
-                      ]]>
-                  </value>
-              </property>
-          </properties>
-        <example>
-    <![CDATA[
-package com.MyCompany;  // <- should be lower case name
-public class SomeClass {
-}
-    ]]>
-        </example>
-      </rule>
-
     <rule name="MisleadingVariableName"
           since="3.4"
           message="Avoid naming non-fields with the prefix 'm_'"
@@ -351,41 +357,6 @@ indicates a field and thus is confusing.
   }
   ]]>
       </example>
-    </rule>
-
-    <rule name="BooleanGetMethodName"
-        since="4.0"
-        message="A 'getX()' method which returns a boolean should be named 'isX()'"
-        class="net.sourceforge.pmd.rules.XPathRule"
-        externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#BooleanGetMethodName">
-        <description>
-Looks for methods named 'getX()' with 'boolean' as the return type. The convention
-is to name these methods 'isX()'.
-        </description>
-        <priority>4</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-                    <![CDATA[
-//MethodDeclaration[
-MethodDeclarator[count(FormalParameters/FormalParameter) = 0 or $checkParameterizedMethods = 'true']
-                [starts-with(@Image, 'get')]
-and
-ResultType/Type/PrimitiveType[@Image = 'boolean']
-]
-]]>
-                </value>
-            </property>
-            <property name="checkParameterizedMethods">
-                <value>false</value>
-            </property>
-        </properties>
-        <example>
-            <![CDATA[
-public boolean getFoo(); // bad
-public boolean isFoo(); // ok
-public boolean getFoo(boolean bar); // ok, unless checkParameterizedMethods=true
-     ]]></example>
     </rule>
 -->
 

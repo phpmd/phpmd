@@ -48,6 +48,7 @@
 
 require_once 'PHPUnit/Framework.php';
 
+require_once dirname(__FILE__) . '/BooleanGetMethodNameTest.php';
 require_once dirname(__FILE__) . '/ConstantNamingConventionsTest.php';
 require_once dirname(__FILE__) . '/ConstructorWithNameAsEnclosingClassTest.php';
 require_once dirname(__FILE__) . '/LongVariableTest.php';
@@ -75,6 +76,7 @@ class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
     {
         $this->setName('PHP_PMD_Rule_Naming - Tests');
 
+        $this->addTestSuite('PHP_PMD_Rule_Naming_BooleanGetMethodNameTest');
         $this->addTestSuite('PHP_PMD_Rule_Naming_ConstantNamingConventionsTest');
         $this->addTestSuite('PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest');
         $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
