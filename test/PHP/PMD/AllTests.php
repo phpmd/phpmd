@@ -53,6 +53,7 @@ require_once dirname(__FILE__) . '/ParserTest.php';
 require_once dirname(__FILE__) . '/ReportTest.php';
 require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
 require_once dirname(__FILE__) . '/RuleSetTest.php';
+require_once dirname(__FILE__) . '/RuleTest.php';
 require_once dirname(__FILE__) . '/Node/AllTests.php';
 require_once dirname(__FILE__) . '/Regression/AllTests.php';
 require_once dirname(__FILE__) . '/Renderer/AllTests.php';
@@ -86,6 +87,7 @@ class PHP_PMD_AllTests
         $suite->addTestSuite('PHP_PMD_ReportTest');
         $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');
         $suite->addTestSuite('PHP_PMD_RuleSetTest');
+        $suite->addTestSuite('PHP_PMD_RuleTest');
 
         $suite->addTest(PHP_PMD_Node_AllTests::suite());
         $suite->addTest(PHP_PMD_Regression_AllTests::suite());
