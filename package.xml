@@ -33,14 +33,21 @@
         <api>devel</api>
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
-    <notesu>
+    <notes>
+- Fixed #6: PHP Tokenizer required but no error when installing.
 - Fixed #7: UnusedLocalVariable ruleset incorrectly flags variables
-  as unused when used inside double quoted string. Fixed in svn 
+  as unused when used inside double quoted string. Fixed in svn
   revision #187.
 - Implemented #9: Add support for "Suppress warnings" annotations.
   Implemented in svn revision #200.
 - Implemented #10: Support for exclude element in rule-set files added.
   Implemented in svn revision #189.
+- Implemented #13: Implement naming rules, e.g. short variables, parameter
+  etc.
+- Fixed #14: ExcessivePublicCount rule should utilize PHP_Depend's cis
+  metric. Fixed in svn revision #203.
+- Fixed #15: ExcessivePublicCount rule is never used. Fixed in svn
+  revision #202.
     </notes>
     <contents>
         <dir name="/">
@@ -76,6 +83,10 @@
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
                         <file name="Function.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="Interface.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
@@ -126,6 +137,14 @@
                             </file>
                         </dir>
                         <dir name="Naming">
+                            <file name="BooleanGetMethodName.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
+                            <file name="ConstantNamingConventions.php" role="php">
+                                <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                                <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                            </file>
                             <file name="ConstructorWithNameAsEnclosingClass.php" role="php">
                                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
                                 <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
@@ -156,6 +175,10 @@
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
                         <file name="IFunctionAware.php" role="php">
+                            <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                            <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
+                        </file>
+                        <file name="IInterfaceAware.php" role="php">
                             <tasks:replace from="@package_version@" to="version" type="package-info"/>
                             <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                         </file>
@@ -296,7 +319,7 @@
             <package>
                 <name>PHP_Depend</name>
                 <channel>pear.pdepend.org</channel>
-                <min>0.9.10</min>
+                <min>0.9.11</min>
             </package>
             <extension>
                 <name>pcre</name>
@@ -332,6 +355,41 @@
         </filelist>
     </phprelease>
 
-    <changelog />
+    <changelog>
+        <release>
+            <date>2010-01-05</date>
+            <time>22:16:58</time>
+            <version>
+                <release>0.2.1</release>
+                <api>0.2.1</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+- Initial release of the PHP Mess Detector.
+            </notes>
+        </release>
+        
+        <release>
+            <date>2010-01-20</date>
+            <time>17:39:35</time>
+            <version>
+                <release>0.2.2</release>
+                <api>0.2.2</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+- Small change to the command line interface, which did not return an
+  exit code != 0 when an exception occured.
+            </notes>
+        </release>
+    </changelog>
 
 </package>
