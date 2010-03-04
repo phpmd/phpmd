@@ -103,4 +103,21 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
     {
         return $this->getNode()->isAbstract();
     }
+
+    /**
+     * Checks if this node has a suppressed annotation for the given rule
+     * instance.
+     *
+     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     *
+     * @return boolean
+     */
+    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    {
+        if (parent::hasSuppressWarningsAnnotationFor($rule)) {
+            return true;
+        }
+        $class = new PHP_PMD_Node_Class($this->getNode()->getParent());
+        return $class->hasSuppressWarningsAnnotationFor($rule);
+    }
 }
