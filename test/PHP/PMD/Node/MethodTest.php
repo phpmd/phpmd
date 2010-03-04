@@ -98,6 +98,89 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
     {
         $node = new PHP_PMD_Node_Method(new PHP_Depend_Code_Method(null));
         $node->getFooBar();
+    }
 
+    /**
+     * testGetParentTypeReturnsInterfaceForInterfaceMethod
+     *
+     * @return void
+     * @covers PHP_PMD_Node_Method::getParentType
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testGetParentTypeReturnsInterfaceForInterfaceMethod()
+    {
+        $method = $this->getMethod();
+        $this->assertType(PHP_PMD_Node_Interface::CLAZZ, $method->getParentType());
+    }
+
+    /**
+     * testGetParentTypeReturnsClassForClassMethod
+     *
+     * @return void
+     * @covers PHP_PMD_Node_Method::getParentType
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testGetParentTypeReturnsClassForClassMethod()
+    {
+        $method = $this->getMethod();
+        $this->assertType(PHP_PMD_Node_Class::CLAZZ, $method->getParentType());
+    }
+
+    /**
+     * testHasSuppressWarningsExecutesDefaultImplementation
+     *
+     * @return void
+     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testHasSuppressWarningsExecutesDefaultImplementation()
+    {
+        $rule = $this->getRuleMock();
+        $rule->setName('FooBar');
+
+        $method = $this->getMethod();
+        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testHasSuppressWarningsDelegatesToParentClassMethod
+     *
+     * @return void
+     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testHasSuppressWarningsDelegatesToParentClassMethod()
+    {
+        $rule = $this->getRuleMock();
+        $rule->setName('FooBar');
+
+        $method = $this->getMethod();
+        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testHasSuppressWarningsDelegatesToParentInterfaceMethod
+     *
+     * @return void
+     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
+     * @group phpmd
+     * @group phpmd::node
+     * @group unittest
+     */
+    public function testHasSuppressWarningsDelegatesToParentInterfaceMethod()
+    {
+        $rule = $this->getRuleMock();
+        $rule->setName('FooBar');
+
+        $method = $this->getMethod();
+        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
     }
 }

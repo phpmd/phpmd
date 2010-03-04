@@ -63,6 +63,11 @@ require_once 'PHP/PMD/Node/AbstractType.php';
 class PHP_PMD_Node_Interface extends PHP_PMD_Node_AbstractType
 {
     /**
+     * The type of this class.
+     */
+    const CLAZZ = __CLASS__;
+
+    /**
      * Constructs a new interface wrapper instance.
      *
      * @param PHP_Depend_Code_Interface $node The wrapped interface object.

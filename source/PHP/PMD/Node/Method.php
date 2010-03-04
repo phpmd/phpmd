@@ -117,7 +117,20 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
         if (parent::hasSuppressWarningsAnnotationFor($rule)) {
             return true;
         }
-        $class = new PHP_PMD_Node_Class($this->getNode()->getParent());
-        return $class->hasSuppressWarningsAnnotationFor($rule);
+        return $this->getParentType()->hasSuppressWarningsAnnotationFor($rule);
+    }
+
+    /**
+     * Returns the parent class or interface instance.
+     *
+     * @return PHP_PMD_Node_AbstractType
+     */
+    public function getParentType()
+    {
+        $parentNode = $this->getNode()->getParent();
+        if ($parentNode instanceof PHP_Depend_Code_Class) {
+            return new PHP_PMD_Node_Class($parentNode);
+        }
+        return new PHP_PMD_Node_Interface($parentNode);
     }
 }

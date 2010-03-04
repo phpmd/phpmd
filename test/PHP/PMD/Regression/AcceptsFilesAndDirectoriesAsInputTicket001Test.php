@@ -69,7 +69,7 @@ class PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test
      * testCliAcceptsDirectoryAsInput
      * 
      * @return void
-     * @covers \stdClass
+     * @covers stdClass
      * @group phpmd
      * @group regression
      */
@@ -93,7 +93,7 @@ class PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test
      * testCliAcceptsSingleFileAsInput
      *
      * @return void
-     * @covers \stdClass
+     * @covers stdClass
      * @group phpmd
      * @group regression
      */

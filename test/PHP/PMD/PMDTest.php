@@ -81,7 +81,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * Tests the main PHP_PMD interface with default settings an a xml-renderer.
      *
      * @return void
-     * @covers \PHP_PMD::processFiles
+     * @covers PHP_PMD::processFiles
      * @group phpmd
      * @group unittest
      */
@@ -109,7 +109,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
      *
      * @return void
-     * @covers \PHP_PMD::processFiles
+     * @covers PHP_PMD::processFiles
      * @group phpmd
      * @group unittest
      */
@@ -137,7 +137,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
      *
      * @return void
-     * @covers \PHP_PMD::processFiles
+     * @covers::processFiles
      * @group phpmd
      * @group unittest
      */

@@ -232,6 +232,10 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     private function _parseSource($sourceFile)
     {
+        if (file_exists($sourceFile) === false) {
+            throw new ErrorException('Cannot locate source file: ' . $sourceFile);
+        }
+
         include_once 'PHP/Depend/Parser.php';
         include_once 'PHP/Depend/Builder/Default.php';
         include_once 'PHP/Depend/Tokenizer/Internal.php';

@@ -57,6 +57,8 @@ require_once 'PHP/PMD/RuleViolation.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @SuppressWarnings(PHPMD)
  */
 abstract class PHP_PMD_AbstractRule
 {
