@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Naming
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -48,30 +48,32 @@
 
 require_once 'PHPUnit/Framework.php';
 
-require_once dirname(__FILE__) . '/CyclomaticComplexityTest.php';
-require_once dirname(__FILE__) . '/ExcessivePublicCountTest.php';
-require_once dirname(__FILE__) . '/UnusedFormalParameterTest.php';
-require_once dirname(__FILE__) . '/UnusedLocalVariableTest.php';
-require_once dirname(__FILE__) . '/UnusedPrivateFieldTest.php';
-require_once dirname(__FILE__) . '/UnusedPrivateMethodTest.php';
-
-require_once dirname(__FILE__) . '/Design/AllTests.php';
-require_once dirname(__FILE__) . '/Naming/AllTests.php';
+require_once dirname(__FILE__) . '/ShortVariableTest.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule package.
+ * Main test suite for the PHP_PMD_Rule_Naming package.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule
+ * @subpackage Rule_Naming
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_AllTests
+class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
 {
+    /**
+     * Constructs a new test suite.
+     */
+    public function __construct()
+    {
+        $this->setName('PHP_PMD_Rule_Naming - Tests');
+
+        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
+    }
+
     /**
      * Creates a phpunit test suite.
      *
@@ -79,18 +81,6 @@ class PHP_PMD_Rule_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Rule_CyclomaticComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_ExcessivePublicCountTest');
-        $suite->addTestSuite('PHP_PMD_Rule_UnusedFormalParameterTest');
-        $suite->addTestSuite('PHP_PMD_Rule_UnusedLocalVariableTest');
-        $suite->addTestSuite('PHP_PMD_Rule_UnusedPrivateFieldTest');
-        $suite->addTestSuite('PHP_PMD_Rule_UnusedPrivateMethodTest');
-
-        $suite->addTest(PHP_PMD_Rule_Design_AllTests::suite());
-        $suite->addTest(PHP_PMD_Rule_Naming_AllTests::suite());
-
-        return $suite;
+        return new PHP_PMD_Rule_Naming_AllTests();
     }
 }

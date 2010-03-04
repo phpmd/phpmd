@@ -12,6 +12,9 @@ if (strpos('@package_version@', '@package_version') === 0) {
     );
 }
 
+// Disable memory_limit
+ini_set('memory_limit', -1);
+
 // Check php setup for cli arguments
 if (!isset($_SERVER['argv']) && !isset($argv)) {
     fwrite(STDERR, 'Please enable the "register_argc_argv" directive in your php.ini', PHP_EOL);
