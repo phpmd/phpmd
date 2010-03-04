@@ -1,5 +1,5 @@
 <?php
-class testRuleNotAppliesToStaticMembersAccessedInMethod
+class testRuleNotAppliesToStaticMembersAccessedInMethodClass
 {
     private static $testRuleNotAppliesToStaticMembersAccessedInMethod;
 
