@@ -35,69 +35,132 @@ class Something {
         </example>
     </rule>
 
-<!--
-  <rule name="LongVariable"
-  		  since="0.3"
-        message="Avoid excessively long variable names like {0}"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#LongVariable">
-    <description>
+    <rule name="LongVariable"
+          since="0.2"
+          message="Avoid excessively long variable names like {0}"
+          class="PHP_PMD_Rule_Naming_LongVariable"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable">
+        <description>
 Detects when a field, formal or local variable is declared with a long name.
-    </description>
-      <priority>3</priority>
-      <properties>
-          <property name="minimum" description="The variable length reporting threshold" value="17"/>
-          <property name="xpath" pluginname="true">
-              <value>
-                  <![CDATA[
-//VariableDeclaratorId[string-length(@Image) > $minimum]
-                  ]]>
-              </value>
-          </property>
-      </properties>
-    <example>
-<![CDATA[
-public class Something {
-  int reallyLongIntName = -3;  // VIOLATION - Field
-  public static void main( String argumentsList[] ) { // VIOLATION - Formal
-    int otherReallyLongName = -5; // VIOLATION - Local
-    for (int interestingIntIndex = 0;  // VIOLATION - For
-             interestingIntIndex < 10;
-             interestingIntIndex ++ ) {
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The variable length reporting threshold" value="20"/>
+        </properties>
+        <example>
+            <![CDATA[
+class Something {
+    protected $reallyLongIntName = -3;  // VIOLATION - Field
+    public static function main( array $argumentsList[] ) { // VIOLATION - Formal
+        $otherReallyLongName = -5; // VIOLATION - Local
+        for ($interestingIntIndex = 0;  // VIOLATION - For
+             $interestingIntIndex < 10;
+             $interestingIntIndex++ ) {
+        }
     }
 }
 ]]>
-    </example>
-  </rule>
+        </example>
+    </rule>
 
-  <rule name="ShortMethodName"
-  		  since="0.3"
-        message="Avoid using short method names"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#ShortMethodName">
-     <description>
+    <rule name="ShortMethodName"
+          since="0.2"
+          message="Avoid using short method names like {0}::{1}()"
+          class="PHP_PMD_Rule_Naming_ShortMethodName"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#shortmethodname">
+        <description>
 Detects when very short method names are used.
-     </description>
-      <priority>3</priority>
-      <properties>
-          <property name="xpath">
-              <value>
-                  <![CDATA[
-//MethodDeclarator[string-length(@Image) < 3]
-                  ]]>
-              </value>
-          </property>
-      </properties>
-     <example>
-<![CDATA[
-public class ShortMethod {
-  public void a( int i ) { // Violation
-  }
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="Minimum length for a method or function name" value="3"/>
+        </properties>
+        <example>
+            <![CDATA[
+class ShortMethod {
+    public function a( $index ) { // Violation
+    }
 }
-]]>
-     </example>
-  </rule>
+            ]]>
+        </example>
+    </rule>
 
+    <rule name="ConstructorWithNameAsEnclosingClass"
+          since="0.2"
+          message="Classes should not have a constructor method with the same name as the class"
+          class="PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#constructorwithnameasenclosingclass">
+        <description>
+A constructor method should not have the same name as the enclosing class, consider
+to use the PHP 5 __construct method.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+class MyClass {
+     // this is bad because it is PHP 4 style
+    public function MyClass() {}
+    // this is good because it is a PHP 5 constructor
+    public function __construct() {}
+}
+    ]]>
+        </example>
+    </rule>
+
+    <rule name="ConstantNamingConventions"
+          since="0.2"
+          message="Constant {0} should be defined in uppercase"
+          class="PHP_PMD_Rule_Naming_ConstantNamingConventions"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#constantnamingconventions">
+        <description>
+Class/Interface constant nanmes should always be defined in uppercase.
+        </description>
+        <priority>4</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo {
+    const MY_NUM = 0; // ok
+    const myTest = ""; // fail
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="BooleanGetMethodName"
+          since="0.2"
+          message="The '{0}()' method which returns a boolean should be named 'is...()' or 'has...()'"
+          class="PHP_PMD_Rule_Naming_BooleanGetMethodName"
+          externalInfoUrl="http://phpmd.org/rules/naming.html#booleangetmethodname">
+        <description>
+Looks for methods named 'getX()' with 'boolean' as the return type. The convention
+is to name these methods 'isX()' or 'hasX()'.
+        </description>
+        <priority>4</priority>
+        <properties>
+            <property name="checkParameterizedMethods" value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+class Foo {
+    /**
+     * @return boolean
+     */
+    public function getFoo() {} // bad
+    /**
+     * @return bool
+     */
+    public function isFoo(); // ok
+    /**
+     * @return boolean
+     */
+    public function getFoo($bar); // ok, unless checkParameterizedMethods=true
+}
+            ]]>
+        </example>
+    </rule>
+
+<!--
 
     <rule name="VariableNamingConventions"
     since="1.2"
@@ -190,147 +253,6 @@ public abstract class Foo { // should be AbstractFoo
        </example>
     </rule>
 
-    <rule name="AvoidDollarSigns"
-    		  since="1.5"
-           message="Avoid using dollar signs in variable/method/class/interface names"
-           class="net.sourceforge.pmd.rules.naming.AvoidDollarSigns"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#AvoidDollarSigns">
-       <description>
-Avoid using dollar signs in variable/method/class/interface names.
-       </description>
-         <priority>3</priority>
-       <example>
-   <![CDATA[
- public class Fo$o {  // yikes!
- }
-   ]]>
-       </example>
-     </rule>
-
-    <rule name="MethodWithSameNameAsEnclosingClass"
-    		 since="1.5"
-          message="Classes should not have non-constructor methods with the same name as the class"
-          class="net.sourceforge.pmd.rules.MethodWithSameNameAsEnclosingClass"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#MethodWithSameNameAsEnclosingClass">
-       <description>
-Non-constructor methods should not have the same name as the enclosing class.
-       </description>
-        <priority>3</priority>
-       <example>
-    <![CDATA[
-public class MyClass {
- // this is bad because it is a method
- public void MyClass() {}
- // this is OK because it is a constructor
- public MyClass() {}
-}
-    ]]>
-       </example>
-     </rule>
-
-    <rule name="SuspiciousHashcodeMethodName"
-    		 since="1.5"
-          message="The method name and return type are suspiciously close to hashCode()"
-          class="net.sourceforge.pmd.rules.naming.SuspiciousHashcodeMethodName"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousHashcodeMethodName">
-       <description>
-The method name and return type are suspiciously close to hashCode(), which
-may mean you are intending to override the hashCode() method.
-       </description>
-        <priority>3</priority>
-       <example>
-    <![CDATA[
-public class Foo {
- public int hashcode() {
- // oops, this probably was supposed to be hashCode
- }
-}
-    ]]>
-       </example>
-     </rule>
-
-    <rule name="SuspiciousConstantFieldName"
-    		 since="2.0"
-          message="The field name indicates a constant but its modifiers do not"
-          class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousConstantFieldName">
-       <description>
-A field name is all in uppercase characters, which in Sun's Java naming
-conventions indicate a constant. However, the field is not final.
-       </description>
-       <priority>3</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-<![CDATA[
-//ClassOrInterfaceDeclaration[@Interface='false']
- /ClassOrInterfaceBody/ClassOrInterfaceBodyDeclaration/FieldDeclaration
-  [@Final='false']
-  [VariableDeclarator/VariableDeclaratorId[upper-case(@Image)=@Image]]
- ]]>
-                </value>
-            </property>
-        </properties>
-       <example>
-    <![CDATA[
-public class Foo {
- // this is bad, since someone could accidentally
- // do PI = 2.71828; which is actualy e
- // final double PI = 3.16; is ok
- double PI = 3.16;
-}
-    ]]>
-       </example>
-     </rule>
-
-    <rule
-        name="SuspiciousEqualsMethodName"
-        since="2.0"
-        message="The method name and parameter number are suspiciously close to equals(Object)"
-        class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousEqualsMethodName">
-        <description>
-The method name and parameter number are suspiciously close to
-equals(Object), which may mean you are intending to override the equals(Object)
-method.
-        </description>
-        <priority>2</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-        <![CDATA[
-//MethodDeclarator[
-(
-@Image = 'equals'
-  and count(FormalParameters/*) = 1
-  and not (FormalParameters/FormalParameter/Type/ReferenceType/ClassOrInterfaceType
-   [@Image = 'Object' or @Image = 'java.lang.Object'])
-)
-or
-@Image='equal'
- and count(FormalParameters/*) = 1
- and (FormalParameters/FormalParameter/Type/ReferenceType/ClassOrInterfaceType
-  [@Image = 'Object' or @Image = 'java.lang.Object'])
-
-]
-        ]]>
-                    </value>
-                 </property>
-              </properties>
-        <example>
-        <![CDATA[
-public class Foo {
- public int equals(Object o) {
- // oops, this probably was supposed to be boolean equals
- }
- public boolean equals(String s) {
- // oops, this probably was supposed to be equals(Object)
- }
-}
-        ]]>
-        </example>
-    </rule>
-
     <rule name="AvoidFieldNameMatchingTypeName"
     		 since="3.0"
           message="It is somewhat confusing to have a field name matching the declaring class name"
@@ -374,8 +296,6 @@ public class Foo {
       </example>
     </rule>
 
-
-
     <rule name="NoPackage"
         since="3.3"
         message="All classes and interfaces must belong to a named package"
@@ -402,33 +322,6 @@ public class ClassInDefaultPackage {
 ]]>
     </example>
   </rule>
-
-    <rule name="PackageCase"
-            since="3.3"
-            message="Package name contains upper case characters"
-            class="net.sourceforge.pmd.rules.XPathRule"
-          externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#PackageCase">
-        <description>
-    Detects when a package definition contains upper case characters.
-        </description>
-        <priority>3</priority>
-          <properties>
-              <property name="xpath" pluginname="true">
-                  <value>
-                      <![CDATA[
-//PackageDeclaration/Name[lower-case(@Image)!=@Image]
-                      ]]>
-                  </value>
-              </property>
-          </properties>
-        <example>
-    <![CDATA[
-package com.MyCompany;  // <- should be lower case name
-public class SomeClass {
-}
-    ]]>
-        </example>
-      </rule>
 
     <rule name="MisleadingVariableName"
           since="3.4"
@@ -463,40 +356,6 @@ indicates a field and thus is confusing.
       </example>
     </rule>
 
-    <rule name="BooleanGetMethodName"
-        since="4.0"
-        message="A 'getX()' method which returns a boolean should be named 'isX()'"
-        class="net.sourceforge.pmd.rules.XPathRule"
-        externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#BooleanGetMethodName">
-        <description>
-Looks for methods named 'getX()' with 'boolean' as the return type. The convention
-is to name these methods 'isX()'.
-        </description>
-        <priority>4</priority>
-        <properties>
-            <property name="xpath">
-                <value>
-                    <![CDATA[
-//MethodDeclaration[
-MethodDeclarator[count(FormalParameters/FormalParameter) = 0 or $checkParameterizedMethods = 'true']
-                [starts-with(@Image, 'get')]
-and
-ResultType/Type/PrimitiveType[@Image = 'boolean']
-]
-]]>
-                </value>
-            </property>
-            <property name="checkParameterizedMethods">
-                <value>false</value>
-            </property>
-        </properties>
-        <example>
-            <![CDATA[
-public boolean getFoo(); // bad
-public boolean isFoo(); // ok
-public boolean getFoo(boolean bar); // ok, unless checkParameterizedMethods=true
-     ]]></example>
-    </rule>
 -->
 
 </ruleset>

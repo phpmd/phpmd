@@ -41,56 +41,45 @@
  * @subpackage Rule_Naming
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/BooleanGetMethodNameTest.php';
-require_once dirname(__FILE__) . '/ConstantNamingConventionsTest.php';
-require_once dirname(__FILE__) . '/ConstructorWithNameAsEnclosingClassTest.php';
-require_once dirname(__FILE__) . '/LongVariableTest.php';
-require_once dirname(__FILE__) . '/ShortMethodNameTest.php';
-require_once dirname(__FILE__) . '/ShortVariableTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Naming package.
+ * This rule class will detect methods that define a php4 style constructor
+ * method while has the same name as the enclosing class.
  *
  * @category   PHP
  * @package    PHP_PMD
  * @subpackage Rule_Naming
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
- * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license    http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
+class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IMethodAware
 {
     /**
-     * Constructs a new test suite.
-     */
-    public function __construct()
-    {
-        $this->setName('PHP_PMD_Rule_Naming - Tests');
-
-        $this->addTestSuite('PHP_PMD_Rule_Naming_BooleanGetMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstantNamingConventionsTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
-    }
-
-    /**
-     * Creates a phpunit test suite.
+     * Extracts all variable and variable declarator nodes from the given node
+     * and checks the variable name length against the configured minimum
+     * length.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        return new PHP_PMD_Rule_Naming_AllTests();
+        if (strcasecmp($node->getName(), $node->getParentName()) !== 0) {
+            return;
+        }
+        $this->addViolation($node);
     }
 }

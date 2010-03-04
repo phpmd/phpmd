@@ -46,17 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/BooleanGetMethodNameTest.php';
-require_once dirname(__FILE__) . '/ConstantNamingConventionsTest.php';
-require_once dirname(__FILE__) . '/ConstructorWithNameAsEnclosingClassTest.php';
-require_once dirname(__FILE__) . '/LongVariableTest.php';
-require_once dirname(__FILE__) . '/ShortMethodNameTest.php';
-require_once dirname(__FILE__) . '/ShortVariableTest.php';
+require_once 'PHP/PMD/Rule/Naming/ConstructorWithNameAsEnclosingClass.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Naming package.
+ * Test case for the constructor name rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,30 +62,56 @@ require_once dirname(__FILE__) . '/ShortVariableTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
+class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new test suite.
+     * testRuleAppliesToConstructorMethodNamedAsEnclosingClass
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
      */
-    public function __construct()
+    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass()
     {
-        $this->setName('PHP_PMD_Rule_Naming - Tests');
-
-        $this->addTestSuite('PHP_PMD_Rule_Naming_BooleanGetMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstantNamingConventionsTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
+        $rule = new PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
     }
 
     /**
-     * Creates a phpunit test suite.
+     * testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
      */
-    public static function suite()
+    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive()
     {
-        return new PHP_PMD_Rule_Naming_AllTests();
+        $rule = new PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleNotAppliesToMethodNamedSimilarToEnclosingClass
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
+     */
+    public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass()
+    {
+        $rule = new PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
     }
 }

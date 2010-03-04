@@ -360,6 +360,23 @@ abstract class PHP_PMD_AbstractRule
     }
 
     /**
+     * Returns the value of a configured property as a boolean or throws an
+     * exception when no property with <b>$name</b> exists.
+     *
+     * @param string $name The property identifier.
+     *
+     * @return boolean
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
+     */
+    public function getBooleanProperty($name)
+    {
+        if (isset($this->_properties[$name])) {
+            return in_array($this->_properties[$name], array('true', 'on', 1));
+        }
+        throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
+    }
+
+    /**
      * Returns the value of a configured property as an integer or throws an
      * exception when no property with <b>$name</b> exists.
      *

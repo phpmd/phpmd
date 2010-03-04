@@ -46,17 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/BooleanGetMethodNameTest.php';
-require_once dirname(__FILE__) . '/ConstantNamingConventionsTest.php';
-require_once dirname(__FILE__) . '/ConstructorWithNameAsEnclosingClassTest.php';
-require_once dirname(__FILE__) . '/LongVariableTest.php';
-require_once dirname(__FILE__) . '/ShortMethodNameTest.php';
-require_once dirname(__FILE__) . '/ShortVariableTest.php';
+require_once 'PHP/PMD/Rule/Naming/ConstantNamingConventions.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Naming package.
+ * Test case for the constructor name rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,30 +62,73 @@ require_once dirname(__FILE__) . '/ShortVariableTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
+class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new test suite.
+     * testRuleAppliesToClassConstantWithLowerCaseCharacters
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
      */
-    public function __construct()
+    public function testRuleAppliesToClassConstantWithLowerCaseCharacters()
     {
-        $this->setName('PHP_PMD_Rule_Naming - Tests');
-
-        $this->addTestSuite('PHP_PMD_Rule_Naming_BooleanGetMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstantNamingConventionsTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
+        $rule = new PHP_PMD_Rule_Naming_ConstantNamingConventions();
+        $rule->setReport($this->getReportMock(2));
+        $rule->apply($this->getClass());
     }
 
     /**
-     * Creates a phpunit test suite.
+     * testRuleAppliesToInterfaceConstantWithLowerCaseCharacters
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
      */
-    public static function suite()
+    public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters()
     {
-        return new PHP_PMD_Rule_Naming_AllTests();
+        $rule = new PHP_PMD_Rule_Naming_ConstantNamingConventions();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getInterface());
+    }
+
+    /**
+     * testRuleNotAppliesToClassConstantWithUpperCaseCharacters
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
+     */
+    public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters()
+    {
+        $rule = new PHP_PMD_Rule_Naming_ConstantNamingConventions();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::naming
+     * @group unittest
+     */
+    public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters()
+    {
+        $rule = new PHP_PMD_Rule_Naming_ConstantNamingConventions();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getInterface());
     }
 }

@@ -52,8 +52,8 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
- * This rule class will detect variables, parameters and properties with short
- * names.
+ * This rule class will detect variables, parameters and properties with really
+ * long names.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -64,7 +64,7 @@ require_once 'PHP/PMD/Rule/IFunctionAware.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_ShortVariable
+class PHP_PMD_Rule_Naming_LongVariable
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IClassAware,
                PHP_PMD_Rule_IMethodAware,
@@ -80,7 +80,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
+     * and checks the variable name length against the configured maximum
      * length.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
@@ -115,8 +115,8 @@ class PHP_PMD_Rule_Naming_ShortVariable
     }
 
     /**
-     * Checks if the variable name of the given node is greater/equal to the
-     * configured threshold or if the given node is an allowed context.
+     * Checks if the variable name of the given node is smaller/equal to the
+     * configured threshold.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
@@ -139,7 +139,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
      */
     protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
     {
-        if ($this->getIntProperty('minimum') <= strlen($node->getImage()) - 1) {
+        if ($this->getIntProperty('maximum') >= strlen($node->getImage()) - 1) {
             return;
         }
         if ($this->_isNameAllowedInContext($node)) {
@@ -150,19 +150,15 @@ class PHP_PMD_Rule_Naming_ShortVariable
 
     /**
      * Checks if a short name is acceptable in the current context. For the
-     * moment these contexts are the init section of a for-loop and short
-     * variable names in catch-statements.
+     * moment the only context is a static member.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
-     * 
+     *
      * @return boolean
      */
     private function _isNameAllowedInContext(PHP_PMD_AbstractNode $node)
     {
-        return $this->_isChildOf($node, 'CatchStatement')
-                || $this->_isChildOf($node, 'ForInit')
-                || $this->_isChildOf($node, 'ForeachStatement')
-                || $this->_isChildOf($node, 'MemberPrimaryPrefix');
+        return $this->_isChildOf($node, 'MemberPrimaryPrefix');
     }
 
     /**
@@ -171,7 +167,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      * @param string               $type Possible parent type.
-     * 
+     *
      * @return boolean
      */
     private function _isChildOf(PHP_PMD_AbstractNode $node, $type)

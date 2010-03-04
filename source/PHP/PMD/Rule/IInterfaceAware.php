@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Naming
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -46,51 +46,19 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/BooleanGetMethodNameTest.php';
-require_once dirname(__FILE__) . '/ConstantNamingConventionsTest.php';
-require_once dirname(__FILE__) . '/ConstructorWithNameAsEnclosingClassTest.php';
-require_once dirname(__FILE__) . '/LongVariableTest.php';
-require_once dirname(__FILE__) . '/ShortMethodNameTest.php';
-require_once dirname(__FILE__) . '/ShortVariableTest.php';
-
 /**
- * Main test suite for the PHP_PMD_Rule_Naming package.
+ * This interface marks a rule implementation as interface aware,
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Naming
+ * @subpackage Rule
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2010 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Naming_AllTests extends PHPUnit_Framework_TestSuite
+interface PHP_PMD_Rule_IInterfaceAware
 {
-    /**
-     * Constructs a new test suite.
-     */
-    public function __construct()
-    {
-        $this->setName('PHP_PMD_Rule_Naming - Tests');
-
-        $this->addTestSuite('PHP_PMD_Rule_Naming_BooleanGetMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstantNamingConventionsTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_LongVariableTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortMethodNameTest');
-        $this->addTestSuite('PHP_PMD_Rule_Naming_ShortVariableTest');
-    }
-
-    /**
-     * Creates a phpunit test suite.
-     *
-     * @return PHPUnit_Framework_TestSuite
-     */
-    public static function suite()
-    {
-        return new PHP_PMD_Rule_Naming_AllTests();
-    }
+    
 }

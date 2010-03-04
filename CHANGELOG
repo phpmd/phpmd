@@ -1,11 +1,20 @@
-phpmd-0.2.3 (2010/     )
+phpmd-0.2.3 (2010/03/04)
 ========================
 
+- Fixed #6: PHP Tokenizer required but no error when installing.
 - Fixed #7: UnusedLocalVariable ruleset incorrectly flags variables
   as unused when used inside double quoted string. Fixed in svn
   revision #187.
+- Implemented #9: Add support for "Suppress warnings" annotations.
+  Implemented in svn revision #200.
 - Implemented #10: Support for exclude element in rule-set files added.
   Implemented in svn revision #189.
+- Implemented #13: Implement naming rules, e.g. short variables, parameter
+  etc.
+- Fixed #14: ExcessivePublicCount rule should utilize PHP_Depend's cis
+  metric. Fixed in svn revision #203.
+- Fixed #15: ExcessivePublicCount rule is never used. Fixed in svn
+  revision #202.
 
 phpmd-0.2.2 (2010/01/20)
 ========================
