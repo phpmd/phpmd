@@ -78,7 +78,7 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
     public function apply(PHP_PMD_AbstractNode $node)
     {
         if ($this->_isBooleanGetMethod($node)) {
-            $this->addViolation($node);
+            $this->addViolation($node, array($node->getImage()));
         }
     }
 

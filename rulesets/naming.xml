@@ -130,7 +130,7 @@ class Foo {
 
     <rule name="BooleanGetMethodName"
           since="0.2"
-          message="A '{0}()' method which returns a boolean should be named 'is...()' or 'has...()'"
+          message="The '{0}()' method which returns a boolean should be named 'is...()' or 'has...()'"
           class="PHP_PMD_Rule_Naming_BooleanGetMethodName"
           externalInfoUrl="http://phpmd.org/rules/naming.html#booleangetmethodname">
         <description>
