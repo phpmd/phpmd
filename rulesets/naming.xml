@@ -138,7 +138,7 @@ is to name these methods 'isX()' or 'hasX()'.
         </description>
         <priority>4</priority>
         <properties>
-            <property name="checkParameterizedMethods" value="false" />
+            <property name="checkParameterizedMethods" value="false" description="Applies only to methods without parameter when set to true" />
         </properties>
         <example>
             <![CDATA[
