@@ -9,7 +9,7 @@ class testHasSuppressWarningsExecutesDefaultImplementationClass
 
     }
 }
-<?php
+
 class testHasSuppressWarningsExecutesDefaultImplementationClass
 {
     /**

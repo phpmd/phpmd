@@ -6,7 +6,6 @@ class testGetParentTypeReturnsClassForClassMethodClass
         
     }
 }
-<?php
 class testGetParentTypeReturnsClassForClassMethodClass
 {
     public function testGetParentTypeReturnsClassForClassMethod()

@@ -6,7 +6,7 @@ interface testHasSuppressWarningsDelegatesToParentInterfaceMethodInterface
 {
     function testHasSuppressWarningsDelegatesToParentInterfaceMethod();
 }
-<?php
+
 /**
  * @SuppressWarnings("PHPMD.FooBar")
  */

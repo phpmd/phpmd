@@ -6,7 +6,7 @@ class testHasSuppressWarningsDelegatesToParentClassMethodClass
 {
     public function testHasSuppressWarningsDelegatesToParentClassMethod() {}
 }
-<?php
+
 /**
  * @SuppressWarnings("PHPMD.FooBar")
  */
