@@ -143,7 +143,10 @@ class PHP_PMD
      */
     public function setIgnorePattern(array $ignorePatterns)
     {
-        $this->_ignorePatterns = $ignorePatterns;
+        $this->_ignorePatterns = array_merge(
+            $this->_ignorePatterns, 
+            $ignorePatterns
+        );
     }
 
     /**
