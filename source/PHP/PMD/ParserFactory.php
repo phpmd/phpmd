@@ -87,7 +87,6 @@ class PHP_PMD_ParserFactory
     private function _createInstance()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->setSupportBadDocumentation();
         $pdepend->setStorage(PHP_Depend::TOKEN_STORAGE, $this->_createEngine());
         $pdepend->setStorage(PHP_Depend::PARSER_STORAGE, $this->_createEngine());
 
