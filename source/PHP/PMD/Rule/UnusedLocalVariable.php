@@ -69,6 +69,28 @@ class PHP_PMD_Rule_UnusedLocalVariable
                PHP_PMD_Rule_IMethodAware
 {
     /**
+     * PHP super globals that are available in all php scopes, so that they
+     * can never be unused local variables.
+     *
+     * @var array(string=>boolean)
+     * @since 0.2.5
+     */
+    private static $_superGlobals = array(
+        '$argc'                => true,
+        '$argv'                => true,
+        '$_COOKIE'             => true,
+        '$_ENV'                => true,
+        '$_FILES'              => true,
+        '$_GET'                => true,
+        '$_POST'               => true,
+        '$_REQUEST'            => true,
+        '$_SERVER'             => true,
+        '$_SESSION'            => true,
+        '$GLOBALS'             => true,
+        '$HTTP_RAW_POST_DATA'  => true,
+    );
+
+    /**
      * Found variable images within a single method or function.
      *
      * @var array(string)
@@ -164,7 +186,9 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     private function _accept(PHP_PMD_AbstractNode $variable)
     {
-        return $this->_isNotThis($variable) && $this->_isNotStaticPostfix($variable);
+        return $this->_isNotThis($variable)
+            && $this->_isNotStaticPostfix($variable)
+            && $this->_isNotSuperGlobal($variable);
     }
 
     /**
@@ -195,5 +219,19 @@ class PHP_PMD_Rule_UnusedLocalVariable
             return !($parent->getParent()->getImage() === '::');
         }
         return true;
+    }
+
+    /**
+     * Tests if the given variable represents one of the PHP super globals
+     * that are available in scopes.
+     *
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     *
+     * @return boolean
+     * @since 0.2.5
+     */
+    private function _isNotSuperGlobal(PHP_PMD_AbstractNode $variable)
+    {
+        return !isset(self::$_superGlobals[$variable->getImage()]);
     }
 }
