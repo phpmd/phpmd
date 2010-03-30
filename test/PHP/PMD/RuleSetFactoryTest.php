@@ -490,6 +490,25 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testFactorySupportsAlternativeSyntaxForPropertyValue
+     *
+     * @return void
+     * @covers PHP_PMD_RuleSetFactory
+     * @group phpmd
+     * @group unittest
+     */
+    public function testFactorySupportsAlternativeSyntaxForPropertyValue()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('alternative-property-value-syntax');
+
+        $rule = $ruleSets[0]->getRules()->current();
+        $this->assertSame(42, $rule->getIntProperty('foo'));
+    }
+
+    /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
      *
      * @return void
