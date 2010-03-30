@@ -34,7 +34,12 @@
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
-- E_NOTICE bug fix in naming rule.
+- Fixed #16: Alternative syntax for properties in rule set files
+  implemented. Fixed in svn revision #220
+- Fixed #19: Super globals were detected as unused variables.Fixed in
+  svn revision #218
+- Fixed #20: Local static variables were treated as unused variables.
+  Fixed in svn revision #219.
     </notes>
     <contents>
         <dir name="/">
@@ -404,6 +409,23 @@
   metric. Fixed in svn revision #203.
 - Fixed #15: ExcessivePublicCount rule is never used. Fixed in svn
   revision #202.
+            </notes>
+        </release>
+
+        <release>
+            <date>2010-03-08</date>
+            <time>22:16:58</time>
+            <version>
+                <release>0.2.4</release>
+                <api>0.2.4</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+- E_NOTICE bug fix in naming rule.
             </notes>
         </release>
     </changelog>
