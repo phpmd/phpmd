@@ -1,3 +1,13 @@
+phpmd-0.2.5 (2010/0
+========================
+
+- Fixed #16: Alternative syntax for properties in rule set files
+  implemented. Fixed in svn revision #220
+- Fixed #19: Super globals were detected as unused variables.Fixed in
+  svn revision #218
+- Fixed #20: Local static variables were treated as unused variables.
+  Fixed in svn revision #219.
+
 phpmd-0.2.4 (2010/03/08)
 ========================
 
