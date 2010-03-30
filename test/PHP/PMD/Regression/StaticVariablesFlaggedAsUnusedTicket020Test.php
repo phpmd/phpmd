@@ -46,16 +46,13 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once dirname(__FILE__) . '/AcceptsFilesAndDirectoriesAsInputTicket001Test.php';
-require_once dirname(__FILE__) . '/InvalidUnusedLocalVariableAndFormalParameterTicket007Test.php';
-require_once dirname(__FILE__) . '/ExcessivePublicCountRuleNeverExecutedTicket015Test.php';
-require_once dirname(__FILE__) . '/SuperGlobalsFlaggedAsUnusedTicket019Test.php';
-require_once dirname(__FILE__) . '/StaticVariablesFlaggedAsUnusedTicket020Test.php';
+require_once 'PHP/PMD/RuleSet.php';
+require_once 'PHP/PMD/Rule/UnusedLocalVariable.php';
 
 /**
- * Main test suite for the PHP_PMD_Regression package.
+ * Regression test for issue 020.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -66,23 +63,21 @@ require_once dirname(__FILE__) . '/StaticVariablesFlaggedAsUnusedTicket020Test.p
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Regression_AllTests
+class PHP_PMD_Regression_StaticVariablesFlaggedAsUnusedTicket020Test
+    extends PHP_PMD_Regression_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testRuleDoesNotApplyToAnySuperGlobalVariable
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers stdClass
+     * @group phpmd
+     * @group regression
      */
-    public static function suite()
+    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Regression - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test');
-        $suite->addTestSuite('PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Test');
-        $suite->addTestSuite('PHP_PMD_Regression_ExcessivePublicCountRuleNeverExecutedTicket015Test');
-        $suite->addTestSuite('PHP_PMD_Regression_SuperGlobalsFlaggedAsUnusedTicket019Test');
-        $suite->addTestSuite('PHP_PMD_Regression_StaticVariablesFlaggedAsUnusedTicket020Test');
-
-        return $suite;
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
     }
 }

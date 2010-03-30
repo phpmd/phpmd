@@ -159,6 +159,9 @@ class PHP_PMD_Rule_UnusedLocalVariable
                 $this->_collectVariable($variable);
             }
         }
+        foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
+            $this->_collectVariable($variable);
+        }
     }
 
     /**
