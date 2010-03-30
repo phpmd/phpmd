@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Alternative Property Value Syntax RuleSet"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>First description...</description>
+    <rule name="AlternativePropertySyntaxRule"
+          since="0.1"
+          message="Test message"
+          class="rules_TestRule"
+          externalInfoUrl="http://phpmd.org/">
+        <description>...</description>
+        <priority>3</priority>
+        <properties>
+            <property name="foo">
+                <value>42</value>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
