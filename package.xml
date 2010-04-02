@@ -35,7 +35,9 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
 - Fixed #16: Alternative syntax for properties in rule set files
-  implemented. Fixed in svn revision #220
+  implemented. Fixed in svn revision #220.
+- Fixed #17: Do not return success exit code when PHPMD detects rule
+  violations in analyzed source code. Fixed in svn revision #226.
 - Fixed #19: Super globals were detected as unused variables.Fixed in
   svn revision #218
 - Fixed #20: Local static variables were treated as unused variables.
