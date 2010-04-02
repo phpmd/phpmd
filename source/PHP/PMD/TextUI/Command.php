@@ -67,16 +67,22 @@ class PHP_PMD_TextUI_Command
      * Exit codes used by the phpmd command line tool.
      */
     const EXIT_SUCCESS   = 0,
-          EXIT_EXCEPTION = 1;
+          EXIT_EXCEPTION = 1,
+          EXIT_VIOLATION = 2;
 
     /**
      * This method creates a PHP_PMD instance and configures this object based
      * on the user's input, then it starts the source analysis.
      *
+     * The return value of this method can be used as an exit code. A value
+     * equal to <b>EXIT_SUCCESS</b> means that no violations or errors were
+     * found in the analyzed code. Otherwise this method will return a value
+     * equal to <b>EXIT_VIOLATION</b>.
+     *
      * @param PHP_PMD_TextUI_CommandLineOptions $opts The prepared command line
      *                                                arguments.
      *
-     * @return void
+     * @return integer
      */
     public function run(PHP_PMD_TextUI_CommandLineOptions $opts)
     {
@@ -113,6 +119,11 @@ class PHP_PMD_TextUI_Command
             array($renderer),
             $ruleSetFactory
         );
+
+        if ($phpmd->hasViolations()) {
+            return self::EXIT_VIOLATION;
+        }
+        return self::EXIT_SUCCESS;
     }
 
     /**
@@ -126,15 +137,16 @@ class PHP_PMD_TextUI_Command
     public static function main(array $args)
     {
         try {
-            $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+            $options = new PHP_PMD_TextUI_CommandLineOptions($args);
+            $command = new PHP_PMD_TextUI_Command();
 
-            $cmd = new PHP_PMD_TextUI_Command();
-            $cmd->run($opts);
+            $exitCode = $command->run($options);
         } catch (Exception $e) {
             fwrite(STDERR, $e->getMessage());
             fwrite(STDERR, PHP_EOL);
-            return self::EXIT_EXCEPTION;
+            
+            $exitCode = self::EXIT_EXCEPTION;
         }
-        return self::EXIT_SUCCESS;
+        return $exitCode;
     }
 }

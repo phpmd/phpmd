@@ -10,6 +10,10 @@ class NPathClass {
         if (true) {}
         if (true) {}
         if (true && true && true && true) {}
+        if (true && true && true && true) {}
+        if (true && true && true && true) {}
+        if (true && true && true && true) {}
+        if (true && true && true && true) {}
     }
 }
 ?>
