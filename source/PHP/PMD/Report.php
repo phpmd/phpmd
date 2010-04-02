@@ -103,6 +103,17 @@ class PHP_PMD_Report
     }
 
     /**
+     * Returns <b>true</b> when this report does not contain any errors.
+     *
+     * @return boolean
+     * @since 0.2.5
+     */
+    public function isEmpty()
+    {
+        return (count($this->_ruleViolations) === 0);
+    }
+
+    /**
      * Returns an iterator with all occured rule violations.
      *
      * @return Iterator
