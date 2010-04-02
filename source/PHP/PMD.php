@@ -88,6 +88,27 @@ class PHP_PMD
      * @var string
      */
     private $_input = null;
+    
+    /**
+     * This property will be set to <b>true</b> when an error or a violation
+     * was found in the processed source code.
+     *
+     * @var boolean
+     * @since 0.2.5
+     */
+    private $_violations = false;
+
+    /**
+     * This method will return <b>true</b> when the processed source code
+     * contains violations.
+     *
+     * @return boolean
+     * @since 0.2.5
+     */
+    public function hasViolations()
+    {
+        return $this->_violations;
+    }
 
     /**
      * Returns the input source file or directory path.
@@ -193,5 +214,7 @@ class PHP_PMD
         foreach ($renderers as $renderer) {
             $renderer->end();
         }
+
+        $this->_violations = !$report->isEmpty();
     }
 }

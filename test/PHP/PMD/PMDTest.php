@@ -98,7 +98,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source'),
             'pmd-refset1',
-            $renderers = array($renderer),
+            array($renderer),
             new PHP_PMD_RuleSetFactory()
         );
 
@@ -126,7 +126,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
-            $renderers = array($renderer),
+            array($renderer),
             new PHP_PMD_RuleSetFactory()
         );
 
@@ -154,10 +154,76 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
-            $renderers = array($renderer),
+            array($renderer),
             new PHP_PMD_RuleSetFactory()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/single-file.xml');
+    }
+
+    /**
+     * testHasViolationsReturnsFalseByDefault
+     *
+     * @return void
+     * @covers PHP_PMD
+     * @group phpmd
+     * @group unittest
+     */
+    public function testHasViolationsReturnsFalseByDefault()
+    {
+        $phpmd = new PHP_PMD();
+        $this->assertFalse($phpmd->hasViolations());
+    }
+
+    /**
+     * testHasViolationsReturnsFalseForSourceWithoutViolations
+     *
+     * @return void
+     * @covers PHP_PMD
+     * @group phpmd
+     * @group unittest
+     */
+    public function testHasViolationsReturnsFalseForSourceWithoutViolations()
+    {
+        self::changeWorkingDirectory();
+
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter(new PHP_PMD_Stubs_WriterStub());
+
+        $phpmd = new PHP_PMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_without_violations.php'),
+            'pmd-refset1',
+            array($renderer),
+            new PHP_PMD_RuleSetFactory()
+        );
+
+        $this->assertFalse($phpmd->hasViolations());
+    }
+
+    /**
+     * testHasViolationsReturnsTrueForSourceWithViolation
+     *
+     * @return void
+     * @covers PHP_PMD
+     * @group phpmd
+     * @group unittest
+     */
+    public function testHasViolationsReturnsTrueForSourceWithViolation()
+    {
+        self::changeWorkingDirectory();
+
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter(new PHP_PMD_Stubs_WriterStub());
+
+        $phpmd = new PHP_PMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_npath_violation.php'),
+            'pmd-refset1',
+            array($renderer),
+            new PHP_PMD_RuleSetFactory()
+        );
+
+        $this->assertTrue($phpmd->hasViolations());
     }
 }
