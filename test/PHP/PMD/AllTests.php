@@ -58,6 +58,7 @@ require_once dirname(__FILE__) . '/Node/AllTests.php';
 require_once dirname(__FILE__) . '/Regression/AllTests.php';
 require_once dirname(__FILE__) . '/Renderer/AllTests.php';
 require_once dirname(__FILE__) . '/Rule/AllTests.php';
+require_once dirname(__FILE__) . '/TextUI/AllTests.php';
 
 /**
  * Main test suite for the complete PHP_PMD application.
@@ -93,6 +94,7 @@ class PHP_PMD_AllTests
         $suite->addTest(PHP_PMD_Regression_AllTests::suite());
         $suite->addTest(PHP_PMD_Renderer_AllTests::suite());
         $suite->addTest(PHP_PMD_Rule_AllTests::suite());
+        $suite->addTest(PHP_PMD_TextUI_AllTests::suite());
 
         return $suite;
     }
