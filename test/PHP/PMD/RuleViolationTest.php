@@ -43,26 +43,15 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
+ * @since     0.2.5
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once dirname(__FILE__) . '/PMDTest.php';
-require_once dirname(__FILE__) . '/ParserFactoryTest.php';
-require_once dirname(__FILE__) . '/ParserTest.php';
-require_once dirname(__FILE__) . '/ReportTest.php';
-require_once dirname(__FILE__) . '/RuleSetFactoryTest.php';
-require_once dirname(__FILE__) . '/RuleSetTest.php';
-require_once dirname(__FILE__) . '/RuleTest.php';
-require_once dirname(__FILE__) . '/RuleViolationTest.php';
-require_once dirname(__FILE__) . '/Node/AllTests.php';
-require_once dirname(__FILE__) . '/Regression/AllTests.php';
-require_once dirname(__FILE__) . '/Renderer/AllTests.php';
-require_once dirname(__FILE__) . '/Rule/AllTests.php';
-require_once dirname(__FILE__) . '/TextUI/AllTests.php';
+require_once 'PHP/PMD/RuleViolation.php';
 
 /**
- * Main test suite for the complete PHP_PMD application.
+ * Test case for the {@link PHP_PMD_RuleViolation} class.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -71,33 +60,64 @@ require_once dirname(__FILE__) . '/TextUI/AllTests.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ * @since     0.2.5
  */
-class PHP_PMD_AllTests
+class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testConstructorExtractsClassNameFromGivenType
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_RuleViolation
+     * @group phpmd
+     * @group unittest
      */
-    public static function suite()
+    public function testConstructorExtractsClassNameFromGivenType()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD - Tests');
+        $rule = $this->getRuleMock();
 
-        $suite->addTestSuite('PHP_PMD_PMDTest');
-        $suite->addTestSuite('PHP_PMD_ParserFactoryTest');
-        $suite->addTestSuite('PHP_PMD_ParserTest');
-        $suite->addTestSuite('PHP_PMD_ReportTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetFactoryTest');
-        $suite->addTestSuite('PHP_PMD_RuleSetTest');
-        $suite->addTestSuite('PHP_PMD_RuleTest');
-        $suite->addTestSuite('PHP_PMD_RuleViolationTest');
+        $node = $this->getClassMock();
+        $node->expects($this->once())
+            ->method('getName');
 
-        $suite->addTest(PHP_PMD_Node_AllTests::suite());
-        $suite->addTest(PHP_PMD_Regression_AllTests::suite());
-        $suite->addTest(PHP_PMD_Renderer_AllTests::suite());
-        $suite->addTest(PHP_PMD_Rule_AllTests::suite());
-        $suite->addTest(PHP_PMD_TextUI_AllTests::suite());
+        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
+    }
 
-        return $suite;
+    /**
+     * testConstructorExtractsClassNameFromGivenMethod
+     *
+     * @return void
+     * @covers PHP_PMD_RuleViolation
+     * @group phpmd
+     * @group unittest
+     */
+    public function testConstructorExtractsClassNameFromGivenMethod()
+    {
+        $rule = $this->getRuleMock();
+
+        $node = $this->getMethodMock();
+        $node->expects($this->once())
+            ->method('getParentName');
+
+        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
+    }
+
+    /**
+     * testConstructorExtractsMethodNameFromGivenMethod
+     *
+     * @return void
+     * @covers PHP_PMD_RuleViolation
+     * @group phpmd
+     * @group unittest
+     */
+    public function testConstructorExtractsMethodNameFromGivenMethod()
+    {
+        $rule = $this->getRuleMock();
+
+        $node = $this->getMethodMock();
+        $node->expects($this->once())
+            ->method('getName');
+
+        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
     }
 }
