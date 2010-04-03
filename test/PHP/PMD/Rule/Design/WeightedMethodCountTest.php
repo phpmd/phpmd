@@ -44,20 +44,15 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
+ * @since      0.2.5
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/Rule/Design/WeightedMethodCount.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the weighted method count rule.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,26 +62,67 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ * @since      0.2.5
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_WeightedMethodCountTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testRuleAppliesForValueGreaterThanThreshold
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
      */
-    public static function suite()
+    public function testRuleAppliesForValueGreaterThanThreshold()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $class  = $this->getClassMock('wmc', 42);
+        $report = $this->getReportMock(1);
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
+        $rule = new PHP_PMD_Rule_Design_WeightedMethodCount();
+        $rule->setReport($report);
+        $rule->addProperty('maximum', '10');
+        $rule->apply($class);
+    }
 
-        return $suite;
+    /**
+     * testRuleAppliesForValueEqualToThreshold
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesForValueEqualToThreshold()
+    {
+        $class  = $this->getClassMock('wmc', 42);
+        $report = $this->getReportMock(1);
+
+        $rule = new PHP_PMD_Rule_Design_WeightedMethodCount();
+        $rule->setReport($report);
+        $rule->addProperty('maximum', '42');
+        $rule->apply($class);
+    }
+
+    /**
+     * testRuleNotAppliesForValueLowerThanThreshold
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleNotAppliesForValueLowerThanThreshold()
+    {
+        $class  = $this->getClassMock('wmc', 42);
+        $report = $this->getReportMock(0);
+
+        $rule = new PHP_PMD_Rule_Design_WeightedMethodCount();
+        $rule->setReport($report);
+        $rule->addProperty('maximum', '43');
+        $rule->apply($class);
     }
 }

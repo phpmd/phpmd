@@ -192,7 +192,7 @@ thoroughly test it.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum"  description="The public item reporting threshold" value="45"/>
+            <property name="minimum" description="The public item reporting threshold" value="45"/>
         </properties>
         <example>
             <![CDATA[
@@ -224,7 +224,7 @@ field.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxfields"  description="The field count reporting threshold " value="15"/>
+            <property name="maxfields" description="The field count reporting threshold " value="15"/>
         </properties>
         <example>
             <![CDATA[
@@ -344,7 +344,52 @@ order to reduce its complexity and find a way to have more fine grained objects.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxmethods"  description="The method count reporting threshold " value="10"/>
+            <property name="maxmethods" description="The method count reporting threshold " value="10"/>
         </properties>
+    </rule>
+
+    <rule name="ExcessiveClassComplexity"
+          since="0.2.5"
+          class="PHP_PMD_Rule_Design_WeightedMethodCount"
+          message="This class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
+        <description>
+            <![CDATA[
+The WMC of a class is a good indicator of how much time and effort is required
+to modify and maintain this class. A large number of methods also means that
+this class has a greater potential impact on derived classes.
+            ]]>
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The maximum WMC tolerable for a class." value="50"/>
+        </properties>
+        <example>
+            <![CDATA[
+class Foo {
+    public function bar()  {
+        if ($a == $b)  {
+            if ($a1 == $b1) {
+                fiddle();
+            } else if ($a2 == $b2) {
+                fiddle();
+            }  else {
+            }
+        }
+    }
+    public function baz()  {
+        if ($a == $b)  {
+            if ($a1 == $b1) {
+                fiddle();
+            } else if ($a2 == $b2) {
+                fiddle();
+            }  else {
+            }
+        }
+    }
+    // Several other complex methods
+}
+            ]]>
+        </example>
     </rule>
 </ruleset>

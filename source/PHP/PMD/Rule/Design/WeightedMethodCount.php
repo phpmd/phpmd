@@ -44,20 +44,15 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
+ * @since      0.2.5
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * This rule checks a given class against a configured weighted method count
+ * threshold.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -67,26 +62,27 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ * @since      0.2.5
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_WeightedMethodCount
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * Creates a phpunit test suite.
+     * This method checks the weighted method count for the given class against
+     * a configured threshold.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The context class node.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $threshold = $this->getIntProperty('maximum');
+        $actual    = $node->getMetric('wmc');
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
-
-        return $suite;
+        if ($actual >= $threshold) {
+            $this->addViolation($node, array($node->getName(), $actual, $threshold));
+        }
     }
 }
