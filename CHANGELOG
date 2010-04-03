@@ -1,6 +1,8 @@
-phpmd-0.2.5 (2010/0
+phpmd-0.2.5 (2010/04/03)
 ========================
 
+- Implemented #12: Add rule for the Weighted Methods Per Class Metric.
+  Implemented in svn revision #228.
 - Fixed #16: Alternative syntax for properties in rule set files
   implemented. Fixed in svn revision #220
 - Fixed #17: Do not return success exit code when PHPMD detects rule

@@ -70,7 +70,7 @@ class PHP_PMD_Rule_Design_WeightedMethodCountTest extends PHP_PMD_AbstractTest
      * testRuleAppliesForValueGreaterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @covers PHP_PMD_Rule_Design_WeightedMethodCount
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -90,7 +90,7 @@ class PHP_PMD_Rule_Design_WeightedMethodCountTest extends PHP_PMD_AbstractTest
      * testRuleAppliesForValueEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @covers PHP_PMD_Rule_Design_WeightedMethodCount
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -110,7 +110,7 @@ class PHP_PMD_Rule_Design_WeightedMethodCountTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesForValueLowerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_WeightedMethodCount
+     * @covers PHP_PMD_Rule_Design_WeightedMethodCount
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
