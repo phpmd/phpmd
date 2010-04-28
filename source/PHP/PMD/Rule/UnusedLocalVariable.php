@@ -111,7 +111,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
 
         $this->_collectVariables($node);
         $this->_removeParameters($node);
-        
+
         foreach ($this->_images as $image => $nodes) {
             if (count($nodes) === 1) {
                 $this->addViolation(reset($nodes), array($image));
@@ -136,7 +136,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
 
         // Now get all declarators in the formal parameters container
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
-        
+
         foreach ($declarators as $declarator) {
             unset($this->_images[$declarator->getImage()]);
         }
@@ -191,6 +191,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
     {
         return $this->_isNotThis($variable)
             && $this->_isNotStaticPostfix($variable)
+            && $this->_isNotStaticPrefix($variable)
             && $this->_isNotSuperGlobal($variable);
     }
 
@@ -218,8 +219,35 @@ class PHP_PMD_Rule_UnusedLocalVariable
     private function _isNotStaticPostfix(PHP_PMD_AbstractNode $variable)
     {
         $parent = $variable->getParent();
-        if (is_object($parent) && $parent->isInstanceOf('PropertyPostfix')) {
-            return !($parent->getParent()->getImage() === '::');
+        while (is_object($parent)) {
+            if ($parent->isInstanceOf('PropertyPostfix')) {
+                if ($parent->getParent()->getImage() === "::") {
+                    return false;
+                }
+            }
+            $parent = $parent->getParent();
+        }
+        return true;
+    }
+
+    /**
+     * This method will return <b>true</b> when the given variable node is
+     * not the child of a primate prefix node.
+     *
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     *
+     * @return boolean
+     */
+    private function _isNotStaticPrefix(PHP_PMD_AbstractNode $variable)
+    {
+        $parent = $variable->getParent();
+        while (is_object($parent)) {
+            if ($parent->isInstanceOf('MemberPrimaryPrefix')) {
+                if ($parent->getParent()->getImage() === "::") {
+                    return false;
+                }
+            }
+            $parent = $parent->getParent();
         }
         return true;
     }

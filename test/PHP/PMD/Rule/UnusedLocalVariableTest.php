@@ -129,6 +129,38 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToStaticArrayProperty
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToStaticArrayProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToStaticObjectProperty
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToStaticObjectProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToDynamicProperty
      *
      * @return void
