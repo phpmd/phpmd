@@ -148,7 +148,30 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            unset($this->_nodes[$variable->getImage()]);
+            if ($this->isRegularVariable($variable)) {
+                unset($this->_nodes[$variable->getImage()]);
+            }
         }
+    }
+
+    /**
+     * Tests if the given variable node is a regular variable an not property
+     * or method postfix.
+     *
+     * @param PHP_PMD_Node_ASTNode $node The variable node to check.
+     *
+     * @return boolean
+     * @since 0.2.6
+     */
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $node)
+    {
+        $parent = $node->getParent();
+        while ($parent->isInstanceOf('ArrayIndexExpression')
+            || $parent->isInstanceOf('StringIndexExpression')
+        ) {
+            $parent = $parent->getParent();
+        }
+        return !$parent->isInstanceOf('PropertyPostfix')
+            && !$parent->isInstanceOf('MethodPostfix');
     }
 }
