@@ -152,7 +152,7 @@ class PHP_PMD_Rule_UnusedPrivateField
     private function _removeUsedFields(PHP_PMD_Node_Class $class)
     {
         foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
-            if ($this->_isClassScope($class, $postfix)) {
+            if ($this->isInScopeOfClass($class, $postfix)) {
                 $this->_removeUsedField($postfix);
             }
         }
@@ -168,14 +168,42 @@ class PHP_PMD_Rule_UnusedPrivateField
      */
     private function _removeUsedField(PHP_PMD_Node_ASTNode $postfix)
     {
-        // TODO: Change this to isStatic() when PHP_Depend 0.9.9 is available
-        if ($postfix->getParent()->getImage() === '::') {
-            $image = $postfix->getImage();
+        if ($postfix->getParent()->isStatic()) {
+            $image = '';
+            $child = $postfix->getFirstChildOfType('Variable');
         } else {
-            $image = '$' . $postfix->getImage();
+            $image = '$';
+            $child = $postfix->getFirstChildOfType('Identifier');
         }
 
-        unset($this->_fields[$image]);
+
+        if ($this->isValidPropertyNode($child)) {
+            unset($this->_fields[$image . $child->getImage()]);
+        }
+    }
+
+    /**
+     * Checks if the given node is a valid property node.
+     *
+     * @param PHP_PMD_Node_ASTNode $node The context property node.
+     *
+     * @return boolean
+     * @since 0.2.6
+     */
+    protected function isValidPropertyNode(PHP_PMD_Node_ASTNode $node = null)
+    {
+        if ($node === null) {
+            return false;
+        }
+        
+        $parent = $node->getParent();
+        while (!$parent->isInstanceOf('PropertyPostfix')) {
+            if ($parent->isInstanceOf('CompoundVariable')) {
+                return false;
+            }
+            $parent = $parent->getParent();
+        }
+        return true;
     }
 
     /**
@@ -187,21 +215,21 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return boolean
      */
-    private function _isClassScope(
+    protected function isInScopeOfClass(
         PHP_PMD_Node_Class $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {
-        $prefix = $postfix->getParent()->getChild(0);
-        while ($prefix->isInstanceOf('PropertyPostfix')) {
-            $prefix = $prefix->getParent()->getParent()->getChild(0);
+        $owner = $postfix->getParent()->getChild(0);
+        if ($owner->isInstanceOf('PropertyPostfix')) {
+            $owner = $owner->getParent()->getParent()->getChild(0);
         }
         return (
-            $prefix->isInstanceOf('SelfReference') ||
-            $prefix->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf('SelfReference') ||
+            $owner->isInstanceOf('StaticReference') ||
             // TODO: Replace this with ThisVariable check when this AST node is
             //       ported back from the design disharmony branch
-            strcasecmp($prefix->getImage(), '$this') === 0 ||
-            strcasecmp($prefix->getImage(), $class->getImage()) === 0
+            strcasecmp($owner->getImage(), '$this') === 0 ||
+            strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
     }
 }

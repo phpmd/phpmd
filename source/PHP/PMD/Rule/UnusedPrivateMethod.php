@@ -166,17 +166,17 @@ class PHP_PMD_Rule_UnusedPrivateMethod
         PHP_PMD_Node_Class $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {
-        $prefix = $postfix->getParent()->getChild(0);
-        if ($prefix->isInstanceOf('MethodPostfix')) {
-            $prefix = $prefix->getParent()->getParent()->getChild(0);
+        $owner = $postfix->getParent()->getChild(0);
+        if ($owner->isInstanceOf('MethodPostfix')) {
+            $owner = $owner->getParent()->getParent()->getChild(0);
         }
         return (
-            $prefix->isInstanceOf('SelfReference') ||
-            $prefix->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf('SelfReference') ||
+            $owner->isInstanceOf('StaticReference') ||
             // TODO: Replace this with ThisVariable check when this AST node is
             //       ported back from the design disharmony branch
-            strcasecmp($prefix->getImage(), '$this') === 0 ||
-            strcasecmp($prefix->getImage(), $class->getImage()) === 0
+            strcasecmp($owner->getImage(), '$this') === 0 ||
+            strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
     }
 }

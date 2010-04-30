@@ -171,6 +171,32 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix
+     *
+     * <code>
+     * class Foo {
+     *     private static $_bar = null;
+     *
+     *     public function baz() {
+     *         self::${'_bar'} = 42;
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotResultInFatalErrorByCallingNonObject()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * testRuleDoesNotApplyToUnusedPublicField
      *
      * @return void
