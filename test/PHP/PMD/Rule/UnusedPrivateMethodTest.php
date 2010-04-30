@@ -271,4 +271,31 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleDoesNotApplyToPrivateMethodInChainedMethodCall
+     *
+     * <code>
+     * class Foo {
+     *     private function bar() {
+     *         return new SplObjectStorage();
+     *     }
+     *     public function add($object) {
+     *         $this->bar()->attach($object);
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateMethod
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCall()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateMethod();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
 }
