@@ -167,11 +167,17 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $node = $variable;
         while (is_object($node = $node->getParent())) {
+            // TODO: Introduce a marker interface like SurroundExpression, then
+            //       replace all these checks with a single one.
             if ($node->isInstanceOf('CompoundExpression')
                 || $node->isInstanceOf('CompoundVariable')
+                || $node->isInstanceOf('ArrayIndexExpression')
+                || $node->isInstanceOf('StringIndexExpression')
                 || $node->isInstanceOf('Arguments')
             ) {
-                return true;
+                if ($node->getChild(0)->getImage() !== $variable->getImage()) {
+                    return true;
+                }
             }
             if ($node->isInstanceOf('MemberPrimaryPrefix')) {
                 if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
