@@ -179,7 +179,6 @@ class PHP_PMD_Rule_UnusedFormalParameter
                     return true;
                 }
             }
-
             if ($node->isInstanceOf('MemberPrimaryPrefix')) {
                 if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
                     return !$node->getParent()->isStatic();

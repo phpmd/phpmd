@@ -346,7 +346,7 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
 
     /**
      * testRuleDoesNotApplyToPrivateStringIndexFieldAccess
-     * 
+     *
      * <code>
      * class Foo {
      *     private $bar = "Manuel";

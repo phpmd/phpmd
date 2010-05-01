@@ -275,7 +275,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleDoesNotApplyToMethodArgument 
+     * testRuleDoesNotApplyToMethodArgument
      *
      * <code>
      * class Foo {
@@ -332,7 +332,11 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *     }
      * }
      * </code>
+<<<<<<< HEAD
      * 
+=======
+     *
+>>>>>>> master
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd
