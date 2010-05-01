@@ -97,6 +97,86 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleAppliesToLocalVariableWithSameNameAsStaticProperty
+     *
+     * <code>
+     * class Foo
+     *     protected $baz = 42;
+     *     function bar() {
+     *         $baz = 23;
+     *         return self::$baz;
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesToLocalVariableWithSameNameAsStaticProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty
+     *
+     * <code>
+     * class Foo
+     *     protected $baz = array(array(1=>42));
+     *     function bar() {
+     *         $baz = 23;
+     *         return self::$baz[0][1];
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty()
+    {
+        $this->markTestSkipped('This should be detected, but not implemented.');
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable
+     *
+     * <code>
+     * class Foo {
+     *     protected static $bar = 42;
+     *     public function baz()
+     *     {
+     *         $name = 'bar';
+     *         return self::${$name};
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToThisVariable
      *
      * @return void
@@ -122,6 +202,63 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * @group unittest
      */
     public function testRuleDoesNotApplyToStaticProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToStaticArrayProperty
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToStaticArrayProperty()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToMethodArgument
+     *
+     * <code>
+     * class Foo {
+     *     function bar() {
+     *         $baz = 42;
+     *         $this->foo($baz);
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToMethodArgument()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToStaticObjectProperty
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToStaticObjectProperty()
     {
         $rule = new PHP_PMD_Rule_UnusedLocalVariable();
         $rule->setReport($this->getReportMock(0));
@@ -378,6 +515,58 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedLocalVariableInMethod()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToLocalVariableUsedAsArrayIndex
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         foreach ($baz as $key) {
+     *             self::$values[$key] = 42;
+     *         }
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToLocalVariableUsedAsArrayIndex()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToLocalVariableUsedAsStringIndex
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         foreach ($baz as $key) {
+     *             self::$string{$key} = 'a';
+     *         }
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToLocalVariableUsedAsStringIndex()
     {
         $rule = new PHP_PMD_Rule_UnusedLocalVariable();
         $rule->setReport($this->getReportMock(0));

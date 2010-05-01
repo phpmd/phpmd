@@ -129,6 +129,79 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed
+     *
+     * <code>
+     * class Foo {
+     *     public static $bar = null;
+     *     public function baz($bar) {
+     *         self::$bar = 'fooBar';
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable
+     *
+     * <code>
+     * class Foo {
+     *     public function baz($bar) {
+     *         self::${$bar} = 'fooBar';
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable
+     *
+     * <code>
+     * class Foo {
+     *     public function baz($bar) {
+     *         self::${$bar}();
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToAbstractMethodFormalParameter
      *
      * @return void
@@ -174,5 +247,102 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression
+     *
+     * <code>
+     * class Foo {
+     *     public static $bar;
+     *     public function baz($bar) {
+     *         self::${$bar} = 42;
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToMethodArgument
+     *
+     * <code>
+     * class Foo {
+     *     function bar($baz) {
+     *         $this->foo($baz);
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToMethodArgument()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToParameterUsedAsArrayIndex
+     *
+     * <code>
+     * class Foo {
+     *     function bar($baz) {
+     *         self::$values[$baz];
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToParameterUsedAsArrayIndex()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToParameterUsedAsStringIndex
+     *
+     * <code>
+     * class Foo {
+     *     function bar($baz) {
+     *         self::$string{$baz};
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToParameterUsedAsStringIndex()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
     }
 }

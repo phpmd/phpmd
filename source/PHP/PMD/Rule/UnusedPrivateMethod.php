@@ -114,26 +114,6 @@ class PHP_PMD_Rule_UnusedPrivateMethod
     }
 
     /**
-     * This method removes all used methods from the given methods array.
-     *
-     * @param PHP_PMD_Node_Class         $class   The context class instance.
-     * @param array(PHP_PMD_Node_Method) $methods All collected private methods.
-     *
-     * @return array(PHP_PMD_AbstractNode)
-     */
-    private function _removeUsedMethods(
-        PHP_PMD_Node_Class $class,
-        array $methods
-    ) {
-        foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
-            if ($this->_isClassScope($class, $postfix)) {
-                unset($methods[strtolower($postfix->getImage())]);
-            }
-        }
-        return $methods;
-    }
-
-    /**
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
      *
@@ -156,6 +136,24 @@ class PHP_PMD_Rule_UnusedPrivateMethod
     }
 
     /**
+     * This method removes all used methods from the given methods array.
+     *
+     * @param PHP_PMD_Node_Class         $class   The context class instance.
+     * @param array(PHP_PMD_Node_Method) $methods All collected private methods.
+     *
+     * @return array(PHP_PMD_AbstractNode)
+     */
+    private function _removeUsedMethods(PHP_PMD_Node_Class $class,array $methods)
+    {
+        foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
+            if ($this->_isClassScope($class, $postfix)) {
+                unset($methods[strtolower($postfix->getImage())]);
+            }
+        }
+        return $methods;
+    }
+
+    /**
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
@@ -168,14 +166,17 @@ class PHP_PMD_Rule_UnusedPrivateMethod
         PHP_PMD_Node_Class $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {
-        $prefix = $postfix->getParent()->getChild(0);
+        $owner = $postfix->getParent()->getChild(0);
+        if ($owner->isInstanceOf('MethodPostfix')) {
+            $owner = $owner->getParent()->getParent()->getChild(0);
+        }
         return (
-            $prefix->isInstanceOf('SelfReference') ||
-            $prefix->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf('SelfReference') ||
+            $owner->isInstanceOf('StaticReference') ||
             // TODO: Replace this with ThisVariable check when this AST node is
             //       ported back from the design disharmony branch
-            strcasecmp($prefix->getImage(), '$this') === 0 ||
-            strcasecmp($prefix->getImage(), $class->getImage()) === 0
+            strcasecmp($owner->getImage(), '$this') === 0 ||
+            strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
     }
 }

@@ -148,7 +148,44 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            unset($this->_nodes[$variable->getImage()]);
+            if ($this->isRegularVariable($variable)) {
+                unset($this->_nodes[$variable->getImage()]);
+            }
         }
+    }
+
+    /**
+     * Tests if the given variable node is a regular variable an not property
+     * or method postfix.
+     *
+     * @param PHP_PMD_Node_ASTNode $node The variable node to check.
+     *
+     * @return boolean
+     * @since 0.2.6
+     */
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
+    {
+        $node = $variable;
+        while (is_object($node = $node->getParent())) {
+            // TODO: Introduce a marker interface like SurroundExpression, then
+            //       replace all these checks with a single one.
+            if ($node->isInstanceOf('CompoundExpression')
+                || $node->isInstanceOf('CompoundVariable')
+                || $node->isInstanceOf('ArrayIndexExpression')
+                || $node->isInstanceOf('StringIndexExpression')
+                || $node->isInstanceOf('Arguments')
+            ) {
+                if ($node->getChild(0)->getImage() !== $variable->getImage()) {
+                    return true;
+                }
+            }
+            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
+                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
+                    return !$node->getParent()->isStatic();
+                }
+                return !$node->isStatic();
+            }
+        }
+        return true;
     }
 }

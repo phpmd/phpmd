@@ -145,6 +145,58 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix
+     *
+     * <code>
+     * class Foo {
+     *     private static $_bar = null;
+     *
+     *     public function baz() {
+     *         self::${$_bar = '_bar'} = 42;
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix
+     *
+     * <code>
+     * class Foo {
+     *     private static $_bar = null;
+     *
+     *     public function baz() {
+     *         self::${'_bar'} = 42;
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotResultInFatalErrorByCallingNonObject()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * testRuleDoesNotApplyToUnusedPublicField
      *
      * @return void
@@ -234,6 +286,84 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * @group unittest
      */
     public function testRuleDoesNotApplyToClassNameAccessedPrivateField()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToPrivateFieldInChainedMethodCall
+     *
+     * <code>
+     * class Foo {
+     *     private $bar = null;
+     *     // ...
+     *     public function baz() {
+     *         $this->bar->foobar();
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToPrivateFieldInChainedMethodCall()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToPrivateArrayFieldAccess
+     *
+     * <code>
+     * class Foo {
+     *     private $bar = array();
+     *     // ...
+     *     public function baz() {
+     *         return $this->bar[42];
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToPrivateArrayFieldAccess()
+    {
+        $rule = new PHP_PMD_Rule_UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToPrivateStringIndexFieldAccess
+     *
+     * <code>
+     * class Foo {
+     *     private $bar = "Manuel";
+     *     // ...
+     *     public function baz() {
+     *         return $this->bar{3};
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedPrivateField
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToPrivateStringIndexFieldAccess()
     {
         $rule = new PHP_PMD_Rule_UnusedPrivateField();
         $rule->setReport($this->getReportMock(0));

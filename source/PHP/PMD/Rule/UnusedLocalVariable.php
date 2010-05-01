@@ -111,7 +111,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
 
         $this->_collectVariables($node);
         $this->_removeParameters($node);
-        
+
         foreach ($this->_images as $image => $nodes) {
             if (count($nodes) === 1) {
                 $this->addViolation(reset($nodes), array($image));
@@ -136,7 +136,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
 
         // Now get all declarators in the formal parameters container
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
-        
+
         foreach ($declarators as $declarator) {
             unset($this->_images[$declarator->getImage()]);
         }
@@ -189,9 +189,9 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     private function _accept(PHP_PMD_AbstractNode $variable)
     {
-        return $this->_isNotThis($variable)
-            && $this->_isNotStaticPostfix($variable)
-            && $this->_isNotSuperGlobal($variable);
+        return $this->isRegularVariable($variable)
+            && $this->_isNotSuperGlobal($variable)
+            && $this->_isNotThis($variable);
     }
 
     /**
@@ -208,18 +208,36 @@ class PHP_PMD_Rule_UnusedLocalVariable
     }
 
     /**
-     * This method will return <b>true</b> when the given variable node is
-     * not the child of a property postfix node.
+     * Tests if the given variable node is a regular variable an not property
+     * or method postfix.
      *
-     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
      *
      * @return boolean
+     * @since 0.2.6
      */
-    private function _isNotStaticPostfix(PHP_PMD_AbstractNode $variable)
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
     {
-        $parent = $variable->getParent();
-        if (is_object($parent) && $parent->isInstanceOf('PropertyPostfix')) {
-            return !($parent->getParent()->getImage() === '::');
+        $node = $variable;
+        while (is_object($node = $node->getParent())) {
+            // TODO: Introduce a marker interface like SurroundExpression, then
+            //       replace all these checks with a single one.
+            if ($node->isInstanceOf('CompoundExpression')
+                || $node->isInstanceOf('CompoundVariable')
+                || $node->isInstanceOf('ArrayIndexExpression')
+                || $node->isInstanceOf('StringIndexExpression')
+                || $node->isInstanceOf('Arguments')
+            ) {
+                if ($node->getChild(0)->getImage() !== $variable->getImage()) {
+                    return true;
+                }
+            }
+            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
+                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
+                    return !$node->getParent()->isStatic();
+                }
+                return !$node->isStatic();
+            }
         }
         return true;
     }
