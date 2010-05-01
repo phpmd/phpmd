@@ -332,7 +332,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *     }
      * }
      * </code>
-     *
+     * 
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @group phpmd

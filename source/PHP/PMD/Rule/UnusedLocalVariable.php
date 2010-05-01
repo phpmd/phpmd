@@ -232,6 +232,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
                     return true;
                 }
             }
+
             if ($node->isInstanceOf('MemberPrimaryPrefix')) {
                 if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
                     return !$node->getParent()->isStatic();
