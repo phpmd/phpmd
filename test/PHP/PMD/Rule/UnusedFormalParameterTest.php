@@ -275,7 +275,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleDoesNotApplyToMethodArgument
+     * testRuleDoesNotApplyToMethodArgument 
      *
      * <code>
      * class Foo {
@@ -316,7 +316,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * @group unittest
      */
     public function testRuleDoesNotApplyToParameterUsedAsArrayIndex()
-    {
+    { 
         $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
