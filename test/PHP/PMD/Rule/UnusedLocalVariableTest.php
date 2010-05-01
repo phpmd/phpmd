@@ -143,7 +143,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      */
     public function testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty()
     {
-        $this->markTestSkipped('This should be detected, but not implemented.');
         $rule = new PHP_PMD_Rule_UnusedLocalVariable();
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());

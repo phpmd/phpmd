@@ -158,33 +158,46 @@ class PHP_PMD_Rule_UnusedFormalParameter
      * Tests if the given variable node is a regular variable an not property
      * or method postfix.
      *
-     * @param PHP_PMD_Node_ASTNode $node The variable node to check.
+     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
      *
      * @return boolean
      * @since 0.2.6
      */
     protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
     {
-        $node = $variable;
-        while (is_object($node = $node->getParent())) {
-            // TODO: Introduce a marker interface like SurroundExpression, then
-            //       replace all these checks with a single one.
-            if ($node->isInstanceOf('CompoundExpression')
-                || $node->isInstanceOf('CompoundVariable')
-                || $node->isInstanceOf('ArrayIndexExpression')
-                || $node->isInstanceOf('StringIndexExpression')
-                || $node->isInstanceOf('Arguments')
+        $yes    = false;
+        $parent = $variable;
+        while ($parent = $parent->getParent()) {
+            if ($parent->isInstanceOf('MemberPrimaryPrefix')) {
+                $yes = true;
+                break;
+            } else if ($parent->isInstanceOf('Arguments')) {
+                return true;
+            }
+        }
+
+        if (!$yes) {
+            return true;
+        }
+
+        $parent = $variable->getParent();
+        if ($parent->isInstanceOf('ArrayIndexExpression')) {
+            return $parent->getChild(0)->getImage() !== $variable->getImage();
+        } else if ($parent->isInstanceOf('StringIndexExpression')) {
+            return $parent->getChild(0)->getImage() !== $variable->getImage();
+        } else if ($parent->isInstanceOf('MethodPostfix')) {
+            return $parent->getChild(0)->getImage() === $variable->getImage();
+        } else if ($parent->isInstanceOf('PropertyPostfix')) {
+            $parentParent = $parent->getParent()->getParent();
+            if ($parentParent->isInstanceOf('MemberPrimaryPrefix')
+                && $parentParent->isStatic()
             ) {
-                if ($node->getChild(0)->getImage() !== $variable->getImage()) {
-                    return true;
-                }
+                return $parent->getChild(0)->getImage() !== $variable->getImage();
             }
-            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
-                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
-                    return !$node->getParent()->isStatic();
-                }
-                return !$node->isStatic();
+            if ($parent->getParent()->isStatic()) {
+                return $parent->getChild(0)->getImage() !== $variable->getImage();
             }
+            return $parent->getChild(0)->getImage() === $variable->getImage();
         }
         return true;
     }
