@@ -549,7 +549,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
 
     /**
      * testRuleDoesNotApplyToLocalVariableUsedAsStringIndex
-     * 
+     *  
      * <code>
      * class Foo {
      *     public function bar() {
