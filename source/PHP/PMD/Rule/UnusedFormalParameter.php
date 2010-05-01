@@ -163,15 +163,23 @@ class PHP_PMD_Rule_UnusedFormalParameter
      * @return boolean
      * @since 0.2.6
      */
-    protected function isRegularVariable(PHP_PMD_Node_ASTNode $node)
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
     {
-        $parent = $node->getParent();
-        while ($parent->isInstanceOf('ArrayIndexExpression')
-            || $parent->isInstanceOf('StringIndexExpression')
-        ) {
-            $parent = $parent->getParent();
+        $node = $variable;
+        while (is_object($node = $node->getParent())) {
+            if ($node->isInstanceOf('CompoundExpression')
+                || $node->isInstanceOf('CompoundVariable')
+                || $node->isInstanceOf('Arguments')
+            ) {
+                return true;
+            }
+            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
+                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
+                    return !$node->getParent()->isStatic();
+                }
+                return !$node->isStatic();
+            }
         }
-        return !$parent->isInstanceOf('PropertyPostfix')
-            && !$parent->isInstanceOf('MethodPostfix');
+        return true;
     }
 }

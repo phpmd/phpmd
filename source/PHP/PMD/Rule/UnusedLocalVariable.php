@@ -189,10 +189,9 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     private function _accept(PHP_PMD_AbstractNode $variable)
     {
-        return $this->_isNotThis($variable)
-            && $this->_isNotStaticPostfix($variable)
-            && $this->_isNotStaticPrefix($variable)
-            && $this->_isNotSuperGlobal($variable);
+        return $this->isRegularVariable($variable)
+            && $this->_isNotSuperGlobal($variable)
+            && $this->_isNotThis($variable);
     }
 
     /**
@@ -209,45 +208,30 @@ class PHP_PMD_Rule_UnusedLocalVariable
     }
 
     /**
-     * This method will return <b>true</b> when the given variable node is
-     * not the child of a property postfix node.
+     * Tests if the given variable node is a regular variable an not property
+     * or method postfix.
      *
-     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
-     *
-     * @return boolean
-     */
-    private function _isNotStaticPostfix(PHP_PMD_AbstractNode $variable)
-    {
-        $parent = $variable->getParent();
-        while (is_object($parent)) {
-            if ($parent->isInstanceOf('PropertyPostfix')) {
-                if ($parent->getParent()->getImage() === "::") {
-                    return false;
-                }
-            }
-            $parent = $parent->getParent();
-        }
-        return true;
-    }
-
-    /**
-     * This method will return <b>true</b> when the given variable node is
-     * not the child of a primate prefix node.
-     *
-     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
      *
      * @return boolean
+     * @since 0.2.6
      */
-    private function _isNotStaticPrefix(PHP_PMD_AbstractNode $variable)
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
     {
-        $parent = $variable->getParent();
-        while (is_object($parent)) {
-            if ($parent->isInstanceOf('MemberPrimaryPrefix')) {
-                if ($parent->getParent()->getImage() === "::") {
-                    return false;
-                }
+        $node = $variable;
+        while (is_object($node = $node->getParent())) {
+            if ($node->isInstanceOf('CompoundExpression')
+                || $node->isInstanceOf('CompoundVariable')
+                || $node->isInstanceOf('Arguments')
+            ) {
+                return true;
             }
-            $parent = $parent->getParent();
+            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
+                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
+                    return !$node->getParent()->isStatic();
+                }
+                return !$node->isStatic();
+            }
         }
         return true;
     }
