@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/AbstractLocalVariable.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/IMethodAware.php';
 
@@ -64,7 +64,7 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
  * @link       http://phpmd.org
  */
 class PHP_PMD_Rule_UnusedFormalParameter
-       extends PHP_PMD_AbstractRule
+       extends PHP_PMD_Rule_AbstractLocalVariable
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
@@ -148,44 +148,9 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            if ($this->isRegularVariable($variable)) {
+            if ($this->isLocal($variable)) {
                 unset($this->_nodes[$variable->getImage()]);
             }
         }
-    }
-
-    /**
-     * Tests if the given variable node is a regular variable an not property
-     * or method postfix.
-     *
-     * @param PHP_PMD_Node_ASTNode $node The variable node to check.
-     *
-     * @return boolean
-     * @since 0.2.6
-     */
-    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
-    {
-        $node = $variable;
-        while (is_object($node = $node->getParent())) {
-            // TODO: Introduce a marker interface like SurroundExpression, then
-            //       replace all these checks with a single one.
-            if ($node->isInstanceOf('CompoundExpression')
-                || $node->isInstanceOf('CompoundVariable')
-                || $node->isInstanceOf('ArrayIndexExpression')
-                || $node->isInstanceOf('StringIndexExpression')
-                || $node->isInstanceOf('Arguments')
-            ) {
-                if ($node->getChild(0)->getImage() !== $variable->getImage()) {
-                    return true;
-                }
-            }
-            if ($node->isInstanceOf('MemberPrimaryPrefix')) {
-                if ($node->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
-                    return !$node->getParent()->isStatic();
-                }
-                return !$node->isStatic();
-            }
-        }
-        return true;
     }
 }
