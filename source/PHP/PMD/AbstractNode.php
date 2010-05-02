@@ -154,25 +154,6 @@ abstract class PHP_PMD_AbstractNode
     }
 
     /**
-     * Traverses up the node tree and finds all parent nodes that are instances
-     * of <b>$parentType</b>.
-     *
-     * @param string $type Class/interface type you are looking for,
-     *
-     * @return array(PHP_PMD_AbstractNode)
-     */
-    public function getParentsOfType($type)
-    {
-        $parents = $this->_node->getParentsOfType('PHP_Depend_Code_AST' . $type);
-
-        $nodes = array();
-        foreach ($parents as $parent) {
-            $nodes[] = new PHP_PMD_Node_ASTNode($parent, $this->getFileName());
-        }
-        return $nodes;
-    }
-
-    /**
      * Searches recursive for all children of this node that are of the given
      * type.
      *

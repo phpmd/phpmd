@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/AbstractLocalVariable.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/IMethodAware.php';
 
@@ -64,7 +64,7 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
  * @link       http://phpmd.org
  */
 class PHP_PMD_Rule_UnusedFormalParameter
-       extends PHP_PMD_AbstractRule
+       extends PHP_PMD_Rule_AbstractLocalVariable
     implements PHP_PMD_Rule_IFunctionAware,
                PHP_PMD_Rule_IMethodAware
 {
@@ -148,57 +148,9 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            if ($this->isRegularVariable($variable)) {
+            if ($this->isLocal($variable)) {
                 unset($this->_nodes[$variable->getImage()]);
             }
         }
-    }
-
-    /**
-     * Tests if the given variable node is a regular variable an not property
-     * or method postfix.
-     *
-     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
-     *
-     * @return boolean
-     * @since 0.2.6
-     */
-    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
-    {
-        $yes    = false;
-        $parent = $variable;
-        while ($parent = $parent->getParent()) {
-            if ($parent->isInstanceOf('MemberPrimaryPrefix')) {
-                $yes = true;
-                break;
-            } else if ($parent->isInstanceOf('Arguments')) {
-                return true;
-            }
-        }
-
-        if (!$yes) {
-            return true;
-        }
-
-        $parent = $variable->getParent();
-        if ($parent->isInstanceOf('ArrayIndexExpression')) {
-            return $parent->getChild(0)->getImage() !== $variable->getImage();
-        } else if ($parent->isInstanceOf('StringIndexExpression')) {
-            return $parent->getChild(0)->getImage() !== $variable->getImage();
-        } else if ($parent->isInstanceOf('MethodPostfix')) {
-            return $parent->getChild(0)->getImage() === $variable->getImage();
-        } else if ($parent->isInstanceOf('PropertyPostfix')) {
-            $parentParent = $parent->getParent()->getParent();
-            if ($parentParent->isInstanceOf('MemberPrimaryPrefix')
-                && $parentParent->isStatic()
-            ) {
-                return $parent->getChild(0)->getImage() !== $variable->getImage();
-            }
-            if ($parent->getParent()->isStatic()) {
-                return $parent->getChild(0)->getImage() !== $variable->getImage();
-            }
-            return $parent->getChild(0)->getImage() === $variable->getImage();
-        }
-        return true;
     }
 }
