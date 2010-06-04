@@ -46,21 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/EvalExpressionTest.php';
-require_once dirname(__FILE__) . '/ExitExpressionTest.php';
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/NumberOfChildrenTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/Rule/Design/NumberOfChildren.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the {@link PHP_PMD_Rule_Design_NumberOfChildren} class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -71,28 +62,56 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_NumberOfChildrenTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testRuleNotAppliesToClassWithChildrenLessThanThreshold
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @covers PHP_PMD_Rule_Design_NumberOfChildren
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
      */
-    public static function suite()
+    public function testRuleNotAppliesToClassWithChildrenLessThanThreshold()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $rule = new PHP_PMD_Rule_Design_NumberOfChildren();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nocc', 41));
+    }
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_EvalExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_ExitExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NumberOfChildrenTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
+    /**
+     * testRuleAppliesToClassWithChildrenIdenticalToThreshold
+     *
+     * @covers PHP_PMD_Rule_Design_NumberOfChildren
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
+     */
+    public function testRuleAppliesToClassWithChildrenIdenticalToThreshold()
+    {
+        $rule = new PHP_PMD_Rule_Design_NumberOfChildren();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nocc', 42));
+    }
 
-        return $suite;
+    /**
+     * testRuleAppliesToClassWithChildrenGreaterThanThreshold
+     *
+     * @covers PHP_PMD_Rule_Design_NumberOfChildren
+     * @group phpmd
+     * @group phpmd::rule
+     * @group phpmd::rule::design
+     * @group unittest
+     */
+    public function testRuleAppliesToClassWithChildrenGreaterThanThreshold()
+    {
+        $rule = new PHP_PMD_Rule_Design_NumberOfChildren();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nocc', 43));
     }
 }
