@@ -147,10 +147,16 @@ class PHP_PMD_TextUI_CommandLineOptions
                 break;
 
             case '--extensions':
+                $this->logDeprecated('extensions', 'suffixes');
+
+            case '--suffixes':
                 $this->_extensions = array_shift($args);
                 break;
 
             case '--ignore':
+                $this->logDeprecated('ignore', 'exclude');
+                
+            case '--exclude':
                 $this->_ignore = array_shift($args);
                 break;
 
@@ -326,9 +332,28 @@ class PHP_PMD_TextUI_CommandLineOptions
                'priority than this will not be used' . PHP_EOL .
                '--reportfile: send report output to a file; default to STDOUT' .
                PHP_EOL .
-               '--extensions: comma-separated string of valid source code ' .
+               '--suffixes: comma-separated string of valid source code ' .
                'filename extensions' . PHP_EOL .
-               '--ignore: comma-separated string of patterns that are used to ' .
+               '--exclude: comma-separated string of patterns that are used to ' .
                'ignore directories' . PHP_EOL;
+    }
+
+    /**
+     * Logs a deprecated option to the current user interface.
+     *
+     * @param string $deprecatedName Name of the deprecated option.
+     * @param string $newName        Name of the new option.
+     *
+     * @return void
+     */
+    protected function logDeprecated( $deprecatedName, $newName )
+    {
+        $message = sprintf(
+            'The --%s option is deprecated, please use --%s instead.',
+            $deprecatedName,
+            $newName
+        );
+
+        fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
     }
 }
