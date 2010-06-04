@@ -72,12 +72,30 @@ class Foo {
         <description>
             <![CDATA[
 A class with an excessive number of children is an indicator for an unbalanced
-class hierarchy. You should consider to restructure this structure.
+class hierarchy. You should consider to refactor this class hierarchy.
             ]]>
         </description>
         <priority>2</priority>
         <properties>
             <property name="minimum" value="15" description="Maximum number of acceptable child classes." />
+        </properties>
+        <example />
+    </rule>
+
+    <rule name="DepthOfInheritance"
+          since="0.2"
+          message = "The class {0} has {1} parents. Consider to reduce the depth of this class hierarchy."
+          class="PHP_PMD_Rule_Design_DepthOfInheritance"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#depthofinheritance">
+        <description>
+            <![CDATA[
+A class with many parents is an indicator for an unbalanced and wrong class
+hierarchy. You should consider to refactor this class hierarchy.
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="6" description="Maximum number of acceptable parent classes." />
         </properties>
         <example />
     </rule>

@@ -1,6 +1,8 @@
 phpmd-0.2.6 (2010/06/  )
 ========================
 
+- Implemented #24: Implement Depth Of Inheritance Rule. Implemented in
+  svn revision #.
 - Implemented #25: Implement Number of Children Rule. Implemented in svn
   revision #.
 - Implemented #26: Implement Rule that detects the usage of PHP's eval()
