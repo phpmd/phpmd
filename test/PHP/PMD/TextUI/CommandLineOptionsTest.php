@@ -46,13 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/CommandLineOptionsTest.php';
-require_once dirname(__FILE__) . '/CommandTest.php';
+require_once 'PHP/PMD/TextUI/CommandLineOptions.php';
 
 /**
- * Main test suite for the PHP_PMD_TextUI package.
+ * Test case for the {@link PHP_PMD_TextUI_CommandLineOptions} class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -63,20 +62,39 @@ require_once dirname(__FILE__) . '/CommandTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_TextUI_AllTests
+class PHP_PMD_TextUI_CommandLineOptionsTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testCliOptionsAcceptsVersionArgument
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @covers PHP_PMD_TextUI_CommandLineOptions
+     * @group phpmd
+     * @group phpmd::textui
+     * @group unittest
      */
-    public static function suite()
+    public function testHasVersionReturnsFalseByDefault()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_TextUI - Tests');
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
 
-        $suite->addTestSuite('PHP_PMD_TextUI_CommandLineOptionsTest');
-        $suite->addTestSuite('PHP_PMD_TextUI_CommandTest');
+        $this->assertFalse($opts->hasVersion());
+    }
 
-        return $suite;
+    /**
+     * testCliOptionsAcceptsVersionArgument
+     *
+     * @return void
+     * @covers PHP_PMD_TextUI_CommandLineOptions
+     * @group phpmd
+     * @group phpmd::textui
+     * @group unittest
+     */
+    public function testCliOptionsAcceptsVersionArgument()
+    {
+        $args = array(__FILE__, '--version');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        $this->assertTrue($opts->hasVersion());
     }
 }

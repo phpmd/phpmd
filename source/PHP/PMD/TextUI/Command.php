@@ -86,6 +86,11 @@ class PHP_PMD_TextUI_Command
      */
     public function run(PHP_PMD_TextUI_CommandLineOptions $opts)
     {
+        if ($opts->hasVersion()) {
+            fwrite(STDOUT, 'PHPMD @package_version@ by Manuel Pichler' . PHP_EOL);
+            return self::EXIT_SUCCESS;
+        }
+
         // Create a report stream
         if ($opts->getReportFile() === null) {
             $stream = STDOUT;
