@@ -1,6 +1,8 @@
 phpmd-0.2.6 (2010/06/  )
 ========================
 
+- Implemented #26: Implement Rule that detects the usage of PHP's eval()
+  function. Implemented in svn revision #.
 - Implemented #27: Implement Rule that detects the usage of PHP's exit()
   expression. Implemented in svn revision #.
 - Fixed #28: Unused local variable and unused parameter rule produces
