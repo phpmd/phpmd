@@ -69,6 +69,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -85,6 +86,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -111,6 +113,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -137,6 +140,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -164,6 +168,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -180,6 +185,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -196,6 +202,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -212,6 +219,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -237,6 +245,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -253,6 +262,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -269,6 +279,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -285,6 +296,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -301,6 +313,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -317,6 +330,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -333,6 +347,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -349,6 +364,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -365,6 +381,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -381,6 +398,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -397,6 +415,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -413,6 +432,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -429,6 +449,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -445,6 +466,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -461,6 +483,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -477,6 +500,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -493,6 +517,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -509,6 +534,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -535,6 +561,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -561,6 +588,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest

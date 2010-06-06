@@ -69,6 +69,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -85,6 +86,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -101,6 +103,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -117,6 +120,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -142,6 +146,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -166,6 +171,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -190,6 +196,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -206,6 +213,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -222,6 +230,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -238,6 +247,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -263,6 +273,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -287,6 +298,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -311,6 +323,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
@@ -339,6 +352,7 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
 >>>>>>> master
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
