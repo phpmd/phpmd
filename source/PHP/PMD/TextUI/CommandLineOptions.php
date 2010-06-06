@@ -116,6 +116,13 @@ class PHP_PMD_TextUI_CommandLineOptions
      * @var string $_ignore
      */
     private $_ignore = null;
+
+    /**
+     * Should the shell show the current phpmd version?
+     *
+     * @var boolean
+     */
+    private $_version = false;
     
     /**
      * Constructs a new command line options instance.
@@ -127,14 +134,7 @@ class PHP_PMD_TextUI_CommandLineOptions
         // Remove current file name
         array_shift($args);
 
-        if (count($args) < 3) {
-            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
-        }
-
-        $this->_inputPath    = array_shift($args);
-        $this->_reportFormat = array_shift($args);
-        $this->_ruleSets     = array_shift($args);
-
+        $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
 
@@ -153,8 +153,24 @@ class PHP_PMD_TextUI_CommandLineOptions
             case '--ignore':
                 $this->_ignore = array_shift($args);
                 break;
+
+            case '--version':
+                $this->_version = true;
+                return;
+
+            default:
+                $arguments[] = $arg;
+                break;
             }
         }
+
+        if (count($arguments) < 3) {
+            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+        }
+
+        $this->_inputPath    = (string) array_shift($arguments);
+        $this->_reportFormat = (string) array_shift($arguments);
+        $this->_ruleSets     = (string) array_shift($arguments);
     }
 
     /**
@@ -228,6 +244,16 @@ class PHP_PMD_TextUI_CommandLineOptions
     public function getIgnore()
     {
         return $this->_ignore;
+    }
+
+    /**
+     * Was the <b>--version</b> passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     */
+    public function hasVersion()
+    {
+        return $this->_version;
     }
 
     /**
