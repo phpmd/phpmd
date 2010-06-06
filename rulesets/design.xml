@@ -18,7 +18,7 @@ The Code Size Ruleset contains a collection of rules that find software design r
         <description>
             <![CDATA[
 An exit-expression within regular code is untestable and therefore it should
-be avoided. Consider to move the exit expression into some kind of startup
+be avoided. Consider to move the exit-expression into some kind of startup
 script where an error/exception code is returned to the calling environment.
             ]]>
         </description>
@@ -30,6 +30,33 @@ class Foo {
     public function bar($param)  {
         if ($param === 42) {
             exit(23);
+        }
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="EvalExpression"
+          since="0.2"
+          message = "The {0} {1}() contains an eval expression."
+          class="PHP_PMD_Rule_Design_EvalExpression"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#evalexpression">
+        <description>
+            <![CDATA[
+An eval-expression is untestable, a security risk and bad practice. Therefore
+it should be avoided. Consider to replace the eval-expression with regular
+code.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo {
+    public function bar($param)  {
+        if ($param === 42) {
+            eval('$param = 23;');
         }
     }
 }
