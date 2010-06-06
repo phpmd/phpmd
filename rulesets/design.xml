@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<ruleset name="Design Rules"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+The Code Size Ruleset contains a collection of rules that find software design related problems.
+    </description>
+  
+    <rule name="ExitExpression"
+          since="0.2"
+          message = "The {0} {1}() contains an exit expression."
+          class="PHP_PMD_Rule_Design_ExitExpression"
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#exitexpression">
+        <description>
+            <![CDATA[
+An exit-expression within regular code is untestable and therefore it should
+be avoided. Consider to move the exit expression into some kind of startup
+script where an error/exception code is returned to the calling environment.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo {
+    public function bar($param)  {
+        if ($param === 42) {
+            exit(23);
+        }
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+</ruleset>

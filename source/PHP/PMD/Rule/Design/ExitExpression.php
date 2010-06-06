@@ -46,19 +46,12 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
-
-require_once dirname(__FILE__) . '/ExitExpressionTest.php';
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * This rule class detects the usage of PHP's exit statement.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -69,26 +62,23 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_ExitExpression
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IMethodAware,
+               PHP_PMD_Rule_IFunctionAware
 {
     /**
-     * Creates a phpunit test suite.
+     * This method checks if a given function or method contains an exit-expression
+     * and emits a rule violation when it exists.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Rule_Design_ExitExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
-
-        return $suite;
+        foreach ($node->findChildrenOfType('ExitExpression') as $exit) {
+            $this->addViolation($exit, array($node->getType(), $node->getName()));
+        }
     }
 }
