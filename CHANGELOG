@@ -3,6 +3,8 @@ phpmd-0.2.6 (2010/06/  )
 
 - Implemented #30: New option --version added to PHPMD's command line
   interface. Implemented in svn revision #.
+- Names of several command line options unified with PHPUnit and PHPCPD. The
+  --ignore option is now --exclude and --extensions is now --suffixes.
 
 phpmd-0.2.5 (2010/04/03)
 ========================
