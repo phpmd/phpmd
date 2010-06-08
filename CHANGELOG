@@ -2,17 +2,17 @@ phpmd-0.2.6 (2010/06/  )
 ========================
 
 - Implemented #24: Implement Depth Of Inheritance Rule. Implemented in
-  svn revision #.
+  svn revision #253.
 - Implemented #25: Implement Number of Children Rule. Implemented in svn
-  revision #.
+  revision #252.
 - Implemented #26: Implement Rule that detects the usage of PHP's eval()
-  function. Implemented in svn revision #.
+  function. Implemented in svn revision #251.
 - Implemented #27: Implement Rule that detects the usage of PHP's exit()
-  expression. Implemented in svn revision #.
+  expression. Implemented in svn revision #250.
 - Fixed #28: Unused local variable and unused parameter rule produces
   false positives. Fixed in svn revision #245.
 - Implemented #30: New option --version added to PHPMD's command line
-  interface. Implemented in svn revision #.
+  interface. Implemented in svn revision #246.
 - Names of several command line options unified with PHPUnit and PHPCPD.
   The --ignore option is now --exclude and --extensions is now --suffixes.
 
