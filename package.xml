@@ -305,6 +305,9 @@
                 <file name="codesize.xml" role="data">
                     <tasks:replace from="@package_version@" to="version" type="package-info"/>
                 </file>
+                <file name="design.xml" role="data">
+                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                </file>
                 <file name="naming.xml" role="data">
                     <tasks:replace from="@package_version@" to="version" type="package-info"/>
                 </file>
