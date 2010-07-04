@@ -18,13 +18,14 @@
  
         <modificationset quietperiod="60">
             <git localWorkingCopy="projects/${project.name}/source/" />
+            <git localWorkingCopy="projects/${project.name}/source/setup/" />
+            <git localWorkingCopy="projects/${project.name}/source/lib/pdepend/" />
         </modificationset>
 
         <schedule interval="60">
             <ant anthome="apache-ant-1.7.0" 
                  buildfile="projects/${project.name}/source/build.xml"
-                 target="dist-continuous-integration">
-                <property name="continuous-integration" value="true" />
+                 target="dist-continuous-integration" />
             </ant>
         </schedule>
 
