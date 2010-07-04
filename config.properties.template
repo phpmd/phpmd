@@ -1,0 +1,7 @@
+twitter.username=username
+twitter.password=password
+
+smtp.hostname=mail.example.com
+smtp.portname=42
+smtp.username=john
+smtp.password=doe

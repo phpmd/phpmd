@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cruisecontrol>
+
+    <project name="PHP_PMD" buildafterfailed="false">
+        <propertyfilelabelincrementer propertyfile="projects/${project.name}/source/build.number" 
+                                      propertyname="build.number"
+                                      preBuildIncrementer="true" />
+
+        <property file="projects/${project.name}/source/config.properties" />
+
+        <listeners>
+            <currentbuildstatuslistener file="logs/${project.name}/status.txt" />
+        </listeners>
+
+        <bootstrappers>
+            <gitbootstrapper localWorkingCopy="projects/${project.name}/source" />
+        </bootstrappers>
+ 
+        <modificationset quietperiod="60">
+            <git localWorkingCopy="projects/${project.name}/source/" />
+        </modificationset>
+
+        <schedule interval="60">
+            <ant anthome="apache-ant-1.7.0" 
+                 buildfile="projects/${project.name}/source/build.xml"
+                 target="dist-continuous-integration">
+                <property name="continuous-integration" value="true" />
+            </ant>
+        </schedule>
+
+        <log dir="logs/${project.name}">
+            <merge dir="projects/${project.name}/build/logs/"/>
+        </log>
+
+        <publishers>
+            <execute command="phpuc graph 
+                                    --max-number 50 
+                                    logs/${project.name} 
+                                    artifacts/${project.name}" />
+            <execute command="phpcb --log projects/${project.name}/build/logs 
+                                    --source projects/${project.name}/source/source
+                                    --output projects/${project.name}/build/phpcb" />
+
+            <artifactspublisher dir="projects/${project.name}/build/phpcb" 
+                                dest="artifacts/${project.name}" 
+                                subdirectory="php-code-browser" />
+<!--
+            <artifactspublisher dir="projects/${project.name}/build/api"
+                                dest="artifacts/${project.name}"
+                                subdirectory="api" />
+-->
+            <artifactspublisher dir="projects/${project.name}/build/coverage"
+                                dest="artifacts/${project.name}"
+                                subdirectory="coverage" />
+<!--
+            <artifactspublisher dir="projects/${project.name}/build/dist"
+                                dest="artifacts/${project.name}"
+                                subdirectory="dist" />
+-->
+            <twitter username="${twitter.username}" password="${twitter.password}" />
+<!--
+            <email buildresultsurl="http://cruise.phpundercontrol.org/buildresults/${project.name}"
+                   mailhost="${smtp.hostname}"
+                   mailport="${smtp.portname}"
+                   username="${smtp.username}"
+                   password="${smtp.password}"
+                   reportsuccess="always"
+                   returnaddress="cruise@php-under-control.org"
+                   returnname="Cruise"
+                   spamwhilebroken="false"
+                   subjectprefix="phpUnderControl">
+                <always address="cruise@php-under-control.org" />
+            </email>
+-->
+        </publishers>
+    </project>
+
+</cruisecontrol>
