@@ -330,7 +330,8 @@
 
             <file name="phpmd.bat" role="script">
                 <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config"/>
+                <tasks:replace from="@php_bin@" to="php_bin" type="pear-config"/>
+                <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config"/>
             </file>
         </dir>
     </contents>
