@@ -10,6 +10,7 @@
         Import common build targets
     -->
     <import file="${basedir}/setup/build.common.xml" />
+    <import file="${basedir}/setup/build.common.pear.xml" />
 
     <!--
         Main build
@@ -26,6 +27,58 @@
         <copy todir="${output.dir}/rulesets">
             <fileset dir="${basedir}/rulesets" />
         </copy>
+    </target>
+
+    <!--
+        We use the phar archive after hook to validate that a newly created
+        phar archive works as expected.
+
+        Parameters:
+            ${phar.archive.filename}  Name of the created phar file.
+    -->
+    <target name="~after-pack-phar-archive">
+        <exec dir="${basedir}/source" executable="${phar.archive.filename}" failonerror="true">
+            <arg line="PHP/PMD/Rule" />
+            <arg line="text" />
+            <arg line="${custom.phpmd.rulesets}" />
+        </exec>
+    </target>
+
+    <!--
+        We use the pear archive after hook to validate that a clean PHPMD
+        PEAR installation works as expected.
+    -->
+    <target name="~after-pack-pear-archive" 
+            depends="-common-pear-prepare,
+                     -after-pack-pear-archive-install,
+                     -after-pack-pear-archive-execute" />
+
+    <!--
+        Installs the newly created PEAR archive of PHPMD.
+    -->
+    <target name="-after-pack-pear-archive-install">
+        <antcall target="common-pear-channel-discover">
+            <param name="pear-channel-uri" value="pear.phpmd.org" />
+        </antcall>
+
+        <antcall target="common-pear-install-local">
+            <param name="pear-package-pattern" value="PHP_PMD" />
+        </antcall>
+    </target>
+
+    <!--
+        Executes the newly created and installed PEAR version of PHPMD.
+    -->
+    <target name="-after-pack-pear-archive-execute">
+
+        <echo message="Executing:" />
+        <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" />
+
+        <exec executable="${common-pear-bin-dir}/phpmd" failonerror="true">
+            <arg line="${common-pear-root-dir}/PHP/PMD/Rule" />
+            <arg line="text" />
+            <arg line="${custom.phpmd.rulesets}" />
+        </exec>
     </target>
 
 </project>
