@@ -67,8 +67,7 @@
                    reportsuccess="always"
                    returnaddress="cruise@phpmd.org"
                    returnname="Cruise"
-                   spamwhilebroken="false"
-                   subjectprefix="PHPMD">
+                   spamwhilebroken="false">
                 <always address="phpmd-commits@phpmd.org" />
             </email>
 
