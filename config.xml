@@ -26,7 +26,6 @@
             <ant anthome="apache-ant-1.7.0" 
                  buildfile="projects/${project.name}/source/build.xml"
                  target="dist-continuous-integration" />
-            </ant>
         </schedule>
 
         <log dir="logs/${project.name}">

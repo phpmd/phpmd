@@ -37,6 +37,10 @@
             ${phar.archive.filename}  Name of the created phar file.
     -->
     <target name="~pack-phar-archive-after">
+
+        <echo message="Executing:" />
+        <echo message="  ${phar.archive.filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" />
+
         <exec dir="${basedir}/source" executable="${phar.archive.filename}" failonerror="true">
             <arg line="PHP/PMD/Rule" />
             <arg line="text" />
