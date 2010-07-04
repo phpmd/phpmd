@@ -37,6 +37,8 @@
                                     --max-number 50 
                                     logs/${project.name} 
                                     artifacts/${project.name}" />
+
+            <execute command="mkdir projects/${project.name}/build/phpcb" />
             <execute command="phpcb --log projects/${project.name}/build/logs 
                                     --source projects/${project.name}/source/source
                                     --output projects/${project.name}/build/phpcb" />
