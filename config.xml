@@ -58,20 +58,20 @@
                                 subdirectory="dist" />
 -->
             <twitter username="${twitter.username}" password="${twitter.password}" />
-<!--
+
             <email buildresultsurl="http://cruise.phpundercontrol.org/buildresults/${project.name}"
                    mailhost="${smtp.hostname}"
                    mailport="${smtp.portname}"
                    username="${smtp.username}"
                    password="${smtp.password}"
                    reportsuccess="always"
-                   returnaddress="cruise@php-under-control.org"
+                   returnaddress="cruise@phpmd.org"
                    returnname="Cruise"
                    spamwhilebroken="false"
-                   subjectprefix="phpUnderControl">
-                <always address="cruise@php-under-control.org" />
+                   subjectprefix="PHPMD">
+                <always address="phpmd-commits@phpmd.org" />
             </email>
--->
+
         </publishers>
     </project>
 
