@@ -5,6 +5,7 @@ then
     if [ -e lib/pdepend/PHP ]
     then
         cd lib/pdepend
+        git fetch origin
         git rebase origin/master
         cd ../..
     else
@@ -14,6 +15,7 @@ then
     if [ -e setup ]
     then
         cd setup
+        git fetch origin
         git rebase origin/master
         cd ..
     else
