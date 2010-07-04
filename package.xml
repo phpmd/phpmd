@@ -34,20 +34,8 @@
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
-- Implemented #24: Implement Depth Of Inheritance Rule. Implemented in
-  svn revision #253.
-- Implemented #25: Implement Number of Children Rule. Implemented in svn
-  revision #252.
-- Implemented #26: Implement Rule that detects the usage of PHP's eval()
-  function. Implemented in svn revision #251.
-- Implemented #27: Implement Rule that detects the usage of PHP's exit()
-  expression. Implemented in svn revision #250.
-- Fixed #28: Unused local variable and unused parameter rule produces
-  false positives. Fixed in svn revision #245.
-- Implemented #30: New option --version added to PHPMD's command line
-  interface. Implemented in svn revision #246.
-- Names of several command line options unified with PHPUnit and PHPCPD.
-  The --ignore option is now --exclude and --extensions is now --suffixes.
+- Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
+  phpmd.bat. Fixed in svn revision #264.
     </notes>
     <contents>
         <dir name="/">
@@ -488,6 +476,36 @@
   svn revision #218
 - Fixed #20: Local static variables were treated as unused variables.
   Fixed in svn revision #219.
+            </notes>
+        </release>
+
+        <release>
+            <date>2010-07-03</date>
+            <time>13:50:57</time>
+            <version>
+                <release>0.2.6</release>
+                <api>0.2.6</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+- Implemented #24: Implement Depth Of Inheritance Rule. Implemented in
+  svn revision #253.
+- Implemented #25: Implement Number of Children Rule. Implemented in svn
+  revision #252.
+- Implemented #26: Implement Rule that detects the usage of PHP&apos;s eval()
+  function. Implemented in svn revision #251.
+- Implemented #27: Implement Rule that detects the usage of PHP&apos;s exit()
+  expression. Implemented in svn revision #250.
+- Fixed #28: Unused local variable and unused parameter rule produces
+  false positives. Fixed in svn revision #245.
+- Implemented #30: New option --version added to PHPMD&apos;s command line
+  interface. Implemented in svn revision #246.
+- Names of several command line options unified with PHPUnit and PHPCPD.
+  The --ignore option is now --exclude and --extensions is now --suffixes.
             </notes>
         </release>
     </changelog>
