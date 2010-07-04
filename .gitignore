@@ -1,4 +1,6 @@
+config.properties
 build
+build.number
 cachegrind.out.*
 lib
 nbproject
