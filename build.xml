@@ -7,6 +7,11 @@
     <property file="build.properties" />
 
     <!--
+        Include common properties
+    -->
+    <property file="setup/build.common.rcs.properties" />
+
+    <!--
         Import common build targets
     -->
     <import file="${basedir}/setup/build.common.xml" />
@@ -30,6 +35,25 @@
     </target>
 
     <!--
+        Hook target that will be called after an git pull on the project's main
+        repository has been done. This hook updates the external libraries.
+    -->
+    <target name="~common-rcs-git-update-after">
+
+        <exec dir="${basedir}/setup" executable="git">
+            <arg line="pull" />
+            <arg line="${common.rcs.git.remote}" />
+            <arg line="${common.rcs.git.branch}" />
+        </exec>
+
+        <exec dir="${basedir}/lib/pdepend" executable="git">
+            <arg line="pull" />
+            <arg line="${common.rcs.git.remote}" />
+            <arg line="${common.rcs.git.branch}" />
+        </exec>
+    </target>
+
+    <!--
         We use the phar archive after hook to validate that a newly created
         phar archive works as expected.
 
@@ -38,8 +62,8 @@
     -->
     <target name="~pack-phar-archive-after">
 
-        <echo message="Executing:" />
-        <echo message="  ${phar.archive.filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" />
+        <echo message="Executing:" level="verbose" />
+        <echo message="  ${phar.archive.filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
         <exec dir="${basedir}/source" executable="${phar.archive.filename}" failonerror="true">
             <arg line="PHP/PMD/Rule" />
@@ -75,8 +99,8 @@
     -->
     <target name="-pack-pear-archive-after-execute">
 
-        <echo message="Executing:" />
-        <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" />
+        <echo message="Executing:" level="verbose" />
+        <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
         <exec executable="${common-pear-bin-dir}/phpmd" failonerror="true">
             <arg line="${common-pear-root-dir}/PHP/PMD/Rule" />
