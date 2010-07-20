@@ -47,8 +47,7 @@
  */
 
 require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
+require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
  * This rule checks the number of public methods and fields in a given class.
