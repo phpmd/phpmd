@@ -1,6 +1,8 @@
 phpmd-0.2.7 (2010/  /  )
 ========================
 
+- Fixed #36: @SupressWarnings annotation does not work for 
+  UnusedPrivateMethod rule. Fixed in svn revision #284.
 - Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
   phpmd.bat. Fixed in svn revision #264.
 
