@@ -128,6 +128,7 @@ class PHP_PMD_Rule_UnusedPrivateMethod
     ) {
         return (
             $method->isPrivate() &&
+            false === $method->hasSuppressWarningsAnnotationFor($this) &&
             strcasecmp($method->getImage(), $class->getImage()) !== 0 &&
             strcasecmp($method->getImage(), '__construct') !== 0 &&
             strcasecmp($method->getImage(), '__destruct') !== 0 &&
