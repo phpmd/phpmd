@@ -95,44 +95,10 @@ abstract class PHP_PMD_Rule_AbstractLocalVariable extends PHP_PMD_AbstractRule
      */
     protected function isLocal(PHP_PMD_Node_ASTNode $variable)
     {
-        return ($this->isNotSuperGlobal($variable)
-            && $this->isNotThis($variable)
+        return (false === $variable->isThis()
+            && $this->isNotSuperGlobal($variable)
             && $this->isRegularVariable($variable)
         );
-    }
-
-    /**
-     * Tests if the given variable node is a regular variable an not property
-     * or method postfix.
-     *
-     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
-     *
-     * @return boolean
-     */
-    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
-    {
-        if ($this->isNotMemberPrefixOrIsArgument($variable)) {
-            return true;
-        }
-
-        $parent = $variable->getParent();
-        if ($this->isIndexExpression($variable)) {
-            return $parent->getChild(0)->getImage() !== $variable->getImage();
-        } else if ($parent->isInstanceOf('MethodPostfix')) {
-            return $parent->getChild(0)->getImage() === $variable->getImage();
-        } else if ($parent->isInstanceOf('PropertyPostfix')) {
-            $parentParent = $parent->getParent()->getParent();
-            if ($parentParent->isInstanceOf('MemberPrimaryPrefix')
-                && $parentParent->isStatic()
-            ) {
-                return $parent->getChild(0)->getImage() !== $variable->getImage();
-            }
-            if ($parent->getParent()->isStatic()) {
-                return $parent->getChild(0)->getImage() !== $variable->getImage();
-            }
-            return $parent->getChild(0)->getImage() === $variable->getImage();
-        }
-        return true;
     }
 
     /**
@@ -149,50 +115,62 @@ abstract class PHP_PMD_Rule_AbstractLocalVariable extends PHP_PMD_AbstractRule
     }
 
     /**
-     * This method will return <b>true</b> when the given variable node
-     * is not a reference to the objects <b>$this</b> context.
+     * Tests if the given variable node is a regular variable an not property
+     * or method postfix.
      *
-     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     * @param PHP_PMD_Node_ASTNode $variable The variable node to check.
      *
      * @return boolean
      */
-    protected function isNotThis(PHP_PMD_AbstractNode $variable)
+    protected function isRegularVariable(PHP_PMD_Node_ASTNode $variable)
     {
-        return ($variable->getImage() !== '$this');
-    }
+        $node   = $this->stripWrappedIndexExpression($variable);
+        $parent = $node->getParent();
 
-    /**
-     * Tests if the given variable is not part of a member primary prefix or if
-     * it is part of method/function arguments.
-     *
-     * @param PHP_PMD_Node_ASTNode $variable The variable to test.
-     *
-     * @return boolean
-     */
-    protected function isNotMemberPrefixOrIsArgument(PHP_PMD_Node_ASTNode $variable)
-    {
-        $parent = $variable;
-        while ($parent = $parent->getParent()) {
-            if ($parent->isInstanceOf('MemberPrimaryPrefix')) {
-                return false;
-            } else if ($parent->isInstanceOf('Arguments')) {
-                return true;
+        if ($parent->isInstanceOf('PropertyPostfix')) {
+            $primaryPrefix = $parent->getParent();
+            if ($primaryPrefix->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
+                return !$primaryPrefix->getParent()->isStatic();
             }
+            return ($parent->getChild(0)->getNode() !== $node->getNode()
+                || !$primaryPrefix->isStatic()
+            );
         }
         return true;
     }
 
     /**
+     * Removes all index expressions that are wrapped around the given node
+     * instance.
+     *
+     * @param PHP_PMD_Node_ASTNode $node The context node instance.
+     *
+     * @return PHP_PMD_Node_ASTNode
+     */
+    protected function stripWrappedIndexExpression(PHP_PMD_Node_ASTNode $node)
+    {
+        if (false === $this->isWrappedByIndexExpression($node)) {
+            return $node;
+        }
+        
+        $parent = $node->getParent();
+        if ($parent->getChild(0)->getNode() === $node->getNode()) {
+            return $this->stripWrappedIndexExpression($parent);
+        }
+        return $node;
+    }
+
+    /**
      * Tests if the given variable node os part of an index expression.
      *
-     * @param PHP_PMD_Node_ASTNode $variable The variable to test.
+     * @param PHP_PMD_Node_ASTNode $node The variable to test.
      *
      * @return boolean
      */
-    protected function isIndexExpression(PHP_PMD_Node_ASTNode $variable)
+    protected function isWrappedByIndexExpression(PHP_PMD_Node_ASTNode $node)
     {
-        return ($variable->getParent()->isInstanceOf('ArrayIndexExpression')
-            || $variable->getParent()->isInstanceOf('StringIndexExpression')
+        return ($node->getParent()->isInstanceOf('ArrayIndexExpression')
+            || $node->getParent()->isInstanceOf('StringIndexExpression')
         );
     }
 }
