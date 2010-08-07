@@ -98,7 +98,7 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
      */
     public function __destruct()
     {
-        if (is_resource($this->_stream) === true) {
+        if ($this->_stream !== STDOUT && is_resource($this->_stream) === true) {
             @fclose($this->_stream);
         }
         $this->_stream = null;
