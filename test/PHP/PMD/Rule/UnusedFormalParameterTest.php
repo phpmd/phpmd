@@ -310,6 +310,13 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
     /**
      * testRuleDoesNotApplyToParameterUsedAsArrayIndex
      *
