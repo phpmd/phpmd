@@ -1,4 +1,4 @@
-phpmd-0.2.7 (2010/  /  )
+phpmd-0.2.7 (2010/09/01)
 ========================
 
 - Fixed #36: @SupressWarnings annotation does not work for 
