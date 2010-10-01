@@ -49,7 +49,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Abstract base class for PHP_PMD test cases.
- *
+ * 
  * @category  PHP
  * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
