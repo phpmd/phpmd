@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Autoload.php';
 
 require_once dirname(__FILE__) . '/ASTNodeTest.php';
 require_once dirname(__FILE__) . '/AnnotationTest.php';

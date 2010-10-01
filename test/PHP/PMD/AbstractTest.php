@@ -508,7 +508,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         $ref = new ReflectionClass('PHP_PMD');
 
         // Set source whitelist
-        PHPUnit_Util_Filter::addDirectoryToWhitelist(dirname($ref->getFileName()));
+        PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(
+            dirname($ref->getFileName())
+        );
     }
 
     /**
