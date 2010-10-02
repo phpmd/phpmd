@@ -86,7 +86,7 @@
     -->
     <target name="-pack-pear-archive-after-install">
         <antcall target="common-pear-channel-discover">
-            <param name="pear-channel-uri" value="pear.phpmd.org" />
+            <param name="pear-channel-uri" value="${pear.channel.uri}" />
         </antcall>
 
         <antcall target="common-pear-install-local">
