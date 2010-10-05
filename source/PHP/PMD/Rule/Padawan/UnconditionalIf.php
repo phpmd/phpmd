@@ -33,7 +33,7 @@ class PHP_PMD_Rule_Padawan_UnconditionalIf
                PHP_PMD_Rule_IFunctionAware
 {
     /**
-     * Extracts all try nodes from the given node
+     * Extracts all nodes from the given node
      * and checks for unconditional if-statements.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
