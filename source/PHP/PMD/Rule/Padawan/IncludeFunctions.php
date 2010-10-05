@@ -18,7 +18,7 @@ require_once 'PHP/PMD/Rule/IFunctionAware.php';
 require_once 'PHP/PMD/Rule/Padawan/IncludeRequires.php';
 
 /**
- * This rule class will detect empty try{} statements.
+ * This rule class will detect potentially exploitable include/requires.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -38,8 +38,8 @@ class PHP_PMD_Rule_Padawan_IncludeFunctions
     private $_processedVariables = array();
     
     /**
-     * Extracts all try nodes from the given node
-     * and checks for empty content.
+     * Extracts possibly exploitable function calls from the given node
+     * and checks for Superglobals as arguments.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
@@ -60,7 +60,5 @@ class PHP_PMD_Rule_Padawan_IncludeFunctions
         
         $this->resetProcessed();
     }
-    
-    
 }
 ?>

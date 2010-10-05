@@ -17,7 +17,7 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
- * This rule class will detect empty try{} statements.
+ * This rule class will detect potentially exploitable include/requires.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -37,8 +37,8 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     private $_processedVariables = array();
     
     /**
-     * Extracts all try nodes from the given node
-     * and checks for empty content.
+     * Extracts all Require-/IncludeExpressions from the given node
+     * and checks for Superglobals as arguments.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
@@ -48,11 +48,9 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     {
         $this->resetProcessed();
         foreach($node->findChildrenOfType('RequireExpression') as $sub) {
-            #var_dump($sub->getType());
             $this->checkNode($sub);
         }
         foreach($node->findChildrenOfType('IncludeExpression') as $sub) {
-            #var_dump($sub->getType());
             $this->checkNode($sub);
         }
         $this->resetProcessed();
@@ -70,8 +68,8 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     }
 
     /**
-     * Checks if the variable name of the given node is greater/equal to the
-     * configured threshold or if the given node is an allowed context.
+     * Checks if the variable name of the given node is matches a known 
+     * superglobal.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      *
@@ -80,6 +78,7 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     protected function checkNodeImage(PHP_PMD_AbstractNode $node)
     {
         $names = array('$_GET', '$_POST', '$_REQUEST', '$_COOKIE', '$_SESSION', '$_ENV');
+        
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
             if (in_array($node->getImage(), $names)) {
@@ -109,6 +108,7 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     {
         $index = $node->getParent()->getChild(1)->getImage();
         $key = sprintf("%s_%s_%s", $node->getImage(), $index, $node->getBeginLine());
+        
         $this->_processedVariables[$key] = true;
     }
 
@@ -123,6 +123,7 @@ class PHP_PMD_Rule_Padawan_IncludeRequires
     {
         $index = $node->getParent()->getChild(1)->getImage();
         $key = sprintf("%s_%s_%s", $node->getImage(), $index, $node->getBeginLine());
+        
         return !isset($this->_processedVariables[$key]);
     }
 }
