@@ -150,4 +150,19 @@ Using unfiltered input from external sources can lead to security holes.
             ]]>
         </example>
     </rule>
+
+    <rule name="SelectAll"
+          since="0.2.7"
+          message="Avoid occurrences of 'SELECT *'."
+          class="PHP_PMD_Rule_Padawan_SelectAll">
+        <description>
+
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+
+            ]]>
+        </example>
+    </rule>
 </ruleset>
