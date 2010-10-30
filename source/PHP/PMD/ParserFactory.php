@@ -45,11 +45,11 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Parser.php';
-
 require_once 'PHP/Depend.php';
 require_once 'PHP/Depend/Input/ExcludePathFilter.php';
 require_once 'PHP/Depend/Input/ExtensionFilter.php';
+
+require_once 'PHP/PMD/Parser.php';
 
 /**
  * Simple factory that is used to return a ready to use PHP_Depend instance.
@@ -87,22 +87,7 @@ class PHP_PMD_ParserFactory
     private function _createInstance()
     {
         $pdepend = new PHP_Depend();
-        $pdepend->setStorage(PHP_Depend::TOKEN_STORAGE, $this->_createEngine());
-        $pdepend->setStorage(PHP_Depend::PARSER_STORAGE, $this->_createEngine());
-
         return $pdepend;
-    }
-
-    /**
-     * Returns an instance of the used php depend temp data storage.
-     *
-     * @return PHP_Depend_Storage_EngineI
-     */
-    private function _createEngine()
-    {
-        include_once 'PHP/Depend/Storage/FileEngine.php';
-
-        return new PHP_Depend_Storage_FileEngine();
     }
 
     /**

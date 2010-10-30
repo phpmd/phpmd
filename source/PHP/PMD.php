@@ -45,8 +45,8 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Report.php';
 require_once 'PHP/PMD/ParserFactory.php';
+require_once 'PHP/PMD/Report.php';
 require_once 'PHP/PMD/RuleSetFactory.php';
 require_once 'PHP/PMD/Writer/Stream.php';
 

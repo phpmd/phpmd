@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHPUnit/Autoload.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
 
 require_once dirname(__FILE__) . '/AcceptsFilesAndDirectoriesAsInputTicket001Test.php';
 require_once dirname(__FILE__) . '/InvalidUnusedLocalVariableAndFormalParameterTicket007Test.php';
