@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<phpunit>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">source</directory>
+        </whitelist>
+    </filter>
+</phpunit>

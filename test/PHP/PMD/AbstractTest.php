@@ -236,16 +236,16 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
-        include_once 'PHP/Depend/Parser.php';
-        include_once 'PHP/Depend/Builder/Default.php';
-        include_once 'PHP/Depend/Tokenizer/Internal.php';
-
         $tokenizer = new PHP_Depend_Tokenizer_Internal();
         $tokenizer->setSourceFile($sourceFile);
 
         $builder =  new PHP_Depend_Builder_Default();
 
-        $parser = new PHP_Depend_Parser($tokenizer, $builder);
+        $parser = new PHP_Depend_Parser_VersionAllParser(
+            $tokenizer, 
+            $builder,
+            new PHP_Depend_Util_Cache_Driver_Memory()
+        );
         $parser->parse();
 
         return $builder->getPackages()->current();
@@ -502,15 +502,6 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         // Configure include path
         set_include_path($include . PATH_SEPARATOR . get_include_path());
-
-        // Include PHP_PMD main file to get the whitelist directory
-        include_once 'PHP/PMD.php';
-        $ref = new ReflectionClass('PHP_PMD');
-
-        // Set source whitelist
-        PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(
-            dirname($ref->getFileName())
-        );
     }
 
     /**
