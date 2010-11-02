@@ -79,6 +79,6 @@ abstract class PHP_PMD_Node_AbstractCallable extends PHP_PMD_Node_AbstractNode
      */
     public function getParameterCount()
     {
-        return $this->getNode()->getParameters()->count();
+        return count($this->getNode()->getParameters());
     }
 }
