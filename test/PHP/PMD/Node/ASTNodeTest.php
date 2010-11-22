@@ -49,7 +49,6 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/PMD/Node/ASTNode.php';
-require_once 'PHP/Depend/Code/ASTNode.php';
 
 /**
  * Test case for the {@link PHP_PMD_Node_ASTNode} class.

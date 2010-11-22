@@ -263,7 +263,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     {
         include_once 'PHP/PMD/Node/Class.php';
 
-        $class = $this->getMock('PHP_PMD_Node_Class', array(), array(null), '', false);
+        $class = $this->getMock(
+            'PHP_PMD_Node_Class',
+            array(),
+            array(null),
+            '',
+            false
+        );
+
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
                 ->method('getMetric')
@@ -390,9 +397,11 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
-            $ruleSet->expects($count === '*' ? $this->atLeastOnce() : $this->exactly($count))
-                    ->method('apply')
-                    ->with($this->isInstanceOf($expectedClass));
+            $ruleSet->expects(
+                $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
+            )
+                ->method('apply')
+                ->with($this->isInstanceOf($expectedClass));
         }
         return $ruleSet;
     }
@@ -502,6 +511,12 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         // Configure include path
         set_include_path($include . PATH_SEPARATOR . get_include_path());
+
+        // Init PHP_Depend autoloader
+        include_once 'PHP/Depend/Autoload.php';
+
+        $autoload = new PHP_Depend_Autoload();
+        $autoload->register();
     }
 
     /**

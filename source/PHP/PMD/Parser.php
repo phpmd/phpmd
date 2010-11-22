@@ -45,10 +45,6 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/Depend/Log/LoggerI.php';
-require_once 'PHP/Depend/Log/CodeAwareI.php';
-require_once 'PHP/Depend/Visitor/AbstractVisitor.php';
-
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/Node/Function.php';
 require_once 'PHP/PMD/Node/Interface.php';

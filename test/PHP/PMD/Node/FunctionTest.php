@@ -49,7 +49,6 @@
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
 require_once 'PHP/PMD/Node/Function.php';
-require_once 'PHP/Depend/Code/Function.php';
 
 /**
  * Test case for the function node implementation.

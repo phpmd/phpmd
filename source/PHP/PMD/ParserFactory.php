@@ -45,11 +45,7 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/Depend.php';
-require_once 'PHP/Depend/Input/ExcludePathFilter.php';
-require_once 'PHP/Depend/Input/ExtensionFilter.php';
-
-require_once 'PHP/PMD/Parser.php';
+require_once 'PHP/Depend/Autoload.php';
 
 /**
  * Simple factory that is used to return a ready to use PHP_Depend instance.
@@ -65,6 +61,15 @@ require_once 'PHP/PMD/Parser.php';
 class PHP_PMD_ParserFactory
 {
     /**
+     * Creates a new factory instance.
+     */
+    public function __construct()
+    {
+        $autoload = new PHP_Depend_Autoload();
+        $autoload->register();
+    }
+
+    /**
      * Creates the used PHP_PMD_Parser analyzer instance.
      *
      * @param PHP_PMD $phpmd The context php mess detector instance.
@@ -73,6 +78,8 @@ class PHP_PMD_ParserFactory
      */
     public function create(PHP_PMD $phpmd)
     {
+        include_once 'PHP/PMD/Parser.php';
+
         $pdepend = $this->_createInstance();
         $pdepend = $this->_init($pdepend, $phpmd);
 
@@ -86,8 +93,8 @@ class PHP_PMD_ParserFactory
      */
     private function _createInstance()
     {
-        $pdepend = new PHP_Depend();
-        return $pdepend;
+        $factory = new PHP_Depend_Util_Configuration_Factory();
+        return new PHP_Depend($factory->createDefault());
     }
 
     /**
