@@ -322,7 +322,8 @@ class PHP_PMD_TextUI_CommandLineOptions
     public function usage()
     {
         return 'Mandatory arguments:' . PHP_EOL .
-               '1) A php source code filename or directory. Can be a comma-separated string' . PHP_EOL .
+               '1) A php source code filename or directory. Can be a comma-' .
+               'separated string' . PHP_EOL .
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
                'filenames' . PHP_EOL . PHP_EOL .
