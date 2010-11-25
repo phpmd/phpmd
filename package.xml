@@ -34,11 +34,9 @@
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
-- Fixed #36: @SupressWarnings annotation does not work for
-  UnusedPrivateMethod rule. Fixed in svn revision #284.
-- Fixed #35: Stream Writer closes STDOUT. Fixed in svn revision #286.
-- Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
-  phpmd.bat. Fixed in svn revision #264.
+- Improved help text for the PHPMD command line. Thanks to Volker
+  Dusch for this contribution. https://github.com/edorian/phpmd
+- PHPMD is now compatible with next PHP_Depend release 0.10.0
     </notes>
     <contents>
         <dir name="/">
@@ -338,7 +336,7 @@
             <package>
                 <name>PHP_Depend</name>
                 <channel>pear.pdepend.org</channel>
-                <min>0.9.11</min>
+                <min>0.10.0RC1</min>
             </package>
             <extension>
                 <name>pcre</name>
@@ -509,6 +507,26 @@
   interface. Implemented in svn revision #246.
 - Names of several command line options unified with PHPUnit and PHPCPD.
   The --ignore option is now --exclude and --extensions is now --suffixes.
+            </notes>
+        </release>
+
+        <release>
+            <date>2010-09-01</date>
+            <version>
+                <release>0.2.7</release>
+                <api>0.2.7</api>
+            </version>
+            <stability>
+                <release>alpha</release>
+                <api>alpha</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+- Fixed #36: @SupressWarnings annotation does not work for
+  UnusedPrivateMethod rule. Fixed in svn revision #284.
+- Fixed #35: Stream Writer closes STDOUT. Fixed in svn revision #286.
+- Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
+  phpmd.bat. Fixed in svn revision #264.
             </notes>
         </release>
     </changelog>
