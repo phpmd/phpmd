@@ -102,7 +102,10 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
-        <exec executable="${common-pear-bin-dir}/phpmd" failonerror="true">
+        <exec executable="php" failonerror="true">
+            <arg line="-d" />
+            <arg line="include_path='${common-pear-root-dir}'" />
+            <arg line="${common-pear-bin-dir}/phpmd" />
             <arg line="${common-pear-root-dir}/PHP/PMD/Rule" />
             <arg line="text" />
             <arg line="${custom.phpmd.rulesets}" />
