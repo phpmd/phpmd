@@ -90,34 +90,4 @@ sqlite_query($_GET['foo']);
             ]]>
         </example>
     </rule>
-
-    <rule name="IncludeExec"
-          since="0.2.7"
-          message="Avoid exec/popen/proc_open/passthru/shell_exec/system."
-          class="PHP_PMD_Rule_Padawan_Exec">
-        <description>
-Using unfiltered input from external sources can lead to security holes.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-
-            ]]>
-        </example>
-    </rule>
-
-    <rule name="IncludeDefine"
-          since="0.2.7"
-          message="Avoid define() with variables instead of constants/literals."
-          class="PHP_PMD_Rule_Padawan_Define">
-        <description>
-
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-
-            ]]>
-        </example>
-    </rule>
 </ruleset>
