@@ -11,7 +11,8 @@ The Padawan Ruleset contains a collection of rules taken from Padawan.
     <rule name="EmptyTry"
           since="0.2.7"
           message="Avoid empty try{} statements"
-          class="PHP_PMD_Rule_Padawan_EmptyTry">
+          class="PHP_PMD_Rule_Padawan_EmptyTry"
+          <!--externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable"-->>
         <description>
 TBD.
         </description>
@@ -33,7 +34,8 @@ class Something {
     <rule name="EmptyCatch"
           since="0.2.7"
           message="Avoid empty catch() statements"
-          class="PHP_PMD_Rule_Padawan_EmptyTry">
+          class="PHP_PMD_Rule_Padawan_EmptyTry"
+          <!--externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable"-->>
         <description>
 TBD.
         </description>
@@ -48,38 +50,6 @@ class Something {
             // VIOLATION -empty
         } 
     }
-}
-            ]]>
-        </example>
-    </rule>
-
-    <rule name="IncludeRequires"
-          since="0.2.7"
-          message="Avoid include/require/etc with Superglobals"
-          class="PHP_PMD_Rule_Padawan_IncludeRequires">
-        <description>
-TBD.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-class Something {
-}
-            ]]>
-        </example>
-    </rule>
-
-    <rule name="IncludeFunctions"
-          since="0.2.7"
-          message="Avoid file/readfile/etc with Superglobals"
-          class="PHP_PMD_Rule_Padawan_IncludeFunctions">
-        <description>
-TBD.
-        </description>
-        <priority>3</priority>
-        <example>
-            <![CDATA[
-class Something {
 }
             ]]>
         </example>
