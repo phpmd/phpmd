@@ -13,7 +13,7 @@ The Padawan Ruleset contains a collection of rules taken from Padawan.
           message="Avoid empty try{} statements"
           class="PHP_PMD_Rule_Padawan_EmptyTry">
         <description>
-Empty try{} statements make no sense.
+TBD.
         </description>
         <priority>3</priority>
         <example>
@@ -35,7 +35,7 @@ class Something {
           message="Avoid empty catch() statements"
           class="PHP_PMD_Rule_Padawan_EmptyTry">
         <description>
-Empty catch() statements can defy the purpose of try/catch.
+TBD.
         </description>
         <priority>3</priority>
         <example>
@@ -58,13 +58,13 @@ class Something {
           message="Avoid include/require/etc with Superglobals"
           class="PHP_PMD_Rule_Padawan_IncludeRequires">
         <description>
-Using unfiltered input from external sources can lead to security holes.
+TBD.
         </description>
         <priority>3</priority>
         <example>
             <![CDATA[
-require $_GET['foo'];
-require_once 'foo/'.$_GET['foo'];
+class Something {
+}
             ]]>
         </example>
     </rule>
@@ -74,19 +74,13 @@ require_once 'foo/'.$_GET['foo'];
           message="Avoid file/readfile/etc with Superglobals"
           class="PHP_PMD_Rule_Padawan_IncludeFunctions">
         <description>
-Using unfiltered input from external sources can lead to security holes.
+TBD.
         </description>
         <priority>3</priority>
         <example>
             <![CDATA[
-file($_GET['foo']);
-readfile($_GET['foo']);
-virtual($_GET['foo']);
-file_get_contents($_GET['foo']);
-fopen($_GET['foo']);
-mysql_query($_GET['foo']);
-pg_query($_GET['foo']);
-sqlite_query($_GET['foo']);
+class Something {
+}
             ]]>
         </example>
     </rule>
