@@ -365,4 +365,16 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToMethodWithFuncGetArgs()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+		$rule->apply($this->getMethod());
+    }
 }

@@ -152,5 +152,14 @@ class PHP_PMD_Rule_UnusedFormalParameter
                 unset($this->_nodes[$variable->getImage()]);
             }
         }
+
+        $functionCalls = $node->findChildrenOfType('FunctionPostfix');
+        foreach ($functionCalls as $functionCall)
+        {
+            if ($functionCall->getImage() == 'func_get_args')
+            {
+                $this->_nodes = array();
+            }
+        }
     }
 }
