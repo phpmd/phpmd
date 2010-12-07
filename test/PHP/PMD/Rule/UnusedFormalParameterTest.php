@@ -367,6 +367,19 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
     }
 
     /**
+	 * testRuleDoesNotApplyToMethodWithFuncGetArgs
+	 *
+	 * If func_get_args() is called then all parameters are
+	 * automatically referenced without needing them to be referenced
+	 * explicitly
+	 * 
+	 * <code>
+	 * class Foo {
+	 *     function bar($baz) {
+	 *         print_r(func_get_args());
+	 *     }
+	 * }
+	 * </code>
      * @group phpmd
      * @group phpmd::rule
      * @group unittest
