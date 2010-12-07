@@ -352,11 +352,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *     }
      * }
      * </code>
-<<<<<<< HEAD
-     * 
-=======
-     *
->>>>>>> master
      * @return void
      * @covers PHP_PMD_Rule_UnusedFormalParameter
      * @covers PHP_PMD_Rule_AbstractLocalVariable
