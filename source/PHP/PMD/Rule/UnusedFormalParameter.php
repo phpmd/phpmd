@@ -156,10 +156,8 @@ class PHP_PMD_Rule_UnusedFormalParameter
         /* If the method calls func_get_args() then all parameters are
          * automatically referenced */
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
-        foreach ($functionCalls as $functionCall)
-        {
-            if ($functionCall->getImage() == 'func_get_args')
-            {
+        foreach ($functionCalls as $functionCall) {
+            if ($functionCall->getImage() == 'func_get_args') {
                 $this->_nodes = array();
             }
         }
