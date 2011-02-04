@@ -29,8 +29,8 @@
             output.dir      Output directory for the temporary build tree.
     -->
     <target name="do-copy-files-for-xyz-archive">
-        <copy todir="${output.dir}/rulesets">
-            <fileset dir="${basedir}/rulesets" />
+        <copy todir="${output.dir}/resources/rulesets">
+            <fileset dir="${resource.basedir.src}/rulesets" />
         </copy>
     </target>
 
@@ -65,7 +65,7 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  ${phar.archive.filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${basedir}/source" executable="${phar.archive.filename}" failonerror="true">
+        <exec dir="${php.basedir.src}" executable="${phar.archive.filename}" failonerror="true">
             <arg line="PHP/PMD/Rule" />
             <arg line="text" />
             <arg line="${custom.phpmd.rulesets}" />
