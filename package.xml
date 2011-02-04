@@ -290,19 +290,21 @@
                     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
                 </file>
             </dir>
-            <dir name="rulesets">
-                <file name="codesize.xml" role="data">
-                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                </file>
-                <file name="design.xml" role="data">
-                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                </file>
-                <file name="naming.xml" role="data">
-                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                </file>
-                <file name="unusedcode.xml" role="data">
-                    <tasks:replace from="@package_version@" to="version" type="package-info"/>
-                </file>
+            <dir name="resources">
+                <dir name="rulesets">
+                    <file name="codesize.xml" role="data">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                    </file>
+                    <file name="design.xml" role="data">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                    </file>
+                    <file name="naming.xml" role="data">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                    </file>
+                    <file name="unusedcode.xml" role="data">
+                        <tasks:replace from="@package_version@" to="version" type="package-info"/>
+                    </file>
+                </dir>
             </dir>
 
             <file name="CHANGELOG" role="doc">

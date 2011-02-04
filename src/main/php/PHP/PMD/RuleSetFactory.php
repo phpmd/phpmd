@@ -89,7 +89,7 @@ class PHP_PMD_RuleSetFactory
         if (strpos($this->_location, '@data_dir') === 0) {
             $this->_location = dirname(__FILE__) . '/../../../resources';
         } else {
-            $this->_location .= '/PHP_PMD';
+            $this->_location .= '/PHP_PMD/resources';
         }
     }
 
