@@ -4,11 +4,11 @@
 // PEAR installation workaround
 if (strpos('@package_version@', '@package_version') === 0) {
     set_include_path(
-        dirname(__FILE__) . '/source' .
+        dirname(__FILE__) . '/src/main/php' .
         PATH_SEPARATOR .
         dirname(__FILE__) . '/lib/pdepend' .
         PATH_SEPARATOR .
-        get_include_path()
+        '.'
     );
 }
 
