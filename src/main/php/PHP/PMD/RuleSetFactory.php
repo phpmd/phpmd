@@ -87,7 +87,7 @@ class PHP_PMD_RuleSetFactory
     {
         // PEAR installer workaround
         if (strpos($this->_location, '@data_dir') === 0) {
-            $this->_location = dirname(__FILE__) . '/../../../';
+            $this->_location = dirname(__FILE__) . '/../../../resources';
         } else {
             $this->_location .= '/PHP_PMD';
         }
