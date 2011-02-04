@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <phpunit>
+    <testsuites>
+        <testsuite name="PHP_PMD_AllTests">
+            <file>src/test/php/PHP/PMD/AllTests.php</file>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">source</directory>
+            <directory suffix=".php">src/main/php</directory>
         </whitelist>
     </filter>
 </phpunit>
