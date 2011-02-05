@@ -75,6 +75,13 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     private static $_originalWorkingDirectory = null;
 
     /**
+     * Temporary files created by a test.
+     * 
+     * @var array(string)
+     */
+    private static $_tempFiles = array();
+
+    /**
      * Resets a changed working directory.
      *
      * @return void
@@ -84,8 +91,12 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         if (self::$_originalWorkingDirectory !== null) {
             chdir(self::$_originalWorkingDirectory);
         }
-
         self::$_originalWorkingDirectory = null;
+
+        foreach (self::$_tempFiles as $tempFile) {
+            unlink($tempFile);
+        }
+        self::$_tempFiles = array();
 
         parent::tearDown();
     }
@@ -543,6 +554,16 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     protected static function createFileUri($localPath = '')
     {
         return self::$_filesDirectory . '/' . $localPath;
+    }
+
+    /**
+     * Creates a file uri for a temporary test file.
+     *
+     * @return string
+     */
+    protected static function createTempFileUri()
+    {
+        return (self::$_tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
     }
 }
 

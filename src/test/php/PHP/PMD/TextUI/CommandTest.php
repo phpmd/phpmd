@@ -83,7 +83,7 @@ class PHP_PMD_TextUI_CommandTest extends PHP_PMD_AbstractTest
                 'text',
                 'codesize',
                 '--reportfile',
-                sys_get_temp_dir() . '/phpmd.txt'
+                self::createTempFileUri()
             )
         );
         $this->assertEquals(PHP_PMD_TextUI_Command::EXIT_SUCCESS, $exitCode);
@@ -107,7 +107,7 @@ class PHP_PMD_TextUI_CommandTest extends PHP_PMD_AbstractTest
                 'text',
                 'codesize',
                 '--reportfile',
-                sys_get_temp_dir() . '/phpmd.txt'
+                self::createTempFileUri()
             )
         );
         $this->assertEquals(PHP_PMD_TextUI_Command::EXIT_VIOLATION, $exitCode);
