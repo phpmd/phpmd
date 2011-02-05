@@ -1,3 +1,12 @@
+phpmd-1.0.0 (2011/02/05)
+========================
+
+- Fixed #9626017: Clear temporary resources after a test has finished. Fixed
+  with commit #b385f15.
+- New source layout that follows maven's conventions for the directory
+  structure of a product.
+- Switched to PHPUnit 3.5.x as testing framework
+
 phpmd-0.2.8 (2010/11/25)
 ========================
 
