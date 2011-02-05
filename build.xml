@@ -17,6 +17,22 @@
     <target name="build" depends="test" description="Primary build: PHP Mess Detector" />
 
     <!--
+        Hook that will be called after we have copied the project's library
+        directory.
+
+        Parameters:
+            output.dir      Output directory for the temporary build tree.
+            library.dir     The library directory in the temporary build tree.
+    -->
+    <target name="~copy-library-dir-after">
+        <delete includeemptydirs="true">
+            <fileset dir="${library.dir}">
+                <exclude name="pdepend/PHP/**" />
+            </fileset>
+        </delete>
+    </target>
+
+    <!--
         Hook method for copying files for the project's xyz archive format.
 
         Parameters:
