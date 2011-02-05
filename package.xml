@@ -338,7 +338,7 @@
             <package>
                 <name>PHP_Depend</name>
                 <channel>pear.pdepend.org</channel>
-                <min>0.10.0RC1</min>
+                <min>0.10.0</min>
             </package>
             <extension>
                 <name>pcre</name>
