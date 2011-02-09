@@ -351,7 +351,7 @@ order to reduce its complexity and find a way to have more fine grained objects.
     <rule name="ExcessiveClassComplexity"
           since="0.2.5"
           class="PHP_PMD_Rule_Design_WeightedMethodCount"
-          message="This class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
+          message="The class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
         <description>
             <![CDATA[
