@@ -6,7 +6,7 @@ if (strpos('@package_version@', '@package_version') === 0) {
     set_include_path(
         dirname(__FILE__) . '/src/main/php' .
         PATH_SEPARATOR .
-        dirname(__FILE__) . '/lib/pdepend' .
+        dirname(__FILE__) . '/lib/pdepend/src/main/php' .
         PATH_SEPARATOR .
         '.'
     );

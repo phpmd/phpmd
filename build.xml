@@ -27,7 +27,7 @@
     <target name="~copy-library-dir-after">
         <delete includeemptydirs="true">
             <fileset dir="${library.dir}">
-                <exclude name="pdepend/PHP/**" />
+                <exclude name="pdepend/src/main/**" />
             </fileset>
         </delete>
     </target>

@@ -1,8 +1,8 @@
-#!/usr/bin/env php
+#!/usr/bin/env php534
 <?php
 Phar::mapPhar( '${archive.alias}' );
 // Configure phar include paths
-set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . 'phar://${archive.alias}/lib/pdepend');
+set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . 'phar://${archive.alias}/lib/pdepend/src/main/php');
 // Load command line utility
 include_once 'phar://${archive.alias}/PHP/PMD/TextUI/Command.php';
 // Run command line interface
