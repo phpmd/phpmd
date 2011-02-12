@@ -34,11 +34,10 @@
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
-- Fixed #9626017: Clear temporary resources after a test has finished. Fixed
-  with commit #b385f15.
-- New source layout that follows maven's conventions for the directory
-  structure of a product.
-- Switched to PHPUnit 3.5.x as testing framework
+- Fixed #9930643: The include_path does not match with PHP_Depend's new
+  directory layout. Fixed with commit #531be78.
+- Fixed #9626017: Clear temporary resources after a test has finished.
+  Fixed with commit #b385f15.
     </notes>
     <contents>
         <dir name="/">
