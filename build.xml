@@ -68,14 +68,17 @@
         phar archive works as expected.
 
         Parameters:
-            ${phar.archive.filename}  Name of the created phar file.
+            ${-package:phar:filename}  Name of the created phar file.
     -->
-    <target name="~pack-phar-archive-after">
+    <target name="~package:phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${phar.archive.filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
+        <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${php.basedir.src}" executable="${phar.archive.filename}" failonerror="true">
+        <exec dir="${php.basedir.src}"
+              executable="${-package:phar:filename}" 
+              failonerror="true">
+              
             <arg line="PHP/PMD/Rule" />
             <arg line="text" />
             <arg line="${custom.phpmd.rulesets}" />
@@ -86,7 +89,7 @@
         We use the pear archive after hook to validate that a clean PHPMD
         PEAR installation works as expected.
     -->
-    <target name="~pack-pear-archive-after"
+    <target name="~package:pear:after~hook"
             depends="-common-pear-prepare,
                      -pack-pear-archive-after-install,
                      -pack-pear-archive-after-execute" />
@@ -112,11 +115,11 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
-        <exec executable="php" failonerror="true">
+        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
             <arg line="-d" />
-            <arg line="include_path='${common-pear-root-dir}'" />
-            <arg line="${common-pear-bin-dir}/phpmd" />
-            <arg line="${common-pear-root-dir}/PHP/PMD/Rule" />
+            <arg line="include_path=${common-pear-root-dir}" />
+            <arg value="${common-pear-bin-dir}/phpmd" />
+            <arg line="PHP/PMD/Rule" />
             <arg line="text" />
             <arg line="${custom.phpmd.rulesets}" />
         </exec>
