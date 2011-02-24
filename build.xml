@@ -70,7 +70,7 @@
         Parameters:
             ${-package:phar:filename}  Name of the created phar file.
     -->
-    <target name="~package:phar:after~hook">
+    <target name="-package:phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
         <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
@@ -89,7 +89,7 @@
         We use the pear archive after hook to validate that a clean PHPMD
         PEAR installation works as expected.
     -->
-    <target name="~package:pear:after~hook"
+    <target name="-package:pear:after~hook"
             depends="-common-pear-prepare,
                      -pack-pear-archive-after-install,
                      -pack-pear-archive-after-execute" />
