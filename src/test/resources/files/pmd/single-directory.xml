@@ -5,12 +5,12 @@
       The function ccn_function() has a Cyclomatic Complexity of 12.
     </violation>
   </file>
-  <file name="/home/manuel/workspace/PHP_PMD-git/src/test/resources/files/source/npath_method.php4">
+  <file name="#{rootDirectory}/source/npath_method.php4">
     <violation beginline="6" endline="13" rule="NPathComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity" class="NPathClass" method="doSomething" priority="3">
       The method doSomething() has an NPath complexity of 80.
     </violation>
   </file>
-  <file name="/home/manuel/workspace/PHP_PMD-git/src/test/resources/files/source/source_with_npath_violation.php">
+  <file name="#{rootDirectory}/source/source_with_npath_violation.php">
     <violation beginline="6" endline="17" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="NPathClass" method="doSomething" priority="3">
       The method doSomething() has a Cyclomatic Complexity of 25.
     </violation>
