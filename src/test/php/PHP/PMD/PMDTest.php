@@ -96,7 +96,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
 
         $phpmd = new PHP_PMD();
         $phpmd->processFiles(
-            self::createFileUri('source'),
+            self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
             array($renderer),
             new PHP_PMD_RuleSetFactory()
@@ -124,7 +124,7 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
 
         $phpmd = new PHP_PMD();
         $phpmd->processFiles(
-            self::createFileUri('source/ccn_function.php'),
+            self::createFileUri('source'),
             'pmd-refset1',
             array($renderer),
             new PHP_PMD_RuleSetFactory()

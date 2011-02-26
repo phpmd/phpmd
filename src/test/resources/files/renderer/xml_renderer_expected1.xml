@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="@package_version@" timestamp="">
+  <file name="/bar.php">
+    <violation beginline="23" endline="42" rule="RuleStub" ruleset="TestRuleSet" package="TestStubPackage" externalInfoUrl="http://phpmd.org/rules/index.html" priority="5">
+      Test description
+    </violation>
+  </file>
+  <file name="/foo.php">
+    <violation beginline="23" endline="42" rule="RuleStub" ruleset="TestRuleSet" package="TestStubPackage" externalInfoUrl="http://phpmd.org/rules/index.html" priority="5">
+      Test description
+    </violation>
+    <violation beginline="23" endline="42" rule="RuleStub" ruleset="TestRuleSet" package="TestStubPackage" externalInfoUrl="http://phpmd.org/rules/index.html" priority="5">
+      Test description
+    </violation>
+  </file>
+</pmd>

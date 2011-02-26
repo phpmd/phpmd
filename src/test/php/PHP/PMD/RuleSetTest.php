@@ -47,7 +47,7 @@
 
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once dirname(__FILE__) . '/_files/rules/TestRule.php';
+require_once dirname(__FILE__) . '/../../../resources/files/rules/TestRule.php';
 
 require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/RuleSet.php';

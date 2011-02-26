@@ -192,7 +192,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $sourceFile = sprintf(
-            '%s/_files/%s/%s.php',
+            '%s/../../../resources/files/%s/%s.php',
             dirname(__FILE__),
             $localPath,
             $frame['function']
@@ -491,12 +491,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $expected = file_get_contents(self::createFileUri($expectedFileName));
-        $expected = str_replace('#{rootDirectory}', dirname(__FILE__), $expected);
+        $expected = str_replace('#{rootDirectory}', self::$_filesDirectory, $expected);
 
-        self::assertXmlStringEqualsXmlString(
-            str_replace(array(" ", "\n", "\r", "\t"), '', $expected),
-            str_replace(array(" ", "\n", "\r", "\t"), '', $actual->saveXML())
-        );
+        self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }
 
     /**
@@ -507,7 +504,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function init()
     {
-        self::$_filesDirectory = dirname(__FILE__) . '/_files';
+        self::$_filesDirectory = realpath(dirname(__FILE__) . '/../../../resources/files');
 
         // file can contain test rule implementations.
         $include = self::$_filesDirectory;
