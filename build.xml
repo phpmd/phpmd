@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PHP Mess Detector" default="build" basedir=".">
+<project name="PHP_PMD" default="build" basedir=".">
 
     <!--
         Include local project properties.
@@ -45,25 +45,6 @@
     </target>
 
     <!--
-        Hook target that will be called after an git pull on the project's main
-        repository has been done. This hook updates the external libraries.
-    -->
-    <target name="~common-rcs-git-update-after">
-
-        <exec dir="${basedir}/setup" executable="git">
-            <arg line="pull" />
-            <arg line="${common.rcs.git.remote}" />
-            <arg line="${common.rcs.git.branch}" />
-        </exec>
-
-        <exec dir="${basedir}/lib/pdepend" executable="git">
-            <arg line="pull" />
-            <arg line="${common.rcs.git.remote}" />
-            <arg line="${common.rcs.git.branch}" />
-        </exec>
-    </target>
-
-    <!--
         We use the phar archive after hook to validate that a newly created
         phar archive works as expected.
 
@@ -90,22 +71,7 @@
         PEAR installation works as expected.
     -->
     <target name="-package:pear:after~hook"
-            depends="-common-pear-prepare,
-                     -pack-pear-archive-after-install,
-                     -pack-pear-archive-after-execute" />
-
-    <!--
-        Installs the newly created PEAR archive of PHPMD.
-    -->
-    <target name="-pack-pear-archive-after-install">
-        <antcall target="common-pear-channel-discover">
-            <param name="pear-channel-uri" value="${pear.channel.uri}" />
-        </antcall>
-
-        <antcall target="common-pear-install-local">
-            <param name="pear-package-pattern" value="PHP_PMD" />
-        </antcall>
-    </target>
+            depends="-pack-pear-archive-after-execute" />
 
     <!--
         Executes the newly created and installed PEAR version of PHPMD.
