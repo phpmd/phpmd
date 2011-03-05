@@ -14,7 +14,9 @@
     <!--
         Main build
     -->
-    <target name="build" depends="test" description="Primary build: PHP Mess Detector" />
+    <target name="build" 
+            depends="clean, package"
+            description="->  Builds distributable packages of the project source." />
 
     <!--
         Hook that will be called after we have copied the project's library

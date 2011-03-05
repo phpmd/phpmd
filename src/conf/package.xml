@@ -23,14 +23,14 @@
         <email>mapi@phpmd.org</email>
         <active>yes</active>
     </lead>
-    <date>1970-01-01</date>
+    <date>@date_release@</date>
     <version>
-        <release>0.0.0</release>
-        <api>0.0.0</api>
+        <release>@version_release@</release>
+        <api>@version_api@</api>
     </version>
     <stability>
-        <release>devel</release>
-        <api>devel</api>
+        <release>@stability_release@</release>
+        <api>@stability_api@</api>
     </stability>
     <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
     <notes>
