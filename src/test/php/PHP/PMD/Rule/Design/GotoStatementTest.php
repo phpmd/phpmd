@@ -43,26 +43,16 @@
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://phpmd.org
+ * @link       https://www.pivotaltracker.com/story/show/10474873
+ * @ticket     10474873
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+require_once dirname(__FILE__) . '/../../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/DepthOfInheritanceTest.php';
-require_once dirname(__FILE__) . '/EvalExpressionTest.php';
-require_once dirname(__FILE__) . '/ExitExpressionTest.php';
-require_once dirname(__FILE__) . '/GotoStatementTest.php';
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/NumberOfChildrenTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/Rule/Design/GotoStatement.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the {@link PHP_PMD_Rule_Design_GotoStatement} class.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -71,32 +61,62 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://phpmd.org
+ * @link       https://www.pivotaltracker.com/story/show/10474873
+ * @ticket     10474873
+ *
+ * @covers PHP_PMD_Rule_Design_GotoStatement
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_GotoStatementTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testRuleNotAppliesToMethodWithoutGotoStatement
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
      */
-    public static function suite()
+    public function testRuleNotAppliesToMethodWithoutGotoStatement()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $rule = new PHP_PMD_Rule_Design_GotoStatement();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_DepthOfInheritanceTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_EvalExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_ExitExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_GotoStatementTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NumberOfChildrenTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
+    /**
+     * testRuleAppliesToMethodWithGotoStatement
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithGotoStatement()
+    {
+        $rule = new PHP_PMD_Rule_Design_GotoStatement();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
 
-        return $suite;
+    /**
+     * testRuleNotAppliesToFunctionWithoutGotoStatement
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToFunctionWithoutGotoStatement()
+    {
+        $rule = new PHP_PMD_Rule_Design_GotoStatement();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToFunctionWithGotoStatement
+     *
+     * @return void
+     */
+    public function testRuleAppliesToFunctionWithGotoStatement()
+    {
+        $rule = new PHP_PMD_Rule_Design_GotoStatement();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getFunction());
     }
 }
