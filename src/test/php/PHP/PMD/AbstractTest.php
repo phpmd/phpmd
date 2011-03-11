@@ -176,12 +176,12 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Parses the source code for the calling test method and returns the first
-     * package node found in the parsed file.
+     * Returns the absolute path for a test resource for the current test.
      *
-     * @return PHP_Depend_Code_Package
+     * @return string
+     * @since 1.1.0
      */
-    private function _parseTestCaseSource()
+    protected function createCodeResourceUriForTest()
     {
         $frame = $this->_getCallingTestCase();
 
@@ -191,13 +191,23 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             $localPath = strtr(substr($frame['class'], 8, -4), '_', '/');
         }
 
-        $sourceFile = sprintf(
+        return sprintf(
             '%s/../../../resources/files/%s/%s.php',
             dirname(__FILE__),
             $localPath,
             $frame['function']
         );
-        return $this->_parseSource($sourceFile);
+    }
+
+    /**
+     * Parses the source code for the calling test method and returns the first
+     * package node found in the parsed file.
+     *
+     * @return PHP_Depend_Code_Package
+     */
+    private function _parseTestCaseSource()
+    {
+        return $this->_parseSource($this->createCodeResourceUriForTest());
     }
 
     /**

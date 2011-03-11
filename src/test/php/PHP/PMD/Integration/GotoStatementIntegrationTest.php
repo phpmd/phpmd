@@ -38,65 +38,59 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Design
+ * @subpackage Integration
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
+ * @since      1.1.0
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/DepthOfInheritanceTest.php';
-require_once dirname(__FILE__) . '/EvalExpressionTest.php';
-require_once dirname(__FILE__) . '/ExitExpressionTest.php';
-require_once dirname(__FILE__) . '/GotoStatementTest.php';
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/NumberOfChildrenTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/TextUI/Command.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * Test case for the goto statement GotoStatementIntegrationTest.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Design
+ * @subpackage Integration
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ * @since      1.1.0
+ *
+ * @group phpmd
+ * @group phpmd::integration
+ * @group integrationtest
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Integration_GotoStatementIntegrationTest extends PHP_PMD_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
+     * testReportContainsGotoStatementWarning
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @outputBuffering enabled
      */
-    public static function suite()
+    public function testReportContainsGotoStatementWarning()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
+        $file = self::createTempFileUri();
 
-        $suite->addTestSuite('PHP_PMD_Rule_Design_DepthOfInheritanceTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_EvalExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_ExitExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_GotoStatementTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NumberOfChildrenTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
+        PHP_PMD_TextUI_Command::main(
+            array(
+                __FILE__,
+                $this->createCodeResourceUriForTest(),
+                'text',
+                'design',
+                '--reportfile',
+                $file
+            )
+        );
 
-        return $suite;
+        self::assertContains('utilizes a goto statement.', file_get_contents($file));
     }
 }
