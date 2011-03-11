@@ -78,7 +78,7 @@ class PHP_PMD_Integration_GotoStatementIntegrationTest extends PHP_PMD_AbstractT
      */
     public function testReportContainsGotoStatementWarning()
     {
-        $reportfile = self::createTempFileUri();
+        $file = self::createTempFileUri();
 
         PHP_PMD_TextUI_Command::main(
             array(
@@ -87,10 +87,10 @@ class PHP_PMD_Integration_GotoStatementIntegrationTest extends PHP_PMD_AbstractT
                 'text',
                 'design',
                 '--reportfile',
-                $reportfile
+                $file
             )
         );
 
-        self::assertContains('utilizes a goto statement.', file_get_contents($reportfile));
+        self::assertContains('utilizes a goto statement.', file_get_contents($file));
     }
 }
