@@ -79,8 +79,8 @@ class PHP_PMD_Rule_Design_GotoStatement
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        foreach ($node->findChildrenOfType('GotoStatement') as $exit) {
-            $this->addViolation($exit, array($node->getType(), $node->getName()));
+        foreach ($node->findChildrenOfType('GotoStatement') as $goto) {
+            $this->addViolation($goto, array($node->getType(), $node->getName()));
         }
     }
     
