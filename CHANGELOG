@@ -2,7 +2,7 @@ phpmd-1.1.0 (2011/03/  )
 ========================
 
 - Implemented #10474873: Add rule for PHP's goto statement. Implemented
-  with commit #.
+  with commit #2745a20.
 
 phpmd-1.0.1 (2011/02/12)
 ========================
