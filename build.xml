@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PHP_PMD" default="build" basedir=".">
+<project name="PHP_PMD" basedir=".">
 
     <!--
         Include local project properties.
@@ -7,16 +7,14 @@
     <property file="build.properties" />
 
     <!--
+        Include private project properties.
+    -->
+    <property file="build.privates" />
+
+    <!--
         Import common build targets
     -->
     <import file="${basedir}/setup/build-commons.xml" />
-
-    <!--
-        Main build
-    -->
-    <target name="build" 
-            depends="clean, package"
-            description="->  Builds distributable packages of the project source." />
 
     <!--
         Hook that will be called after we have copied the project's library
@@ -62,9 +60,9 @@
               executable="${-package:phar:filename}" 
               failonerror="true">
               
-            <arg line="PHP/PMD/Rule" />
-            <arg line="text" />
-            <arg line="${custom.phpmd.rulesets}" />
+            <arg value="PHP/PMD/Rule" />
+            <arg value="text" />
+            <arg value="${custom.phpmd.rulesets}" />
         </exec>
     </target>
 
@@ -84,12 +82,12 @@
         <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
 
         <exec dir="${php.basedir.src}" executable="php" failonerror="true">
-            <arg line="-d" />
-            <arg line="include_path=${common-pear-root-dir}" />
+            <arg value="-d" />
+            <arg value="include_path=${common-pear-root-dir}" />
             <arg value="${common-pear-bin-dir}/phpmd" />
-            <arg line="PHP/PMD/Rule" />
-            <arg line="text" />
-            <arg line="${custom.phpmd.rulesets}" />
+            <arg value="PHP/PMD/Rule" />
+            <arg value="text" />
+            <arg value="${custom.phpmd.rulesets}" />
         </exec>
     </target>
 
