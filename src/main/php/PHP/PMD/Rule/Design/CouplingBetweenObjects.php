@@ -44,26 +44,14 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
  * @link       http://phpmd.org
+ * @since      1.1.0
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-require_once dirname(__FILE__) . '/CouplingBetweenObjectsTest.php';
-require_once dirname(__FILE__) . '/DepthOfInheritanceTest.php';
-require_once dirname(__FILE__) . '/EvalExpressionTest.php';
-require_once dirname(__FILE__) . '/ExitExpressionTest.php';
-require_once dirname(__FILE__) . '/GotoStatementTest.php';
-require_once dirname(__FILE__) . '/LongClassTest.php';
-require_once dirname(__FILE__) . '/LongMethodTest.php';
-require_once dirname(__FILE__) . '/LongParameterListTest.php';
-require_once dirname(__FILE__) . '/NpathComplexityTest.php';
-require_once dirname(__FILE__) . '/NumberOfChildrenTest.php';
-require_once dirname(__FILE__) . '/TooManyFieldsTest.php';
-require_once dirname(__FILE__) . '/TooManyMethodsTest.php';
-require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
+require_once 'PHP/PMD/AbstractRule.php';
+require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * Main test suite for the PHP_PMD_Rule_Design package.
+ * This rule class detects the usage of PHP's goto statement.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -73,32 +61,26 @@ require_once dirname(__FILE__) . '/WeightedMethodCountTest.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ * @since      1.1.0
  */
-class PHP_PMD_Rule_Design_AllTests
+class PHP_PMD_Rule_Design_CouplingBetweenObjects
+       extends PHP_PMD_AbstractRule
+    implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * Creates a phpunit test suite.
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @param PHP_PMD_AbstractNode $node The current context for analysis.
+     *
+     * @return void
      */
-    public static function suite()
+    public function apply(PHP_PMD_AbstractNode $node)
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Rule_Design - Tests');
-
-        $suite->addTestSuite('PHP_PMD_Rule_Design_CouplingBetweenObjectsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_DepthOfInheritanceTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_EvalExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_ExitExpressionTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_GotoStatementTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongClassTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongMethodTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_LongParameterListTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NpathComplexityTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_NumberOfChildrenTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyFieldsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_TooManyMethodsTest');
-        $suite->addTestSuite('PHP_PMD_Rule_Design_WeightedMethodCountTest');
-
-        return $suite;
+        $cbo = $node->getMetric('cbo');
+        if ($cbo >= $this->getIntProperty('minimum')) {
+            $this->addViolation($node, array($node->getName(), $cbo));
+        }
     }
+
 }
