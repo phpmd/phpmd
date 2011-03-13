@@ -155,7 +155,40 @@ maintainability and understandability
         <properties>
             <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
         </properties>
-        <example />
+        <example>
+            <![CDATA[
+class Foo {
+    /**
+     * @var \foo\bar\X
+     */
+    private $x = null;
+
+    /**
+     * @var \foo\bar\Y
+     */
+    private $y = null;
+
+    /**
+     * @var \foo\bar\Z
+     */
+    private $z = null;
+
+    public function setFoo(\Foo $foo) {}
+    public function setBar(\Bar $bar) {}
+    public function setBaz(\Baz $baz) {}
+
+    /**
+     * @return \SplObjectStorage
+     * @throws \OutOfRangeException
+     * @throws \InvalidArgumentException
+     * @throws \ErrorException
+     */
+    public function process(Iterator $it) {}
+
+    // ...
+}
+            ]]>
+        </example>
     </rule>
 
 </ruleset>
