@@ -107,7 +107,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     public function testCreateRuleSetsReturnsArray()
     {
         $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertType('array', $ruleSets);
+        self::assertInternalType('array', $ruleSets);
     }
 
     /**
@@ -135,7 +135,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance()
     {
         $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertType('PHP_PMD_RuleSet', $ruleSets[0]);
+        self::assertInstanceOf('PHP_PMD_RuleSet', $ruleSets[0]);
     }
 
     /**
@@ -197,8 +197,8 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        $this->assertType('PHP_PMD_RuleSet', $ruleSets[0]);
-        $this->assertType('PHP_PMD_RuleSet', $ruleSets[1]);
+        self::assertInstanceOf('PHP_PMD_RuleSet', $ruleSets[0]);
+        self::assertInstanceOf('PHP_PMD_RuleSet', $ruleSets[1]);
     }
 
     /**
@@ -250,7 +250,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         self::changeWorkingDirectory();
         
         $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertType('array', $ruleSets);
+        self::assertInternalType('array', $ruleSets);
     }
 
     /**
@@ -330,7 +330,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         self::changeWorkingDirectory();
 
         $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        $this->assertType('PHP_PMD_AbstractRule', $ruleSets[0]->getRules()->current());
+        self::assertInstanceOf('PHP_PMD_AbstractRule', $ruleSets[0]->getRules()->current());
     }
 
     /**
@@ -372,7 +372,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
         $factory = new PHP_PMD_RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1');
         
-        $this->assertType('PHP_PMD_RuleSet', $ruleSet);
+        self::assertInstanceOf('PHP_PMD_RuleSet', $ruleSet);
     }
 
     /**

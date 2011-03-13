@@ -111,7 +111,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod()
     {
         $method = $this->getMethod();
-        $this->assertType(PHP_PMD_Node_Interface::CLAZZ, $method->getParentType());
+        self::assertInstanceOf(PHP_PMD_Node_Interface::CLAZZ, $method->getParentType());
     }
 
     /**
@@ -126,7 +126,7 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
     public function testGetParentTypeReturnsClassForClassMethod()
     {
         $method = $this->getMethod();
-        $this->assertType(PHP_PMD_Node_Class::CLAZZ, $method->getParentType());
+        self::assertInstanceOf(PHP_PMD_Node_Class::CLAZZ, $method->getParentType());
     }
 
     /**

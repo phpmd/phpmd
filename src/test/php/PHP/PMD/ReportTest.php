@@ -83,7 +83,6 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
 
         $actual = array();
         foreach ($report->getRuleViolations() as $violation) {
-            $this->assertType('PHP_PMD_RuleViolation', $violation);
             $actual[] = $violation->getFileName();
         }
 

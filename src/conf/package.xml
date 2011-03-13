@@ -36,6 +36,8 @@
     <notes>
 - Implemented #10474873: Add rule for PHP's goto statement. Implemented
   with commit #2745a20.
+- Implemented #11012465: Replace deprecated PHPUnit features in test suite.
+  Implemented with commit #.
 - Fixed #10096717: LongVariable rule should not apply on private
   properties. Fixed with commit #f063bc9.
     </notes>
