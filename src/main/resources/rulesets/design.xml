@@ -139,4 +139,23 @@ hierarchy. You should consider to refactor this class hierarchy.
         <example />
     </rule>
 
+    <rule name="CouplingBetweenObjects"
+          since="1.1.0"
+          message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
+          class="PHP_PMD_Rule_Design_CouplingBetweenObjects"
+          externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects">
+        <description>
+            <![CDATA[
+A class with to many dependencies has negative impacts on several quality
+aspects of a class. This includes quality criterias like stability,
+maintainability and understandability
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
+        </properties>
+        <example />
+    </rule>
+
 </ruleset>

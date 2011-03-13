@@ -38,7 +38,7 @@
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Design
+ * @subpackage Integration
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
@@ -47,40 +47,55 @@
  * @since      1.1.0
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IClassAware.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
+
+require_once 'PHP/PMD/TextUI/Command.php';
 
 /**
- * This rule class detects the usage of PHP's goto statement.
+ * Integration tests for the coupling between objects rule class.
  *
  * @category   PHP
  * @package    PHP_PMD
- * @subpackage Rule_Design
+ * @subpackage Integration
  * @author     Manuel Pichler <mapi@phpmd.org>
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  * @since      1.1.0
+ *
+ * @group phpmd
+ * @group phpmd::integration
+ * @group integrationtest
  */
-class PHP_PMD_Rule_Design_CouplingBetweenObjects
-       extends PHP_PMD_AbstractRule
-    implements PHP_PMD_Rule_IClassAware
+class PHP_PMD_Integration_CouplingBetweenObjectsIntegrationTest
+    extends PHP_PMD_AbstractTest
 {
     /**
-     * This method should implement the violation analysis algorithm of concrete
-     * rule implementations. All extending classes must implement this method.
-     *
-     * @param PHP_PMD_AbstractNode $node The current context for analysis.
+     * testReportContainsCouplingBetweenObjectsWarning
      *
      * @return void
+     * @outputBuffering enabled
      */
-    public function apply(PHP_PMD_AbstractNode $node)
+    public function testReportContainsCouplingBetweenObjectsWarning()
     {
-        $cbo = $node->getMetric('cbo');
-        if ($cbo >= ($threshold = $this->getIntProperty('minimum'))) {
-            $this->addViolation($node, array($node->getName(), $cbo, $threshold));
-        }
-    }
+        $file = self::createTempFileUri();
 
+        PHP_PMD_TextUI_Command::main(
+            array(
+                __FILE__,
+                $this->createCodeResourceUriForTest(),
+                'text',
+                'design',
+                '--reportfile',
+                $file
+            )
+        );
+
+        self::assertContains(
+            'has a coupling between objects value of 14. ' .
+            'Consider to reduce the number of dependencies under 13.',
+            file_get_contents($file)
+        );
+    }
 }

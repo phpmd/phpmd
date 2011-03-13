@@ -49,6 +49,7 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
+require_once dirname(__FILE__) . '/CouplingBetweenObjectsIntegrationTest.php';
 require_once dirname(__FILE__) . '/GotoStatementIntegrationTest.php';
 
 /**
@@ -73,6 +74,7 @@ class PHP_PMD_Integration_AllTests extends PHPUnit_Framework_TestSuite
     {
         parent::__construct('PHP_PMD_Integration - Tests');
 
+        $this->addTestSuite('PHP_PMD_Integration_CouplingBetweenObjectsIntegrationTest');
         $this->addTestSuite('PHP_PMD_Integration_GotoStatementIntegrationTest');
     }
 
