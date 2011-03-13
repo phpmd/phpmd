@@ -51,7 +51,7 @@ require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
- * This rule class detects the usage of PHP's goto statement.
+ * This rule class detects violations of Coupling Between Objects metric.
  *
  * @category   PHP
  * @package    PHP_PMD
