@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/Naming/LongVariable.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Naming_LongVariable
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::naming
+ * @group unittest
  */
 class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold()
     {
@@ -86,11 +87,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold()
     {
@@ -104,11 +100,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold()
     {
@@ -122,11 +113,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToFunctionParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold()
     {
@@ -140,11 +126,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold()
     {
@@ -158,11 +139,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold()
     {
@@ -182,11 +158,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold()
     {
@@ -200,11 +171,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold()
     {
@@ -218,11 +184,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMethodParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold()
     {
@@ -242,11 +203,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold()
     {
@@ -260,11 +216,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToFieldWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToFieldWithNameLongerThanThreshold()
     {
@@ -278,11 +229,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToFieldWithNameEqualToThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold()
     {
@@ -296,11 +242,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToFieldWithNameShorterThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToFieldWithNameShorterThanThreshold()
     {
@@ -314,11 +255,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold()
     {
@@ -338,11 +274,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToStaticMembersAccessedInMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod()
     {
@@ -356,11 +287,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToIdenticalVariableOnlyOneTime
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime()
     {
@@ -374,11 +300,6 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_LongVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes()
     {
@@ -392,5 +313,32 @@ class PHP_PMD_Rule_Naming_LongVariableTest extends PHP_PMD_AbstractTest
         foreach ($class->getMethods() as $method) {
             $rule->apply($method);
         }
+    }
+    /**
+     * testRuleNotAppliesForLongPrivateProperty
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testRuleNotAppliesForLongPrivateProperty()
+    {
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleNotAppliesForLongPrivateStaticProperty
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testRuleNotAppliesForLongPrivateStaticProperty()
+    {
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->addProperty('maximum', 17);
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
     }
 }

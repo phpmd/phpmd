@@ -1,7 +1,7 @@
 <?php
 class testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
 {
-    private $_foo;
+    protected $_foo;
 
     protected function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold($fooB)
     {

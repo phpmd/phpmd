@@ -43,21 +43,15 @@
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    SVN: $Id$
- * @link       http://phpmd.org
+ * @link       https://www.pivotaltracker.com/story/show/10096717
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+require_once dirname(__FILE__) . '/AbstractTest.php';
 
-require_once dirname(__FILE__) . '/AcceptsFilesAndDirectoriesAsInputTicket001Test.php';
-require_once dirname(__FILE__) . '/InvalidUnusedLocalVariableAndFormalParameterTicket007Test.php';
-require_once dirname(__FILE__) . '/ExcessivePublicCountRuleNeverExecutedTicket015Test.php';
-require_once dirname(__FILE__) . '/SuperGlobalsFlaggedAsUnusedTicket019Test.php';
-require_once dirname(__FILE__) . '/StaticVariablesFlaggedAsUnusedTicket020Test.php';
-require_once dirname(__FILE__) . '/SuppressWarningsNotAppliesToUnusedPrivateMethod036Test.php';
-require_once dirname(__FILE__) . '/LongVariablePrivatePropertiesTicket010096717Test.php';
+require_once 'PHP/PMD/Rule/Naming/LongVariable.php';
 
 /**
- * Main test suite for the PHP_PMD_Regression package.
+ * Regression test for issue 10096717.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -66,27 +60,41 @@ require_once dirname(__FILE__) . '/LongVariablePrivatePropertiesTicket010096717T
  * @copyright  2009-2011 Manuel Pichler. All rights reserved.
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
- * @link       http://phpmd.org
+ * @link       https://www.pivotaltracker.com/story/show/10096717
+ * @since      1.1.0
+ *
+ * @ticket 10096717
+ * @covers stdClass
+ * @group phpmd
+ * @group phpmd::integration
+ * @group integrationtest
  */
-class PHP_PMD_Regression_AllTests
+class PHP_PMD_Regression_LongVariablePrivatePropertiesTicket010096717Test
+    extends PHP_PMD_Regression_AbstractTest
 {
     /**
-     * Creates a phpunit test suite.
-     *
-     * @return PHPUnit_Framework_TestSuite
+     * testRuleNotAppliesForLongPrivateProperty
+     * 
+     * @return void
      */
-    public static function suite()
+    public function testRuleNotAppliesForLongPrivateProperty()
     {
-        $suite = new PHPUnit_Framework_TestSuite('PHP_PMD_Regression - Tests');
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maximum', 17);
+        $rule->apply($this->getClass());
+    }
 
-        $suite->addTestSuite('PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test');
-        $suite->addTestSuite('PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Test');
-        $suite->addTestSuite('PHP_PMD_Regression_ExcessivePublicCountRuleNeverExecutedTicket015Test');
-        $suite->addTestSuite('PHP_PMD_Regression_SuperGlobalsFlaggedAsUnusedTicket019Test');
-        $suite->addTestSuite('PHP_PMD_Regression_StaticVariablesFlaggedAsUnusedTicket020Test');
-        $suite->addTestSuite('PHP_PMD_Regression_SuppressWarningsNotAppliesToUnusedPrivateMethod036Test');
-        $suite->addTestSuite('PHP_PMD_Regression_LongVariablePrivatePropertiesTicket010096717Test');
-
-        return $suite;
+    /**
+     * testRuleNotAppliesForLongPrivateStaticProperty
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesForLongPrivateStaticProperty()
+    {
+        $rule = new PHP_PMD_Rule_Naming_LongVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maximum', 17);
+        $rule->apply($this->getClass());
     }
 }

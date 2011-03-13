@@ -94,6 +94,10 @@ class PHP_PMD_Rule_Naming_LongVariable
         if ($node->getType() === 'class') {
             $fields = $node->findChildrenOfType('FieldDeclaration');
             foreach ($fields as $field) {
+                if ($field->isPrivate()) {
+                    continue;
+                }
+                
                 $declarators = $field->findChildrenOfType('VariableDeclarator');
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);

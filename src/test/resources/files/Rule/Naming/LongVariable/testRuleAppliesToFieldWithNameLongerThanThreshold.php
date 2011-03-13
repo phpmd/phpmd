@@ -1,5 +1,5 @@
 <?php
 class testRuleAppliesToFieldWithNameLongerThanThreshold
 {
-    private $_thisReallyLongClassFieldName = 42;
+    protected $thisReallyLongClassFieldName = 42;
 }
