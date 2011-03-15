@@ -499,6 +499,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         if (isset($actual['duration'])) {
             $actual['duration'] = '';
         }
+        if (isset($actual['version'])) {
+            $actual['version'] = '@package_version@';
+        }
 
         $expected = file_get_contents(self::createFileUri($expectedFileName));
         $expected = str_replace('#{rootDirectory}', self::$_filesDirectory, $expected);
@@ -519,8 +522,14 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         // file can contain test rule implementations.
         $include = self::$_filesDirectory;
 
-        // Check pear installation
-        if (strpos('@package_version@', '@package_version') === 0) {
+        if (is_int($index = array_search('--include-path', $_SERVER['argv']))) {
+            $ext = pathinfo($_SERVER['argv'][$index + 1], PATHINFO_EXTENSION);
+
+            if (0 === strpos($ext, 'phar')) {
+                include realpath($_SERVER['argv'][$index + 1]);
+            }
+
+        } else if (strpos('@package_version@', '@package_version') === 0) {
             $include .= PATH_SEPARATOR . 
                         realpath(dirname(__FILE__) . '/../../../../main/php') .
                         PATH_SEPARATOR .

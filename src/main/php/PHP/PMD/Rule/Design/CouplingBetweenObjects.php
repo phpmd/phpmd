@@ -82,5 +82,4 @@ class PHP_PMD_Rule_Design_CouplingBetweenObjects
             $this->addViolation($node, array($node->getName(), $cbo, $threshold));
         }
     }
-
 }
