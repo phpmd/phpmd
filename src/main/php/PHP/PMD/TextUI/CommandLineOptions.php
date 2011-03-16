@@ -146,6 +146,10 @@ class PHP_PMD_TextUI_CommandLineOptions
                 $this->_reportFile = array_shift($args);
                 break;
 
+            case '--inputfile':
+                array_unshift($arguments, $this->_readInputFile(array_shift($args)));
+                break;
+
             case '--extensions':
                 $this->logDeprecated('extensions', 'suffixes');
 
@@ -356,5 +360,25 @@ class PHP_PMD_TextUI_CommandLineOptions
         );
 
         fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
+    }
+
+    /**
+     * This method takes the given input file, reads the newline separated paths
+     * from that file and creates a comma separated string of the file paths. If
+     * the given <b>$inputFile</b> not exists, this method will throw an
+     * exception.
+     *
+     * @param string $inputFile Specified input file name.
+     *
+     * @return string
+     * @throws InvalidArgumentException If the specified input file does not exist.
+     * @since 1.1.0
+     */
+    private function _readInputFile($inputFile)
+    {
+        if (file_exists($inputFile)) {
+            return join(',', array_map('trim', file($inputFile)));
+        }
+        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }

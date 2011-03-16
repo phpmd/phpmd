@@ -113,8 +113,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         return new PHP_PMD_Node_Class(
             $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()
-                    ->getClasses()
+                $this->_parseTestCaseSource()->getClasses()
             )
         );
     }
@@ -131,8 +130,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         return new PHP_PMD_Node_Interface(
             $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()
-                    ->getInterfaces()
+                $this->_parseTestCaseSource()->getInterfaces()
             )
         );
     }
@@ -149,10 +147,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         
         return new PHP_PMD_Node_Method(
             $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()
-                    ->getTypes()
-                    ->current()
-                    ->getMethods()
+                $this->_parseTestCaseSource()->getTypes()->current()->getMethods()
             )
         );
     }
@@ -169,8 +164,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         return new PHP_PMD_Node_Function(
             $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()
-                    ->getFunctions()
+                $this->_parseTestCaseSource()->getFunctions()
             )
         );
     }
@@ -181,21 +175,36 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      * @return string
      * @since 1.1.0
      */
-    protected function createCodeResourceUriForTest()
+    protected static function createCodeResourceUriForTest()
     {
-        $frame = $this->_getCallingTestCase();
+        $frame = self::_getCallingTestCase();
+        return self::createResourceUriForTest($frame['function'] . '.php');
+    }
 
-        if (preg_match('(_([^_]+)_[^_]+[a-z]([0-9]+)Test)i', $frame['class'], $match)) {
-            $localPath = $match[1] . '/' . $match[2];
+    /**
+     * Returns the absolute path for a test resource for the current test.
+     *
+     * @param string $localPath The local/relative file location
+     *
+     * @return string
+     * @since 1.1.0
+     */
+    protected static function createResourceUriForTest($localPath)
+    {
+        $frame = self::_getCallingTestCase();
+
+        $regexp = '(_([^_]+)_[^_]+[a-z]([0-9]+)Test)i';
+        if (preg_match($regexp, $frame['class'], $match)) {
+            $testPath = $match[1] . '/' . $match[2];
         } else {
-            $localPath = strtr(substr($frame['class'], 8, -4), '_', '/');
+            $testPath = strtr(substr($frame['class'], 8, -4), '_', '/');
         }
-
+        
         return sprintf(
-            '%s/../../../resources/files/%s/%s.php',
+            '%s/../../../resources/files/%s/%s',
             dirname(__FILE__),
-            $localPath,
-            $frame['function']
+            $testPath,
+            $localPath
         );
     }
 
@@ -215,7 +224,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    private function _getCallingTestCase()
+    private static function _getCallingTestCase()
     {
         foreach (debug_backtrace() as $frame) {
             if (strpos($frame['function'], 'test') === 0) {
@@ -503,8 +512,11 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             $actual['version'] = '@package_version@';
         }
 
-        $expected = file_get_contents(self::createFileUri($expectedFileName));
-        $expected = str_replace('#{rootDirectory}', self::$_filesDirectory, $expected);
+        $expected = str_replace(
+            '#{rootDirectory}',
+            self::$_filesDirectory,
+            file_get_contents(self::createFileUri($expectedFileName))
+        );
 
         self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }
@@ -517,7 +529,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     public static function init()
     {
-        self::$_filesDirectory = realpath(dirname(__FILE__) . '/../../../resources/files');
+        self::$_filesDirectory = realpath(
+            dirname(__FILE__) . '/../../../resources/files'
+        );
 
         // file can contain test rule implementations.
         $include = self::$_filesDirectory;
@@ -557,7 +571,10 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     {
         self::$_originalWorkingDirectory = getcwd();
 
-        chdir(self::createFileUri($localPath));
+        if (0 === preg_match('(^([A-Z]:|/))', $localPath)) {
+            $localPath = self::createFileUri($localPath);
+        }
+        chdir($localPath);
     }
 
     /**

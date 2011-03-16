@@ -61,40 +61,153 @@ require_once 'PHP/PMD/TextUI/CommandLineOptions.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_TextUI_CommandLineOptions
+ * @group phpmd
+ * @group phpmd::textui
+ * @group unittest
  */
 class PHP_PMD_TextUI_CommandLineOptionsTest extends PHP_PMD_AbstractTest
 {
     /**
-     * testCliOptionsAcceptsVersionArgument
+     * testAssignsInputArgumentToInputProperty
      *
      * @return void
-     * @covers PHP_PMD_TextUI_CommandLineOptions
-     * @group phpmd
-     * @group phpmd::textui
-     * @group unittest
+     * @since 1.1.0
      */
-    public function testHasVersionReturnsFalseByDefault()
+    public function testAssignsInputArgumentToInputProperty()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $args = array('foo.php', __FILE__, 'text', 'design');
         $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
 
-        $this->assertFalse($opts->hasVersion());
+        self::assertEquals(__FILE__, $opts->getInputPath());
+    }
+
+    /**
+     * testAssignsFormatArgumentToReportFormatProperty
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testAssignsFormatArgumentToReportFormatProperty()
+    {
+        $args = array('foo.php', __FILE__, 'text', 'design');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertEquals('text', $opts->getReportFormat());
+    }
+
+    /**
+     * testAssignsRuleSetsArgumentToRuleSetProperty
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testAssignsRuleSetsArgumentToRuleSetProperty()
+    {
+        $args = array('foo.php', __FILE__, 'text', 'design');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertEquals('design', $opts->getRuleSets());
+    }
+
+    /**
+     * testThrowsExpectedExceptionWhenRequiredArgumentsNotSet
+     * 
+     * @return void
+     * @since 1.1.0
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
+    {
+        $args = array(__FILE__, 'text', 'design');
+        new PHP_PMD_TextUI_CommandLineOptions($args);
+    }
+
+    /**
+     * testAssignsInputFileOptionToInputPathProperty
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testAssignsInputFileOptionToInputPathProperty()
+    {
+        $uri = self::createResourceUriForTest('inputfile.txt');
+
+        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertEquals('Dir1/Class1.php,Dir2/Class2.php', $opts->getInputPath());
+    }
+
+    /**
+     * testAssignsFormatArgumentCorrectWhenCalledWithInputFile
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testAssignsFormatArgumentCorrectWhenCalledWithInputFile()
+    {
+        $uri = self::createResourceUriForTest('inputfile.txt');
+
+        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertEquals('text', $opts->getReportFormat());
+    }
+
+    /**
+     * testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile
+     *
+     * @return void
+     * @since 1.1.0
+     */
+    public function testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile()
+    {
+        $uri = self::createResourceUriForTest('inputfile.txt');
+
+        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertEquals('design', $opts->getRuleSets());
+    }
+
+    /**
+     * testThrowsExpectedExceptionWhenInputFileNotExists
+     *
+     * @return void
+     * @since 1.1.0
+     * @expectedException InvalidArgumentException
+     */
+    public function testThrowsExpectedExceptionWhenInputFileNotExists()
+    {
+        $args = array('foo.php', 'text', 'design', '--inputfile', 'inputfail.txt');
+        new PHP_PMD_TextUI_CommandLineOptions($args);
     }
 
     /**
      * testCliOptionsAcceptsVersionArgument
      *
      * @return void
-     * @covers PHP_PMD_TextUI_CommandLineOptions
-     * @group phpmd
-     * @group phpmd::textui
-     * @group unittest
+     */
+    public function testHasVersionReturnsFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertFalse($opts->hasVersion());
+    }
+
+    /**
+     * testCliOptionsAcceptsVersionArgument
+     *
+     * @return void
      */
     public function testCliOptionsAcceptsVersionArgument()
     {
         $args = array(__FILE__, '--version');
         $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
 
-        $this->assertTrue($opts->hasVersion());
+        self::assertTrue($opts->hasVersion());
     }
 }

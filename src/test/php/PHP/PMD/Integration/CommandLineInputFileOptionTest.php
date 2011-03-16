@@ -47,14 +47,12 @@
  * @since      1.1.0
  */
 
-require_once 'PHPUnit/Framework/TestSuite.php';
+require_once dirname(__FILE__) . '/../AbstractTest.php';
 
-require_once dirname(__FILE__) . '/CommandLineInputFileOptionTest.php';
-require_once dirname(__FILE__) . '/CouplingBetweenObjectsIntegrationTest.php';
-require_once dirname(__FILE__) . '/GotoStatementIntegrationTest.php';
+require_once 'PHP/PMD/TextUI/Command.php';
 
 /**
- * Main test suite for all PHP_PMD integration tests
+ * Integration tests for the command line option <em>--inputfile</em>.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -65,28 +63,65 @@ require_once dirname(__FILE__) . '/GotoStatementIntegrationTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  * @since      1.1.0
+ *
+ * @group phpmd
+ * @group phpmd::integration
+ * @group integrationtest
  */
-class PHP_PMD_Integration_AllTests extends PHPUnit_Framework_TestSuite
+class PHP_PMD_Integration_CommandLineInputFileOptionTest
+    extends PHP_PMD_AbstractTest
 {
     /**
-     * Constructs a new test suite instance.
+     * testReportContainsExpectedRuleViolationWarning
+     *
+     * @return void
+     * @outputBuffering enabled
      */
-    public function __construct()
+    public function testReportContainsExpectedRuleViolationWarning()
     {
-        parent::__construct('PHP_PMD_Integration - Tests');
-
-        $this->addTestSuite('PHP_PMD_Integration_CommandLineInputFileOptionTest');
-        $this->addTestSuite('PHP_PMD_Integration_CouplingBetweenObjectsIntegrationTest');
-        $this->addTestSuite('PHP_PMD_Integration_GotoStatementIntegrationTest');
+        self::assertContains(
+            "Avoid unused local variables such as '\$foo'.",
+            self::runCommandLine()
+        );
     }
 
     /**
-     * Creates a phpunit test suite.
+     * testReportNotContainsRuleViolationWarningForFileNotInList
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return void
+     * @outputBuffering enabled
      */
-    public static function suite()
+    public function testReportNotContainsRuleViolationWarningForFileNotInList()
     {
-        return new self();
+        self::assertNotContains(
+            "Avoid unused local variables such as '\$bar'.",
+            self::runCommandLine()
+        );
+    }
+
+    /**
+     * Runs the PHPMD command line interface and returns the report content.
+     *
+     * @return string
+     */
+    protected static function runCommandLine()
+    {
+        $inputfile  = self::createResourceUriForTest('inputfile.txt');
+        $reportfile = self::createTempFileUri();
+
+        self::changeWorkingDirectory(dirname($inputfile));
+
+        PHP_PMD_TextUI_Command::main(
+            array(
+                __FILE__,
+                'text',
+                'unusedcode',
+                '--reportfile',
+                $reportfile,
+                '--inputfile',
+                $inputfile
+            )
+        );
+        return file_get_contents($reportfile);
     }
 }
