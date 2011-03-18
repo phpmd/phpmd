@@ -1,0 +1,35 @@
+#
+# robots.txt for http://kore-nordmann.de
+#
+# Please note: There are a lot of pages on this site, and there are
+# some misbehaved spiders out there that go _way_ too fast. If you're
+# irresponsible, your access to the site may be blocked.
+
+Sitemap: http://pdepend.org/.sitemap
+
+# advertising-related bots:
+User-agent: Mediapartners-Google*
+Disallow: /
+
+# A capture bot, downloads gazillions of pages with no public benefit
+# http://www.webreaper.net/
+User-agent: WebReaper
+Disallow: /
+
+#
+# Friendly, low-speed bots are welcome viewing article pages, but not
+# dynamically-generated pages please.
+#
+
+# Only googles bots now '$'
+# User-agent: Googlebot
+# Disallow: /relation/find$
+
+User-agent: *
+Disallow: /styles/
+Disallow: /images/
+
+#
+# *at least* 1 second please. preferably more :D
+#
+Crawl-delay: 1

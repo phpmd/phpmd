@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true">
+        <name>About</name>
+        <path>about.rst</path>
+    </site>
+    <directory>
+        <name>Documentation</name>
+        <path>documentation/</path>
+    </directory>
+    <directory>
+        <name>Rules</name>
+        <path>rules/</path>
+    </directory>
+    <directory>
+        <name>Download</name>
+        <path>download/</path>
+    </directory>
+    <directory>
+        <name>Support &amp; Contact</name>
+        <path>support/</path>
+    </directory>
+
+    <media>
+        <path>robots.txt</path>
+    </media>
+</index>
+

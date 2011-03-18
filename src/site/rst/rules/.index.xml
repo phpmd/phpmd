@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+  <site index="true" display="false">
+    <name>Index</name>
+    <path>index.rst</path>
+  </site>
+    <site>
+        <name>Code Size Rules</name>
+        <path>codesize.rst</path>
+    </site>
+    <site>
+        <name>Design Rules</name>
+        <path>design.rst</path>
+    </site>
+    <site>
+        <name>Naming Rules</name>
+        <path>naming.rst</path>
+    </site>
+    <site>
+        <name>Unused Code Rules</name>
+        <path>unusedcode.rst</path>
+    </site>
+</index>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true" display="false">
+        <path>index.rst</path>
+    </site>
+    <site display="true">
+        <name>Suppress warnings</name>
+        <path>suppress-warnings.rst</path>
+    </site>
+    <site display="true">
+        <name>Creating a rule set</name>
+        <path>creating-a-ruleset.rst</path>
+    </site>
+    <site display="true">
+        <name>Ant task usage</name>
+        <path>ant-task.rst</path>
+    </site>
+</index>
+

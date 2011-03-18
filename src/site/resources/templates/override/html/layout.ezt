@@ -1,0 +1,111 @@
+{use $tree, $content}
+{var $description = wcv_get_config_value( 'description' )}
+{var $keywords = wcv_get_config_value( 'tags' )}
+{if wcv_content_has( $content, 'abstract' )}
+	{if $content->content->abstract !== false}
+		{$description = str_find_replace( str_simplify( $content->content->abstract ), '"', '\\"' )}
+	{/if}
+{/if}
+{if wcv_content_has( $content, 'keywords' )}
+	{if $content->content->keywords !== false}
+		{$keywords = str_join( $content->content->keywords, ", ")}
+	{/if}
+{/if}
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xml:lang="{$content->metadata->language}"
+	lang="{$content->metadata->language}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<meta name="description" content="{$description}" />
+	<meta name="keywords" content="{$keywords}" />
+	<meta name="author" content="{$content->metadata->author}" />
+	<meta name="language" content="{$content->metadata->language}" />
+	<meta name="date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
+	<meta name="robots" content="all" />
+
+	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+	<meta name="DC.title" content="{$content->displayName}" />
+	<meta name="DC.creator" content="{$content->metadata->author}" />
+	<meta name="DC.date" content="{date_format_timestamp( 'r', $content->metadata->mtime)}" />
+	<meta name="DC.rights" content="{$content->metadata->license}" />
+
+	<link rel="meta" href="{$content->path->relative . '.rdf'}" />
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+	<link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+	<link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+{if wcv_content_has( $content, 'feed' ) }
+	<link rel="alternate" type="application/rss+xml" title="{$content->displayName}" href="{$content->path->relative}.rss" />
+{/if}
+
+{var $urlWithoutExt = $content->path->url . str_remove( $content->content->path->relative, 0, 1 )}
+{if ( $content->content->isBlogPost )}
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+    rdf:about="{$urlWithoutExt . '.html'}"
+    dc:identifier="{$urlWithoutExt . '.html'}"
+    dc:title="{$content->displayName}"
+    trackback:ping="{$urlWithoutExt . '.dyn'}" />
+</rdf:RDF>
+{/if}
+
+{*	<script type="text/ecmascript">
+{literal}
+// <![CDATA[
+/**
+ * Return a mail link constructed from the parameters. The order of the
+ * parameters is a bit unintuitive to not match any common patterns easily.
+ * This is obviously no challenge for a specialized bot.
+ *
+ * @param string host
+ * @param string tld
+ * @param string user
+ * @return string
+ */
+function returnMailLink( element, host, tld, user )
+{
+	element.setAttribute( "href", "mailto:" + user + "@" + host + "." + tld );
+}
+// ]]>
+{/literal}
+	</script> *}
+
+        <title>{wcv_get_config_value( 'title' )}</title>
+    </head>
+    <body>
+        <h1>
+            <a href="/">{wcv_get_config_value( 'title' )}</a>
+        </h1>
+        <div id="content">
+            {raw $content->content->html}
+        </div>
+
+        <div id="navigation">
+            {include wcv_get_template( 'html/navigation.ezt' ) send $tree, $content}
+            {include wcv_get_template( 'html/release.ezt' )}
+        </div>
+
+    	{include wcv_get_template( 'html/footer.ezt' ) send $content}
+    	{include wcv_get_template( 'html/formats.ezt' ) send $content}
+{literal}
+<script type="text/javascript">
+var pkBaseURL = "//a.xplib.de/";
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="//a.xplib.de/piwik.php?idsite=3" style="border:0" alt="" /></p></noscript>
+{/literal}
+    </body>
+</html>

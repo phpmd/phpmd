@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<index>
+    <site index="true" display="false">
+        <name>Index</name>
+        <path>index.rst</path>
+    </site>
+    <directory>
+        <name>Releases</name>
+        <path>releases/</path>
+    </directory>
+    <directory>
+        <name>Extensions</name>
+        <path>extensions/</path>
+    </directory>
+</index>

@@ -1,0 +1,21 @@
+{use $content}
+<div id="formats">
+	{var $formats=array() }
+	{$formats['RDF'] = $content->path->relative . '.rdf'}
+
+	{* Check for other supported formats *}
+	{if wcv_content_has( $content, 'html' ) }
+		{$formats['HTML'] = $content->path->relative . '.html'}
+	{/if}
+	{if wcv_content_has( $content, 'text' ) }
+		{$formats['Text'] = $content->path->relative . '.txt'}
+	{/if}
+	{if wcv_content_has( $content, 'feed' ) }
+		{$formats['RSS'] = $content->path->relative . '.rss'}
+	{/if}
+
+	{foreach $formats as $name => $url}
+		<a href="{$url}">{$name}</a>
+		{delimiter} | {/delimiter}
+	{/foreach}
+</div>
