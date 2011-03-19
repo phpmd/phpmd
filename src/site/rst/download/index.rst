@@ -13,21 +13,15 @@ with `PHP Depend`__ you must also discover this project's
 
   mapi@arwen ~ $ pear channel-discover pear.phpmd.org
   mapi@arwen ~ $ pear channel-discover pear.pdepend.org
-  mapi@arwen ~ $ pear install --alldeps phpmd/PHP_PMD-alpha
-
-__ http://pear.php.net/manual/en/installation.php
-__ http://pear.phpmd.org
-__ http://pdepend.org
-__ http://pear.pdepend.org
+  mapi@arwen ~ $ pear install --alldeps phpmd/PHP_PMD
 
 From the github repository
 ==========================
 
-If you like to participate on the social coding plattform GitHub,
+If you like to participate on the social coding plattform `GitHub`__,
 you can use PHPMD's mirror to fork and contribute to PHPMD. ::
 
-  mapi@arwen ~ $ git clone git://github.com/manuelpichler/phpmd.git
-
+  mapi@arwen ~ $ git clone git://github.com/phpmd/phpmd.git
 
 Requirements
 ============
@@ -38,5 +32,10 @@ current state. It relies on the following software products:
 - `PHP_Depend >= 0.10.0`__
 - `PHP >= 5.2.3`__
 
+__ http://pear.php.net/manual/en/installation.php
+__ http://pear.phpmd.org
+__ http://pdepend.org
+__ http://pear.pdepend.org
+__ https://github.com/phpmd/phpmd
 __ http://pdepend.org
 __ http://php.net/downloads.php
