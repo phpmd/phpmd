@@ -45,11 +45,8 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Rule.php';
-require_once 'PHP/PMD/RuleViolation.php';
-
 /**
- * This is the abstract base class for pmd rules.
+ * Base interface for a PHPMD rule.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -58,103 +55,21 @@ require_once 'PHP/PMD/RuleViolation.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
- *
- * @SuppressWarnings(PHPMD)
+ * @since     1.1.0
  */
-abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
+interface PHP_PMD_Rule
 {
     /**
-     * List of readable priority names.
-     *
-     * @var array(string) $_priorities
+     * The default lowest rule priority.
      */
-    private static $_priorities = array(
-        'High',
-        'Medium High',
-        'Medium',
-        'Medium Low',
-        'Low'
-    );
-
-    /**
-     * The name for this rule instance.
-     *
-     * @var string $_name
-     */
-    private $_name = '';
-
-    /**
-     * The violation message text for this rule.
-     *
-     * @var string $_message
-     */
-    private $_message = '';
-
-    /**
-     * The version since when this rule is available.
-     *
-     * @var string $_since
-     */
-    private $_since = null;
-
-    /**
-     * An url will external information for this rule.
-     *
-     * @var string $_externalInfoUrl
-     */
-    private $_externalInfoUrl = '';
-
-    /**
-     * An optional description for this rule.
-     *
-     * @var string $_description
-     */
-    private $_description = '';
-
-    /**
-     * A list of code examples for this rule.
-     *
-     * @var array(string) $_examples
-     */
-    private $_examples = array();
-
-    /**
-     * The name of the parent rule-set instance.
-     *
-     * @var string $_ruleSetName
-     */
-    private $_ruleSetName = '';
-
-    /**
-     * The priority of this rule.
-     *
-     * @var integer $_priority
-     */
-    private $_priority = self::LOWEST_PRIORITY;
-
-    /**
-     * Configuration properties for this rule instance.
-     *
-     * @var array(string=>string) $_properties
-     */
-    private $_properties = array();
-
-    /**
-     * The report for object for this rule.
-     *
-     * @var PHP_PMD_Report $_report
-     */
-    private $_report = null;
+    const LOWEST_PRIORITY = 5;
 
     /**
      * Returns the name for this rule instance.
      *
      * @return string
      */
-    public function getName()
-    {
-        return $this->_name;
-    }
+    function getName();
 
     /**
      * Sets the name for this rule instance.
@@ -163,20 +78,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setName($name)
-    {
-        $this->_name = $name;
-    }
+    function setName($name);
 
     /**
      * Returns the version since when this rule is available or <b>null</b>.
      *
      * @return string
      */
-    public function getSince()
-    {
-        return $this->_since;
-    }
+    function getSince();
 
     /**
      * Sets the version since when this rule is available.
@@ -185,20 +94,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setSince($since)
-    {
-        $this->_since = $since;
-    }
+    function setSince($since);
 
     /**
      * Returns the violation message text for this rule.
      *
      * @return string
      */
-    public function getMessage()
-    {
-        return $this->_message;
-    }
+    function getMessage();
 
     /**
      * Sets the violation message text for this rule.
@@ -207,20 +110,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setMessage($message)
-    {
-        $this->_message = $message;
-    }
+    function setMessage($message);
 
     /**
      * Returns an url will external information for this rule.
      *
      * @return string
      */
-    public function getExternalInfoUrl()
-    {
-        return $this->_externalInfoUrl;
-    }
+    function getExternalInfoUrl();
 
     /**
      * Sets an url will external information for this rule.
@@ -229,20 +126,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setExternalInfoUrl($externalInfoUrl)
-    {
-        $this->_externalInfoUrl = $externalInfoUrl;
-    }
+    function setExternalInfoUrl($externalInfoUrl);
 
     /**
      * Returns the description text for this rule instance.
      *
      * @return string
      */
-    public function getDescription()
-    {
-        return $this->_description;
-    }
+    function getDescription();
 
     /**
      * Sets the description text for this rule instance.
@@ -251,20 +142,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setDescription($description)
-    {
-        $this->_description = $description;
-    }
+    function setDescription($description);
 
     /**
      * Returns a list of examples for this rule.
      *
      * @return array(string)
      */
-    public function getExamples()
-    {
-        return $this->_examples;
-    }
+    function getExamples();
 
     /**
      * Adds a code example for this rule.
@@ -273,20 +158,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function addExample($example)
-    {
-        $this->_examples[] = $example;
-    }
+    function addExample($example);
 
     /**
      * Returns the priority of this rule.
      *
      * @return integer
      */
-    public function getPriority()
-    {
-        return $this->_priority;
-    }
+    function getPriority();
 
     /**
      * Set the priority of this rule.
@@ -295,20 +174,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setPriority($priority)
-    {
-        $this->_priority = $priority;
-    }
+    function setPriority($priority);
 
     /**
      * Returns the name of the parent rule-set instance.
      *
      * @return string
      */
-    public function getRuleSetName()
-    {
-        return $this->_ruleSetName;
-    }
+    function getRuleSetName();
 
     /**
      * Sets the name of the parent rule set instance.
@@ -317,20 +190,14 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setRuleSetName($ruleSetName)
-    {
-        $this->_ruleSetName = $ruleSetName;
-    }
+    function setRuleSetName($ruleSetName);
 
     /**
      * Returns the violation report for this rule.
      *
      * @return PHP_PMD_Report
      */
-    public function getReport()
-    {
-        return $this->_report;
-    }
+    function getReport();
 
     /**
      * Sets the violation report for this rule.
@@ -339,10 +206,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function setReport(PHP_PMD_Report $report)
-    {
-        $this->_report = $report;
-    }
+    function setReport(PHP_PMD_Report $report);
 
     /**
      * Adds a configuration property to this rule instance.
@@ -352,10 +216,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @return void
      */
-    public function addProperty($name, $value)
-    {
-        $this->_properties[$name] = $value;
-    }
+    function addProperty($name, $value);
 
     /**
      * Returns the value of a configured property as a boolean or throws an
@@ -366,13 +227,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      * @return boolean
      * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
-    public function getBooleanProperty($name)
-    {
-        if (isset($this->_properties[$name])) {
-            return in_array($this->_properties[$name], array('true', 'on', 1));
-        }
-        throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
-    }
+    function getBooleanProperty($name);
 
     /**
      * Returns the value of a configured property as an integer or throws an
@@ -383,40 +238,15 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      * @return integer
      * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
-    public function getIntProperty($name)
-    {
-        if (isset($this->_properties[$name])) {
-            return (int) $this->_properties[$name];
-        }
-        throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
-    }
+    function getIntProperty($name);
 
     /**
-     * This method adds a violation to all reports for this violation type and
-     * for the given <b>$node</b> instance.
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
      *
-     * @param PHP_PMD_AbstractNode $node The node which has a violation of this
-     *                                   type.
-     * @param array(string)        $args Optional list of arguments that are
-     *                                   used to replace "{\d+}" placeholders in
-     *                                   the message text of this rule.
+     * @param PHP_PMD_AbstractNode $node The current context for analysis.
      *
      * @return void
      */
-    protected function addViolation(
-        PHP_PMD_AbstractNode $node,
-        array $args = array()
-    ) {
-        $search  = array();
-        $replace = array();
-        foreach ($args as $index => $value) {
-            $search[]  = '{' . $index . '}';
-            $replace[] = $value;
-        }
-
-        $message = str_replace($search, $replace, $this->_message);
-
-        $ruleViolation = new PHP_PMD_RuleViolation($this, $node, $message);
-        $this->_report->addRuleViolation($ruleViolation);
-    }
+    function apply(PHP_PMD_AbstractNode $node);
 }

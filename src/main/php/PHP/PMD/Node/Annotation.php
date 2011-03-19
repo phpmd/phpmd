@@ -94,11 +94,11 @@ class PHP_PMD_Node_Annotation
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     * @param PHP_PMD_Rule $rule The rule to check.
      *
      * @return boolean
      */
-    public function suppresses(PHP_PMD_AbstractRule $rule)
+    public function suppresses(PHP_PMD_Rule $rule)
     {
         if ($this->_name === self::SUPPRESS_ANNOTATION) {
             return $this->_suppresses($rule);
@@ -109,11 +109,11 @@ class PHP_PMD_Node_Annotation
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     * @param PHP_PMD_Rule $rule The rule to check.
      *
      * @return boolean
      */
-    private function _suppresses(PHP_PMD_AbstractRule $rule)
+    private function _suppresses(PHP_PMD_Rule $rule)
     {
         if (in_array($this->_value, array('PHPMD', 'PMD'))) {
             return true;

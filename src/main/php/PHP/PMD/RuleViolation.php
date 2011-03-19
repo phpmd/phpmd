@@ -62,7 +62,7 @@ class PHP_PMD_RuleViolation
     /**
      * The rule that causes this violation.
      *
-     * @var PHP_PMD_AbstractRule
+     * @var PHP_PMD_Rule
      */
     private $_rule = null;
 
@@ -106,12 +106,12 @@ class PHP_PMD_RuleViolation
     /**
      * Constructs a new rule violation instance.
      *
-     * @param PHP_PMD_AbstractRule $rule             PHP_PMD rule for violation.
+     * @param PHP_PMD_Rule         $rule             PHP_PMD rule for violation.
      * @param PHP_PMD_AbstractNode $node             The source node of evil.
      * @param string               $violationMessage The error/report message.
      */
     public function __construct(
-        PHP_PMD_AbstractRule $rule,
+        PHP_PMD_Rule $rule,
         PHP_PMD_AbstractNode $node,
         $violationMessage
     ) {
@@ -132,7 +132,7 @@ class PHP_PMD_RuleViolation
     /**
      * Returns the rule that causes this violation.
      *
-     * @return PHP_PMD_AbstractRule
+     * @return PHP_PMD_Rule
      */
     public function getRule()
     {

@@ -78,7 +78,7 @@ class PHP_PMD_RuleSetFactory
      *
      * @var integer
      */
-    private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
+    private $_minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
 
     /**
      * Constructs a new default rule-set factory instance.
@@ -270,16 +270,14 @@ class PHP_PMD_RuleSetFactory
      * Checks if the given rule is included/not excluded by the given rule-set
      * reference node.
      *
-     * @param PHP_PMD_AbstractRule $rule        The currently processed rule.
-     * @param SimpleXMLElement     $ruleSetNode The context rule-set xml element.
+     * @param PHP_PMD_Rule     $rule        The currently processed rule.
+     * @param SimpleXMLElement $ruleSetNode The context rule-set xml element.
      *
      * @return boolean
      * @since 0.2.3
      */
-    private function _isIncluded(
-        PHP_PMD_AbstractRule $rule,
-        SimpleXMLElement $ruleSetNode
-    ) {
+    private function _isIncluded(PHP_PMD_Rule $rule, SimpleXMLElement $ruleSetNode)
+    {
         foreach ($ruleSetNode->exclude as $exclude) {
             if ($rule->getName() === (string) $exclude['name']) {
                 return false;
@@ -322,7 +320,7 @@ class PHP_PMD_RuleSetFactory
             }
         }
 
-        /* @var $rule PHP_PMD_AbstractRule */
+        /* @var $rule PHP_PMD_Rule */
         $rule = new $className();
         $rule->setName((string) $ruleNode['name']);
         $rule->setMessage((string) $ruleNode['message']);
@@ -417,13 +415,13 @@ class PHP_PMD_RuleSetFactory
      *   ...
      * </code>
      *
-     * @param PHP_PMD_AbstractRule $rule           The context rule object.
-     * @param SimpleXMLElement     $propertiesNode The raw properties xml node.
+     * @param PHP_PMD_Rule     $rule           The context rule object.
+     * @param SimpleXMLElement $propertiesNode The raw properties xml node.
      *
      * @return void
      */
     private function _parsePropertiesNode(
-        PHP_PMD_AbstractRule $rule,
+        PHP_PMD_Rule $rule,
         SimpleXMLElement $propertiesNode
     ) {
         foreach ($propertiesNode->children() as $node) {
@@ -434,17 +432,15 @@ class PHP_PMD_RuleSetFactory
     }
 
     /**
-     * Adds an additional propery to the given <b>$rule</b> instance.
+     * Adds an additional property to the given <b>$rule</b> instance.
      *
-     * @param PHP_PMD_AbstractRule $rule The context rule object.
-     * @param SimpleXMLElement     $node The raw xml property node.
+     * @param PHP_PMD_Rule     $rule The context rule object.
+     * @param SimpleXMLElement $node The raw xml property node.
      *
      * @return void
      */
-    private function _addProperty(
-        PHP_PMD_AbstractRule $rule,
-        SimpleXMLElement $node
-    ) {
+    private function _addProperty(PHP_PMD_Rule $rule, SimpleXMLElement $node)
+    {
         $name  = trim($node['name']);
         $value = trim($this->_getPropertyValue($node));
         if ($name !== '' && $value !== '') {

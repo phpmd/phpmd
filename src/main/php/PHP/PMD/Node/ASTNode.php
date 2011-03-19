@@ -86,12 +86,12 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param PHP_PMD_AbstractRule $rule The context rule instance.
+     * @param PHP_PMD_Rule $rule The context rule instance.
      * 
      * @return boolean
      * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
-    public function hasSuppressWarningsAnnotationFor(PHP_PMD_AbstractRule $rule)
+    public function hasSuppressWarningsAnnotationFor(PHP_PMD_Rule $rule)
     {
         return false;
     }

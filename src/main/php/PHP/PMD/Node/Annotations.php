@@ -95,11 +95,11 @@ class PHP_PMD_Node_Annotations
     /**
      * Checks if one of the annotations suppresses the given rule.
      *
-     * @param PHP_PMD_AbstractRule $rule The rule to check.
+     * @param PHP_PMD_Rule $rule The rule to check.
      *
      * @return boolean
      */
-    public function suppresses(PHP_PMD_AbstractRule $rule)
+    public function suppresses(PHP_PMD_Rule $rule)
     {
         foreach ($this->_annotations as $annotation) {
             if ($annotation->suppresses($rule)) {

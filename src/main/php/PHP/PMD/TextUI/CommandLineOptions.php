@@ -73,7 +73,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      *
      * @var integer $_minimumPriority
      */
-    private $_minimumPriority = PHP_PMD_AbstractRule::LOWEST_PRIORITY;
+    private $_minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
 
     /**
      * A php source code filename or directory.

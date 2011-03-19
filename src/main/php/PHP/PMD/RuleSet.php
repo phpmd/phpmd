@@ -203,7 +203,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      *
      * @param string $name The rule name.
      *
-     * @return PHP_PMD_AbstractRule
+     * @return PHP_PMD_Rule
      */
     public function getRuleByName($name)
     {
@@ -238,11 +238,11 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     /**
      * Adds a new rule to this rule-set.
      *
-     * @param PHP_PMD_AbstractRule $rule Rule instance to add.
+     * @param PHP_PMD_Rule $rule Rule instance to add.
      *
      * @return void
      */
-    public function addRule(PHP_PMD_AbstractRule $rule)
+    public function addRule(PHP_PMD_Rule $rule)
     {
         foreach ($this->_applyTo as $applyTo => $type) {
             if ($rule instanceof $applyTo) {
