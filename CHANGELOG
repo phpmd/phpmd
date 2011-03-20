@@ -1,8 +1,10 @@
-phpmd-1.1.0 (2011/03/  )
+phpmd-1.1.0 (2011/03/20)
 ========================
 
 - Implemented #10474873: Add rule for PHP's goto statement. Implemented
   with commit #2745a20.
+- Implemented #10474987: Implement rule for CBO metric. Implemented with
+  commit #14277b4.
 - Implemented #11012465: Replace deprecated PHPUnit features in test suite.
   Implemented with commit #4adb88d.
 - Fixed #10096717: LongVariable rule should not apply on private
