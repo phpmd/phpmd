@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index>
+    <site index="true" display="false">
+        <name>Release 1.1.0</name>
+        <path>changelog.rst</path>
+    </site>
+</index>
