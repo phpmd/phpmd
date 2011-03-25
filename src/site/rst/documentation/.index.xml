@@ -8,6 +8,10 @@
         <path>suppress-warnings.rst</path>
     </site>
     <site display="true">
+        <name>Writing a PHPMD Rule</name>
+        <path>writing-a-phpmd-rule.rst</path>
+    </site>
+    <site display="true">
         <name>Creating a rule set</name>
         <path>creating-a-ruleset.rst</path>
     </site>

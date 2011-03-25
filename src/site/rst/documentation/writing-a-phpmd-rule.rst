@@ -402,7 +402,7 @@ tree node. To implement additional rules you should take a look at PHP_Depend's
 Conclusion
 ==========
 
-Within this post we have shown you several ways to implement custom rules for
+In this article we have shown you several ways to implement custom rules for
 PHPMD. If you think one of your rules could be reusable for other projects and
 user, don't hesitate to propose your on the project's mailing list
 `phpmd-users@phpmd.org`__ or to send us `GitHub`__ pull request.
