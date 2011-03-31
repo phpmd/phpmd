@@ -174,8 +174,6 @@ class PHP_PMD_Rule_UnusedPrivateMethod
         return (
             $owner->isInstanceOf('SelfReference') ||
             $owner->isInstanceOf('StaticReference') ||
-            // TODO: Replace this with ThisVariable check when this AST node is
-            //       ported back from the design disharmony branch
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
