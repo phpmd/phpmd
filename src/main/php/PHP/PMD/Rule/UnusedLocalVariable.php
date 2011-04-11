@@ -92,7 +92,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
 
         foreach ($this->_images as $image => $nodes) {
             if (count($nodes) === 1) {
-                $this->addViolation(reset($nodes), array($image));
+                $this->doCheckNodeImage($nodes[0]);
             }
         }
     }
@@ -156,4 +156,52 @@ class PHP_PMD_Rule_UnusedLocalVariable
         }
         $this->_images[$node->getImage()][] = $node;
     }
+
+    /**
+     * Template method that performs the real node image check.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return void
+     */
+    protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
+    {
+        if ($this->_isNameAllowedInContext($node)) {
+            return;
+        }
+        $this->addViolation($node, array($node->getImage()));
+    }
+
+    /**
+     * Checks if a short name is acceptable in the current context. For the
+     * moment these contexts are the init section of a for-loop and short
+     * variable names in catch-statements.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     *
+     * @return boolean
+     */
+    private function _isNameAllowedInContext(PHP_PMD_AbstractNode $node)
+    {
+        return $this->_isChildOf($node, 'CatchStatement');
+    }
+
+    /**
+     * Checks if the given node is a direct or indirect child of a node with
+     * the given type.
+     *
+     * @param PHP_PMD_AbstractNode $node The context source code node.
+     * @param string               $type Possible parent type.
+     *
+     * @return boolean
+     */
+    private function _isChildOf(PHP_PMD_AbstractNode $node, $type)
+    {
+        $parent = $node->getParent();
+        if ($parent->isInstanceOf($type)) {
+            return true;
+        }
+        return false;
+    }
 }
+?>
