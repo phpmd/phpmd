@@ -307,11 +307,11 @@ class PHP_PMD_RuleSetFactory
         $fileName  = strtr($className, '_', '/') . '.php';
 
         if (class_exists($className) === false) {
-            $fp = @fopen($fileName, 'r', true);
-            if ($fp === false) {
+            $handle = @fopen($fileName, 'r', true);
+            if ($handle === false) {
                 throw new PHP_PMD_RuleClassFileNotFoundException($className);
             }
-            fclose($fp);
+            fclose($handle);
 
             include_once $fileName;
 
