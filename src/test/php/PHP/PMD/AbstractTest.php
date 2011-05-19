@@ -3,7 +3,7 @@
  * This file is part of PHP_PMD.
  *
  * PHP Version 5
- * 
+ *
  * Copyright (c) 2009-2011, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
@@ -76,7 +76,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
     /**
      * Temporary files created by a test.
-     * 
+     *
      * @var array(string)
      */
     private static $_tempFiles = array();
@@ -144,7 +144,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
     protected function getMethod()
     {
         include_once 'PHP/PMD/Node/Method.php';
-        
+
         return new PHP_PMD_Node_Method(
             $this->_getNodeForCallingTestCase(
                 $this->_parseTestCaseSource()->getTypes()->current()->getMethods()
@@ -199,7 +199,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         } else {
             $testPath = strtr(substr($frame['class'], 8, -4), '_', '/');
         }
-        
+
         return sprintf(
             '%s/../../../resources/files/%s/%s',
             dirname(__FILE__),
@@ -272,7 +272,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         $builder =  new PHP_Depend_Builder_Default();
 
         $parser = new PHP_Depend_Parser_VersionAllParser(
-            $tokenizer, 
+            $tokenizer,
             $builder,
             new PHP_Depend_Util_Cache_Driver_Memory()
         );
@@ -544,10 +544,10 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             }
 
         } else if (strpos('@package_version@', '@package_version') === 0) {
-            $include .= PATH_SEPARATOR . 
+            $include .= PATH_SEPARATOR .
                         realpath(dirname(__FILE__) . '/../../../../main/php') .
                         PATH_SEPARATOR .
-                        realpath(dirname(__FILE__) . '/../../../../../lib/pdepend');
+                        realpath(dirname(__FILE__) . '/../../../../../lib/pdepend/src/main/php');
         }
 
         // Configure include path
