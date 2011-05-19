@@ -123,7 +123,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      * @var boolean
      */
     private $_version = false;
-    
+
     /**
      * Constructs a new command line options instance.
      *
@@ -159,7 +159,7 @@ class PHP_PMD_TextUI_CommandLineOptions
 
             case '--ignore':
                 $this->logDeprecated('ignore', 'exclude');
-                
+
             case '--exclude':
                 $this->_ignore = array_shift($args);
                 break;
@@ -301,13 +301,13 @@ class PHP_PMD_TextUI_CommandLineOptions
                 // Try to load a custom renderer
                 $fileName = strtr($this->_reportFormat, '_', '/') . '.php';
 
-                $fp = @fopen($fileName, 'r', true);
-                if (is_resource($fp) === false) {
+                $fileHandle = @fopen($fileName, 'r', true);
+                if (is_resource($fileHandle) === false) {
                     $message = 'Can\'t find the custom report class: '
                              . $this->_reportFormat;
                     throw new InvalidArgumentException($message, self::INPUT_ERROR);
                 }
-                @fclose($fp);
+                @fclose($fileHandle);
 
                 include_once $fileName;
 
