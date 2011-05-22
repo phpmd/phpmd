@@ -54,7 +54,7 @@
     <target name="-package:phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
+        <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${php.basedir.src}"
               executable="${-package:phar:filename}" 
@@ -62,7 +62,7 @@
               
             <arg value="PHP/PMD/Rule" />
             <arg value="text" />
-            <arg value="${custom.phpmd.rulesets}" />
+            <arg value="${phpmd.rulesets}" />
         </exec>
     </target>
 
@@ -79,7 +79,7 @@
     <target name="-pack-pear-archive-after-execute">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  phpmd PHP/PMD/Rule text ${custom.phpmd.rulesets}" level="verbose" />
+        <echo message="  phpmd PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${php.basedir.src}" executable="php" failonerror="true">
             <arg value="-d" />
@@ -87,7 +87,7 @@
             <arg value="${common-pear-bin-dir}/phpmd" />
             <arg value="PHP/PMD/Rule" />
             <arg value="text" />
-            <arg value="${custom.phpmd.rulesets}" />
+            <arg value="${phpmd.rulesets}" />
         </exec>
     </target>
 
