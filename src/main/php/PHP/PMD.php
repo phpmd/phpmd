@@ -80,7 +80,7 @@ class PHP_PMD
      *
      * @var array(string)
      */
-    private $_ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg');
+    private $_ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS');
 
     /**
      * The input source file or directory.
