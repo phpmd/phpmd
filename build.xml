@@ -40,7 +40,7 @@
     -->
     <target name="do-copy-files-for-xyz-archive">
         <copy todir="${output.dir}/resources/rulesets">
-            <fileset dir="${resource.basedir.src}/rulesets" />
+            <fileset dir="${commons.srcdir.resource}/rulesets" />
         </copy>
     </target>
 
@@ -56,7 +56,7 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${php.basedir.src}"
+        <exec dir="${commons.srcdir.php}"
               executable="${-package:phar:filename}" 
               failonerror="true">
               
@@ -81,7 +81,10 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  phpmd PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${php.basedir.src}" executable="php" failonerror="true">
+        <exec dir="${commons.srcdir.php}" 
+              executable="${commons.executable.php}" 
+              failonerror="true">
+
             <arg value="-d" />
             <arg value="include_path=${common-pear-root-dir}" />
             <arg value="${common-pear-bin-dir}/phpmd" />
