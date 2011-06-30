@@ -29,6 +29,9 @@ __ /rules/index.html
 Recent Releases
 ===============
 
+
+- 2011/06/30 - PHPMD 1.1.1: New feature `release`__ of PHPMD that fixes an issue
+  in PHP_PMD's package file.
 - 2011/02/20 - PHPMD 1.1.0: New feature `release`__ of PHPMD that provides two
   new rules that will measure the quality of a project.
 - 2011/02/12 - PHPMD 1.0.1: New Bugfix `release`__ that closes two
@@ -37,13 +40,10 @@ Recent Releases
   1.0.0 `release`__ of the PHP Mess Detector.
 - 2010/10/01 - PHPMD 0.2.7: Bugfix `release`__ of the PHP Mess Detector.
   Please take a look at the `CHANGELOG`__ for the concrete changes.
-- 2010/08/10 - New release of PHPMD's `Java Binding`__ and the Ant
-  `extension`__.
 
+__ /download/releases/1.1.1/changelog.html
 __ /download/releases/1.1.0/changelog.html
 __ /download/releases/index.html
 __ /download/releases/index.html
 __ /download/releases/index.html
 __ http://tracker.pdepend.org/php_mess_detector/browse_code/view/CHANGELOG#line1
-__ /download/extensions#java-binding 
-__ /download/extensions#ant-task

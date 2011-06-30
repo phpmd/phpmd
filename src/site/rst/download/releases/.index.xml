@@ -6,6 +6,10 @@
     </site>
 
     <directory>
+        <name>1.1.1</name>
+        <path>1.1.1/</path>
+    </directory>
+    <directory>
         <name>1.1.0</name>
         <path>1.1.0/</path>
     </directory>
