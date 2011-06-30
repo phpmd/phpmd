@@ -1,8 +1,9 @@
-config.properties
 build
 build.number
 build.privates
+cache.properties
 cachegrind.out.*
+config.properties
 nbproject
 catalog.xml
 .settings
