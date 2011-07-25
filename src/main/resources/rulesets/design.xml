@@ -105,7 +105,7 @@ class Foo {
 
     <rule name="NumberOfChildren"
           since="0.2"
-          message = "The class {0} has {1} children. Consider to rebalance this class hierarchy."
+          message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
           class="PHP_PMD_Rule_Design_NumberOfChildren"
           externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren">
         <description>
@@ -123,7 +123,7 @@ class hierarchy. You should consider to refactor this class hierarchy.
 
     <rule name="DepthOfInheritance"
           since="0.2"
-          message = "The class {0} has {1} parents. Consider to reduce the depth of this class hierarchy."
+          message = "The {0} {1} has {2} parents. Consider to reduce the depth of this class hierarchy to under {3}."
           class="PHP_PMD_Rule_Design_DepthOfInheritance"
           externalInfoUrl="http://phpmd.org/rules/design.html#depthofinheritance">
         <description>
