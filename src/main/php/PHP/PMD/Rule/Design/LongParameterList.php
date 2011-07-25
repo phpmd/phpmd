@@ -77,10 +77,12 @@ class PHP_PMD_Rule_Design_LongParameterList
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getParameterCount() < $this->getIntProperty('minimum')) {
+        $threshold = $this->getIntProperty('minimum');
+        $count = $node->getParameterCount();
+        if ($count < $threshold) {
             return;
         }
 
-        $this->addViolation($node);
+        $this->addViolation($node, array($node->getName(), $count, $threshold));
     }
 }

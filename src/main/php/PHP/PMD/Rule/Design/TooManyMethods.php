@@ -82,13 +82,15 @@ class PHP_PMD_Rule_Design_TooManyMethods
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getMetric('nom') <= $this->getIntProperty('maxmethods')) {
+        $threshold = $this->getIntProperty('maxmethods');
+        if ($node->getMetric('nom') <= $threshold) {
             return;
         }
-        if ($this->_countMethods($node) <= $this->getIntProperty('maxmethods')) {
+        $nom = $this->_countMethods($node);
+        if ($nom <= $threshold) {
             return;
         }
-        $this->addViolation($node);
+        $this->addViolation($node, array($node->getType(), $node->getName(), $nom, $threshold));
     }
 
     /**

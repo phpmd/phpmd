@@ -12,7 +12,7 @@ The Code Size Ruleset contains a collection of rules that find code size related
   
     <rule name="CyclomaticComplexity"
           since="0.1"
-          message = "The {0} {1}() has a Cyclomatic Complexity of {2}."
+          message = "The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}."
           class="PHP_PMD_Rule_CyclomaticComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity">
         <description>
@@ -79,7 +79,7 @@ class Foo {
 
     <rule name="NPathComplexity"
           since="0.1"
-          message="The {0} {1}() has an NPath complexity of {2}."
+          message="The {0} {1}() has an NPath complexity of {2}. The configured NPath complexity threshold is {3}."
           class="PHP_PMD_Rule_Design_NpathComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity">
         <description>
@@ -104,7 +104,7 @@ class Foo {
 
     <rule name="ExcessiveMethodLength"
           since="0.1"
-          message="Avoid really long methods."
+          message="The {0} {1}() has {2} lines of code. Current threshold is set to {3}. Avoid really long methods."
           class="PHP_PMD_Rule_Design_LongMethod"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
         <description>
@@ -130,7 +130,7 @@ class Foo {
 
     <rule name="ExcessiveClassLength"
  	  since="0.1"
-          message="Avoid really long classes."
+          message="The {0} {1} has {2} lines of code. Current threshold is {3}. Avoid really long classes."
           class="PHP_PMD_Rule_Design_LongClass"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
@@ -156,7 +156,7 @@ class Foo {
 
     <rule name="ExcessiveParameterList"
           since="0.1"
-          message="Avoid really long parameter lists."
+          message="The {0} {1} has {2} parameters. Consider to reduce parameter number under {3}."
           class="PHP_PMD_Rule_Design_LongParameterList"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
@@ -182,7 +182,7 @@ class Foo {
 
     <rule name="ExcessivePublicCount"
           since="0.1"
-          message="This class has a bunch of public methods and attributes"
+          message="The {0] {1} has {2} public methods and attributes. Consider to reduce the number of public items under {3}."
           class="PHP_PMD_Rule_ExcessivePublicCount"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
@@ -213,7 +213,7 @@ public class Foo {
 
     <rule name="TooManyFields"
           since="0.1"
-          message="Too many fields"
+          message="The {0] {1] has {2} fields. Consider to redesign {1} to keep the number of fields under {3}."
           class="PHP_PMD_Rule_Design_TooManyFields"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanyfields">
         <description>
@@ -334,7 +334,7 @@ public class Foo extends Bar {
     <rule name="TooManyMethods"
           since="0.1"
           class="PHP_PMD_Rule_Design_TooManyMethods"
-          message="This class has too many methods, consider refactoring it."
+          message="The {0] {1} has {2} methods. Consider refactoring {1} to keep number of methods under {3}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
             <![CDATA[

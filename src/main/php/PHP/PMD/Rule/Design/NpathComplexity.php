@@ -78,8 +78,9 @@ class PHP_PMD_Rule_Design_NpathComplexity
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
+        $threshold = $this->getIntProperty('minimum');
         $npath = $node->getMetric('npath');
-        if ($npath < $this->getIntProperty('minimum')) {
+        if ($npath < $threshold) {
             return;
         }
 
@@ -88,7 +89,8 @@ class PHP_PMD_Rule_Design_NpathComplexity
             array(
                 $node->getType(),
                 $node->getName(),
-                $npath
+                $npath,
+                $threshold
             )
         );
     }

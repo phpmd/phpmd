@@ -78,11 +78,12 @@ class PHP_PMD_Rule_CyclomaticComplexity
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
+        $threshold = $this->getIntProperty('reportLevel');
         $ccn = $node->getMetric('ccn2');
-        if ($ccn < $this->getIntProperty('reportLevel')) {
+        if ($ccn < $threshold) {
             return;
         }
-        
-        $this->addViolation($node, array($node->getType(), $node->getName(), $ccn));
+
+        $this->addViolation($node, array($node->getType(), $node->getName(), $ccn, $threshold));
     }
 }
