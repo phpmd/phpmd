@@ -78,9 +78,10 @@ class PHP_PMD_Rule_Naming_ShortMethodName
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($this->getIntProperty('minimum') <= strlen($node->getName())) {
+        $threshold = $this->getIntProperty('minimum');
+        if ($threshold <= strlen($node->getName())) {
             return;
         }
-        $this->addViolation($node, array($node->getParentName(), $node->getName()));
+        $this->addViolation($node, array($node->getParentName(), $node->getName(), $threshold));
     }
 }

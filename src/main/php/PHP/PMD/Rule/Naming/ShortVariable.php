@@ -139,13 +139,14 @@ class PHP_PMD_Rule_Naming_ShortVariable
      */
     protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
     {
-        if ($this->getIntProperty('minimum') <= strlen($node->getImage()) - 1) {
+        $threshold = $this->getIntProperty('minimum');
+        if ($threshold <= strlen($node->getImage()) - 1) {
             return;
         }
         if ($this->_isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($node->getImage()));
+        $this->addViolation($node, array($node->getImage(), $threshold));
     }
 
     /**
@@ -154,7 +155,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
      * variable names in catch-statements.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
-     * 
+     *
      * @return boolean
      */
     private function _isNameAllowedInContext(PHP_PMD_AbstractNode $node)
@@ -171,7 +172,7 @@ class PHP_PMD_Rule_Naming_ShortVariable
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
      * @param string               $type Possible parent type.
-     * 
+     *
      * @return boolean
      */
     private function _isChildOf(PHP_PMD_AbstractNode $node, $type)
