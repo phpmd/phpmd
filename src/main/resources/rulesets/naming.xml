@@ -10,7 +10,7 @@ The Naming Ruleset contains a collection of rules about names - too long, too sh
 
     <rule name="ShortVariable"
           since="0.2"
-          message="Avoid variables with short names like {0}"
+          message="Avoid variables with short names like {0}. Configured minimum length is {1}."
           class="PHP_PMD_Rule_Naming_ShortVariable"
           externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable">
         <description>
@@ -37,7 +37,7 @@ class Something {
 
     <rule name="LongVariable"
           since="0.2"
-          message="Avoid excessively long variable names like {0}"
+          message="Avoid excessively long variable names like {0}. Keep variable name length under {1}."
           class="PHP_PMD_Rule_Naming_LongVariable"
           externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable">
         <description>
@@ -65,7 +65,7 @@ class Something {
 
     <rule name="ShortMethodName"
           since="0.2"
-          message="Avoid using short method names like {0}::{1}()"
+          message="Avoid using short method names like {0}::{1}(). The configured minimum method name length is {2}."
           class="PHP_PMD_Rule_Naming_ShortMethodName"
           externalInfoUrl="http://phpmd.org/rules/naming.html#shortmethodname">
         <description>

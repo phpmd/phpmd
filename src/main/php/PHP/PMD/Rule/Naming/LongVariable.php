@@ -97,7 +97,7 @@ class PHP_PMD_Rule_Naming_LongVariable
                 if ($field->isPrivate()) {
                     continue;
                 }
-                
+
                 $declarators = $field->findChildrenOfType('VariableDeclarator');
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);
@@ -143,13 +143,14 @@ class PHP_PMD_Rule_Naming_LongVariable
      */
     protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
     {
-        if ($this->getIntProperty('maximum') >= strlen($node->getImage()) - 1) {
+        $threshold = $this->getIntProperty('maximum');
+        if ($threshold >= strlen($node->getImage()) - 1) {
             return;
         }
         if ($this->_isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($node->getImage()));
+        $this->addViolation($node, array($node->getImage(), $threshold));
     }
 
     /**

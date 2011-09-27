@@ -78,14 +78,15 @@ class PHP_PMD_Rule_Design_LongMethod
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
+        $threshold = $this->getIntProperty('minimum');
         $loc = $node->getMetric('loc');
-        if ($loc < $this->getIntProperty('minimum')) {
+        if ($loc < $threshold) {
             return;
         }
 
         $type = explode('_', get_class($node));
         $type = strtolower(array_pop($type));
 
-        $this->addViolation($node, array($type, $node->getName(), $loc));
+        $this->addViolation($node, array($type, $node->getName(), $loc, $threshold));
     }
 }

@@ -62,7 +62,7 @@ require_once 'PHP/PMD/Rule/IClassAware.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Rule_ExcessivePublicCount 
+class PHP_PMD_Rule_ExcessivePublicCount
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IClassAware
 {
@@ -76,9 +76,11 @@ class PHP_PMD_Rule_ExcessivePublicCount
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getMetric('cis') < $this->getIntProperty('minimum')) {
+        $threshold = $this->getIntProperty('minimum');
+        $cis = $node->getMetric('cis');
+        if ($cis < $threshold) {
             return;
         }
-        $this->addViolation($node);
+        $this->addViolation($node, array($node->getType(), $node->getName(), $cis, $threshold));
     }
 }

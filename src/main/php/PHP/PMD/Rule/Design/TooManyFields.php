@@ -75,9 +75,11 @@ class PHP_PMD_Rule_Design_TooManyFields
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($node->getMetric('vars') <= $this->getIntProperty('maxfields')) {
+        $threshold = $this->getIntProperty('maxfields');
+        $vars = $node->getMetric('vars');
+        if ($vars <= $threshold) {
             return;
         }
-        $this->addViolation($node);
+        $this->addViolation($node, array($node->getType(), $node->getName(), $vars, $threshold));
     }
 }
