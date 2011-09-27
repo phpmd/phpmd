@@ -62,6 +62,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      * Should this rule set force the strict mode.
      *
      * @var boolean
+     * @since 1.2.0
      */
     private $_strict = false;
 
@@ -187,6 +188,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      * Activates the strict mode for this rule set instance.
      *
      * @return void
+     * @since 1.2.0
      */
     public function setStrict()
     {

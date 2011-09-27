@@ -105,6 +105,9 @@ class PHP_PMD_TextUI_Command
         // Create a rule set factory
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
+        if ($opts->hasStrict()) {
+            $ruleSetFactory->setStrict();
+        }
 
         $phpmd = new PHP_PMD();
 

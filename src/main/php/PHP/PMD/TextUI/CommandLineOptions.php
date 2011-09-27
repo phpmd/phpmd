@@ -125,6 +125,14 @@ class PHP_PMD_TextUI_CommandLineOptions
     private $_version = false;
 
     /**
+     * Should PHPMD run in strict mode?
+     * 
+     * @var boolean
+     * @since 1.2.0
+     */
+    private $_strict = false;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param array(string) $args The cli arguments.
@@ -167,6 +175,10 @@ class PHP_PMD_TextUI_CommandLineOptions
             case '--version':
                 $this->_version = true;
                 return;
+
+            case '--strict':
+                $this->_strict = true;
+                break;
 
             default:
                 $arguments[] = $arg;
@@ -267,6 +279,17 @@ class PHP_PMD_TextUI_CommandLineOptions
     }
 
     /**
+     * Was the <b>--strict</b> option passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     * @since 1.2.0
+     */
+    public function hasStrict()
+    {
+        return $this->_strict;
+    }
+
+    /**
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
@@ -340,7 +363,9 @@ class PHP_PMD_TextUI_CommandLineOptions
                '--suffixes: comma-separated string of valid source code ' .
                'filename extensions' . PHP_EOL .
                '--exclude: comma-separated string of patterns that are used to ' .
-               'ignore directories' . PHP_EOL;
+               'ignore directories' . PHP_EOL .
+                '--strict: also report those nodes with a @SuppressWarnings ' .
+               'annotation' . PHP_EOL;
     }
 
     /**

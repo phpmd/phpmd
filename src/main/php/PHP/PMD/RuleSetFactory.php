@@ -69,6 +69,7 @@ class PHP_PMD_RuleSetFactory
      * Is the strict mode active?
      *
      * @var boolean
+     * @since 1.2.0
      */
     private $_strict = false;
 
@@ -104,6 +105,7 @@ class PHP_PMD_RuleSetFactory
      * Activates the strict mode for all rule sets.
      *
      * @return void
+     * @since 1.2.0
      */
     public function setStrict()
     {

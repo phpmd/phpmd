@@ -210,4 +210,45 @@ class PHP_PMD_TextUI_CommandLineOptionsTest extends PHP_PMD_AbstractTest
 
         self::assertTrue($opts->hasVersion());
     }
+
+    /**
+     * testCliUsageContainsStrictOption
+     * 
+     * @return void
+     */
+    public function testCliUsageContainsStrictOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        $this->assertContains('--strict:', $opts->usage());
+    }
+
+    /**
+     * testCliOptionsIsStrictReturnsFalseByDefault
+     * 
+     * @return void
+     * @since 1.2.0
+     */
+    public function testCliOptionsIsStrictReturnsFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertFalse($opts->hasStrict());
+    }
+
+    /**
+     * testCliOptionsAcceptsStrictArgument
+     * 
+     * @return void
+     * @since 1.2.0
+     */
+    public function testCliOptionsAcceptsStrictArgument()
+    {
+        $args = array(__FILE__, '--strict', __FILE__, 'text', 'codesize');
+        $opts = new PHP_PMD_TextUI_CommandLineOptions($args);
+
+        self::assertTrue($opts->hasStrict());
+    }
 }
