@@ -599,4 +599,31 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleDoesNotApplyToCatchStatement
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         try {
+     *         } catch (Exception $e) {
+     *         }
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     * @covers PHP_PMD_Rule_UnusedLocalVariable
+     * @covers PHP_PMD_Rule_AbstractLocalVariable
+     * @group phpmd
+     * @group phpmd::rule
+     * @group unittest
+     */
+    public function testRuleDoesNotApplyToCatchStatement()
+    {
+        $rule = new PHP_PMD_Rule_UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }
