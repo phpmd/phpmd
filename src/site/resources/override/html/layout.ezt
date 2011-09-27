@@ -90,7 +90,7 @@ function returnMailLink( element, host, tld, user )
 
         <div id="navigation">
             {include wcv_get_template( 'html/navigation.ezt' ) send $tree, $content}
-            {include wcv_get_template( 'html/release.ezt' )}
+            {* include wcv_get_template( 'html/release.ezt' ) *}
         </div>
 
     	{include wcv_get_template( 'html/footer.ezt' ) send $content}
