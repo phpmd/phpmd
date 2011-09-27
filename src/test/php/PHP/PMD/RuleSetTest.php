@@ -49,6 +49,7 @@ require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once dirname(__FILE__) . '/../../../resources/files/rules/TestRule.php';
 
+require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/AbstractRule.php';
 require_once 'PHP/PMD/RuleSet.php';
 
@@ -62,6 +63,10 @@ require_once 'PHP/PMD/RuleSet.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD_RuleSet
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
 {
@@ -69,9 +74,6 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
      *
      * @return void
-     * @covers PHP_PMD_RuleSet
-     * @group phpmd
-     * @group unittest
      */
     public function testGetRuleByNameReturnsNullWhenNoMatchingRuleExists()
     {
@@ -83,9 +85,6 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      * testGetRuleByNameReturnsMatchingRuleInstance
      *
      * @return void
-     * @covers PHP_PMD_RuleSet
-     * @group phpmd
-     * @group unittest
      */
     public function testGetRuleByNameReturnsMatchingRuleInstance()
     {
@@ -103,13 +102,8 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
     {
         $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
-
-        $node = $this->getMock('PHP_PMD_Node_AbstractNode', array('getDocComment'));
-        $node->expects($this->once())
-            ->method('getDocComment')
-            ->will($this->returnValue('/** @SuppressWarnings(PMD) */'));
-
-        $ruleSet->apply($node);
+        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->apply($this->getClass());
 
         $this->assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
     }
@@ -122,16 +116,13 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
     public function testApplyInvokesRuleWhenStrictModeIsSet()
     {
         $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
+        $ruleSet->setReport($this->getReportMock(0));
         $ruleSet->setStrict();
 
-        $node = $this->getMock('PHP_PMD_Node_AbstractNode', array('getDocComment'));
-        $node->expects($this->once())
-            ->method('getDocComment')
-            ->will($this->returnValue('/** @SuppressWarnings(PMD) */'));
+        $class = $this->getClass();
+        $ruleSet->apply($class);
 
-        $ruleSet->apply($node);
-
-        $this->assertSame($node, $ruleSet->getRuleByName(__FUNCTION__)->node);
+        $this->assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
     }
 
     /**

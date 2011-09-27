@@ -289,7 +289,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->_rules[$className] as $rule) {
-            if (!$this->_strict && $node->hasSuppressWarningsAnnotationFor($rule)) {
+            if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->_strict) {
                 continue;
             }
             $rule->setReport($this->_report);
