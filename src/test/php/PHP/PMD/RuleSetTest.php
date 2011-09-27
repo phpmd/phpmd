@@ -96,6 +96,45 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testApplyNotInvokesRuleWhenSuppressAnnotationExists
+     * 
+     * @return void
+     */
+    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
+    {
+        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
+
+        $node = $this->getMock('PHP_PMD_Node_AbstractNode', array('getDocComment'));
+        $node->expects($this->once())
+            ->method('getDocComment')
+            ->will($this->returnValue('/** @SuppressWarnings(PMD) */'));
+
+        $ruleSet->apply($node);
+
+        $this->assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
+    }
+
+    /**
+     * testApplyInvokesRuleWhenStrictModeIsSet
+     * 
+     * @return void
+     */
+    public function testApplyInvokesRuleWhenStrictModeIsSet()
+    {
+        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
+        $ruleSet->setStrict();
+
+        $node = $this->getMock('PHP_PMD_Node_AbstractNode', array('getDocComment'));
+        $node->expects($this->once())
+            ->method('getDocComment')
+            ->will($this->returnValue('/** @SuppressWarnings(PMD) */'));
+
+        $ruleSet->apply($node);
+
+        $this->assertSame($node, $ruleSet->getRuleByName(__FUNCTION__)->node);
+    }
+
+    /**
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
      *
