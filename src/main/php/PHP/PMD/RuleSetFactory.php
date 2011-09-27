@@ -66,6 +66,13 @@ require_once 'PHP/PMD/RuleSetNotFoundException.php';
 class PHP_PMD_RuleSetFactory
 {
     /**
+     * Is the strict mode active?
+     *
+     * @var boolean
+     */
+    private $_strict = false;
+
+    /**
      * The data directory set by PEAR or a dynamic property set within the class
      * constructor.
      *
@@ -91,6 +98,16 @@ class PHP_PMD_RuleSetFactory
         } else {
             $this->_location .= '/PHP_PMD/resources';
         }
+    }
+
+    /**
+     * Activates the strict mode for all rule sets.
+     *
+     * @return void
+     */
+    public function setStrict()
+    {
+        $this->_strict = true;
     }
 
     /**
@@ -194,6 +211,10 @@ class PHP_PMD_RuleSetFactory
         $ruleSet = new PHP_PMD_RuleSet();
         $ruleSet->setFileName($fileName);
         $ruleSet->setName((string) $xml['name']);
+
+        if ($this->_strict) {
+            $ruleSet->setStrict();
+        }
 
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'description') {

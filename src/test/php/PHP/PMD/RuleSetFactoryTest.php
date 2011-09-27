@@ -59,6 +59,10 @@ require_once 'PHP/PMD/RuleSetFactory.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD_RuleSetFactory
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 {
@@ -66,9 +70,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory::_createRuleSetFileName
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets()
     {
@@ -82,9 +83,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory::_createRuleSetFileName
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory()
     {
@@ -100,9 +98,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsReturnsArray
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsReturnsArray()
     {
@@ -114,9 +109,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForSingleFileReturnsArrayWithOneElement
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement()
     {
@@ -128,9 +120,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance()
     {
@@ -142,9 +131,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsConfiguresExpectedRuleSetName
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetName()
     {
@@ -156,9 +142,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsConfiguresExpectedRuleSetName
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription()
     {
@@ -170,9 +153,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements()
     {
@@ -187,9 +167,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances()
     {
@@ -205,9 +182,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames()
     {
@@ -223,9 +197,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions()
     {
@@ -241,9 +212,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForSingleLocalFileNameReturnsArray
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForLocalFileNameReturnsArray()
     {
@@ -257,9 +225,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForSingleLocalFileNameReturnsArrayWithOneElement
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement()
     {
@@ -273,9 +238,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForSingleLocalFileNameConfiguresExpectedRuleSetName
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsForLocalFileNameConfiguresExpectedRuleSetName()
     {
@@ -289,9 +251,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithReferenceContainsExpectedRuleSet
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedRuleSet()
     {
@@ -305,9 +264,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules()
     {
@@ -321,9 +277,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsForLocalFileWithRuleSetReferenceNodes
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithReferenceContainsRuleInstances()
     {
@@ -337,9 +290,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithReferenceContainsExpectedRules
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedRules()
     {
@@ -361,9 +311,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateSingleRuleSetReturnsRuleSetInstance
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateSingleRuleSetReturnsRuleSetInstance()
     {
@@ -379,9 +326,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * Tests that the rule-set factory applies a set priority filter correct.
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetWithSpecifiedPriorityOnlyContainsMatchingRules()
     {
@@ -398,9 +342,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting()
     {
@@ -417,9 +358,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleWithExpectedExample
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleWithExpectedExample()
     {
@@ -436,9 +374,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleWithExpectedMultipleExamples
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleWithExpectedMultipleExamples()
     {
@@ -455,9 +390,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting()
     {
@@ -474,9 +406,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting()
     {
@@ -493,9 +422,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testFactorySupportsAlternativeSyntaxForPropertyValue
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactorySupportsAlternativeSyntaxForPropertyValue()
     {
@@ -512,9 +438,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting()
     {
@@ -533,9 +456,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesNameSetting()
     {
@@ -552,9 +472,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting()
     {
@@ -571,9 +488,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting()
     {
@@ -590,9 +504,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule()
     {
@@ -609,9 +520,6 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules()
     {
@@ -629,10 +537,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * identifier.
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
      * @covers PHP_PMD_RuleSetNotFoundException
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
     {
@@ -651,10 +556,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * for the configured rule does not exist.
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
      * @covers PHP_PMD_RuleClassFileNotFoundException
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
@@ -674,10 +576,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * cannot be found.
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
      * @covers PHP_PMD_RuleClassNotFoundException
-     * @group phpmd
-     * @group unittest
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
@@ -697,10 +596,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      * cannot be found.
      *
      * @return void
-     * @covers PHP_PMD_RuleSetFactory
      * @covers PHP_PMD_RuleClassNotFoundException
-     * @group phpmd
-     * @group unittest
      * @expectedException RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
@@ -709,6 +605,23 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 
         $factory = new PHP_PMD_RuleSetFactory();
         $factory->createRuleSets($fileName);
+    }
+
+    /**
+     * testCreateRuleSetsActivatesStrictModeOnRuleSet
+     * 
+     * @return void
+     */
+    public function testCreateRuleSetsActivatesStrictModeOnRuleSet()
+    {
+        $fileName = self::createFileUri('rulesets/set1.xml');
+
+        $factory = new PHP_PMD_RuleSetFactory();
+        $factory->setStrict();
+
+        $ruleSets = $factory->createRuleSets($fileName);
+
+        $this->assertAttributeEquals(true, '_strict', $ruleSets[0]);
     }
 
     /**

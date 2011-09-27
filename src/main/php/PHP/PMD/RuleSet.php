@@ -59,6 +59,13 @@
 class PHP_PMD_RuleSet implements IteratorAggregate
 {
     /**
+     * Should this rule set force the strict mode.
+     *
+     * @var boolean
+     */
+    private $_strict = false;
+
+    /**
      * The name of the file where this set is specified.
      *
      * @var string $_fileName
@@ -177,6 +184,16 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     }
 
     /**
+     * Activates the strict mode for this rule set instance.
+     *
+     * @return void
+     */
+    public function setStrict()
+    {
+        $this->_strict = true;
+    }
+
+    /**
      * Returns the violation report used by the rule-set.
      *
      * @return PHP_PMD_Report
@@ -270,7 +287,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->_rules[$className] as $rule) {
-            if ($node->hasSuppressWarningsAnnotationFor($rule)) {
+            if (!$this->_strict && $node->hasSuppressWarningsAnnotationFor($rule)) {
                 continue;
             }
             $rule->setReport($this->_report);
