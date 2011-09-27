@@ -78,7 +78,15 @@ class PHP_PMD_Rule_Design_NumberOfChildren
         $nocc = $node->getMetric('nocc');
         $threshold = $this->getIntProperty('minimum');
         if ($nocc >= $threshold) {
-            $this->addViolation($node, array($node-> getType(), $node->getName(), $nocc, $threshold));
+            $this->addViolation(
+                $node, 
+                array(
+                    $node-> getType(), 
+                    $node->getName(), 
+                    $nocc, 
+                    $threshold
+                )
+            );
         }
     }
 }

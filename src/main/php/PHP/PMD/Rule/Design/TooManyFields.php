@@ -80,6 +80,14 @@ class PHP_PMD_Rule_Design_TooManyFields
         if ($vars <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($node->getType(), $node->getName(), $vars, $threshold));
+        $this->addViolation(
+            $node, 
+            array(
+                $node->getType(), 
+                $node->getName(), 
+                $vars, 
+                $threshold
+            )
+        );
     }
 }

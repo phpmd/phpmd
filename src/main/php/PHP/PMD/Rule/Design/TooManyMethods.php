@@ -90,7 +90,15 @@ class PHP_PMD_Rule_Design_TooManyMethods
         if ($nom <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($node->getType(), $node->getName(), $nom, $threshold));
+        $this->addViolation(
+            $node, 
+            array(
+                $node->getType(), 
+                $node->getName(), 
+                $nom, 
+                $threshold
+            )
+        );
     }
 
     /**

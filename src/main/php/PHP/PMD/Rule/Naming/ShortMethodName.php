@@ -82,6 +82,13 @@ class PHP_PMD_Rule_Naming_ShortMethodName
         if ($threshold <= strlen($node->getName())) {
             return;
         }
-        $this->addViolation($node, array($node->getParentName(), $node->getName(), $threshold));
+        $this->addViolation(
+            $node, 
+            array(
+                $node->getParentName(), 
+                $node->getName(), 
+                $threshold
+            )
+        );
     }
 }

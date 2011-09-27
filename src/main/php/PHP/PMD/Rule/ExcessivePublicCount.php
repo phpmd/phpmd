@@ -81,6 +81,14 @@ class PHP_PMD_Rule_ExcessivePublicCount
         if ($cis < $threshold) {
             return;
         }
-        $this->addViolation($node, array($node->getType(), $node->getName(), $cis, $threshold));
+        $this->addViolation(
+            $node, 
+            array(
+                $node->getType(), 
+                $node->getName(), 
+                $cis, 
+                $threshold
+            )
+        );
     }
 }

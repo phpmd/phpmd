@@ -90,7 +90,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
         $this->_collectVariables($node);
         $this->_removeParameters($node);
 
-        foreach ($this->_images as $image => $nodes) {
+        foreach ($this->_images as $nodes) {
             if (count($nodes) === 1) {
                 $this->doCheckNodeImage($nodes[0]);
             }

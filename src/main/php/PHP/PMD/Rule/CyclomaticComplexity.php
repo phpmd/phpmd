@@ -84,6 +84,14 @@ class PHP_PMD_Rule_CyclomaticComplexity
             return;
         }
 
-        $this->addViolation($node, array($node->getType(), $node->getName(), $ccn, $threshold));
+        $this->addViolation(
+            $node, 
+            array(
+                $node->getType(), 
+                $node->getName(), 
+                $ccn, 
+                $threshold
+            )
+        );
     }
 }

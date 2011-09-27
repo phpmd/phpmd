@@ -78,7 +78,15 @@ class PHP_PMD_Rule_Design_DepthOfInheritance
         $threshold = $this->getIntProperty('minimum');
         $dit = $node->getMetric('dit');
         if ($dit >= $threshold) {
-            $this->addViolation($node, array($node->getType(), $node->getName(), $dit, $threshold));
+            $this->addViolation(
+                $node, 
+                array(
+                    $node->getType(), 
+                    $node->getName(), 
+                    $dit, 
+                    $threshold
+                )
+            );
         }
     }
 }
