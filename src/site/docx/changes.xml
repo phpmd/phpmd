@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+
+    <properties>
+        <title>PHPMD</title>
+        <author email="mapi@phpmd.org">Manuel Pichler</author>
+    </properties>
+
+    <body>
+        <release version="1.2.0"
+                 date="2011/09/27"
+                 description="Version 1.2.0 is a small feature release of PHPMD
+                              that introduces the new command line option --strict.
+                              This options forces PHPMD to apply all rules, even
+                              if a source node contains the @SuppressWarnings
+                              annotation.">
+
+            <action type="add" issue="18462127" dev="mapi" date="">
+                PHPMD needs a *strict* mode.
+            </action>
+        </release>
+
+        <release version="1.1.1"
+                 date="2011/06/30"
+                 description="Version 1.1.1 of PHPMD is a pure Bugfix release
+                              that fixes an issue in PHPMD's package manifest.
+                              This bug prevents Pyrus the PEAR2 installer from
+                              installing PHPMD.">
+
+            <action type="fix" issue="10096717" dev="mapi" date="f063bc9">
+                Bug in PHPMD's package manifest file.
+            </action>
+        </release>
+
+        <release version="1.1.0"
+                 date="2011/03/20"
+                 description="Version 1.1.0 of PHPMD was released on March the
+                              20th 2011. The key features for this release were
+                              two new rules. The first one utilizes the Coupling
+                              Between Objects (CBO) metric to detect strongly
+                              coupled classes. The second one detects the usage
+                              of PHP's questionable 'goto' statement. Beside
+                              that we have closed a minor bug in the
+                              LongVariable rule, where also private properties
+                              with descriptive names were reported. And finally
+                              we have replaced deprecated PHPUnit features in
+                              the PHPMD's test suite, so that PHPMD's tests
+                              should now work with PHPUnit 3.4.x and 3.5.x
+                              without deprecated warnings.">
+            
+            <action type="add" issue="10474873" dev="mapi" date="2745a20">
+                Add rule for PHP's goto statement.
+            </action>
+            <action type="add" issue="10474987" dev="mapi" date="14277b4">
+                Implement rule for CBO metric.
+            </action>
+            <action type="add" issue="11012465" dev="mapi" date="4adb88d">
+                Replace deprecated PHPUnit features in test suite.
+            </action>
+            <action type="fix" issue="10096717" dev="mapi" date="f063bc9">
+                LongVariable rule should not apply on private properties.
+            </action>
+        </release>
+
+        <release version="1.0.1" date="2011/02/12">
+            <action type="fix" issue="9930643" dev="mapi" date="531be78">
+                The include_path does not match with PHP_Depend's new directory
+                layout.
+            </action>
+            <action type="fix" issue="9626017" dev="mapi" date="b385f15">
+                Clear temporary resources after a test has finished.
+            </action>
+        </release>
+
+        <release version="1.0.0" date="2011/02/05">
+            <action type="update">
+                New source layout that follows maven's conventions for the
+                directory structure of a product.
+            </action>
+            <action type="update">
+                Switched to PHPUnit 3.5.x as testing framework
+            </action>
+            <action type="fix" issue="9626017" date="b385f15">
+                Clear temporary resources after a test has finished.
+            </action>
+        </release>
+
+        <release version="0.2.8" date="2010/11/25">
+            <action type="update" due-to="Volker Dusch">
+                Improved help text for the PHPMD command line. Thanks to Volker
+                Dusch for this contribution. https://github.com/edorian/phpmd
+            </action>
+            <action type="update">
+                PHPMD is now compatible with next PHP_Depend release 0.10.0
+            </action>
+        </release>
+
+        <release version="0.2.7" date="2010/09/01">
+            <action type="fix" issue="36" date="284">
+                @SupressWarnings annotation does not work for
+                UnusedPrivateMethod rule.
+            </action>
+            <action type="fix" issue="35" date="286">
+                Stream Writer closes STDOUT.
+            </action>
+            <action type="fix" issue="33" date="264">
+                PEAR package.xml does not @php_bin@ and @bin_dir@ on phpmd.bat.
+            </action>
+        </release>
+
+        <release version="0.2.6" date="2010/07/03">
+            <action type="add" issue="24" date="253">
+                Implement Depth Of Inheritance Rule.
+            </action>
+            <action type="add" issue="25" date="252">
+                Implement Number of Children Rule.
+            </action>
+            <action type="add" issue="26" date="251">
+                Implement Rule that detects the usage of PHP's eval() function.
+            </action>
+            <action type="add" issue="27" date="250">
+                Implement Rule that detects the usage of PHP's exit()
+                expression.
+            </action>
+            <action type="add" issue="30" date="246">
+                New option --version added to PHPMD's command line interface.
+            </action>
+            <action type="update">
+                Names of several command line options unified with PHPUnit and
+                PHPCPD. The --ignore option is now --exclude and --extensions
+                is now --suffixes.
+            </action>
+            <action type="fix" issue="28" date="245">
+                Unused local variable and unused parameter rule produces false
+                positives.
+            </action>
+        </release>
+
+        <release version="0.2.5" date="2010/04/03">
+            <action type="add" issue="12" date="228">
+                Add rule for the Weighted Methods Per Class Metric.
+            </action>
+            <action type="add" issue="16" date="220">
+                Alternative syntax for properties in rule set files implemented.
+            </action>
+            <action type="fix" issue="17" date="226">
+                Do not return success exit code when PHPMD detects rule
+                violations in analyzed source code.
+            </action>
+            <action type="fix" issue="19" date="218">
+                Super globals were detected as unused variables.
+            </action>
+            <action type="fix" issue="20" date="219">
+                Local static variables were treated as unused variables.
+            </action>
+        </release>
+
+        <release version="0.2.4" date="2010/03/08">
+            <action type="fix">
+                E_NOTICE bug fix in naming rule.
+            </action>
+        </release>
+
+        <release version="0.2.3" date="2010/03/04">
+            <action type="add" issue="9" date="200">
+                Add support for "Suppress warnings" annotations.
+            </action>
+            <action type="add" issue="10" date="189">
+                Support for exclude element in rule-set files added.
+            </action>
+            <action type="add" issue="13">
+                Implement naming rules, e.g. short variables, parameter etc.
+            </action>
+            <action type="fix" issue="6">
+                PHP Tokenizer required but no error when installing.
+            </action>
+            <action type="fix" issue="7" date="187">
+                UnusedLocalVariable ruleset incorrectly flags variables as
+                unused when used inside double quoted string.
+            </action>
+            <action type="fix" issue="14" date="203">
+                ExcessivePublicCount rule should utilize PHP_Depend's cis
+                metric.
+            </action>
+            <action type="fix" issue="15" date="202">
+                ExcessivePublicCount rule is never used.
+            </action>
+        </release>
+
+        <release version="0.2.2" date="2010/01/20">
+            <action type="fix">
+                Small change to the command line interface, which did not return
+                an exit code != 0 when an exception occured.
+            </action>
+        </release>
+
+        <release version="0.2.1" date="2010/01/05">
+            <action type="add" issue="5" date="158">
+                Allow multiple input files/directories.
+            </action>
+            <action type="add">
+                Additional unit tests for multiple components added.
+            </action>
+        </release>
+
+        <release version="0.2.0" date="2009/12/30">
+            <action type="add" issue="2" date="134">
+                Support for unused code fules completed.
+            </action>
+            <action type="add" issue="3">
+                Text renderer implemented.
+            </action>
+            <action type="add" issue="4" date="139">
+                Implement a html renderer.
+            </action>
+            <action type="update">
+                Several performance improvements.
+            </action>
+        </release>
+
+        <release version="0.1.0" date="2009/12/20" description="Initial release" />
+    </body>
+</document>
