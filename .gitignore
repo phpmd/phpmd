@@ -1,14 +1,2 @@
-build
-build.number
-build.privates
-cache.properties
-cachegrind.out.*
-compile.cache
-config.properties
-nbproject
-catalog.xml
-.settings
-.buildpath
-.project
-.idea
 .abc
+.idea

@@ -7,11 +7,6 @@
     <property file="build.properties" />
 
     <!--
-        Include private project properties.
-    -->
-    <property file="build.privates" />
-
-    <!--
         Import common build targets
     -->
     <import file="${basedir}/setup/build-commons.xml" />
