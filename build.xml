@@ -9,7 +9,7 @@
     <!--
         Import common build targets
     -->
-    <import file="${basedir}/setup/build-commons.xml" />
+	<import file="${basedir}/setup/src/main/xml/base.xml" />
 
     <!--
         Hook that will be called after we have copied the project's library
