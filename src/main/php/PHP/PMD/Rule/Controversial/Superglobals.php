@@ -93,7 +93,13 @@ class Superglobals
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if (in_array($variable->getImage(), $this->superglobals)) {
-                $this->addViolation($node, array($node->getName(), $variable->getImage()));
+                $this->addViolation(
+                    $node, 
+                    array(
+                        $node->getName(), 
+                        $variable->getImage()
+                    )
+                );
             }
         }
     }
