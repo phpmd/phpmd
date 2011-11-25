@@ -16,7 +16,10 @@
                               This options forces PHPMD to apply all rules, even
                               if a source node contains the @SuppressWarnings
                               annotation.">
-
+            <action date="0e60fb9" dev="francisbesset" system="pivotaltracker" due-to="francisbesset" due-to-email="francis.besset@gmail.com" type="add">
+                Controverial PHPMD rule that checks if the project under
+                test does not utilize PHP's super globals.
+            </action>
             <action type="add" issue="18462127" dev="mapi" date="">
                 PHPMD needs a *strict* mode.
             </action>
