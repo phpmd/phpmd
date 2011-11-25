@@ -64,7 +64,7 @@ require_once 'PHP/PMD/Rule/IFunctionAware.php';
  * @link       http://phpmd.org
  * @since      1.1.0
  */
-class Superglobals
+class PHP_PMD_Rule_Controversial_Superglobals
        extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IMethodAware,
                PHP_PMD_Rule_IFunctionAware
