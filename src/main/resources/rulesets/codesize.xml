@@ -182,7 +182,7 @@ class Foo {
 
     <rule name="ExcessivePublicCount"
           since="0.1"
-          message="The {0] {1} has {2} public methods and attributes. Consider to reduce the number of public items under {3}."
+          message="The {0} {1} has {2} public methods and attributes. Consider to reduce the number of public items under {3}."
           class="PHP_PMD_Rule_ExcessivePublicCount"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
@@ -213,7 +213,7 @@ public class Foo {
 
     <rule name="TooManyFields"
           since="0.1"
-          message="The {0] {1] has {2} fields. Consider to redesign {1} to keep the number of fields under {3}."
+          message="The {0] {1} has {2} fields. Consider to redesign {1} to keep the number of fields under {3}."
           class="PHP_PMD_Rule_Design_TooManyFields"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanyfields">
         <description>
@@ -334,7 +334,7 @@ public class Foo extends Bar {
     <rule name="TooManyMethods"
           since="0.1"
           class="PHP_PMD_Rule_Design_TooManyMethods"
-          message="The {0] {1} has {2} methods. Consider refactoring {1} to keep number of methods under {3}."
+          message="The {0} {1} has {2} methods. Consider refactoring {1} to keep number of methods under {3}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
             <![CDATA[
