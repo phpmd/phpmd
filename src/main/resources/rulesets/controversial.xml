@@ -34,4 +34,112 @@ class Foo {
         </example>
     </rule>
 
+    <rule name="CamelCaseClassName"
+          since="0.2"
+          message = "The class {0} is not named in CamelCase."
+          class="PHP_PMD_Rule_Controversial_CamelCaseClassName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+An usage of CamelCase standardize the name of classes.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class class_name {
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCasePropertyName"
+          since="0.2"
+          message = "The property {0} is not named in camelCase."
+          class="PHP_PMD_Rule_Controversial_CamelCasePropertyName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+An usage of camelCase standardize the name of properties.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class ClassName {
+    protected $property_name;
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseMethodName"
+          since="0.2"
+          message = "The method {0} is not named in camelCase."
+          class="PHP_PMD_Rule_Controversial_CamelCaseMethodName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+An usage of camelCase standardize the name of methods.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class ClassName {
+    public function get_name() {
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseParameterName"
+          since="0.2"
+          message = "The parameter {0} is not named in camelCase."
+          class="PHP_PMD_Rule_Controversial_CamelCaseParameterName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+An usage of camelCase standardize the name of parameters.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class ClassName {
+    public function doSomething($user_name) {
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseVariableName"
+          since="0.2"
+          message = "The variable {0} is not named in camelCase."
+          class="PHP_PMD_Rule_Controversial_CamelCaseVariableName"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+An usage of camelCase standardize the name of variables.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class ClassName {
+    public function doSomething() {
+        $data_module = new DataModule();
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
 </ruleset>
