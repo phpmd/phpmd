@@ -7,18 +7,18 @@
          xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
 
     <description>
-The Code Size Ruleset contains a collection of rules.
+This ruleset contains a collection of controversial rules.
     </description>
 
     <rule name="Superglobals"
           since="0.2"
-          message = "The {0} contains an usage of superglobal {1}."
+          message = "{0} accesses the super-global variable {1}."
           class="PHP_PMD_Rule_Controversial_Superglobals"
           externalInfoUrl="#">
         <description>
             <![CDATA[
-An usage of superglobal is a bad practice with a framework.
-The framework should you make available access to these variables.
+Accessing a super-global variable directly is considered a bad practice.
+These variables should be encapsulated in objects that are provided by a framework, for instance.
             ]]>
         </description>
         <priority>1</priority>
@@ -26,12 +26,11 @@ The framework should you make available access to these variables.
         <example>
             <![CDATA[
 class Foo {
-    public function bar()  {
+    public function bar() {
         $name = $_POST['foo'];
     }
 }
             ]]>
         </example>
     </rule>
-
 </ruleset>
