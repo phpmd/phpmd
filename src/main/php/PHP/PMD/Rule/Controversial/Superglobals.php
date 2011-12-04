@@ -52,7 +52,7 @@ require_once 'PHP/PMD/Rule/IMethodAware.php';
 require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
- * This rule class detects violations of Coupling Between Objects metric.
+ * This rule class detects the usage of superglobals.
  *
  * @category   PHP
  * @package    PHP_PMD
@@ -94,9 +94,9 @@ class PHP_PMD_Rule_Controversial_Superglobals
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if (in_array($variable->getImage(), $this->superglobals)) {
                 $this->addViolation(
-                    $node, 
+                    $node,
                     array(
-                        $node->getName(), 
+                        $node->getName(),
                         $variable->getImage()
                     )
                 );
