@@ -85,6 +85,17 @@ abstract class PHP_PMD_Rule_AbstractLocalVariable extends PHP_PMD_AbstractRule
         '$HTTP_RAW_POST_DATA'  => true,
     );
 
+	/**
+	 * List of magic variables to avoid unused local variable errors
+	 *
+	 * @var array(string=>boolean)
+	 */
+	private static $_magicVariables = array(
+	    '$_suppress'           => true,
+	);
+
+
+
     /**
      * Tests if the given variable node represents a local variable or if it is
      * a static object property or something similar.
@@ -98,6 +109,7 @@ abstract class PHP_PMD_Rule_AbstractLocalVariable extends PHP_PMD_AbstractRule
         return (false === $variable->isThis()
             && $this->isNotSuperGlobal($variable)
             && $this->isRegularVariable($variable)
+            && $this->isNotMagic($variable)
         );
     }
 
@@ -113,6 +125,20 @@ abstract class PHP_PMD_Rule_AbstractLocalVariable extends PHP_PMD_AbstractRule
     {
         return !isset(self::$_superGlobals[$variable->getImage()]);
     }
+
+    /**
+     * Tests if the given variable represents one of the magic variables
+     *
+     * @param PHP_PMD_AbstractNode $variable The currently analyzed variable node.
+     *
+     * @return boolean
+     */
+    protected function isNotMagic(PHP_PMD_AbstractNode $variable)
+    {
+        return !isset(self::$_magicVariables[$variable->getImage()]);
+    }
+
+
 
     /**
      * Tests if the given variable node is a regular variable an not property
