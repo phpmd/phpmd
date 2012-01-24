@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://pdepend.org/schema/configuration"
+               xsi:schemaLocation="http://pdepend.org/schema/configuration http://pdepend.org/schema/1.0/configuration.xsd">
+
+    <imageConvert>
+        <fontFamily>Arial</fontFamily>
+        <fontSize>12</fontSize>
+    </imageConvert>
+    
+    <cache>
+        <driver>memory</driver>
+    </cache>
+
+</configuration>
