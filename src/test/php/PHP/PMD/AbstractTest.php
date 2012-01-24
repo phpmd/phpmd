@@ -394,7 +394,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         }
 
         $report = $this->getMock('PHP_PMD_Report');
-        $method = $report->expects($expects)
+        $report->expects($expects)
             ->method('addRuleViolation');
 
         return $report;

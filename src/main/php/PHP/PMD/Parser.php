@@ -45,6 +45,7 @@
  * @link      http://phpmd.org
  */
 
+require_once 'PHP/PMD/ProcessingError.php';
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/Node/Function.php';
 require_once 'PHP/PMD/Node/Interface.php';
@@ -124,6 +125,10 @@ class PHP_PMD_Parser
 
         $this->_pdepend->addLogger($this);
         $this->_pdepend->analyze();
+
+        foreach ($this->_pdepend->getExceptions() as $exception) {
+            $report->addError(new PHP_PMD_ProcessingError($exception->getMessage()));
+        }
     }
 
     /**

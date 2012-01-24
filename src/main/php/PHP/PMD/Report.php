@@ -81,9 +81,17 @@ class PHP_PMD_Report
     private $_endTime = 0.0;
 
     /**
+     * Errors that occurred while parsing the source.
+     *
+     * @var array
+     * @since 1.2.1
+     */
+    private $_errors = array();
+
+    /**
      * Adds a rule violation to this report.
      *
-     * @param PHP_PMD_RuleViolation $violation The occured rule violation.
+     * @param PHP_PMD_RuleViolation $violation The occurred rule violation.
      *
      * @return void
      */
@@ -114,7 +122,7 @@ class PHP_PMD_Report
     }
 
     /**
-     * Returns an iterator with all occured rule violations.
+     * Returns an iterator with all occurred rule violations.
      *
      * @return Iterator
      */
@@ -134,6 +142,19 @@ class PHP_PMD_Report
         }
 
         return new ArrayIterator($violations);
+    }
+
+    /**
+     * Adds a processing error that occurred while parsing the source.
+     *
+     * @param PHP_PMD_ProcessingError $error Representation of the parsing error.
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function addError(PHP_PMD_ProcessingError $error)
+    {
+        $this->_errors[] = $error;
     }
 
     /**

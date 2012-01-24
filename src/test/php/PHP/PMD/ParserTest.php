@@ -158,6 +158,29 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testParserStoreParsingExceptionsInReport
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testParserStoreParsingExceptionsInReport()
+    {
+        $report = $this->getReportMock(0);
+        $report->expects($this->once())
+            ->method('addError');
+
+        $pdepend = $this->_getPHPDependMock();
+        $pdepend->expects($this->once())
+            ->method('getExceptions')
+            ->will($this->returnValue(array(
+                new PHP_Depend_Parser_InvalidStateException(42, __FILE__, 'foo')
+            )));
+
+        $parser = new PHP_PMD_Parser($pdepend);
+        $parser->parse($report);
+    }
+
+    /**
      * Creates a mocked PHP_Depend instance.
      *
      * @return PHP_Depend
