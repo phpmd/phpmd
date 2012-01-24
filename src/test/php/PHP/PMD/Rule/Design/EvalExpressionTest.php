@@ -61,17 +61,19 @@ require_once 'PHP/PMD/Rule/Design/EvalExpression.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ * 
+ * @covers PHP_PMD_Rule_Design_EvalExpression
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleNotAppliesToMethodWithoutEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToMethodWithoutEvalExpression()
     {
@@ -83,11 +85,7 @@ class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToMethodWithEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToMethodWithEvalExpression()
     {
@@ -99,11 +97,7 @@ class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesMultipleTimesToMethodWithEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesMultipleTimesToMethodWithEvalExpression()
     {
@@ -115,11 +109,7 @@ class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleNotAppliesToFunctionWithoutEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToFunctionWithoutEvalExpression()
     {
@@ -131,11 +121,7 @@ class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToFunctionWithEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToFunctionWithEvalExpression()
     {
@@ -147,11 +133,7 @@ class PHP_PMD_Rule_Design_EvalExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesMultipleTimesToFunctionWithEvalExpression
      *
-     * @covers PHP_PMD_Rule_Design_EvalExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesMultipleTimesToFunctionWithEvalExpression()
     {

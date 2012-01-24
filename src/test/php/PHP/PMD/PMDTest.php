@@ -61,6 +61,10 @@ require_once 'PHP/PMD/Renderer/XMLRenderer.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
 {
@@ -81,9 +85,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * Tests the main PHP_PMD interface with default settings an a xml-renderer.
      *
      * @return void
-     * @covers PHP_PMD::processFiles
-     * @group phpmd
-     * @group unittest
      */
     public function testRunWithDefaultSettingsAndXmlRenderer()
     {
@@ -109,9 +110,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
      *
      * @return void
-     * @covers PHP_PMD::processFiles
-     * @group phpmd
-     * @group unittest
      */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory()
     {
@@ -137,9 +135,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
      *
      * @return void
-     * @covers::processFiles
-     * @group phpmd
-     * @group unittest
      */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile()
     {
@@ -165,9 +160,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testHasViolationsReturnsFalseByDefault
      *
      * @return void
-     * @covers PHP_PMD
-     * @group phpmd
-     * @group unittest
      */
     public function testHasViolationsReturnsFalseByDefault()
     {
@@ -179,9 +171,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testHasViolationsReturnsFalseForSourceWithoutViolations
      *
      * @return void
-     * @covers PHP_PMD
-     * @group phpmd
-     * @group unittest
      */
     public function testHasViolationsReturnsFalseForSourceWithoutViolations()
     {
@@ -205,9 +194,6 @@ class PHP_PMD_PMDTest extends PHP_PMD_AbstractTest
      * testHasViolationsReturnsTrueForSourceWithViolation
      *
      * @return void
-     * @covers PHP_PMD
-     * @group phpmd
-     * @group unittest
      */
     public function testHasViolationsReturnsTrueForSourceWithViolation()
     {

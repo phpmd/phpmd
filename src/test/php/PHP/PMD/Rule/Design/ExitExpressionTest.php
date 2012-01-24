@@ -61,17 +61,19 @@ require_once 'PHP/PMD/Rule/Design/ExitExpression.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Design_ExitExpression
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleNotAppliesToMethodWithoutExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToMethodWithoutExitExpression()
     {
@@ -83,11 +85,7 @@ class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToMethodWithExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToMethodWithExitExpression()
     {
@@ -99,11 +97,7 @@ class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesMultipleTimesToMethodWithExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesMultipleTimesToMethodWithExitExpression()
     {
@@ -115,11 +109,7 @@ class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleNotAppliesToFunctionWithoutExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToFunctionWithoutExitExpression()
     {
@@ -131,11 +121,7 @@ class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToFunctionWithExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToFunctionWithExitExpression()
     {
@@ -147,11 +133,7 @@ class PHP_PMD_Rule_Design_ExitExpressionTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesMultipleTimesToFunctionWithExitExpression
      *
-     * @covers PHP_PMD_Rule_Design_ExitExpression
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesMultipleTimesToFunctionWithExitExpression()
     {

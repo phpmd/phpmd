@@ -62,6 +62,12 @@ require_once 'PHP/PMD/Node/Class.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_Class
+ * @covers PHP_PMD_Node_AbstractType
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
 {
@@ -69,11 +75,6 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      * testGetMethodNamesReturnsExpectedResult
      *
      * @return void
-     * @covers PHP_PMD_Node_Class
-     * @covers PHP_PMD_Node_AbstractType
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetMethodNamesReturnsExpectedResult()
     {
@@ -89,10 +90,6 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      * testHasSuppressWarningsAnnotationForReturnsTrue
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {

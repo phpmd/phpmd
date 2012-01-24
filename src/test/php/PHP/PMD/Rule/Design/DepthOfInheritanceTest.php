@@ -61,17 +61,19 @@ require_once 'PHP/PMD/Rule/Design/DepthOfInheritance.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Design_DepthOfInheritance
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_DepthOfInheritanceTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_DepthOfInheritance
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold()
     {
@@ -84,11 +86,7 @@ class PHP_PMD_Rule_Design_DepthOfInheritanceTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold
      *
-     * @covers PHP_PMD_Rule_Design_DepthOfInheritance
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold()
     {
@@ -101,11 +99,7 @@ class PHP_PMD_Rule_Design_DepthOfInheritanceTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_DepthOfInheritance
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold()
     {

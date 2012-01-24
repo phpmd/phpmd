@@ -62,6 +62,10 @@ require_once 'PHP/PMD/Rule/UnusedFormalParameter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers stdClass
+ * @group phpmd
+ * @group regression
  */
 class PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Test
     extends PHP_PMD_Regression_AbstractTest
@@ -70,9 +74,6 @@ class PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Te
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
      *
      * @return void
-     * @covers stdClass
-     * @group phpmd
-     * @group regression
      */
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
     {
@@ -81,6 +82,11 @@ class PHP_PMD_Regression_InvalidUnusedLocalVariableAndFormalParameterTicket007Te
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
+     *
+     * @return void
+     */
     public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported()
     {
         $rule = new PHP_PMD_Rule_UnusedFormalParameter();

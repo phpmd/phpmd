@@ -20,6 +20,10 @@
             <action date="d162b21" dev="mapi" issue="23278127" system="pivotaltracker" due-to="Hugo Hamon" due-to-email="hugo.hamon@sensio.com" type="fix">
                 PHPMD should exclude unused parameters from inherited methods
             </action>
+
+            <action date="" dev="mapi" issue="11055167" system="pivotaltracker" type="update">
+                Move PHPUnit annotations from method doc block to class doc block
+            </action>
          </release>
 
         <release version="1.2.0"

@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Node/Annotation.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_Annotation
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists()
     {
@@ -83,10 +84,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue()
     {
@@ -98,10 +95,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD()
     {
@@ -113,10 +106,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD()
     {
@@ -128,10 +117,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName()
     {
@@ -146,10 +131,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName()
     {
@@ -164,10 +145,6 @@ class PHP_PMD_Node_AnnotationTest extends PHP_PMD_AbstractTest
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotation
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName()
     {

@@ -61,17 +61,19 @@ require_once 'PHP/PMD/Rule/Design/NumberOfChildren.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Design_NumberOfChildren
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_NumberOfChildrenTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleNotAppliesToClassWithChildrenLessThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_NumberOfChildren
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleNotAppliesToClassWithChildrenLessThanThreshold()
     {
@@ -84,11 +86,7 @@ class PHP_PMD_Rule_Design_NumberOfChildrenTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassWithChildrenIdenticalToThreshold
      *
-     * @covers PHP_PMD_Rule_Design_NumberOfChildren
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassWithChildrenIdenticalToThreshold()
     {
@@ -101,11 +99,7 @@ class PHP_PMD_Rule_Design_NumberOfChildrenTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassWithChildrenGreaterThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_NumberOfChildren
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassWithChildrenGreaterThanThreshold()
     {

@@ -145,10 +145,13 @@ class PHP_PMD_TextUI_Command
     public static function main(array $args)
     {
         try {
+$s = microtime(true);
             $options = new PHP_PMD_TextUI_CommandLineOptions($args);
             $command = new PHP_PMD_TextUI_Command();
 
             $exitCode = $command->run($options);
+
+printf("Total time: %2.4f seconds\n", (microtime(true) - $s));
         } catch (Exception $e) {
             fwrite(STDERR, $e->getMessage());
             fwrite(STDERR, PHP_EOL);

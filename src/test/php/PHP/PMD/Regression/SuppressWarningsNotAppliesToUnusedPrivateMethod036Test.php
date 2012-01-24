@@ -62,6 +62,10 @@ require_once 'PHP/PMD/Rule/UnusedPrivateMethod.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers stdClass
+ * @group phpmd
+ * @group regression
  */
 class PHP_PMD_Regression_SuppressWarningsNotAppliesToUnusedPrivateMethod036Test
     extends PHP_PMD_Regression_AbstractTest
@@ -70,9 +74,6 @@ class PHP_PMD_Regression_SuppressWarningsNotAppliesToUnusedPrivateMethod036Test
      * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
      *
      * @return void
-     * @covers stdClass
-     * @group phpmd
-     * @group regression
      */
     public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation()
     {

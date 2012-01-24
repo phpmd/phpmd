@@ -60,6 +60,10 @@ require_once 'PHP/PMD/ParserFactory.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD_ParserFactory
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
 {
@@ -67,9 +71,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
      * testFactoryConfiguresInputDirectory
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresInputDirectory()
     {
@@ -93,9 +94,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
      * testFactoryConfiguresInputFile
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresInputFile()
     {
@@ -119,9 +117,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
      * testFactoryConfiguresMultipleInputDirectories
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresMultipleInputDirectories()
     {
@@ -146,9 +141,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
      * testFactoryConfiguresMultipleInputFilesAndDirectories
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresMultipleInputFilesAndDirectories()
     {
@@ -173,9 +165,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
      * testFactoryConfiguresIgnorePattern
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresIgnorePattern()
     {
@@ -191,16 +180,13 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri));
 
-        $parser = $factory->create($phpmd);
+        $factory->create($phpmd);
     }
 
     /**
      * testFactoryConfiguresFileExtensions
      *
      * @return void
-     * @covers PHP_PMD_ParserFactory
-     * @group phpmd
-     * @group unittest
      */
     public function testFactoryConfiguresFileExtensions()
     {
@@ -216,6 +202,6 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
             ->method('getInput')
             ->will($this->returnValue($uri));
 
-        $parser = $factory->create($phpmd);
+        $factory->create($phpmd);
     }
 }

@@ -61,6 +61,10 @@ require_once 'PHP/PMD/AbstractRule.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD_AbstractRule
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
 {
@@ -68,9 +72,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      */
     public function testGetIntPropertyReturnsValueOfTypeInteger()
     {
@@ -84,9 +85,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1()
     {
@@ -100,9 +98,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn()
     {
@@ -116,9 +111,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue()
     {
@@ -132,9 +124,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue()
     {
@@ -148,9 +137,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      * @expectedException OutOfBoundsException
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
@@ -163,9 +149,6 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @covers PHP_PMD_AbstractRule
-     * @group phpmd
-     * @group unittest
      * @expectedException OutOfBoundsException
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()

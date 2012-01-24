@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/Naming/ConstantNamingConventions.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::naming
+ * @group unittest
  */
 class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_Abstract
      * testRuleAppliesToClassConstantWithLowerCaseCharacters
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToClassConstantWithLowerCaseCharacters()
     {
@@ -85,11 +86,6 @@ class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_Abstract
      * testRuleAppliesToInterfaceConstantWithLowerCaseCharacters
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters()
     {
@@ -102,11 +98,6 @@ class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_Abstract
      * testRuleNotAppliesToClassConstantWithUpperCaseCharacters
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters()
     {
@@ -119,11 +110,6 @@ class PHP_PMD_Rule_Naming_ConstantNamingConventionsTest extends PHP_PMD_Abstract
      * testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstantNamingConventions
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters()
     {

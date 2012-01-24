@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Rule/UnusedPrivateField.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_UnusedPrivateField
+ * @group phpmd
+ * @group phpmd::rule
+ * @group unittest
  */
 class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedPrivateField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToUnusedPrivateField()
     {
@@ -84,10 +85,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedPrivateStaticField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject()
     {
@@ -100,10 +97,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedPrivateStaticField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToUnusedPrivateStaticField()
     {
@@ -116,10 +109,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass()
     {
@@ -132,10 +121,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent()
     {
@@ -158,10 +143,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix()
     {
@@ -184,10 +165,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotResultInFatalErrorByCallingNonObject()
     {
@@ -200,10 +177,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToUnusedPublicField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedPublicField()
     {
@@ -216,10 +189,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToUnusedProtectedField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedProtectedField()
     {
@@ -232,10 +201,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToThisAccessedPrivateField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToThisAccessedPrivateField()
     {
@@ -248,10 +213,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToSelfAccessedPrivateField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToSelfAccessedPrivateField()
     {
@@ -264,10 +225,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToStaticAccessedPrivateField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToStaticAccessedPrivateField()
     {
@@ -280,10 +237,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToClassNameAccessedPrivateField
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToClassNameAccessedPrivateField()
     {
@@ -306,10 +259,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateFieldInChainedMethodCall()
     {
@@ -332,10 +281,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateArrayFieldAccess()
     {
@@ -358,10 +303,6 @@ class PHP_PMD_Rule_UnusedPrivateFieldTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateField
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateStringIndexFieldAccess()
     {

@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/Naming/BooleanGetMethodName.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::naming
+ * @group unittest
  */
 class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMethodStartingWithGetAndReturningBoolean
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBoolean()
     {
@@ -86,11 +87,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMethodStartingWithGetAndReturningBool
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBool()
     {
@@ -104,11 +100,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean()
     {
@@ -122,11 +113,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleIgnoresParametersWhenNotExpliciteConfigured
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleIgnoresParametersWhenNotExpliciteConfigured()
     {
@@ -140,11 +126,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesWhenParametersAreExpliciteEnabled
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesWhenParametersAreExpliciteEnabled()
     {
@@ -159,11 +140,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToMethodStartingWithIs
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToMethodStartingWithIs()
     {
@@ -178,11 +154,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToMethodStartingWithHas
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToMethodStartingWithHas()
     {
@@ -197,11 +168,6 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodNameTest extends PHP_PMD_AbstractTest
      * testRuleNotAppliesToMethodWithReturnTypeNotBoolean
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_BooleanGetMethodName
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToMethodWithReturnTypeNotBoolean()
     {

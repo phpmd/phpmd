@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/Naming/ConstructorWithNameAsEnclosingClass.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::naming
+ * @group unittest
  */
 class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest extends PHP_PM
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClass
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass()
     {
@@ -85,11 +86,6 @@ class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest extends PHP_PM
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive()
     {
@@ -102,11 +98,6 @@ class PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClassTest extends PHP_PM
      * testRuleNotAppliesToMethodNamedSimilarToEnclosingClass
      *
      * @return void
-     * @covers PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::naming
-     * @group unittest
      */
     public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass()
     {

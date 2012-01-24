@@ -59,6 +59,10 @@ require_once 'PHP/PMD/Parser.php';
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   Release: @package_version@
  * @link      http://phpmd.org
+ *
+ * @covers PHP_PMD_Parser
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
 {
@@ -66,9 +70,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDelegatesClassNodeToRuleSet()
     {
@@ -88,9 +89,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * code file to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet()
     {
@@ -109,9 +107,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
@@ -126,9 +121,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * code file to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
     {
@@ -142,9 +134,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * Tests that the metrics adapter delegates a node to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
@@ -159,9 +148,6 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      * code file to a registered rule-set.
      *
      * @return void
-     * @covers PHP_PMD_Parser
-     * @group phpmd
-     * @group unittest
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
     {

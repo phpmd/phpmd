@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Node/Function.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_Function
+ * @covers PHP_PMD_Node_AbstractCallable
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +74,6 @@ class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
      * testMagicCallDelegatesToWrappedPHPDependFunction
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testMagicCallDelegatesToWrappedPHPDependFunction()
     {
@@ -87,10 +89,6 @@ class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      * @expectedException BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()

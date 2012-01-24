@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/Design/LongClass.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Design_LongClass
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
 {
@@ -69,11 +75,6 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_Design_LongClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
      */
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
@@ -91,11 +92,6 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_Design_LongClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
      */
     public function testRuleAppliesForValueEqualToThreshold()
     {
@@ -113,11 +109,6 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
      * than the threshold.
      *
      * @return void
-     * @covers PHP_PMD_Rule_Design_LongClass
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {

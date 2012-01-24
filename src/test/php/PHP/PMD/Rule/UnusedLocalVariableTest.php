@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/UnusedLocalVariable.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_UnusedLocalVariable
+ * @covers PHP_PMD_Rule_AbstractLocalVariable
+ * @group phpmd
+ * @group phpmd::rule
+ * @group unittest
  */
 class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedLocalVariable
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToUnusedLocalVariable()
     {
@@ -85,11 +86,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testInnerFunctionParametersDoNotHideUnusedVariables
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testInnerFunctionParametersDoNotHideUnusedVariables()
     {
@@ -112,11 +108,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToLocalVariableWithSameNameAsStaticProperty()
     {
@@ -139,11 +130,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty()
     {
@@ -167,11 +153,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable()
     {
@@ -184,11 +165,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToThisVariable
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToThisVariable()
     {
@@ -201,11 +177,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToStaticProperty
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToStaticProperty()
     {
@@ -218,11 +189,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToStaticArrayProperty
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToStaticArrayProperty()
     {
@@ -244,11 +210,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToMethodArgument()
     {
@@ -261,11 +222,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToStaticObjectProperty
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToStaticObjectProperty()
     {
@@ -278,11 +234,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToDynamicProperty
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToDynamicProperty()
     {
@@ -295,11 +246,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToUnusedParameters
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedParameters()
     {
@@ -312,11 +258,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToArgcSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToArgcSuperGlobal()
     {
@@ -329,11 +270,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToArgvSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToArgvSuperGlobal()
     {
@@ -346,11 +282,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToGlobalsSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToGlobalsSuperGlobal()
     {
@@ -363,11 +294,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToCookieSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToCookieSuperGlobal()
     {
@@ -380,11 +306,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToEnvSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToEnvSuperGlobal()
     {
@@ -397,11 +318,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToFilesSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToFilesSuperGlobal()
     {
@@ -414,11 +330,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToGetSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToGetSuperGlobal()
     {
@@ -431,11 +342,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToPostSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPostSuperGlobal()
     {
@@ -448,11 +354,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToRequestSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToRequestSuperGlobal()
     {
@@ -465,11 +366,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToSessionSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToSessionSuperGlobal()
     {
@@ -482,11 +378,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToServerSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToServerSuperGlobal()
     {
@@ -499,11 +390,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToHttpRawPostDataSuperGlobal
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToHttpRawPostDataSuperGlobal()
     {
@@ -516,11 +402,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToUnusedLocalVariableInFunction
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedLocalVariableInFunction()
     {
@@ -533,11 +414,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToUnusedLocalVariableInMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToUnusedLocalVariableInMethod()
     {
@@ -560,11 +436,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToLocalVariableUsedAsArrayIndex()
     {
@@ -587,11 +458,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToLocalVariableUsedAsStringIndex()
     {
@@ -614,11 +480,6 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedLocalVariable
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToCatchStatement()
     {

@@ -61,17 +61,19 @@ require_once 'PHP/PMD/Rule/Design/TooManyFields.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_Design_TooManyFields
+ * @group phpmd
+ * @group phpmd::rule
+ * @group phpmd::rule::design
+ * @group unittest
  */
 class PHP_PMD_Rule_Design_TooManyFieldsTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_TooManyFields
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold()
     {
@@ -84,11 +86,7 @@ class PHP_PMD_Rule_Design_TooManyFieldsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold
      *
-     * @covers PHP_PMD_Rule_Design_TooManyFields
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold()
     {
@@ -101,11 +99,7 @@ class PHP_PMD_Rule_Design_TooManyFieldsTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassesWithMoreFieldsThanThreshold
      *
-     * @covers PHP_PMD_Rule_Design_TooManyFields
-     * @group phpmd
-     * @group phpmd::rule
-     * @group phpmd::rule::design
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassesWithMoreFieldsThanThreshold()
     {

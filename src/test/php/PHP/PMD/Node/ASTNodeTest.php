@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Node/ASTNode.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_ASTNode
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      * testGetImageDelegatesToGetImageMethodOfWrappedNode
      *
      * @return void
-     * @covers PHP_PMD_Node_ASTNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetImageDelegatesToGetImageMethodOfWrappedNode()
     {
@@ -87,10 +88,6 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      * testGetNameDelegatesToGetImageMethodOfWrappedNode
      *
      * @return void
-     * @covers PHP_PMD_Node_ASTNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetNameDelegatesToGetImageMethodOfWrappedNode()
     {
@@ -106,10 +103,6 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
      *
      * @return void
-     * @covers PHP_PMD_Node_ASTNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse()
     {
@@ -125,10 +118,6 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      * testGetParentNameReturnsNull
      *
      * @return void
-     * @covers PHP_PMD_Node_ASTNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetParentNameReturnsNull()
     {
@@ -142,10 +131,6 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      * testGetPackageNameReturnsNull
      *
      * @return void
-     * @covers PHP_PMD_Node_ASTNode
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetPackageNameReturnsNull()
     {

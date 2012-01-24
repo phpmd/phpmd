@@ -61,6 +61,10 @@ require_once 'PHP/PMD.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers stdClass
+ * @group phpmd
+ * @group regression
  */
 class PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test
     extends PHP_PMD_Regression_AbstractTest
@@ -69,9 +73,6 @@ class PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test
      * testCliAcceptsDirectoryAsInput
      * 
      * @return void
-     * @covers stdClass
-     * @group phpmd
-     * @group regression
      */
     public function testCliAcceptsDirectoryAsInput()
     {
@@ -93,9 +94,6 @@ class PHP_PMD_Regression_AcceptsFilesAndDirectoriesAsInputTicket001Test
      * testCliAcceptsSingleFileAsInput
      *
      * @return void
-     * @covers stdClass
-     * @group phpmd
-     * @group regression
      */
     public function testCliAcceptsSingleFileAsInput()
     {

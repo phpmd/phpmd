@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Renderer/XMLRenderer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Renderer_XMLRenderer
+ * @group phpmd
+ * @group phpmd::renderer
+ * @group unittest
  */
 class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
 {
@@ -81,10 +86,6 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
      * testRendererCreatesExpectedNumberOfXmlElements
      *
      * @return void
-     * @covers PHP_PMD_Renderer_XMLRenderer
-     * @group phpmd
-     * @group phpmd::renderer
-     * @group unittest
      */
     public function testRendererCreatesExpectedNumberOfXmlElements()
     {

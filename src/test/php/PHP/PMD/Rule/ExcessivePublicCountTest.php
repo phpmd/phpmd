@@ -61,16 +61,18 @@ require_once 'PHP/PMD/Rule/ExcessivePublicCount.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_ExcessivePublicCount
+ * @group phpmd
+ * @group phpmd::rule
+ * @group unittest
  */
 class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold
      *
-     * @covers PHP_PMD_Rule_ExcessivePublicCount
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
+     * @return void
      */
     public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold()
     {
@@ -83,10 +85,7 @@ class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold
      *
-     * @covers PHP_PMD_Rule_ExcessivePublicCount
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold()
     {
@@ -99,10 +98,7 @@ class PHP_PMD_Rule_ExcessivePublicCountTest extends PHP_PMD_AbstractTest
     /**
      * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
      *
-     * @covers PHP_PMD_Rule_ExcessivePublicCount
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
+     * @return void
      */
     public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold()
     {

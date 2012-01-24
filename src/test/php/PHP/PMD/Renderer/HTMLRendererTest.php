@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Renderer/HTMLRenderer.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Renderer_HTMLRenderer
+ * @group phpmd
+ * @group phpmd::renderer
+ * @group unittest
  */
 class PHP_PMD_Renderer_HTMLRendererTest extends PHP_PMD_AbstractTest
 {
@@ -81,10 +86,6 @@ class PHP_PMD_Renderer_HTMLRendererTest extends PHP_PMD_AbstractTest
      * testRendererCreatesExpectedNumberOfTextEntries
      *
      * @return void
-     * @covers PHP_PMD_Renderer_HTMLRenderer
-     * @group phpmd
-     * @group phpmd::renderer
-     * @group unittest
      */
     public function testRendererCreatesExpectedHtmlTableRow()
     {

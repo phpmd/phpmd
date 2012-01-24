@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Rule/UnusedPrivateMethod.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_UnusedPrivateMethod
+ * @group phpmd
+ * @group phpmd::rule
+ * @group unittest
  */
 class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedPrivateMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToUnusedPrivateMethod()
     {
@@ -84,10 +85,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToUnusedStaticPrivateMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToUnusedStaticPrivateMethod()
     {
@@ -100,10 +97,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToParentReferencedUnusedPrivateMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToParentReferencedUnusedPrivateMethod()
     {
@@ -116,10 +109,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesWhenMethodIsReferencedOnDifferentObject
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentObject()
     {
@@ -132,10 +121,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesWhenMethodIsReferencedOnDifferentClass
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentClass()
     {
@@ -148,10 +133,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleAppliesWhenPropertyWithSimilarNameIsReferenced
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenPropertyWithSimilarNameIsReferenced()
     {
@@ -174,10 +155,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesWhenMethodWithSimilarNameIsInInvocationChain()
     {
@@ -190,10 +167,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToPrivateConstructor
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateConstructor()
     {
@@ -206,10 +179,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToPrivatePhp4Constructor
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivatePhp4Constructor()
     {
@@ -222,10 +191,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToPrivateCloneMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateCloneMethod()
     {
@@ -238,10 +203,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToThisReferencedMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToThisReferencedMethod()
     {
@@ -254,10 +215,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToSelfReferencedMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToSelfReferencedMethod()
     {
@@ -270,10 +227,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToStaticReferencedMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToStaticReferencedMethod()
     {
@@ -286,10 +239,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToClassNameReferencedMethod
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToClassNameReferencedMethod()
     {
@@ -313,10 +262,6 @@ class PHP_PMD_Rule_UnusedPrivateMethodTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedPrivateMethod
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCall()
     {

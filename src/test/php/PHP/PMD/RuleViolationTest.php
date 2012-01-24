@@ -61,6 +61,10 @@ require_once 'PHP/PMD/RuleViolation.php';
  * @version   Release: @package_version@
  * @link      http://phpmd.org
  * @since     0.2.5
+ *
+ * @covers PHP_PMD_RuleViolation
+ * @group phpmd
+ * @group unittest
  */
 class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
 {
@@ -68,9 +72,6 @@ class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
      * testConstructorExtractsClassNameFromGivenType
      *
      * @return void
-     * @covers PHP_PMD_RuleViolation
-     * @group phpmd
-     * @group unittest
      */
     public function testConstructorExtractsClassNameFromGivenType()
     {
@@ -80,16 +81,13 @@ class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
         $node->expects($this->once())
             ->method('getName');
 
-        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
+        new PHP_PMD_RuleViolation($rule, $node, 'foo');
     }
 
     /**
      * testConstructorExtractsClassNameFromGivenMethod
      *
      * @return void
-     * @covers PHP_PMD_RuleViolation
-     * @group phpmd
-     * @group unittest
      */
     public function testConstructorExtractsClassNameFromGivenMethod()
     {
@@ -99,16 +97,13 @@ class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
         $node->expects($this->once())
             ->method('getParentName');
 
-        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
+        new PHP_PMD_RuleViolation($rule, $node, 'foo');
     }
 
     /**
      * testConstructorExtractsMethodNameFromGivenMethod
      *
      * @return void
-     * @covers PHP_PMD_RuleViolation
-     * @group phpmd
-     * @group unittest
      */
     public function testConstructorExtractsMethodNameFromGivenMethod()
     {
@@ -118,6 +113,6 @@ class PHP_PMD_RuleViolationTest extends PHP_PMD_AbstractTest
         $node->expects($this->once())
             ->method('getName');
 
-        $violation = new PHP_PMD_RuleViolation($rule, $node, 'foo');
+        new PHP_PMD_RuleViolation($rule, $node, 'foo');
     }
 }

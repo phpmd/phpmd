@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Node/Annotations.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_Annotations
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_AnnotationsTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Node_AnnotationsTest extends PHP_PMD_AbstractTest
      * testCollectionReturnsFalseWhenNoAnnotationExists
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotations
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testCollectionReturnsFalseWhenNoAnnotationExists()
     {
@@ -83,10 +84,6 @@ class PHP_PMD_Node_AnnotationsTest extends PHP_PMD_AbstractTest
      * testCollectionReturnsFalseWhenNoMatchingAnnotationExists
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotations
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists()
     {
@@ -112,10 +109,6 @@ class PHP_PMD_Node_AnnotationsTest extends PHP_PMD_AbstractTest
      * testCollectionReturnsTrueWhenMatchingAnnotationExists
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotations
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testCollectionReturnsTrueWhenMatchingAnnotationExists()
     {
@@ -133,10 +126,6 @@ class PHP_PMD_Node_AnnotationsTest extends PHP_PMD_AbstractTest
      * testCollectionReturnsTrueWhenOneMatchingAnnotationExists
      *
      * @return void
-     * @covers PHP_PMD_Node_Annotations
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists()
     {
