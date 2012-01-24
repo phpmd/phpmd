@@ -9,6 +9,15 @@
     </properties>
 
     <body>
+        <release version="1.2.1"
+                 date="2012/01/24"
+                 description="">
+
+            <action date="" dev="mapi" issue="14990109" system="pivotaltracker" due-to="tdxtik" type="fix">
+                False detection of unused variable
+            </action>
+         </release>
+
         <release version="1.2.0"
                  date="2011/09/27"
                  description="Version 1.2.0 is a small feature release of PHPMD
@@ -20,7 +29,7 @@
                 Controverial PHPMD rule that checks if the project under
                 test does not utilize PHP's super globals.
             </action>
-            <action type="add" issue="18462127" dev="mapi" date="">
+            <action type="add" issue="18462127" dev="mapi" date="b066b44">
                 PHPMD needs a *strict* mode.
             </action>
         </release>

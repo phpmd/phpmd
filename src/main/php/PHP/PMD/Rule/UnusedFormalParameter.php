@@ -148,7 +148,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
-            if ($this->isLocal($variable)) {
+            if ($this->isRegularVariable($variable)) {
                 unset($this->_nodes[$variable->getImage()]);
             }
         }
