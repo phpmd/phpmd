@@ -60,7 +60,7 @@ require_once dirname(__FILE__) . '/../AbstractTest.php';
  * @version    Release: @package_version@
  * @link       http://phpmd.org
  */
-class PHP_PMD_Regression_AbstractTest extends PHP_PMD_AbstractTest
+abstract class PHP_PMD_Regression_AbstractTest extends PHP_PMD_AbstractTest
 {
     /**
      * Creates a full filename for a test content in the <em>_files</b> directory.
