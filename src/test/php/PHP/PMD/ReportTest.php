@@ -173,29 +173,29 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testGetProcessingErrorsReturnsEmptyIteratorByDefault
+     * testGetErrorsReturnsEmptyIteratorByDefault
      *
      * @return void
      * @since 1.2.1
      */
-    public function testGetProcessingErrorsReturnsEmptyIteratorByDefault()
+    public function testGetErrorsReturnsEmptyIteratorByDefault()
     {
         $report = new PHP_PMD_Report();
-        $this->assertSame(0, iterator_count($report->getProcessingErrors()));
+        $this->assertSame(0, iterator_count($report->getErrors()));
     }
 
     /**
-     * testGetProcessingErrorsReturnsPreviousAddedProcessingError
+     * testGetErrorsReturnsPreviousAddedProcessingError
      *
      * @return void
      * @since 1.2.1
      */
-    public function testGetProcessingErrorsReturnsPreviousAddedProcessingError()
+    public function testGetErrorsReturnsPreviousAddedProcessingError()
     {
         $report = new PHP_PMD_Report();
         $report->addError(new PHP_PMD_ProcessingError('Failing file "/foo.php".'));
 
-        $this->assertSame(1, iterator_count($report->getProcessingErrors()));
+        $this->assertSame(1, iterator_count($report->getErrors()));
     }
 
 }

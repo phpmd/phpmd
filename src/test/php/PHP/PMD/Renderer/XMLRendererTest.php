@@ -104,7 +104,7 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
             ->method('getRuleViolations')
             ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
-            ->method('getProcessingErrors')
+            ->method('getErrors')
             ->will($this->returnValue(new ArrayIterator(array())));
 
         $renderer = new PHP_PMD_Renderer_XMLRenderer();
@@ -142,7 +142,7 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
             ->method('getRuleViolations')
             ->will($this->returnValue(new ArrayIterator(array())));
         $report->expects($this->once())
-            ->method('getProcessingErrors')
+            ->method('getErrors')
             ->will($this->returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new PHP_PMD_Renderer_XMLRenderer();

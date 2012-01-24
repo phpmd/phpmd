@@ -164,7 +164,7 @@ class PHP_PMD_Report
      * @return Iterator
      * @since 1.2.1
      */
-    public function getProcessingErrors()
+    public function getErrors()
     {
         return new ArrayIterator($this->_errors);
     }

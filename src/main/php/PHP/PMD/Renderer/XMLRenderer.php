@@ -137,11 +137,11 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
             $writer->write('  </file>' . PHP_EOL);
         }
 
-        foreach ($report->getProcessingErrors() as $processingError) {
+        foreach ($report->getErrors() as $error) {
             $writer->write('  <error filename="');
-            $writer->write($processingError->getFile());
+            $writer->write($error->getFile());
             $writer->write('" msg="');
-            $writer->write(htmlspecialchars($processingError->getMessage()));
+            $writer->write(htmlspecialchars($error->getMessage()));
             $writer->write('" />' . PHP_EOL);
         }
 
