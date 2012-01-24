@@ -17,7 +17,7 @@
                 False detection of unused variable
             </action>
 
-            <action date="" dev="mapi" issue="23278127" system="pivotaltracker" due-to="Hugo Hamon" due-to-email="hugo.hamon@sensio.com" type="fix">
+            <action date="d162b21" dev="mapi" issue="23278127" system="pivotaltracker" due-to="Hugo Hamon" due-to-email="hugo.hamon@sensio.com" type="fix">
                 PHPMD should exclude unused parameters from inherited methods
             </action>
          </release>
