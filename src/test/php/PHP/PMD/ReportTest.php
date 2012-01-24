@@ -48,6 +48,7 @@
 require_once dirname(__FILE__) . '/AbstractTest.php';
 
 require_once 'PHP/PMD/Report.php';
+require_once 'PHP/PMD/ProcessingError.php';
 
 /**
  * Test case for the report class.
@@ -170,4 +171,31 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
         
         $this->assertFalse($report->isEmpty());
     }
+
+    /**
+     * testGetProcessingErrorsReturnsEmptyIteratorByDefault
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testGetProcessingErrorsReturnsEmptyIteratorByDefault()
+    {
+        $report = new PHP_PMD_Report();
+        $this->assertSame(0, iterator_count($report->getProcessingErrors()));
+    }
+
+    /**
+     * testGetProcessingErrorsReturnsPreviousAddedProcessingError
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testGetProcessingErrorsReturnsPreviousAddedProcessingError()
+    {
+        $report = new PHP_PMD_Report();
+        $report->addError(new PHP_PMD_ProcessingError('Failing file "/foo.php".'));
+
+        $this->assertSame(1, iterator_count($report->getProcessingErrors()));
+    }
+
 }

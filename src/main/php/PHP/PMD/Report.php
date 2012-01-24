@@ -158,6 +158,18 @@ class PHP_PMD_Report
     }
 
     /**
+     * Returns an iterator with all {@link PHP_PMD_ProcessingError} that were
+     * added to this report.
+     *
+     * @return Iterator
+     * @since 1.2.1
+     */
+    public function getProcessingErrors()
+    {
+        return new ArrayIterator($this->_errors);
+    }
+
+    /**
      * Starts the time tracking of this report instance.
      *
      * @return void
