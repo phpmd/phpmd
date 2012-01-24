@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/PMD/ProcessingError.php';
 require_once 'PHP/PMD/Renderer/HTMLRenderer.php';
 
 /**
@@ -100,8 +101,11 @@ class PHP_PMD_Renderer_HTMLRendererTest extends PHP_PMD_AbstractTest
 
         $report = $this->getReportMock(0);
         $report->expects($this->once())
-               ->method('getRuleViolations')
-               ->will($this->returnValue(new ArrayIterator($violations)));
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator(array())));
 
         $renderer = new PHP_PMD_Renderer_HTMLRenderer();
         $renderer->setWriter($writer);
@@ -116,6 +120,46 @@ class PHP_PMD_Renderer_HTMLRendererTest extends PHP_PMD_AbstractTest
             '<td>/foo.php</td>' . PHP_EOL .
             '<td align="center" width="5%">2</td>' . PHP_EOL .
             '<td><a href="http://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
+            '</tr>',
+            $writer->getData()
+        );
+    }
+
+    /**
+     * testRendererAddsProcessingErrorsToHtmlReport
+     *
+     * @return void
+     */
+    public function testRendererAddsProcessingErrorsToHtmlReport()
+    {
+        // Create a writer instance.
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $errors = array(
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/foo.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/bar.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/baz.php".'),
+        );
+
+        $report = $this->getReportMock(0);
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator(array())));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator($errors)));
+
+        $renderer = new PHP_PMD_Renderer_HTMLRenderer();
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertContains(
+            '<tr>' .
+            '<td>/tmp/bar.php</td>' .
+            '<td>Failed for file &quot;/tmp/bar.php&quot;.</td>' .
             '</tr>',
             $writer->getData()
         );

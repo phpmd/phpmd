@@ -24,6 +24,9 @@
             <action date="7bcddde" dev="mapi" issue="11055167" system="pivotaltracker" type="update">
                 Move PHPUnit annotations from method doc block to class doc block
             </action>
+            <action date="9355859" dev="mapi" issue="" system="pivotaltracker" type="fix">
+                PHP_Depend exceptions are silently ignored
+            </action>
          </release>
 
         <release version="1.2.0"

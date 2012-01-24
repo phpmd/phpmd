@@ -139,6 +139,10 @@ class PHP_PMD_Renderer_HTMLRenderer extends PHP_PMD_AbstractRenderer
             $writer->write('</tr>');
             $writer->write(PHP_EOL);
         }
+
+        $writer->write('</table>');
+
+        $this->_glomProcessingErrors($report);
     }
 
     /**
@@ -150,8 +154,42 @@ class PHP_PMD_Renderer_HTMLRenderer extends PHP_PMD_AbstractRenderer
     public function end()
     {
         $writer = $this->getWriter();
+        $writer->write('</body></html>');
+    }
+
+    /**
+     * This method will render a html table with occurred processing errors.
+     *
+     * @param PHP_PMD_Report $report The context violation report.
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    private function _glomProcessingErrors(PHP_PMD_Report $report)
+    {
+        if (false === $report->hasErrors()) {
+            return;
+        }
+
+        $writer = $this->getWriter();
+
+        $writer->write('<hr />');
+        $writer->write('<center><h3>Processing errors</h3></center>');
+        $writer->write('<table align="center" cellspacing="0" cellpadding="3">');
+        $writer->write('<tr><th>File</th><th>Problem</th></tr>');
+
+        $index = 0;
+        foreach ($report->getErrors() as $error) {
+            $writer->write('<tr');
+            if (++$index % 2 === 1) {
+                $writer->write(' bgcolor="lightgrey"');
+            }
+            $writer->write('>');
+            $writer->write('<td>' . $error->getFile() . '</td>');
+            $writer->write('<td>' . htmlentities($error->getMessage()) . '</td>');
+            $writer->write('</tr>' . PHP_EOL);
+        }
 
         $writer->write('</table>');
-        $writer->write('</body></html>');
     }
 }

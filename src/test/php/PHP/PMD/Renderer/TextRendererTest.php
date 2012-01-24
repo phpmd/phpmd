@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/PMD/ProcessingError.php';
 require_once 'PHP/PMD/Renderer/TextRenderer.php';
 
 /**
