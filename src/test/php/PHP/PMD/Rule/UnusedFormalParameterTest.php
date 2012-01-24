@@ -61,6 +61,12 @@ require_once 'PHP/PMD/Rule/UnusedFormalParameter.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Rule_UnusedFormalParameter
+ * @covers PHP_PMD_Rule_AbstractLocalVariable
+ * @group phpmd
+ * @group phpmd::rule
+ * @group unittest
  */
 class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
 {
@@ -68,11 +74,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToFunctionUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToFunctionUnusedFormalParameter()
     {
@@ -85,11 +86,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMultipleFunctionUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToMultipleFunctionUnusedFormalParameter()
     {
@@ -102,11 +98,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMethodUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToMethodUnusedFormalParameter()
     {
@@ -119,11 +110,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleAppliesToMultipleMethodUnusedFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToMultipleMethodUnusedFormalParameter()
     {
@@ -145,11 +131,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed()
     {
@@ -170,11 +151,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable()
     {
@@ -195,11 +171,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable()
     {
@@ -212,11 +183,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToAbstractMethodFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToAbstractMethodFormalParameter()
     {
@@ -229,11 +195,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToInterfaceMethodFormalParameter
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToInterfaceMethodFormalParameter()
     {
@@ -246,11 +207,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * testRuleDoesNotApplyToInnerFunctionDeclaration
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToInnerFunctionDeclaration()
     {
@@ -272,11 +228,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression()
     {
@@ -297,11 +248,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToMethodArgument()
     {
@@ -310,6 +256,11 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex
+     *
+     * @return void
+     */
     public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex()
     {
         $rule = new PHP_PMD_Rule_UnusedFormalParameter();
@@ -329,11 +280,6 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      * </code>
      *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToParameterUsedAsArrayIndex()
     {
@@ -352,12 +298,8 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
      *     }
      * }
      * </code>
+     *
      * @return void
-     * @covers PHP_PMD_Rule_UnusedFormalParameter
-     * @covers PHP_PMD_Rule_AbstractLocalVariable
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
      */
     public function testRuleDoesNotApplyToParameterUsedAsStringIndex()
     {
@@ -367,27 +309,65 @@ class PHP_PMD_Rule_UnusedFormalParameterTest extends PHP_PMD_AbstractTest
     }
 
     /**
-	 * testRuleDoesNotApplyToMethodWithFuncGetArgs
-	 *
-	 * If func_get_args() is called then all parameters are
-	 * automatically referenced without needing them to be referenced
-	 * explicitly
-	 * 
-	 * <code>
-	 * class Foo {
-	 *     function bar($baz) {
-	 *         print_r(func_get_args());
-	 *     }
-	 * }
-	 * </code>
-     * @group phpmd
-     * @group phpmd::rule
-     * @group unittest
+     * testRuleDoesNotApplyToMethodWithFuncGetArgs
+     *
+     * If func_get_args() is called then all parameters are
+     * automatically referenced without needing them to be referenced
+     * explicitly
+     *
+     * <code>
+     * class Foo {
+     *     function bar($baz) {
+     *         print_r(func_get_args());
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
      */
     public function testRuleDoesNotApplyToMethodWithFuncGetArgs()
     {
         $rule = new PHP_PMD_Rule_UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
-		$rule->apply($this->getMethod());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToInheritMethod
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testRuleDoesNotApplyToInheritMethod()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToImplementedAbstractMethod
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testRuleDoesNotApplyToImplementedAbstractMethod()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToImplementedInterfaceMethod
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testRuleDoesNotApplyToImplementedInterfaceMethod()
+    {
+        $rule = new PHP_PMD_Rule_UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
     }
 }

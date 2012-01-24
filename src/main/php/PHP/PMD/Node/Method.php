@@ -133,4 +133,35 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
         }
         return new PHP_PMD_Node_Interface($parentNode);
     }
+
+    /**
+     * Returns <b>true</b> when this method is the initial method declaration.
+     * Otherwise this method will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 1.2.1
+     */
+    public function isDeclaration()
+    {
+        if ($this->isPrivate()) {
+            return true;
+        }
+
+        $parentNode = $this->getNode()->getParent();
+        foreach ($parentNode->getInterfaces() as $parentType) {
+            $methods = $parentType->getAllMethods();
+            if (isset($methods[$this->getName()])) {
+                return false;
+            }
+        }
+
+        if (is_object($parentType = $parentNode->getParentClass())) {
+            $methods = $parentType->getAllMethods();
+            if (isset($methods[$this->getName()])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

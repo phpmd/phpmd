@@ -61,6 +61,11 @@ require_once 'PHP/PMD/Node/Method.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://phpmd.org
+ *
+ * @covers PHP_PMD_Node_Method
+ * @group phpmd
+ * @group phpmd::node
+ * @group unittest
  */
 class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
 {
@@ -68,10 +73,6 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testMagicCallDelegatesToWrappedPHPDependMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
@@ -87,10 +88,6 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @covers PHP_PMD_Node_AbstractCallable::__call
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      * @expectedException BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
@@ -103,25 +100,19 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testGetParentTypeReturnsInterfaceForInterfaceMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_Method::getParentType
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod()
     {
-        $method = $this->getMethod();
-        self::assertInstanceOf(PHP_PMD_Node_Interface::CLAZZ, $method->getParentType());
+        $this->assertInstanceOf(
+            PHP_PMD_Node_Interface::CLAZZ,
+            $this->getMethod()->getParentType()
+        );
     }
 
     /**
      * testGetParentTypeReturnsClassForClassMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_Method::getParentType
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testGetParentTypeReturnsClassForClassMethod()
     {
@@ -133,10 +124,6 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testHasSuppressWarningsExecutesDefaultImplementation
      *
      * @return void
-     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testHasSuppressWarningsExecutesDefaultImplementation()
     {
@@ -151,10 +138,6 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testHasSuppressWarningsDelegatesToParentClassMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testHasSuppressWarningsDelegatesToParentClassMethod()
     {
@@ -169,10 +152,6 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
      * testHasSuppressWarningsDelegatesToParentInterfaceMethod
      *
      * @return void
-     * @covers PHP_PMD_Node_Method::hasSuppressWarningsAnnotationFor
-     * @group phpmd
-     * @group phpmd::node
-     * @group unittest
      */
     public function testHasSuppressWarningsDelegatesToParentInterfaceMethod()
     {
@@ -181,5 +160,65 @@ class PHP_PMD_Node_MethodTest extends PHP_PMD_AbstractTest
 
         $method = $this->getMethod();
         $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testIsDeclarationReturnsTrueForMethodDeclaration
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testIsDeclarationReturnsTrueForMethodDeclaration()
+    {
+        $method = $this->getMethod();
+        $this->assertTrue($method->isDeclaration());
+    }
+
+    /**
+     * testIsDeclarationReturnsTrueForMethodDeclarationWithParent
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testIsDeclarationReturnsTrueForMethodDeclarationWithParent()
+    {
+        $method = $this->getMethod();
+        $this->assertTrue($method->isDeclaration());
+    }
+
+    /**
+     * testIsDeclarationReturnsFalseForInheritMethodDeclaration
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testIsDeclarationReturnsFalseForInheritMethodDeclaration()
+    {
+        $method = $this->getMethod();
+        $this->assertFalse($method->isDeclaration());
+    }
+
+    /**
+     * testIsDeclarationReturnsFalseForImplementedAbstractMethod
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testIsDeclarationReturnsFalseForImplementedAbstractMethod()
+    {
+        $method = $this->getMethod();
+        $this->assertFalse($method->isDeclaration());
+    }
+
+    /**
+     * testIsDeclarationReturnsFalseForImplementedInterfaceMethod
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testIsDeclarationReturnsFalseForImplementedInterfaceMethod()
+    {
+        $method = $this->getMethod();
+        $this->assertFalse($method->isDeclaration());
     }
 }

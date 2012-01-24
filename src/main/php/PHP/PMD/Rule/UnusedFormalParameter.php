@@ -89,6 +89,10 @@ class PHP_PMD_Rule_UnusedFormalParameter
             return;
         }
 
+        if ($this->_isNotDeclaration($node)) {
+            return;
+        }
+
         $this->_nodes = array();
 
         $this->_collectParameters($node);
@@ -110,6 +114,23 @@ class PHP_PMD_Rule_UnusedFormalParameter
     {
         if ($node instanceof PHP_PMD_Node_Method) {
             return $node->isAbstract();
+        }
+        return false;
+    }
+
+    /**
+     * Tests if the given <b>$node</b> is a method and if this method is also
+     * the initial declaration.
+     *
+     * @param PHP_PMD_AbstractNode $node The context method or a function instance.
+     *
+     * @return boolean
+     * @since 1.2.1
+     */
+    private function _isNotDeclaration(PHP_PMD_AbstractNode $node)
+    {
+        if ($node instanceof PHP_PMD_Node_Method) {
+            return !$node->isDeclaration();
         }
         return false;
     }
