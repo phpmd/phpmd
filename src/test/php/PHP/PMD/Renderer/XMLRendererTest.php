@@ -48,6 +48,7 @@
 
 require_once dirname(__FILE__) . '/../AbstractTest.php';
 
+require_once 'PHP/PMD/ProcessingError.php';
 require_once 'PHP/PMD/Renderer/XMLRenderer.php';
 
 /**
@@ -100,8 +101,11 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
 
         $report = $this->getReportMock(0);
         $report->expects($this->once())
-               ->method('getRuleViolations')
-               ->will($this->returnValue(new ArrayIterator($violations)));
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getProcessingErrors')
+            ->will($this->returnValue(new ArrayIterator(array())));
 
         $renderer = new PHP_PMD_Renderer_XMLRenderer();
         $renderer->setWriter($writer);
@@ -113,6 +117,44 @@ class PHP_PMD_Renderer_XMLRendererTest extends PHP_PMD_AbstractTest
         $this->assertXmlEquals(
             $writer->getData(),
             'renderer/xml_renderer_expected1.xml'
+        );
+    }
+
+    /**
+     * testRendererAddsProcessingErrorsToXmlReport
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testRendererAddsProcessingErrorsToXmlReport()
+    {
+        // Create a writer instance.
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $processingErrors = array(
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/foo.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/bar.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/baz.php".'),
+        );
+
+        $report = $this->getReportMock(0);
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator(array())));
+        $report->expects($this->once())
+            ->method('getProcessingErrors')
+            ->will($this->returnValue(new ArrayIterator($processingErrors)));
+
+        $renderer = new PHP_PMD_Renderer_XMLRenderer();
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertXmlEquals(
+            $writer->getData(),
+            'renderer/xml_renderer_processing_errors.xml'
         );
     }
 }
