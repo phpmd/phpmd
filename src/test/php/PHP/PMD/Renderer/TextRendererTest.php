@@ -100,8 +100,11 @@ class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
 
         $report = $this->getReportMock(0);
         $report->expects($this->once())
-               ->method('getRuleViolations')
-               ->will($this->returnValue(new ArrayIterator($violations)));
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator(array())));
 
         $renderer = new PHP_PMD_Renderer_TextRenderer();
         $renderer->setWriter($writer);
@@ -115,6 +118,46 @@ class PHP_PMD_Renderer_TextRendererTest extends PHP_PMD_AbstractTest
             "/bar.php:1\tTest description" . PHP_EOL .
             "/foo.php:2\tTest description" . PHP_EOL .
             "/foo.php:3\tTest description" . PHP_EOL,
+            $writer->getData()
+        );
+    }
+
+    /**
+     * testRendererAddsProcessingErrorsToTextReport
+     *
+     * @return void
+     */
+    public function testRendererAddsProcessingErrorsToTextReport()
+    {
+        // Create a writer instance.
+        $writer = new PHP_PMD_Stubs_WriterStub();
+
+        $errors = array(
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/foo.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/bar.php".'),
+            new PHP_PMD_ProcessingError('Failed for file "/tmp/baz.php".'),
+        );
+
+        $report = $this->getReportMock(0);
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator(array())));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator($errors)));
+
+        $renderer = new PHP_PMD_Renderer_TextRenderer();
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            PHP_EOL .
+            "/tmp/foo.php\t-\tFailed for file \"/tmp/foo.php\"." . PHP_EOL .
+            "/tmp/bar.php\t-\tFailed for file \"/tmp/bar.php\"." . PHP_EOL .
+            "/tmp/baz.php\t-\tFailed for file \"/tmp/baz.php\"." . PHP_EOL,
             $writer->getData()
         );
     }

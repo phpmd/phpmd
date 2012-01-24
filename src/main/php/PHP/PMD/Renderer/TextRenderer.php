@@ -86,5 +86,13 @@ class PHP_PMD_Renderer_TextRenderer extends PHP_PMD_AbstractRenderer
             $writer->write($violation->getDescription());
             $writer->write(PHP_EOL);
         }
+
+        foreach ($report->getErrors() as $error) {
+
+            $writer->write($error->getFile());
+            $writer->write("\t-\t");
+            $writer->write($error->getMessage());
+            $writer->write(PHP_EOL);
+        }
     }
 }
