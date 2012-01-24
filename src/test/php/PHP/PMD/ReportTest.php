@@ -173,6 +173,32 @@ class PHP_PMD_ReportTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testHasErrorsReturnsFalseByDefault
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testHasErrorsReturnsFalseByDefault()
+    {
+        $report = new PHP_PMD_Report();
+        $this->assertFalse($report->hasErrors());
+    }
+
+    /**
+     * testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError
+     *
+     * @return void
+     * @since 1.2.1
+     */
+    public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError()
+    {
+        $report = new PHP_PMD_Report();
+        $report->addError(new PHP_PMD_ProcessingError('Failing file "/foo.php".'));
+
+        $this->assertTrue($report->hasErrors());
+    }
+
+    /**
      * testGetErrorsReturnsEmptyIteratorByDefault
      *
      * @return void

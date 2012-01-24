@@ -158,6 +158,18 @@ class PHP_PMD_Report
     }
 
     /**
+     * Returns <b>true</b> when the report contains at least one processing
+     * error. Otherwise this method will return <b>false</b>.
+     *
+     * @return boolean
+     * @since 1.2.1
+     */
+    public function hasErrors()
+    {
+        return count($this->_errors) > 0;
+    }
+
+    /**
      * Returns an iterator with all {@link PHP_PMD_ProcessingError} that were
      * added to this report.
      *
