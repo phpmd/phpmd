@@ -3,7 +3,6 @@
     <testsuites>
 		<testsuite name="PHP_PMD_AllTests">
 			<directory suffix="Test.php">src/test/php</directory>
-			<!--<file>src/test/php/PHP/PMD/AllTests.php</file>-->
         </testsuite>
     </testsuites>
     <filter>
