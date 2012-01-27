@@ -10,8 +10,12 @@
 
     <body>
         <release version="1.2.1"
-                 date="2012/01/24"
-                 description="">
+                 date="2012/01/27"
+				 description="The 1.2.1 release of PHPMD closes several minor
+                              issues and bugs. Beside that we have added a
+							  contribution by Francis Besset with additions
+							  rules for PHPMD. Finally we have updated the
+							  utilized PHP_Depend version to a newer release.">
 
             <action date="183fbd5" dev="mapi" issue="14990109" system="pivotaltracker" due-to="tdxtik" type="fix">
                 False detection of unused variable
@@ -26,7 +30,13 @@
             </action>
             <action date="d3d553f" dev="mapi" issue="9355859" system="pivotaltracker" type="fix">
                 PHP_Depend exceptions are silently ignored
-            </action>
+			</action>
+			<action date="7176e74" dev="mapi" due-to="Francis Besset" due-to-email="francis.besset@gmail.com" type="add">
+				Added Superglobals rule in Controversial
+			</action>
+			<action date="1c3c260" dev="mapi" due-to="Francis Besset" due-to-email="francis.besset@gmail.com" type="add">
+				Added rules to check CamelCase
+			</action>
          </release>
 
         <release version="1.2.0"

@@ -29,7 +29,10 @@ __ /rules/index.html
 Recent Releases
 ===============
 
-- 2011/09/27 - PHPMD 1.2.9: New feature `release`__ of PHPMD that implements a
+- 2012/01/27 - PHPMD 1.2.1: New bugfix `release`__ of PHPMD that fixes several
+  minor issues in PHPMD. Additionally we have updated to a more recent 
+  PHP_Depend version.
+- 2011/09/27 - PHPMD 1.2.0: New feature `release`__ of PHPMD that implements a
   new command line option for the strict mode.
 - 2011/06/30 - PHPMD 1.1.1: New feature `release`__ of PHPMD that fixes an issue
   in PHP_PMD's package file.
@@ -37,11 +40,9 @@ Recent Releases
   new rules that will measure the quality of a project.
 - 2011/02/12 - PHPMD 1.0.1: New Bugfix `release`__ that closes two
   issues in release 1.0.0.
-- 2011/02/05 - PHPMD 1.0.0: We are proud to announce the first stable
-  1.0.0 `release`__ of the PHP Mess Detector.
 
+__ /download/release/1.2.1/changelog.html
 __ /download/release/1.2.0/changelog.html
 __ /download/release/1.1.1/changelog.html
 __ /download/release/1.1.0/changelog.html
-__ /download/releases/index.html
 __ /download/releases/index.html
