@@ -40,8 +40,8 @@ class Foo {
           class="PHP_PMD_Rule_Controversial_CamelCaseClassName"
           externalInfoUrl="#">
         <description>
-            <![CDATA[
-An usage of CamelCase standardize the name of classes.
+			<![CDATA[
+It is considered best practice to use the CamelCase notation to name classes.
             ]]>
         </description>
         <priority>1</priority>
@@ -61,7 +61,7 @@ class class_name {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-An usage of camelCase standardize the name of properties.
+It is considered best practice to use the camelCase notation to name attributes.
             ]]>
         </description>
         <priority>1</priority>
@@ -82,7 +82,7 @@ class ClassName {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-An usage of camelCase standardize the name of methods.
+It is considered best practice to use the CamelCase notation to name methods.
             ]]>
         </description>
         <priority>1</priority>
@@ -104,7 +104,7 @@ class ClassName {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-An usage of camelCase standardize the name of parameters.
+It is considered best practice to use the camelCase notation to name parameters.
             ]]>
         </description>
         <priority>1</priority>
@@ -126,7 +126,7 @@ class ClassName {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-An usage of camelCase standardize the name of variables.
+It is considered best practice to use the camelCase notation to name variables.
             ]]>
         </description>
         <priority>1</priority>
