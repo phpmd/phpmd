@@ -19,7 +19,7 @@
 
         </release>
         <release version="1.2.1"
-                 date="2012/01/27"
+                 date="2012/02/04"
 				 description="The 1.2.1 release of PHPMD closes several minor
                               issues and bugs. Beside that we have added a
 							  contribution by Francis Besset with additions
