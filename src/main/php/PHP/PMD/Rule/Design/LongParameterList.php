@@ -83,6 +83,14 @@ class PHP_PMD_Rule_Design_LongParameterList
             return;
         }
 
-        $this->addViolation($node, array($node->getName(), $count, $threshold));
+        $this->addViolation(
+            $node,
+            array(
+                $node->getType(),
+                $node->getName(),
+                $count,
+                $threshold
+            )
+        );
     }
 }
