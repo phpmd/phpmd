@@ -29,20 +29,24 @@ __ /rules/index.html
 Recent Releases
 ===============
 
+- 2012/02/04 - PHPMD 1.3.0: This `release`__ depends on the latest PHP_Depend
+  version 1.0.0.
+
 - 2012/01/27 - PHPMD 1.2.1: New bugfix `release`__ of PHPMD that fixes several
   minor issues in PHPMD. Additionally we have updated to a more recent 
   PHP_Depend version.
+
 - 2011/09/27 - PHPMD 1.2.0: New feature `release`__ of PHPMD that implements a
   new command line option for the strict mode.
+
 - 2011/06/30 - PHPMD 1.1.1: New feature `release`__ of PHPMD that fixes an issue
   in PHP_PMD's package file.
+
 - 2011/02/20 - PHPMD 1.1.0: New feature `release`__ of PHPMD that provides two
   new rules that will measure the quality of a project.
-- 2011/02/12 - PHPMD 1.0.1: New Bugfix `release`__ that closes two
-  issues in release 1.0.0.
 
+__ /download/release/1.3.0/changelog.html
 __ /download/release/1.2.1/changelog.html
 __ /download/release/1.2.0/changelog.html
 __ /download/release/1.1.1/changelog.html
 __ /download/release/1.1.0/changelog.html
-__ /download/releases/index.html

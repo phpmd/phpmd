@@ -9,6 +9,15 @@
     </properties>
 
     <body>
+        <release version="1.3.0"
+                 date=""
+                 description="Version 1.3.0 now depends on PHP_Depend 1.0.0 which
+                              has support for all the new language constructs
+                              introduced with PHP 5.4. Additionally this release
+                              contains some minor fixes for PHPMD's rule violation
+                              messages.">
+
+        </release>
         <release version="1.2.1"
                  date="2012/01/27"
 				 description="The 1.2.1 release of PHPMD closes several minor

@@ -29,7 +29,7 @@ Requirements
 PHPMD itself is considered as an early development version at its
 current state. It relies on the following software products:
 
-- `PHP_Depend >= 0.10.9`__
+- `PHP_Depend >= 1.0.0`__
 - `PHP >= 5.2.3`__
 
 __ http://pear.php.net/manual/en/installation.php
