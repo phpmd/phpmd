@@ -147,17 +147,19 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
             return true;
         }
 
+        $methodName = strtolower($this->getName());
+
         $parentNode = $this->getNode()->getParent();
         foreach ($parentNode->getInterfaces() as $parentType) {
             $methods = $parentType->getAllMethods();
-            if (isset($methods[$this->getName()])) {
+            if (isset($methods[$methodName])) {
                 return false;
             }
         }
 
         if (is_object($parentType = $parentNode->getParentClass())) {
             $methods = $parentType->getAllMethods();
-            if (isset($methods[$this->getName()])) {
+            if (isset($methods[$methodName])) {
                 return false;
             }
         }

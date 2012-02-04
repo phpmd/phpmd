@@ -130,7 +130,7 @@ class Foo {
 
     <rule name="ExcessiveClassLength"
  	  since="0.1"
-          message="The {0} {1} has {2} lines of code. Current threshold is {3}. Avoid really long classes."
+          message="The class {0} has {1} lines of code. Current threshold is {2}. Avoid really long classes."
           class="PHP_PMD_Rule_Design_LongClass"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
