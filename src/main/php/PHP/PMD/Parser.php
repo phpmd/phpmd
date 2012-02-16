@@ -176,6 +176,9 @@ class PHP_PMD_Parser
      */
     public function close()
     {
+        // Set max nesting level, because we may get really deep data structures
+        ini_set('xdebug.max_nesting_level', 8192);
+
         foreach ($this->_code as $node) {
             $node->accept($this);
         }

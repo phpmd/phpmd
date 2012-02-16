@@ -175,10 +175,10 @@ class PHP_PMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string                          $inputPath      File or directory
-     * @param string                          $ruleSets       Rule-sets to apply
-     * @param array(PHP_PMD_AbstractRenderer) $renderers      Report renderers
-     * @param PHP_PMD_RuleSetFactory          $ruleSetFactory The factory to use
+     * @param string                     $inputPath      File or directory
+     * @param string                     $ruleSets       Rule-sets to apply
+     * @param PHP_PMD_AbstractRenderer[] $renderers      Report renderers
+     * @param PHP_PMD_RuleSetFactory     $ruleSetFactory The factory to use
      *
      * @return void
      */
