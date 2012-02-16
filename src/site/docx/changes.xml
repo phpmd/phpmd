@@ -11,9 +11,12 @@
     <body>
         <release version="1.3.1"
                  date="2012/02/16"
-                 description="">
+                 description="The 1.3.1 release of PHPMD closes one critical bug
+                              in PHPMD, that causes a fatal error due to the xdebug
+                              max_nesting_level setting for very deep self calls on
+                              methods.">
 
-            <action date="" dev="mapi" issue="24975295" system="pivotaltracker" due-to="Akram" type="fix">
+            <action date="f6550df" dev="mapi" issue="24975295" system="pivotaltracker" due-to="Akram" type="fix">
                 Fatal: Maximum function nesting level reached in ASTNode.php:425
             </action>
         </release>
