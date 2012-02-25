@@ -16,7 +16,7 @@
                               memory handling when it is run in a PHP environment
                               that uses the Suhosin patch and the suhosin.memory_limit
                               setting.">
-            <action date="" dev="mapi" issue="25450811" system="pivotaltracker" type="fix" due-to="Gordon Franke">
+            <action date="19e4fc5" dev="mapi" issue="25450811" system="pivotaltracker" type="fix" due-to="Gordon Franke">
                 Alert disable memory_limit
             </action>
         </release>

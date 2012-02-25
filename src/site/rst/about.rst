@@ -29,6 +29,9 @@ __ /rules/index.html
 Recent Releases
 ===============
 
+- 2012/02/25 - PHPMD 1.3.2; This `release`__ closes a minor issue in PHPMD
+  related to the Suhosin patch and ``memory_limit``.
+
 - 2012/02/04 - PHPMD 1.3.0: This `release`__ depends on the latest PHP_Depend
   version 1.0.0.
 
@@ -42,11 +45,8 @@ Recent Releases
 - 2011/06/30 - PHPMD 1.1.1: New feature `release`__ of PHPMD that fixes an issue
   in PHP_PMD's package file.
 
-- 2011/02/20 - PHPMD 1.1.0: New feature `release`__ of PHPMD that provides two
-  new rules that will measure the quality of a project.
-
+__ /download/release/1.3.2/changelog.html
 __ /download/release/1.3.0/changelog.html
 __ /download/release/1.2.1/changelog.html
 __ /download/release/1.2.0/changelog.html
 __ /download/release/1.1.1/changelog.html
-__ /download/release/1.1.0/changelog.html
