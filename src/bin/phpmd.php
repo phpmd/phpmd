@@ -12,8 +12,19 @@ if (strpos('@package_version@', '@package_version') === 0) {
     );
 }
 
-// Disable memory_limit
-ini_set('memory_limit', -1);
+// Allow as much memory as possible by default
+if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
+    $limit = ini_get('memory_limit');
+    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
+        $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
+        $limit = ($match[1] * (1 << $shift[$match[2]]));
+    }
+    if (ini_get('suhosin.memory_limit') > $limit) {
+        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
+    }
+} else {
+    ini_set('memory_limit', -1);
+}
 
 // Check php setup for cli arguments
 if (!isset($_SERVER['argv']) && !isset($argv)) {
