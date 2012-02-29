@@ -10,6 +10,15 @@
     </properties>
 
     <body>
+        <release version="1.3.3"
+                 date="2012/02/29"
+                 description="This release closes an issue introduced with the
+                              last release. It closes one more regression related
+                              to PHP's memory_limit and the Suhosin patch.">
+            <action date="" dev="mapi" type="fix" due-to="Guido van Biemen">
+                Fixed fatal error due to bug in memory_limit modification code.
+            </action>
+        </release>
         <release version="1.3.2"
                  date="2012/02/25"
                  description="This release closes a minor issue in PHP_PMD's

@@ -19,7 +19,7 @@ if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) 
         $shift = array('B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40);
         $limit = ($match[1] * (1 << $shift[$match[2]]));
     }
-    if (ini_get('suhosin.memory_limit') > $limit) {
+    if (ini_get('suhosin.memory_limit') > $limit && $limit > -1) {
         ini_set('memory_limit', ini_get('suhosin.memory_limit'));
     }
 } else {
