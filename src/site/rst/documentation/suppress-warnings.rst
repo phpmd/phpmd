@@ -41,6 +41,8 @@ a single annotation. ::
   /**
    * Suppress all rules containing "unused" in this
    * class
+   *
+   * @SuppressWarnings("unused")
    */
   class Bar {
       private $_unusedPrivateField = 42;
