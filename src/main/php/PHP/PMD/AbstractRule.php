@@ -391,6 +391,25 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
         throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
     }
 
+
+    /**
+     * Returns the raw string value of a configured property or throws an 
+     * exception when no property with <b>$name</b> exists.
+     *
+     * @param string $name The property identifier.
+     *
+     * @return string
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
+     */
+    public function getStringProperty($name)
+    {
+        if (isset($this->_properties[$name])) {
+            return $this->_properties[$name];
+        }
+        throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
+
+    }
+
     /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
