@@ -558,6 +558,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
 
         $autoload = new PHP_Depend_Autoload();
         $autoload->register();
+        
+        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0) 
+        date_default_timezone_set('UTC');
     }
 
     /**
