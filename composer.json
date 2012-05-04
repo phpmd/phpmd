@@ -5,7 +5,10 @@
         "php": ">=5.3.0",
         "pdepend/pdepend": "dev-master"
     },
-    "include-path": ["../../pdepend/pdepend/src/main/php"],
+    "include-path": [
+        "../../pdepend/pdepend/src/main/php",
+        "src/main/php"
+    ],
     "bin": ["src/bin/phpmd"]
 }
 
