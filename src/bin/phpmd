@@ -1,17 +1,22 @@
 #!/usr/bin/env php
 <?php
 
-// PEAR installation workaround
-if (strpos('@package_version@', '@package_version') === 0) {
-    set_include_path(
-        dirname(__FILE__) . '/../main/php' .
-        PATH_SEPARATOR .
-        dirname(__FILE__) . '/../../lib/pdepend/src/main/php' .
-        PATH_SEPARATOR .
-        dirname(__FILE__) . '/../../../pdepend/src/main/php' .
-        PATH_SEPARATOR .
-        '.'
-    );
+
+if (file_exists(__DIR__ . '/../../../../autoload.php')) {
+    // phpmd is part of a composer installation
+    require_once __DIR__ . '/../../../../autoload.php';
+} else {
+
+    // PEAR installation workaround
+    if (strpos('@package_version@', '@package_version') === 0) {
+        set_include_path(
+            dirname(__FILE__) . '/../main/php' .
+            PATH_SEPARATOR .
+            dirname(__FILE__) . '/../../lib/pdepend/src/main/php' .
+            PATH_SEPARATOR .
+            '.'
+        );
+    }
 }
 
 // Allow as much memory as possible by default
