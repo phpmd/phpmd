@@ -46,11 +46,13 @@ Command line options
   - ``--reportfile`` - Sends the report output to the specified file, 
     instead of the default output target ``STDOUT``.
 
-  - ``--extensions`` - Comma separated string of valid PHP source file
+  - ``--suffixes`` - Comma-separated string of valid source code filename 
     extensions.
 
-  - ``--ignore`` - Comma separated string of files or directories that
-    will be ignored during the parsing process.
+  - ``--exclude`` - Comma-separated string of patterns that are used to ignore 
+    directories.
+
+  - ``--struct`` - Also report those nodes with a @SuppressWarnings annotation.
 
 Using multiple rule sets
 ````````````````````````
