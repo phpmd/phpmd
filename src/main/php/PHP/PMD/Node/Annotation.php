@@ -70,14 +70,14 @@ class PHP_PMD_Node_Annotation
      *
      * @var string
      */
-    private $_name = null;
+    private $name = null;
 
     /**
      * The annotation value.
      *
      * @var string
      */
-    private $_value = null;
+    private $value = null;
 
     /**
      * Constructs a new annotation instance.
@@ -87,8 +87,8 @@ class PHP_PMD_Node_Annotation
      */
     public function __construct($name, $value)
     {
-        $this->_name  = $name;
-        $this->_value = trim($value, '" ');
+        $this->name  = $name;
+        $this->value = trim($value, '" ');
     }
 
     /**
@@ -100,8 +100,8 @@ class PHP_PMD_Node_Annotation
      */
     public function suppresses(PHP_PMD_Rule $rule)
     {
-        if ($this->_name === self::SUPPRESS_ANNOTATION) {
-            return $this->_suppresses($rule);
+        if ($this->name === self::SUPPRESS_ANNOTATION) {
+            return $this->isSuppressed($rule);
         }
         return false;
     }
@@ -113,13 +113,13 @@ class PHP_PMD_Node_Annotation
      *
      * @return boolean
      */
-    private function _suppresses(PHP_PMD_Rule $rule)
+    private function isSuppressed(PHP_PMD_Rule $rule)
     {
-        if (in_array($this->_value, array('PHPMD', 'PMD'))) {
+        if (in_array($this->value, array('PHPMD', 'PMD'))) {
             return true;
-        } else if (strpos($this->_value, 'PMD.' . $rule->getName()) !== false) {
+        } else if (strpos($this->value, 'PMD.' . $rule->getName()) !== false) {
             return true;
         }
-        return (stripos($rule->getName(), $this->_value) !== false);
+        return (stripos($rule->getName(), $this->value) !== false);
     }
 }

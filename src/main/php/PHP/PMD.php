@@ -73,21 +73,21 @@ class PHP_PMD
      *
      * @var array(string)
      */
-    private $_fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
+    private $fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
 
     /**
      * List of exclude directory patterns.
      *
      * @var array(string)
      */
-    private $_ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS');
+    private $ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS');
 
     /**
      * The input source file or directory.
      *
      * @var string
      */
-    private $_input = null;
+    private $input = null;
     
     /**
      * This property will be set to <b>true</b> when an error or a violation
@@ -96,7 +96,7 @@ class PHP_PMD
      * @var boolean
      * @since 0.2.5
      */
-    private $_violations = false;
+    private $violations = false;
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -107,7 +107,7 @@ class PHP_PMD
      */
     public function hasViolations()
     {
-        return $this->_violations;
+        return $this->violations;
     }
 
     /**
@@ -117,7 +117,7 @@ class PHP_PMD
      */
     public function getInput()
     {
-        return $this->_input;
+        return $this->input;
     }
 
     /**
@@ -128,7 +128,7 @@ class PHP_PMD
      */
     public function getFileExtensions()
     {
-        return $this->_fileExtensions;
+        return $this->fileExtensions;
     }
 
     /**
@@ -140,7 +140,7 @@ class PHP_PMD
      */
     public function setFileExtensions(array $fileExtensions)
     {
-        $this->_fileExtensions = $fileExtensions;
+        $this->fileExtensions = $fileExtensions;
     }
 
     /**
@@ -151,7 +151,7 @@ class PHP_PMD
      */
     public function getIgnorePattern()
     {
-        return $this->_ignorePatterns;
+        return $this->ignorePatterns;
     }
 
     /**
@@ -164,8 +164,8 @@ class PHP_PMD
      */
     public function setIgnorePattern(array $ignorePatterns)
     {
-        $this->_ignorePatterns = array_merge(
-            $this->_ignorePatterns, 
+        $this->ignorePatterns = array_merge(
+            $this->ignorePatterns,
             $ignorePatterns
         );
     }
@@ -188,7 +188,7 @@ class PHP_PMD
         array $renderers,
         PHP_PMD_RuleSetFactory $ruleSetFactory
     ) {
-        $this->_input = $inputPath;
+        $this->input = $inputPath;
 
         $report = new PHP_PMD_Report();
 
@@ -215,6 +215,6 @@ class PHP_PMD
             $renderer->end();
         }
 
-        $this->_violations = !$report->isEmpty();
+        $this->violations = !$report->isEmpty();
     }
 }

@@ -61,9 +61,9 @@ abstract class PHP_PMD_AbstractRenderer
     /**
      * The associated output writer instance.
      *
-     * @var PHP_PMD_AbstractWriter $_writer
+     * @var PHP_PMD_AbstractWriter
      */
-    private $_writer = null;
+    private $writer = null;
 
     /**
      * Returns the associated output writer instance.
@@ -72,7 +72,7 @@ abstract class PHP_PMD_AbstractRenderer
      */
     public function getWriter()
     {
-        return $this->_writer;
+        return $this->writer;
     }
 
     /**
@@ -84,7 +84,7 @@ abstract class PHP_PMD_AbstractRenderer
      */
     public function setWriter(PHP_PMD_AbstractWriter $writer)
     {
-        $this->_writer = $writer;
+        $this->writer = $writer;
     }
 
     /**

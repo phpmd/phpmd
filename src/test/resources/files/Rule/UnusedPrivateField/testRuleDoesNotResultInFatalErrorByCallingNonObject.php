@@ -1,7 +1,7 @@
 <?php
 class testRuleDoesNotResultInFatalErrorByCallingNonObject
 {
-    private $_foo = null;
+    private $foo = null;
 
     public function bar()
     {

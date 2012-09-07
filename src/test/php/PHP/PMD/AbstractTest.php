@@ -112,8 +112,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/PMD/Node/Class.php';
 
         return new PHP_PMD_Node_Class(
-            $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()->getClasses()
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getClasses()
             )
         );
     }
@@ -129,8 +129,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/PMD/Node/Interface.php';
 
         return new PHP_PMD_Node_Interface(
-            $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()->getInterfaces()
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getInterfaces()
             )
         );
     }
@@ -146,8 +146,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/PMD/Node/Method.php';
 
         return new PHP_PMD_Node_Method(
-            $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()->getTypes()->current()->getMethods()
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getTypes()->current()->getMethods()
             )
         );
     }
@@ -163,8 +163,8 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         include_once 'PHP/PMD/Node/Function.php';
 
         return new PHP_PMD_Node_Function(
-            $this->_getNodeForCallingTestCase(
-                $this->_parseTestCaseSource()->getFunctions()
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getFunctions()
             )
         );
     }
@@ -177,7 +177,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function createCodeResourceUriForTest()
     {
-        $frame = self::_getCallingTestCase();
+        $frame = self::getCallingTestCase();
         return self::createResourceUriForTest($frame['function'] . '.php');
     }
 
@@ -191,7 +191,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function createResourceUriForTest($localPath)
     {
-        $frame = self::_getCallingTestCase();
+        $frame = self::getCallingTestCase();
 
         $regexp = '(_([^_]+)_[^_]+[a-z]([0-9]+)Test)i';
         if (preg_match($regexp, $frame['class'], $match)) {
@@ -214,9 +214,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_Depend_Code_Package
      */
-    private function _parseTestCaseSource()
+    private function parseTestCaseSource()
     {
-        return $this->_parseSource($this->createCodeResourceUriForTest());
+        return $this->parseSource($this->createCodeResourceUriForTest());
     }
 
     /**
@@ -224,7 +224,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    private static function _getCallingTestCase()
+    private static function getCallingTestCase()
     {
         foreach (debug_backtrace() as $frame) {
             if (strpos($frame['function'], 'test') === 0) {
@@ -241,9 +241,9 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_Depend_Code_AbstractItem
      */
-    private function _getNodeForCallingTestCase(Iterator $nodes)
+    private function getNodeForCallingTestCase(Iterator $nodes)
     {
-        $frame = $this->_getCallingTestCase();
+        $frame = $this->getCallingTestCase();
         foreach ($nodes as $node) {
             if ($node->getName() === $frame['function']) {
                 return $node;
@@ -260,7 +260,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @return PHP_Depend_Code_Package
      */
-    private function _parseSource($sourceFile)
+    private function parseSource($sourceFile)
     {
         if (file_exists($sourceFile) === false) {
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);

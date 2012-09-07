@@ -1,13 +1,13 @@
 <?php
 class testRuleAppliesWhenPropertyWithSimilarNameIsReferenced
 {
-    private function _foo()
+    private function foo()
     {
 
     }
 
     public function bar()
     {
-        $this->_foo = 42;
+        $this->foo = 42;
     }
 }

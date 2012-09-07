@@ -66,9 +66,9 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
      * Temporary property that holds the name of the last rendered file, it is
      * used to detect the next processed file.
      *
-     * @var string $_fileName
+     * @var string
      */
-    private $_fileName = null;
+    private $fileName = null;
 
     /**
      * This method will be called on all renderers before the engine starts the
@@ -100,13 +100,13 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
             
-            if ($this->_fileName !== $fileName) {
+            if ($this->fileName !== $fileName) {
                 // Not first file
-                if ($this->_fileName !== null) {
+                if ($this->fileName !== null) {
                     $writer->write('  </file>' . PHP_EOL);
                 }
                 // Store current file name
-                $this->_fileName = $fileName;
+                $this->fileName = $fileName;
 
                 $writer->write('  <file name="' . $fileName . '">' . PHP_EOL);
             }
@@ -119,11 +119,11 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
             $writer->write(' rule="' . $rule->getName() . '"');
             $writer->write(' ruleset="' . $rule->getRuleSetName() . '"');
             
-            $this->_maybeAdd('package', $violation->getPackageName());
-            $this->_maybeAdd('externalInfoUrl', $rule->getExternalInfoUrl());
-            $this->_maybeAdd('function', $violation->getFunctionName());
-            $this->_maybeAdd('class', $violation->getClassName());
-            $this->_maybeAdd('method', $violation->getMethodName());
+            $this->maybeAdd('package', $violation->getPackageName());
+            $this->maybeAdd('externalInfoUrl', $rule->getExternalInfoUrl());
+            $this->maybeAdd('function', $violation->getFunctionName());
+            $this->maybeAdd('class', $violation->getClassName());
+            $this->maybeAdd('method', $violation->getMethodName());
             //$this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
@@ -133,7 +133,7 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
         }
 
         // Last file and at least one violation
-        if ($this->_fileName !== null) {
+        if ($this->fileName !== null) {
             $writer->write('  </file>' . PHP_EOL);
         }
 
@@ -157,7 +157,7 @@ class PHP_PMD_Renderer_XMLRenderer extends PHP_PMD_AbstractRenderer
      *
      * @return void
      */
-    private function _maybeAdd($attr, $value)
+    private function maybeAdd($attr, $value)
     {
         if ($value === null || trim($value) === '') {
             return;

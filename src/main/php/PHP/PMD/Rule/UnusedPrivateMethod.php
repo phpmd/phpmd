@@ -76,7 +76,7 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      */
     public function apply(PHP_PMD_AbstractNode $class)
     {
-        foreach ($this->_collectUnusedPrivateMethods($class) as $node) {
+        foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, array($node->getImage()));
         }
     }
@@ -89,10 +89,10 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectUnusedPrivateMethods(PHP_PMD_Node_Class $class)
+    private function collectUnusedPrivateMethods(PHP_PMD_Node_Class $class)
     {
-        $methods = $this->_collectPrivateMethods($class);
-        return $this->_removeUsedMethods($class, $methods);
+        $methods = $this->collectPrivateMethods($class);
+        return $this->removeUsedMethods($class, $methods);
     }
 
     /**
@@ -102,11 +102,11 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectPrivateMethods(PHP_PMD_Node_Class $class)
+    private function collectPrivateMethods(PHP_PMD_Node_Class $class)
     {
         $methods = array();
         foreach ($class->getMethods() as $method) {
-            if ($this->_acceptMethod($class, $method)) {
+            if ($this->acceptMethod($class, $method)) {
                 $methods[strtolower($method->getImage())] = $method;
             }
         }
@@ -122,7 +122,7 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return boolean
      */
-    private function _acceptMethod(
+    private function acceptMethod(
         PHP_PMD_Node_Class $class,
         PHP_PMD_Node_Method $method
     ) {
@@ -144,10 +144,10 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _removeUsedMethods(PHP_PMD_Node_Class $class,array $methods)
+    private function removeUsedMethods(PHP_PMD_Node_Class $class,array $methods)
     {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
-            if ($this->_isClassScope($class, $postfix)) {
+            if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
             }
         }
@@ -163,7 +163,7 @@ class PHP_PMD_Rule_UnusedPrivateMethod
      *
      * @return boolean
      */
-    private function _isClassScope(
+    private function isClassScope(
         PHP_PMD_Node_Class $class,
         PHP_PMD_Node_ASTNode $postfix
     ) {

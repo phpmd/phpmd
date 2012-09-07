@@ -71,9 +71,9 @@ class PHP_PMD_Rule_UnusedFormalParameter
     /**
      * Collected ast nodes.
      *
-     * @var array(string=>PHP_PMD_Node_ASTNode)
+     * @var PHP_PMD_Node_ASTNode[]
      */
-    private $_nodes = array();
+    private $nodes = array();
 
     /**
      * This method checks that all parameters of a given function or method are
@@ -85,20 +85,20 @@ class PHP_PMD_Rule_UnusedFormalParameter
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($this->_isAbstractMethod($node)) {
+        if ($this->isAbstractMethod($node)) {
             return;
         }
 
-        if ($this->_isNotDeclaration($node)) {
+        if ($this->isNotDeclaration($node)) {
             return;
         }
 
-        $this->_nodes = array();
+        $this->nodes = array();
 
-        $this->_collectParameters($node);
-        $this->_removeUsedParameters($node);
+        $this->collectParameters($node);
+        $this->removeUsedParameters($node);
 
-        foreach ($this->_nodes as $node) {
+        foreach ($this->nodes as $node) {
             $this->addViolation($node, array($node->getImage()));
         }
     }
@@ -110,7 +110,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
      *
      * @return boolean
      */
-    private function _isAbstractMethod(PHP_PMD_AbstractNode $node)
+    private function isAbstractMethod(PHP_PMD_AbstractNode $node)
     {
         if ($node instanceof PHP_PMD_Node_Method) {
             return $node->isAbstract();
@@ -127,7 +127,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
      * @return boolean
      * @since 1.2.1
      */
-    private function _isNotDeclaration(PHP_PMD_AbstractNode $node)
+    private function isNotDeclaration(PHP_PMD_AbstractNode $node)
     {
         if ($node instanceof PHP_PMD_Node_Method) {
             return !$node->isDeclaration();
@@ -143,7 +143,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
      *
      * @return void
      */
-    private function _collectParameters(PHP_PMD_AbstractNode $node)
+    private function collectParameters(PHP_PMD_AbstractNode $node)
     {
         // First collect the formal parameters container
         $parameters = $node->getFirstChildOfType('FormalParameters');
@@ -152,7 +152,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
         foreach ($declarators as $declarator) {
-            $this->_nodes[$declarator->getImage()] = $declarator;
+            $this->nodes[$declarator->getImage()] = $declarator;
         }
     }
 
@@ -165,12 +165,12 @@ class PHP_PMD_Rule_UnusedFormalParameter
      *
      * @return void
      */
-    private function _removeUsedParameters(PHP_PMD_AbstractNode $node)
+    private function removeUsedParameters(PHP_PMD_AbstractNode $node)
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
             if ($this->isRegularVariable($variable)) {
-                unset($this->_nodes[$variable->getImage()]);
+                unset($this->nodes[$variable->getImage()]);
             }
         }
 
@@ -179,7 +179,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
         foreach ($functionCalls as $functionCall) {
             if ($functionCall->getImage() == 'func_get_args') {
-                $this->_nodes = array();
+                $this->nodes = array();
             }
         }
     }

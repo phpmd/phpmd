@@ -230,8 +230,8 @@ field.
             <![CDATA[
 class Person {
    protected $one;
-   private $_two;
-   private $_three;
+   private $two;
+   private $three;
    [... many more fields ...]
 }
             ]]>

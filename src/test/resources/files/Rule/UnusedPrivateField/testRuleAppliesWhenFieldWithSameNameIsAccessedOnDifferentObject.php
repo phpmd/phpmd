@@ -1,10 +1,10 @@
 <?php
 class testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject
 {
-    private $_foo = 42;
+    private $foo = 42;
 
     public function __construct($object)
     {
-        $object->_foo = 23;
+        $object->foo = 23;
     }
 }

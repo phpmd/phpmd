@@ -71,7 +71,7 @@ class PHP_PMD_RuleSetFactory
      * @var boolean
      * @since 1.2.0
      */
-    private $_strict = false;
+    private $strict = false;
 
     /**
      * The data directory set by PEAR or a dynamic property set within the class
@@ -79,14 +79,14 @@ class PHP_PMD_RuleSetFactory
      *
      * @var string
      */
-    private $_location = '@data_dir@';
+    private $location = '@data_dir@';
 
     /**
      * The minimum priority for rules to load.
      *
      * @var integer
      */
-    private $_minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
+    private $minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
 
     /**
      * Constructs a new default rule-set factory instance.
@@ -94,10 +94,10 @@ class PHP_PMD_RuleSetFactory
     public function __construct()
     {
         // PEAR installer workaround
-        if (strpos($this->_location, '@data_dir') === 0) {
-            $this->_location = dirname(__FILE__) . '/../../../resources';
+        if (strpos($this->location, '@data_dir') === 0) {
+            $this->location = dirname(__FILE__) . '/../../../resources';
         } else {
-            $this->_location .= '/PHP_PMD/resources';
+            $this->location .= '/PHP_PMD/resources';
         }
     }
 
@@ -109,7 +109,7 @@ class PHP_PMD_RuleSetFactory
      */
     public function setStrict()
     {
-        $this->_strict = true;
+        $this->strict = true;
     }
 
     /**
@@ -121,7 +121,7 @@ class PHP_PMD_RuleSetFactory
      */
     public function setMinimumPriority($minimumPriority)
     {
-        $this->_minimumPriority = $minimumPriority;
+        $this->minimumPriority = $minimumPriority;
     }
 
     /**
@@ -154,8 +154,8 @@ class PHP_PMD_RuleSetFactory
      */
     public function createSingleRuleSet($ruleSetOrFileName)
     {
-        $fileName = $this->_createRuleSetFileName($ruleSetOrFileName);
-        return $this->_parseRuleSetNode($fileName);
+        $fileName = $this->createRuleSetFileName($ruleSetOrFileName);
+        return $this->parseRuleSetNode($fileName);
     }
 
     /**
@@ -166,18 +166,18 @@ class PHP_PMD_RuleSetFactory
      *
      * @return string
      */
-    private function _createRuleSetFileName($ruleSetOrFileName)
+    private function createRuleSetFileName($ruleSetOrFileName)
     {
         if (file_exists($ruleSetOrFileName) === true) {
             return $ruleSetOrFileName;
         }
 
-        $fileName = $this->_location . '/' . $ruleSetOrFileName;
+        $fileName = $this->location . '/' . $ruleSetOrFileName;
         if (file_exists($fileName) === true) {
             return $fileName;
         }
 
-        $fileName = $this->_location . '/rulesets/' . $ruleSetOrFileName . '.xml';
+        $fileName = $this->location . '/rulesets/' . $ruleSetOrFileName . '.xml';
         if (file_exists($fileName) === true) {
             return $fileName;
         }
@@ -197,7 +197,7 @@ class PHP_PMD_RuleSetFactory
      *
      * @return PHP_PMD_RuleSet
      */
-    private function _parseRuleSetNode($fileName)
+    private function parseRuleSetNode($fileName)
     {
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
@@ -214,7 +214,7 @@ class PHP_PMD_RuleSetFactory
         $ruleSet->setFileName($fileName);
         $ruleSet->setName((string) $xml['name']);
 
-        if ($this->_strict) {
+        if ($this->strict) {
             $ruleSet->setStrict();
         }
 
@@ -222,7 +222,7 @@ class PHP_PMD_RuleSetFactory
             if ($node->getName() === 'description') {
                 $ruleSet->setDescription((string) $node);
             } else if ($node->getName() === 'rule') {
-                $this->_parseRuleNode($ruleSet, $node);
+                $this->parseRuleNode($ruleSet, $node);
             }
         }
 
@@ -239,16 +239,16 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleNode(
+    private function parseRuleNode(
         PHP_PMD_RuleSet $ruleSet,
         SimpleXMLElement $node
     ) {
         if (substr($node['ref'], -3, 3) === 'xml') {
-            $this->_parseRuleSetReferenceNode($ruleSet, $node);
+            $this->parseRuleSetReferenceNode($ruleSet, $node);
         } else if ('' === (string) $node['ref']) {
-            $this->_parseSingleRuleNode($ruleSet, $node);
+            $this->parseSingleRuleNode($ruleSet, $node);
         } else {
-            $this->_parseRuleReferenceNode($ruleSet, $node);
+            $this->parseRuleReferenceNode($ruleSet, $node);
         }
     }
 
@@ -261,13 +261,13 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleSetReferenceNode(
+    private function parseRuleSetReferenceNode(
         PHP_PMD_RuleSet $ruleSet,
         SimpleXMLElement $ruleSetNode
     ) {
-        $rules = $this->_parseRuleSetReference($ruleSetNode);
+        $rules = $this->parseRuleSetReference($ruleSetNode);
         foreach ($rules as $rule) {
-            if ($this->_isIncluded($rule, $ruleSetNode)) {
+            if ($this->isIncluded($rule, $ruleSetNode)) {
                 $ruleSet->addRule($rule);
             }
         }
@@ -281,10 +281,10 @@ class PHP_PMD_RuleSetFactory
      * @return PHP_PMD_RuleSet
      * @since 0.2.3
      */
-    private function _parseRuleSetReference(SimpleXMLElement $ruleSetNode)
+    private function parseRuleSetReference(SimpleXMLElement $ruleSetNode)
     {
         $ruleSetFactory = new PHP_PMD_RuleSetFactory();
-        $ruleSetFactory->setMinimumPriority($this->_minimumPriority);
+        $ruleSetFactory->setMinimumPriority($this->minimumPriority);
 
         return $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
     }
@@ -299,7 +299,7 @@ class PHP_PMD_RuleSetFactory
      * @return boolean
      * @since 0.2.3
      */
-    private function _isIncluded(PHP_PMD_Rule $rule, SimpleXMLElement $ruleSetNode)
+    private function isIncluded(PHP_PMD_Rule $rule, SimpleXMLElement $ruleSetNode)
     {
         foreach ($ruleSetNode->exclude as $exclude) {
             if ($rule->getName() === (string) $exclude['name']) {
@@ -322,7 +322,7 @@ class PHP_PMD_RuleSetFactory
      * @throws PHP_PMD_RuleClassNotFoundException When a configured rule class
      *                                            does not exist.
      */
-    private function _parseSingleRuleNode(
+    private function parseSingleRuleNode(
         PHP_PMD_RuleSet $ruleSet,
         SimpleXMLElement $ruleNode
     ) {
@@ -363,11 +363,11 @@ class PHP_PMD_RuleSetFactory
             } else if ($node->getName() === 'priority') {
                 $rule->setPriority((integer) $node);
             } else if ($node->getName() === 'properties') {
-                $this->_parsePropertiesNode($rule, $node);
+                $this->parsePropertiesNode($rule, $node);
             }
         }
 
-        if ($rule->getPriority() <= $this->_minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority) {
             $ruleSet->addRule($rule);
         }
     }
@@ -381,14 +381,14 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parseRuleReferenceNode(
+    private function parseRuleReferenceNode(
         PHP_PMD_RuleSet $ruleSet,
         SimpleXMLElement $ruleNode
     ) {
         $ref = (string) $ruleNode['ref'];
 
         $fileName = substr($ref, 0, strpos($ref, '.xml/') + 4);
-        $fileName = $this->_createRuleSetFileName($fileName);
+        $fileName = $this->createRuleSetFileName($fileName);
 
         $ruleName = substr($ref, strpos($ref, '.xml/') + 5);
 
@@ -415,11 +415,11 @@ class PHP_PMD_RuleSetFactory
             } else if ($node->getName() === 'priority') {
                 $rule->setPriority((integer) $node);
             } else if ($node->getName() === 'properties') {
-                $this->_parsePropertiesNode($rule, $node);
+                $this->parsePropertiesNode($rule, $node);
             }
         }
 
-        if ($rule->getPriority() <= $this->_minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority) {
             $ruleSet->addRule($rule);
         }
     }
@@ -443,13 +443,13 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _parsePropertiesNode(
+    private function parsePropertiesNode(
         PHP_PMD_Rule $rule,
         SimpleXMLElement $propertiesNode
     ) {
         foreach ($propertiesNode->children() as $node) {
             if ($node->getName() === 'property') {
-                $this->_addProperty($rule, $node);
+                $this->addProperty($rule, $node);
             }
         }
     }
@@ -462,10 +462,10 @@ class PHP_PMD_RuleSetFactory
      *
      * @return void
      */
-    private function _addProperty(PHP_PMD_Rule $rule, SimpleXMLElement $node)
+    private function addProperty(PHP_PMD_Rule $rule, SimpleXMLElement $node)
     {
         $name  = trim($node['name']);
-        $value = trim($this->_getPropertyValue($node));
+        $value = trim($this->getPropertyValue($node));
         if ($name !== '' && $value !== '') {
             $rule->addProperty($name, $value);
         }
@@ -482,7 +482,7 @@ class PHP_PMD_RuleSetFactory
      * @return string
      * @since 0.2.5
      */
-    private function _getPropertyValue(SimpleXMLElement $propertyNode)
+    private function getPropertyValue(SimpleXMLElement $propertyNode)
     {
         if (isset($propertyNode->value)) {
             return (string) $propertyNode->value;

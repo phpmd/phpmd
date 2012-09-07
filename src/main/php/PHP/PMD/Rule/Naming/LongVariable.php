@@ -76,7 +76,7 @@ class PHP_PMD_Rule_Naming_LongVariable
      *
      * @var array(string=>boolean)
      */
-    private $_processedVariables = array();
+    private $processedVariables = array();
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -147,7 +147,7 @@ class PHP_PMD_Rule_Naming_LongVariable
         if ($threshold >= strlen($node->getImage()) - 1) {
             return;
         }
-        if ($this->_isNameAllowedInContext($node)) {
+        if ($this->isNameAllowedInContext($node)) {
             return;
         }
         $this->addViolation($node, array($node->getImage(), $threshold));
@@ -161,9 +161,9 @@ class PHP_PMD_Rule_Naming_LongVariable
      *
      * @return boolean
      */
-    private function _isNameAllowedInContext(PHP_PMD_AbstractNode $node)
+    private function isNameAllowedInContext(PHP_PMD_AbstractNode $node)
     {
-        return $this->_isChildOf($node, 'MemberPrimaryPrefix');
+        return $this->isChildOf($node, 'MemberPrimaryPrefix');
     }
 
     /**
@@ -175,7 +175,7 @@ class PHP_PMD_Rule_Naming_LongVariable
      *
      * @return boolean
      */
-    private function _isChildOf(PHP_PMD_AbstractNode $node, $type)
+    private function isChildOf(PHP_PMD_AbstractNode $node, $type)
     {
         $parent = $node->getParent();
         while (is_object($parent)) {
@@ -194,7 +194,7 @@ class PHP_PMD_Rule_Naming_LongVariable
      */
     protected function resetProcessed()
     {
-        $this->_processedVariables = array();
+        $this->processedVariables = array();
     }
 
     /**
@@ -206,7 +206,7 @@ class PHP_PMD_Rule_Naming_LongVariable
      */
     protected function addProcessed(PHP_PMD_AbstractNode $node)
     {
-        $this->_processedVariables[$node->getImage()] = true;
+        $this->processedVariables[$node->getImage()] = true;
     }
 
     /**
@@ -218,6 +218,6 @@ class PHP_PMD_Rule_Naming_LongVariable
      */
     protected function isNotProcessed(PHP_PMD_AbstractNode $node)
     {
-        return !isset($this->_processedVariables[$node->getImage()]);
+        return !isset($this->processedVariables[$node->getImage()]);
     }
 }

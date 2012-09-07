@@ -81,70 +81,70 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      *
      * @var string $_name
      */
-    private $_name = '';
+    private $name = '';
 
     /**
      * The violation message text for this rule.
      *
-     * @var string $_message
+     * @var string
      */
-    private $_message = '';
+    private $message = '';
 
     /**
      * The version since when this rule is available.
      *
-     * @var string $_since
+     * @var string
      */
-    private $_since = null;
+    private $since = null;
 
     /**
      * An url will external information for this rule.
      *
-     * @var string $_externalInfoUrl
+     * @var string
      */
-    private $_externalInfoUrl = '';
+    private $externalInfoUrl = '';
 
     /**
      * An optional description for this rule.
      *
-     * @var string $_description
+     * @var string
      */
-    private $_description = '';
+    private $description = '';
 
     /**
      * A list of code examples for this rule.
      *
-     * @var array(string) $_examples
+     * @var array(string)
      */
-    private $_examples = array();
+    private $examples = array();
 
     /**
      * The name of the parent rule-set instance.
      *
-     * @var string $_ruleSetName
+     * @var string
      */
-    private $_ruleSetName = '';
+    private $ruleSetName = '';
 
     /**
      * The priority of this rule.
      *
-     * @var integer $_priority
+     * @var integer
      */
-    private $_priority = self::LOWEST_PRIORITY;
+    private $priority = self::LOWEST_PRIORITY;
 
     /**
      * Configuration properties for this rule instance.
      *
-     * @var array(string=>string) $_properties
+     * @var array(string=>string)
      */
-    private $_properties = array();
+    private $properties = array();
 
     /**
      * The report for object for this rule.
      *
-     * @var PHP_PMD_Report $_report
+     * @var PHP_PMD_Report
      */
-    private $_report = null;
+    private $report = null;
 
     /**
      * Returns the name for this rule instance.
@@ -153,7 +153,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getSince()
     {
-        return $this->_since;
+        return $this->since;
     }
 
     /**
@@ -187,7 +187,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setSince($since)
     {
-        $this->_since = $since;
+        $this->since = $since;
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getMessage()
     {
-        return $this->_message;
+        return $this->message;
     }
 
     /**
@@ -209,7 +209,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setMessage($message)
     {
-        $this->_message = $message;
+        $this->message = $message;
     }
 
     /**
@@ -219,7 +219,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getExternalInfoUrl()
     {
-        return $this->_externalInfoUrl;
+        return $this->externalInfoUrl;
     }
 
     /**
@@ -231,7 +231,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setExternalInfoUrl($externalInfoUrl)
     {
-        $this->_externalInfoUrl = $externalInfoUrl;
+        $this->externalInfoUrl = $externalInfoUrl;
     }
 
     /**
@@ -241,7 +241,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getDescription()
     {
-        return $this->_description;
+        return $this->description;
     }
 
     /**
@@ -253,7 +253,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setDescription($description)
     {
-        $this->_description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -263,7 +263,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getExamples()
     {
-        return $this->_examples;
+        return $this->examples;
     }
 
     /**
@@ -275,7 +275,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function addExample($example)
     {
-        $this->_examples[] = $example;
+        $this->examples[] = $example;
     }
 
     /**
@@ -285,7 +285,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getPriority()
     {
-        return $this->_priority;
+        return $this->priority;
     }
 
     /**
@@ -297,7 +297,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setPriority($priority)
     {
-        $this->_priority = $priority;
+        $this->priority = $priority;
     }
 
     /**
@@ -307,7 +307,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getRuleSetName()
     {
-        return $this->_ruleSetName;
+        return $this->ruleSetName;
     }
 
     /**
@@ -319,7 +319,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setRuleSetName($ruleSetName)
     {
-        $this->_ruleSetName = $ruleSetName;
+        $this->ruleSetName = $ruleSetName;
     }
 
     /**
@@ -329,7 +329,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getReport()
     {
-        return $this->_report;
+        return $this->report;
     }
 
     /**
@@ -341,7 +341,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function setReport(PHP_PMD_Report $report)
     {
-        $this->_report = $report;
+        $this->report = $report;
     }
 
     /**
@@ -354,7 +354,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function addProperty($name, $value)
     {
-        $this->_properties[$name] = $value;
+        $this->properties[$name] = $value;
     }
 
     /**
@@ -368,8 +368,8 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getBooleanProperty($name)
     {
-        if (isset($this->_properties[$name])) {
-            return in_array($this->_properties[$name], array('true', 'on', 1));
+        if (isset($this->properties[$name])) {
+            return in_array($this->properties[$name], array('true', 'on', 1));
         }
         throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
     }
@@ -385,8 +385,8 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getIntProperty($name)
     {
-        if (isset($this->_properties[$name])) {
-            return (int) $this->_properties[$name];
+        if (isset($this->properties[$name])) {
+            return (int) $this->properties[$name];
         }
         throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
     }
@@ -403,8 +403,8 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      */
     public function getStringProperty($name)
     {
-        if (isset($this->_properties[$name])) {
-            return $this->_properties[$name];
+        if (isset($this->properties[$name])) {
+            return $this->properties[$name];
         }
         throw new OutOfBoundsException('Property $' . $name . ' does not exist.');
 
@@ -433,9 +433,9 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
             $replace[] = $value;
         }
 
-        $message = str_replace($search, $replace, $this->_message);
+        $message = str_replace($search, $replace, $this->message);
 
         $ruleViolation = new PHP_PMD_RuleViolation($this, $node, $message);
-        $this->_report->addRuleViolation($ruleViolation);
+        $this->report->addRuleViolation($ruleViolation);
     }
 }

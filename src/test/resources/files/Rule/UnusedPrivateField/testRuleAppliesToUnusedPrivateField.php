@@ -1,5 +1,5 @@
 <?php
 class testRuleAppliesToUnusedPrivateField
 {
-    private $_foo = 0;
+    private $foo = 0;
 }

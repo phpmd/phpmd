@@ -80,7 +80,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('minimum', '4');
-        $rule->apply($this->_createMethod(3));
+        $rule->apply($this->createMethod(3));
     }
 
     /**
@@ -93,7 +93,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('minimum', '3');
-        $rule->apply($this->_createMethod(3));
+        $rule->apply($this->createMethod(3));
     }
 
     /**
@@ -106,7 +106,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('minimum', '3');
-        $rule->apply($this->_createMethod(42));
+        $rule->apply($this->createMethod(42));
     }
 
     /**
@@ -119,7 +119,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('minimum', '4');
-        $rule->apply($this->_createFunction(3));
+        $rule->apply($this->createFunction(3));
     }
 
     /**
@@ -132,7 +132,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('minimum', '3');
-        $rule->apply($this->_createFunction(3));
+        $rule->apply($this->createFunction(3));
     }
 
     /**
@@ -145,7 +145,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongParameterList();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('minimum', '3');
-        $rule->apply($this->_createFunction(42));
+        $rule->apply($this->createFunction(42));
     }
 
     /**
@@ -155,9 +155,9 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_PMD_Node_Method
      */
-    private function _createMethod($parameterCount)
+    private function createMethod($parameterCount)
     {
-        return $this->_initFunctionOrMethod($this->getMethodMock(), $parameterCount);
+        return $this->initFunctionOrMethodMock($this->getMethodMock(), $parameterCount);
     }
 
     /**
@@ -167,9 +167,9 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_PMD_Node_Function
      */
-    private function _createFunction($parameterCount)
+    private function createFunction($parameterCount)
     {
-        return $this->_initFunctionOrMethod($this->createFunctionMock(), $parameterCount);
+        return $this->initFunctionOrMethodMock($this->createFunctionMock(), $parameterCount);
     }
 
     /**
@@ -180,7 +180,7 @@ class PHP_PMD_Rule_Design_LongParameterListTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_PMD_Node_Function|PHP_PMD_Node_Method
      */
-    private function _initFunctionOrMethod($mock, $parameterCount)
+    private function initFunctionOrMethodMock($mock, $parameterCount)
     {
         $mock->expects($this->once())
             ->method('getParameterCount')

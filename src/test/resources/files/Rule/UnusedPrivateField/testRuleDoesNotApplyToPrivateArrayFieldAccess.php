@@ -1,10 +1,10 @@
 <?php
 class testRuleDoesNotApplyToPrivateArrayFieldAccess
 {
-    private $_foo = array();
+    private $foo = array();
 
     private function bar()
     {
-        return $this->_foo[42];
+        return $this->foo[42];
     }
 }

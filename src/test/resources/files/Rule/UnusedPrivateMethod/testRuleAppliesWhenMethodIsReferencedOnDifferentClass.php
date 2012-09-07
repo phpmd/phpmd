@@ -1,13 +1,13 @@
 <?php
 class testRuleAppliesWhenMethodIsReferencedOnDifferentClass
 {
-    private static function _foo()
+    private static function foo()
     {
 
     }
 
     public function bar()
     {
-        FooBarBaz::_foo();
+        FooBarBaz::foo();
     }
 }

@@ -66,14 +66,14 @@ abstract class PHP_PMD_AbstractNode
      *
      * @var PHP_Depend_Code_AbstractItem|PHP_Depend_Code_ASTNode $node
      */
-    private $_node = null;
+    private $node = null;
 
     /**
      * The collected metrics for this node.
      *
      * @var array(string=>mixed) $_metrics
      */
-    private $_metrics = null;
+    private $metrics = null;
 
     /**
      * Constructs a new PHP_PMD node.
@@ -83,7 +83,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function __construct($node)
     {
-        $this->_node = $node;
+        $this->node = $node;
     }
 
     /**
@@ -115,7 +115,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getParent()
     {
-        if (($node = $this->_node->getParent()) === null) {
+        if (($node = $this->node->getParent()) === null) {
             return null;
         }
         return new PHP_PMD_Node_ASTNode($node, $this->getFileName());
@@ -131,7 +131,7 @@ abstract class PHP_PMD_AbstractNode
     public function getChild($index)
     {
         return new PHP_PMD_Node_ASTNode(
-            $this->_node->getChild($index),
+            $this->node->getChild($index),
             $this->getFileName()
         );
     }
@@ -146,7 +146,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getFirstChildOfType($type)
     {
-        $node = $this->_node->getFirstChildOfType('PHP_Depend_Code_AST' . $type);
+        $node = $this->node->getFirstChildOfType('PHP_Depend_Code_AST' . $type);
         if ($node === null) {
             return null;
         }
@@ -163,7 +163,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function findChildrenOfType($type)
     {
-        $children = $this->_node->findChildrenOfType('PHP_Depend_Code_AST' . $type);
+        $children = $this->node->findChildrenOfType('PHP_Depend_Code_AST' . $type);
 
         $nodes = array();
         foreach ($children as $child) {
@@ -182,7 +182,7 @@ abstract class PHP_PMD_AbstractNode
     public function isInstanceOf($type)
     {
         $class = 'PHP_Depend_Code_AST' . $type;
-        return ($this->_node instanceof $class);
+        return ($this->node instanceof $class);
     }
 
     /**
@@ -192,7 +192,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getImage()
     {
-        return $this->_node->getName();
+        return $this->node->getName();
     }
 
     /**
@@ -203,7 +203,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getName()
     {
-        return $this->_node->getName();
+        return $this->node->getName();
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getBeginLine()
     {
-        return $this->_node->getStartLine();
+        return $this->node->getStartLine();
     }
 
     /**
@@ -223,7 +223,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getEndLine()
     {
-        return $this->_node->getEndLine();
+        return $this->node->getEndLine();
     }
 
     /**
@@ -233,7 +233,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getFileName()
     {
-        return (string) $this->_node->getSourceFile();
+        return (string) $this->node->getSourceFile();
     }
 
     /**
@@ -243,7 +243,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getNode()
     {
-        return $this->_node;
+        return $this->node;
     }
 
     /**
@@ -267,8 +267,8 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getMetric($name)
     {
-        if (isset($this->_metrics[$name])) {
-            return $this->_metrics[$name];
+        if (isset($this->metrics[$name])) {
+            return $this->metrics[$name];
         }
         return null;
     }
@@ -282,8 +282,8 @@ abstract class PHP_PMD_AbstractNode
      */
     public function setMetrics(array $metrics)
     {
-        if ($this->_metrics === null) {
-            $this->_metrics = $metrics;
+        if ($this->metrics === null) {
+            $this->metrics = $metrics;
         }
     }
 

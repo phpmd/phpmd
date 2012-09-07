@@ -1,13 +1,13 @@
 <?php
 class testRuleAppliesWhenMethodIsReferencedOnDifferentObject
 {
-    private function _foo()
+    private function foo()
     {
 
     }
 
     public function bar($object)
     {
-        $object->_foo();
+        $object->foo();
     }
 }

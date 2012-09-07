@@ -65,16 +65,16 @@ class PHP_PMD_Node_Annotations
     /**
      * Detected annotations.
      *
-     * @var array(PHP_PMD_Node_Annotation)
+     * @var PHP_PMD_Node_Annotation[]
      */
-    private $_annotations = array();
+    private $annotations = array();
 
     /**
      * Regexp used to extract code annotations.
      *
      * @var string
      */
-    private $_regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
+    private $regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
 
     /**
      * Constructs a new collection instance.
@@ -83,12 +83,12 @@ class PHP_PMD_Node_Annotations
      */
     public function __construct(PHP_PMD_AbstractNode $node)
     {
-        preg_match_all($this->_regexp, $node->getDocComment(), $matches);
+        preg_match_all($this->regexp, $node->getDocComment(), $matches);
         foreach (array_keys($matches[0]) as $i) {
             $name  = $matches[1][$i];
             $value = trim($matches[2][$i], '" ');
 
-            $this->_annotations[] = new PHP_PMD_Node_Annotation($name, $value);
+            $this->annotations[] = new PHP_PMD_Node_Annotation($name, $value);
         }
     }
     
@@ -101,7 +101,7 @@ class PHP_PMD_Node_Annotations
      */
     public function suppresses(PHP_PMD_Rule $rule)
     {
-        foreach ($this->_annotations as $annotation) {
+        foreach ($this->annotations as $annotation) {
             if ($annotation->suppresses($rule)) {
                 return true;
             }

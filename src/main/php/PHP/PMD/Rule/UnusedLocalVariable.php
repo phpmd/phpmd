@@ -73,7 +73,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @var array(string)
      */
-    private $_images = array();
+    private $images = array();
 
     /**
      * This method checks that all local variables within the given function or
@@ -85,12 +85,12 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        $this->_images = array();
+        $this->images = array();
 
-        $this->_collectVariables($node);
-        $this->_removeParameters($node);
+        $this->collectVariables($node);
+        $this->removeParameters($node);
 
-        foreach ($this->_images as $nodes) {
+        foreach ($this->images as $nodes) {
             if (count($nodes) === 1) {
                 $this->doCheckNodeImage($nodes[0]);
             }
@@ -107,7 +107,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return void
      */ 
-    private function _removeParameters(PHP_PMD_Node_AbstractCallable $node)
+    private function removeParameters(PHP_PMD_Node_AbstractCallable $node)
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType('FormalParameters');
@@ -116,7 +116,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
         foreach ($declarators as $declarator) {
-            unset($this->_images[$declarator->getImage()]);
+            unset($this->images[$declarator->getImage()]);
         }
     }
 
@@ -130,15 +130,15 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return void
      */
-    private function _collectVariables(PHP_PMD_Node_AbstractCallable $node)
+    private function collectVariables(PHP_PMD_Node_AbstractCallable $node)
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ($this->isLocal($variable)) {
-                $this->_collectVariable($variable);
+                $this->collectVariable($variable);
             }
         }
         foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
-            $this->_collectVariable($variable);
+            $this->collectVariable($variable);
         }
     }
 
@@ -149,12 +149,12 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return void
      */
-    private function _collectVariable(PHP_PMD_Node_ASTNode $node)
+    private function collectVariable(PHP_PMD_Node_ASTNode $node)
     {
-        if (!isset($this->_images[$node->getImage()])) {
-            $this->_images[$node->getImage()] = array();
+        if (!isset($this->images[$node->getImage()])) {
+            $this->images[$node->getImage()] = array();
         }
-        $this->_images[$node->getImage()][] = $node;
+        $this->images[$node->getImage()][] = $node;
     }
 
     /**
@@ -166,7 +166,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
      */
     protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
     {
-        if ($this->_isNameAllowedInContext($node)) {
+        if ($this->isNameAllowedInContext($node)) {
             return;
         }
         $this->addViolation($node, array($node->getImage()));
@@ -181,9 +181,9 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return boolean
      */
-    private function _isNameAllowedInContext(PHP_PMD_AbstractNode $node)
+    private function isNameAllowedInContext(PHP_PMD_AbstractNode $node)
     {
-        return $this->_isChildOf($node, 'CatchStatement');
+        return $this->isChildOf($node, 'CatchStatement');
     }
 
     /**
@@ -195,7 +195,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return boolean
      */
-    private function _isChildOf(PHP_PMD_AbstractNode $node, $type)
+    private function isChildOf(PHP_PMD_AbstractNode $node, $type)
     {
         $parent = $node->getParent();
         if ($parent->isInstanceOf($type)) {

@@ -4,7 +4,7 @@ class testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean
     /**
      * @return boolean
      */
-    private function _getFooBar()
+    private function getFooBar()
     {
 
     }

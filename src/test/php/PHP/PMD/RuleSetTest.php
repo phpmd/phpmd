@@ -77,7 +77,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      */
     public function testGetRuleByNameReturnsNullWhenNoMatchingRuleExists()
     {
-        $ruleSet = $this->_createRuleSetFixture();
+        $ruleSet = $this->createRuleSetFixture();
         $this->assertNull($ruleSet->getRuleByName(__FUNCTION__));
     }
 
@@ -88,7 +88,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      */
     public function testGetRuleByNameReturnsMatchingRuleInstance()
     {
-        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
+        $ruleSet = $this->createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
         $rule    = $ruleSet->getRuleByName(__CLASS__);
 
         $this->assertEquals(__CLASS__, $rule->getName());
@@ -101,7 +101,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      */
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
     {
-        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
+        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportMock(0));
         $ruleSet->apply($this->getClass());
 
@@ -115,7 +115,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      */
     public function testApplyInvokesRuleWhenStrictModeIsSet()
     {
-        $ruleSet = $this->_createRuleSetFixture(__FUNCTION__);
+        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportMock(0));
         $ruleSet->setStrict();
 
@@ -133,7 +133,7 @@ class PHP_PMD_RuleSetTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_PMD_AbstractRule
      */
-    private function _createRuleSetFixture($name = null)
+    private function createRuleSetFixture($name = null)
     {
         $ruleSet = new PHP_PMD_RuleSet();
         for ($i = 0; $i < func_num_args(); ++$i) {

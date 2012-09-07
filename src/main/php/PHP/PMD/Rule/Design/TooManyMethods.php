@@ -78,7 +78,7 @@ class PHP_PMD_Rule_Design_TooManyMethods
      *
      * @var string
      */
-    private $_ignoreRegexp;
+    private $ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks
@@ -91,16 +91,16 @@ class PHP_PMD_Rule_Design_TooManyMethods
     public function apply(PHP_PMD_AbstractNode $node)
     {
         try {
-            $this->_ignoreRegexp = $this->getStringProperty('ignorepattern');
+            $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
         } catch (OutOfBoundsException $e) {
-            $this->_ignoreRegexp = self::DEFAULT_IGNORE_REGEXP;
+            $this->ignoreRegexp = self::DEFAULT_IGNORE_REGEXP;
         }
 
         $threshold = $this->getIntProperty('maxmethods');
         if ($node->getMetric('nom') <= $threshold) {
             return;
         }
-        $nom = $this->_countMethods($node);
+        $nom = $this->countMethods($node);
         if ($nom <= $threshold) {
             return;
         }
@@ -122,11 +122,11 @@ class PHP_PMD_Rule_Design_TooManyMethods
      *
      * @return integer
      */
-    private function _countMethods(PHP_PMD_Node_AbstractType $node)
+    private function countMethods(PHP_PMD_Node_AbstractType $node)
     {
         $count = 0;
         foreach ($node->getMethodNames() as $name) {
-            if (preg_match($this->_ignoreRegexp, $name) === 0) {
+            if (preg_match($this->ignoreRegexp, $name) === 0) {
                 ++$count;
             }
         }

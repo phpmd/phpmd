@@ -62,23 +62,23 @@ class PHP_PMD_Report
     /**
      * List of rule violations detected in the analyzed source code.
      *
-     * @var array(PHP_PMD_RuleViolations) $_ruleViolations
+     * @var PHP_PMD_RuleViolations[]
      */
-    private $_ruleViolations = array();
+    private $ruleViolations = array();
 
     /**
      * The start time for this report.
      *
-     * @var float $_startTime
+     * @var float
      */
-    private $_startTime = 0.0;
+    private $startTime = 0.0;
 
     /**
      * The end time for this report.
      *
-     * @var float $_endTime
+     * @var float
      */
-    private $_endTime = 0.0;
+    private $endTime = 0.0;
 
     /**
      * Errors that occurred while parsing the source.
@@ -86,7 +86,7 @@ class PHP_PMD_Report
      * @var array
      * @since 1.2.1
      */
-    private $_errors = array();
+    private $errors = array();
 
     /**
      * Adds a rule violation to this report.
@@ -98,16 +98,16 @@ class PHP_PMD_Report
     public function addRuleViolation(PHP_PMD_RuleViolation $violation)
     {
         $fileName = $violation->getFileName();
-        if (!isset($this->_ruleViolations[$fileName])) {
-            $this->_ruleViolations[$fileName] = array();
+        if (!isset($this->ruleViolations[$fileName])) {
+            $this->ruleViolations[$fileName] = array();
         }
 
         $beginLine = $violation->getBeginLine();
-        if (!isset($this->_ruleViolations[$fileName][$beginLine])) {
-            $this->_ruleViolations[$fileName][$beginLine] = array();
+        if (!isset($this->ruleViolations[$fileName][$beginLine])) {
+            $this->ruleViolations[$fileName][$beginLine] = array();
         }
 
-        $this->_ruleViolations[$fileName][$beginLine][] = $violation;
+        $this->ruleViolations[$fileName][$beginLine][] = $violation;
     }
 
     /**
@@ -118,7 +118,7 @@ class PHP_PMD_Report
      */
     public function isEmpty()
     {
-        return (count($this->_ruleViolations) === 0);
+        return (count($this->ruleViolations) === 0);
     }
 
     /**
@@ -129,10 +129,10 @@ class PHP_PMD_Report
     public function getRuleViolations()
     {
         // First sort by file name
-        ksort($this->_ruleViolations);
+        ksort($this->ruleViolations);
 
         $violations = array();
-        foreach ($this->_ruleViolations as $violationInLine) {
+        foreach ($this->ruleViolations as $violationInLine) {
             // Second sort is by line number
             ksort($violationInLine);
 
@@ -154,7 +154,7 @@ class PHP_PMD_Report
      */
     public function addError(PHP_PMD_ProcessingError $error)
     {
-        $this->_errors[] = $error;
+        $this->errors[] = $error;
     }
 
     /**
@@ -166,7 +166,7 @@ class PHP_PMD_Report
      */
     public function hasErrors()
     {
-        return count($this->_errors) > 0;
+        return count($this->errors) > 0;
     }
 
     /**
@@ -178,7 +178,7 @@ class PHP_PMD_Report
      */
     public function getErrors()
     {
-        return new ArrayIterator($this->_errors);
+        return new ArrayIterator($this->errors);
     }
 
     /**
@@ -188,7 +188,7 @@ class PHP_PMD_Report
      */
     public function start()
     {
-        $this->_startTime = microtime(true) * 1000.0;
+        $this->startTime = microtime(true) * 1000.0;
     }
 
     /**
@@ -198,7 +198,7 @@ class PHP_PMD_Report
      */
     public function end()
     {
-        $this->_endTime = microtime(true) * 1000.0;
+        $this->endTime = microtime(true) * 1000.0;
     }
 
     /**
@@ -208,6 +208,6 @@ class PHP_PMD_Report
      */
     public function getElapsedTimeInMillis()
     {
-        return round($this->_endTime - $this->_startTime);
+        return round($this->endTime - $this->startTime);
     }
 }

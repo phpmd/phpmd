@@ -71,58 +71,58 @@ class PHP_PMD_TextUI_CommandLineOptions
     /**
      * The minimum rule priority.
      *
-     * @var integer $_minimumPriority
+     * @var integer
      */
-    private $_minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
+    private $minimumPriority = PHP_PMD_Rule::LOWEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
      *
-     * @var string $_inputPath
+     * @var string
      */
-    private $_inputPath = null;
+    private $inputPath = null;
 
     /**
      * The specified report format.
      *
-     * @var string $_reportFormat
+     * @var string
      */
-    private $_reportFormat = null;
+    private $reportFormat = null;
 
     /**
      * An optional filename for the generated report.
      *
-     * @var string $_reportFile
+     * @var string
      */
-    private $_reportFile = null;
+    private $reportFile = null;
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
-     * @var string $_ruleSets
+     * @var string
      */
-    private $_ruleSets = null;
+    private $ruleSets = null;
 
     /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
-     * @var string $_extensions
+     * @var string
      */
-    private $_extensions = null;
+    private $extensions = null;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
-     * @var string $_ignore
+     * @var string
      */
-    private $_ignore = null;
+    private $ignore = null;
 
     /**
      * Should the shell show the current phpmd version?
      *
      * @var boolean
      */
-    private $_version = false;
+    private $version = false;
 
     /**
      * Should PHPMD run in strict mode?
@@ -130,7 +130,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      * @var boolean
      * @since 1.2.0
      */
-    private $_strict = false;
+    private $strict = false;
 
     /**
      * Constructs a new command line options instance.
@@ -147,37 +147,37 @@ class PHP_PMD_TextUI_CommandLineOptions
             switch ($arg) {
 
             case '--minimumpriority':
-                $this->_minimumPriority = (int) array_shift($args);
+                $this->minimumPriority = (int) array_shift($args);
                 break;
 
             case '--reportfile':
-                $this->_reportFile = array_shift($args);
+                $this->reportFile = array_shift($args);
                 break;
 
             case '--inputfile':
-                array_unshift($arguments, $this->_readInputFile(array_shift($args)));
+                array_unshift($arguments, $this->readInputFile(array_shift($args)));
                 break;
 
             case '--extensions':
                 $this->logDeprecated('extensions', 'suffixes');
 
             case '--suffixes':
-                $this->_extensions = array_shift($args);
+                $this->extensions = array_shift($args);
                 break;
 
             case '--ignore':
                 $this->logDeprecated('ignore', 'exclude');
 
             case '--exclude':
-                $this->_ignore = array_shift($args);
+                $this->ignore = array_shift($args);
                 break;
 
             case '--version':
-                $this->_version = true;
+                $this->version = true;
                 return;
 
             case '--strict':
-                $this->_strict = true;
+                $this->strict = true;
                 break;
 
             default:
@@ -190,9 +190,9 @@ class PHP_PMD_TextUI_CommandLineOptions
             throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->_inputPath    = (string) array_shift($arguments);
-        $this->_reportFormat = (string) array_shift($arguments);
-        $this->_ruleSets     = (string) array_shift($arguments);
+        $this->inputPath    = (string) array_shift($arguments);
+        $this->reportFormat = (string) array_shift($arguments);
+        $this->ruleSets     = (string) array_shift($arguments);
     }
 
     /**
@@ -202,7 +202,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getInputPath()
     {
-        return $this->_inputPath;
+        return $this->inputPath;
     }
 
     /**
@@ -212,7 +212,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getReportFormat()
     {
-        return $this->_reportFormat;
+        return $this->reportFormat;
     }
 
     /**
@@ -223,7 +223,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getReportFile()
     {
-        return $this->_reportFile;
+        return $this->reportFile;
     }
 
     /**
@@ -233,7 +233,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getRuleSets()
     {
-        return $this->_ruleSets;
+        return $this->ruleSets;
     }
 
     /**
@@ -243,7 +243,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getMinimumPriority()
     {
-        return $this->_minimumPriority;
+        return $this->minimumPriority;
     }
 
     /**
@@ -254,7 +254,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getExtensions()
     {
-        return $this->_extensions;
+        return $this->extensions;
     }
 
     /**
@@ -265,7 +265,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function getIgnore()
     {
-        return $this->_ignore;
+        return $this->ignore;
     }
 
     /**
@@ -275,7 +275,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function hasVersion()
     {
-        return $this->_version;
+        return $this->version;
     }
 
     /**
@@ -286,7 +286,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function hasStrict()
     {
-        return $this->_strict;
+        return $this->strict;
     }
 
     /**
@@ -304,7 +304,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function createRenderer()
     {
-        switch ($this->_reportFormat) {
+        switch ($this->reportFormat) {
 
         case 'xml':
             include_once 'PHP/PMD/Renderer/XMLRenderer.php';
@@ -319,24 +319,24 @@ class PHP_PMD_TextUI_CommandLineOptions
             return new PHP_PMD_Renderer_TextRenderer();
 
         default:
-            if ($this->_reportFormat !== '') {
+            if ($this->reportFormat !== '') {
 
                 // Try to load a custom renderer
-                $fileName = strtr($this->_reportFormat, '_', '/') . '.php';
+                $fileName = strtr($this->reportFormat, '_', '/') . '.php';
 
                 $fileHandle = @fopen($fileName, 'r', true);
                 if (is_resource($fileHandle) === false) {
                     $message = 'Can\'t find the custom report class: '
-                             . $this->_reportFormat;
+                             . $this->reportFormat;
                     throw new InvalidArgumentException($message, self::INPUT_ERROR);
                 }
                 @fclose($fileHandle);
 
                 include_once $fileName;
 
-                return new $this->_reportFormat;
+                return new $this->reportFormat;
             }
-            $message = 'Can\'t create report with format of ' . $this->_reportFormat;
+            $message = 'Can\'t create report with format of ' . $this->reportFormat;
             throw new InvalidArgumentException($message, self::INPUT_ERROR);
         }
     }
@@ -399,7 +399,7 @@ class PHP_PMD_TextUI_CommandLineOptions
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    private function _readInputFile($inputFile)
+    private function readInputFile($inputFile)
     {
         if (file_exists($inputFile)) {
             return join(',', array_map('trim', file($inputFile)));

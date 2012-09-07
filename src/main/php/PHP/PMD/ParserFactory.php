@@ -80,8 +80,8 @@ class PHP_PMD_ParserFactory
     {
         include_once 'PHP/PMD/Parser.php';
 
-        $pdepend = $this->_createInstance();
-        $pdepend = $this->_init($pdepend, $phpmd);
+        $pdepend = $this->createInstance();
+        $pdepend = $this->init($pdepend, $phpmd);
 
         return new PHP_PMD_Parser($pdepend);
     }
@@ -91,7 +91,7 @@ class PHP_PMD_ParserFactory
      *
      * @return PHP_Depend
      */
-    private function _createInstance()
+    private function createInstance()
     {
         $factory = new PHP_Depend_Util_Configuration_Factory();
         return new PHP_Depend($factory->createDefault());
@@ -105,11 +105,11 @@ class PHP_PMD_ParserFactory
      *
      * @return PHP_Depend
      */
-    private function _init(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function init(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
-        $this->_initInput($pdepend, $phpmd);
-        $this->_initIgnores($pdepend, $phpmd);
-        $this->_initExtensions($pdepend, $phpmd);
+        $this->initInput($pdepend, $phpmd);
+        $this->initIgnores($pdepend, $phpmd);
+        $this->initExtensions($pdepend, $phpmd);
 
         return $pdepend;
     }
@@ -122,7 +122,7 @@ class PHP_PMD_ParserFactory
      *
      * @return void
      */
-    private function _initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
         foreach (explode(',', $phpmd->getInput()) as $path) {
             if (is_dir(trim($path))) {
@@ -141,7 +141,7 @@ class PHP_PMD_ParserFactory
      *
      * @return void
      */
-    private function _initIgnores(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initIgnores(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
         if (count($phpmd->getIgnorePattern()) > 0) {
             $pdepend->addFileFilter(
@@ -158,7 +158,7 @@ class PHP_PMD_ParserFactory
      *
      * @return void
      */
-    private function _initExtensions(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initExtensions(PHP_Depend $pdepend, PHP_PMD $phpmd)
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(

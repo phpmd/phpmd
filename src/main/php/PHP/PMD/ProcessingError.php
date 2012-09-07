@@ -65,14 +65,14 @@ class PHP_PMD_ProcessingError
      *
      * @var string
      */
-    private $_message;
+    private $message;
 
     /**
      * The source file where the processing error occurred.
      *
      * @var string
      */
-    private $_file;
+    private $file;
 
     /**
      * Constructs a new processing error instance.
@@ -81,8 +81,8 @@ class PHP_PMD_ProcessingError
      */
     public function __construct($message)
     {
-        $this->_message = $message;
-        $this->_file    = $this->_extractFile($message);
+        $this->message = $message;
+        $this->file    = $this->extractFile($message);
     }
 
     /**
@@ -92,7 +92,7 @@ class PHP_PMD_ProcessingError
      */
     public function getFile()
     {
-        return $this->_file;
+        return $this->file;
     }
 
     /**
@@ -102,7 +102,7 @@ class PHP_PMD_ProcessingError
      */
     public function getMessage()
     {
-        return $this->_message;
+        return $this->message;
     }
 
     /**
@@ -114,7 +114,7 @@ class PHP_PMD_ProcessingError
      *
      * @return string
      */
-    private function _extractFile($message)
+    private function extractFile($message)
     {
         preg_match('(file: (.+)\.$| file "([^"]+)")', $message, $match);
 

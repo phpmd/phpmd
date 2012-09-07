@@ -1,10 +1,10 @@
 <?php
 class testRuleDoesNotApplyToThisAccessedPrivateField
 {
-    private $_foo = 42;
+    private $foo = 42;
 
     public function __construct()
     {
-        $this->_foo = 23;
+        $this->foo = 23;
     }
 }

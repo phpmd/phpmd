@@ -4,7 +4,7 @@ use Route24975295 as Route;
 
 class Bootstrap extends Bootstrap24975295
 {
-    protected function _initRouter()
+    protected function initRouter()
     {
         $this->bootstrap('frontController');
         $front = $this->getResource('frontController');

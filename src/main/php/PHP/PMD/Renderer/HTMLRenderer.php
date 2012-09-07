@@ -142,7 +142,7 @@ class PHP_PMD_Renderer_HTMLRenderer extends PHP_PMD_AbstractRenderer
 
         $writer->write('</table>');
 
-        $this->_glomProcessingErrors($report);
+        $this->glomProcessingErrors($report);
     }
 
     /**
@@ -165,7 +165,7 @@ class PHP_PMD_Renderer_HTMLRenderer extends PHP_PMD_AbstractRenderer
      * @return void
      * @since 1.2.1
      */
-    private function _glomProcessingErrors(PHP_PMD_Report $report)
+    private function glomProcessingErrors(PHP_PMD_Report $report)
     {
         if (false === $report->hasErrors()) {
             return;

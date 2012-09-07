@@ -77,7 +77,7 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        if ($this->_isBooleanGetMethod($node)) {
+        if ($this->isBooleanGetMethod($node)) {
             $this->addViolation($node, array($node->getImage()));
         }
     }
@@ -90,11 +90,11 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
      *
      * @return boolean
      */
-    private function _isBooleanGetMethod(PHP_PMD_Node_Method $node)
+    private function isBooleanGetMethod(PHP_PMD_Node_Method $node)
     {
-        return $this->_isGetterMethodName($node)
-                && $this->_isReturnTypeBoolean($node)
-                && $this->_isParameterizedOrIgnored($node);
+        return $this->isGetterMethodName($node)
+                && $this->isReturnTypeBoolean($node)
+                && $this->isParameterizedOrIgnored($node);
     }
 
     /**
@@ -104,7 +104,7 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
      *
      * @return boolean
      */
-    private function _isGetterMethodName(PHP_PMD_Node_Method $node)
+    private function isGetterMethodName(PHP_PMD_Node_Method $node)
     {
         return (preg_match('(^_?get)i', $node->getImage()) > 0);
     }
@@ -116,7 +116,7 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
      *
      * @return boolean
      */
-    private function _isReturnTypeBoolean(PHP_PMD_Node_Method $node)
+    private function isReturnTypeBoolean(PHP_PMD_Node_Method $node)
     {
         $comment = $node->getDocComment();
         return (preg_match('(\*\s*@return\s+bool(ean)?\s)i', $comment) > 0);
@@ -130,7 +130,7 @@ class PHP_PMD_Rule_Naming_BooleanGetMethodName
      *
      * @return boolean
      */
-    private function _isParameterizedOrIgnored(PHP_PMD_Node_Method $node)
+    private function isParameterizedOrIgnored(PHP_PMD_Node_Method $node)
     {
         if ($this->getBooleanProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;

@@ -78,7 +78,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(true));
 
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Class'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -97,7 +97,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(false));
 
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -110,7 +110,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Method'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock());
@@ -124,7 +124,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
     {
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock(null));
@@ -137,7 +137,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHP_PMD_Node_Function'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock());
@@ -151,7 +151,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
     {
-        $adapter = new PHP_PMD_Parser($this->_getPHPDependMock());
+        $adapter = new PHP_PMD_Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock(null));
@@ -169,7 +169,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
         $report->expects($this->once())
             ->method('addError');
 
-        $pdepend = $this->_getPHPDependMock();
+        $pdepend = $this->getPHPDependMock();
         $pdepend->expects($this->once())
             ->method('getExceptions')
             ->will($this->returnValue(array(
@@ -185,7 +185,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_Depend
      */
-    private function _getPHPDependMock()
+    private function getPHPDependMock()
     {
         return $this->getMock('PHP_Depend', array(), array(null), '', false);
     }

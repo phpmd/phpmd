@@ -67,7 +67,7 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
      *
      * @var string
      */
-    private $_fileName = null;
+    private $fileName = null;
 
     /**
      * Constructs a new ast node instance.
@@ -79,7 +79,7 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
     {
         parent::__construct($node);
 
-        $this->_fileName = $fileName;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -124,7 +124,7 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
      */
     public function getFileName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**

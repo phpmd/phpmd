@@ -1,13 +1,13 @@
 <?php
 class testRuleDoesNotApplyToThisReferencedMethod
 {
-    private function _foo()
+    private function foo()
     {
 
     }
 
     protected function bar()
     {
-        $this->_foo();
+        $this->foo();
     }
 }

@@ -65,9 +65,9 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
     /**
      * The stream resource handle
      *
-     * @var resource $_stream
+     * @var resource
      */
-    private $_stream = null;
+    private $stream = null;
 
     /**
      * Constructs a new stream writer instance.
@@ -78,7 +78,7 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
     public function __construct($streamResourceOrUri)
     {
         if (is_resource($streamResourceOrUri) === true) {
-            $this->_stream = $streamResourceOrUri;
+            $this->stream = $streamResourceOrUri;
         } else {
             $dirName = dirname($streamResourceOrUri);
             if (file_exists($dirName) === false) {
@@ -89,7 +89,7 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
                 throw new RuntimeException($message);
             }
 
-            $this->_stream = fopen($streamResourceOrUri, 'wb');
+            $this->stream = fopen($streamResourceOrUri, 'wb');
         }
     }
 
@@ -98,10 +98,10 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
      */
     public function __destruct()
     {
-        if ($this->_stream !== STDOUT && is_resource($this->_stream) === true) {
-            @fclose($this->_stream);
+        if ($this->stream !== STDOUT && is_resource($this->stream) === true) {
+            @fclose($this->stream);
         }
-        $this->_stream = null;
+        $this->stream = null;
     }
 
     /**
@@ -113,6 +113,6 @@ class PHP_PMD_Writer_Stream extends PHP_PMD_AbstractWriter
      */
     public function write($data)
     {
-        fwrite($this->_stream, $data);
+        fwrite($this->stream, $data);
     }
 }

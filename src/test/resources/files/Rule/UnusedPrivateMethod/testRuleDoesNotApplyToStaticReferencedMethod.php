@@ -1,13 +1,13 @@
 <?php
 class testRuleDoesNotApplyToStaticReferencedMethod
 {
-    private static function _foo()
+    private static function foo()
     {
 
     }
 
     public static function bar()
     {
-        static::_foo();
+        static::foo();
     }
 }

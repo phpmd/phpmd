@@ -70,9 +70,9 @@ class PHP_PMD_Rule_UnusedPrivateField
      * Collected private fields/variable declarators in the currently processed
      * class.
      *
-     * @var array(string=>PHP_PMD_Node_ASTNode)
+     * @var PHP_PMD_Node_ASTNode[]
      */
-    private $_fields = array();
+    private $fields = array();
 
     /**
      * This method checks that all private class properties are at least accessed
@@ -84,7 +84,7 @@ class PHP_PMD_Rule_UnusedPrivateField
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        foreach ($this->_collectUnusedPrivateFields($node) as $field) {
+        foreach ($this->collectUnusedPrivateFields($node) as $field) {
             $this->addViolation($field, array($field->getImage()));
         }
     }
@@ -97,14 +97,14 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return array(PHP_PMD_AbstractNode)
      */
-    private function _collectUnusedPrivateFields(PHP_PMD_Node_Class $class)
+    private function collectUnusedPrivateFields(PHP_PMD_Node_Class $class)
     {
-        $this->_fields = array();
+        $this->fields = array();
 
-        $this->_collectPrivateFields($class);
-        $this->_removeUsedFields($class);
+        $this->collectPrivateFields($class);
+        $this->removeUsedFields($class);
 
-        return $this->_fields;
+        return $this->fields;
     }
 
     /**
@@ -115,11 +115,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return void
      */
-    private function _collectPrivateFields(PHP_PMD_Node_Class $class)
+    private function collectPrivateFields(PHP_PMD_Node_Class $class)
     {
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
             if ($declaration->isPrivate()) {
-                $this->_collectPrivateField($declaration);
+                $this->collectPrivateField($declaration);
             }
         }
     }
@@ -132,11 +132,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return void
      */
-    private function _collectPrivateField(PHP_PMD_Node_ASTNode $declaration)
+    private function collectPrivateField(PHP_PMD_Node_ASTNode $declaration)
     {
         $fields = $declaration->findChildrenOfType('VariableDeclarator');
         foreach ($fields as $field) {
-            $this->_fields[$field->getImage()] = $field;
+            $this->fields[$field->getImage()] = $field;
         }
     }
 
@@ -149,11 +149,11 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return void
      */
-    private function _removeUsedFields(PHP_PMD_Node_Class $class)
+    private function removeUsedFields(PHP_PMD_Node_Class $class)
     {
         foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
             if ($this->isInScopeOfClass($class, $postfix)) {
-                $this->_removeUsedField($postfix);
+                $this->removeUsedField($postfix);
             }
         }
     }
@@ -166,7 +166,7 @@ class PHP_PMD_Rule_UnusedPrivateField
      *
      * @return void
      */
-    private function _removeUsedField(PHP_PMD_Node_ASTNode $postfix)
+    private function removeUsedField(PHP_PMD_Node_ASTNode $postfix)
     {
         if ($postfix->getParent()->isStatic()) {
             $image = '';
@@ -178,7 +178,7 @@ class PHP_PMD_Rule_UnusedPrivateField
 
 
         if ($this->isValidPropertyNode($child)) {
-            unset($this->_fields[$image . $child->getImage()]);
+            unset($this->fields[$image . $child->getImage()]);
         }
     }
 

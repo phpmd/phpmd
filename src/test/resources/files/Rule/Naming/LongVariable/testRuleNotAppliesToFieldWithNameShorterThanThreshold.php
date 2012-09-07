@@ -1,5 +1,5 @@
 <?php
 class testRuleNotAppliesToFieldWithNameShorterThanThreshold
 {
-    private $_fooBar = 0;
+    private $fooBar = 0;
 }

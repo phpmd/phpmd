@@ -45,12 +45,12 @@ a single annotation. ::
    * @SuppressWarnings("unused")
    */
   class Bar {
-      private $_unusedPrivateField = 42;
+      private $unusedPrivateField = 42;
       public function foo($unusedFormalParameter = 23)
       {
           $unusedLocalVariable = 17;
       }
-      private function _unusedPrivateMethod() {
+      private function unusedPrivateMethod() {
       }
   }
 

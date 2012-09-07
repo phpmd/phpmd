@@ -4,10 +4,10 @@ class testRuleDoesNotApplyToPrivateFieldInChainedMethodCall
     /**
      * @var SplObjectStorage
      */
-    private $_foo = null;
+    private $foo = null;
 
     public function add($object)
     {
-        $this->_foo->attach($object);
+        $this->foo->attach($object);
     }
 }

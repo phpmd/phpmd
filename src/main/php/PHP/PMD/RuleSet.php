@@ -64,42 +64,42 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      * @var boolean
      * @since 1.2.0
      */
-    private $_strict = false;
+    private $strict = false;
 
     /**
      * The name of the file where this set is specified.
      *
-     * @var string $_fileName
+     * @var string
      */
-    private $_fileName = '';
+    private $fileName = '';
 
     /**
      * The name of this rule-set.
      *
-     * @var string $_name
+     * @var string
      */
-    private $_name = '';
+    private $name = '';
 
     /**
      * An optional description for this rule-set.
      *
-     * @var string $_description
+     * @var string
      */
-    private $_description = '';
+    private $description = '';
 
     /**
      * The violation report used by the rule-set.
      *
-     * @var PHP_PMD_Report $_report
+     * @var PHP_PMD_Report
      */
-    private $_report = null;
+    private $report = null;
 
     /**
      * Mapping between marker interfaces and concrete context code node classes.
      *
-     * @var array(string=>string) $_applyTo
+     * @var array(string=>string)
      */
-    private $_applyTo = array(
+    private $applyTo = array(
         'PHP_PMD_Rule_IClassAware'      =>  'PHP_PMD_Node_Class',
         'PHP_PMD_Rule_IFunctionAware'   =>  'PHP_PMD_Node_Function',
         'PHP_PMD_Rule_IInterfaceAware'  =>  'PHP_PMD_Node_Interface',
@@ -109,9 +109,9 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     /**
      * Mapping of rules that apply to a concrete code node type.
      *
-     * @var array(string=>array) $_rules
+     * @var array(string=>array)
      */
-    private $_rules = array(
+    private $rules = array(
         'PHP_PMD_Node_Class'      =>  array(),
         'PHP_PMD_Node_Function'   =>  array(),
         'PHP_PMD_Node_Interface'  =>  array(),
@@ -125,7 +125,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function getFileName()
     {
-        return $this->_fileName;
+        return $this->fileName;
     }
 
     /**
@@ -137,7 +137,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function setFileName($fileName)
     {
-        $this->_fileName = $fileName;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -147,7 +147,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -159,7 +159,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
 
     /**
@@ -169,7 +169,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function getDescription()
     {
-        return $this->_description;
+        return $this->description;
     }
 
     /**
@@ -181,7 +181,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function setDescription($description)
     {
-        $this->_description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -192,7 +192,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function setStrict()
     {
-        $this->_strict = true;
+        $this->strict = true;
     }
 
     /**
@@ -202,7 +202,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function getReport()
     {
-        return $this->_report;
+        return $this->report;
     }
 
     /**
@@ -214,7 +214,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function setReport(PHP_PMD_Report $report)
     {
-        $this->_report = $report;
+        $this->report = $report;
     }
 
     /**
@@ -243,7 +243,7 @@ class PHP_PMD_RuleSet implements IteratorAggregate
     public function getRules()
     {
         $result = array();
-        foreach ($this->_rules as $rules) {
+        foreach ($this->rules as $rules) {
             foreach ($rules as $rule) {
                 if (in_array($rule, $result, true) === false) {
                     $result[] = $rule;
@@ -263,9 +263,9 @@ class PHP_PMD_RuleSet implements IteratorAggregate
      */
     public function addRule(PHP_PMD_Rule $rule)
     {
-        foreach ($this->_applyTo as $applyTo => $type) {
+        foreach ($this->applyTo as $applyTo => $type) {
             if ($rule instanceof $applyTo) {
-                $this->_rules[$type][] = $rule;
+                $this->rules[$type][] = $rule;
             }
         }
     }
@@ -283,16 +283,16 @@ class PHP_PMD_RuleSet implements IteratorAggregate
         $className = get_class($node);
 
         // Check for valid node type
-        if (!isset($this->_rules[$className])) {
+        if (!isset($this->rules[$className])) {
             return;
         }
 
         // Apply all rules to this node
-        foreach ($this->_rules[$className] as $rule) {
-            if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->_strict) {
+        foreach ($this->rules[$className] as $rule) {
+            if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->strict) {
                 continue;
             }
-            $rule->setReport($this->_report);
+            $rule->setReport($this->report);
             $rule->apply($node);
         }
     }

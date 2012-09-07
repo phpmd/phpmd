@@ -71,37 +71,37 @@ class PHP_PMD_Parser
     /**
      * The analysing rule-set instance.
      *
-     * @var array(PHP_PMD_RuleSet) $_ruleSets
+     * @var PHP_PMD_RuleSet[]
      */
-    private $_ruleSets = array();
+    private $ruleSets = array();
 
     /**
      * The metric containing analyzer instances.
      *
-     * @var array(PHP_Depend_Metrics_AnalyzerI) $_analyzers
+     * @var PHP_Depend_Metrics_AnalyzerI[]
      */
-    private $_analyzers = array();
+    private $analyzers = array();
 
     /**
      * The raw PHP_Depend code nodes.
      *
      * @var PHP_Depend_Code_NodeIterator
      */
-    private $_code = null;
+    private $code = null;
 
     /**
      * The violation report used by this PHP_Depend adapter.
      *
-     * @var PHP_PMD_Report $_report
+     * @var PHP_PMD_Report
      */
-    private $_report = null;
+    private $report = null;
 
     /**
      * The wrapped PHP_Depend instance.
      *
      * @var PHP_Depend
      */
-    private $_pdepend = null;
+    private $pdepend = null;
 
     /**
      * Constructs a new parser adapter instance.
@@ -110,7 +110,7 @@ class PHP_PMD_Parser
      */
     public function __construct(PHP_Depend $pdepend)
     {
-        $this->_pdepend = $pdepend;
+        $this->pdepend = $pdepend;
     }
 
     /**
@@ -124,10 +124,10 @@ class PHP_PMD_Parser
     {
         $this->setReport($report);
 
-        $this->_pdepend->addLogger($this);
-        $this->_pdepend->analyze();
+        $this->pdepend->addLogger($this);
+        $this->pdepend->analyze();
 
-        foreach ($this->_pdepend->getExceptions() as $exception) {
+        foreach ($this->pdepend->getExceptions() as $exception) {
             $report->addError(new PHP_PMD_ProcessingError($exception->getMessage()));
         }
     }
@@ -141,7 +141,7 @@ class PHP_PMD_Parser
      */
     public function addRuleSet(PHP_PMD_RuleSet $ruleSet)
     {
-        $this->_ruleSets[] = $ruleSet;
+        $this->ruleSets[] = $ruleSet;
     }
 
     /**
@@ -153,7 +153,7 @@ class PHP_PMD_Parser
      */
     public function setReport(PHP_PMD_Report $report)
     {
-        $this->_report = $report;
+        $this->report = $report;
     }
 
     /**
@@ -166,7 +166,7 @@ class PHP_PMD_Parser
      */
     public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
     {
-        $this->_analyzers[] = $analyzer;
+        $this->analyzers[] = $analyzer;
     }
 
     /**
@@ -180,7 +180,7 @@ class PHP_PMD_Parser
         // Set max nesting level, because we may get really deep data structures
         ini_set('xdebug.max_nesting_level', 8192);
 
-        foreach ($this->_code as $node) {
+        foreach ($this->code as $node) {
             $node->accept($this);
         }
     }
@@ -210,7 +210,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Class($node));
+        $this->apply(new PHP_PMD_Node_Class($node));
         parent::visitClass($node);
     }
 
@@ -228,7 +228,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Function($node));
+        $this->apply(new PHP_PMD_Node_Function($node));
     }
 
     /**
@@ -245,7 +245,7 @@ class PHP_PMD_Parser
             return;
         }
         
-        $this->_apply(new PHP_PMD_Node_Interface($node));
+        $this->apply(new PHP_PMD_Node_Interface($node));
         parent::visitInterface($node);
     }
 
@@ -263,7 +263,7 @@ class PHP_PMD_Parser
             return;
         }
 
-        $this->_apply(new PHP_PMD_Node_Method($node));
+        $this->apply(new PHP_PMD_Node_Method($node));
     }
 
     /**
@@ -275,7 +275,7 @@ class PHP_PMD_Parser
      */
     public function setCode(PHP_Depend_Code_NodeIterator $code)
     {
-        $this->_code = $code;
+        $this->code = $code;
     }
 
     /**
@@ -285,11 +285,11 @@ class PHP_PMD_Parser
      *
      * @return void
      */
-    private function _apply(PHP_PMD_AbstractNode $node)
+    private function apply(PHP_PMD_AbstractNode $node)
     {
-        $this->_collectMetrics($node);
-        foreach ($this->_ruleSets as $ruleSet) {
-            $ruleSet->setReport($this->_report);
+        $this->collectMetrics($node);
+        foreach ($this->ruleSets as $ruleSet) {
+            $ruleSet->setReport($this->report);
             $ruleSet->apply($node);
         }
     }
@@ -302,12 +302,12 @@ class PHP_PMD_Parser
      *
      * @return void
      */
-    private function _collectMetrics(PHP_PMD_AbstractNode $node)
+    private function collectMetrics(PHP_PMD_AbstractNode $node)
     {
         $metrics = array();
 
         $pdepend = $node->getNode();
-        foreach ($this->_analyzers as $analyzer) {
+        foreach ($this->analyzers as $analyzer) {
             $metrics = array_merge($metrics, $analyzer->getNodeMetrics($pdepend));
         }
         $node->setMetrics($metrics);

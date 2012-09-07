@@ -80,7 +80,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '42');
-        $rule->apply($this->_createClassMock(23));
+        $rule->apply($this->createClassMock(23));
     }
 
     /**
@@ -93,7 +93,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '42');
-        $rule->apply($this->_createClassMock(42));
+        $rule->apply($this->createClassMock(42));
     }
 
     /**
@@ -106,7 +106,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('maxmethods', '23');
-        $rule->apply($this->_createClassMock(42, array_fill(0, 42, __FUNCTION__)));
+        $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
 
     /**
@@ -119,7 +119,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
-        $rule->apply($this->_createClassMock(2, array('invoke', 'getClass')));
+        $rule->apply($this->createClassMock(2, array('invoke', 'getClass')));
     }
 
     /**
@@ -132,7 +132,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
-        $rule->apply($this->_createClassMock(2, array('invoke', 'setClass')));
+        $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
     }
 
    /**
@@ -146,7 +146,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->_createClassMock(2, array('invoke', 'injectClass')));
+        $rule->apply($this->createClassMock(2, array('invoke', 'injectClass')));
     }
 
     /**
@@ -159,7 +159,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_TooManyMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '2');
-        $rule->apply($this->_createClassMock(3, array('invoke', 'getClass', 'setClass')));
+        $rule->apply($this->createClassMock(3, array('invoke', 'getClass', 'setClass')));
     }
 
     /**
@@ -170,7 +170,7 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
      *
      * @return PHP_PMD_Node_Class
      */
-    private function _createClassMock($numberOfMethods, array $methodNames = null)
+    private function createClassMock($numberOfMethods, array $methodNames = null)
     {
         $class = $this->getClassMock('nom', $numberOfMethods);
 

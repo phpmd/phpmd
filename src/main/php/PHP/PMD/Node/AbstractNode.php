@@ -67,7 +67,7 @@ abstract class PHP_PMD_Node_AbstractNode extends PHP_PMD_AbstractNode
      *
      * @var PHP_PMD_Node_Annotations
      */
-    private $_annotations = null;
+    private $annotations = null;
 
     /**
      * Checks if this node has a suppressed annotation for the given rule
@@ -79,9 +79,9 @@ abstract class PHP_PMD_Node_AbstractNode extends PHP_PMD_AbstractNode
      */
     public function hasSuppressWarningsAnnotationFor(PHP_PMD_Rule $rule)
     {
-        if ($this->_annotations === null) {
-            $this->_annotations = new PHP_PMD_Node_Annotations($this);
+        if ($this->annotations === null) {
+            $this->annotations = new PHP_PMD_Node_Annotations($this);
         }
-        return $this->_annotations->suppresses($rule);
+        return $this->annotations->suppresses($rule);
     }
 }

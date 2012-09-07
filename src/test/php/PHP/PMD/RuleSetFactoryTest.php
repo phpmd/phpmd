@@ -101,7 +101,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsReturnsArray()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         self::assertInternalType('array', $ruleSets);
     }
 
@@ -112,7 +112,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         $this->assertEquals(1, count($ruleSets));
     }
 
@@ -123,7 +123,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         self::assertInstanceOf('PHP_PMD_RuleSet', $ruleSets[0]);
     }
 
@@ -134,7 +134,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetName()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
     }
 
@@ -145,7 +145,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         $this->assertEquals('First description...', $ruleSets[0]->getDescription());
     }
 
@@ -156,7 +156,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
@@ -170,7 +170,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
@@ -185,7 +185,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
@@ -200,7 +200,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions()
     {
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles(
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
@@ -217,7 +217,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
         
-        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
         self::assertInternalType('array', $ruleSets);
     }
 
@@ -230,7 +230,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
         $this->assertEquals(1, count($ruleSets));
     }
 
@@ -243,7 +243,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
         $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
     }
 
@@ -256,7 +256,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
         $this->assertEquals('First Test RuleSet', $ruleSets[0]->getName());
     }
 
@@ -269,7 +269,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
         $this->assertEquals(4, iterator_count($ruleSets[0]));
     }
 
@@ -282,7 +282,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
         self::assertInstanceOf('PHP_PMD_AbstractRule', $ruleSets[0]->getRules()->current());
     }
 
@@ -295,7 +295,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $ruleSets = $this->_createRuleSetsFromAbsoluteFiles('rulesets/refset2.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset2.xml');
 
         $actual   = array();
         $expected = array('RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet');
@@ -621,7 +621,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertAttributeEquals(true, '_strict', $ruleSets[0]);
+        $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
     }
 
     /**
@@ -633,12 +633,12 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return array(PHP_PMD_RuleSet)
      */
-    private function _createRuleSetsFromAbsoluteFiles($file)
+    private function createRuleSetsFromAbsoluteFiles($file)
     {
         $files = func_get_args();
         $files = array_map(array(__CLASS__, 'createFileUri'), $files);
 
-        return call_user_func_array(array($this, '_createRuleSetsFromFiles'), $files);
+        return call_user_func_array(array($this, 'createRuleSetsFromFiles'), $files);
     }
 
     /**
@@ -650,7 +650,7 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
      *
      * @return array(PHP_PMD_RuleSet)
      */
-    private function _createRuleSetsFromFiles($file)
+    private function createRuleSetsFromFiles($file)
     {
         $args = func_get_args();
 
