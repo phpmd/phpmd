@@ -16,6 +16,10 @@
         <name>Download</name>
         <path>download/</path>
     </directory>
+    <site>
+        <name>People behind</name>
+        <path>people-behind.rst</path>
+    </site>
     <directory>
         <name>Support &amp; Contact</name>
         <path>support/</path>
