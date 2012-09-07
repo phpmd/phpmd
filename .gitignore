@@ -1,3 +1,5 @@
 .abc
 .idea
 .sonar
+composer.phar
+vendor
