@@ -135,6 +135,20 @@ class PHP_PMD_Rule_Design_TooManyMethodsTest extends PHP_PMD_AbstractTest
         $rule->apply($this->_createClassMock(2, array('invoke', 'setClass')));
     }
 
+   /**
+     * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
+     *
+     * @return void
+     */
+    public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
+    {
+        $rule = new PHP_PMD_Rule_Design_TooManyMethods();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
+        $rule->apply($this->_createClassMock(2, array('invoke', 'injectClass')));
+    }
+
     /**
      * testRuleIgnoresGetterAndSetterMethodsInTest
      *
