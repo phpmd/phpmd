@@ -9,6 +9,10 @@
         <path>codesize.rst</path>
     </site>
     <site>
+        <name>Controversial Rules</name>
+        <path>controversial.rst</path>
+    </site>
+    <site>
         <name>Design Rules</name>
         <path>design.rst</path>
     </site>

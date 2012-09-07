@@ -5,11 +5,13 @@ Current Rulesets
 List of rulesets and rules contained in each ruleset.
 
 - `Code Size Rules`__: The Code Size Ruleset contains a collection of rules that find code size related problems.
+- `Controversial Rules`__: This ruleset contains a collection of controversial rules.
 - `Design Rules`__: The Code Size Ruleset contains a collection of rules that find software design related problems.
 - `Naming Rules`__: The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
 - `Unused Code Rules`__: The Unused Code Ruleset contains a collection of rules that find unused code.
 
 __ index.html#code-size-rules
+__ index.html#controversial-rules
 __ index.html#design-rules
 __ index.html#naming-rules
 __ index.html#unused-code-rules
@@ -36,6 +38,23 @@ __ codesize.html#excessivepubliccount
 __ codesize.html#toomanyfields
 __ codesize.html#toomanymethods
 __ codesize.html#excessiveclasscomplexity
+
+Controversial Rules
+===================
+
+- `Superglobals`__: Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.
+- `CamelCaseClassName`__: It is considered best practice to use the CamelCase notation to name classes.
+- `CamelCasePropertyName`__: It is considered best practice to use the camelCase notation to name attributes.
+- `CamelCaseMethodName`__: It is considered best practice to use the CamelCase notation to name methods.
+- `CamelCaseParameterName`__: It is considered best practice to use the camelCase notation to name parameters.
+- `CamelCaseVariableName`__: It is considered best practice to use the camelCase notation to name variables.
+
+__ controversial.html#superglobals
+__ controversial.html#camelcaseclassname
+__ controversial.html#camelcasepropertyname
+__ controversial.html#camelcasemethodname
+__ controversial.html#camelcaseparametername
+__ controversial.html#camelcasevariablename
 
 Design Rules
 ============
