@@ -26,6 +26,9 @@
             <action date="bc795b6" dev="palbertini" issue="53" system="github" type="add">
                 Added getStringProperty and rule-setting to change TooManyMethods ignore Regexp
             </action>
+            <action date="3622bb8" dev="3622bb8" issue="10" system="github" type="add">
+                Composer support
+            </action>
         </release>
 
         <release version="1.3.3"
