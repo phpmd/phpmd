@@ -1,10 +1,12 @@
 {
-    "name": "zerkalica/phpmd",
-    "description": "Unofficial version of PHPMD development staff to be handled with Composer.",
+    "name": "phpmd/phpmd",
+    "description": "Official version of PHPMD handled with Composer.",
+
     "require": {
         "php": ">=5.3.0",
-        "pdepend/pdepend": "dev-master"
+        "pdepend/pdepend": "*"
     },
+
     "include-path": [
         "../../pdepend/pdepend/src/main/php",
         "src/main/php"
