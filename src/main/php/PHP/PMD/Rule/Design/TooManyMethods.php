@@ -66,11 +66,18 @@ class PHP_PMD_Rule_Design_TooManyMethods
     implements PHP_PMD_Rule_IClassAware
 {
     /**
+     * the default regex pattern for ignore method names. override with "ignorepattern" rule setting.
+     *
+     * @var string
+     */
+    const DEFAULT_IGNORE_REGEXP = '(^(set|get))i';
+
+    /**
      * Regular expression that filter all methods that are ignored by this rule.
      *
      * @var string
      */
-    private $_ignoreRegexp = '(^(set|get))i';
+    private $_ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks
@@ -82,6 +89,12 @@ class PHP_PMD_Rule_Design_TooManyMethods
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
+        try {
+            $this->_ignoreRegexp = $this->getStringProperty('ignorepattern');
+        } catch (OutOfBoundsException $e) {
+            $this->_ignoreRegexp = self::DEFAULT_IGNORE_REGEXP;
+        }
+
         $threshold = $this->getIntProperty('maxmethods');
         if ($node->getMetric('nom') <= $threshold) {
             return;
@@ -91,11 +104,11 @@ class PHP_PMD_Rule_Design_TooManyMethods
             return;
         }
         $this->addViolation(
-            $node, 
+            $node,
             array(
-                $node->getType(), 
-                $node->getName(), 
-                $nom, 
+                $node->getType(),
+                $node->getName(),
+                $nom,
                 $threshold
             )
         );
