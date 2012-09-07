@@ -66,7 +66,8 @@ class PHP_PMD_Rule_Design_TooManyMethods
     implements PHP_PMD_Rule_IClassAware
 {
     /**
-     * the default regex pattern for ignore method names. override with "ignorepattern" rule setting.
+     * the default regex pattern for ignore method names. override with
+     * "ignorepattern" rule setting.
      *
      * @var string
      */
