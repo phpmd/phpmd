@@ -17,6 +17,11 @@ Contributors
 - Che Hodgins (Since 2011) / https://github.com/chehodgins
 - Gennadiy Litvinyuk (Since 2011) / https://github.com/gennadiylitvinyuk
 - Francis Besset (Since 2011) / https://github.com/francisbesset
+- zerkalica (Since 2012) / https://github.com/zerkalica
+- palbertini (Since 2012) / https://github.com/palbertini
+- bahulneel (Since 2012) / https://github.com/bahulneel
+- Willem Stuursma (Since 2012) / https://github.com/willemstuursma
+- Nimlhug (Since 2012) / https://github.com/Nimlhug
 
 
 ..
