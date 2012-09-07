@@ -156,4 +156,29 @@ class PHP_PMD_RuleTest extends PHP_PMD_AbstractTest
         $rule = $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
         $rule->getBooleanProperty(__FUNCTION__);
     }
+
+    /**
+     * testStringPropertyThrowsExceptionWhenNoPropertyForNameExists
+     *
+     * @return void
+     * @expectedException OutOfBoundsException
+     */
+    public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
+    {
+        $rule = $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
+        $rule->getStringProperty(__FUNCTION__);
+    }
+
+    /**
+     * testGetStringPropertyReturnsStringValue
+     *
+     * @return void
+     */
+    public function testGetStringPropertyReturnsString()
+    {
+        $rule = $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
+        $rule->addProperty(__FUNCTION__, 'Fourty Two');
+
+        $this->assertSame('Fourty Two', $rule->getStringProperty(__FUNCTION__));
+    }
 }
