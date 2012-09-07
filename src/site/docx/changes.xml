@@ -13,7 +13,8 @@
         <release version="1.4.0"
                  date="2012/09/07"
                  description="This release integrates some longer pending pull
-                              requests and smaller bugfixes.">
+                              requests and smaller bugfixes. One major addition
+                              is support for Composer as distribution channel.">
             <action date="b7d659f" dev="Nimlhug" issue="11" system="github" type="add">
                 Add getStringProperty($name) to AbstractRule.php
             </action>

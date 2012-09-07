@@ -29,6 +29,10 @@ __ /rules/index.html
 Recent Releases
 ===============
 
+- 2012/09/08 - PHPMD 1.4.0: This `release`__ integrates several longer pending
+  pull requests and smaller bugfixes. One major addition is support for Composer
+  as distribution channel.
+
 - 2012/02/25 - PHPMD 1.3.2; This `release`__ closes a minor issue in PHPMD
   related to the Suhosin patch and ``memory_limit``.
 
@@ -42,11 +46,8 @@ Recent Releases
 - 2011/09/27 - PHPMD 1.2.0: New feature `release`__ of PHPMD that implements a
   new command line option for the strict mode.
 
-- 2011/06/30 - PHPMD 1.1.1: New feature `release`__ of PHPMD that fixes an issue
-  in PHP_PMD's package file.
-
+__ /download/release/1.4.0/changelog.html
 __ /download/release/1.3.2/changelog.html
 __ /download/release/1.3.0/changelog.html
 __ /download/release/1.2.1/changelog.html
 __ /download/release/1.2.0/changelog.html
-__ /download/release/1.1.1/changelog.html
