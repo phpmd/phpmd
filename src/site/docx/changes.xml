@@ -16,19 +16,19 @@
                               requests and smaller bugfixes. One major addition
                               is support for Composer as distribution channel.">
             <action date="b7d659f" dev="Nimlhug" issue="11" system="github" type="add">
-                Add getStringProperty($name) to AbstractRule.php
+                Add getStringProperty($name) to AbstractRule.php.
             </action>
             <action date="458d566" dev="willemstuursma" issue="12" system="github" type="update" due-to="Willem Stuursma">
-                Update README.rst on cmd line arguments
+                Update README.rst on cmd line arguments.
             </action>
             <action date="22b523c" dev="bahulneel" issue="51" system="github" type="fix">
-                Fixed handling of traits
+                Fixed handling of traits.
             </action>
             <action date="bc795b6" dev="palbertini" issue="53" system="github" type="add">
-                Added getStringProperty and rule-setting to change TooManyMethods ignore Regexp
+                Added getStringProperty and rule-setting to change TooManyMethods ignore Regexp.
             </action>
             <action date="3622bb8" dev="3622bb8" issue="10" system="github" type="add">
-                Composer support
+                Provide PHPMD as composer dependency on packagist.org.
             </action>
         </release>
 
