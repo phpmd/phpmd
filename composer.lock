@@ -1,0 +1,17 @@
+{
+    "hash": "fae9e6c8fac23d0272b04d32d39c662c",
+    "packages": [
+        {
+            "package": "pdepend/pdepend",
+            "version": "1.0.7"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ]
+}
