@@ -131,6 +131,10 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
         if ($parentNode instanceof PHP_Depend_Code_Class) {
             return new PHP_PMD_Node_Class($parentNode);
         }
+
+        if ($parentNode instanceof PHP_Depend_Code_Trait) {
+              return new PHP_PMD_Node_Trait($parentNode);
+        }
         return new PHP_PMD_Node_Interface($parentNode);
     }
 

@@ -49,6 +49,7 @@ require_once 'PHP/PMD/ProcessingError.php';
 require_once 'PHP/PMD/Node/Class.php';
 require_once 'PHP/PMD/Node/Function.php';
 require_once 'PHP/PMD/Node/Interface.php';
+require_once 'PHP/PMD/Node/Trait.php';
 require_once 'PHP/PMD/Node/Method.php';
 
 /**
