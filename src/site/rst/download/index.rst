@@ -17,11 +17,11 @@ as a required dependency: ::
 Then install Composer in your project (or `download the composer.phar`__
 directly): ::
 
-  curl -s http://getcomposer.org/installer | php
+  ~ $ curl -s http://getcomposer.org/installer | php
 
 And finally let Composer install the project dependencies: ::
 
-  php composer.phar install
+  ~ $ php composer.phar install
 
 __ http://getcomposer.org/composer.phar
 
@@ -31,17 +31,17 @@ From the github repository
 If you like to participate on the social coding plattform `GitHub`__,
 you can use PHPMD's mirror to fork and contribute to PHPMD. ::
 
-  mapi@arwen ~ $ git clone git://github.com/phpmd/phpmd.git
+  ~ $ git clone git://github.com/phpmd/phpmd.git
 
 Then ``cd`` into the checkout directory initialize the referenced sub modules: ::
 
-  mapi@arwen ~ $ cd phpmd
-  mapi@arwen phpmd $ git submodule update --init
+  ~ $ cd phpmd
+  ~/phpmd $ git submodule update --init
 
 This installs the build framework used by PHPMD. To initialize PHPMD's
 requirements you should now invoke *Ant* with the ``initialize`` target: ::
 
-  mapi@arwen phpmd $ ant initialize
+  ~/phpmd $ ant initialize
 
 This command installs the dependencies used by PHPMD. Please not that this
 command will produce a lot of output on the shell.
@@ -55,9 +55,9 @@ stable version. Because PHPMD heavily relies on metrics measured
 with `PHP Depend`__ you must also discover this project's 
 `PEAR Channel`__. Just enter: ::
 
-  mapi@arwen ~ $ pear channel-discover pear.phpmd.org
-  mapi@arwen ~ $ pear channel-discover pear.pdepend.org
-  mapi@arwen ~ $ pear install --alldeps phpmd/PHP_PMD
+  ~ $ pear channel-discover pear.phpmd.org
+  ~ $ pear channel-discover pear.pdepend.org
+  ~ $ pear install --alldeps phpmd/PHP_PMD
 
 Requirements
 ============
