@@ -19,9 +19,9 @@
             output.dir      Output directory for the temporary build tree.
             library.dir     The library directory in the temporary build tree.
     -->
-    <target name="~copy-library-dir-after">
+    <target name="~copy-vendor-dir-after">
         <delete includeemptydirs="true">
-            <fileset dir="${library.dir}">
+            <fileset dir="${vendor.dir}/pdepend">
                 <exclude name="pdepend/src/main/**" />
             </fileset>
         </delete>

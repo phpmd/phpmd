@@ -547,7 +547,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             $include .= PATH_SEPARATOR .
                         realpath(dirname(__FILE__) . '/../../../../main/php') .
                         PATH_SEPARATOR .
-                        realpath(dirname(__FILE__) . '/../../../../../lib/pdepend/src/main/php');
+                        realpath(dirname(__FILE__) . '/../../../../../vendor/pdepend/pdepend/src/main/php');
         }
 
         // Configure include path

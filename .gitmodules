@@ -1,6 +1,3 @@
 [submodule "setup"]
 	path = setup
 	url = git://github.com/Qafoo/build-commons.git
-[submodule "lib/pdepend"]
-        path = lib/pdepend
-        url = git://github.com/pdepend/pdepend.git

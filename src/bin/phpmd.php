@@ -12,7 +12,7 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
         set_include_path(
             dirname(__FILE__) . '/../main/php' .
             PATH_SEPARATOR .
-            dirname(__FILE__) . '/../../lib/pdepend/src/main/php' .
+            dirname(__FILE__) . '/../../vendor/pdepend/pdepend/src/main/php' .
             PATH_SEPARATOR .
             '.'
         );

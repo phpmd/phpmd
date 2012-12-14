@@ -8,7 +8,7 @@ define('PHP_PMD_RELEASE', 'phar');
 Phar::mapPhar( '${archive.alias}' );
 
 $includePath = 'phar://${archive.alias}/' . PATH_SEPARATOR .
-               'phar://${archive.alias}/lib/pdepend/src/main/php';
+               'phar://${archive.alias}/vendor/pdepend/pdepend/src/main/php';
 
 if (isset($argv) && realpath($argv[0]) === __FILE__) {
     // Configure phar include paths
