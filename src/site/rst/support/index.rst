@@ -56,5 +56,5 @@ Issue-Tracker
   think you found a bug or you have a feature request for future
   versions of PHPMD.
 
-__ http://tracker.phpmd.org/php_mess_detector
+__ https://github.com/phpmd/phpmd/issues
 
