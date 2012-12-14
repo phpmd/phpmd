@@ -110,7 +110,7 @@ class PHP_PMD_Integration_CommandLineInputFileOptionTest
         $reportfile = self::createTempFileUri();
 
         self::changeWorkingDirectory(dirname($inputfile));
-var_dump(getcwd());
+
         PHP_PMD_TextUI_Command::main(
             array(
                 __FILE__,
