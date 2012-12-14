@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 5.2
+  - 5.3
+  - 5.4
+
+env:
+  - TEST_CONFIG="phpunit.xml.dist"
+
+before_script:
+  - composer install
+
+script: phpunit --configuration $TEST_CONFIG
+
+notifications:
+  irc: "irc.freenode.org#phpmd"
