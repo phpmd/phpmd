@@ -489,7 +489,7 @@ class PHP_PMD_Rule_UnusedLocalVariableTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testRuleDoesNotApplyToCatchStatement
+     * testRuleDoesNotApplyToCompactFunction
      *
      * <code>
      * class Foo {

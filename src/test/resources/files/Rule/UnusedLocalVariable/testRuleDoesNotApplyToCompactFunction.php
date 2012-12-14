@@ -7,4 +7,3 @@ class testRuleDoesNotApplyToCompactFunction
         return compact('key');
     }
 }
-?>

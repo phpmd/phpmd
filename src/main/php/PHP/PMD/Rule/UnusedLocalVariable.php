@@ -143,7 +143,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
             if ($func->getImage() === 'compact') {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
-                    $this->_collectLiteral($literal);
+                    $this->collectLiteral($literal);
                 }
             }
         }
@@ -171,13 +171,13 @@ class PHP_PMD_Rule_UnusedLocalVariable
      *
      * @return void
      */
-    private function _collectLiteral(PHP_PMD_Node_ASTNode $node)
+    private function collectLiteral(PHP_PMD_Node_ASTNode $node)
     {
         $variable = '$' . trim($node->getImage(), '\'');
-        if (!isset($this->_images[$variable])) {
-            $this->_images[$variable] = array();
+        if (!isset($this->images[$variable])) {
+            $this->images[$variable] = array();
         }
-        $this->_images[$variable][] = $node;
+        $this->images[$variable][] = $node;
     }
 
     /**
