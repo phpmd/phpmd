@@ -22,6 +22,7 @@ Contributors
 - bahulneel (Since 2012) / https://github.com/bahulneel
 - Willem Stuursma (Since 2012) / https://github.com/willemstuursma
 - Nimlhug (Since 2012) / https://github.com/Nimlhug
+- A. Martin Llano (Since 2012) / https://github.com/amllano
 
 
 ..
