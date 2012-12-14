@@ -10,7 +10,7 @@ as a required dependency: ::
 
   {
       "require": {
-          "phpmd/phpmd: "1.4.0"
+          "phpmd/phpmd" : "1.4.0"
       }
   }
 
