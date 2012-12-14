@@ -17,6 +17,8 @@ Contributors
 - `bahulneel`__ / `https://github.com/bahulneel`__ /  (Since 2012)
 - `Willem Stuursma`__ / `https://github.com/willemstuursma`__ /  (Since 2012)
 - `Nimlhug`__ / `https://github.com/Nimlhug`__ /  (Since 2012)
+- `A. Martin Llano`__ / `https://github.com/amllano`__ / (Since 2012)
+- `Juan Basso`__ / `https://github.com/jrbasso`__ / (Since 2012)
 
 __ https://github.com/edorian
 __ https://github.com/edorian
@@ -42,7 +44,10 @@ __ https://github.com/willemstuursma
 __ https://github.com/willemstuursma
 __ https://github.com/Nimlhug
 __ https://github.com/Nimlhug
-
+__ https://github.com/amllano
+__ https://github.com/amllano
+__ https://github.com/jrbasso
+__ https://github.com/jrbasso
 
 Project founder
 ===============
