@@ -88,7 +88,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
         if ($this->isAbstractMethod($node)) {
             return;
         }
-        
+
         if ($this->isInheritedSignature($node)) {
             return;
         }
@@ -125,20 +125,19 @@ class PHP_PMD_Rule_UnusedFormalParameter
     /**
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
      * {@inheritdoc} annotation.
-     * 
+     *
      * @param PHP_PMD_AbstractNode $node The context method or function instance.
      *
      * @return boolean
      */
-     private function isInheritedSignature(PHP_PMD_AbstractNode $node) 
+     private function isInheritedSignature(PHP_PMD_AbstractNode $node)
      {
         if ($node instanceof PHP_PMD_Node_Method) {
             return preg_match('/\@inheritdoc/', $node->getDocComment());
         }
-        
         return false;
     }
-    
+
     /**
      * Tests if the given <b>$node</b> is a method and if this method is also
      * the initial declaration.
