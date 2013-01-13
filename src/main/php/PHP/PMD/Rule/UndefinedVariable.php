@@ -105,7 +105,7 @@ implements PHP_PMD_Rule_IFunctionAware,
      */
     private function checkVariableDefined(PHP_PMD_AbstractNode $variable, PHP_PMD_AbstractNode $parentNode)
     {
-        return isset($this->images[$variable->getImage()]) || $this->isNameAllowedInContext($parentNode);
+        return isset($this->images[$variable->getImage()]) || $this->isNameAllowedInContext($parentNode, $variable);
     }
 
     /**
@@ -148,10 +148,11 @@ implements PHP_PMD_Rule_IFunctionAware,
      * Checks if a short name is acceptable in the current context.
      *
      * @param PHP_PMD_AbstractNode $node The context source code node.
+     * @param PHP_PMD_AbstractNode $variable The variable node.
      *
      * @return boolean
      */
-    private function isNameAllowedInContext(PHP_PMD_AbstractNode $node)
+    private function isNameAllowedInContext(PHP_PMD_AbstractNode $node, PHP_PMD_AbstractNode $variable)
     {
         return ($node instanceof PHP_PMD_Node_Method && $variable->getImage() === '$this');
     }
