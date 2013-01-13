@@ -82,14 +82,35 @@ class Something
         <description>
 Avoid passing parameters to methods or constructors and then not using those parameters.
         </description>
-        <priority>3</priority>
+    <priority>3</priority>
+    <example>
+<![CDATA[
+class Foo
+{
+private function bar($howdy)
+{
+    // $howdy is not used
+}
+}
+]]>
+    </example>
+    </rule>
+
+    <rule name="UndefinedVariable"
+          since="1.5"
+          message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
+          externalInfoUrl="">
+        <description>
+Detects when a variable is used that has not been defined before.
+        </description>
         <example>
 <![CDATA[
 class Foo
 {
-    private function bar($howdy)
+    private function bar()
     {
-        // $howdy is not used
+        // $message is undefined
+        echo $message;
     }
 }
 ]]>
