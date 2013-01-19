@@ -97,6 +97,7 @@ private function bar($howdy)
     </rule>
 
     <rule name="UndefinedVariable"
+          class="PHP_PMD_Rule_UndefinedVariable"
           since="1.5"
           message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
           externalInfoUrl="">

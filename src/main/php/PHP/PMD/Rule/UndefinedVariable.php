@@ -86,12 +86,52 @@ implements PHP_PMD_Rule_IFunctionAware,
     {
         $this->images = array();
 
+        $this->collectForeachStatements($node);
+        $this->collectListExpressions($node);
         $this->collectAssignments($node);
         $this->collectParameters($node);
+        $this->collectExceptionCatches($node);
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ( ! $this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, array($variable->getImage()));
+            }
+        }
+    }
+
+    private function collectExceptionCatches($node)
+    {
+        $catchStatements = $node->findChildrenOfType('CatchStatement');
+
+        foreach ($catchStatements as $catchStatement) {
+            foreach ($catchStatement->getChildren() as $children) {
+                if ($children instanceof PHP_Depend_Code_ASTVariable) {
+                    $this->addVariableDefinition($children);
+                }
+            }
+        }
+    }
+
+    private function collectListExpressions(PHP_PMD_Node_AbstractCallable $node)
+    {
+        $lists = $node->findChildrenOfType('ListExpression');
+
+        foreach ($lists as $listExpression) {
+            foreach ($listExpression->getChildren() as $variable) {
+                $this->addVariableDefinition($variable);
+            }
+        }
+    }
+
+    private function collectForeachStatements(PHP_PMD_Node_AbstractCallable $node)
+    {
+        $foreachStatements = $node->findChildrenOfType('ForeachStatement');
+
+        foreach ($foreachStatements as $foreachStatement) {
+            foreach ($foreachStatement->getChildren() as $children) {
+                if ($children instanceof PHP_Depend_Code_ASTVariable) {
+                    $this->addVariableDefinition($children);
+                }
             }
         }
     }
@@ -123,7 +163,7 @@ implements PHP_PMD_Rule_IFunctionAware,
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
         foreach ($declarators as $declarator) {
-            $this->images[$declarator->getImage()] = $declarator;
+            $this->addVariableDefinition($declarator);
         }
     }
 
@@ -138,9 +178,14 @@ implements PHP_PMD_Rule_IFunctionAware,
         foreach ($node->findChildrenOfType('AssignmentExpression') as $assignment) {
             $variable = $assignment->getChild(0);
 
-            if ( ! isset($definitions[$variable->getImage()])) {
-                $this->images[$variable->getImage()] = $variable;
-            }
+            $this->addVariableDefinition($variable);
+        }
+    }
+
+    private function addVariableDefinition($variable)
+    {
+        if ( ! isset($definitions[$variable->getImage()])) {
+            $this->images[$variable->getImage()] = $variable;
         }
     }
 
