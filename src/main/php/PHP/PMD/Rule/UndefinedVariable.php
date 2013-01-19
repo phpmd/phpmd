@@ -196,7 +196,7 @@ implements PHP_PMD_Rule_IFunctionAware,
 
     private function addVariableDefinition($variable)
     {
-        if ( ! isset($definitions[$variable->getImage()])) {
+        if ( ! isset($this->images[$variable->getImage()])) {
             $this->images[$variable->getImage()] = $variable;
         }
     }
@@ -211,6 +211,10 @@ implements PHP_PMD_Rule_IFunctionAware,
      */
     private function isNameAllowedInContext(PHP_PMD_AbstractNode $node, PHP_PMD_AbstractNode $variable)
     {
-        return ($node instanceof PHP_PMD_Node_Method && $variable->getImage() === '$this');
+        return (
+            $node instanceof PHP_PMD_Node_Method &&
+            $variable->getImage() === '$this' &&
+            ($node->getModifiers() & PHP_Depend_ConstantsI::IS_STATIC) === 0
+        );
     }
 }
