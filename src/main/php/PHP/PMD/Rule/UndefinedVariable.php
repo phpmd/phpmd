@@ -91,10 +91,22 @@ implements PHP_PMD_Rule_IFunctionAware,
         $this->collectAssignments($node);
         $this->collectParameters($node);
         $this->collectExceptionCatches($node);
+        $this->collectGlobalStatements($node);
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ( ! $this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, array($variable->getImage()));
+            }
+        }
+    }
+
+    private function collectGlobalStatements($node)
+    {
+        $globalStatements = $node->findChildrenOfType('GlobalStatement');
+
+        foreach ($globalStatements as $globalStatement) {
+            foreach ($globalStatement->getChildren() as $variable) {
+                $this->addVariableDefinition($variable);
             }
         }
     }
