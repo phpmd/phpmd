@@ -11,7 +11,7 @@ require_once 'PHP/PMD/Rule/IFunctionAware.php';
  * Object Calisthenics teaches us, that an else expression can always be
  * avoided by simple guard clause or return statements.
  */
-class PHP_PMD_Rule_Design_ElseExpression
+class PHP_PMD_Rule_CleanCode_ElseExpression
     extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IMethodAware,
             PHP_PMD_Rule_IFunctionAware
