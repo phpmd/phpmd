@@ -12,7 +12,7 @@ require_once 'PHP/PMD/Rule/IFunctionAware.php';
  * idioms in a performant way. This is why loop => if or if => loop
  * are allowed, however never two loops or two if statements.
  */
-class PHP_PMD_Rule_Design_NestedScopes
+class PHP_PMD_Rule_CleanCode_NestedScopes
     extends PHP_PMD_AbstractRule
     implements PHP_PMD_Rule_IMethodAware,
             PHP_PMD_Rule_IFunctionAware
