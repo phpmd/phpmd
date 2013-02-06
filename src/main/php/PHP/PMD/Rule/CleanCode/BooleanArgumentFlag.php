@@ -28,8 +28,8 @@ class PHP_PMD_Rule_CleanCode_BooleanArgumentFlag
         }
     }
 
-    private function isBooleanValue(PHP_Depend_Code_Value $value)
+    private function isBooleanValue(PHP_Depend_Code_Value $value = null)
     {
-        return $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
+        return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
     }
 }

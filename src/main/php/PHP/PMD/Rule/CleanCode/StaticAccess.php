@@ -20,7 +20,16 @@ class PHP_PMD_Rule_CleanCode_StaticAccess
         $staticReferences = $node->findChildrenOfType('ClassOrInterfaceReference');
 
         foreach ($staticReferences as $reference) {
+            if ($this->isReferenceInParameter($reference)) {
+                continue;
+            }
+
             $this->addViolation($reference, array($reference->getImage(), $node->getImage()));
         }
+    }
+
+    private function isReferenceInParameter($reference)
+    {
+        return $reference->getParent()->getNode() instanceof PHP_Depend_Code_ASTFormalParameter;
     }
 }
