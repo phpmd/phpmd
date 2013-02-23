@@ -70,6 +70,7 @@ require_once 'PHP/PMD/Rule/Naming/ShortVariable.php';
  */
 class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
 {
+
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold
      *
@@ -79,6 +80,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
@@ -92,6 +94,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 2);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -105,6 +108,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -118,6 +122,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
@@ -131,6 +136,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -144,6 +150,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(1));
 
         $class = $this->getClass();
@@ -163,6 +170,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
@@ -176,6 +184,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 2);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
@@ -189,6 +198,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(1));
 
         $class = $this->getClass();
@@ -208,6 +218,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 2);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
@@ -221,6 +232,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
@@ -234,6 +246,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
@@ -247,6 +260,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 2);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
@@ -260,6 +274,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();
@@ -279,6 +294,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -292,6 +308,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -305,6 +322,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -318,6 +336,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
@@ -331,6 +350,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
@@ -344,6 +364,7 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
     {
         $rule = new PHP_PMD_Rule_Naming_ShortVariable();
         $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','');
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();
@@ -352,5 +373,20 @@ class PHP_PMD_Rule_Naming_ShortVariableTest extends PHP_PMD_AbstractTest
         foreach ($class->getMethods() as $method) {
             $rule->apply($method);
         }
+    }
+
+    /**
+     * testRuleNotAppliesToVariablesFromExceptionsList
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToVariablesFromExceptionsList()
+    {
+        $rule = new PHP_PMD_Rule_Naming_ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions','id');
+        $rule->setReport($this->getReportMock(0));
+
+        $rule->apply($this->getClass());
     }
 }

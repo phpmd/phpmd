@@ -140,13 +140,33 @@ class PHP_PMD_Rule_Naming_ShortVariable
     protected function doCheckNodeImage(PHP_PMD_AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
+
         if ($threshold <= strlen($node->getImage()) - 1) {
             return;
         }
+
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+
+        $exceptions = $this->getExceptionsList();
+
+        if (in_array(substr($node->getImage(),1), $exceptions)) {
+            return;
+        }
+
         $this->addViolation($node, array($node->getImage(), $threshold));
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+
+        return explode(',',$this->getStringProperty('exceptions'));
     }
 
     /**
