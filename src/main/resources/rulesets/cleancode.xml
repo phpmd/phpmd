@@ -92,37 +92,4 @@ class Foo
             ]]>
         </example>
     </rule>
-
-    <rule name="NestedScopes"
-          since="1.4.0"
-          message="The method {0} uses a nested scope. Nested scopes increase complexity and should be extracted into their own mehtods."
-          class="PHP_PMD_Rule_CleanCode_NestedScopes"
-          externalInfoUrl="http://phpmd.org/rules/design.html#nestedscopes">
-        <description>
-            <![CDATA[
-A nested scope is a loop in a loop, or an if-statement inside an if-statement. These blocks
-of code are usually subject to increased complexity and make the code hard to read.
-Consider extracting nested scopes into their own helper methods.
-            ]]>
-        </description>
-        <priority>1</priority>
-        <properties></properties>
-        <example>
-            <![CDATA[
-class Foo
-{
-    public function bar($flag)
-    {
-        if ($flag) {
-            if ($this->otherCondition($flag)) {
-                // nested scope here
-            }
-        } else {
-            // another branch
-        }
-    }
-}
-            ]]>
-        </example>
-    </rule>
 </ruleset>
