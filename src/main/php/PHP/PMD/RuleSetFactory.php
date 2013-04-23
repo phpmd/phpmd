@@ -159,6 +159,18 @@ class PHP_PMD_RuleSetFactory
     }
 
     /**
+     * Lists available rule-set identifiers.
+     *
+     * @return array(string)
+     */
+    public function listAvailableRuleSets()
+    {
+        return array_merge(
+            self::listRuleSetsInDirectory($this->location . '/rulesets/'),
+            self::listRuleSetsInDirectory(getcwd() . '/rulesets/'));
+    }
+
+    /**
      * This method creates the filename for a rule-set identifier or it returns
      * the input when it is already a filename.
      *
@@ -188,6 +200,27 @@ class PHP_PMD_RuleSetFactory
         }
 
         throw new PHP_PMD_RuleSetNotFoundException($ruleSetOrFileName);
+    }
+
+    /**
+     * Lists available rule-set identifiers in given directory.
+     *
+     * @param string $directory The directory to scan for rule-sets.
+     *
+     * @return array(string)
+     */
+    private static function listRuleSetsInDirectory($directory)
+    {
+        $ruleSets = array();
+        if (is_dir($directory)) {
+            foreach (scandir($directory) as $file) {
+                $matches = array();
+                if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
+                    $ruleSets[] = $matches[1];
+                }
+            }
+        }
+        return $ruleSets;
     }
 
     /**
