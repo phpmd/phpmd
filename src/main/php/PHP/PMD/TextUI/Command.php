@@ -84,8 +84,10 @@ class PHP_PMD_TextUI_Command
      *
      * @return integer
      */
-    public function run(PHP_PMD_TextUI_CommandLineOptions $opts)
-    {
+    public function run(
+        PHP_PMD_TextUI_CommandLineOptions $opts,
+        PHP_PMD_RuleSetFactory $ruleSetFactory
+    ) {
         if ($opts->hasVersion()) {
             fwrite(STDOUT, 'PHPMD @package_version@ by Manuel Pichler' . PHP_EOL);
             return self::EXIT_SUCCESS;
@@ -102,8 +104,7 @@ class PHP_PMD_TextUI_Command
         $renderer = $opts->createRenderer();
         $renderer->setWriter(new PHP_PMD_Writer_Stream($stream));
 
-        // Create a rule set factory
-        $ruleSetFactory = new PHP_PMD_RuleSetFactory();
+        // Configure a rule set factory
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
         if ($opts->hasStrict()) {
             $ruleSetFactory->setStrict();
@@ -145,10 +146,12 @@ class PHP_PMD_TextUI_Command
     public static function main(array $args)
     {
         try {
-            $options = new PHP_PMD_TextUI_CommandLineOptions($args);
+            $ruleSetFactory = new PHP_PMD_RuleSetFactory();
+            $options = new PHP_PMD_TextUI_CommandLineOptions($args,
+                $ruleSetFactory->listAvailableRuleSets());
             $command = new PHP_PMD_TextUI_Command();
 
-            $exitCode = $command->run($options);
+            $exitCode = $command->run($options, $ruleSetFactory);
         } catch (Exception $e) {
             fwrite(STDERR, $e->getMessage());
             fwrite(STDERR, PHP_EOL);

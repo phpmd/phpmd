@@ -133,14 +133,23 @@ class PHP_PMD_TextUI_CommandLineOptions
     private $strict = false;
 
     /**
+     * List of available rule-sets.
+     *
+     * @var array(string)
+     */
+    private $availableRuleSets = array();
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param array(string) $args The cli arguments.
      */
-    public function __construct(array $args)
+    public function __construct(array $args, array $availableRuleSets = array())
     {
         // Remove current file name
         array_shift($args);
+
+        $this->availableRuleSets = $availableRuleSets;
 
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
@@ -354,6 +363,8 @@ class PHP_PMD_TextUI_CommandLineOptions
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
                'filenames' . PHP_EOL . PHP_EOL .
+               'Available formats: xml, text, html.' . PHP_EOL .
+               'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . PHP_EOL . PHP_EOL .
                'Optional arguments that may be put after the mandatory arguments:' .
                PHP_EOL .
                '--minimumpriority: rule priority threshold; rules with lower ' .
