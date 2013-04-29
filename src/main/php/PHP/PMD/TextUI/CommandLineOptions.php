@@ -326,6 +326,10 @@ class PHP_PMD_TextUI_CommandLineOptions
         case 'text':
             include_once 'PHP/PMD/Renderer/TextRenderer.php';
             return new PHP_PMD_Renderer_TextRenderer();
+        
+        case 'json':
+            include_once 'PHP/PMD/Renderer/JsonRenderer.php';
+            return new PHP_PMD_Renderer_JsonRenderer();
 
         default:
             if ($this->reportFormat !== '') {
