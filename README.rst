@@ -52,7 +52,9 @@ Command line options
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore 
     directories.
 
-  - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation. ::
+  - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation. 
+
+  An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes .php
 
