@@ -54,8 +54,8 @@ Command line options
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation. ::
 
-  phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes .php
-  
+    phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes .php
+
 Using multiple rule sets
 ````````````````````````
 
