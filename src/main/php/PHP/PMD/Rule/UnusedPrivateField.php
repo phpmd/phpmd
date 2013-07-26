@@ -202,6 +202,9 @@ class PHP_PMD_Rule_UnusedPrivateField
                 return false;
             }
             $parent = $parent->getParent();
+            if (is_null($parent)) {
+                   return false;
+            }
         }
         return true;
     }
