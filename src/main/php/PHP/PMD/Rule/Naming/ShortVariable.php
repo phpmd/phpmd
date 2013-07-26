@@ -165,8 +165,13 @@ class PHP_PMD_Rule_Naming_ShortVariable
      */
     private function getExceptionsList()
     {
+        try {
+            $exceptions = $this->getStringProperty('exceptions');
+        } catch (OutOfBoundsException $e) {
+            $exceptions = '';
+        }
 
-        return explode(',',$this->getStringProperty('exceptions'));
+        return explode(',', $exceptions);
     }
 
     /**
