@@ -1,6 +1,6 @@
-=========================
-PHPMD Supressing Warnings
-=========================
+==========================
+PHPMD Suppressing Warnings
+==========================
 
 You can use doc comment annotations to exclude methods or classes 
 from PHPMD or to suppress special rules for some software artifacts. ::
