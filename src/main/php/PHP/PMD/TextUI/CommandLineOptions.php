@@ -150,7 +150,8 @@ class PHP_PMD_TextUI_CommandLineOptions
         array_shift($args);
 
         $this->availableRuleSets = $availableRuleSets;
-
+        $this->renderersDirPathName=__DIR__.'/../Renderer';
+        
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
@@ -297,7 +298,13 @@ class PHP_PMD_TextUI_CommandLineOptions
     {
         return $this->strict;
     }
-
+    
+    /**
+     * A path to directory where renderers are situated
+     *
+     * @var string
+     */
+    public $renderersDirPathName;
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
@@ -313,45 +320,33 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function createRenderer()
     {
-        switch ($this->reportFormat) {
-
-        case 'xml':
-            include_once 'PHP/PMD/Renderer/XMLRenderer.php';
-            return new PHP_PMD_Renderer_XMLRenderer();
-
-        case 'html':
-            include_once 'PHP/PMD/Renderer/HTMLRenderer.php';
-            return new PHP_PMD_Renderer_HTMLRenderer();
-
-        case 'text':
-            include_once 'PHP/PMD/Renderer/TextRenderer.php';
-            return new PHP_PMD_Renderer_TextRenderer();
-        
-        case 'json':
-            include_once 'PHP/PMD/Renderer/JsonRenderer.php';
-            return new PHP_PMD_Renderer_JsonRenderer();
-
-        default:
-            if ($this->reportFormat !== '') {
-
-                // Try to load a custom renderer
-                $fileName = strtr($this->reportFormat, '_', '/') . '.php';
-
-                $fileHandle = @fopen($fileName, 'r', true);
-                if (is_resource($fileHandle) === false) {
-                    $message = 'Can\'t find the custom report class: '
-                             . $this->reportFormat;
-                    throw new InvalidArgumentException($message, self::INPUT_ERROR);
+        if ($this->reportFormat !== '') {
+            if(preg_match("/^\w+$/",$this->reportFormat)){
+                foreach(scandir($this->renderersDirPathName) as $fileName){
+                    if(preg_match('/^('.$this->reportFormat.'Renderer).php$/i',$fileName,$match)){
+                        include_once $this->renderersDirPathName.'/'.$fileName;
+                        $className="PHP_PMD_Renderer_".$match[1];
+                        return new $className();
+                    }
                 }
-                @fclose($fileHandle);
-
-                include_once $fileName;
-
-                return new $this->reportFormat;
             }
-            $message = 'Can\'t create report with format of ' . $this->reportFormat;
-            throw new InvalidArgumentException($message, self::INPUT_ERROR);
+            // Try to load a custom renderer
+            $fileName = strtr($this->reportFormat, '_', '/') . '.php';
+
+            $fileHandle = @fopen($fileName, 'r', true);
+            if (is_resource($fileHandle) === false) {
+                $message = 'Can\'t find the custom report class: '
+                         . $this->reportFormat;
+                throw new InvalidArgumentException($message, self::INPUT_ERROR);
+            }
+            @fclose($fileHandle);
+
+            include_once $fileName;
+
+            return new $this->reportFormat;
         }
+        $message = 'Can\'t create report with format of ' . $this->reportFormat;
+        throw new InvalidArgumentException($message, self::INPUT_ERROR);
     }
 
     /**
@@ -361,13 +356,21 @@ class PHP_PMD_TextUI_CommandLineOptions
      */
     public function usage()
     {
+        $renderers="";
+        $f=true;
+        foreach(scandir($this->renderersDirPathName) as $fileName){
+            if(preg_match('/^(\w+)Renderer.php$/i',$fileName,$match)){
+                $renderers.=($f?' ,':'').$match[1];
+                $f=false;
+            }
+        }
         return 'Mandatory arguments:' . PHP_EOL .
                '1) A php source code filename or directory. Can be a comma-' .
                'separated string' . PHP_EOL .
                '2) A report format' . PHP_EOL .
                '3) A ruleset filename or a comma-separated string of ruleset' .
                'filenames' . PHP_EOL . PHP_EOL .
-               'Available formats: xml, text, html.' . PHP_EOL .
+               'Available formats: ' .$renderers. PHP_EOL.
                'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . PHP_EOL . PHP_EOL .
                'Optional arguments that may be put after the mandatory arguments:' .
                PHP_EOL .
