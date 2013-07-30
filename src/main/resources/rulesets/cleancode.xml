@@ -44,7 +44,7 @@ class Foo {
             <![CDATA[
 An if expression with an else branch is never necessary. You can rewrite the
 conditions in a way that the else is not necessary and the code becomes simpler to read.
-To achieve this use early exits or partition the method it several smaller methods.
+To achieve this use early exits or partition the method into several smaller methods.
             ]]>
         </description>
         <priority>1</priority>
