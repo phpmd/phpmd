@@ -9,15 +9,6 @@ by writing patches, extensions or just providing new ideas, you
 should feel free to join PHPMD's `IRC channel`__ or send a 
 message to the phpmd-users@phpmd.org mailinglist.
 
-Mailinglists
-============
-
-- phpmd-users@phpmd.org is the list where you will find help on
-  PHPMD related topics.
-
-  Sent an empty mail to phpmd-users-join@phpmd.org, to subscribe
-  to this list.
-
 IRC
 ===
 
