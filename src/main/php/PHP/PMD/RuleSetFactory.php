@@ -548,7 +548,7 @@ class PHP_PMD_RuleSetFactory
             throw new RuntimeException(trim(libxml_get_last_error()->message));
         }
 
-        $excludes = [];
+        $excludes = array();
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'exclude-pattern') {
                 $excludes[] = ''.$node;
