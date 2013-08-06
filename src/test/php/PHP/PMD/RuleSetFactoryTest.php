@@ -339,6 +339,25 @@ class PHP_PMD_RuleSetFactoryTest extends PHP_PMD_AbstractTest
     }
 
     /**
+     * testCreateRuleWithExcludePattern
+     *
+     * @return void
+     */
+    public function testCreateRuleWithExcludePattern()
+    {
+        self::changeWorkingDirectory();
+
+        $factory  = new PHP_PMD_RuleSetFactory();
+        $excludes = $factory->getIgnorePattern('rulesets/exclude-pattern.xml');
+
+        $expected = array(
+            'some/excluded/files'
+        );
+
+        $this->assertEquals($expected, $excludes);
+    }
+
+    /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
      *
      * @return void

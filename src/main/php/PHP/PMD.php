@@ -188,6 +188,10 @@ class PHP_PMD
         array $renderers,
         PHP_PMD_RuleSetFactory $ruleSetFactory
     ) {
+
+        // Merge parsed excludes
+        $this->ignorePatterns = array_merge($this->ignorePatterns, $ruleSetFactory->getIgnorePattern($ruleSets));
+
         $this->input = $inputPath;
 
         $report = new PHP_PMD_Report();
