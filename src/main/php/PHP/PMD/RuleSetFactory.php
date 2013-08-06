@@ -535,6 +535,8 @@ class PHP_PMD_RuleSetFactory
      */
     public function getIgnorePattern($fileName)
     {
+        $fileName = $this->createRuleSetFileName($fileName);
+
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
 
