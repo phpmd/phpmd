@@ -133,7 +133,7 @@ class PHP_PMD_Rule_UnusedFormalParameter
      private function isInheritedSignature(PHP_PMD_AbstractNode $node)
      {
         if ($node instanceof PHP_PMD_Node_Method) {
-            return preg_match('/\@inheritdoc/', $node->getDocComment());
+            return preg_match('/\@inheritdoc/i', $node->getDocComment());
         }
         return false;
     }
