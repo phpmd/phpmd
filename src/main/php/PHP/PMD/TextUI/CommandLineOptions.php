@@ -329,6 +329,9 @@ class PHP_PMD_TextUI_CommandLineOptions
 
         default:
             if ($this->reportFormat !== '') {
+                if (class_exists($this->reportFormat)) {
+                    return new $this->reportFormat();
+                }
 
                 // Try to load a custom renderer
                 $fileName = strtr($this->reportFormat, '_', '/') . '.php';
@@ -343,7 +346,7 @@ class PHP_PMD_TextUI_CommandLineOptions
 
                 include_once $fileName;
 
-                return new $this->reportFormat;
+                return new $this->reportFormat();
             }
             $message = 'Can\'t create report with format of ' . $this->reportFormat;
             throw new InvalidArgumentException($message, self::INPUT_ERROR);
