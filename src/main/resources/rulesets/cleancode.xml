@@ -14,7 +14,7 @@ The Clean Code ruleset contains rules that enforce a clean code base. This inclu
           since="1.4.0"
           message="The method {0} has a boolean flag argument {1}, which is a certain sign of a Single Responsibility Principle violation."
           class="PHP_PMD_Rule_CleanCode_BooleanArgumentFlag"
-          externalInfoUrl="http://phpmd.org/rules/design.html#booleanargumentflag">
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#booleanargumentflag">
         <description>
             <![CDATA[
 A boolean flag argument is a reliable indicator for a violation of
@@ -39,12 +39,14 @@ class Foo {
           since="1.4.0"
           message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
           class="PHP_PMD_Rule_CleanCode_ElseExpression"
-          externalInfoUrl="http://phpmd.org/rules/design.html#eleseexpression">
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#eleseexpression">
         <description>
             <![CDATA[
 An if expression with an else branch is never necessary. You can rewrite the
-conditions in a way that the else is not necessary and the code becomes simpler to read.
-To achieve this use early exits or partition the method it several smaller methods.
+conditions in a way that the else is not necessary and the code becomes simpler
+to read.  To achieve this use early return statements. To achieve this you may
+need to split the code it several smaller methods. For very simple assignments
+you could also use the ternary operations.
             ]]>
         </description>
         <priority>1</priority>
@@ -70,7 +72,7 @@ class Foo
           since="1.4.0"
           message="Avoid using static access to class '{0}' in method '{1}'."
           class="PHP_PMD_Rule_CleanCode_StaticAccess"
-          externalInfoUrl="http://phpmd.org/rules/design.html#staticaccess">
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#staticaccess">
         <description>
             <![CDATA[
 Static acccess causes inexchangable dependencies to other classes and leads to hard to test code. Avoid
