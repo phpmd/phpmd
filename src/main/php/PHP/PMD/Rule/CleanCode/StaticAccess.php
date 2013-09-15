@@ -82,16 +82,20 @@ class PHP_PMD_Rule_CleanCode_StaticAccess
         $nodes = $node->findChildrenOfType('MemberPrimaryPrefix');
 
         foreach ($nodes as $methodCall) {
-            if ($this->isCallingParent($methodCall)) {
-                continue;
-            }
-
-            if ($this->isCallingSelf($methodCall)) {
+            if (!$this->isStaticMethodCall($methodCall)) {
                 continue;
             }
 
             $this->addViolation($methodCall, array($methodCall->getImage(), $methodCall->getImage()));
         }
+    }
+
+    private function isStaticMethodCall($methodCall)
+    {
+        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTClassOrInterfaceReference &&
+               $methodCall->getChild(1)->getNode() instanceof PHP_Depend_Code_ASTMethodPostfix &&
+               !$this->isCallingParent($methodCall) &&
+               !$this->isCallingSelf($methodCall);
     }
 
     private function isCallingParent($methodCall)
