@@ -19,4 +19,11 @@ class PHP_PMD_Rule_CleanCode_StaticAccessTest extends PHP_PMD_AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    public function testRuleNotAppliesToDynamicMethodCall()
+    {
+        $rule = new PHP_PMD_Rule_CleanCode_StaticAccess();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }
