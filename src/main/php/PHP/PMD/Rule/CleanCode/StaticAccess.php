@@ -79,19 +79,28 @@ class PHP_PMD_Rule_CleanCode_StaticAccess
      */
     public function apply(PHP_PMD_AbstractNode $node)
     {
-        $staticReferences = $node->findChildrenOfType('ClassOrInterfaceReference');
+        $nodes = $node->findChildrenOfType('MemberPrimaryPrefix');
 
-        foreach ($staticReferences as $reference) {
-            if ($this->isReferenceInParameter($reference)) {
+        foreach ($nodes as $methodCall) {
+            if ($this->isCallingParent($methodCall)) {
                 continue;
             }
 
-            $this->addViolation($reference, array($reference->getImage(), $node->getImage()));
+            if ($this->isCallingSelf($methodCall)) {
+                continue;
+            }
+
+            $this->addViolation($methodCall, array($methodCall->getImage(), $methodCall->getImage()));
         }
     }
 
-    private function isReferenceInParameter($reference)
+    private function isCallingParent($methodCall)
     {
-        return $reference->getParent()->getNode() instanceof PHP_Depend_Code_ASTFormalParameter;
+        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTParentReference;
+    }
+
+    private function isCallingSelf($methodCall)
+    {
+        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTSelfReference;
     }
 }
