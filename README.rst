@@ -36,7 +36,7 @@ Command line options
 - You can also use shortened names to refer to the built-in rule sets,
   like this: ::
 
-    phpmd PHP/Depend/DbusUI/ xml codesize
+    phpmd /path/to/source xml codesize
 
 - The command line interface also accepts the following optional arguments:
 

@@ -429,6 +429,6 @@ __ http://pdepend.org/documentation/software-metrics.html
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractNode.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IFunctionAware.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IMethodAware.php
-__ https://github.com/pdepend/pdepend/tree/master/src/main/php/PHP/Depend/Code
+__ https://github.com/pdepend/pdepend/tree/master/src/main/php/PDepend/Code
 __ mailto:phpmd-users@phpmd.org
 __ https://github.com/phpmd/phpmd
