@@ -554,7 +554,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         set_include_path($include . PATH_SEPARATOR . get_include_path());
 
         // Init PHP_Depend autoloader
-        include_once 'PHP/Depend/Autoload.php';
+        include_once 'PDepend/Autoload.php';
 
         $autoload = new PHP_Depend_Autoload();
         $autoload->register();
