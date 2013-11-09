@@ -9,7 +9,14 @@
         <author email="mapi@phpmd.org">Manuel Pichler</author>
     </properties>
 
-	<body>
+    <body>
+        <release version="1.5.1"
+                 date=""
+                 description="">
+            <action date="cdfbb8f" dev="mapi" issue="111" system="github" type="fix" due-to="magicsunday">
+                Changelog with old releases and invalid dates removed.
+            </action>
+        </release>
         <release version="1.5.0"
                  date="2013/07/26"
                  description="This release closes some PHP 5.4 related issues.">
