@@ -199,7 +199,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     {
         $class = $this->getMock('PDepend\Source\AST\ASTClass', array(), array(null));
         $class->expects($this->any())
-            ->method('getSourceFile')
+            ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
         $class->expects($this->any())
             ->method('getConstants')
@@ -225,7 +225,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     {
         $function = $this->getMock('PDepend\Source\AST\ASTFunction', array(), array(null));
         $function->expects($this->atLeastOnce())
-            ->method('getSourceFile')
+            ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
 
         return $function;
@@ -242,7 +242,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     {
         $method = $this->getMock('PDepend\Source\AST\ASTMethod', array(), array(null));
         $method->expects($this->atLeastOnce())
-            ->method('getSourceFile')
+            ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
 
         return $method;
