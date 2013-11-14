@@ -196,7 +196,7 @@ class PHP_PMD_Parser
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PDepend\Metrics\CodeAwareGenerator');
+        return array('PDepend\Metrics\AnalyzerNodeAware');
     }
 
     /**
