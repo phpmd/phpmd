@@ -266,15 +266,15 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
-        $tokenizer = new PHP_Depend_Tokenizer_Internal();
+        $tokenizer = new \PDepend\Source\Language\PHP\PHPTokenizerInternal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $builder =  new PHP_Depend_Builder_Default();
+        $builder =  new \PDepend\Source\Language\PHP\PHPBuilder();
 
-        $parser = new PHP_Depend_Parser_VersionAllParser(
+        $parser = new \PDepend\Source\Language\PHP\PHPParserGeneric(
             $tokenizer,
             $builder,
-            new PHP_Depend_Util_Cache_Driver_Memory()
+            new \PDepend\Util\Cache\Driver\MemoryCacheDriver()
         );
         $parser->parse();
 

@@ -173,7 +173,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
         $pdepend->expects($this->once())
             ->method('getExceptions')
             ->will($this->returnValue(array(
-                new PHP_Depend_Parser_InvalidStateException(42, __FILE__, 'foo')
+                new \PDepend\Source\Parser\InvalidStateException(42, __FILE__, 'foo')
             )));
 
         $parser = new PHP_PMD_Parser($pdepend);
@@ -181,23 +181,23 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * Creates a mocked PHP_Depend instance.
+     * Creates a mocked PDepend instance.
      *
-     * @return PHP_Depend
+     * @return \PDepend\Engine
      */
     private function getPHPDependMock()
     {
-        return $this->getMock('PHP_Depend', array(), array(null), '', false);
+        return $this->getMock('PDepend\Engine', array(), array(null), '', false);
     }
 
     /**
-     * Creates a mocked PHP_Depend class instance.
+     * Creates a mocked PDepend class instance.
      *
-     * @return PHP_Depend_Code_Class
+     * @return PDepend\Source\AST\ASTClass
      */
     protected function getPHPDependClassMock()
     {
-        $class = $this->getMock('PHP_Depend_Code_Class', array(), array(null));
+        $class = $this->getMock('PDepend\Source\AST\ASTClass', array(), array(null));
         $class->expects($this->any())
             ->method('getSourceFile')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
@@ -223,7 +223,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
     {
-        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null));
+        $function = $this->getMock('PDepend\Source\AST\ASTFunction', array(), array(null));
         $function->expects($this->atLeastOnce())
             ->method('getSourceFile')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -240,7 +240,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {
-        $method = $this->getMock('PHP_Depend_Code_Method', array(), array(null));
+        $method = $this->getMock('PDepend\Source\AST\ASTMethod', array(), array(null));
         $method->expects($this->atLeastOnce())
             ->method('getSourceFile')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -257,7 +257,7 @@ class PHP_PMD_ParserTest extends PHP_PMD_AbstractTest
      */
     protected function getPHPDependFileMock($fileName)
     {
-        $file = $this->getMock('PHP_Depend_Code_File', array(), array(null));
+        $file = $this->getMock('PDepend\Source\AST\ASTCompilationUnit', array(), array(null));
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue($fileName));

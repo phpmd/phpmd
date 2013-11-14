@@ -46,9 +46,10 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTSelfReference;
 
 /**
  * Check if static access is used in a method.
@@ -92,19 +93,19 @@ class PHP_PMD_Rule_CleanCode_StaticAccess
 
     private function isStaticMethodCall($methodCall)
     {
-        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTClassOrInterfaceReference &&
-               $methodCall->getChild(1)->getNode() instanceof PHP_Depend_Code_ASTMethodPostfix &&
+        return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
+               $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
                !$this->isCallingParent($methodCall) &&
                !$this->isCallingSelf($methodCall);
     }
 
     private function isCallingParent($methodCall)
     {
-        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTParentReference;
+        return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
     private function isCallingSelf($methodCall)
     {
-        return $methodCall->getChild(0)->getNode() instanceof PHP_Depend_Code_ASTSelfReference;
+        return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
 }

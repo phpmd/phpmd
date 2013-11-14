@@ -46,7 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
 
 /**
  * Abstract base class for all code nodes.

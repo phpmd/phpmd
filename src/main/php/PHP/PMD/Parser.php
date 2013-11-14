@@ -45,12 +45,16 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/ProcessingError.php';
-require_once 'PHP/PMD/Node/Class.php';
-require_once 'PHP/PMD/Node/Function.php';
-require_once 'PHP/PMD/Node/Interface.php';
-require_once 'PHP/PMD/Node/Trait.php';
-require_once 'PHP/PMD/Node/Method.php';
+
+use PDepend\Engine;
+use PDepend\Report\CodeAwareGenerator;
+use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PDepend\Metrics\Analyzer;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Simple wrapper around the php depend engine.
@@ -64,9 +68,8 @@ require_once 'PHP/PMD/Node/Method.php';
  * @link      http://phpmd.org
  */
 class PHP_PMD_Parser
-       extends PHP_Depend_Visitor_AbstractVisitor
-    implements PHP_Depend_Log_LoggerI,
-               PHP_Depend_Log_CodeAwareI
+       extends AbstractASTVisitor
+    implements CodeAwareGenerator
 {
     /**
      * The analysing rule-set instance.
@@ -78,37 +81,37 @@ class PHP_PMD_Parser
     /**
      * The metric containing analyzer instances.
      *
-     * @var PHP_Depend_Metrics_AnalyzerI[]
+     * @var \PDepend\Metrics\Analyzer[]
      */
     private $analyzers = array();
 
     /**
-     * The raw PHP_Depend code nodes.
+     * The raw PDepend code nodes.
      *
-     * @var PHP_Depend_Code_NodeIterator
+     * @var \PDepend\Source\AST\ASTArtifactList
      */
-    private $code = null;
+    private $artifacts = null;
 
     /**
-     * The violation report used by this PHP_Depend adapter.
+     * The violation report used by this PDepend adapter.
      *
      * @var PHP_PMD_Report
      */
     private $report = null;
 
     /**
-     * The wrapped PHP_Depend instance.
+     * The wrapped PDepend Engine instance.
      *
-     * @var PHP_Depend
+     * @var PDepend\Engine
      */
     private $pdepend = null;
 
     /**
      * Constructs a new parser adapter instance.
      *
-     * @param PHP_Depend $pdepend The context php depend instance.
+     * @param \PDepend\Eengine $pdepend The context php depend instance.
      */
-    public function __construct(PHP_Depend $pdepend)
+    public function __construct(Engine $pdepend)
     {
         $this->pdepend = $pdepend;
     }
@@ -124,7 +127,7 @@ class PHP_PMD_Parser
     {
         $this->setReport($report);
 
-        $this->pdepend->addLogger($this);
+        $this->pdepend->addReportGenerator($this);
         $this->pdepend->analyze();
 
         foreach ($this->pdepend->getExceptions() as $exception) {
@@ -160,11 +163,11 @@ class PHP_PMD_Parser
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param PHP_Depend_Metrics_AnalyzerI $analyzer The analyzer to log.
+     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
      *
      * @return boolean
      */
-    public function log(PHP_Depend_Metrics_AnalyzerI $analyzer)
+    public function log(Analyzer $analyzer)
     {
         $this->analyzers[] = $analyzer;
     }
@@ -173,14 +176,14 @@ class PHP_PMD_Parser
      * Closes the logger process and writes the output file.
      *
      * @return void
-     * @throws PHP_Depend_Log_NoLogOutputException If the no log target exists.
+     * @throws PDepend\Report\NoLogOutputException If the no log target exists.
      */
     public function close()
     {
         // Set max nesting level, because we may get really deep data structures
         ini_set('xdebug.max_nesting_level', 8192);
 
-        foreach ($this->code as $node) {
+        foreach ($this->artifacts as $node) {
             $node->accept($this);
         }
     }
@@ -193,18 +196,17 @@ class PHP_PMD_Parser
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PHP_Depend_Metrics_NodeAwareI');
+        return array('PDepend\Metrics\CodeAwareGenerator');
     }
 
     /**
      * Visits a class node.
      *
-     * @param PHP_Depend_Code_Class $node The current class node.
+     * @param \PDepend\Source\AST\ASTClass $node The current class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitClass()
      */
-    public function visitClass(PHP_Depend_Code_Class $node)
+    public function visitClass(ASTClass $node)
     {
         if (!$node->isUserDefined()) {
             return;
@@ -217,14 +219,13 @@ class PHP_PMD_Parser
     /**
      * Visits a function node.
      *
-     * @param PHP_Depend_Code_Function $node The current function node.
+     * @param ASTFunction $node The current function node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitFunction()
      */
-    public function visitFunction(PHP_Depend_Code_Function $node)
+    public function visitFunction(ASTFunction $node)
     {
-        if ($node->getSourceFile()->getFileName() === null) {
+        if ($node->getCompilationUnit()->getFileName() === null) {
             return;
         }
 
@@ -234,17 +235,16 @@ class PHP_PMD_Parser
     /**
      * Visits an interface node.
      *
-     * @param PHP_Depend_Code_Interface $node The current interface node.
+     * @param ASTInterface $node The current interface node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitInterface()
      */
-    public function visitInterface(PHP_Depend_Code_Interface $node)
+    public function visitInterface(ASTInterface $node)
     {
         if (!$node->isUserDefined()) {
             return;
         }
-        
+
         $this->apply(new PHP_PMD_Node_Interface($node));
         parent::visitInterface($node);
     }
@@ -252,14 +252,13 @@ class PHP_PMD_Parser
     /**
      * Visits a method node.
      *
-     * @param PHP_Depend_Code_Method $node The method class node.
+     * @param ASTMethod $node The method class node.
      *
      * @return void
-     * @see PHP_Depend_VisitorI::visitMethod()
      */
-    public function visitMethod(PHP_Depend_Code_Method $node)
+    public function visitMethod(ASTMethod $node)
     {
-        if ($node->getSourceFile()->getFileName() === null) {
+        if ($node->getCompilationUnit()->getFileName() === null) {
             return;
         }
 
@@ -269,13 +268,13 @@ class PHP_PMD_Parser
     /**
      * Sets the context code nodes.
      *
-     * @param PHP_Depend_Code_NodeIterator $code The code nodes.
+     * @param \PDepend\Source\AST\ASTArtifactList $code The code nodes.
      *
      * @return void
      */
-    public function setCode(PHP_Depend_Code_NodeIterator $code)
+    public function setArtifacts(ASTArtifactList $artifacts)
     {
-        $this->code = $code;
+        $this->artifacts = $artifacts;
     }
 
     /**

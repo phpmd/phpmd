@@ -45,12 +45,10 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/ASTNode.php';
-require_once 'PHP/PMD/Node/Annotations.php';
 
 /**
  * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper
- * around PHP_Depend's object model.
+ * around PDepend's object model.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -64,7 +62,7 @@ abstract class PHP_PMD_AbstractNode
 {
     /**
      *
-     * @var PHP_Depend_Code_AbstractItem|PHP_Depend_Code_ASTNode $node
+     * @var \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node
      */
     private $node = null;
 
@@ -78,8 +76,8 @@ abstract class PHP_PMD_AbstractNode
     /**
      * Constructs a new PHP_PMD node.
      *
-     * @param PHP_Depend_Code_AbstractItem|PHP_Depend_Code_ASTNode $node The wrapped
-     *        PHP_Depend ast node instance or item object.
+     * @param \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node The wrapped
+     *        PDepend ast node instance or item object.
      */
     public function __construct($node)
     {
@@ -88,13 +86,13 @@ abstract class PHP_PMD_AbstractNode
 
     /**
      * The magic call method is used to pipe requests from rules direct
-     * to the underlying PHP_Depend ast node.
+     * to the underlying PDepend ast node.
      *
      * @param string $name Name of the invoked method.
      * @param array  $args Optional method arguments.
      *
      * @return mixed
-     * @throws BadMethodCallException When the underlying PHP_Depend node
+     * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args)
@@ -146,7 +144,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getFirstChildOfType($type)
     {
-        $node = $this->node->getFirstChildOfType('PHP_Depend_Code_AST' . $type);
+        $node = $this->node->getFirstChildOfType('PDepend\Source\AST\AST' . $type);
         if ($node === null) {
             return null;
         }
@@ -163,7 +161,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function findChildrenOfType($type)
     {
-        $children = $this->node->findChildrenOfType('PHP_Depend_Code_AST' . $type);
+        $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
         $nodes = array();
         foreach ($children as $child) {
@@ -181,7 +179,7 @@ abstract class PHP_PMD_AbstractNode
      */
     public function isInstanceOf($type)
     {
-        $class = 'PHP_Depend_Code_AST' . $type;
+        $class = 'PDepend\Source\AST\AST' . $type;
         return ($this->node instanceof $class);
     }
 
@@ -233,13 +231,13 @@ abstract class PHP_PMD_AbstractNode
      */
     public function getFileName()
     {
-        return (string) $this->node->getSourceFile();
+        return (string) $this->node->getCompilationUnit()->getFileName();
     }
 
     /**
-     * Returns the wrapped PHP_Depend node instance.
+     * Returns the wrapped PDepend node instance.
      *
-     * @return PHP_Depend_Code_AbstractItem
+     * @return \PDepend\Source\AST\ASTArtifact
      */
     public function getNode()
     {

@@ -46,7 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractWriter.php';
 
 /**
  * This writer uses PHP's stream api as its output target.
