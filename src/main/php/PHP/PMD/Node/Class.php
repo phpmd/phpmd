@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractType.php';
+use PDepend\Source\AST\ASTClass;
 
 /**
  * Wrapper around PHP_Depend's class objects.
@@ -72,7 +72,7 @@ class PHP_PMD_Node_Class extends PHP_PMD_Node_AbstractType
      *
      * @param PHP_Depend_Code_Class $node The wrapped class object.
      */
-    public function __construct(PHP_Depend_Code_Class $node)
+    public function __construct(ASTClass $node)
     {
         parent::__construct($node);
     }

@@ -46,8 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
  * This rule class will detect all classes with too much fields.

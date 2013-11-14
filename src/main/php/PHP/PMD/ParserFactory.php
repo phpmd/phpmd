@@ -45,10 +45,13 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/Depend/Autoload.php';
+use PDepend\Engine;
+use PDepend\Util\Configuration\ConfigurationFactory;
+use PDepend\Input\ExcludePathFilter;
+use PDepend\Input\ExtensionFilter;
 
 /**
- * Simple factory that is used to return a ready to use PHP_Depend instance.
+ * Simple factory that is used to return a ready to use PDepend instance.
  *
  * @category  PHP
  * @package   PHP_PMD
@@ -61,15 +64,6 @@ require_once 'PHP/Depend/Autoload.php';
 class PHP_PMD_ParserFactory
 {
     /**
-     * Creates a new factory instance.
-     */
-    public function __construct()
-    {
-        $autoload = new PHP_Depend_Autoload();
-        $autoload->register();
-    }
-
-    /**
      * Creates the used PHP_PMD_Parser analyzer instance.
      *
      * @param PHP_PMD $phpmd The context php mess detector instance.
@@ -78,8 +72,6 @@ class PHP_PMD_ParserFactory
      */
     public function create(PHP_PMD $phpmd)
     {
-        include_once 'PHP/PMD/Parser.php';
-
         $pdepend = $this->createInstance();
         $pdepend = $this->init($pdepend, $phpmd);
 
@@ -89,23 +81,23 @@ class PHP_PMD_ParserFactory
     /**
      * Creates a clean php depend instance with some base settings.
      *
-     * @return PHP_Depend
+     * @return \PDepend\Engine
      */
     private function createInstance()
     {
-        $factory = new PHP_Depend_Util_Configuration_Factory();
-        return new PHP_Depend($factory->createDefault());
+        $factory = new ConfigurationFactory();
+        return new Engine($factory->createDefault());
     }
 
     /**
-     * Configures the given PHP_Depend instance based on some user settings.
+     * Configures the given PDepend\Engine instance based on some user settings.
      *
-     * @param PHP_Depend $pdepend The context php depend instance.
+     * @param PDepend\Engine $pdepend The context php depend instance.
      * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
      *
-     * @return PHP_Depend
+     * @return PDepend\Engine
      */
-    private function init(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function init(Engine $pdepend, PHP_PMD $phpmd)
     {
         $this->initInput($pdepend, $phpmd);
         $this->initIgnores($pdepend, $phpmd);
@@ -117,12 +109,12 @@ class PHP_PMD_ParserFactory
     /**
      * Configures the input source.
      *
-     * @param PHP_Depend $pdepend The context php depend instance.
+     * @param PDepend\Engine $pdepend The context php depend instance.
      * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
      *
      * @return void
      */
-    private function initInput(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initInput(PDepend\Engine $pdepend, PHP_PMD $phpmd)
     {
         foreach (explode(',', $phpmd->getInput()) as $path) {
             if (is_dir(trim($path))) {
@@ -136,16 +128,16 @@ class PHP_PMD_ParserFactory
     /**
      * Initializes the ignored files and path's.
      *
-     * @param PHP_Depend $pdepend The context php depend instance.
+     * @param PDepend\Engine $pdepend The context php depend instance.
      * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
      *
      * @return void
      */
-    private function initIgnores(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initIgnores(Engine $pdepend, PHP_PMD $phpmd)
     {
         if (count($phpmd->getIgnorePattern()) > 0) {
             $pdepend->addFileFilter(
-                new PHP_Depend_Input_ExcludePathFilter($phpmd->getIgnorePattern())
+                new ExcludePathFilter($phpmd->getIgnorePattern())
             );
         }
     }
@@ -153,16 +145,16 @@ class PHP_PMD_ParserFactory
     /**
      * Initializes the accepted php source file extensions.
      *
-     * @param PHP_Depend $pdepend The context php depend instance.
+     * @param \PDepend\Engine $pdepend The context php depend instance.
      * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
      *
      * @return void
      */
-    private function initExtensions(PHP_Depend $pdepend, PHP_PMD $phpmd)
+    private function initExtensions(Engine $pdepend, PHP_PMD $phpmd)
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(
-                new PHP_Depend_Input_ExtensionFilter($phpmd->getFileExtensions())
+                new ExtensionFilter($phpmd->getFileExtensions())
             );
         }
     }

@@ -46,9 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
  * This rule class checks for excessive long function and method parameter lists.

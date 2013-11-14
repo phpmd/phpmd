@@ -46,9 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IClassAware.php';
-require_once 'PHP/PMD/Rule/IInterfaceAware.php';
 
 /**
  * This rule detects class/interface constants that do not follow the upper

@@ -76,7 +76,7 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      */
     public function testGetImageDelegatesToGetImageMethodOfWrappedNode()
     {
-        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
         $mock->expects($this->once())
             ->method('getImage');
 
@@ -91,7 +91,7 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      */
     public function testGetNameDelegatesToGetImageMethodOfWrappedNode()
     {
-        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
         $mock->expects($this->once())
             ->method('getImage');
 
@@ -106,7 +106,7 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      */
     public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse()
     {
-        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
 
         $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
         $rule = $this->getMockForAbstractClass('PHP_PMD_AbstractRule');
@@ -121,7 +121,7 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      */
     public function testGetParentNameReturnsNull()
     {
-        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
         $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
 
         $this->assertNull($node->getParentName());
@@ -134,7 +134,7 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
      */
     public function testGetPackageNameReturnsNull()
     {
-        $mock = $this->getMock('PHP_Depend_Code_ASTNode');
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
         $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
 
         $this->assertNull($node->getPackageName());

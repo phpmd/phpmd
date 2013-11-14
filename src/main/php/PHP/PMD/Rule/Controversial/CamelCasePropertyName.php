@@ -47,8 +47,6 @@
  * @since      1.1.0
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
  * This rule class detects properties not named in camelCase.
