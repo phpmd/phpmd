@@ -79,7 +79,14 @@ class PHP_PMD_Rule_Design_LongMethod
     public function apply(PHP_PMD_AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
-        $loc = $node->getMetric('loc');
+        $ignoreWhitespace = $this->getBooleanProperty('ignore-whitespace');
+
+        if ($ignoreWhitespace) {
+            $loc = $node->getMetric('eloc');
+        } else {
+            $loc = $node->getMetric('loc');
+        }
+
         if ($loc < $threshold) {
             return;
         }

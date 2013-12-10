@@ -9,7 +9,7 @@
     <description>
 The Code Size Ruleset contains a collection of rules that find code size related problems.
     </description>
-  
+
     <rule name="CyclomaticComplexity"
           since="0.1"
           message = "The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}."
@@ -114,6 +114,7 @@ too much.  Try to reduce the method size by creating helper methods and removing
         <priority>3</priority>
         <properties>
             <property name="minimum" description="The method size reporting threshold" value="100"/>
+            <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
         </properties>
         <example>
             <![CDATA[
@@ -141,6 +142,7 @@ manageable.
         <priority>3</priority>
         <properties>
             <property name="minimum" description="The class size reporting threshold"  value="1000"/>
+            <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
         </properties>
         <example>
             <![CDATA[

@@ -84,6 +84,7 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongClass();
         $rule->setReport($report);
         $rule->addProperty('minimum', '41');
+        $rule->addProperty('ignore-whitespace', false);
         $rule->apply($class);
     }
 
@@ -101,6 +102,7 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongClass();
         $rule->setReport($report);
         $rule->addProperty('minimum', '42');
+        $rule->addProperty('ignore-whitespace', false);
         $rule->apply($class);
     }
 
@@ -118,6 +120,24 @@ class PHP_PMD_Rule_Design_LongClassTest extends PHP_PMD_AbstractTest
         $rule = new PHP_PMD_Rule_Design_LongClass();
         $rule->setReport($report);
         $rule->addProperty('minimum', '23');
+        $rule->addProperty('ignore-whitespace', false);
+        $rule->apply($class);
+    }
+
+    /**
+     * Tests that the rule uses eloc when ignore whitespace is set
+     *
+     * @return void
+     */
+    public function testRuleUsesElocWhenIgnoreWhitespaceSet()
+    {
+        $class  = $this->getClassMock('eloc', 22);
+        $report = $this->getReportMock(0);
+
+        $rule = new PHP_PMD_Rule_Design_LongClass();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '23');
+        $rule->addProperty('ignore-whitespace', true);
         $rule->apply($class);
     }
 }
