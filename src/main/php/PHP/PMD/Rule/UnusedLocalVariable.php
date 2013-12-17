@@ -141,7 +141,7 @@ class PHP_PMD_Rule_UnusedLocalVariable
             $this->collectVariable($variable);
         }
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
-            if(strpos($func->getImage(),'compact')) {
+            if(substr($func->getName(), 1 + (strrpos($func->getName(), "\\") ?: -1)) === "compact") {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
                     $this->collectLiteral($literal);
                 }
