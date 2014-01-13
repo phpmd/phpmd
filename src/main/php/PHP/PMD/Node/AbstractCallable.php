@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractNode.php';
+use PDepend\Source\AST\AbstractASTCallable;
 
 /**
  * Abstract base class for PHP_Depend function and method wrappers.
@@ -67,7 +67,7 @@ abstract class PHP_PMD_Node_AbstractCallable extends PHP_PMD_Node_AbstractNode
      *
      * @param PHP_Depend_Code_AbstractCallable $node The wrapped callable object.
      */
-    public function __construct(PHP_Depend_Code_AbstractCallable $node)
+    public function __construct(AbstractASTCallable $node)
     {
         parent::__construct($node);
     }

@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractNode.php';
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 
 /**
  * Abstract base class for classes and interfaces.
@@ -67,7 +67,7 @@ abstract class PHP_PMD_Node_AbstractType extends PHP_PMD_Node_AbstractNode
      *
      * @param PHP_Depend_Code_AbstractClassOrInterface $node The wrapped node.
      */
-    public function __construct(PHP_Depend_Code_AbstractClassOrInterface $node)
+    public function __construct(AbstractASTClassOrInterface $node)
     {
         parent::__construct($node);
     }

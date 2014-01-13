@@ -108,7 +108,7 @@ class PHP_PMD_ProcessingError
     /**
      * Evil hack that extracts the source file from the original exception
      * message. This method should be removed once we have added the source file
-     * as a mandatory property to PHP_Depend's exceptions.
+     * as a mandatory property to PDepend's exceptions.
      *
      * @param string $message The original processing error message.
      *

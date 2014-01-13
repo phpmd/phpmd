@@ -45,8 +45,6 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/Rule.php';
-require_once 'PHP/PMD/RuleViolation.php';
 
 /**
  * This is the abstract base class for pmd rules.

@@ -78,9 +78,9 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      */
     public function testGetMethodNamesReturnsExpectedResult()
     {
-        $class = new PHP_Depend_Code_Class(null);
-        $class->addMethod(new PHP_Depend_Code_Method(__CLASS__));
-        $class->addMethod(new PHP_Depend_Code_Method(__FUNCTION__));
+        $class = new \PDepend\Source\AST\ASTClass(null);
+        $class->addMethod(new \PDepend\Source\AST\ASTMethod(__CLASS__));
+        $class->addMethod(new \PDepend\Source\AST\ASTMethod(__FUNCTION__));
 
         $node = new PHP_PMD_Node_Class($class);
         $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
@@ -93,13 +93,13 @@ class PHP_PMD_Node_ClassTest extends PHP_PMD_AbstractTest
      */
     public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {
-        $class = new PHP_Depend_Code_Class(null);
+        $class = new \PDepend\Source\AST\ASTClass(null);
         $class->setDocComment('/** @SuppressWarnings("PMD") */');
-        
+
         $rule = $this->getMock('PHP_PMD_AbstractRule');
-        
+
         $node = new PHP_PMD_Node_Class($class);
-        
+
         $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
     }
 }

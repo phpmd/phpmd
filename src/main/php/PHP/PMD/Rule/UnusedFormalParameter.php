@@ -46,9 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Rule/AbstractLocalVariable.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
  * This rule collects all formal parameters of a given function or method that

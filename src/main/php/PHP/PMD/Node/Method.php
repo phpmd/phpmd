@@ -46,7 +46,9 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractCallable.php';
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTTrait;
 
 /**
  * Wrapper around a PHP_Depend method node.
@@ -67,7 +69,7 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
      *
      * @param PHP_Depend_Code_CodeMethod $node The wrapped method object.
      */
-    public function __construct(PHP_Depend_Code_Method $node)
+    public function __construct(ASTMethod $node)
     {
         parent::__construct($node);
     }
@@ -128,11 +130,11 @@ class PHP_PMD_Node_Method extends PHP_PMD_Node_AbstractCallable
     public function getParentType()
     {
         $parentNode = $this->getNode()->getParent();
-        if ($parentNode instanceof PHP_Depend_Code_Class) {
+        if ($parentNode instanceof ASTClass) {
             return new PHP_PMD_Node_Class($parentNode);
         }
 
-        if ($parentNode instanceof PHP_Depend_Code_Trait) {
+        if ($parentNode instanceof ASTTrait) {
               return new PHP_PMD_Node_Trait($parentNode);
         }
         return new PHP_PMD_Node_Interface($parentNode);

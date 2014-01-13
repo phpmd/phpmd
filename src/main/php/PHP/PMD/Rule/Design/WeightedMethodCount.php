@@ -47,8 +47,6 @@
  * @since      0.2.5
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IClassAware.php';
 
 /**
  * This rule checks a given class against a configured weighted method count

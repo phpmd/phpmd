@@ -46,9 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
+use PDepend\Source\AST\ASTValue;
 
 /**
  * Check for a boolean flag in the method/function signature.
@@ -90,7 +88,7 @@ class PHP_PMD_Rule_CleanCode_BooleanArgumentFlag
         }
     }
 
-    private function isBooleanValue(PHP_Depend_Code_Value $value = null)
+    private function isBooleanValue(ASTValue $value = null)
     {
         return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
     }

@@ -46,7 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRenderer.php';
 
 /**
  * This class will render a Java-PMD compatible xml-report.

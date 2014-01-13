@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractNode.php';
+use PDepend\Source\AST\ASTNode;
 
 /**
  * Wrapper around a PHP_Depend ast node.
@@ -75,7 +75,7 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
      * @param PHP_Depend_Code_ASTNode $node     The context ast node.
      * @param string                  $fileName The source file name.
      */
-    public function __construct(PHP_Depend_Code_ASTNode $node, $fileName)
+    public function __construct(ASTNode $node, $fileName)
     {
         parent::__construct($node);
 

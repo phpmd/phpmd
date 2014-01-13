@@ -46,9 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
  * Check if there is an else expression somewhere in the method/function and

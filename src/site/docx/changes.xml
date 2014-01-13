@@ -10,9 +10,12 @@
     </properties>
 
     <body>
-        <release version="1.5.1"
-                 date=""
-                 description="">
+        <release version="2.0.0"
+                 date="2014/01/13"
+                 description="This is major release of PHPMD which utilizes 2.0 engine of PDepend.">
+            <action date="cdfbb8f" dev="svscorp" issue="61" system="github" type="add">
+                UnusedLocalVariable fix for compact handling in Symfony2
+            </action>
             <action date="cdfbb8f" dev="mapi" issue="111" system="github" type="fix" due-to="magicsunday">
                 Changelog with old releases and invalid dates removed.
             </action>

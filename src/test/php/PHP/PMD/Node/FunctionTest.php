@@ -77,7 +77,7 @@ class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
      */
     public function testMagicCallDelegatesToWrappedPHPDependFunction()
     {
-        $function = $this->getMock('PHP_Depend_Code_Function', array(), array(null));
+        $function = $this->getMock('PDepend\Source\AST\ASTFunction', array(), array(null));
         $function->expects($this->once())
             ->method('getStartLine');
 
@@ -93,7 +93,7 @@ class PHP_PMD_Node_FunctionTest extends PHP_PMD_AbstractTest
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        $node = new PHP_PMD_Node_Function(new PHP_Depend_Code_Function(null));
+        $node = new PHP_PMD_Node_Function(new PDepend\Source\AST\ASTFunction(null));
         $node->getFooBar();
     }
 }

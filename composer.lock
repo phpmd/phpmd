@@ -3,24 +3,28 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e146a8bb0bfcd4ef4b06b6941981a57d",
+    "hash": "f106892956be890eb79588f55b33a80c",
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "1.1.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1537f19d62d7b30c13ac173270106df7c6b9c459"
+                "reference": "a632b5c3581d954f197f6b9d7671ba99534cc054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1537f19d62d7b30c13ac173270106df7c6b9c459",
-                "reference": "1537f19d62d7b30c13ac173270106df7c6b9c459",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/a632b5c3581d954f197f6b9d7671ba99534cc054",
+                "reference": "a632b5c3581d954f197f6b9d7671ba99534cc054",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.3"
+                "php": ">=5.3.7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable",
+                "squizlabs/php_codesniffer": "@stable"
             },
             "bin": [
                 "src/bin/pdepend"
@@ -36,7 +40,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2013-12-04 17:46:00"
+            "time": "2013-11-09 22:50:50"
         }
     ],
     "packages-dev": [
@@ -46,9 +50,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "pdepend/pdepend": 20
+    },
     "platform": {
         "php": ">=5.3.0"
     },

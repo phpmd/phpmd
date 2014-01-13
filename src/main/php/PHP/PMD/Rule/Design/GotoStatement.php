@@ -47,9 +47,6 @@
  * @since      1.1.0
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
-require_once 'PHP/PMD/Rule/IFunctionAware.php';
 
 /**
  * This rule class detects the usage of PHP's goto statement.

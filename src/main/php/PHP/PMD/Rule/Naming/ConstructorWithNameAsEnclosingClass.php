@@ -46,8 +46,6 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/Rule/IMethodAware.php';
 
 /**
  * This rule class will detect methods that define a php4 style constructor

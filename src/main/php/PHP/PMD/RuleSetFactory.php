@@ -45,11 +45,6 @@
  * @link      http://phpmd.org
  */
 
-require_once 'PHP/PMD/AbstractRule.php';
-require_once 'PHP/PMD/RuleSet.php';
-require_once 'PHP/PMD/RuleClassFileNotFoundException.php';
-require_once 'PHP/PMD/RuleClassNotFoundException.php';
-require_once 'PHP/PMD/RuleSetNotFoundException.php';
 
 /**
  * This factory class is used to create the {@link PHP_PMD_RuleSet} instance

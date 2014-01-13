@@ -46,7 +46,7 @@
  * @link       http://phpmd.org
  */
 
-require_once 'PHP/PMD/Node/AbstractType.php';
+use PDepend\Source\AST\ASTTrait;
 
 /**
  * Wrapper around PHP_Depend's interface objects.
@@ -72,7 +72,7 @@ class PHP_PMD_Node_Trait extends PHP_PMD_Node_AbstractType
      *
      * @param PHP_Depend_Code_Trait $node The wrapped interface object.
      */
-    public function __construct(PHP_Depend_Code_Trait $node)
+    public function __construct(ASTTrait $node)
     {
         parent::__construct($node);
     }
