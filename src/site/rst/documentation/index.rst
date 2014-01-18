@@ -49,8 +49,8 @@ Command line options
   - ``--extensions`` - Comma separated string of valid PHP source file
     extensions.
 
-  - ``--ignore`` - Comma separated string of files or directories that
-    will be ignored during the parsing process.
+  - ``--exclude`` - Comma separated string of files or directories that
+    will be excluded from the parsing process.
 
 Using multiple rule sets
 ````````````````````````
