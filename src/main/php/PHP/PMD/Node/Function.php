@@ -77,9 +77,9 @@ class PHP_PMD_Node_Function extends PHP_PMD_Node_AbstractCallable
      *
      * @return string
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
-        return $this->getNode()->getPackage()->getName();
+        return $this->getNode()->getNamespace()->getName();
     }
 
     /**

@@ -308,5 +308,5 @@ abstract class PHP_PMD_AbstractNode
      *
      * @return string
      */
-    public abstract function getPackageName();
+    public abstract function getNamespaceName();
 }

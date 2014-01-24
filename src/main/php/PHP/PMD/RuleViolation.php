@@ -184,9 +184,9 @@ class PHP_PMD_RuleViolation
      *
      * @return string
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
-        return $this->node->getPackageName();
+        return $this->node->getNamespaceName();
     }
 
     /**

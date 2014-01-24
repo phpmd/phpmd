@@ -128,15 +128,15 @@ class PHP_PMD_Node_ASTNodeTest extends PHP_PMD_AbstractTest
     }
 
     /**
-     * testGetPackageNameReturnsNull
+     * testGetNamespaceNameReturnsNull
      *
      * @return void
      */
-    public function testGetPackageNameReturnsNull()
+    public function testGetNamespaceNameReturnsNull()
     {
         $mock = $this->getMock('PDepend\Source\AST\ASTNode');
         $node = new PHP_PMD_Node_ASTNode($mock, __FILE__);
 
-        $this->assertNull($node->getPackageName());
+        $this->assertNull($node->getNamespaceName());
     }
 }

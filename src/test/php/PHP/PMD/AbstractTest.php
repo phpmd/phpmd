@@ -481,7 +481,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
             ->method('getEndLine')
             ->will($this->returnValue($endLine));
         $ruleViolation->expects($this->any())
-            ->method('getPackageName')
+            ->method('getNamespaceName')
             ->will($this->returnValue('TestStubPackage'));
         $ruleViolation->expects($this->any())
             ->method('getDescription')

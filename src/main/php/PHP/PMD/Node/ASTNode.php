@@ -139,11 +139,11 @@ class PHP_PMD_Node_ASTNode extends PHP_PMD_AbstractNode
     }
 
     /**
-     * Returns the name of the parent package.
+     * Returns the name of the parent namespace.
      *
      * @return string
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
         return null;
     }

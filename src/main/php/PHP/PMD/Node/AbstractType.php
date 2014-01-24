@@ -113,13 +113,13 @@ abstract class PHP_PMD_Node_AbstractType extends PHP_PMD_Node_AbstractNode
     }
 
     /**
-     * Returns the name of the parent package.
+     * Returns the name of the parent namespace.
      *
      * @return string
      */
-    public function getPackageName()
+    public function getNamespaceName()
     {
-        return $this->getNode()->getPackage()->getName();
+        return $this->getNode()->getNamespace()->getName();
     }
 
     /**
