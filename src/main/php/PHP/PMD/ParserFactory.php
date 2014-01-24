@@ -45,8 +45,8 @@
  * @link      http://phpmd.org
  */
 
+use PDepend\Application;
 use PDepend\Engine;
-use PDepend\Util\Configuration\ConfigurationFactory;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
 
@@ -85,15 +85,15 @@ class PHP_PMD_ParserFactory
      */
     private function createInstance()
     {
-        $factory = new ConfigurationFactory();
-        return new Engine($factory->createDefault());
+        $application = new Application();
+        return $application->getEngine();
     }
 
     /**
      * Configures the given PDepend\Engine instance based on some user settings.
      *
      * @param PDepend\Engine $pdepend The context php depend instance.
-     * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
+     * @param PHP_PMD $phpmd The calling/parent php mess detector.
      *
      * @return PDepend\Engine
      */

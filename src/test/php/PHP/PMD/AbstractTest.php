@@ -278,7 +278,7 @@ abstract class PHP_PMD_AbstractTest extends PHPUnit_Framework_TestCase
         );
         $parser->parse();
 
-        return $builder->getPackages()->current();
+        return $builder->getNamespaces()->current();
     }
 
     /**

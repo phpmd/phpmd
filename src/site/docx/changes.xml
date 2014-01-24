@@ -22,6 +22,9 @@
             <action date="8c3ebe1" dev="beberlei" issue="119" system="github" type="add">
                 PDepend 2.0 support
             </action>
+            <action date="19c4da8" dev="adambrett" issue="122" system="github" type="add">
+                Add: New parameter 'ignore-whitespace' to LongClass and LongMethod rules
+            </action>
         </release>
         <release version="1.5.0"
                  date="2013/07/26"

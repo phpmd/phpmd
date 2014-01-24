@@ -6,6 +6,7 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     // phpmd is part of a composer installation
     require_once __DIR__ . '/../../../../autoload.php';
 } else {
+    require_once __DIR__ . '/../../vendor/autoload.php';
 
     // PEAR installation workaround
     if (strpos('@package_version@', '@package_version') === 0) {
