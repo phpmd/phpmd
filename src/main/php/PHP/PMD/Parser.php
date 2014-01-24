@@ -109,7 +109,7 @@ class PHP_PMD_Parser
     /**
      * Constructs a new parser adapter instance.
      *
-     * @param \PDepend\Eengine $pdepend The context php depend instance.
+     * @param \PDepend\Engine $pdepend The context php depend instance.
      */
     public function __construct(Engine $pdepend)
     {
@@ -196,7 +196,19 @@ class PHP_PMD_Parser
      */
     public function getAcceptedAnalyzers()
     {
-        return array('PDepend\Metrics\AnalyzerNodeAware');
+        return array(
+            'pdepend.analyzer.cyclomatic_complexity',
+            'pdepend.analyzer.node_loc',
+            'pdepend.analyzer.npath_complexity',
+            'pdepend.analyzer.inheritance',
+            'pdepend.analyzer.node_count',
+            'pdepend.analyzer.hierarchy',
+            'pdepend.analyzer.crap_index',
+            'pdepend.analyzer.code_rank',
+            'pdepend.analyzer.coupling',
+            'pdepend.analyzer.class_level',
+            'pdepend.analyzer.cohesion',
+        );
     }
 
     /**
