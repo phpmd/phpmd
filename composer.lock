@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "e49e2ff3441e0eea3e5fd43d39a0f9aa368b875d"
+                "reference": "57bc5a1fca868f9abd7c5deffd9ac57aea6adfd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/e49e2ff3441e0eea3e5fd43d39a0f9aa368b875d",
-                "reference": "e49e2ff3441e0eea3e5fd43d39a0f9aa368b875d",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/57bc5a1fca868f9abd7c5deffd9ac57aea6adfd9",
+                "reference": "57bc5a1fca868f9abd7c5deffd9ac57aea6adfd9",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2013-12-04 18:20:11"
+            "time": "2014-01-24 20:42:53"
         },
         {
             "name": "symfony/config",
