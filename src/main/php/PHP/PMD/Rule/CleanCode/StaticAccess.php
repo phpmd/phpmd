@@ -86,6 +86,17 @@ class PHP_PMD_Rule_CleanCode_StaticAccess
             if (!$this->isStaticMethodCall($methodCall)) {
                 continue;
             }
+            // references to self, parent and static are not considered static calls
+            switch ($reference->getImage()) {
+                case 'self':
+                case 'parent':
+                case 'static':
+                    continue 2;
+            }
+            // uses of "new" should be allowed
+            if ($reference->getParent()->getImage() == 'new') {
+                continue;
+            }
 
             $this->addViolation($methodCall, array($methodCall->getImage(), $methodCall->getImage()));
         }
