@@ -62,23 +62,30 @@ class PHP_PMD_RuleViolation
     /**
      * The rule that causes this violation.
      *
-     * @var PHP_PMD_Rule
+     * @var \PHP_PMD_Rule
      */
-    private $rule = null;
+    private $rule;
 
     /**
      * The context code node for this rule violation.
      *
-     * @var PHP_PMD_AbstractNode 
+     * @var \PHP_PMD_AbstractNode
      */
-    private $node = null;
+    private $node;
 
     /**
      * The description/message text that describes the violation.
      * 
      * @var string
      */
-    private $description = '';
+    private $description;
+
+    /**
+     * The raw metric value which caused this rule violation.
+     *
+     * @var mixed
+     */
+    private $metric;
 
     /**
      * Name of the owning/context class or interface of this violation.
@@ -106,17 +113,20 @@ class PHP_PMD_RuleViolation
     /**
      * Constructs a new rule violation instance.
      *
-     * @param PHP_PMD_Rule         $rule             PHP_PMD rule for violation.
-     * @param PHP_PMD_AbstractNode $node             The source node of evil.
-     * @param string               $violationMessage The error/report message.
+     * @param PHP_PMD_Rule $rule
+     * @param PHP_PMD_AbstractNode $node
+     * @param string $violationMessage
+     * @param mixed $metric
      */
     public function __construct(
         PHP_PMD_Rule $rule,
         PHP_PMD_AbstractNode $node,
-        $violationMessage
+        $violationMessage,
+        $metric = null
     ) {
         $this->rule        = $rule;
         $this->node        = $node;
+        $this->metric      = $metric;
         $this->description = $violationMessage;
 
         if ($node instanceof PHP_PMD_Node_AbstractType) {
@@ -147,6 +157,16 @@ class PHP_PMD_RuleViolation
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Returns the raw metric value which caused this rule violation.
+     *
+     * @return mixed|null
+     */
+    public function getMetric()
+    {
+        return $this->metric;
     }
 
     /**

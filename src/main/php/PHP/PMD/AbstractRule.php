@@ -412,17 +412,15 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
      *
-     * @param PHP_PMD_AbstractNode $node The node which has a violation of this
-     *                                   type.
-     * @param array(string)        $args Optional list of arguments that are
-     *                                   used to replace "{\d+}" placeholders in
-     *                                   the message text of this rule.
-     *
+     * @param \PHP_PMD_AbstractNode $node
+     * @param array $args
+     * @param mixed $metric
      * @return void
      */
     protected function addViolation(
-        PHP_PMD_AbstractNode $node,
-        array $args = array()
+        \PHP_PMD_AbstractNode $node,
+        array $args = array(),
+        $metric = null
     ) {
         $search  = array();
         $replace = array();
@@ -433,7 +431,7 @@ abstract class PHP_PMD_AbstractRule implements PHP_PMD_Rule
 
         $message = str_replace($search, $replace, $this->message);
 
-        $ruleViolation = new PHP_PMD_RuleViolation($this, $node, $message);
+        $ruleViolation = new \PHP_PMD_RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
     }
 }
