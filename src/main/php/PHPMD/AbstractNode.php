@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of PHP_PMD.
+ * This file is part of PHPMD.
  *
  * PHP Version 5
  *
@@ -36,15 +36,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category  PHP
- * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2012 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version   SVN: $Id$
  * @link      http://phpmd.org
  */
 
+namespace PHPMD;
 
 /**
  * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper
@@ -58,7 +57,7 @@
  * @version   Release: @package_version@
  * @link      http://phpmd.org
  */
-abstract class PHP_PMD_AbstractNode
+abstract class AbstractNode
 {
     /**
      *
@@ -100,7 +99,7 @@ abstract class PHP_PMD_AbstractNode
         if (method_exists($this->getNode(), $name)) {
             return call_user_func_array(array($this->getNode(), $name), $args);
         }
-        throw new BadMethodCallException(
+        throw new \BadMethodCallException(
             sprintf('Invalid method %s() called.', $name)
         );
     }
@@ -116,7 +115,7 @@ abstract class PHP_PMD_AbstractNode
         if (($node = $this->node->getParent()) === null) {
             return null;
         }
-        return new PHP_PMD_Node_ASTNode($node, $this->getFileName());
+        return new \PHP_PMD_Node_ASTNode($node, $this->getFileName());
     }
 
     /**
@@ -124,11 +123,11 @@ abstract class PHP_PMD_AbstractNode
      *
      * @param integer $index The child offset.
      *
-     * @return PHP_PMD_Node_ASTNode
+     * @return \PHP_PMD_Node_ASTNode
      */
     public function getChild($index)
     {
-        return new PHP_PMD_Node_ASTNode(
+        return new \PHP_PMD_Node_ASTNode(
             $this->node->getChild($index),
             $this->getFileName()
         );
@@ -139,8 +138,7 @@ abstract class PHP_PMD_AbstractNode
      * has no child of the given type.
      *
      * @param string $type The searched child type.
-     *
-     * @return PHP_PMD_AbstractNode
+     * @return \PHPMD\AbstractNode
      */
     public function getFirstChildOfType($type)
     {
@@ -148,7 +146,7 @@ abstract class PHP_PMD_AbstractNode
         if ($node === null) {
             return null;
         }
-        return new PHP_PMD_Node_ASTNode($node, $this->getFileName());
+        return new \PHP_PMD_Node_ASTNode($node, $this->getFileName());
     }
 
     /**
@@ -156,8 +154,7 @@ abstract class PHP_PMD_AbstractNode
      * type.
      *
      * @param string $type The searched child type.
-     *
-     * @return array(PHP_PMD_AbstractNode)
+     * @return \PHPMD\AbstractNode[]
      */
     public function findChildrenOfType($type)
     {
@@ -165,7 +162,7 @@ abstract class PHP_PMD_AbstractNode
 
         $nodes = array();
         foreach ($children as $child) {
-            $nodes[] = new PHP_PMD_Node_ASTNode($child, $this->getFileName());
+            $nodes[] = new \PHP_PMD_Node_ASTNode($child, $this->getFileName());
         }
         return $nodes;
     }
@@ -174,7 +171,6 @@ abstract class PHP_PMD_AbstractNode
      * Tests if this node represents the the given type.
      *
      * @param string $type The expected node type.
-     *
      * @return boolean
      */
     public function isInstanceOf($type)
@@ -275,7 +271,6 @@ abstract class PHP_PMD_AbstractNode
      * This method will set the metrics for this node.
      *
      * @param array(string=>mixed) $metrics The collected node metrics.
-     *
      * @return void
      */
     public function setMetrics(array $metrics)
@@ -289,11 +284,10 @@ abstract class PHP_PMD_AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param PHP_PMD_Rule $rule The context rule instance.
-     *
+     * @param \PHP_PMD_Rule $rule
      * @return boolean
      */
-    public abstract function hasSuppressWarningsAnnotationFor(PHP_PMD_Rule $rule);
+    public abstract function hasSuppressWarningsAnnotationFor(\PHP_PMD_Rule $rule);
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no

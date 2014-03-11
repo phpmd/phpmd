@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+class_alias('PHPMD\\AbstractNode', 'PHP_PMD_AbstractNode');
 
 if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     // phpmd is part of a composer installation
