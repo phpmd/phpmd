@@ -78,7 +78,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
         
         $uri = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getInput'));
         $phpmd->expects($this->once())
             ->method('getInput')
             ->will($this->returnValue($uri));
@@ -101,7 +101,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getInput'));
         $phpmd->expects($this->once())
             ->method('getInput')
             ->will($this->returnValue($uri));
@@ -172,7 +172,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getIgnorePattern', 'getInput'));
         $phpmd->expects($this->exactly(2))
             ->method('getIgnorePattern')
             ->will($this->returnValue(array('Test')));
@@ -194,7 +194,7 @@ class PHP_PMD_ParserFactoryTest extends PHP_PMD_AbstractTest
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMock('PHP_PMD');
+        $phpmd = $this->getMock('PHP_PMD', array('getFileExtensions', 'getInput'));
         $phpmd->expects($this->exactly(2))
             ->method('getFileExtensions')
             ->will($this->returnValue(array('.php')));
