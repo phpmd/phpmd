@@ -19,6 +19,13 @@
         "../../pdepend/pdepend/src/main/php",
         "src/main/php"
     ],
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.0-dev"
+        }
+    },
+    
     "bin": ["src/bin/phpmd"]
 }
 
