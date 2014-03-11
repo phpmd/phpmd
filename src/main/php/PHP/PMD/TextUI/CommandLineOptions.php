@@ -103,6 +103,13 @@ class PHP_PMD_TextUI_CommandLineOptions
     private $ruleSets = null;
 
     /**
+     * File name of a PHPUnit code coverage report.
+     *
+     * @var string
+     */
+    private $coverageReport;
+
+    /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
      * @var string
@@ -164,6 +171,10 @@ class PHP_PMD_TextUI_CommandLineOptions
 
             case '--inputfile':
                 array_unshift($arguments, $this->readInputFile(array_shift($args)));
+                break;
+
+            case '--coverage':
+                $this->coverageReport = array_shift($args);
                 break;
 
             case '--extensions':
@@ -252,6 +263,17 @@ class PHP_PMD_TextUI_CommandLineOptions
     public function getMinimumPriority()
     {
         return $this->minimumPriority;
+    }
+
+    /**
+     * Returns the file name of a supplied code coverage report or <b>NULL</b>
+     * if the user has not supplied the --coverage option.
+     *
+     * @return string
+     */
+    public function getCoverageReport()
+    {
+        return $this->coverageReport;
     }
 
     /**

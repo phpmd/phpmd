@@ -109,6 +109,13 @@ class PHP_PMD_TextUI_Command
         }
 
         $phpmd = new PHP_PMD();
+        $phpmd->setOptions(
+            array_filter(
+                array(
+                    'coverage' => $opts->getCoverageReport()
+                )
+            )
+        );
 
         $extensions = $opts->getExtensions();
         if ($extensions !== null) {

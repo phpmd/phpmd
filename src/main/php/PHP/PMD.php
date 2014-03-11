@@ -83,7 +83,7 @@ class PHP_PMD
      *
      * @var string
      */
-    private $input = null;
+    private $input;
     
     /**
      * This property will be set to <b>true</b> when an error or a violation
@@ -93,6 +93,14 @@ class PHP_PMD
      * @since 0.2.5
      */
     private $violations = false;
+
+    /**
+     * Additional options for PHPMD or one of it's parser backends.
+     *
+     * @var array
+     * @since 1.2.0
+     */
+    private $options = array();
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -164,6 +172,27 @@ class PHP_PMD
             $this->ignorePatterns,
             $ignorePatterns
         );
+    }
+
+    /**
+     * Returns additional options for PHPMD or one of it's parser backends.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Sets additional options for PHPMD or one of it's parser backends.
+     *
+     * @param array $options Additional backend or PHPMD options.
+     * @return void
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
     }
 
     /**

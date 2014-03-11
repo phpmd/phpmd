@@ -64,6 +64,15 @@ use PDepend\Input\ExtensionFilter;
 class PHP_PMD_ParserFactory
 {
     /**
+     * Mapping between phpmd option names and those used by pdepend.
+     *
+     * @var array
+     */
+    private $phpmd2pdepend = array(
+        'coverage'  =>  'coverage-report'
+    );
+
+    /**
      * Creates the used PHP_PMD_Parser analyzer instance.
      *
      * @param PHP_PMD $phpmd The context php mess detector instance.
@@ -99,6 +108,7 @@ class PHP_PMD_ParserFactory
      */
     private function init(Engine $pdepend, PHP_PMD $phpmd)
     {
+        $this->initOptions($pdepend, $phpmd);
         $this->initInput($pdepend, $phpmd);
         $this->initIgnores($pdepend, $phpmd);
         $this->initExtensions($pdepend, $phpmd);
@@ -146,8 +156,7 @@ class PHP_PMD_ParserFactory
      * Initializes the accepted php source file extensions.
      *
      * @param \PDepend\Engine $pdepend The context php depend instance.
-     * @param PHP_PMD    $phpmd   The calling/parent php mess detector.
-     *
+     * @param PHP_PMD $phpmd   The calling/parent php mess detector.
      * @return void
      */
     private function initExtensions(Engine $pdepend, PHP_PMD $phpmd)
@@ -157,5 +166,23 @@ class PHP_PMD_ParserFactory
                 new ExtensionFilter($phpmd->getFileExtensions())
             );
         }
+    }
+
+    /**
+     * Initializes additional options for pdepend.
+     *
+     * @param \PDepend\Engine $pdepend
+     * @param PHP_PMD $phpmd
+     * @return void
+     */
+    private function initOptions(Engine $pdepend, PHP_PMD $phpmd)
+    {
+        $options = array();
+        foreach (array_filter($phpmd->getOptions()) as $name => $value) {
+            if (isset($this->phpmd2pdepend[$name])) {
+                $options[$this->phpmd2pdepend[$name]] = $value;
+            }
+        }
+        $pdepend->setOptions($options);
     }
 }
