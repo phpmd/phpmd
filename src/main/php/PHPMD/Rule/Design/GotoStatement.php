@@ -74,5 +74,4 @@ class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
             $this->addViolation($goto, array($node->getType(), $node->getName()));
         }
     }
-    
 }

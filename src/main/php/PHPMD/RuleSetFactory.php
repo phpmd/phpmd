@@ -240,7 +240,7 @@ class RuleSetFactory
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'description') {
                 $ruleSet->setDescription((string) $node);
-            } else if ($node->getName() === 'rule') {
+            } elseif ($node->getName() === 'rule') {
                 $this->parseRuleNode($ruleSet, $node);
             }
         }
@@ -261,7 +261,7 @@ class RuleSetFactory
     {
         if (substr($node['ref'], -3, 3) === 'xml') {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
-        } else if ('' === (string) $node['ref']) {
+        } elseif ('' === (string) $node['ref']) {
             $this->parseSingleRuleNode($ruleSet, $node);
         } else {
             $this->parseRuleReferenceNode($ruleSet, $node);
@@ -364,11 +364,11 @@ class RuleSetFactory
         foreach ($ruleNode->children() as $node) {
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
-            } else if ($node->getName() === 'example') {
+            } elseif ($node->getName() === 'example') {
                 $rule->addExample((string) $node);
-            } else if ($node->getName() === 'priority') {
+            } elseif ($node->getName() === 'priority') {
                 $rule->setPriority((integer) $node);
-            } else if ($node->getName() === 'properties') {
+            } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
         }
@@ -413,11 +413,11 @@ class RuleSetFactory
         foreach ($ruleNode->children() as $node) {
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
-            } else if ($node->getName() === 'example') {
+            } elseif ($node->getName() === 'example') {
                 $rule->addExample((string) $node);
-            } else if ($node->getName() === 'priority') {
+            } elseif ($node->getName() === 'priority') {
                 $rule->setPriority((integer) $node);
-            } else if ($node->getName() === 'properties') {
+            } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
         }

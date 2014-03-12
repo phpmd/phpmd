@@ -49,7 +49,6 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 
-
 /**
  * This rule collects all private fields in a class that aren't used in any
  * method of the analyzed class.

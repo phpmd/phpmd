@@ -43,6 +43,7 @@
  */
 
 namespace PHPMD\TextUI;
+
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
@@ -83,21 +84,21 @@ class CommandLineOptions
      *
      * @var string
      */
-    private $reportFormat = null;
+    private $reportFormat;
 
     /**
      * An optional filename for the generated report.
      *
      * @var string
      */
-    private $reportFile = null;
+    private $reportFile;
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
      */
-    private $ruleSets = null;
+    private $ruleSets;
 
     /**
      * File name of a PHPUnit code coverage report.
@@ -111,14 +112,14 @@ class CommandLineOptions
      *
      * @var string
      */
-    private $extensions = null;
+    private $extensions;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
      * @var string
      */
-    private $ignore = null;
+    private $ignore;
 
     /**
      * Should the shell show the current phpmd version?
@@ -160,47 +161,49 @@ class CommandLineOptions
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
 
-            case '--minimumpriority':
-                $this->minimumPriority = (int) array_shift($args);
-                break;
+                case '--minimumpriority':
+                    $this->minimumPriority = (int) array_shift($args);
+                    break;
 
-            case '--reportfile':
-                $this->reportFile = array_shift($args);
-                break;
+                case '--reportfile':
+                    $this->reportFile = array_shift($args);
+                    break;
 
-            case '--inputfile':
-                array_unshift($arguments, $this->readInputFile(array_shift($args)));
-                break;
+                case '--inputfile':
+                    array_unshift($arguments, $this->readInputFile(array_shift($args)));
+                    break;
 
-            case '--coverage':
-                $this->coverageReport = array_shift($args);
-                break;
+                case '--coverage':
+                    $this->coverageReport = array_shift($args);
+                    break;
 
-            case '--extensions':
-                $this->logDeprecated('extensions', 'suffixes');
+                case '--extensions':
+                    $this->logDeprecated('extensions', 'suffixes');
+                    /* Deprecated: We use the suffixes option now */
 
-            case '--suffixes':
-                $this->extensions = array_shift($args);
-                break;
+                case '--suffixes':
+                    $this->extensions = array_shift($args);
+                    break;
 
-            case '--ignore':
-                $this->logDeprecated('ignore', 'exclude');
+                case '--ignore':
+                    $this->logDeprecated('ignore', 'exclude');
+                    /* Deprecated: We use the exclude option now */
 
-            case '--exclude':
-                $this->ignore = array_shift($args);
-                break;
+                case '--exclude':
+                    $this->ignore = array_shift($args);
+                    break;
 
-            case '--version':
-                $this->version = true;
-                return;
+                case '--version':
+                    $this->version = true;
+                    return;
 
-            case '--strict':
-                $this->strict = true;
-                break;
+                case '--strict':
+                    $this->strict = true;
+                    break;
 
-            default:
-                $arguments[] = $arg;
-                break;
+                default:
+                    $arguments[] = $arg;
+                    break;
             }
         }
 
@@ -334,38 +337,39 @@ class CommandLineOptions
     {
         switch ($this->reportFormat) {
 
-        case 'xml':
-            return new XMLRenderer();
+            case 'xml':
+                return new XMLRenderer();
 
-        case 'html':
-            return new HTMLRenderer();
+            case 'html':
+                return new HTMLRenderer();
 
-        case 'text':
-            return new TextRenderer();
+            case 'text':
+                return new TextRenderer();
 
-        default:
-            if ($this->reportFormat !== '') {
-                if (class_exists($this->reportFormat)) {
+            default:
+                if ($this->reportFormat !== '') {
+                    if (class_exists($this->reportFormat)) {
+                        return new $this->reportFormat();
+                    }
+
+                    // Try to load a custom renderer
+                    $fileName = strtr($this->reportFormat, '_', '/') . '.php';
+
+                    $fileHandle = @fopen($fileName, 'r', true);
+                    if (is_resource($fileHandle) === false) {
+                        $message = 'Can\'t find the custom report class: '
+                                 . $this->reportFormat;
+                        throw new \InvalidArgumentException($message, self::INPUT_ERROR);
+                    }
+                    @fclose($fileHandle);
+
+                    include_once $fileName;
+
                     return new $this->reportFormat();
                 }
 
-                // Try to load a custom renderer
-                $fileName = strtr($this->reportFormat, '_', '/') . '.php';
-
-                $fileHandle = @fopen($fileName, 'r', true);
-                if (is_resource($fileHandle) === false) {
-                    $message = 'Can\'t find the custom report class: '
-                             . $this->reportFormat;
-                    throw new \InvalidArgumentException($message, self::INPUT_ERROR);
-                }
-                @fclose($fileHandle);
-
-                include_once $fileName;
-
-                return new $this->reportFormat();
-            }
-            $message = 'Can\'t create report with format of ' . $this->reportFormat;
-            throw new \InvalidArgumentException($message, self::INPUT_ERROR);
+                $message = 'Can\'t create report with format of ' . $this->reportFormat;
+                throw new \InvalidArgumentException($message, self::INPUT_ERROR);
         }
     }
 
@@ -401,12 +405,11 @@ class CommandLineOptions
     /**
      * Logs a deprecated option to the current user interface.
      *
-     * @param string $deprecatedName Name of the deprecated option.
-     * @param string $newName        Name of the new option.
-     *
+     * @param string $deprecatedName
+     * @param string $newName
      * @return void
      */
-    protected function logDeprecated( $deprecatedName, $newName )
+    protected function logDeprecated($deprecatedName, $newName)
     {
         $message = sprintf(
             'The --%s option is deprecated, please use --%s instead.',

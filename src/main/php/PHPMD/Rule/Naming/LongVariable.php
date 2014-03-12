@@ -50,7 +50,6 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
-
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.

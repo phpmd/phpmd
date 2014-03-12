@@ -74,11 +74,11 @@ class CyclomaticComplexity extends AbstractRule implements FunctionAware, Method
         }
 
         $this->addViolation(
-            $node, 
+            $node,
             array(
-                $node->getType(), 
-                $node->getName(), 
-                $ccn, 
+                $node->getType(),
+                $node->getName(),
+                $ccn,
                 $threshold
             )
         );

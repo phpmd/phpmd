@@ -73,11 +73,11 @@ class TooManyFields extends AbstractRule implements ClassAware
             return;
         }
         $this->addViolation(
-            $node, 
+            $node,
             array(
-                $node->getType(), 
-                $node->getName(), 
-                $vars, 
+                $node->getType(),
+                $node->getName(),
+                $vars,
                 $threshold
             )
         );

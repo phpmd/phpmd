@@ -100,7 +100,7 @@ abstract class AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    public abstract function renderReport(Report $report);
+    abstract public function renderReport(Report $report);
 
     /**
      * This method will be called the engine has finished the report processing

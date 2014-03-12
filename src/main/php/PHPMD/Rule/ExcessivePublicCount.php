@@ -73,11 +73,11 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware
             return;
         }
         $this->addViolation(
-            $node, 
+            $node,
             array(
-                $node->getType(), 
-                $node->getName(), 
-                $cis, 
+                $node->getType(),
+                $node->getName(),
+                $cis,
                 $threshold
             )
         );

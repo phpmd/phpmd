@@ -128,10 +128,10 @@ class RuleViolation
 
         if ($node instanceof AbstractTypeNode) {
             $this->className = $node->getName();
-        } else if ($node instanceof MethodNode) {
+        } elseif ($node instanceof MethodNode) {
             $this->className  = $node->getParentName();
             $this->methodName = $node->getName();
-        } else if ($node instanceof FunctionNode) {
+        } elseif ($node instanceof FunctionNode) {
             $this->functionName = $node->getName();
         }
     }

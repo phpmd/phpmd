@@ -74,10 +74,10 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
             return;
         }
         $this->addViolation(
-            $node, 
+            $node,
             array(
-                $node->getParentName(), 
-                $node->getName(), 
+                $node->getParentName(),
+                $node->getName(),
                 $threshold
             )
         );

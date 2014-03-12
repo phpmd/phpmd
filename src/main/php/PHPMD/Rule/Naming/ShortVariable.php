@@ -139,7 +139,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
         $exceptions = $this->getExceptionsList();
 
-        if (in_array(substr($node->getImage(),1), $exceptions)) {
+        if (in_array(substr($node->getImage(), 1), $exceptions)) {
             return;
         }
 

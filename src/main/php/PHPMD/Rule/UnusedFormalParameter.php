@@ -117,8 +117,8 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node
      * @return boolean
      */
-     private function isInheritedSignature(AbstractNode $node)
-     {
+    private function isInheritedSignature(AbstractNode $node)
+    {
         if ($node instanceof MethodNode) {
             return preg_match('/\@inheritdoc/', $node->getDocComment());
         }

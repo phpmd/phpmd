@@ -49,7 +49,6 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\InterfaceAware;
 
-
 /**
  * This rule detects class/interface constants that do not follow the upper
  * case convention.

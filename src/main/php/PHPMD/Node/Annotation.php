@@ -111,7 +111,7 @@ class Annotation
     {
         if (in_array($this->value, array('PHPMD', 'PMD'))) {
             return true;
-        } else if (strpos($this->value, 'PMD.' . $rule->getName()) !== false) {
+        } elseif (strpos($this->value, 'PMD.' . $rule->getName()) !== false) {
             return true;
         }
         return (stripos($rule->getName(), $this->value) !== false);

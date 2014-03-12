@@ -49,7 +49,6 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 
-
 /**
  * Base class for rules that rely on local variables.
  *
@@ -67,7 +66,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @var array(string=>boolean)
      */
-    private static $_superGlobals = array(
+    private static $superGlobals = array(
         '$argc'                => true,
         '$argv'                => true,
         '$_COOKIE'             => true,
@@ -106,7 +105,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isNotSuperGlobal(AbstractNode $variable)
     {
-        return !isset(self::$_superGlobals[$variable->getImage()]);
+        return !isset(self::$superGlobals[$variable->getImage()]);
     }
 
     /**

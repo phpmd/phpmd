@@ -283,7 +283,7 @@ abstract class AbstractNode
      * @param \PHPMD\Rule $rule
      * @return boolean
      */
-    public abstract function hasSuppressWarningsAnnotationFor(Rule $rule);
+    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule);
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
@@ -291,12 +291,12 @@ abstract class AbstractNode
      *
      * @return string
      */
-    public abstract function getParentName();
+    abstract public function getParentName();
 
     /**
      * Returns the name of the parent package.
      *
      * @return string
      */
-    public abstract function getNamespaceName();
+    abstract public function getNamespaceName();
 }

@@ -71,11 +71,11 @@ class NumberOfChildren extends AbstractRule implements ClassAware
         $threshold = $this->getIntProperty('minimum');
         if ($nocc >= $threshold) {
             $this->addViolation(
-                $node, 
+                $node,
                 array(
-                    $node-> getType(), 
-                    $node->getName(), 
-                    $nocc, 
+                    $node->getType(),
+                    $node->getName(),
+                    $nocc,
                     $threshold
                 )
             );

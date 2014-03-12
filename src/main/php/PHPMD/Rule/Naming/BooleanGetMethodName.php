@@ -49,7 +49,6 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
-
 /**
  * This rule tests that a method which returns a boolean value does not start
  * with <b>get</b> or <b>_get</b> for a getter.

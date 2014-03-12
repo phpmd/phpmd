@@ -60,5 +60,5 @@ abstract class AbstractWriter
      * @param string $data
      * @return void
      */
-    public abstract function write($data);
+    abstract public function write($data);
 }

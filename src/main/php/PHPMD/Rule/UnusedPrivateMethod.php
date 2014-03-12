@@ -50,7 +50,6 @@ use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 
-
 /**
  * This rule collects all private methods in a class that aren't used in any
  * method of the analyzed class.

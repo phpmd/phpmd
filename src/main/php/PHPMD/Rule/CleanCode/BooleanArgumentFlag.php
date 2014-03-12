@@ -74,7 +74,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
             $declarator = $param->getFirstChildOfType('VariableDeclarator');
             $value = $declarator->getValue();
 
-            if ( ! $this->isBooleanValue($value)) {
+            if (false === $this->isBooleanValue($value)) {
                 continue;
             }
 
