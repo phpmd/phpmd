@@ -13,7 +13,7 @@ The Code Size Ruleset contains a collection of rules that find code size related
     <rule name="CyclomaticComplexity"
           since="0.1"
           message = "The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}."
-          class="PHP_PMD_Rule_CyclomaticComplexity"
+          class="PHPMD\Rule\CyclomaticComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity">
         <description>
             <![CDATA[
@@ -80,7 +80,7 @@ class Foo {
     <rule name="NPathComplexity"
           since="0.1"
           message="The {0} {1}() has an NPath complexity of {2}. The configured NPath complexity threshold is {3}."
-          class="PHP_PMD_Rule_Design_NpathComplexity"
+          class="PHPMD\Rule\Design\NpathComplexity"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity">
         <description>
 The NPath complexity of a method is the number of acyclic execution paths through that method.
@@ -105,7 +105,7 @@ class Foo {
     <rule name="ExcessiveMethodLength"
           since="0.1"
           message="The {0} {1}() has {2} lines of code. Current threshold is set to {3}. Avoid really long methods."
-          class="PHP_PMD_Rule_Design_LongMethod"
+          class="PHPMD\Rule\Design\LongMethod"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
         <description>
 Violations of this rule usually indicate that the method is doing
@@ -132,7 +132,7 @@ class Foo {
     <rule name="ExcessiveClassLength"
  	  since="0.1"
           message="The class {0} has {1} lines of code. Current threshold is {2}. Avoid really long classes."
-          class="PHP_PMD_Rule_Design_LongClass"
+          class="PHPMD\Rule\Design\LongClass"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
 Long Class files are indications that the class may be trying to
@@ -159,7 +159,7 @@ class Foo {
     <rule name="ExcessiveParameterList"
           since="0.1"
           message="The {0} {1} has {2} parameters. Consider to reduce parameter number under {3}."
-          class="PHP_PMD_Rule_Design_LongParameterList"
+          class="PHPMD\Rule\Design\LongParameterList"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
 Long parameter lists can indicate that a new object should be created to
@@ -185,7 +185,7 @@ class Foo {
     <rule name="ExcessivePublicCount"
           since="0.1"
           message="The {0} {1} has {2} public methods and attributes. Consider to reduce the number of public items under {3}."
-          class="PHP_PMD_Rule_ExcessivePublicCount"
+          class="PHPMD\Rule\ExcessivePublicCount"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
 A large number of public methods and attributes declared in a class can indicate
@@ -216,7 +216,7 @@ public class Foo {
     <rule name="TooManyFields"
           since="0.1"
           message="The {0} {1} has {2} fields. Consider to redesign {1} to keep the number of fields under {3}."
-          class="PHP_PMD_Rule_Design_TooManyFields"
+          class="PHPMD\Rule\Design\TooManyFields"
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanyfields">
         <description>
 Classes that have too many fields could be redesigned to have fewer fields,
@@ -335,7 +335,7 @@ public class Foo extends Bar {
 
     <rule name="TooManyMethods"
           since="0.1"
-          class="PHP_PMD_Rule_Design_TooManyMethods"
+          class="PHPMD\Rule\Design\TooManyMethods"
           message="The {0} {1} has {2} methods. Consider refactoring {1} to keep number of methods under {3}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
@@ -352,7 +352,7 @@ order to reduce its complexity and find a way to have more fine grained objects.
 
     <rule name="ExcessiveClassComplexity"
           since="0.2.5"
-          class="PHP_PMD_Rule_Design_WeightedMethodCount"
+          class="PHPMD\Rule\Design\WeightedMethodCount"
           message="The class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
         <description>

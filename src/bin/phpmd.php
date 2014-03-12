@@ -2,6 +2,8 @@
 <?php
 
 
+use PHPMD\TextUI\Command;
+
 if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     // phpmd is part of a composer installation
     require_once __DIR__ . '/../../../../autoload.php';
@@ -42,8 +44,5 @@ if (!isset($_SERVER['argv']) && !isset($argv)) {
     $argv = $_SERVER['argv'];
 }
 
-// Load command line utility
-require_once 'PHP/PMD/TextUI/Command.php';
-
 // Run command line interface
-exit(PHP_PMD_TextUI_Command::main($argv));
+exit(Command::main($argv));

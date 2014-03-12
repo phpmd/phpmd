@@ -46,7 +46,7 @@ in this build: ::
       <target name="example">
           <phpmd rulesetfiles="unusedcode" failonerror="off">
               <formatter type="xml" toFile="${basedir}/pmd.xml" />
-              <fileset dir="${basedir}/PHP/PMD">
+              <fileset dir="${basedir}/PHPMD">
                   <include name="*.php" />
               </fileset>
           </phpmd>
@@ -91,7 +91,7 @@ is a modified version of the previous example: ::
           <formatter type="text" toFile="${basedir}/pmd.xml" />
           <ruleset>unusedcode</ruleset>
           <ruleset>codesize</ruleset
-          <fileset dir="${basedir}/PHP/PMD">
+          <fileset dir="${basedir}/PHPMD">
               <include name="*.php" />
           </fileset>
       </phpmd>

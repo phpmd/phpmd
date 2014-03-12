@@ -10,7 +10,7 @@
     <rule name="RuleOneInFirstRuleSet"
           since="0.1"
           message="Test message"
-          class="rules_TestRule"
+          class="PHPMD\Stubs\RuleStub"
           externalInfoUrl="http://phpmd.org/">
         <description>...</description>
         <priority>3</priority>
@@ -20,7 +20,7 @@
     <rule name="RuleTwoInFirstRuleSet"
           since="0.1"
           message="Test message"
-          class="rules_TestRule"
+          class="PHPMD\Stubs\RuleStub"
           externalInfoUrl="http://phpmd.org/">
         <description>...</description>
         <priority>1</priority>

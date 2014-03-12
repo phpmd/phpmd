@@ -38,24 +38,22 @@
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   SVN: $Id$
- * @link      http://phpmd.org
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @version   @project.version@
  */
 
 namespace PHPMD;
 
+use PHPMD\Node\ASTNode;
+
 /**
- * This is an abstract base class for PHP_PMD code nodes, it is just a wrapper
+ * This is an abstract base class for PHPMD code nodes, it is just a wrapper
  * around PDepend's object model.
  *
- * @category  PHP
- * @package   PHP_PMD
  * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2012 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version   Release: @package_version@
- * @link      http://phpmd.org
+ * @copyright 2008-2014 Manuel Pichler. All rights reserved.
+ * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @version   @project.version@
  */
 abstract class AbstractNode
 {
@@ -73,10 +71,9 @@ abstract class AbstractNode
     private $metrics = null;
 
     /**
-     * Constructs a new PHP_PMD node.
+     * Constructs a new PHPMD node.
      *
-     * @param \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node The wrapped
-     *        PDepend ast node instance or item object.
+     * @param \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node
      */
     public function __construct($node)
     {
@@ -87,11 +84,10 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend ast node.
      *
-     * @param string $name Name of the invoked method.
-     * @param array  $args Optional method arguments.
-     *
+     * @param string $name
+     * @param array $args
      * @return mixed
-     * @throws BadMethodCallException When the underlying PDepend node
+     * @throws \BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args)
@@ -108,14 +104,14 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return PHP_PMD_AbstractNode
+     * @return \PHPMD\AbstractNode
      */
     public function getParent()
     {
         if (($node = $this->node->getParent()) === null) {
             return null;
         }
-        return new \PHP_PMD_Node_ASTNode($node, $this->getFileName());
+        return new ASTNode($node, $this->getFileName());
     }
 
     /**
@@ -123,11 +119,11 @@ abstract class AbstractNode
      *
      * @param integer $index The child offset.
      *
-     * @return \PHP_PMD_Node_ASTNode
+     * @return \PHPMD\Node\ASTNode
      */
     public function getChild($index)
     {
-        return new \PHP_PMD_Node_ASTNode(
+        return new ASTNode(
             $this->node->getChild($index),
             $this->getFileName()
         );
@@ -146,7 +142,7 @@ abstract class AbstractNode
         if ($node === null) {
             return null;
         }
-        return new \PHP_PMD_Node_ASTNode($node, $this->getFileName());
+        return new ASTNode($node, $this->getFileName());
     }
 
     /**
@@ -162,7 +158,7 @@ abstract class AbstractNode
 
         $nodes = array();
         foreach ($children as $child) {
-            $nodes[] = new \PHP_PMD_Node_ASTNode($child, $this->getFileName());
+            $nodes[] = new ASTNode($child, $this->getFileName());
         }
         return $nodes;
     }
@@ -247,8 +243,8 @@ abstract class AbstractNode
      */
     public function getType()
     {
-        $type = explode('_', get_class($this));
-        return strtolower(array_pop($type));
+        $type = explode('\\', get_class($this));
+        return preg_replace('(node$)', '', strtolower(array_pop($type)));
     }
 
     /**
@@ -284,10 +280,10 @@ abstract class AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHP_PMD_Rule $rule
+     * @param \PHPMD\Rule $rule
      * @return boolean
      */
-    public abstract function hasSuppressWarningsAnnotationFor(\PHP_PMD_Rule $rule);
+    public abstract function hasSuppressWarningsAnnotationFor(Rule $rule);
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no

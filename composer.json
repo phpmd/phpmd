@@ -10,7 +10,7 @@
 
     "autoload": {
         "psr-0": {
-            "PHP_PMD": "src/main/php",
+            "PHPMD\\": "src/main/php",
             "PDepend\\": "vendor/pdepend/pdepend/src/main/php/"
         }
     },
@@ -25,7 +25,7 @@
             "dev-master": "2.0.0-dev"
         }
     },
-    
+
     "bin": ["src/bin/phpmd"]
 }
 

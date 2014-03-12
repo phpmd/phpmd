@@ -2,7 +2,7 @@
 class testRuleDoesNotApplyToPrivateFieldInChainedMethodCall
 {
     /**
-     * @var SplObjectStorage
+     * @var \SplObjectStorage
      */
     private $foo = null;
 
