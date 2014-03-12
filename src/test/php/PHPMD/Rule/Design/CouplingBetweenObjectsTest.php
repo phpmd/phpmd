@@ -85,7 +85,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('minimum', '42');
-        $rule->apply($this->getClassMock('cbo', 42));        
+        $rule->apply($this->getClassMock('cbo', 42));
     }
 
     /**

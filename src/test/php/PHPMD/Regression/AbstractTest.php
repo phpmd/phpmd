@@ -66,7 +66,7 @@ abstract class AbstractTest extends \PHPMD\AbstractTest
         $trace = debug_backtrace();
 
         $ticket = '';
-        if (preg_match( '(\D(\d+)Test$)', $trace[1]['class'], $match )) {
+        if (preg_match('(\D(\d+)Test$)', $trace[1]['class'], $match)) {
             $ticket = $match[1];
         }
 

@@ -95,4 +95,3 @@ class WriterStub extends AbstractWriter
         return $this->chunks;
     }
 }
-?>

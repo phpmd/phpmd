@@ -65,21 +65,21 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @var string $_filesDirectory
      */
-    private static $_filesDirectory = null;
+    private static $filesDirectory = null;
 
     /**
      * Original directory is used to reset a changed working directory.
      *
      * @return void
      */
-    private static $_originalWorkingDirectory = null;
+    private static $originalWorkingDirectory = null;
 
     /**
      * Temporary files created by a test.
      *
      * @var array(string)
      */
-    private static $_tempFiles = array();
+    private static $tempFiles = array();
 
     /**
      * Resets a changed working directory.
@@ -88,15 +88,15 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if (self::$_originalWorkingDirectory !== null) {
-            chdir(self::$_originalWorkingDirectory);
+        if (self::$originalWorkingDirectory !== null) {
+            chdir(self::$originalWorkingDirectory);
         }
-        self::$_originalWorkingDirectory = null;
+        self::$originalWorkingDirectory = null;
 
-        foreach (self::$_tempFiles as $tempFile) {
+        foreach (self::$tempFiles as $tempFile) {
             unlink($tempFile);
         }
-        self::$_tempFiles = array();
+        self::$tempFiles = array();
 
         parent::tearDown();
     }
@@ -365,9 +365,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $expects = null;
         if ($expectedInvokes < 0) {
             $expects = $this->atLeastOnce();
-        } else if ($expectedInvokes === 0) {
+        } elseif ($expectedInvokes === 0) {
             $expects = $this->never();
-        } else if ($expectedInvokes === 1) {
+        } elseif ($expectedInvokes === 1) {
             $expects = $this->once();
         } else {
             $expects = $this->exactly($expectedInvokes);
@@ -485,7 +485,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $expected = str_replace(
             '#{rootDirectory}',
-            self::$_filesDirectory,
+            self::$filesDirectory,
             file_get_contents(self::createFileUri($expectedFileName))
         );
 
@@ -500,22 +500,22 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public static function setUpBeforeClass()
     {
-        self::$_filesDirectory = realpath(__DIR__ . '/../../resources/files');
+        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 
-        if (false === strpos(get_include_path(), self::$_filesDirectory)) {
+        if (false === strpos(get_include_path(), self::$filesDirectory)) {
             set_include_path(
                 sprintf(
                     '%s%s%s%s%s',
                     get_include_path(),
                     PATH_SEPARATOR,
-                    self::$_filesDirectory,
+                    self::$filesDirectory,
                     PATH_SEPARATOR,
                     realpath(__DIR__ . '/../')
                 )
             );
         }
 
-        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0) 
+        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
         date_default_timezone_set('UTC');
     }
 
@@ -528,7 +528,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function changeWorkingDirectory($localPath = '')
     {
-        self::$_originalWorkingDirectory = getcwd();
+        self::$originalWorkingDirectory = getcwd();
 
         if (0 === preg_match('(^([A-Z]:|/))', $localPath)) {
             $localPath = self::createFileUri($localPath);
@@ -544,7 +544,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function createFileUri($localPath = '')
     {
-        return self::$_filesDirectory . '/' . $localPath;
+        return self::$filesDirectory . '/' . $localPath;
     }
 
     /**
@@ -554,6 +554,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function createTempFileUri()
     {
-        return (self::$_tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
+        return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
     }
 }

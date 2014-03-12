@@ -214,5 +214,4 @@ class ReportTest extends AbstractTest
 
         $this->assertSame(1, iterator_count($report->getErrors()));
     }
-
 }
