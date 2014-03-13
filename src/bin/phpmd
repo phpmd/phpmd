@@ -3,6 +3,24 @@
 
 use PHPMD\TextUI\Command;
 
+if (file_exists(__DIR__ . '/../../../../autoload.php')) {
+    // phpmd is part of a composer installation
+    require_once __DIR__ . '/../../../../autoload.php';
+} else {
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+    // PEAR installation workaround
+    if (strpos('@package_version@', '@package_version') === 0) {
+        set_include_path(
+            dirname(__FILE__) . '/../main/php' .
+            PATH_SEPARATOR .
+            dirname(__FILE__) . '/../../vendor/pdepend/pdepend/src/main/php' .
+            PATH_SEPARATOR .
+            '.'
+        );
+    }
+}
+
 class_alias('PHPMD\\AbstractNode', 'PHP_PMD_AbstractNode');
 class_alias('PHPMD\\AbstractRenderer', 'PHP_PMD_AbstractRenderer');
 class_alias('PHPMD\\AbstractRule', 'PHP_PMD_AbstractRule');
@@ -73,24 +91,6 @@ class_alias('PHPMD\\Rule\\Naming\\ShortVariable', 'PHP_PMD_Rule_Naming_ShortVari
 class_alias('PHPMD\\TextUI\\Command', 'PHP_PMD_TextUI_Command');
 class_alias('PHPMD\\TextUI\\CommandLineOptions', 'PHP_PMD_TextUI_CommandLineOptions');
 class_alias('PHPMD\\Writer\\StreamWriter', 'PHP_PMD_Writer_Stream');
-
-if (file_exists(__DIR__ . '/../../../../autoload.php')) {
-    // phpmd is part of a composer installation
-    require_once __DIR__ . '/../../../../autoload.php';
-} else {
-    require_once __DIR__ . '/../../vendor/autoload.php';
-
-    // PEAR installation workaround
-    if (strpos('@package_version@', '@package_version') === 0) {
-        set_include_path(
-            dirname(__FILE__) . '/../main/php' .
-            PATH_SEPARATOR .
-            dirname(__FILE__) . '/../../vendor/pdepend/pdepend/src/main/php' .
-            PATH_SEPARATOR .
-            '.'
-        );
-    }
-}
 
 // Allow as much memory as possible by default
 if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
