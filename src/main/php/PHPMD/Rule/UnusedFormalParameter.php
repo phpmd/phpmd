@@ -185,6 +185,11 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             if ($functionCall->getImage() == 'func_get_args') {
                 $this->nodes = array();
             }
+            if (0 === strcasecmp(trim($functionCall->getImage(), '\\'), 'compact')) {
+                foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
+                    unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
+                }
+            }
         }
     }
 }

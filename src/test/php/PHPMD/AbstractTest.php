@@ -141,7 +141,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         return new MethodNode(
             $this->getNodeForCallingTestCase(
-                $this->parseTestCaseSource()->getTypes()->current()->getMethods()
+                $this->parseTestCaseSource()
+                    ->getTypes()
+                    ->current()
+                    ->getMethods()
             )
         );
     }

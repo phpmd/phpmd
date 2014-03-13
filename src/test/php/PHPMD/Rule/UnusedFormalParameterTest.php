@@ -372,4 +372,40 @@ class UnusedFormalParameterTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * @test
+     * @return void
+     * @since 2.0.0
+     */
+    public function test_compact_function_rule_does_not_apply()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @test
+     * @return void
+     * @since 2.0.0
+     */
+    public function test_compact_function_rule_only_applies_to_used_parameters()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(2));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @test
+     * @return void
+     * @since 2.0.0
+     */
+    public function test_compact_function_rule_works_case_insensitive()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }
