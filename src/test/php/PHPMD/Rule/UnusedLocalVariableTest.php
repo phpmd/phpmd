@@ -500,4 +500,16 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * @test
+     * @return void
+     * @since 2.0.0
+     */
+    public function test_compact_function_rule_works_case_insensitive()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }

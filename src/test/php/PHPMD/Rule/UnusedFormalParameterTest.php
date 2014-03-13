@@ -325,6 +325,18 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * @test
+     * @return void
+     * @since 2.0.0
+     */
+    public function test_func_get_args_rule_works_case_insensitive()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToInheritMethod
      *
      * @return void

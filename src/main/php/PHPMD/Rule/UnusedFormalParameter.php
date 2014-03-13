@@ -182,10 +182,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
          * automatically referenced */
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
         foreach ($functionCalls as $functionCall) {
-            if ($functionCall->getImage() == 'func_get_args') {
+            if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
                 $this->nodes = array();
             }
-            if (0 === strcasecmp(trim($functionCall->getImage(), '\\'), 'compact')) {
+            if ($this->isFunctionNameEqual($functionCall, 'compact')) {
                 foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
                     unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
                 }

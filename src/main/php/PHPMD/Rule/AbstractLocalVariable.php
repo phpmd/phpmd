@@ -164,4 +164,17 @@ abstract class AbstractLocalVariable extends AbstractRule
             || $node->getParent()->isInstanceOf('StringIndexExpression')
         );
     }
+
+    /**
+     * PHP is case insensitive so we should compare function names case
+     * insensitive.
+     *
+     * @param \PHPMD\AbstractNode $node
+     * @param string $name
+     * @return boolean
+     */
+    protected function isFunctionNameEqual(AbstractNode $node, $name)
+    {
+        return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
+    }
 }
