@@ -70,63 +70,63 @@ class CommandLineOptions
      *
      * @var integer
      */
-    private $minimumPriority = Rule::LOWEST_PRIORITY;
+    protected $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
      *
      * @var string
      */
-    private $inputPath;
+    protected $inputPath;
 
     /**
      * The specified report format.
      *
      * @var string
      */
-    private $reportFormat;
+    protected $reportFormat;
 
     /**
      * An optional filename for the generated report.
      *
      * @var string
      */
-    private $reportFile;
+    protected $reportFile;
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
      */
-    private $ruleSets;
+    protected $ruleSets;
 
     /**
      * File name of a PHPUnit code coverage report.
      *
      * @var string
      */
-    private $coverageReport;
+    protected $coverageReport;
 
     /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
      * @var string
      */
-    private $extensions;
+    protected $extensions;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
      * @var string
      */
-    private $ignore;
+    protected $ignore;
 
     /**
      * Should the shell show the current phpmd version?
      *
      * @var boolean
      */
-    private $version = false;
+    protected $version = false;
 
     /**
      * Should PHPMD run in strict mode?
@@ -134,14 +134,14 @@ class CommandLineOptions
      * @var boolean
      * @since 1.2.0
      */
-    private $strict = false;
+    protected $strict = false;
 
     /**
      * List of available rule-sets.
      *
      * @var array(string)
      */
-    private $availableRuleSets = array();
+    protected $availableRuleSets = array();
 
     /**
      * Constructs a new command line options instance.
@@ -328,6 +328,8 @@ class CommandLineOptions
      * Valid renderers are:
      * <ul>
      *   <li>xml</li>
+     *   <li>html</li>
+     *   <li>text</li>
      * </ul>
      *
      * @return \PHPMD\AbstractRenderer
@@ -338,39 +340,71 @@ class CommandLineOptions
         switch ($this->reportFormat) {
 
             case 'xml':
-                return new XMLRenderer();
+                return $this->createXmlRenderer();
 
             case 'html':
-                return new HTMLRenderer();
+                return $this->createHtmlRenderer();
 
             case 'text':
-                return new TextRenderer();
+                return $this->createTextRenderer();
 
             default:
-                if ($this->reportFormat !== '') {
-                    if (class_exists($this->reportFormat)) {
-                        return new $this->reportFormat();
-                    }
-
-                    // Try to load a custom renderer
-                    $fileName = strtr($this->reportFormat, '_', '/') . '.php';
-
-                    $fileHandle = @fopen($fileName, 'r', true);
-                    if (is_resource($fileHandle) === false) {
-                        $message = 'Can\'t find the custom report class: '
-                                 . $this->reportFormat;
-                        throw new \InvalidArgumentException($message, self::INPUT_ERROR);
-                    }
-                    @fclose($fileHandle);
-
-                    include_once $fileName;
-
-                    return new $this->reportFormat();
-                }
-
-                $message = 'Can\'t create report with format of ' . $this->reportFormat;
-                throw new \InvalidArgumentException($message, self::INPUT_ERROR);
+                return $this->createCustomRenderer();
         }
+    }
+
+    /**
+     * @return \PHPMD\Renderer\XMLRenderer
+     */
+    protected function createXmlRenderer()
+    {
+        return new XMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\XMLRenderer
+     */
+    protected function createTextRenderer()
+    {
+        return new TextRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\HTMLRenderer
+     */
+    protected function createHtmlRenderer()
+    {
+        return new HTMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\AbstractRenderer
+     * @throws \InvalidArgumentException
+     */
+    protected function createCustomRenderer()
+    {
+        if ($this->reportFormat !== '') {
+            if (class_exists($this->reportFormat)) {
+                return new $this->reportFormat();
+            }
+
+            // Try to load a custom renderer
+            $fileName = strtr($this->reportFormat, '_', '/') . '.php';
+
+            $fileHandle = @fopen($fileName, 'r', true);
+            if (is_resource($fileHandle) === false) {
+                $message = 'Can\'t find the custom report class: '
+                    . $this->reportFormat;
+                throw new \InvalidArgumentException($message, self::INPUT_ERROR);
+            }
+            @fclose($fileHandle);
+
+            include_once $fileName;
+
+            return new $this->reportFormat();
+        }
+        $message = 'Can\'t create report with format of ' . $this->reportFormat;
+        throw new \InvalidArgumentException($message, self::INPUT_ERROR);
     }
 
     /**
@@ -431,7 +465,7 @@ class CommandLineOptions
      * @throws \InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    private function readInputFile($inputFile)
+    protected function readInputFile($inputFile)
     {
         if (file_exists($inputFile)) {
             return join(',', array_map('trim', file($inputFile)));
