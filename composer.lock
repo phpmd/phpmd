@@ -3,11 +3,11 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "8c638d357f3e7e8d9a81d1001d6fdffd",
+    "hash": "a1e5c74356f4731ed9af79bdb6517032",
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "2.0.0-beta.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
@@ -215,7 +215,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "pdepend/pdepend": 10
+        "pdepend/pdepend": 20
     },
     "platform": {
         "php": ">=5.3.0"
