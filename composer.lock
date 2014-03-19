@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5885d895c91d300e1ce4b4e79a9b755e",
+    "hash": "c9cf17121d4ee9e3e10bb793155ad73e",
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "2.0.0-beta.1",
+            "version": "2.0.0-beta.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "87aabf54d9df84175760e163cbaf6ee359864878"
+                "reference": "2c3c7d676baf9022ec4279c83d5bd0438e9e766f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/87aabf54d9df84175760e163cbaf6ee359864878",
-                "reference": "87aabf54d9df84175760e163cbaf6ee359864878",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/2c3c7d676baf9022ec4279c83d5bd0438e9e766f",
+                "reference": "2c3c7d676baf9022ec4279c83d5bd0438e9e766f",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2014-03-17 15:52:29"
+            "time": "2014-03-19 21:24:33"
         },
         {
             "name": "symfony/config",
