@@ -13,6 +13,18 @@
         <release version="2.0.0"
                  date="2014/01/13"
                  description="This is major release of PHPMD which utilizes 2.0 engine of PDepend.">
+            <action date="" dev="mapi" issue="40" system="github" type="add">
+                Allow multiple report files
+
+                Now it is possible to render multiple report files during a single
+                PHPMD run, just add:
+
+                --reportfile-xml report.xml
+                --reportfile-html report.html
+                --reportfile-text report.txt
+
+                to the PHP command line call.
+            </action>
             <action date="a1dc403" dev="svscorp" issue="61" system="github" type="add">
                 UnusedLocalVariable fix for compact handling in Symfony2
             </action>

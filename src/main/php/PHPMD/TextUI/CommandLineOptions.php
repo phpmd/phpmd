@@ -94,6 +94,13 @@ class CommandLineOptions
     protected $reportFile;
 
     /**
+     * Additional report files.
+     *
+     * @var array
+     */
+    protected $reportFiles = array();
+
+    /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
@@ -201,6 +208,10 @@ class CommandLineOptions
                     $this->strict = true;
                     break;
 
+                case (preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match) > 0):
+                    $this->reportFiles[$match[1]] = array_shift($args);
+                    break;
+
                 default:
                     $arguments[] = $arg;
                     break;
@@ -245,6 +256,17 @@ class CommandLineOptions
     public function getReportFile()
     {
         return $this->reportFile;
+    }
+
+    /**
+     * Returns a hash with report files specified for different renderers. The
+     * key represents the report format and the value the report file location.
+     *
+     * @return array
+     */
+    public function getReportFiles()
+    {
+        return $this->reportFiles;
     }
 
     /**
@@ -332,12 +354,15 @@ class CommandLineOptions
      *   <li>text</li>
      * </ul>
      *
+     * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer()
+    public function createRenderer($reportFormat = null)
     {
-        switch ($this->reportFormat) {
+        $reportFormat = $reportFormat ?: $this->reportFormat;
+
+        switch ($reportFormat) {
 
             case 'xml':
                 return $this->createXmlRenderer();
