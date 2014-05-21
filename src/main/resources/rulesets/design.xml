@@ -147,7 +147,7 @@ hierarchy. You should consider to refactor this class hierarchy.
         <description>
             <![CDATA[
 A class with too many dependencies has negative impacts on several quality
-aspects of a class. This includes quality criterias like stability,
+aspects of a class. This includes quality criteria like stability,
 maintainability and understandability
             ]]>
         </description>
