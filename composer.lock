@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2e3664a95dccf0201362c4faf2952497",
+    "hash": "2d31a9e81645e1f67ddc6a7440a7ea86",
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "0008154ed57e39c25185a78df2615823f7ce2b58"
+                "reference": "b74f2bb68e86104cd97dfb8d74209692c9b465ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/0008154ed57e39c25185a78df2615823f7ce2b58",
-                "reference": "0008154ed57e39c25185a78df2615823f7ce2b58",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/b74f2bb68e86104cd97dfb8d74209692c9b465ce",
+                "reference": "b74f2bb68e86104cd97dfb8d74209692c9b465ce",
                 "shasum": ""
             },
             "require": {
@@ -32,11 +32,6 @@
                 "src/bin/pdepend"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.0-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "PDepend\\": "src/main/php/"
@@ -47,7 +42,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2014-04-30 09:18:08"
+            "time": "2014-05-21 09:48:10"
         },
         {
             "name": "symfony/config",
@@ -214,9 +209,8 @@
     "aliases": [
 
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
-        "pdepend/pdepend": 20,
         "symfony/dependency-injection": 0,
         "symfony/filesystem": 0,
         "symfony/config": 0

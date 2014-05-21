@@ -34,7 +34,10 @@
             output.dir      Output directory for the temporary build tree.
     -->
     <target name="do-copy-files-for-xyz-archive">
-        <copy todir="${output.dir}/resources/rulesets">
+        <move todir="${output.dir}/src/main/php">
+            <fileset dir="${output.dir}/" includes="PHPMD/**/*.*" />
+        </move>
+        <copy todir="${output.dir}/src/main/resources/rulesets">
             <fileset dir="${commons.srcdir.resource}/rulesets" />
         </copy>
     </target>

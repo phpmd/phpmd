@@ -2,13 +2,13 @@
     "name": "phpmd/phpmd",
     "description": "Official version of PHPMD handled with Composer.",
     "license": "BSD-3-Clause",
-    "version": "2.0.0-beta.7",
+    "version": "2.0.0",
 
-    "minimum-stability" : "dev",
+    "minimum-stability" : "stable",
 
     "require": {
         "php": ">=5.3.0",
-        "pdepend/pdepend": "2.0.0.*@dev",
+        "pdepend/pdepend": "2.0.*",
 
         "symfony/dependency-injection": "@stable",
         "symfony/filesystem": "@stable",
@@ -26,12 +26,6 @@
         "../../pdepend/pdepend/src/main/php",
         "src/main/php"
     ],
-
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.0.0-dev"
-        }
-    },
 
     "bin": ["src/bin/phpmd"]
 }
