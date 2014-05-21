@@ -146,7 +146,7 @@ hierarchy. You should consider to refactor this class hierarchy.
           externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects">
         <description>
             <![CDATA[
-A class with to many dependencies has negative impacts on several quality
+A class with too many dependencies has negative impacts on several quality
 aspects of a class. This includes quality criterias like stability,
 maintainability and understandability
             ]]>
