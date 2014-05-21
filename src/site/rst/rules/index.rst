@@ -64,7 +64,7 @@ Design Rules
 - `GotoStatement`__: Goto makes code harder to read and it is nearly impossible to understand the control flow of an application that uses this language construct. Therefore it should be avoided. Consider to replace Goto with regular control structures and separate methods/function, which are easier to read.
 - `NumberOfChildren`__: A class with an excessive number of children is an indicator for an unbalanced class hierarchy. You should consider to refactor this class hierarchy.
 - `DepthOfInheritance`__: A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.
-- `CouplingBetweenObjects`__: A class with to many dependencies has negative impacts on several quality aspects of a class. This includes quality criterias like stability, maintainability and understandability
+- `CouplingBetweenObjects`__: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 
 __ design.html#exitexpression
 __ design.html#evalexpression

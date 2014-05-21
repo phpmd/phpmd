@@ -76,7 +76,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     }
 
     /**
-     * Tests if the given method matches all criterias to be an invalid
+     * Tests if the given method matches all criteria to be an invalid
      * boolean get method.
      *
      * @param \PHPMD\Node\MethodNode $node
