@@ -1,4 +1,6 @@
-<?php namespace PHPMDTest;
+<?php
+
+namespace PHPMDTest;
 
 class test_namespaced_compact_function_rule_does_not_apply
 {
