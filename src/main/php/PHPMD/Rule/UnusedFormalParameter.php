@@ -109,7 +109,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         }
         return false;
     }
-    
+
     /**
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
      * {@inheritdoc} annotation.
@@ -185,7 +185,8 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
                 $this->nodes = array();
             }
-            if ($this->isFunctionNameEqual($functionCall, 'compact')) {
+
+            if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
                 foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
                     unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
                 }
