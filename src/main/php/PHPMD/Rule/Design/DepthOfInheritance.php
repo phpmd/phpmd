@@ -67,9 +67,9 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        $threshold = $this->getIntProperty('minimum');
+        $threshold = $this->getIntProperty('maximum');
         $dit = $node->getMetric('dit');
-        if ($dit >= $threshold) {
+        if ($dit > $threshold) {
             $this->addViolation(
                 $node,
                 array(
