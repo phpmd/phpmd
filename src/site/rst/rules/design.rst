@@ -108,7 +108,7 @@ CouplingBetweenObjects
 
 Since: PHPMD 1.1.0
 
-A class with to many dependencies has negative impacts on several quality aspects of a class. This includes quality criterias like stability, maintainability and understandability
+A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 
 
 Example: ::
