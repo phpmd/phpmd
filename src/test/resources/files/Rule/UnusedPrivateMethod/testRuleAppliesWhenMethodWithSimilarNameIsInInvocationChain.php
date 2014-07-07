@@ -2,7 +2,7 @@
 class testRuleAppliesWhenMethodWithSimilarNameIsInInvocationChain
 {
     /**
-     * @var SplObjectStorage
+     * @var \SplObjectStorage
      */
     protected $storage = null;
 

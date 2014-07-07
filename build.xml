@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="PHP_PMD" basedir=".">
+<project name="PHPMD" basedir=".">
 
     <!--
         Include local project properties.
@@ -34,7 +34,10 @@
             output.dir      Output directory for the temporary build tree.
     -->
     <target name="do-copy-files-for-xyz-archive">
-        <copy todir="${output.dir}/resources/rulesets">
+        <move todir="${output.dir}/src/main/php">
+            <fileset dir="${output.dir}/" includes="PHPMD/**/*.*" />
+        </move>
+        <copy todir="${output.dir}/src/main/resources/rulesets">
             <fileset dir="${commons.srcdir.resource}/rulesets" />
         </copy>
     </target>
@@ -49,13 +52,13 @@
     <target name="-phpmd:package:phar:after~hooked" extensionOf="-package:phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${-package:phar:filename} PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
+        <echo message="  ${-package:phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${commons.srcdir.php}"
               executable="${-package:phar:filename}" 
               failonerror="true">
               
-            <arg value="PHP/PMD/Rule" />
+            <arg value="PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
         </exec>
@@ -67,7 +70,7 @@
     <target name="-phpmd:package:pear:after~hooked" extensionOf="-package:pear:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  phpmd PHP/PMD/Rule text ${phpmd.rulesets}" level="verbose" />
+        <echo message="  phpmd PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${commons.srcdir.php}" 
               executable="${commons.executable.php}" 
@@ -76,7 +79,7 @@
             <arg value="-d" />
             <arg value="include_path=${common-pear-root-dir}" />
             <arg value="${common-pear-bin-dir}/phpmd" />
-            <arg value="PHP/PMD/Rule" />
+            <arg value="PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
         </exec>

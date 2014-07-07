@@ -13,7 +13,7 @@ This ruleset contains a collection of controversial rules.
     <rule name="Superglobals"
           since="0.2"
           message = "{0} accesses the super-global variable {1}."
-          class="PHP_PMD_Rule_Controversial_Superglobals"
+          class="PHPMD\Rule\Controversial\Superglobals"
           externalInfoUrl="#">
         <description>
             <![CDATA[
@@ -37,7 +37,7 @@ class Foo {
     <rule name="CamelCaseClassName"
           since="0.2"
           message = "The class {0} is not named in CamelCase."
-          class="PHP_PMD_Rule_Controversial_CamelCaseClassName"
+          class="PHPMD\Rule\Controversial\CamelCaseClassName"
           externalInfoUrl="#">
         <description>
 			<![CDATA[
@@ -57,7 +57,7 @@ class class_name {
     <rule name="CamelCasePropertyName"
           since="0.2"
           message = "The property {0} is not named in camelCase."
-          class="PHP_PMD_Rule_Controversial_CamelCasePropertyName"
+          class="PHPMD\Rule\Controversial\CamelCasePropertyName"
           externalInfoUrl="#">
         <description>
             <![CDATA[
@@ -78,7 +78,7 @@ class ClassName {
     <rule name="CamelCaseMethodName"
           since="0.2"
           message = "The method {0} is not named in camelCase."
-          class="PHP_PMD_Rule_Controversial_CamelCaseMethodName"
+          class="PHPMD\Rule\Controversial\CamelCaseMethodName"
           externalInfoUrl="#">
         <description>
             <![CDATA[
@@ -100,7 +100,7 @@ class ClassName {
     <rule name="CamelCaseParameterName"
           since="0.2"
           message = "The parameter {0} is not named in camelCase."
-          class="PHP_PMD_Rule_Controversial_CamelCaseParameterName"
+          class="PHPMD\Rule\Controversial\CamelCaseParameterName"
           externalInfoUrl="#">
         <description>
             <![CDATA[
@@ -122,7 +122,7 @@ class ClassName {
     <rule name="CamelCaseVariableName"
           since="0.2"
           message = "The variable {0} is not named in camelCase."
-          class="PHP_PMD_Rule_Controversial_CamelCaseVariableName"
+          class="PHPMD\Rule\Controversial\CamelCaseVariableName"
           externalInfoUrl="#">
         <description>
             <![CDATA[

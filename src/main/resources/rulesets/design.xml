@@ -13,7 +13,7 @@ The Code Size Ruleset contains a collection of rules that find software design r
     <rule name="ExitExpression"
           since="0.2"
           message = "The {0} {1}() contains an exit expression."
-          class="PHP_PMD_Rule_Design_ExitExpression"
+          class="PHPMD\Rule\Design\ExitExpression"
           externalInfoUrl="http://phpmd.org/rules/design.html#exitexpression">
         <description>
             <![CDATA[
@@ -40,7 +40,7 @@ class Foo {
     <rule name="EvalExpression"
           since="0.2"
           message = "The {0} {1}() contains an eval expression."
-          class="PHP_PMD_Rule_Design_EvalExpression"
+          class="PHPMD\Rule\Design\EvalExpression"
           externalInfoUrl="http://phpmd.org/rules/design.html#evalexpression">
         <description>
             <![CDATA[
@@ -67,7 +67,7 @@ class Foo {
     <rule name="GotoStatement"
           since="1.1.0"
           message="The {0} {1}() utilizes a goto statement."
-          class="PHP_PMD_Rule_Design_GotoStatement"
+          class="PHPMD\Rule\Design\GotoStatement"
           externalInfoUrl="http://phpmd.org/rules/design.html#gotostatement">
         <description>
             <![CDATA[
@@ -106,7 +106,7 @@ class Foo {
     <rule name="NumberOfChildren"
           since="0.2"
           message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
-          class="PHP_PMD_Rule_Design_NumberOfChildren"
+          class="PHPMD\Rule\Design\NumberOfChildren"
           externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren">
         <description>
             <![CDATA[
@@ -124,7 +124,7 @@ class hierarchy. You should consider to refactor this class hierarchy.
     <rule name="DepthOfInheritance"
           since="0.2"
           message = "The {0} {1} has {2} parents. Consider to reduce the depth of this class hierarchy to under {3}."
-          class="PHP_PMD_Rule_Design_DepthOfInheritance"
+          class="PHPMD\Rule\Design\DepthOfInheritance"
           externalInfoUrl="http://phpmd.org/rules/design.html#depthofinheritance">
         <description>
             <![CDATA[
@@ -142,7 +142,7 @@ hierarchy. You should consider to refactor this class hierarchy.
     <rule name="CouplingBetweenObjects"
           since="1.1.0"
           message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
-          class="PHP_PMD_Rule_Design_CouplingBetweenObjects"
+          class="PHPMD\Rule\Design\CouplingBetweenObjects"
           externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects">
         <description>
             <![CDATA[
@@ -183,12 +183,11 @@ class Foo {
      * @throws \InvalidArgumentException
      * @throws \ErrorException
      */
-    public function process(Iterator $it) {}
+    public function process(\Iterator $it) {}
 
     // ...
 }
             ]]>
         </example>
     </rule>
-
 </ruleset>

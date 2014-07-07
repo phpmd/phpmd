@@ -3,7 +3,7 @@ class testRuleDoesNotApplyToPrivateMethodInChainedMethodCall
 {
     private function bar()
     {
-        return new SplObjectStorage();
+        return new \SplObjectStorage();
     }
 
     public function add($object)

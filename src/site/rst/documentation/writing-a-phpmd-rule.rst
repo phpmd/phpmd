@@ -17,25 +17,25 @@ This article describes how you can extend PHPMD with custom rule classes that
 can be used to detect design issues or errors in the analyzed source code.
 
 Let us start with some architecture basics behind PHPMD. All rules in PHPMD
-must at least implement the `PHP_PMD_Rule`__ interface. You can also extend
-the abstract rule base class `PHP_PMD_AbstractRule`__ which already provides
+must at least implement the `PHPMD\Rule`__ interface. You can also extend
+the abstract rule base class `\PHPMD\AbstractRule`__ which already provides
 an implementation of all required infrastructure methods and application logic,
 so that the only task which is left to you is the implementation of the
 concrete validation code of your rule. To implement this validation-code the
 PHPMD rule interface declares the ``apply()`` method which will be invoked by
 the application during the source analysis phase. ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
+  require_once 'PHPMD/AbstractRule.php';
 
-  class Com_Example_Rule_NoFunctions extends PHP_PMD_AbstractRule
+  class Com_Example_Rule_NoFunctions extends \PHPMD\AbstractRule
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           // Check constraints against the given node instance
       }
   }
 
-The ``apply()`` method gets an instance of `PHP_PMD_AbstractNode`__ as
+The ``apply()`` method gets an instance of `\PHPMD\AbstractNode`__ as
 argument. This node instance represents the different high level code artifacts
 found in the analyzed source code. In this context high level artifact means
 *interfaces*, *classes*, *methods* and *functions*. But how do we tell PHPMD
@@ -46,22 +46,19 @@ interfaces is to label a rule class, which says: Hey I'm interessted in nodes
 of type class and interface, or I am interessted in function artifacts. The
 following list shows the available marker interfaces:
 
-- `PHP_PMD_Rule_IClassAware`__
-- `PHP_PMD_Rule_IFunctionAware`__
-- `PHP_PMD_Rule_IInterfaceAware`__
-- `PHP_PMD_Rule_IMethodAware`__
+- `\PHPMD\Rule\ClassAware`__
+- `\PHPMD\Rule\FunctionAware`__
+- `\PHPMD\Rule\InterfaceAware`__
+- `\PHPMD\Rule\MethodAware`__
 
 With this marker interfaces we can now extend the previous example, so that
 the rule will be called for functions found in the analyzed source code. ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IFunctionAware.php';
-
   class Com_Example_Rule_NoFunctions
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IFunctionAware
+         extends \PHPMD\AbstractRule
+      implements \PHPMD\Rule\FunctionAware
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           // Check constraints against the given node instance
       }
@@ -70,11 +67,11 @@ the rule will be called for functions found in the analyzed source code. ::
 And because our coding guideline forbids functions every call to the ``apply()``
 method will result in a rule violation. Such a violation can be reported to
 PHPMD through the ``addViolation()`` method. The rule inherits this helper
-method from it's parent class `PHP_PMD_AbstractRule`__. ::
+method from it's parent class `\PHPMD\AbstractRule`__. ::
 
   class Com_Example_Rule_NoFunctions // ...
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           $this->addViolation($node);
       }
@@ -137,7 +134,7 @@ section how to develop a rule class, that uses a software metric measured by
 `PHP_Depend`__ as input data.
 
 In this section you will learn how to access software metrics for a given
-`PHP_PMD_AbstractNode`__ instance. And you will learn how to use PHPMD's
+`\PHPMD\AbstractNode`__ instance. And you will learn how to use PHPMD's
 configuration backend in such a way, that thresholds and other settings can
 be customized without changing any PHP code. Additionally you will see how
 the information content of an error message can be improved.
@@ -153,20 +150,17 @@ because a class without any public method does not expose any service to
 surrounding application.
 
 The following code listing shows the entire rule class skeleton. As you can
-see, this class implements the `PHP_PMD_Rule_IClassAware`__ interface, so that
+see, this class implements the `\PHPMD\Rule\ClassAware`__ interface, so that
 PHPMD knows that this rule will only be called for classes. ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IClassAware.php';
-
   class Com_Example_Rule_NumberOfPublicMethods
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IClassAware
+         extends \PHPMD\AbstractRule
+      implements \PHPMD\Rule\ClassAware
   {
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           // Check constraints against the given node instance
       }
@@ -178,17 +172,14 @@ a node object can directly be accessed through the ``getMetric()`` method of the
 node instance. This method takes a single parameter, the abbreviation/acronym
 of the metric as documented in PHP_Depends `metric catalog`__. ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IClassAware.php';
-
   class Com_Example_Rule_NumberOfPublicMethods
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IClassAware
+         extends \PHPMD\AbstractRule
+      implements \PHPMD\Rule\ClassAware
   {
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           $npm = $node->getMetric('npm');
           if ($npm < self::MINIMUM || $npm > self::MAXIMUM) {
@@ -262,14 +253,11 @@ methods. Currently PHPMD supports the following getter methods.
 So now let's modify the rule class and replace the hard coded constants with
 the configurable properties. ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IClassAware.php';
-
   class Com_Example_Rule_NumberOfPublicMethods
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IClassAware
+         extends \PHPMD\AbstractRule
+      implements \PHPMD\Rule\ClassAware
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           $npm = $node->getMetric('npm');
           if ($npm < $this->getIntProperty('minimum') ||
@@ -317,14 +305,11 @@ values. The format for such placeholders is ``'{' + \d+ '}'``. ::
 Now we can adjust the rule class in such a manner, that it will set the correct
 values for the placeholders ``{0}``, ``{1}`` and ``{2}`` ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IClassAware.php';
-
   class Com_Example_Rule_NumberOfPublicMethods
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IClassAware
+         extends \PHPMD\AbstractRule
+      implements \PHPMD\Rule\ClassAware
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node)
       {
           $min = $this->getIntProperty('minimum');
           $max = $this->getIntProperty('maximum');
@@ -352,7 +337,7 @@ source code. The ability to access PHP_Depend's abstract syntax tree gives you
 the most powerful way to write rules for PHPMD, because you can analyze nearly
 all apects of the software under test. The syntax tree can be accessed through
 the ``getFirstChildOfType()`` and ``findChildrenOfType()`` methods of the
-`PHP_PMD_AbstractNode`__ class.
+`\PHPMD\AbstractNode`__ class.
 
 In this example we will implement a rule that detects the usage of the new and
 controversial PHP feature ``goto``. Because we all know and agree that ``goto``
@@ -362,20 +347,20 @@ PHP_Depend's for the ``goto`` language construct.
 
 Because the ``goto`` statement cannot be found in classes and interfaces, but
 in methods and functions, the new rule class must implement the two marker
-interfaces `PHP_PMD_Rule_IFunctionAware`__ and `PHP_PMD_Rule_IMethodAware`__.
+interfaces `\PHPMD\Rule\FunctionAware`__ and `\PHPMD\Rule\MethodAware`__.
 
 ::
 
-  require_once 'PHP/PMD/AbstractRule.php';
-  require_once 'PHP/PMD/Rule/IMethodAware.php';
-  require_once 'PHP/PMD/Rule/IFunctionAware.php';
+  namespace PHPMD\Rule\Design;
 
-  class PHP_PMD_Rule_Design_GotoStatement
-         extends PHP_PMD_AbstractRule
-      implements PHP_PMD_Rule_IMethodAware,
-                 PHP_PMD_Rule_IFunctionAware
+  use PHPMD\AbstractNode;
+  use PHPMD\AbstractRule;
+  use PHPMD\Rule\MethodAware;
+  use PHPMD\Rule\FunctionAware;
+
+  class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
   {
-      public function apply(PHP_PMD_AbstractNode $node)
+      public function apply(AbstractNode $node)
       {
           foreach ($node->findChildrenOfType('GotoStatement') as $goto) {
               $this->addViolation($goto, array($node->getType(), $node->getName()));
@@ -385,14 +370,14 @@ interfaces `PHP_PMD_Rule_IFunctionAware`__ and `PHP_PMD_Rule_IMethodAware`__.
 
 As you can see, we are searching for the string ``GotoStatement`` in the
 previous example. This is a shortcut notation used by PHPMD to address concrete
-PHP_Depend syntax tree nodes. All abstract syntax tree classes in PHP_Depend
+PHP_Depend syntax tree nodes. All abstract syntax tree classes in PDepend
 have the following format: ::
 
-  PHP_Depend_Code_ASTGotoStatement
+  \PDepend\Source\AST\ASTGotoStatement
 
 where ::
 
-  PHP_Depend_Code_AST
+  \PDepend\Source\AST\AST
 
 is fixed and everything else depends on the node type. And this fixed part of
 the class name can be ommitted in PHPMD when searching for an abstract syntax
@@ -404,31 +389,30 @@ Conclusion
 
 In this article we have shown you several ways to implement custom rules for
 PHPMD. If you think one of your rules could be reusable for other projects and
-user, don't hesitate to propose your on the project's mailing list
-`phpmd-users@phpmd.org`__ or to send us `GitHub`__ pull request.
+user, don't hesitate to propose your custom rules on the project's issue tracker
+at `GitHub`__ or open a pull request.
 
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractRule.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractNode.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IClassAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IFunctionAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IInterfaceAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IMethodAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractRule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/ClassAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/InterfaceAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
 __ http://pmd.sf.net/
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
 __ http://phpmd.org/documentation/creating-a-ruleset.html
 
 __ http://pdepend.org
 __ http://pdepend.org/documentation/software-metrics.html
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
 __ http://pdepend.org/documentation/software-metrics/number-of-public-methods.html
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IClassAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/IClassAware.php
 __ http://pdepend.org/documentation/software-metrics.html
 
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/AbstractNode.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IFunctionAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHP/PMD/Rule/IMethodAware.php
-__ https://github.com/pdepend/pdepend/tree/master/src/main/php/PHP/Depend/Code
-__ mailto:phpmd-users@phpmd.org
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
+__ https://github.com/pdepend/pdepend/tree/master/src/main/phpHP/Depend/Source/AST
 __ https://github.com/phpmd/phpmd

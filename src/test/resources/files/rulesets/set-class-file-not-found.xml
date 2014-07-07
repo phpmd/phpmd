@@ -9,7 +9,7 @@
     <rule name="ClassFileNotFoundRule"
           since="0.1"
           message="Test message"
-          class="rules_ClassFileNotFoundRule"
+          class="PHPMD\Stubs\ClassFileNotFoundRule"
           externalInfoUrl="http://phpmd.org/">
     </rule>
 </ruleset>

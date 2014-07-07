@@ -11,7 +11,7 @@ The Naming Ruleset contains a collection of rules about names - too long, too sh
     <rule name="ShortVariable"
           since="0.2"
           message="Avoid variables with short names like {0}. Configured minimum length is {1}."
-          class="PHP_PMD_Rule_Naming_ShortVariable"
+          class="PHPMD\Rule\Naming\ShortVariable"
           externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable">
         <description>
 Detects when a field, local, or parameter has a very short name.
@@ -19,6 +19,7 @@ Detects when a field, local, or parameter has a very short name.
         <priority>3</priority>
         <properties>
             <property name="minimum" description="Minimum length for a variable, property or parameter name" value="3"/>
+            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
         </properties>
         <example>
             <![CDATA[
@@ -38,7 +39,7 @@ class Something {
     <rule name="LongVariable"
           since="0.2"
           message="Avoid excessively long variable names like {0}. Keep variable name length under {1}."
-          class="PHP_PMD_Rule_Naming_LongVariable"
+          class="PHPMD\Rule\Naming\LongVariable"
           externalInfoUrl="http://phpmd.org/rules/naming.html#longvariable">
         <description>
 Detects when a field, formal or local variable is declared with a long name.
@@ -66,7 +67,7 @@ class Something {
     <rule name="ShortMethodName"
           since="0.2"
           message="Avoid using short method names like {0}::{1}(). The configured minimum method name length is {2}."
-          class="PHP_PMD_Rule_Naming_ShortMethodName"
+          class="PHPMD\Rule\Naming\ShortMethodName"
           externalInfoUrl="http://phpmd.org/rules/naming.html#shortmethodname">
         <description>
 Detects when very short method names are used.
@@ -88,7 +89,7 @@ class ShortMethod {
     <rule name="ConstructorWithNameAsEnclosingClass"
           since="0.2"
           message="Classes should not have a constructor method with the same name as the class"
-          class="PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass"
+          class="PHPMD\Rule\Naming\ConstructorWithNameAsEnclosingClass"
           externalInfoUrl="http://phpmd.org/rules/naming.html#constructorwithnameasenclosingclass">
         <description>
 A constructor method should not have the same name as the enclosing class, consider
@@ -110,7 +111,7 @@ class MyClass {
     <rule name="ConstantNamingConventions"
           since="0.2"
           message="Constant {0} should be defined in uppercase"
-          class="PHP_PMD_Rule_Naming_ConstantNamingConventions"
+          class="PHPMD\Rule\Naming\ConstantNamingConventions"
           externalInfoUrl="http://phpmd.org/rules/naming.html#constantnamingconventions">
         <description>
 Class/Interface constant nanmes should always be defined in uppercase.
@@ -130,7 +131,7 @@ class Foo {
     <rule name="BooleanGetMethodName"
           since="0.2"
           message="The '{0}()' method which returns a boolean should be named 'is...()' or 'has...()'"
-          class="PHP_PMD_Rule_Naming_BooleanGetMethodName"
+          class="PHPMD\Rule\Naming\BooleanGetMethodName"
           externalInfoUrl="http://phpmd.org/rules/naming.html#booleangetmethodname">
         <description>
 Looks for methods named 'getX()' with 'boolean' as the return type. The convention

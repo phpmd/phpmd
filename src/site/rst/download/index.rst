@@ -9,8 +9,8 @@ Create a ``composer.json`` file in your project directory and add *PHPMD*
 as a required dependency: ::
 
   {
-      "require": {
-          "phpmd/phpmd" : "1.4.0"
+      "require-dev": {
+          "phpmd/phpmd" : "1.4.*"
       }
   }
 

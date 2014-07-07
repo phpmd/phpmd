@@ -2,45 +2,45 @@
 class testReportContainsCouplingBetweenObjectsWarning
 {
     /**
-     * @param ReflectionParameter $p
+     * @param \ReflectionParameter $p
      *
      * @return void
-     * @throws OutOfBoundsException
+     * @throws \OutOfBoundsException
      */
-    public function addParameter(ReflectionParameter $p)
+    public function addParameter(\ReflectionParameter $p)
     {
 
     }
 
     /**
-     * @param ReflectionClass $c
+     * @param \ReflectionClass $c
      *
      * @return void
-     * @throws OutOfBoundsException
+     * @throws \OutOfBoundsException
      */
-    public function setClass(ReflectionClass $c)
+    public function setClass(\ReflectionClass $c)
     {
 
     }
 
     /**
-     * @param ReflectionClass $c
+     * @param \ReflectionClass $c
      *
      * @return void
-     * @throws OutOfBoundsException
+     * @throws \OutOfBoundsException
      */
-    public function setParentClass(ReflectionClass $c)
+    public function setParentClass(\ReflectionClass $c)
     {
 
     }
 
     /**
-     * @param ReflectionProperty $p
+     * @param \ReflectionProperty $p
      *
      * @return void
-     * @throws OutOfBoundsException
+     * @throws \OutOfBoundsException
      */
-    public function addProperty(ReflectionProperty $p)
+    public function addProperty(\ReflectionProperty $p)
     {
         
     }
@@ -49,29 +49,29 @@ class testReportContainsCouplingBetweenObjectsWarning
      * @param DOMNode $node
      *
      * @return void
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function traverse(DOMNode $node = null)
+    public function traverse(\DOMNode $node = null)
     {
 
     }
 
     /**
-     * @param SplObjectStorage $storage
+     * @param \SplObjectStorage $storage
      *
      * @return void
      */
-    public function setStorage(SplObjectStorage $storage)
+    public function setStorage(\SplObjectStorage $storage)
     {
 
     }
 
     /**
-     * @return Iterator
+     * @return \Iterator
      */
     public function getIterator()
     {
-        return new ArrayIterator(array());
+        return new \ArrayIterator(array());
     }
 
     /**
@@ -100,6 +100,6 @@ class testReportContainsCouplingBetweenObjectsWarning
 
     public function fail()
     {
-        throw new ErrorException();
+        throw new \ErrorException();
     }
 }

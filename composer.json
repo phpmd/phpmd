@@ -1,16 +1,32 @@
 {
     "name": "phpmd/phpmd",
     "description": "Official version of PHPMD handled with Composer.",
+    "license": "BSD-3-Clause",
+    "version": "2.0.0",
+
+    "minimum-stability" : "stable",
 
     "require": {
         "php": ">=5.3.0",
-        "pdepend/pdepend": "*"
+        "pdepend/pdepend": "2.0.*",
+
+        "symfony/dependency-injection": "@stable",
+        "symfony/filesystem": "@stable",
+        "symfony/config": "@stable"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "PHPMD\\": "src/main/php",
+            "PDepend\\": "vendor/pdepend/pdepend/src/main/php/"
+        }
     },
 
     "include-path": [
         "../../pdepend/pdepend/src/main/php",
         "src/main/php"
     ],
+
     "bin": ["src/bin/phpmd"]
 }
 

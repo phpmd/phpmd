@@ -7,18 +7,15 @@ define('PHP_PMD_RELEASE', 'phar');
 
 Phar::mapPhar( '${archive.alias}' );
 
-$includePath = 'phar://${archive.alias}/' . PATH_SEPARATOR .
-               'phar://${archive.alias}/vendor/pdepend/pdepend/src/main/php';
+// Configure include path to use this phar
+set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . get_include_path());
 
 if (isset($argv) && realpath($argv[0]) === __FILE__) {
-    // Configure phar include paths
-    set_include_path($includePath);
+
     // Load command line utility
-    include_once 'phar://${archive.alias}/PHP/PMD/TextUI/Command.php';
+    include_once 'phar://${archive.alias}/vendor/autoload.php';
+
     // Run command line interface
-    exit(PHP_PMD_TextUI_Command::main($argv));
-} else {
-    set_include_path($includePath . PATH_SEPARATOR . get_include_path());
+    exit(\PHPMD\TextUI\Command::main($argv));
 }
 __HALT_COMPILER();
-?>

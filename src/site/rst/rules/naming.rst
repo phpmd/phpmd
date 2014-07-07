@@ -31,6 +31,8 @@ This rule has the following properties:
 =================================== =============== ===========================================================
  minimum                             3               Minimum length for a variable, property or parameter name 
 =================================== =============== ===========================================================
+ exceptions                          empty           Comma-separated list of names that should be allowed
+=================================== =============== ===========================================================
 
 LongVariable
 ============

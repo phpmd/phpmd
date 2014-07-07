@@ -10,6 +10,54 @@
     </properties>
 
     <body>
+        <release version="2.0.0"
+                 date="2014/05/21"
+                 description="This is major release of PHPMD which utilizes 2.0 engine of PDepend.">
+            <action date="e16c38c" dev="mapi" issue="40" system="github" type="add">
+                Allow multiple report files
+
+                Now it is possible to render multiple report files during a single
+                PHPMD run, just add:
+
+                --reportfile-xml report.xml
+                --reportfile-html report.html
+                --reportfile-text report.txt
+
+                to the PHP command line call.
+            </action>
+            <action date="a1dc403" dev="svscorp" issue="61" system="github" type="add">
+                UnusedLocalVariable fix for compact handling in Symfony2
+            </action>
+            <action date="cdfbb8f" dev="mapi" issue="111" system="github" type="fix" due-to="magicsunday">
+                Changelog with old releases and invalid dates removed.
+            </action>
+            <action date="8c3ebe1" dev="beberlei" issue="119" system="github" type="add">
+                PDepend 2.0 support
+            </action>
+            <action date="19c4da8" dev="adambrett" issue="122" system="github" type="add">
+                Add: New parameter 'ignore-whitespace' to LongClass and LongMethod rules
+            </action>
+        </release>
+        <release version="1.5.0"
+                 date="2013/07/26"
+                 description="This release closes some PHP 5.4 related issues.">
+            <action date="1484e22" dev="kirillsablin" issue="66" system="github" type="add">
+                Added support for short variable name exceptions
+            </action>
+            <action date="86560ce" dev="andy128k" issue="73" system="github" type="add">
+                Show available formats and rulesets
+            </action>
+            <action date="9ab3b6d" dev="timporter" issue="87" system="github" type="fix">
+                Fix: PHP Fatal error: Call to a member function isInstanceOf() on a non-object
+            </action>
+            <action date="a473345" dev="kirillsablin" issue="81" system="github" type="fix">
+                Fix error when using entire ruleset "Naming"
+            </action>
+            <action date="2a3d304" dev="rwos" issue="91" system="github" type="fix">
+                (tiny) documentation typo fix
+            </action>
+        </release>
+
         <release version="1.4.1"
                  date="2012/12/14"
                  description="This release integrates several pull requests.">

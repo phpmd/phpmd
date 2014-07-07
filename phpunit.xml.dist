@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<phpunit>
+<phpunit bootstrap="src/test/php/bootstrap.php">
     <testsuites>
-		<testsuite name="PHP_PMD_AllTests">
+		<testsuite name="PHPMD AllTests">
 			<directory suffix="Test.php">src/test/php</directory>
         </testsuite>
     </testsuites>

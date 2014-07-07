@@ -12,7 +12,7 @@ The Unused Code Ruleset contains a collection of rules that find unused code.
     <rule name="UnusedPrivateField"
           since="0.2"
           message="Avoid unused private fields such as '{0}'."
-          class="PHP_PMD_Rule_UnusedPrivateField"
+          class="PHPMD\Rule\UnusedPrivateField"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield">
         <description>
 Detects when a private field is declared and/or assigned a value, but not used.
@@ -37,7 +37,7 @@ class Something
     <rule name="UnusedLocalVariable"
           since="0.2"
           message="Avoid unused local variables such as '{0}'."
-          class="PHP_PMD_Rule_UnusedLocalVariable"
+          class="PHPMD\Rule\UnusedLocalVariable"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedlocalvariable">
         <description>
 Detects when a local variable is declared and/or assigned, but not used.
@@ -58,7 +58,7 @@ class Foo {
     <rule name="UnusedPrivateMethod"
           since="0.2"
           message="Avoid unused private methods such as '{0}'."
-          class="PHP_PMD_Rule_UnusedPrivateMethod"
+          class="PHPMD\Rule\UnusedPrivateMethod"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatemethod">
         <description>
 Unused Private Method detects when a private method is declared but is unused.
@@ -77,7 +77,7 @@ class Something
     <rule name="UnusedFormalParameter"
           since="0.2"
           message="Avoid unused parameters such as '{0}'."
-          class="PHP_PMD_Rule_UnusedFormalParameter"
+          class="PHPMD\Rule\UnusedFormalParameter"
           externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedformalparameter">
         <description>
 Avoid passing parameters to methods or constructors and then not using those parameters.
