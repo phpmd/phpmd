@@ -21,6 +21,10 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     }
 }
 
+if (!ini_get('date.timezone') && !date_default_timezone_get()) {
+    date_default_timezone_set('UTC');
+}
+
 class_alias('PHPMD\\AbstractNode', 'PHP_PMD_AbstractNode');
 class_alias('PHPMD\\AbstractRenderer', 'PHP_PMD_AbstractRenderer');
 class_alias('PHPMD\\AbstractRule', 'PHP_PMD_AbstractRule');
