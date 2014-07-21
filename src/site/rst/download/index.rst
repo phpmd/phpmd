@@ -10,7 +10,7 @@ as a required dependency: ::
 
   {
       "require-dev": {
-          "phpmd/phpmd" : "1.4.*"
+          "phpmd/phpmd" : "2.0.*"
       }
   }
 
@@ -46,15 +46,6 @@ requirements you should now invoke *Ant* with the ``initialize`` target: ::
 This command installs the dependencies used by PHPMD. Please not that this
 command will produce a lot of output on the shell.
 
-Installing as a PEAR package
-============================
-
-The preferred way to install PHPMD should be the `PEAR installer`__
-and PHPMD's `PEAR channel`__, where you will always find the latest
-stable version. Because PHPMD heavily relies on metrics measured 
-with `PHP Depend`__ you must also discover this project's 
-`PEAR Channel`__. Just enter: ::
-
   ~ $ pear channel-discover pear.phpmd.org
   ~ $ pear channel-discover pear.pdepend.org
   ~ $ pear install --alldeps phpmd/PHP_PMD
@@ -65,13 +56,9 @@ Requirements
 PHPMD itself is considered as an early development version at its
 current state. It relies on the following software products:
 
-- `PHP_Depend >= 1.0.0`__
-- `PHP >= 5.2.3`__
+- `PHP_Depend >= 2.0.0`__
+- `PHP >= 5.3.0`__
 
-__ http://pear.php.net/manual/en/installation.php
-__ http://pear.phpmd.org
-__ http://pdepend.org
-__ http://pear.pdepend.org
 __ https://github.com/phpmd/phpmd
 __ http://pdepend.org
 __ http://php.net/downloads.php
