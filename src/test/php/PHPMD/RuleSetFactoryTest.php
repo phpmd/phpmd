@@ -339,7 +339,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new PHP_PMD_RuleSetFactory();
+        $factory  = new RuleSetFactory();
         $excludes = $factory->getIgnorePattern('exclude-pattern');
 
         $expected = array(

@@ -496,7 +496,7 @@ class RuleSetFactory
      * @param $fileName     The filename of a rule-set definition.
      *
      * @return array
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function getIgnorePattern($fileName)
     {
@@ -510,7 +510,7 @@ class RuleSetFactory
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
-            throw new RuntimeException(trim(libxml_get_last_error()->message));
+            throw new \RuntimeException(trim(libxml_get_last_error()->message));
         }
 
         $excludes = array();
