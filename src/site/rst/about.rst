@@ -29,27 +29,4 @@ __ /rules/index.html
 Recent Releases
 ===============
 
-- 2013/07/26 - PHPMD 1.5.0: You can find the new release `here`__.
-
-- 2012/12/14 - From now on we will use GitHub's `issue tracker`__ as our main
-  ticket solution. The old PivotalTracker will not be used anymore.
-
-- 2012/12/14 - PHPMD 1.4.1: This `release`__ integrates some pull requests from
-  GitHub. Additionally it closes some long pending bugs.
-
-- 2012/09/08 - PHPMD 1.4.0: This `release`__ integrates several longer pending
-  pull requests and smaller bugfixes. One major addition is support for Composer
-  as distribution channel.
-
-- 2012/02/25 - PHPMD 1.3.2; This `release`__ closes a minor issue in PHPMD
-  related to the Suhosin patch and ``memory_limit``.
-
-- 2012/02/04 - PHPMD 1.3.0: This `release`__ depends on the latest PHP_Depend
-  version 1.0.0.
-
-__ /download/release/1.5.0/changelog.html
-__ https://github.com/phpmd/phpmd/issues
-__ /download/release/1.4.1/changelog.html
-__ /download/release/1.4.0/changelog.html
-__ /download/release/1.3.2/changelog.html
-__ /download/release/1.3.0/changelog.html
+.. include:: download/release/parts/latest.rst
