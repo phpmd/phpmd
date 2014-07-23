@@ -512,4 +512,39 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleDoesNotApplyToNamespacedCompactFunction
+     *
+     * <code>
+     * namespace Baz;
+     *
+     * class Foo {
+     *     public function bar() {
+     *         $key = 'ok';
+     *         return compact('key');
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToNamespacedCompactFunction()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @test
+     * @return void
+     * @since 2.0.1
+     */
+    public function test_namespaced_compact_function_rule_works_case_insensitive()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }

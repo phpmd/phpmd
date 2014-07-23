@@ -128,7 +128,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             $this->collectVariable($variable);
         }
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
-            if ($this->isFunctionNameEqual($func, 'compact')) {
+            if ($this->isFunctionNameEndingWith($func, 'compact')) {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
                     $this->collectLiteral($literal);
                 }

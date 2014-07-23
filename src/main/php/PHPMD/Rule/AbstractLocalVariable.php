@@ -144,7 +144,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         if (false === $this->isWrappedByIndexExpression($node)) {
             return $node;
         }
-        
+
         $parent = $node->getParent();
         if ($parent->getChild(0)->getNode() === $node->getNode()) {
             return $this->stripWrappedIndexExpression($parent);
@@ -176,5 +176,20 @@ abstract class AbstractLocalVariable extends AbstractRule
     protected function isFunctionNameEqual(AbstractNode $node, $name)
     {
         return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
+    }
+
+    /**
+     * AST puts namespace prefix to global functions called from a namespace.
+     * This method checks if the last part of function fully qualified name is equal to $name
+     *
+     * @param \PHPMD\AbstractNode $node
+     * @param string $name
+     * @return boolean
+     */
+    protected function isFunctionNameEndingWith(AbstractNode $node, $name)
+    {
+        $parts = explode('\\', trim($node->getImage(), '\\'));
+
+        return (0 === strcasecmp(array_pop($parts), $name));
     }
 }
