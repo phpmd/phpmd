@@ -24,6 +24,10 @@ Contributors
 - `Gasillo`__ (Since 2014) / `https://github.com/Gasillo`__
 - `Marc Würth`__ (Since 2014) / `https://github.com/ravage84`__
 
+... and many others.
+See the full list on GitHub:
+https://github.com/phpmd/phpmd/graphs/contributors
+
 __ https://github.com/edorian
 __ https://github.com/edorian
 __ https://github.com/timmartin

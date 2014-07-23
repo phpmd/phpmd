@@ -102,11 +102,11 @@ class BooleanGetMethodNameTest extends AbstractTest
     }
 
     /**
-     * testRuleIgnoresParametersWhenNotExpliciteConfigured
+     * testRuleIgnoresParametersWhenNotExplicitConfigured
      *
      * @return void
      */
-    public function testRuleIgnoresParametersWhenNotExpliciteConfigured()
+    public function testRuleIgnoresParametersWhenNotExplicitConfigured()
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -115,11 +115,11 @@ class BooleanGetMethodNameTest extends AbstractTest
     }
 
     /**
-     * testRuleNotAppliesWhenParametersAreExpliciteEnabled
+     * testRuleNotAppliesWhenParametersAreExplicitEnabled
      *
      * @return void
      */
-    public function testRuleNotAppliesWhenParametersAreExpliciteEnabled()
+    public function testRuleNotAppliesWhenParametersAreExplicitEnabled()
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'true');
