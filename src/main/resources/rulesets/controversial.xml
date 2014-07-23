@@ -40,7 +40,7 @@ class Foo {
           class="PHPMD\Rule\Controversial\CamelCaseClassName"
           externalInfoUrl="#">
         <description>
-			<![CDATA[
+            <![CDATA[
 It is considered best practice to use the CamelCase notation to name classes.
             ]]>
         </description>
@@ -86,7 +86,12 @@ It is considered best practice to use the CamelCase notation to name methods.
             ]]>
         </description>
         <priority>1</priority>
-        <properties />
+        <properties>
+            <property
+                    name="allow-underscore"
+                    description="Allow an optional, single underscore at the beginning."
+                    value="false" />
+        </properties>
         <example>
             <![CDATA[
 class ClassName {
