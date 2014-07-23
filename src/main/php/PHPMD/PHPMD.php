@@ -207,6 +207,10 @@ class PHPMD
         array $renderers,
         RuleSetFactory $ruleSetFactory
     ) {
+
+        // Merge parsed excludes
+        $this->ignorePatterns = array_merge($this->ignorePatterns, $ruleSetFactory->getIgnorePattern($ruleSets));
+
         $this->input = $inputPath;
 
         $report = new Report();
