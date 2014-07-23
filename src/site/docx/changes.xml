@@ -19,6 +19,9 @@
             <action date="b5cdc74" dev="Nyholm" issue="154" system="github" type="add">
                 Added PHP 5.6 and HHVM to travis.yml
             </action>
+            <action date="" dev="Gasillo" issue="118" system="github" type="fix">
+                Fix [Naming]: Trait can have method same as trait's name
+            </action>
         </release>
 
         <release version="2.0.0"
