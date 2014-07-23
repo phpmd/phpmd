@@ -43,12 +43,8 @@ requirements you should now invoke *Ant* with the ``initialize`` target: ::
 
   ~/phpmd $ ant initialize
 
-This command installs the dependencies used by PHPMD. Please not that this
+This command installs the dependencies used by PHPMD. Please note that this
 command will produce a lot of output on the shell.
-
-  ~ $ pear channel-discover pear.phpmd.org
-  ~ $ pear channel-discover pear.pdepend.org
-  ~ $ pear install --alldeps phpmd/PHP_PMD
 
 Requirements
 ============

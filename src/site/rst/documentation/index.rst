@@ -23,7 +23,7 @@ Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
 You can pass a file name or a directory name containing PHP source
 code to PHPMD.
 
-The PHPMD PEAR or Phar distribution includes the rule set files inside 
+The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks 
 like a filesystem reference.
 
