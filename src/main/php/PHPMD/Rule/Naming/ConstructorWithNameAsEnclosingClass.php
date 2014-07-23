@@ -60,16 +60,17 @@ use PHPMD\Rule\MethodAware;
 class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
 {
     /**
-     * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
-     * length.
+     * Is method has the same name as the enclosing class
+     * (php4 style constructor).
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        if (strcasecmp($node->getName(), $node->getParentName()) !== 0) {
+        if (strcasecmp($node->getName(), $node->getParentName()) !== 0
+            || $node->getNode()->getParent() instanceof PHP_Depend_Code_Trait
+        ) {
             return;
         }
         $this->addViolation($node);
