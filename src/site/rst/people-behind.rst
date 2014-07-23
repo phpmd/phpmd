@@ -5,20 +5,24 @@ People behind PHPMD
 Contributors
 ============
 
-- `Volker Dusch`__ / `https://github.com/edorian`__ /  (Since 2010)
-- `timmartin`__ / `https://github.com/timmartin`__ /  (Since 2010)
-- `Sebastian Bergmann`__ / `https://github.com/sebastianbergmann`__ / (Since 2011)
-- `Zsolt Takacs`__ / `https://github.com/zstakacs`__ /  (Since 2011)
-- `Che Hodgins`__ / `https://github.com/chehodgins`__ /  (Since 2011)
-- `Gennadiy Litvinyuk`__ / `https://github.com/gennadiylitvinyuk`__ /  (Since 2011)
-- `Francis Besset`__ / `https://github.com/francisbesset`__ /  (Since 2011)
-- `zerkalica`__ / `https://github.com/zerkalica`__ /  (Since 2012)
-- `palbertin`__ / `https://github.com/palbertini`__ /  (Since 2012)
-- `bahulneel`__ / `https://github.com/bahulneel`__ /  (Since 2012)
-- `Willem Stuursma`__ / `https://github.com/willemstuursma`__ /  (Since 2012)
-- `Nimlhug`__ / `https://github.com/Nimlhug`__ /  (Since 2012)
-- `A. Martin Llano`__ / `https://github.com/amllano`__ / (Since 2012)
-- `Juan Basso`__ / `https://github.com/jrbasso`__ / (Since 2012)
+- `Volker Dusch`__ (Since 2010) / `https://github.com/edorian`__
+- `timmartin`__ (Since 2010) / `https://github.com/timmartin`__
+- `Sebastian Bergmann`__ (Since 2011) / `https://github.com/sebastianbergmann`__
+- `Zsolt Takacs`__ (Since 2011) / `https://github.com/zstakacs`__
+- `Che Hodgins`__ (Since 2011) / `https://github.com/chehodgins`__
+- `Gennadiy Litvinyuk`__ (Since 2011) / `https://github.com/gennadiylitvinyuk`__
+- `Francis Besset`__ (Since 2011) / `https://github.com/francisbesset`__
+- `zerkalica`__ (Since 2012) / `https://github.com/zerkalica`__
+- `palbertin`__ (Since 2012) / `https://github.com/palbertini`__
+- `bahulneel`__ (Since 2012) / `https://github.com/bahulneel`__
+- `Willem Stuursma`__ (Since 2012) / `https://github.com/willemstuursma`__
+- `Nimlhug`__ (Since 2012) / `https://github.com/Nimlhug`__
+- `A. Martin Llano`__ (Since 2012) / `https://github.com/amllano`__
+- `Juan Basso`__ (Since 2012) / `https://github.com/jrbasso`__
+- `Radosław Mejer`__ (Since 2014) / `https://github.com/radmen`__
+- `Tobias Nyholm`__ (Since 2014) / `https://github.com/Nyholm`__
+- `Gasillo`__ (Since 2014) / `https://github.com/Gasillo`__
+- `Marc Würth`__ (Since 2014) / `https://github.com/ravage84`__
 
 __ https://github.com/edorian
 __ https://github.com/edorian
@@ -48,6 +52,14 @@ __ https://github.com/amllano
 __ https://github.com/amllano
 __ https://github.com/jrbasso
 __ https://github.com/jrbasso
+__ https://github.com/radmen
+__ https://github.com/radmen
+__ https://github.com/Nyholm
+__ https://github.com/Nyholm
+__ https://github.com/Gasillo
+__ https://github.com/Gasillo
+__ https://github.com/ravage84
+__ https://github.com/ravage84
 
 Project founder
 ===============
