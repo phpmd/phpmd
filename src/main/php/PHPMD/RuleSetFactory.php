@@ -487,4 +487,39 @@ class RuleSetFactory
         }
         return (string) $propertyNode['value'];
     }
+
+    /**
+     * Returns an array of path exclude patterns in format described at
+     *
+     * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
+     *
+     * @param $fileName     The filename of a rule-set definition.
+     *
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getIgnorePattern($fileName)
+    {
+        $fileName = $this->createRuleSetFileName($fileName);
+
+        // Hide error messages
+        $libxml = libxml_use_internal_errors(true);
+
+        $xml = simplexml_load_file($fileName);
+        if ($xml === false) {
+            // Reset error handling to previous setting
+            libxml_use_internal_errors($libxml);
+
+            throw new \RuntimeException(trim(libxml_get_last_error()->message));
+        }
+
+        $excludes = array();
+        foreach ($xml->children() as $node) {
+            if ($node->getName() === 'exclude-pattern') {
+                $excludes[] = ''.$node;
+            }
+        }
+
+        return $excludes;
+    }
 }
