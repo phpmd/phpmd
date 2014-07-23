@@ -25,6 +25,7 @@ Contributors
 - A. Martin Llano (Since 2012) / https://github.com/amllano
 - Juan Basso (Since 2012) / https://github.com/jrbasso
 - Radosław Mejer (Since 2014) / https://github.com/radmen
+- Tobias Nyholm (Since 2014) / https://github.com/Nyholm
 
 ..
    Local Variables:

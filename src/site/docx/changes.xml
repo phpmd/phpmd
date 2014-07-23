@@ -13,8 +13,11 @@
         <release version="2.1.0"
                  date=""
                  description="">
-            <action date="" dev="radmen" issue="150" system="github" type="add">
+            <action date="ffab9fc" dev="radmen" issue="150" system="github" type="add">
                 Fix for unused variables rules when handling namespace compact()
+            </action>
+            <action date="b5cdc74" dev="Nyholm" issue="154" system="github" type="add">
+                Added PHP 5.6 and HHVM to travis.yml
             </action>
         </release>
 
