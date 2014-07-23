@@ -1,5 +1,5 @@
 <?php
-class testRuleIgnoresParametersWhenNotExpliciteConfigured
+class testRuleIgnoresParametersWhenNotExplicitConfigured
 {
     /**
      * @return boolean
