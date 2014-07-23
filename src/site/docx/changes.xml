@@ -10,6 +10,14 @@
     </properties>
 
     <body>
+        <release version="2.1.0"
+                 date=""
+                 description="">
+            <action date="" dev="radmen" issue="150" system="github" type="add">
+                Fix for unused variables rules when handling namespace compact()
+            </action>
+        </release>
+
         <release version="2.0.0"
                  date="2014/05/21"
                  description="This is major release of PHPMD which utilizes 2.0 engine of PDepend.">

@@ -24,7 +24,7 @@ Contributors
 - Nimlhug (Since 2012) / https://github.com/Nimlhug
 - A. Martin Llano (Since 2012) / https://github.com/amllano
 - Juan Basso (Since 2012) / https://github.com/jrbasso
-
+- Radosław Mejer (Since 2014) / https://github.com/radmen
 
 ..
    Local Variables:
