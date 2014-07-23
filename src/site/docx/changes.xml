@@ -22,6 +22,9 @@
             <action date="f93be40" dev="Gasillo" issue="118" system="github" type="fix">
                 Fix [Naming]: Trait can have method same as trait's name
             </action>
+            <action date="d0779c2" dev="ravage84" issue="159" system="github" type="add">
+                Allow a single underscore at the beginning
+            </action>
         </release>
 
         <release version="2.0.0"
