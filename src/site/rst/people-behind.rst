@@ -20,6 +20,10 @@ Contributors
 - `A. Martin Llano`__ / `https://github.com/amllano`__ / (Since 2012)
 - `Juan Basso`__ / `https://github.com/jrbasso`__ / (Since 2012)
 
+... and many others.
+See the full list on GitHub:
+https://github.com/phpmd/phpmd/graphs/contributors
+
 __ https://github.com/edorian
 __ https://github.com/edorian
 __ https://github.com/timmartin
