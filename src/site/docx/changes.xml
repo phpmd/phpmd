@@ -25,6 +25,12 @@
             <action date="d0779c2" dev="ravage84" issue="159" system="github" type="add">
                 Allow a single underscore at the beginning
             </action>
+            <action date="6257a83" dev="ptlis" issue="100" system="github" type="add">
+                Quick change to add support for exclude-pattern in a ruleset
+            </action>
+            <action date="6257a83" dev="ptlis" issue="117" system="github" type="add" due-to="andrewwatson">
+                --exclude not working
+            </action>
         </release>
 
         <release version="2.0.0"

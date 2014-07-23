@@ -19,6 +19,7 @@ Contributors
 - `Nimlhug`__ (Since 2012) / `https://github.com/Nimlhug`__
 - `A. Martin Llano`__ (Since 2012) / `https://github.com/amllano`__
 - `Juan Basso`__ (Since 2012) / `https://github.com/jrbasso`__
+- `Brian Ridley`__ (Since 2013) / `https://github.com/ptlis`__
 - `Radosław Mejer`__ (Since 2014) / `https://github.com/radmen`__
 - `Tobias Nyholm`__ (Since 2014) / `https://github.com/Nyholm`__
 - `Gasillo`__ (Since 2014) / `https://github.com/Gasillo`__
@@ -56,6 +57,8 @@ __ https://github.com/amllano
 __ https://github.com/amllano
 __ https://github.com/jrbasso
 __ https://github.com/jrbasso
+__ https://github.com/ptlis
+__ https://github.com/ptlis
 __ https://github.com/radmen
 __ https://github.com/radmen
 __ https://github.com/Nyholm
