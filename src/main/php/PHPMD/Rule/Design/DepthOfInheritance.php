@@ -78,7 +78,7 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
         $dit = $node->getMetric('dit');
         if (
             ($comparision === 1 && $dit > $threshold) ||
-            ($comparision === 2 && $dit <= $threshold)
+            ($comparision === 2 && $dit >= $threshold)
         ) {
             $this->addViolation(
                 $node,
