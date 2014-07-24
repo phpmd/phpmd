@@ -70,7 +70,7 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
         try {
             $threshold = $this->getIntProperty('maximum');
             $comparision = 1;
-        } catch (OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException $e) {
             $threshold = $this->getIntProperty('minimum');
             $comparision = 2;
         }
