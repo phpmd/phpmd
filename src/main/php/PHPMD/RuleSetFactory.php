@@ -221,7 +221,7 @@ class RuleSetFactory
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
 
-        $xml = simplexml_load_file($fileName);
+        $xml = simplexml_load_string(file_get_contents($fileName));
         if ($xml === false) {
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
@@ -507,7 +507,7 @@ class RuleSetFactory
             // Hide error messages
             $libxml = libxml_use_internal_errors(true);
 
-            $xml = simplexml_load_file($ruleSetFileName);
+            $xml = simplexml_load_string(file_get_contents($ruleSetFileName));
             if ($xml === false) {
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
