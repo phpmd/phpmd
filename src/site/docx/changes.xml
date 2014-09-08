@@ -11,8 +11,8 @@
 
     <body>
         <release version="2.1.0"
-                 date=""
-                 description="">
+                 date="2014/09/08"
+                 description="This integrates several outstanding pull requests.">
             <action date="ffab9fc" dev="radmen" issue="150" system="github" type="add">
                 Fix for unused variables rules when handling namespace compact()
             </action>
@@ -30,6 +30,9 @@
             </action>
             <action date="6257a83" dev="ptlis" issue="117" system="github" type="add" due-to="andrewwatson">
                 --exclude not working
+            </action>
+            <action date="e081088" dev="mikaeljorhult" issue="177" system="github" type="fix" due-to="">
+                Get XML contents before parsing
             </action>
         </release>
 
