@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3f0210e0d00d08a835b313d4624b3662",
+    "hash": "a4385c16c0ade17a0795aba7f4687478",
     "packages": [
         {
             "name": "pdepend/pdepend",
