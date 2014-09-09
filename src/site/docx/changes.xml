@@ -16,10 +16,10 @@
             <action dev="manuelpichler" issue="181" system="github" type="fix">
                 404 error on your website release area
             </action>
-            <action due-to="piotr-cz" dev="manuelpichler" issue="168" system="github" type="fix">
+            <action date="3f56c37" due-to="piotr-cz" dev="manuelpichler" issue="168" system="github" type="fix">
                 --version argument doesn't return version
             </action>
-            <action due-to="till" dev="manuelpichler" issue="183" system="github" type="add">
+            <action date="5f9e8a2" due-to="till" dev="manuelpichler" issue="183" system="github" type="add">
                 exceptions for CamelCaseVariableName and UnusedLocalVariable
             </action>
         </release>
