@@ -10,7 +10,7 @@ as a required dependency: ::
 
   {
       "require-dev": {
-          "phpmd/phpmd" : "2.0.*"
+          "phpmd/phpmd" : "@stable"
       }
   }
 
