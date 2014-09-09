@@ -85,4 +85,24 @@
         </exec>
     </target>
 
+    <target name="-phpmd:deploy:after~hooked" extensionOf="-integration-test:after~hook" if="release">
+
+        <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
+
+        <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
+            <arg line="${remote.shell.credentials}" />
+            <arg line="mkdir '${project.web.release.dir}'" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="scp" failonerror="true">
+            <arg line="dist/${project.name}-${project.version}.phar" />
+            <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.phar" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
+            <arg line="${remote.shell.credentials}" />
+            <arg line="cd '${project.web.release.dir}/..' ; rm latest ; ln -s '${project.version}' latest" />
+        </exec>
+
+        <antcall target="site:deploy" />
+    </target>
+
 </project>
