@@ -10,6 +10,16 @@
     </properties>
 
     <body>
+        <release version="2.1.1"
+                 date="2014/09/09"
+                 description="">
+            <action dev="manuelpichler" issue="181" system="github" type="fix">
+                404 error on your website release area
+            </action>
+            <action due-to="piotr-cz" dev="manuelpichler" issue="168" system="github" type="fix">
+                --version argument doesn't return version
+            </action>
+        </release>
         <release version="2.1.0"
                  date="2014/09/08"
                  description="This integrates several outstanding pull requests.">
