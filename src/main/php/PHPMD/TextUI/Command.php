@@ -81,7 +81,7 @@ class Command
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
     {
         if ($opts->hasVersion()) {
-            fwrite(STDOUT, 'PHPMD @package_version@ by Manuel Pichler' . PHP_EOL);
+            fwrite(STDOUT, sprintf('PHPMD %s', $this->getVersion()) . PHP_EOL);
             return self::EXIT_SUCCESS;
         }
 
@@ -141,6 +141,28 @@ class Command
             return self::EXIT_VIOLATION;
         }
         return self::EXIT_SUCCESS;
+    }
+
+    /**
+     * Returns the current version number.
+     *
+     * @return string
+     */
+    private function getVersion()
+    {
+        $composer = __DIR__ . '/../../../../../composer.json';
+        $build = __DIR__ . '/../../../../../build.xml';
+
+        if (file_exists($composer)) {
+            $data = json_decode(file_get_contents($composer));
+            $version = $data->version;
+        } elseif (file_exists($build)) {
+            $data = @parse_ini_file($build);
+            $version = $data['project.version'];
+        } else {
+            $version = '@package_version@';
+        }
+        RETURN $version;
     }
 
     /**
