@@ -62,6 +62,14 @@ use PHPMD\Rule\MethodAware;
 class CamelCaseVariableName extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
+     * @var array
+     */
+    private $exceptions = array(
+        '$php_errormsg',
+        '$http_response_header',
+    );
+
+    /**
      * This method checks if a variable is not named in camelCase
      * and emits a rule violation.
      *
@@ -71,14 +79,17 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     public function apply(AbstractNode $node)
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
-            if (!preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $variable->getImage())) {
-                $this->addViolation(
-                    $node,
-                    array(
-                        $variable->getImage(),
-                    )
-                );
+            $image = $variable->getImage();
+
+            if (in_array($image, $this->exceptions)) {
+                continue;
             }
+
+            if (preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $image)) {
+                continue;
+            }
+
+            $this->addViolation($node, array($image));
         }
     }
 }

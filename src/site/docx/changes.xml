@@ -19,6 +19,9 @@
             <action due-to="piotr-cz" dev="manuelpichler" issue="168" system="github" type="fix">
                 --version argument doesn't return version
             </action>
+            <action due-to="till" dev="manuelpichler" issue="183" system="github" type="add">
+                exceptions for CamelCaseVariableName and UnusedLocalVariable
+            </action>
         </release>
         <release version="2.1.0"
                  date="2014/09/08"
