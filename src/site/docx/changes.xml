@@ -10,6 +10,15 @@
     </properties>
 
 	<body>
+
+        <release version="1.5.1"
+                 date="2014/09/16"
+                 description="Bug fix release in old PHPMD version.">
+            <action date="dfaad75" dev="alcohol" issue="167" system="github" type="fix">
+                Modified version constraint for pdepend/pdepend
+            </action>
+        </release>
+
         <release version="1.5.0"
                  date="2013/07/26"
                  description="This release closes some PHP 5.4 related issues.">

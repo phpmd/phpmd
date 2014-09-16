@@ -1,6 +1,8 @@
 {
     "name": "phpmd/phpmd",
     "description": "Official version of PHPMD handled with Composer.",
+    "license": "BSD-3-Clause",
+    "version": "1.5.1",
 
     "require": {
         "php": ">=5.3.0",
