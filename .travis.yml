@@ -10,7 +10,7 @@ env:
 before_script:
   - composer install
 
-script: phpunit --configuration $TEST_CONFIG
+script: ./vendor/bin/phpunit --configuration $TEST_CONFIG
 
 notifications:
   irc: "irc.freenode.org#phpmd"

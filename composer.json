@@ -2,11 +2,17 @@
     "name": "phpmd/phpmd",
     "description": "Official version of PHPMD handled with Composer.",
     "license": "BSD-3-Clause",
-    "version": "1.5.2",
+    "version": "1.5.1",
 
     "require": {
         "php": ">=5.3.0",
         "pdepend/pdepend": "1.1.*"
+    },
+
+
+    "require-dev": {
+        "phpunit/phpunit": "3.*@stable",
+        "squizlabs/php_codesniffer": "@stable"
     },
 
     "include-path": [
