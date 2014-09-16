@@ -16,6 +16,9 @@
             <action date="74b9f84" dev="ravage84" issue="165" system="github" type="fix">
                  Removed lie regarding PEAR
             </action>
+            <action date="9271fc6" dev="rodrigm" issue="182" system="github" type="add">
+                 Tweak with CamelCase matching inheritDoc 
+            </action>
         </release>
         <release version="2.1.1"
                  date="2014/09/09"
