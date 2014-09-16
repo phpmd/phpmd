@@ -4,7 +4,7 @@
 
     "require": {
         "php": ">=5.3.0",
-        "pdepend/pdepend": "~1.1.1"
+        "pdepend/pdepend": "1.1.*"
     },
 
     "include-path": [
