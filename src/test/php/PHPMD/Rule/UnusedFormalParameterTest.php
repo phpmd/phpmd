@@ -386,6 +386,16 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase
+     */
+    public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * @test
      * @return void
      * @since 2.0.0
