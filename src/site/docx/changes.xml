@@ -10,6 +10,13 @@
     </properties>
 
     <body>
+        <release version="2.1.2"
+                 date="2014/09/19"
+                 description="">
+            <action date="74b9f84" dev="ravage84" issue="165" system="github" type="fix">
+                 Removed lie regarding PEAR
+            </action>
+        </release>
         <release version="2.1.1"
                  date="2014/09/09"
                  description="">
