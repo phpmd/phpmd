@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4385c16c0ade17a0795aba7f4687478",
+    "hash": "e8b5a8242b4c5337c824139e1302c8c8",
     "packages": [
         {
             "name": "pdepend/pdepend",
@@ -205,11 +205,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "symfony/dependency-injection": 0,
-        "symfony/filesystem": 0,
-        "symfony/config": 0
-    },
+    "stability-flags": [
+
+    ],
     "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0"

@@ -9,14 +9,14 @@
         "php": ">=5.3.0",
         "pdepend/pdepend": "2.0.*",
 
-        "symfony/dependency-injection": "@stable",
-        "symfony/filesystem": "@stable",
-        "symfony/config": "@stable"
+        "symfony/dependency-injection": "2.5.*",
+        "symfony/filesystem": "2.5.*",
+        "symfony/config": "2.5.*"
     },
 
     "autoload": {
         "psr-0": {
-            "PHPMD\\": "src/main/php",
+            "PHPMD\\": "src/main/php"
         }
     },
 
