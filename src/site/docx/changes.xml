@@ -19,6 +19,12 @@
             <action date="9271fc6" dev="rodrigm" issue="182" system="github" type="add">
                  Tweak with CamelCase matching inheritDoc 
             </action>
+            <action date="f954dcf" dev="andrewwatson" issue="85" system="github" type="fix">
+                 Documentation changes, fixed typo in PHPMD's online documentation.
+            </action>
+            <action date="45c55d8" dev="gena01" issue="190" system="github" type="fix">
+                 Updating composer.json
+            </action>
         </release>
         <release version="2.1.1"
                  date="2014/09/09"
