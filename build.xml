@@ -85,6 +85,8 @@
         </exec>
     </target>
 
+    <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />
+
     <target name="-phpmd:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
 
         <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
