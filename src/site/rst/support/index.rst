@@ -34,7 +34,7 @@ There are also companies providing commercial support for PHPMD:
   software quality tools and processes.
 
 __ irc://irc.freenode.net/#phpmd
-__ irc://freenode.net/#phpmd
+__ irc://irc.freenode.net/#phpmd
 __ http://freenode.net
 __ https://github.com/phpmd/phpmd/issues
 __ http://qafoo.com
