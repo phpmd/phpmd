@@ -12,7 +12,7 @@
     <body>
         <release version="2.1.2"
                  date="2014/09/25"
-                 description="">
+                 description="This release closes several minor issues and integrates some outstanding pull requests.">
             <action date="84f2d8a" dev="ravage84" issue="164" system="github" type="fix">
                 Fixed IRC link
             </action>
@@ -25,11 +25,17 @@
             <action date="f954dcf" dev="andrewwatson" issue="85" system="github" type="fix">
                  Documentation changes, fixed typo in PHPMD's online documentation.
             </action>
+            <action date="450f91c" dev="manuelpichler" issue="189" system="github" type="add">
+                Missing composer install documentation
+            </action>
             <action date="45c55d8" dev="gena01" issue="190" system="github" type="fix">
                  Updating composer.json
             </action>
-            <action date="" dev="manuelpichler" issue="191" system="github" type="fix">
+            <action date="b18ffbb" dev="manuelpichler" issue="191" system="github" type="fix">
                 Superglobals are not named in CamelCase
+            </action>
+            <action date="1eb321d" dev="gabeguz" issue="192" system="github" type="fix">
+                Fix a typo. These are the 'design rules' not the 'code size rules
             </action>
         </release>
         <release version="2.1.1"
