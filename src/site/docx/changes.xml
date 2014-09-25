@@ -10,6 +10,13 @@
     </properties>
 
     <body>
+        <release version="2.1.3"
+                 date="2014/09/25"
+                 description="Bug fix release.">
+            <action date="7b8d13f" dev="manuelpichler" issue="195" system="github" type="fix">
+                Missing version number in composer.json file replaced with build.properties version number.
+            </action>
+        </release>
         <release version="2.1.2"
                  date="2014/09/25"
                  description="This release closes several minor issues and integrates some outstanding pull requests.">
