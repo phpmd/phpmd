@@ -38,13 +38,14 @@ Then ``cd`` into the checkout directory initialize the referenced sub modules: :
   ~ $ cd phpmd
   ~/phpmd $ git submodule update --init
 
-This installs the build framework used by PHPMD. To initialize PHPMD's
-requirements you should now invoke *Ant* with the ``initialize`` target: ::
+Then install Composer in your project (or `download the composer.phar`__
+directly): ::
 
-  ~/phpmd $ ant initialize
+  ~ $ curl -s http://getcomposer.org/installer | php
 
-This command installs the dependencies used by PHPMD. Please note that this
-command will produce a lot of output on the shell.
+And finally let Composer install the project dependencies: ::
+
+  ~ $ php composer.phar install
 
 Requirements
 ============
@@ -56,5 +57,6 @@ current state. It relies on the following software products:
 - `PHP >= 5.3.0`__
 
 __ https://github.com/phpmd/phpmd
+__ http://getcomposer.org/composer.phar
 __ http://pdepend.org
 __ http://php.net/downloads.php
