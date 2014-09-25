@@ -67,6 +67,15 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     private $exceptions = array(
         '$php_errormsg',
         '$http_response_header',
+        '$GLOBALS',
+        '$_SERVER',
+        '$_GET',
+        '$_POST',
+        '$_FILES',
+        '$_COOKIE',
+        '$_SESSION',
+        '$_REQUEST',
+        '$_ENV',
     );
 
     /**

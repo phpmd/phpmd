@@ -11,8 +11,11 @@
 
     <body>
         <release version="2.1.2"
-                 date="2014/09/19"
+                 date="2014/09/25"
                  description="">
+            <action date="84f2d8a" dev="ravage84" issue="164" system="github" type="fix">
+                Fixed IRC link
+            </action>
             <action date="74b9f84" dev="ravage84" issue="165" system="github" type="fix">
                  Removed lie regarding PEAR
             </action>
@@ -24,6 +27,9 @@
             </action>
             <action date="45c55d8" dev="gena01" issue="190" system="github" type="fix">
                  Updating composer.json
+            </action>
+            <action date="" dev="manuelpichler" issue="191" system="github" type="fix">
+                Superglobals are not named in CamelCase
             </action>
         </release>
         <release version="2.1.1"
