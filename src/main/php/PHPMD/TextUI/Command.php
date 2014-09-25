@@ -158,7 +158,7 @@ class Command
         } else {
             $version = '@package_version@';
         }
-        RETURN $version;
+        return $version;
     }
 
     /**
