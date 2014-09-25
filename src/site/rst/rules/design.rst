@@ -2,7 +2,7 @@
 Design Rules
 ============
 
-The Code Size Ruleset contains a collection of rules that find software design related problems.
+The Design Ruleset contains a collection of rules that find software design related problems.
 
 ExitExpression
 ==============
