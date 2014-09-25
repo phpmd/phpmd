@@ -150,13 +150,9 @@ class Command
      */
     private function getVersion()
     {
-        $composer = __DIR__ . '/../../../../../composer.json';
-        $build = __DIR__ . '/../../../../../build.xml';
+        $build = __DIR__ . '/../../../../../build.properties';
 
-        if (file_exists($composer)) {
-            $data = json_decode(file_get_contents($composer));
-            $version = $data->version;
-        } elseif (file_exists($build)) {
+        if (file_exists($build)) {
             $data = @parse_ini_file($build);
             $version = $data['project.version'];
         } else {

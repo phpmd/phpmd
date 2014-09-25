@@ -55,7 +55,7 @@ use PHPMD\AbstractTest;
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  * @version   @project.version@
  *
- * @covers \PHPMD\Rule\Design\CamelCaseMethodName
+ * @covers \PHPMD\Rule\Controversial\CamelCaseMethodName
  * @group phpmd
  * @group phpmd::rule
  * @group phpmd::rule::controversial
@@ -67,7 +67,6 @@ class CamelCaseMethodNameTest extends AbstractTest
      * Tests that the rule does not apply for a valid method name.
      *
      * @return void
-     * @covers ::apply
      */
     public function testRuleDoesNotApplyForValidMethodName()
     {
@@ -85,7 +84,6 @@ class CamelCaseMethodNameTest extends AbstractTest
      * starting with a capital.
      *
      * @return void
-     * @covers ::apply
      */
     public function testRuleDoesApplyForMethodNameWithCapital()
     {
@@ -104,7 +102,6 @@ class CamelCaseMethodNameTest extends AbstractTest
      * with underscores.
      *
      * @return void
-     * @covers ::apply
      */
     public function testRuleDoesApplyForMethodNameWithUnderscores()
     {
@@ -123,7 +120,6 @@ class CamelCaseMethodNameTest extends AbstractTest
      * with an underscore at the beginning when it is allowed.
      *
      * @return void
-     * @covers ::apply
      */
     public function testRuleDoesApplyForValidMethodNameWithUnderscoreWhenNotAllowed()
     {
@@ -141,7 +137,6 @@ class CamelCaseMethodNameTest extends AbstractTest
      * with an underscore at the beginning when it is not allowed.
      *
      * @return void
-     * @covers ::apply
      */
     public function testRuleDoesNotApplyForValidMethodNameWithUnderscoreWhenAllowed()
     {
