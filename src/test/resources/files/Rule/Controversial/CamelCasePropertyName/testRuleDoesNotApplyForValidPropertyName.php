@@ -1,5 +1,5 @@
 <?php
 class testRuleDoesNotApplyForValidPropertyName
 {
-	public $camelCasePropertyName;
+    public $camelCasePropertyName;
 }

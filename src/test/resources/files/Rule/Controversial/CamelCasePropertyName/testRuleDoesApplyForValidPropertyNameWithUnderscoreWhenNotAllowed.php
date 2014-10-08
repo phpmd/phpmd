@@ -1,5 +1,5 @@
 <?php
 class testRuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed
 {
-	public $_camelCasePropertyNameWithUnderscoreAtTheBeginning;
+    public $_camelCasePropertyNameWithUnderscoreAtTheBeginning;
 }

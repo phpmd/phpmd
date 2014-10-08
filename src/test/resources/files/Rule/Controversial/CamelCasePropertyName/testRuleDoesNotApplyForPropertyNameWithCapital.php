@@ -1,5 +1,5 @@
 <?php
 class testRuleDoesNotApplyForPropertyNameWithCapital
 {
-	public $AlsoValidPropertyName;
+    public $AlsoValidPropertyName;
 }
