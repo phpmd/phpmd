@@ -27,10 +27,27 @@ class StaticAccessTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    public function testRuleNotAppliesToStaticMethodAccessWhenExcluded()
+   {
+       $rule = new StaticAccess();
+       $rule->setReport($this->getReportMock(0));
+       $rule->addProperty('exceptions', 'Excluded1,Excluded2');
+       $rule->apply($this->getMethod());
+   }
+
     public function testRuleAppliesToStaticMethodAccess()
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
+
+
+    public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded()
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportMock(1));
+        $rule->addProperty('exceptions', 'Excluded');
         $rule->apply($this->getMethod());
     }
 
