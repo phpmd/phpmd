@@ -4,17 +4,31 @@ Current Rulesets
 
 List of rulesets and rules contained in each ruleset.
 
+- `Clean Code Rules`__: The Clean Code Ruleset contains a collection of rules that enforce clean code principles.
 - `Code Size Rules`__: The Code Size Ruleset contains a collection of rules that find code size related problems.
 - `Controversial Rules`__: This ruleset contains a collection of controversial rules.
 - `Design Rules`__: The Code Size Ruleset contains a collection of rules that find software design related problems.
 - `Naming Rules`__: The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
 - `Unused Code Rules`__: The Unused Code Ruleset contains a collection of rules that find unused code.
 
+__ index.html#clean-code-rules
 __ index.html#code-size-rules
 __ index.html#controversial-rules
 __ index.html#design-rules
 __ index.html#naming-rules
 __ index.html#unused-code-rules
+
+
+Clean Code Rules
+================
+
+- `ElseExpression`__: An if expression with an else branch is never necessary.
+- `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP).
+- `StaticAccess`__: Static acccess causes inexchangable dependencies to other classes and leads to hard to test code.
+
+__ cleancode.html#elseexpression
+__ cleancode.html#booleanargumentflag
+__ cleancode.html#staticaccess
 
 Code Size Rules
 ===============
