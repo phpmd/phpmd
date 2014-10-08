@@ -81,7 +81,9 @@ case when static access is acceptable is when used for factory methods.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties>
+            <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+        </properties>
         <example>
             <![CDATA[
 class Foo
