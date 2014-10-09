@@ -33,7 +33,7 @@ See http://phpmd.org/download/index.html
 Command line usage
 ------------------
 
-Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
+Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
 
