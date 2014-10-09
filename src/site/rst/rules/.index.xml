@@ -5,6 +5,10 @@
     <path>index.rst</path>
   </site>
     <site>
+        <name>Clean Code Rules</name>
+        <path>cleancode.rst</path>
+    </site>
+    <site>
         <name>Code Size Rules</name>
         <path>codesize.rst</path>
     </site>
