@@ -22,5 +22,4 @@ install:
 
 test_script:
   - cd C:\projects\phpmd
-  - dir
-  - .\vendor\bin\phpunit.bat
+  - vendor\bin\phpunit.bat
