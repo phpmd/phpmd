@@ -8,8 +8,13 @@ branches:
 
 install:
   - cinst OpenSSL.Light
-  - SET PATH=C:\Program Files\OpenSSL\bin;%PATH%
+  - SET PATH=C:\Program Files\OpenSSL;%PATH%
   - cinst php
+  - cd c:\tools\php
+  - copy php.ini-production php.ini
+  - echo date.timezone="UTC" >> php.ini
+  - echo extension_dir=ext >> php.ini
+  - echo extension=php_openssl.dll >> php.ini
   - SET PATH=C:\tools\php;%PATH%
   - cd C:\projects\phpmd
   - php -r "readfile('http://getcomposer.org/installer');" | php
