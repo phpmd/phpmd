@@ -8,7 +8,7 @@ branches:
 
 install:
   - cinst OpenSSL.Light
-  - SET PATH=C:\Program Files\OpenSSL;%PATH%
+  - SET PATH=C:\Program Files\OpenSSL\bin;%PATH%
   - cinst php
   - SET PATH=C:\tools\php;%PATH%
   - cd C:\projects\phpmd
