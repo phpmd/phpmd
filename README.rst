@@ -1,10 +1,25 @@
-==================
+PHPMD
+=====
+
+PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the well known Java tool PMD. PHPMD can be seen as an user friendly frontend application for the raw metrics stream measured by PHP Depend.
+
+http://phpmd.org
+
+Installation
+------------
+
+See http://phpmd.org/download/index.html
+
+
 Command line usage
-==================
+------------------
 
 Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
 
   mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
+
+While the ``rulesets/codesize.xml`` ruleset file could look like this::
+
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
     <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
@@ -28,7 +43,7 @@ its archive, even if the "rulesets/codesize.xml" parameter above looks
 like a filesystem reference.
 
 Command line options
-====================
+--------------------
 
 - Notice that the default output is in XML, so you can redirect it to
   a file and XSLT it or whatever
@@ -93,7 +108,7 @@ to create one output for certain parts of your code ::
 
 
 Exit codes
-==========
+----------
 
 PHPMD's command line tool currently defines three different exit codes.
 
@@ -107,7 +122,7 @@ PHPMD's command line tool currently defines three different exit codes.
   violations in the analyzed source code.
 
 Renderers
-=========
+---------
 
 At the moment PHPMD comes with the following three renderers:
 
