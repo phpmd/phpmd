@@ -1,7 +1,7 @@
 build: false
 shallow_clone: true
 platform: 'x86'
-clone_folder: c:\projects\phpmd
+clone_folder: C:\projects\phpmd
 branches:
   except:
     - gh-pages
@@ -21,5 +21,6 @@ install:
   - php composer.phar install --prefer-dist --no-interaction --dev
 
 test_script:
-  - cd c:\projects\phpmd
-  - vendor\bin\phpunit.bat
+  - cd C:\projects\phpmd
+  - dir
+  - .\vendor\bin\phpunit.bat
