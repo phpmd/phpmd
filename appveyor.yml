@@ -6,15 +6,9 @@ branches:
   except:
     - gh-pages
 
-environment:
-  global:
-    PHP: "C:/PHP"
-
-init:
-  - SET PATH=C:\php\;%PATH%
-
 install:
   - cinst php
+  - SET PATH=C:\php\;%PATH%
   - cd C:\projects\phpmd
   - php -r "readfile('https://getcomposer.org/installer');" | php
   - php composer.phar install --prefer-dist --no-interaction --dev
