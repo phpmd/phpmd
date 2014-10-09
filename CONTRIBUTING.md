@@ -18,7 +18,7 @@ chance of keeping on top of things.
 Issues
 ------
 
-* Submit an [issue](https://github.com/phpmd/phpmd/issues/
+* Submit an [issue](https://github.com/phpmd/phpmd/issues/)
   * Make sure it does not already exist.
   * Clearly describe the issue including steps to reproduce, when it is a bug.
   * Make sure you note the PHPMD version you use.
