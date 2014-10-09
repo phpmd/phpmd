@@ -5,6 +5,27 @@ PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the
 
 http://phpmd.org
 
+.. image:: https://poser.pugx.org/phpmd/phpmd/v/stable.svg
+:target: https://packagist.org/packages/phpmd/phpmd
+:alt: Latest Stable Version
+
+.. image:: https://poser.pugx.org/phpmd/phpmd/license.svg
+:target: https://packagist.org/packages/phpmd/phpmd
+:alt: License
+
+.. image:: https://travis-ci.org/phpmd/phpmd.svg?branch=master
+:target: https://travis-ci.org/phpmd/phpmd
+:alt: Travis Build Status
+
+.. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
+:target: https://scrutinizer-ci.com/g/phpmd/phpmd/build-status/master
+:alt: Scrutinizer Build Status
+
+.. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/quality-score.png?b=master
+:target: https://scrutinizer-ci.com/g/phpmd/phpmd/?branch=master
+:alt: Scrutinizer Code Quality
+
+
 Installation
 ------------
 
