@@ -57,9 +57,11 @@ While the ``rulesets/codesize.xml`` ruleset file could look like this::
 You can pass a file name or a directory name containing PHP source
 code to PHPMD.
 
-The PHPMD Phar distribution includes the rule set files inside
+The `PHPMD Phar distribution`__ includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks 
 like a filesystem reference.
+
+__ http://phpmd.org/download/index.html
 
 Command line options
 --------------------
