@@ -2,8 +2,6 @@
 /**
  * This file is part of PHPMD.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *

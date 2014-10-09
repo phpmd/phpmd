@@ -2,8 +2,6 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * PHP Version 5
- *
  * Copyright (c) 2009, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
