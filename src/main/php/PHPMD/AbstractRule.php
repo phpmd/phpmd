@@ -357,7 +357,7 @@ abstract class AbstractRule implements Rule
         if (isset($this->properties[$name])) {
             return in_array($this->properties[$name], array('true', 'on', 1));
         }
-        throw new \OutOfBoundsException('Property $' . $name . ' does not exist.');
+        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
     /**
@@ -373,7 +373,7 @@ abstract class AbstractRule implements Rule
         if (isset($this->properties[$name])) {
             return (int) $this->properties[$name];
         }
-        throw new \OutOfBoundsException('Property $' . $name . ' does not exist.');
+        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
 
@@ -390,7 +390,7 @@ abstract class AbstractRule implements Rule
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
-        throw new \OutOfBoundsException('Property $' . $name . ' does not exist.');
+        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
 
     }
 
