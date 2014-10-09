@@ -43,6 +43,12 @@ class Something
 Detects when a local variable is declared and/or assigned, but not used.
         </description>
         <priority>3</priority>
+        <properties>
+            <property
+                    name="allow-unused-foreach-variables"
+                    description="Allow unused variables in foreach language constructs."
+                    value="false" />
+        </properties>
         <example>
 <![CDATA[
 class Foo {

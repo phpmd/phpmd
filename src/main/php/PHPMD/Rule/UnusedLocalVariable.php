@@ -172,6 +172,9 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+        if ($this->isUnusedForeachVariableAllowed($node)) {
+            return;
+        }
         $this->addViolation($node, array($node->getImage()));
     }
 
@@ -186,6 +189,28 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'CatchStatement');
+    }
+
+    /**
+     * Checks if an unused foreach variable (key or variable) is allowed.
+     *
+     * If it's not a foreach variable, it returns always false.
+     *
+     * @param \PHPMD\Node\ASTNode $variable The variable to check.
+     * @return bool True if allowed, else false.
+     */
+    private function isUnusedForeachVariableAllowed(ASTNode $variable) {
+        $isForeachVariable = $this->isChildOf($variable, 'ForeachStatement');
+        if (!$isForeachVariable) {
+            return false;
+        }
+
+        $ignoreUnusedForeachVars = $this->getBooleanProperty('allow-unused-foreach-variables');
+        if ($ignoreUnusedForeachVars) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
