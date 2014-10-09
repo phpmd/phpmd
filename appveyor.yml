@@ -1,0 +1,24 @@
+build: false
+shallow_clone: true
+platform: 'x86'
+clone_folder: c:\projects\phpmd
+branches:
+  except:
+    - gh-pages
+
+environment:
+  global:
+    PHP: "C:/PHP"
+
+init:
+  - SET PATH=C:\php\;%PATH%
+
+install:
+  - cinst php
+  - cd C:\projects\phpmd
+  - php -r "readfile('https://getcomposer.org/installer');" | php
+  - php composer.phar install --prefer-dist --no-interaction --dev
+
+test_script:
+  - cd c:\projects\phpmd
+  - vendor\bin\phpunit.bat
