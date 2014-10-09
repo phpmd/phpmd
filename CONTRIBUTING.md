@@ -27,9 +27,9 @@ Coding Standard
 ---------------
 
 Make sure your code changes comply with the PSR-2 Coding standard,
-using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)::
+using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer):
 
-   phpcs -p --extensions=php --standard=PSR2 /path/to/phpmd/
+    phpcs -p --extensions=php --standard=PSR2 /path/to/phpmd/
 
 Additional Resources
 --------------------
