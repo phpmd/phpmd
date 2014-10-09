@@ -39,7 +39,6 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   @project.version@
  * @since      0.2.5
  */
 
@@ -56,7 +55,6 @@ use PHPMD\Rule\ClassAware;
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   @project.version@
  * @since      0.2.5
  */
 class WeightedMethodCount extends AbstractRule implements ClassAware

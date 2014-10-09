@@ -39,7 +39,6 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   @project.version@
  */
 
 namespace PHPMD\Rule;
@@ -57,7 +56,6 @@ use PHPMD\Node\MethodNode;
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   @project.version@
  */
 class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
