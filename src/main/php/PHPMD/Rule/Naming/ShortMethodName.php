@@ -70,7 +70,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
             return;
         }
 
-         $exceptions = $this->getExceptionsList();                                                                                                                                                                  
+        $exceptions = $this->getExceptionsList();
 
         if (in_array($node->getName(), $exceptions)) {
             return;
@@ -91,7 +91,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      *
      * @return array
      */
-    private function getExceptionsList()                                                                                                                                                                           
+    private function getExceptionsList()
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');
@@ -101,5 +101,4 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
 
         return explode(',', $exceptions);
     }
-
 }
