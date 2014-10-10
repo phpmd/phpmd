@@ -14,7 +14,8 @@
         "symfony/config": "2.5.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+		"squizlabs/php_codesniffer": "*"
     },
 
     "autoload": {
