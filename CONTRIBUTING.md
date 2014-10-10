@@ -26,10 +26,13 @@ Issues
 Coding Standard
 ---------------
 
-Make sure your code changes comply with the PSR-2 Coding standard,
-using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer):
+Make sure your code changes comply with the PSR-2 coding standard by
+using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+from within your PHPMD folder:
 
-    phpcs -p --extensions=php --standard=PSR2 /path/to/phpmd/
+    vendor/bin/phpcs -p --extensions=php --standard=PSR2 src > phpcs.txt
+
+Check the ``phpcs.txt`` once it finished.
 
 Additional Resources
 --------------------
