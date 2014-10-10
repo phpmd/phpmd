@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-		"squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*"
     },
 
     "autoload": {
