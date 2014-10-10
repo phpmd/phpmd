@@ -13,6 +13,9 @@
         "symfony/filesystem": "2.5.*",
         "symfony/config": "2.5.*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
 
     "autoload": {
         "psr-0": {

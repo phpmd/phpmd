@@ -488,6 +488,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             file_get_contents(self::createFileUri($expectedFileName))
         );
 
+		$expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
+
         self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }
 
