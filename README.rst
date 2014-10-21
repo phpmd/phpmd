@@ -42,12 +42,12 @@ While the ``rulesets/codesize.xml`` ruleset file could look like this::
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
     <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-      <violation beginline="67" 
-                 endline="224" 
-                 rule="TooManyMethods" 
-                 ruleset="Code Size Rules" 
+      <violation beginline="67"
+                 endline="224"
+                 rule="TooManyMethods"
+                 ruleset="Code Size Rules"
                  package="PHP_Depend\DbusUI"
-                 class="PHP_Depend_DbusUI_ResultPrinter" 
+                 class="PHP_Depend_DbusUI_ResultPrinter"
                  priority="3">
         This class has too many methods, consider refactoring it.
       </violation>

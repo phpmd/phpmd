@@ -9,7 +9,7 @@
     <!--
         Import common build targets
     -->
-	<import file="${basedir}/setup/src/main/xml/base.xml" />
+    <import file="${basedir}/setup/src/main/xml/base.xml" />
 
     <!--
         Hook that will be called after we have copied the project's library
@@ -55,9 +55,9 @@
         <echo message="  ${-package:phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${commons.srcdir.php}"
-              executable="${-package:phar:filename}" 
+              executable="${-package:phar:filename}"
               failonerror="true">
-              
+
             <arg value="PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
@@ -72,8 +72,8 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  phpmd PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${commons.srcdir.php}" 
-              executable="${commons.executable.php}" 
+        <exec dir="${commons.srcdir.php}"
+              executable="${commons.executable.php}"
               failonerror="true">
 
             <arg value="-d" />
