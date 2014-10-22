@@ -74,6 +74,10 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
                 continue;
             }
 
+            if ($this->isInheritedSignature($node)) {
+                continue;
+            }
+            
             $this->addViolation($param, array($node->getImage(), $declarator->getImage()));
         }
     }
@@ -81,5 +85,22 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
     private function isBooleanValue(ASTValue $value = null)
     {
         return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
+    }
+    
+    /**
+     * Returns <b>true</b> when the given node is method with signature declared as inherited using
+     * {@inheritdoc} annotation.
+     *
+     * @param PHP_PMD_AbstractNode $node The context method or function instance.
+     *
+     * @return boolean
+     */
+     private function isInheritedSignature(PHP_PMD_AbstractNode $node)
+     {
+        if ($node instanceof PHP_PMD_Node_Method) {
+            return preg_match('/\@inheritdoc/', $node->getDocComment());
+        }
+
+        return false;
     }
 }
