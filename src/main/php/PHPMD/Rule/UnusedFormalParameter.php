@@ -134,21 +134,13 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function isMagicMethod(AbstractNode $node)
     {
         static $names = [
-                'construct',
-                'destruct',
                 'call',
                 'callStatic',
                 'get',
                 'set',
                 'isset',
                 'unset',
-                'sleep',
-                'wakeup',
-                'toString',
-                'invoke',
-                'set_state',
-                'clone',
-                'debugInfo'
+                'set_state'
         ];
 
         if ($node instanceof MethodNode) {
