@@ -133,7 +133,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     private function isMagicMethod(AbstractNode $node)
     {
-        static $names = [
+        static $names = array(
                 'call',
                 'callStatic',
                 'get',
@@ -141,7 +141,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
                 'isset',
                 'unset',
                 'set_state'
-        ];
+        );
 
         if ($node instanceof MethodNode) {
             return preg_match('/\__(?:' . implode("|", $names) . ')/i', $node->getName());
