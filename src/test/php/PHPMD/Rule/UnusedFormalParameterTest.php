@@ -372,6 +372,22 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToMagicMethod
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToMagicMethod()
+    {
+        $methods = array_filter($this->getClass()->getMethods(), function ($method) {
+            return $method->getName() == '__call';
+        });
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply(reset($methods));
+    }
+
+    /**
      * testRuleDoesNotApplyToMethodWithInheritdocAnnotation
      */
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation()
