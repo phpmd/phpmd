@@ -44,6 +44,7 @@ namespace PHPMD\Rule\Naming;
 use PDepend\Source\AST\ASTTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\InterfaceNode;
 use PHPMD\Rule\MethodAware;
 
 /**
@@ -65,12 +66,20 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
      */
     public function apply(AbstractNode $node)
     {
+
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;
         }
         if (strcasecmp($node->getName(), $node->getParentName()) !== 0) {
             return;
         }
+        if ($node->getParentType() instanceof InterfaceNode) {
+            return;
+        }
+        if ($node->getNamespaceName() !== '+global') {
+            return;
+        }
+
         $this->addViolation($node);
     }
 }

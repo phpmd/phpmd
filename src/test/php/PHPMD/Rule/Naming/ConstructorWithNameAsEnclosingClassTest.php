@@ -93,4 +93,18 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    public function testRuleNotAppliesToMethodNamedAsEnclosingInterface()
+    {
+        $rule = new ConstructorWithNameAsEnclosingClass();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleNotAppliesToMethodInNamespaces()
+    {
+        $rule = new ConstructorWithNameAsEnclosingClass();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }
