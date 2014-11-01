@@ -66,7 +66,6 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
      */
     public function apply(AbstractNode $node)
     {
-
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;
         }
