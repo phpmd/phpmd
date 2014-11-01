@@ -1,8 +1,5 @@
 <?php
 interface testRuleNotAppliesToMethodNamedAsEnclosingInterface
 {
-    function testRuleNotAppliesToMethodNamedAsEnclosingInterface()
-    {
-
-    }
+    function testRuleNotAppliesToMethodNamedAsEnclosingInterface();
 }
