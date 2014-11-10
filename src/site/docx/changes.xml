@@ -25,6 +25,9 @@
             <action date="6317043" dev="rjkip" issue="218" system="github" type="update">
                  Allow any future minor version of Symfony2 2.5 components.
             </action>
+            <action date="422345e" dev="grogy" issue="216" system="github" type="fix">
+                Refactor - removed right side spaces
+            </action>
             <action date="6da3358" dev="ravage84" issue="215" system="github" type="update">
                  Improved composer.json
             </action>
