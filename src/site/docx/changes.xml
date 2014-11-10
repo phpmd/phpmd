@@ -10,6 +10,16 @@
     </properties>
 
     <body>
+        <release version="2.2.1"
+                 date="2014/11/10"
+                 description="Closes an issue with recent symfony versions">
+            <action date="6317043" dev="rjkip" issue="218" system="github" type="add">
+                 Allow any future minor version of Symfony2 2.5 components
+            </action>
+            <action date="6317043" dev="rjkip" issue="196" system="github" type="add">
+                 Composer Compatible for symfony >= 2.5 and < master/dev
+            </action>
+        </release>
         <release version="2.2.0"
                  date="2014/10/10"
                  description="This release incorporates several pull request with enhancements, features and bug fixes.">
