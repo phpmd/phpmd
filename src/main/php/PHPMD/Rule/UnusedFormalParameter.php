@@ -74,6 +74,11 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             return;
         }
 
+        // Magic methods should be ignored as invalid declarations are picked up by PHP.
+        if ($this->isMagicMethod($node)) {
+            return;
+        }
+
         if ($this->isInheritedSignature($node)) {
             return;
         }
@@ -117,6 +122,29 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     {
         if ($node instanceof MethodNode) {
             return preg_match('/\@inheritdoc/i', $node->getDocComment());
+        }
+        return false;
+    }
+
+    /**
+     * Returns <b>true</b> when the given node is a magic method signature
+     * @param AbstractNode $node
+     * @return boolean
+     */
+    private function isMagicMethod(AbstractNode $node)
+    {
+        static $names = array(
+                'call',
+                'callStatic',
+                'get',
+                'set',
+                'isset',
+                'unset',
+                'set_state'
+        );
+
+        if ($node instanceof MethodNode) {
+            return preg_match('/\__(?:' . implode("|", $names) . ')/i', $node->getName());
         }
         return false;
     }
