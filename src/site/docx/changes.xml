@@ -10,7 +10,7 @@
     </properties>
 
     <body>
-        <release version="2.2.1"
+        <release version="2.3.0"
                  date="2014/11/10"
                  description="Closes an issue with recent symfony versions">
             <action date="b248315" dev="gooh" issue="221" system="github" type="add">
@@ -19,14 +19,17 @@
             <action date="b248315" dev="gooh" issue="220" system="github" type="add">
                  Skip check for ConstructorWithNameAsEnclosingClass when in an interface or namespace
             </action>
+            <action date="4d3b154" dev="aztech-dev" issue="219" system="github" type="update">
+                 Do not trigger UnusedFormalParameter with some magic methods.
+            </action>
             <action date="6317043" dev="rjkip" issue="218" system="github" type="update">
-                 Allow any future minor version of Symfony2 2.5 components
+                 Allow any future minor version of Symfony2 2.5 components.
             </action>
             <action date="6da3358" dev="ravage84" issue="215" system="github" type="update">
                  Improved composer.json
             </action>
             <action date="6317043" dev="rjkip" issue="196" system="github" type="update">
-                 Composer Compatible for symfony &gt;= 2.5 and &lt; master/dev
+                 Composer Compatible for symfony &gt;= 2.5 and &lt; master/dev.
             </action>
         </release>
         <release version="2.2.0"
