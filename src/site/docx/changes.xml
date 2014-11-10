@@ -13,11 +13,20 @@
         <release version="2.2.1"
                  date="2014/11/10"
                  description="Closes an issue with recent symfony versions">
-            <action date="6317043" dev="rjkip" issue="218" system="github" type="add">
+            <action date="b248315" dev="gooh" issue="221" system="github" type="add">
+                 Ignore php4 style ctor in interfaces and namespaces
+            </action>
+            <action date="b248315" dev="gooh" issue="220" system="github" type="add">
+                 Skip check for ConstructorWithNameAsEnclosingClass when in an interface or namespace
+            </action>
+            <action date="6317043" dev="rjkip" issue="218" system="github" type="update">
                  Allow any future minor version of Symfony2 2.5 components
             </action>
-            <action date="6317043" dev="rjkip" issue="196" system="github" type="add">
-                 Composer Compatible for symfony >= 2.5 and < master/dev
+            <action date="6da3358" dev="ravage84" issue="215" system="github" type="update">
+                 Improved composer.json
+            </action>
+            <action date="6317043" dev="rjkip" issue="196" system="github" type="update">
+                 Composer Compatible for symfony &gt;= 2.5 and &lt; master/dev
             </action>
         </release>
         <release version="2.2.0"
