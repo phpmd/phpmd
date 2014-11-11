@@ -72,7 +72,7 @@ class RuleViolation
 
     /**
      * The description/message text that describes the violation.
-     * 
+     *
      * @var string
      */
     private $description;

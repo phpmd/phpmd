@@ -69,7 +69,7 @@ abstract class AbstractRenderer
 
     /**
      * Returns the associated output writer instance.
-     * 
+     *
      * @param \PHPMD\AbstractWriter $writer
      * @return void
      */
