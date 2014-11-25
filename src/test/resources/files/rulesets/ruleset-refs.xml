@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset 
+    name="phpmd-phpincludepath-test" 
+    xmlns="http://www.addiks.net/xmlns/pmd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://www.addiks.net/xmlns/pmd http://files.addiks.de/xmlns/phpmd.xsd" 
+    xsi:noNamespaceSchemaLocation=" http://files.addiks.de/xmlns/phpmd.xsd"> 
+    <description>First description...</description>
+    
+    <php-includepath>/foo/bar/baz</php-includepath>
+    
+    <!-- this ref's set1.xml using the include-path '.../src/test/php'
+         It will cause an error if that feature does not work properly. -->
+    <rule ref="../resources/files/rulesets/set1.xml" />
+    
+    <!-- This includes a certain file not following PSR-0 using an explicit filepath.
+         If including a rule with explicit filename does not work, this will fail. 
+         Also, the file is referenced relative from this rule-file. -->
+    <rule name="SomeTestRule" 
+          message="The method is missing a valid @return annotation!"
+          class="some_class_that_does_not_follow_psr0" 
+          file="../classes/does_not_follow_psr0.class.php"> 
+        <priority>1</priority> 
+    </rule>
+    
+</ruleset>
