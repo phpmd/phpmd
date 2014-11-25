@@ -647,7 +647,7 @@ class RuleSetFactoryTest extends AbstractTest
         
         try{
             $factory = new RuleSetFactory();
-            $ruleSets = $factory->createRuleSets($fileName);
+            $factory->createRuleSets($fileName);
             
             $expectedIncludePath  = "/foo/bar/baz";
             $actualIncludePaths   = explode(PATH_SEPARATOR, get_include_path());
