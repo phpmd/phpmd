@@ -375,7 +375,7 @@ class RuleSetFactory
         }
 
         if (!is_readable($fileName)) {
-            $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
+            $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
         }
         
         if (class_exists($className) === false) {
