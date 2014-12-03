@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Gerrit Addiks <gerrit.addiks@brille24.de>
+ * @author Gerrit Addiks <gerrit@addiks.de>
  */
 
 /**
