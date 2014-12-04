@@ -83,7 +83,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
                 continue;
             }
 
-            $this->addViolation($methodCall, array($methodCall->getImage(), $methodCall->getImage()));
+            $this->addViolation($methodCall, array($className, $node->getName()));
         }
     }
 
