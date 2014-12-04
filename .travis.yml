@@ -17,7 +17,7 @@ env:
 before_script:
   - composer install
 
-script: phpunit --configuration $TEST_CONFIG
+script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
 
 notifications:
   irc: "irc.freenode.org#phpmd"
