@@ -166,7 +166,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * Closes the logger process and writes the output file.
      *
      * @return void
-     * @throws PDepend\Report\NoLogOutputException If the no log target exists.
+     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
      */
     public function close()
     {
