@@ -41,7 +41,6 @@
 
 namespace PHPMD;
 
-use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
