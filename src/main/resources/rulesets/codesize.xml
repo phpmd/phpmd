@@ -357,9 +357,10 @@ order to reduce its complexity and find a way to have more fine grained objects.
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
         <description>
             <![CDATA[
-The WMC of a class is a good indicator of how much time and effort is required
-to modify and maintain this class. A large number of methods also means that
-this class has a greater potential impact on derived classes.
+The Weighted Method Count (WMC) of a class is a good indicator of how much time
+and effort is required to modify and maintain this class. The WMC metric is defined
+as the sum of complexities of all methods declared in a class. A large number of
+methods also means that this class has a greater potential impact on derived classes.
             ]]>
         </description>
         <priority>3</priority>
