@@ -53,19 +53,6 @@ namespace PHPMD;
 abstract class AbstractRule implements Rule
 {
     /**
-     * List of readable priority names.
-     *
-     * @var array(string) $_priorities
-     */
-    private static $priorities = array(
-        'High',
-        'Medium High',
-        'Medium',
-        'Medium Low',
-        'Low'
-    );
-
-    /**
      * The name for this rule instance.
      *
      * @var string $_name
