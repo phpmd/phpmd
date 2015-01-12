@@ -87,7 +87,7 @@ class ClassName {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-It is considered best practice to use the CamelCase notation to name methods.
+It is considered best practice to use the camelCase notation to name methods.
             ]]>
         </description>
         <priority>1</priority>
