@@ -107,7 +107,6 @@ class TooManyMethods extends AbstractRule implements ClassAware
     /**
      * Counts all methods within the given class/interface node.
      *
-     *
      * @param \PHPMD\Node\AbstractTypeNode $node
      * @return integer
      */
