@@ -69,6 +69,13 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
         if ($threshold <= strlen($node->getName())) {
             return;
         }
+
+        $exceptions = $this->getExceptionsList();
+
+        if (in_array($node->getName(), $exceptions)) {
+            return;
+        }
+
         $this->addViolation(
             $node,
             array(
@@ -77,5 +84,21 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
                 $threshold
             )
         );
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+        try {
+            $exceptions = $this->getStringProperty('exceptions');
+        } catch (OutOfBoundsException $e) {
+            $exceptions = '';
+        }
+
+        return explode(',', $exceptions);
     }
 }

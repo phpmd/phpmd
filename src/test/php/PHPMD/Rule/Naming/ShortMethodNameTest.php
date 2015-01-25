@@ -67,6 +67,7 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 54);
+        $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
@@ -80,6 +81,7 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
+        $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -93,6 +95,7 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 54);
+        $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -105,6 +108,7 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
+        $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
@@ -118,6 +122,7 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 50);
+        $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
@@ -131,6 +136,21 @@ class ShortMethodNameTest extends AbstractTest
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToMethodWithShortNameWhenException()
+    {
+        $rule = new ShortMethodName();
+        $rule->addProperty('minimum', 100);
+        $rule->addProperty('exceptions', 'testRuleNotAppliesToMethodWithShortNameWhenException,another');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
