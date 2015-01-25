@@ -11,7 +11,7 @@
 
     <body>
         <release version="2.2.0"
-                 date="2014/12/04"
+                 date="2015/01/25"
                  description="Closes an issue with recent symfony versions">
             <action date="efa1dcd" dev="jyggen" issue="226" system="github" type="fix">
                 Fixed error message for StaticAccess
