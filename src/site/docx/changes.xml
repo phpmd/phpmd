@@ -13,8 +13,14 @@
         <release version="2.2.1"
                  date=""
                  description="">
+            <action date="22a73a7" dev="ravage84" issue="210" system="github" type="add">
+                Added editorconfig
+            </action>
             <action date="441398d" dev="ravage84" issue="211" system="github" type="add">
                 Added phpcs as development dependency
+            </action>
+            <action date="55b799b" dev="ravage84" issue="214" system="github" type="add">
+                Short method name exceptions
             </action>
             <action date="c12fffa" dev="grogy" issue="225" system="github" type="update">
                 Refactor - remove right side whitespaces
