@@ -133,7 +133,7 @@ class CommandLineOptions
 
     /**
      * Should PHPMD run in strict mode?
-     * 
+     *
      * @var boolean
      * @since 1.2.0
      */

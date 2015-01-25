@@ -378,7 +378,7 @@ abstract class AbstractRule implements Rule
 
 
     /**
-     * Returns the raw string value of a configured property or throws an 
+     * Returns the raw string value of a configured property or throws an
      * exception when no property with <b>$name</b> exists.
      *
      * @param string $name

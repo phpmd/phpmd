@@ -115,7 +115,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
-            $this->doCheckNodeImage($node);
+            $this->checkMaximumLength($node);
         }
     }
 
@@ -125,7 +125,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function doCheckNodeImage(AbstractNode $node)
+    protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
         if ($threshold >= strlen($node->getImage()) - 1) {

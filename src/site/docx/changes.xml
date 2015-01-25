@@ -10,9 +10,12 @@
     </properties>
 
     <body>
-        <release version="2.3.0"
-                 date="2014/11/10"
+        <release version="2.2.0"
+                 date="2014/12/04"
                  description="Closes an issue with recent symfony versions">
+            <action date="efa1dcd" dev="jyggen" issue="226" system="github" type="fix">
+                Fixed error message for StaticAccess
+            </action>
             <action date="b248315" dev="gooh" issue="221" system="github" type="add">
                  Ignore php4 style ctor in interfaces and namespaces
             </action>
@@ -34,10 +37,6 @@
             <action date="6317043" dev="rjkip" issue="196" system="github" type="update">
                  Composer Compatible for symfony &gt;= 2.5 and &lt; master/dev.
             </action>
-        </release>
-        <release version="2.2.0"
-                 date="2014/10/10"
-                 description="This release incorporates several pull request with enhancements, features and bug fixes.">
             <action date="05210b6" dev="ravage84" issue="208" system="github" type="add">
                 Appveyor CI for Windows
             </action>

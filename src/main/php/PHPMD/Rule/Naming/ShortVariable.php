@@ -111,7 +111,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
-            $this->doCheckNodeImage($node);
+            $this->checkMinimumLength($node);
         }
     }
 
@@ -121,7 +121,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function doCheckNodeImage(AbstractNode $node)
+    protected function checkMinimumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
 

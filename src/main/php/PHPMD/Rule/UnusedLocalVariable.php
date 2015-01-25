@@ -199,18 +199,14 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\ASTNode $variable The variable to check.
      * @return bool True if allowed, else false.
      */
-    private function isUnusedForeachVariableAllowed(ASTNode $variable) {
+    private function isUnusedForeachVariableAllowed(ASTNode $variable)
+    {
         $isForeachVariable = $this->isChildOf($variable, 'ForeachStatement');
         if (!$isForeachVariable) {
             return false;
         }
 
-        $ignoreUnusedForeachVars = $this->getBooleanProperty('allow-unused-foreach-variables');
-        if ($ignoreUnusedForeachVars) {
-            return true;
-        }
-
-        return false;
+        return $this->getBooleanProperty('allow-unused-foreach-variables');
     }
 
     /**

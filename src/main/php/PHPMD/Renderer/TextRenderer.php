@@ -68,7 +68,6 @@ class TextRenderer extends AbstractRenderer
         $writer->write(PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            
             $writer->write($violation->getFileName());
             $writer->write(':');
             $writer->write($violation->getBeginLine());
@@ -78,7 +77,6 @@ class TextRenderer extends AbstractRenderer
         }
 
         foreach ($report->getErrors() as $error) {
-
             $writer->write($error->getFile());
             $writer->write("\t-\t");
             $writer->write($error->getMessage());
