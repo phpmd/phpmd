@@ -37,7 +37,8 @@
         "symfony/config": ">=2.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-0": {

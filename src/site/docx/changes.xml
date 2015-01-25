@@ -10,6 +10,37 @@
     </properties>
 
     <body>
+        <release version="2.2.1"
+                 date=""
+                 description="">
+            <action date="c12fffa" dev="grogy" issue="225" system="github" type="update">
+                Refactor - remove right side whitespaces
+            </action>
+            <action date="49f19d8" dev="bolmstedt" issue="237" system="github" type="fix">
+                Display type correctly for constructors
+            </action>
+            <action date="829d110" dev="ravage84" issue="238" system="github" type="fix">
+                Fix link to rulesets
+            </action>
+            <action date="966ce38" dev="JeroenDeDauw" issue="242" system="github" type="update">
+                Unused "use" statement removed from RuleViolation class
+            </action>
+            <action date="121d43b" dev="JeroenDeDauw" issue="243" system="github" type="update">
+                Unused private property removed.
+            </action>
+            <action date="b5a04ce" dev="JeroenDeDauw" issue="244" system="github" type="fix">
+                Fix typos in type hints
+            </action>
+            <action date="6cd03ce" dev="JeroenDeDauw" issue="245" system="github" type="fix">
+                Fix CamelCase vs camelCase issue in the docs
+            </action>
+            <action date="b1e9be9" dev="JeroenDeDauw" issue="246" system="github" type="update">
+                Improve WMC documentation
+            </action>
+            <action date="a9bd6cb" dev="JeroenDeDauw" issue="249" system="github" type="update">
+                Remove redundant line
+            </action>
+        </release>
         <release version="2.2.0"
                  date="2015/01/25"
                  description="Closes an issue with recent symfony versions">
