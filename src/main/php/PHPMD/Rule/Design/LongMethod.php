@@ -78,9 +78,14 @@ class LongMethod extends AbstractRule implements FunctionAware, MethodAware
             return;
         }
 
-        $type = explode('_', get_class($node));
-        $type = strtolower(array_pop($type));
-
-        $this->addViolation($node, array($type, $node->getName(), $loc, $threshold));
+        $this->addViolation(
+            $node,
+            array(
+                $node->getType(),
+                $node->getName(),
+                $loc,
+                $threshold
+            )
+        );
     }
 }
