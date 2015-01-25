@@ -194,4 +194,4 @@ own set of rules. Another good source of information are the rule set
 `files`__ that are shipped with PHPMD.
 
 __ /rules/ 
-__ http://tracker.phpmd.org/php_mess_detector/browse_code/view/rulesets/
+__ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
