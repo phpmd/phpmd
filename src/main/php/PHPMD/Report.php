@@ -54,7 +54,7 @@ class Report
     /**
      * List of rule violations detected in the analyzed source code.
      *
-     * @var \PHPMD\RuleViolations[]
+     * @var \PHPMD\RuleViolation[]
      */
     private $ruleViolations = array();
 

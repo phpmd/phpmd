@@ -181,7 +181,7 @@ class ParserTest extends AbstractTest
     /**
      * Creates a mocked PDepend class instance.
      *
-     * @return PDepend\Source\AST\ASTClass
+     * @return \PDepend\Source\AST\ASTClass
      */
     protected function getPHPDependClassMock()
     {
