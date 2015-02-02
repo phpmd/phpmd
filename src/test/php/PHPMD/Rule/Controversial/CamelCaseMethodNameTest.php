@@ -72,6 +72,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
         $rule->apply($this->getMethod());
     }
 
@@ -90,6 +91,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
         $rule->apply($method);
     }
 
@@ -108,6 +110,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
         $rule->apply($method);
     }
 
@@ -125,6 +128,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
         $rule->apply($method);
     }
 
@@ -142,6 +146,79 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'true');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply for a valid test method name
+     * with an underscore.
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForTestMethodWithUnderscoreWhenNotAllowed()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does not apply for a valid test method name
+     * with an underscore when an single underscore is allowed.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForTestMethodWithUnderscoreWhenAllowed()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply for a test method name
+     * with multiple underscores even when one is allowed.
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply to for test method names that
+     * have a capital after their single allowed underscore.
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTestMethodWithUnderscoreFollowedByCapital()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'true');
         $rule->apply($method);
     }
 

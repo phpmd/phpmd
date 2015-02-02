@@ -84,10 +84,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     {
         $methodName = $node->getName();
         if (!in_array($methodName, $this->ignoredMethods)) {
-            $allowUnderscore = $this->getBooleanProperty('allow-underscore');
-            $pattern = $allowUnderscore ? '/^[_]?[a-z][a-zA-Z0-9]*$/' : '/^[a-z][a-zA-Z0-9]*$/';
-
-            if (!preg_match($pattern, $methodName)) {
+            if (!$this->isValid($methodName)) {
                 $this->addViolation(
                     $node,
                     array(
@@ -97,4 +94,18 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
             }
         }
     }
+
+    private function isValid($methodName)
+    {
+        if ($this->getBooleanProperty('allow-underscore-test') && strpos($methodName, 'test') === 0) {
+            return preg_match('/^test[a-zA-Z0-9]*([_][a-z][a-zA-Z0-9]*)?$/', $methodName);
+        }
+
+        if ($this->getBooleanProperty('allow-underscore')) {
+            return preg_match('/^[_]?[a-z][a-zA-Z0-9]*$/', $methodName);
+        }
+
+        return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName);
+    }
+
 }
