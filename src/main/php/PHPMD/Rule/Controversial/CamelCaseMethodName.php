@@ -84,12 +84,8 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     {
         $methodName = $node->getName();
         if (!in_array($methodName, $this->ignoredMethods)) {
-            $pattern = '/^[a-z][a-zA-Z0-9]*$/';
             $allowUnderscore = $this->getBooleanProperty('allow-underscore');
-
-            if ($allowUnderscore == true) {
-                $pattern = '/^[_]?[a-z][a-zA-Z0-9]*$/';
-            }
+            $pattern = $allowUnderscore ? '/^[_]?[a-z][a-zA-Z0-9]*$/' : '/^[a-z][a-zA-Z0-9]*$/';
 
             if (!preg_match($pattern, $methodName)) {
                 $this->addViolation(
