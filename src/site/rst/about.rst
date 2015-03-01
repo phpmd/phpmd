@@ -20,7 +20,7 @@ can be things like:
 - Unused parameters, methods, properties
 
 PHPMD is a young project and so it only provides a limited set of
-pre defined rules, compared with it's brother PMD, that detect code
+pre defined rules, compared with its brother PMD, that detect code
 smells and possible errors within the analyzed source code. Checkout
 the `rules section`__ to learn more about all implemented rules.
 
