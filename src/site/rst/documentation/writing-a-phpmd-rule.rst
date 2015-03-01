@@ -17,8 +17,8 @@ This article describes how you can extend PHPMD with custom rule classes that
 can be used to detect design issues or errors in the analyzed source code.
 
 Let us start with some architecture basics behind PHPMD. All rules in PHPMD
-must at least implement the `PHPMD\Rule`__ interface. You can also extend
-the abstract rule base class `\PHPMD\AbstractRule`__ which already provides
+must at least implement the `\\PHPMD\\Rule`__ interface. You can also extend
+the abstract rule base class `\\PHPMD\\AbstractRule`__ which already provides
 an implementation of all required infrastructure methods and application logic,
 so that the only task which is left to you is the implementation of the
 concrete validation code of your rule. To implement this validation-code the
@@ -35,7 +35,7 @@ the application during the source analysis phase. ::
       }
   }
 
-The ``apply()`` method gets an instance of `\PHPMD\AbstractNode`__ as
+The ``apply()`` method gets an instance of `\\PHPMD\\AbstractNode`__ as
 argument. This node instance represents the different high level code artifacts
 found in the analyzed source code. In this context high level artifact means
 *interfaces*, *classes*, *methods* and *functions*. But how do we tell PHPMD
@@ -46,10 +46,10 @@ interfaces is to label a rule class, which says: Hey I'm interessted in nodes
 of type class and interface, or I am interessted in function artifacts. The
 following list shows the available marker interfaces:
 
-- `\PHPMD\Rule\ClassAware`__
-- `\PHPMD\Rule\FunctionAware`__
-- `\PHPMD\Rule\InterfaceAware`__
-- `\PHPMD\Rule\MethodAware`__
+- `\\PHPMD\\Rule\\ClassAware`__
+- `\\PHPMD\\Rule\\FunctionAware`__
+- `\\PHPMD\\Rule\\InterfaceAware`__
+- `\\PHPMD\\Rule\\MethodAware`__
 
 With this marker interfaces we can now extend the previous example, so that
 the rule will be called for functions found in the analyzed source code. ::
@@ -67,7 +67,7 @@ the rule will be called for functions found in the analyzed source code. ::
 And because our coding guideline forbids functions every call to the ``apply()``
 method will result in a rule violation. Such a violation can be reported to
 PHPMD through the ``addViolation()`` method. The rule inherits this helper
-method from it's parent class `\PHPMD\AbstractRule`__. ::
+method from it's parent class `\\PHPMD\\AbstractRule`__. ::
 
   class Com_Example_Rule_NoFunctions // ...
   {
@@ -131,10 +131,10 @@ Writing a rule based on an existing Software Metric
 Since the root goal for the development of PHPMD was the implementation of a
 simple and user friendly interface for PHP_Depend, we will show you in this
 section how to develop a rule class, that uses a software metric measured by
-`PHP_Depend`__ as input data.
+`PDepend`__ as input data.
 
 In this section you will learn how to access software metrics for a given
-`\PHPMD\AbstractNode`__ instance. And you will learn how to use PHPMD's
+`\\PHPMD\\AbstractNode`__ instance. And you will learn how to use PHPMD's
 configuration backend in such a way, that thresholds and other settings can
 be customized without changing any PHP code. Additionally you will see how
 the information content of an error message can be improved.
@@ -150,7 +150,7 @@ because a class without any public method does not expose any service to
 surrounding application.
 
 The following code listing shows the entire rule class skeleton. As you can
-see, this class implements the `\PHPMD\Rule\ClassAware`__ interface, so that
+see, this class implements the `\\PHPMD\\Rule\\ClassAware`__ interface, so that
 PHPMD knows that this rule will only be called for classes. ::
 
   class Com_Example_Rule_NumberOfPublicMethods
@@ -337,7 +337,7 @@ source code. The ability to access PHP_Depend's abstract syntax tree gives you
 the most powerful way to write rules for PHPMD, because you can analyze nearly
 all apects of the software under test. The syntax tree can be accessed through
 the ``getFirstChildOfType()`` and ``findChildrenOfType()`` methods of the
-`\PHPMD\AbstractNode`__ class.
+`\\PHPMD\\AbstractNode`__ class.
 
 In this example we will implement a rule that detects the usage of the new and
 controversial PHP feature ``goto``. Because we all know and agree that ``goto``
@@ -347,7 +347,7 @@ PHP_Depend's for the ``goto`` language construct.
 
 Because the ``goto`` statement cannot be found in classes and interfaces, but
 in methods and functions, the new rule class must implement the two marker
-interfaces `\PHPMD\Rule\FunctionAware`__ and `\PHPMD\Rule\MethodAware`__.
+interfaces `\\PHPMD\\Rule\\FunctionAware`__ and `\\PHPMD\\Rule\\MethodAware`__.
 
 ::
 

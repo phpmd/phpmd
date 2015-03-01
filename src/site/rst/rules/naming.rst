@@ -30,8 +30,7 @@ This rule has the following properties:
  Name                                Default Value   Description                                               
 =================================== =============== ===========================================================
  minimum                             3               Minimum length for a variable, property or parameter name 
-=================================== =============== ===========================================================
- exceptions                          empty           Comma-separated list of names that should be allowed
+ exceptions                                          Comma-separated list of exceptions                        
 =================================== =============== ===========================================================
 
 LongVariable
@@ -84,6 +83,7 @@ This rule has the following properties:
  Name                                Default Value   Description                                  
 =================================== =============== ==============================================
  minimum                             3               Minimum length for a method or function name 
+ exceptions                                          Comma-separated list of exceptions           
 =================================== =============== ==============================================
 
 ConstructorWithNameAsEnclosingClass

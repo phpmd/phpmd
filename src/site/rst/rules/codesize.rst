@@ -106,11 +106,12 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== =====================================
- Name                                Default Value   Description                         
-=================================== =============== =====================================
- minimum                             100             The method size reporting threshold 
-=================================== =============== =====================================
+=================================== =============== =========================================
+ Name                                Default Value   Description                             
+=================================== =============== =========================================
+ minimum                             100             The method size reporting threshold     
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
+=================================== =============== =========================================
 
 ExcessiveClassLength
 ====================
@@ -130,11 +131,12 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ====================================
- Name                                Default Value   Description                        
-=================================== =============== ====================================
- minimum                             1000            The class size reporting threshold 
-=================================== =============== ====================================
+=================================== =============== =========================================
+ Name                                Default Value   Description                             
+=================================== =============== =========================================
+ minimum                             1000            The class size reporting threshold      
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
+=================================== =============== =========================================
 
 ExcessiveParameterList
 ======================
@@ -236,7 +238,7 @@ ExcessiveClassComplexity
 
 Since: PHPMD 0.2.5
 
-The WMC of a class is a good indicator of how much time and effort is required to modify and maintain this class. A large number of methods also means that this class has a greater potential impact on derived classes.
+The Weighted Method Count (WMC) of a class is a good indicator of how much time and effort is required to modify and maintain this class. The WMC metric is defined as the sum of complexities of all methods declared in a class. A large number of methods also means that this class has a greater potential impact on derived classes.
 
 
 Example: ::

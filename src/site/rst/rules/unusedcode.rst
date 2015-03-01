@@ -42,6 +42,14 @@ Example: ::
       }
   }
 
+This rule has the following properties:
+
+=================================== =============== ========================================================
+ Name                                Default Value   Description                                            
+=================================== =============== ========================================================
+ allow-unused-foreach-variables      false           Allow unused variables in foreach language constructs. 
+=================================== =============== ========================================================
+
 UnusedPrivateMethod
 ===================
 

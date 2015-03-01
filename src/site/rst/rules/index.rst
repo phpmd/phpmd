@@ -4,7 +4,7 @@ Current Rulesets
 
 List of rulesets and rules contained in each ruleset.
 
-- `Clean Code Rules`__: The Clean Code Ruleset contains a collection of rules that enforce clean code principles.
+- `Clean Code Rules`__: The Clean Code ruleset contains rules that enforce a clean code base. This includes rules from SOLID and object calisthenics.
 - `Code Size Rules`__: The Code Size Ruleset contains a collection of rules that find code size related problems.
 - `Controversial Rules`__: This ruleset contains a collection of controversial rules.
 - `Design Rules`__: The Code Size Ruleset contains a collection of rules that find software design related problems.
@@ -18,16 +18,15 @@ __ index.html#design-rules
 __ index.html#naming-rules
 __ index.html#unused-code-rules
 
-
 Clean Code Rules
 ================
 
-- `ElseExpression`__: An if expression with an else branch is never necessary.
-- `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP).
-- `StaticAccess`__: Static acccess causes inexchangable dependencies to other classes and leads to hard to test code.
+- `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
+- `ElseExpression`__: An if expression with an else branch is never necessary. You can rewrite the conditions in a way that the else is not necessary and the code becomes simpler to read. To achieve this use early return statements. To achieve this you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+- `StaticAccess`__: Static acccess causes inexchangable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
 
-__ cleancode.html#elseexpression
 __ cleancode.html#booleanargumentflag
+__ cleancode.html#elseexpression
 __ cleancode.html#staticaccess
 
 Code Size Rules
@@ -41,7 +40,7 @@ Code Size Rules
 - `ExcessivePublicCount`__: A large number of public methods and attributes declared in a class can indicate the class may need to be broken up as increased effort will be required to thoroughly test it.
 - `TooManyFields`__: Classes that have too many fields could be redesigned to have fewer fields, possibly through some nested object grouping of some of the information. For example, a class with city/state/zip fields could instead have one Address field.
 - `TooManyMethods`__: A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
-- `ExcessiveClassComplexity`__: The WMC of a class is a good indicator of how much time and effort is required to modify and maintain this class. A large number of methods also means that this class has a greater potential impact on derived classes.
+- `ExcessiveClassComplexity`__: The Weighted Method Count (WMC) of a class is a good indicator of how much time and effort is required to modify and maintain this class. The WMC metric is defined as the sum of complexities of all methods declared in a class. A large number of methods also means that this class has a greater potential impact on derived classes.
 
 __ codesize.html#cyclomaticcomplexity
 __ codesize.html#npathcomplexity
@@ -59,7 +58,7 @@ Controversial Rules
 - `Superglobals`__: Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.
 - `CamelCaseClassName`__: It is considered best practice to use the CamelCase notation to name classes.
 - `CamelCasePropertyName`__: It is considered best practice to use the camelCase notation to name attributes.
-- `CamelCaseMethodName`__: It is considered best practice to use the CamelCase notation to name methods.
+- `CamelCaseMethodName`__: It is considered best practice to use the camelCase notation to name methods.
 - `CamelCaseParameterName`__: It is considered best practice to use the camelCase notation to name parameters.
 - `CamelCaseVariableName`__: It is considered best practice to use the camelCase notation to name variables.
 

@@ -47,12 +47,20 @@ Example: ::
       protected $property_name;
   }
 
+This rule has the following properties:
+
+=================================== =============== ========================================================
+ Name                                Default Value   Description                                            
+=================================== =============== ========================================================
+ allow-underscore                    false           Allow an optional, single underscore at the beginning. 
+=================================== =============== ========================================================
+
 CamelCaseMethodName
 ===================
 
 Since: PHPMD 0.2
 
-It is considered best practice to use the CamelCase notation to name methods.
+It is considered best practice to use the camelCase notation to name methods.
 
 
 Example: ::
@@ -61,6 +69,14 @@ Example: ::
       public function get_name() {
       }
   }
+
+This rule has the following properties:
+
+=================================== =============== ========================================================
+ Name                                Default Value   Description                                            
+=================================== =============== ========================================================
+ allow-underscore                    false           Allow an optional, single underscore at the beginning. 
+=================================== =============== ========================================================
 
 CamelCaseParameterName
 ======================

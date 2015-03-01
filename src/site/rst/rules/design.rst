@@ -2,7 +2,7 @@
 Design Rules
 ============
 
-The Design Ruleset contains a collection of rules that find software design related problems.
+The Code Size Ruleset contains a collection of rules that find software design related problems.
 
 ExitExpression
 ==============
@@ -65,7 +65,7 @@ Example: ::
               goto Y;
           }
           Z:
-          return 42;                 
+          return 42;
       }
   }
 
@@ -159,3 +159,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
+        
