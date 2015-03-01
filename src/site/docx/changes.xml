@@ -11,8 +11,8 @@
 
     <body>
         <release version="2.2.1"
-                 date=""
-                 description="">
+                 date="2015/03/01"
+                 description="This release integration several pull requests and closes and handful of issues.">
             <action date="22a73a7" dev="ravage84" issue="210" system="github" type="add">
                 Added editorconfig
             </action>
