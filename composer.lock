@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "5714f56f40e361f63a0562fd6e15a4c8782dae27"
+                "reference": "a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/5714f56f40e361f63a0562fd6e15a4c8782dae27",
-                "reference": "5714f56f40e361f63a0562fd6e15a4c8782dae27",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4",
+                "reference": "a15ffcbfbcc4570d4a733ca7b76e9cac0a56c3f4",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2015-02-27 15:50:01"
+            "time": "2015-03-02 08:06:43"
         },
         {
             "name": "symfony/config",
