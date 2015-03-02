@@ -86,6 +86,13 @@ class ParserFactory
     private function createInstance()
     {
         $application = new Application();
+
+        if (file_exists(getcwd() . '/pdepend.xml')) {
+            $application->setConfigurationFile(getcwd() . '/pdepend.xml');
+        } elseif (file_exists(getcwd() . '/pdepend.xml.dist')) {
+            $application->setConfigurationFile(getcwd() . '/pdepend.xml.dist');
+        }
+
         return $application->getEngine();
     }
 
