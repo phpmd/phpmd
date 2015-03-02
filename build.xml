@@ -24,6 +24,14 @@
             <fileset dir="${vendor.dir}/pdepend">
                 <exclude name="pdepend/src/main/**" />
             </fileset>
+            <fileset dir="${vendor.dir}/symfony">
+                <include name="**/Tests/**" />
+            </fileset>
+            <fileset dir="${vendor.dir}/phpdocumentor" />
+            <fileset dir="${vendor.dir}/phpspec" />
+            <fileset dir="${vendor.dir}/phpunit" />
+            <fileset dir="${vendor.dir}/sebastian" />
+            <fileset dir="${vendor.dir}/squizlabs" />
         </delete>
     </target>
 
