@@ -223,7 +223,9 @@ TooManyMethods
 
 Since: PHPMD 0.1
 
-A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
+A class with too many methods is probably a good suspect for refactoring,
+in order to reduce its complexity and find a way to have more fine grained objects.
+It ignores methods starting with 'get' or 'set' by default.
 
 This rule has the following properties:
 
@@ -231,6 +233,7 @@ This rule has the following properties:
  Name                                Default Value   Description                           
 =================================== =============== =======================================
  maxmethods                          10              The method count reporting threshold  
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex
 =================================== =============== =======================================
 
 ExcessiveClassComplexity
