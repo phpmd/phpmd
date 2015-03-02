@@ -130,7 +130,23 @@ class CamelCasePropertyNameTest extends AbstractTest
 
     /**
      * Tests that the rule does not apply for a valid property name
-     * with an underscore at the beginning when it is not allowed.
+     * with no underscore at the beginning when it is allowed.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed()
+    {
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCasePropertyName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'true');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does not apply for a valid property name
+     * with an underscore at the beginning when it is allowed.
      *
      * @return void
      */

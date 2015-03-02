@@ -69,7 +69,7 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware
 
         $pattern = '/^\$[a-zA-Z][a-zA-Z0-9]*$/';
         if ($allowUnderscore == true) {
-            $pattern = '/^\$[_][a-zA-Z][a-zA-Z0-9]*$/';
+            $pattern = '/^\$[_]?[a-zA-Z][a-zA-Z0-9]*$/';
         }
 
         foreach ($node->getProperties() as $property) {
