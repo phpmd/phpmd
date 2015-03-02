@@ -72,6 +72,7 @@ class PHPMDTest extends AbstractTest
         $renderer->setWriter($writer);
 
         $phpmd = new PHPMD();
+
         $phpmd->processFiles(
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
