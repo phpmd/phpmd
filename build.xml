@@ -91,8 +91,9 @@
             <arg line="cd '${project.web.release.dir}/..' ; rm latest ; ln -s '${project.version}' latest" />
         </exec>
 
-        <antcall target="site:deploy"
-                 inheritAll="false" />
+        <exec dir="${basedir}" executable="ant" failonerror="true">
+            <arg line="site:deploy" />
+        </exec>
     </target>
 
 </project>
