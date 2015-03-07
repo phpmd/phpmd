@@ -74,7 +74,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * The metric containing analyzer instances.
      *
-     * @var \PDepend\Metrics\Analyzer[]
+     * @var \PDepend\Metrics\AnalyzerNodeAware[]
      */
     private $analyzers = array();
 
