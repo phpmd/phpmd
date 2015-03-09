@@ -266,7 +266,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $code
+     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts)
