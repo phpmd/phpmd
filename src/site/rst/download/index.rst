@@ -2,6 +2,14 @@
 Downloads
 =========
 
+Installing as a Phar
+====================
+
+You can always fetch the latest stable version as a phar archive throught
+the following version agnostic link: ::
+
+  ~ $ wget -c http://static.phpmd.org/php/latest/phpmd.phar
+
 Installing via Composer
 =======================
 
