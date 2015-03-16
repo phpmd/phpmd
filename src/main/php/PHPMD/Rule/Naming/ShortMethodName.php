@@ -95,7 +95,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');
-        } catch (OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException $e) {
             $exceptions = '';
         }
 
