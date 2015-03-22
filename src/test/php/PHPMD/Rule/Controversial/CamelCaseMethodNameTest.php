@@ -45,7 +45,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the camel case method name rule.
- *_Design
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
