@@ -104,4 +104,18 @@ class CamelCaseVariableNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->apply($this->getClass());
     }
+
+    /**
+     * Tests that the rule does NOT apply for a statically accessed variable
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForStaticVariableAccess()
+    {
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
+    }
 }
