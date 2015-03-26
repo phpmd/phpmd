@@ -10,6 +10,19 @@
     </properties>
 
     <body>
+        <release version="2.2.2"
+                 date="2015/03/26"
+                 description="Bugfix release that closes some issues in phpmd's core and in the project documentation.">
+            <action date="b73dd32" dev="JeroenDeDauw" issue="271" system="github" type="fix">
+                Fix cp error in doc
+            </action>
+            <action date="0d4bed1" dev="tvking" issue="270" system="github" type="fix">
+                Fixing namespace issue for OutOfBoundsException
+            </action>
+            <action date="0d4bed1" dev="tvking" issue="80" system="github" type="fix" due-to="DannyvdSluijs">
+                Out ot the box usage in combination with composer of all rules failes throws error Property $exceptions does not exist.
+            </action>
+        </release>
         <release version="2.2.1"
                  date="2015/03/01"
                  description="This release integration several pull requests and closes and handful of issues.">

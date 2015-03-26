@@ -154,4 +154,20 @@ class ShortMethodNameTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleAlsoWorksWithoutExceptionListConfigured
+     *
+     * @return void
+     * @since 2.2.2
+     * @see https://github.com/phpmd/phpmd/issues/80
+     * @see https://github.com/phpmd/phpmd/issues/270
+     */
+    public function testRuleAlsoWorksWithoutExceptionListConfigured()
+    {
+        $rule = new ShortMethodName();
+        $rule->addProperty('minimum', 100);
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethodMock());
+    }
 }
