@@ -220,9 +220,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function isChildOf(AbstractNode $node, $type)
     {
         $parent = $node->getParent();
-        if ($parent->isInstanceOf($type)) {
-            return true;
-        }
-        return false;
+        
+        return $parent->isInstanceOf($type);
     }
 }
