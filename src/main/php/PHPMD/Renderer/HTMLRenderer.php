@@ -72,7 +72,7 @@ class HTMLRenderer extends AbstractRenderer
         $writer->write('<table align="center" cellspacing="0" cellpadding="3">');
         $writer->write('<tr>');
         $writer->write('<th>#</th><th>File</th><th>Line</th><th>Problem</th>');
-        $writer->write('<tr>');
+        $writer->write('</tr>');
         $writer->write(PHP_EOL);
     }
 
