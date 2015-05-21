@@ -193,5 +193,5 @@ exactly, which settings are available for one rule, while you create your
 own set of rules. Another good source of information are the rule set
 `files`__ that are shipped with PHPMD.
 
-__ /rules/ 
+__ /rules/index.html 
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
