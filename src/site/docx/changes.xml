@@ -22,7 +22,7 @@
             <action date="20a0142" dev="ravage84" type="fix">
                 Fixed link to rules documentation
             </action>
-            <action date="20a0142" dev="ravage84" type="update">
+            <action date="f4ddb8a" dev="manuelpichler" type="update">
                 Underlying PDepend version bumped.
             </action>
         </release>
