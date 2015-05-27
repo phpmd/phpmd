@@ -10,6 +10,22 @@
     </properties>
 
     <body>
+        <release version="2.2.3"
+                 date="2015/05/27"
+                 description="Bugfix release that closes issues and adds some improvements to phpmd.">
+            <action date="5e94a65" dev="OlivierBarbier" issue="281" system="github" type="update">
+                Code cleanup
+            </action>
+            <action date="df6280f" dev="ryancookdev" issue="285" system="github" type="fix">
+                Corrected HTML TR closing tag
+            </action>
+            <action date="20a0142" dev="ravage84" type="fix">
+                Fixed link to rules documentation
+            </action>
+            <action date="20a0142" dev="ravage84" type="update">
+                Underlying PDepend version bumped.
+            </action>
+        </release>
         <release version="2.2.2"
                  date="2015/03/26"
                  description="Bugfix release that closes some issues in phpmd's core and in the project documentation.">
