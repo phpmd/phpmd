@@ -227,11 +227,12 @@ A class with too many methods is probably a good suspect for refactoring, in ord
 
 This rule has the following properties:
 
-=================================== =============== =======================================
- Name                                Default Value   Description                           
-=================================== =============== =======================================
- maxmethods                          10              The method count reporting threshold  
-=================================== =============== =======================================
+=========================== =============== ===========================================================================
+ Name                        Default Value   Description
+=========================== =============== ===========================================================================
+ maxmethods                  10              The method count reporting threshold
+ ignorepattern               (^(set|get))i   Regular expression that filters all methods that are ignored by this rule
+=========================== =============== ===========================================================================
 
 ExcessiveClassComplexity
 ========================
