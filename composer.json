@@ -1,7 +1,7 @@
 {
     "name": "phpmd/phpmd",
     "description": "PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the well known Java tool PMD.",
-    "keywords":[
+    "keywords": [
         "phpmd",
         "pdepend",
         "pmd",
@@ -31,7 +31,6 @@
     "require": {
         "php": ">=5.3.0",
         "pdepend/pdepend": "~2.0",
-
         "symfony/dependency-injection": ">=2.4",
         "symfony/filesystem": ">=2.4",
         "symfony/config": ">=2.4"
