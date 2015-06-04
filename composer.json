@@ -45,5 +45,8 @@
             "PHPMD\\": "src/main/php"
         }
     },
-    "bin": ["src/bin/phpmd"]
+    "bin": ["src/bin/phpmd"],
+    "scripts": {
+        "test": "phpunit"
+    }
 }
