@@ -18,7 +18,7 @@ install:
   - SET PATH=C:\tools\php;%PATH%
   - cd C:\projects\phpmd
   - php -r "readfile('http://getcomposer.org/installer');" | php
-  - php composer.phar install --prefer-dist --no-interaction --dev
+  - php composer.phar install --prefer-dist --no-interaction
 
 test_script:
   - cd C:\projects\phpmd
