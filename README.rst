@@ -17,8 +17,8 @@ http://phpmd.org
    :target: https://travis-ci.org/phpmd/phpmd
    :alt: Travis Build Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/ek3c6nirsbtv6hu2?svg=true
-   :target: https://ci.appveyor.com/project/ravage84/phpmd-cmdg5
+.. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
+   :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
 
 .. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
