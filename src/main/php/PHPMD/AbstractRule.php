@@ -407,4 +407,13 @@ abstract class AbstractRule implements Rule
         $ruleViolation = new RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
     }
+
+    /**
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
+     *
+     * @param \PHPMD\AbstractNode $node
+     * @return void
+     */
+    abstract public function apply(AbstractNode $node);
 }
