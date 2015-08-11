@@ -405,8 +405,8 @@ __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
 __ http://phpmd.org/documentation/creating-a-ruleset.html
 
 __ http://pdepend.org
-__ http://pdepend.org/documentation/software-metrics.html
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
+__ http://pdepend.org/documentation/software-metrics.html
 __ http://pdepend.org/documentation/software-metrics/number-of-public-methods.html
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/IClassAware.php
 __ http://pdepend.org/documentation/software-metrics.html
