@@ -61,7 +61,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    const DEFAULT_IGNORE_REGEXP = '(^(set|get))i';
+    const DEFAULT_IGNORE_REGEXP = '(^(set|get|is))i';
 
     /**
      * Regular expression that filter all methods that are ignored by this rule.
