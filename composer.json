@@ -16,7 +16,13 @@
             "name": "Manuel Pichler",
             "homepage": "https://github.com/manuelpichler",
             "email": "github@manuel-pichler.de",
-            "role": "Project founder"
+            "role": "Project Founder"
+        },
+        {
+            "name": "Marc Würth",
+            "homepage": "https://github.com/ravage84",
+            "email": "ravage@bluewin.ch",
+            "role": "Project Maintainer"
         },
         {
             "name": "Other contributors",

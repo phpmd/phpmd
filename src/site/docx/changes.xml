@@ -10,6 +10,47 @@
     </properties>
 
     <body>
+        <release version="2.3.0"
+                 date="2015/09/21"
+                 description="This new release contains several contributed bugfixes and additions to PHPMD. Beside that we now have better support for language constructs in the upcoming PHP 7.">
+            <action date="180848f" dev="addiks" type="add" issue="232" system="github">
+                Three new features about references, includes and include-paths
+            </action>
+            <action date="7e02f38" dev="sas05" type="update" issue="241" system="github">
+                Fix of UnusedPrivateMethod chained method calls.
+            </action>
+            <action date="3cbe76d" dev="JeroenDeDauw" type="update" issue="257" system="github">
+                Add option to allow having an undercore in test methods.
+            </action>
+            <action date="dfa6872" dev="manuelpichler" due-to="snapshotpl" type="add" issue="265" system="github">
+                Search for development code
+            </action>
+            <action date="724bf76" dev="JeroenDeDauw" type="fix" issue="272" system="github">
+                Improve type hint.
+            </action>
+            <action date="b862f1f" dev="JeroenDeDauw" type="add" issue="273" system="github">
+                Add TooManyPublicMethods rule.
+            </action>
+            <action date="586ccfc" dev="ravage84" type="update" issue="291" system="github">
+                Define the version constraints of deps in Composer using the caret operator.
+            </action>
+            <action date="9b806f6" dev="RadekDvorak" type="fix" issue="293" system="github">
+                Declared missing method in abstract class
+            </action>
+            <action date="227d469" dev="michaelhogg" type="fix" issue="297" system="github">
+                Complete fix for timezone warning.
+            </action>
+            <action date="4bc4eeb" dev="aboks" type="fix" issue="301" system="github">
+                Fix mixed up links in documentation.
+            </action>
+            <action date="3376c73" dev="mi-schi" type="fix" issue="304" system="github">
+                Fix #303, change if condition order.
+            </action>
+            <action date="cd1308e" dev="BernardoSilva" type="update" issue="306" system="github">
+                Use new Travis infrastructure.
+            </action>
+        </release>
+
         <release version="2.2.3"
                  date="2015/05/27"
                  description="Bugfix release that closes issues and adds some improvements to phpmd.">
@@ -26,6 +67,8 @@
                 Underlying PDepend version bumped.
             </action>
         </release>
+
+
         <release version="2.2.2"
                  date="2015/03/26"
                  description="Bugfix release that closes some issues in phpmd's core and in the project documentation.">
