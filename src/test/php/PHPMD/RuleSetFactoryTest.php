@@ -616,7 +616,7 @@ class RuleSetFactoryTest extends AbstractTest
 
     /**
      * testCreateRuleSetsActivatesStrictModeOnRuleSet
-     * 
+     *
      * @return void
      */
     public function testCreateRuleSetsActivatesStrictModeOnRuleSet()
@@ -629,6 +629,41 @@ class RuleSetFactoryTest extends AbstractTest
         $ruleSets = $factory->createRuleSets($fileName);
 
         $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
+    }
+    
+    /**
+     * Tests that adding an include-path via ruleset works.
+     * Also implicitly tests (by parsing the ruleset) that
+     * reference-by-includepath and explicit-classfile-declaration works.
+     *
+     * @return void
+     */
+    public function testAddPHPIncludePath()
+    {
+        $includePathBefore = get_include_path();
+        
+        $rulesetFilepath = 'rulesets/ruleset-refs.xml';
+        $fileName = self::createFileUri($rulesetFilepath);
+        
+        try{
+            $factory = new RuleSetFactory();
+            $factory->createRuleSets($fileName);
+            
+            $expectedIncludePath  = "/foo/bar/baz";
+            $actualIncludePaths   = explode(PATH_SEPARATOR, get_include_path());
+            $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
+        
+        }catch(\Exception $exception){
+            set_include_path($includePathBefore);
+            throw $exception;
+        }
+        
+        set_include_path($includePathBefore);
+        
+        $this->assertTrue(
+            $isIncludePathPresent,
+            "The include-path from '{$rulesetFilepath}' was not set!"
+        );
     }
 
     /**

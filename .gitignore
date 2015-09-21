@@ -1,5 +1,8 @@
 .abc
 .idea
 .sonar
+.project
+.buildpath
+.settings
 composer.phar
 vendor
