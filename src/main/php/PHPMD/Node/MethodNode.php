@@ -121,12 +121,14 @@ class MethodNode extends AbstractCallableNode
     {
         $parentNode = $this->getNode()->getParent();
 
-        if ($parentNode instanceof ASTClass) {
-            return new ClassNode($parentNode);
-        }
         if ($parentNode instanceof ASTTrait) {
             return new TraitNode($parentNode);
         }
+
+        if ($parentNode instanceof ASTClass) {
+            return new ClassNode($parentNode);
+        }
+        
         return new InterfaceNode($parentNode);
     }
 
