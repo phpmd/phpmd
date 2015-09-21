@@ -342,11 +342,36 @@ public class Foo extends Bar {
             <![CDATA[
 A class with too many methods is probably a good suspect for refactoring, in
 order to reduce its complexity and find a way to have more fine grained objects.
+
+By default it ignores methods starting with 'get' or 'set'.
+
+The default was changed from 10 to 25 in PHPMD 2.3.
             ]]>
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxmethods" description="The method count reporting threshold " value="10"/>
+            <property name="maxmethods" description="The method count reporting threshold" value="25"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+        </properties>
+    </rule>
+
+    <rule name="TooManyPublicMethods"
+          since="0.1"
+          class="PHPMD\Rule\Design\TooManyPublicMethods"
+          message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
+          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanypublicmethods">
+        <description>
+            <![CDATA[
+A class with too many public methods is probably a good suspect for refactoring, in
+order to reduce its complexity and find a way to have more fine grained objects.
+
+By default it ignores methods starting with 'get' or 'set'.
+            ]]>
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maxmethods" description="The method count reporting threshold" value="10"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
         </properties>
     </rule>
 

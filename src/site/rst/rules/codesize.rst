@@ -223,14 +223,37 @@ TooManyMethods
 
 Since: PHPMD 0.1
 
-A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
+A class with too many methods is probably a good suspect for refactoring,
+in order to reduce its complexity and find a way to have more fine grained objects.
+By default it ignores methods starting with 'get' or 'set'.
+
+The default was changed from 10 to 25 in PHPMD 2.3.
 
 This rule has the following properties:
 
 =================================== =============== =======================================
- Name                                Default Value   Description                           
+ Name                                Default Value   Description
 =================================== =============== =======================================
- maxmethods                          10              The method count reporting threshold  
+ maxmethods                          25              The method count reporting threshold
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex
+=================================== =============== =======================================
+
+TooManyPublicMethods
+====================
+
+Since: PHPMD 2.3
+
+A class with too many public methods is probably a good suspect for refactoring,
+in order to reduce its complexity and find a way to have more fine grained objects.
+By default it ignores methods starting with 'get' or 'set'.
+
+This rule has the following properties:
+
+=================================== =============== =======================================
+ Name                                Default Value   Description
+=================================== =============== =======================================
+ maxmethods                          10              The method count reporting threshold
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex
 =================================== =============== =======================================
 
 ExcessiveClassComplexity
