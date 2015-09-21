@@ -47,13 +47,13 @@ use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Rule\ClassAware;
 
 /**
- * This rule class will detect all classes with too much methods.
+ * This rule class will detect all classes with too much public methods.
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class TooManyMethods extends AbstractRule implements ClassAware
+class TooManyPublicMethods extends AbstractRule implements ClassAware
 {
     /**
      * Regular expression that filters all methods that are ignored by this rule.
@@ -63,7 +63,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
     private $ignoreRegexp;
 
     /**
-     * This method checks the number of methods with in a given class and checks
+     * This method checks the number of public methods with in a given class and checks
      * this number against a configured threshold.
      *
      * @param \PHPMD\AbstractNode $node
@@ -74,7 +74,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
         $threshold = $this->getIntProperty('maxmethods');
-        if ($node->getMetric('nom') <= $threshold) {
+        if ($node->getMetric('npm') <= $threshold) {
             return;
         }
         $nom = $this->countMethods($node);
@@ -93,7 +93,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
     }
 
     /**
-     * Counts all methods within the given class/interface node.
+     * Counts public methods within the given class/interface node.
      *
      * @param \PHPMD\Node\AbstractTypeNode $node
      * @return integer
@@ -101,8 +101,8 @@ class TooManyMethods extends AbstractRule implements ClassAware
     private function countMethods(AbstractTypeNode $node)
     {
         $count = 0;
-        foreach ($node->getMethodNames() as $name) {
-            if (preg_match($this->ignoreRegexp, $name) === 0) {
+        foreach ($node->getMethods() as $method) {
+            if ($method->getNode()->isPublic() && preg_match($this->ignoreRegexp, $method->getName()) === 0) {
                 ++$count;
             }
         }

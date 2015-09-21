@@ -41,31 +41,32 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\State;
 use PHPMD\AbstractTest;
+use PHPMD\Node\MethodNode;
 
 /**
- * Test case for the too many methods rule.
+ * Test case for the too many public methods rule.
  *_Design
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PHPMD\Rule\Design\TooManyMethods
+ * @covers \PHPMD\Rule\Design\TooManyPublicMethods
  * @group phpmd
  * @group phpmd::rule
  * @group phpmd::rule::design
  * @group unittest
  */
-class TooManyMethodsTest extends AbstractTest
+class TooManyPublicMethodsTest extends AbstractTest
 {
     /**
-     * testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold
-     *
      * @return void
      */
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
@@ -73,13 +74,11 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
-     * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
-     *
      * @return void
      */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
@@ -87,13 +86,11 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesToClassesWithMoreMethodsThanThreshold
-     *
      * @return void
      */
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(1));
         $rule->addProperty('maxmethods', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
@@ -101,13 +98,11 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
-     * testRuleIgnoresGetterMethodsInTest
-     *
      * @return void
      */
     public function testRuleIgnoresGetterMethodsInTest()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
@@ -115,27 +110,23 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
-     * testRuleIgnoresSetterMethodsInTest
-     *
      * @return void
      */
     public function testRuleIgnoresSetterMethodsInTest()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
     }
 
-   /**
-     * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-     *
+    /**
      * @return void
      */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
@@ -143,35 +134,61 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
-     * testRuleIgnoresGetterAndSetterMethodsInTest
-     *
      * @return void
      */
     public function testRuleIgnoresGetterAndSetterMethodsInTest()
     {
-        $rule = new TooManyMethods();
+        $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportMock(0));
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(3, array('invoke', 'getClass', 'setClass')));
+        $rule->apply($this->createClassMock(3, array('foo', 'bar'), array('baz', 'bah')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleIgnoresPrivateMethods()
+    {
+        $rule = new TooManyPublicMethods();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
+        $rule->apply($this->createClassMock(2, array('invoke', 'getClass', 'setClass')));
     }
 
     /**
      * Creates a prepared class node mock
      *
      * @param integer $numberOfMethods
-     * @param array$methodNames
+     * @param array|null $publicMethods
+     * @param array|null $privateMethods
      * @return \PHPMD\Node\ClassNode
      */
-    private function createClassMock($numberOfMethods, array $methodNames = null)
+    private function createClassMock($numberOfMethods, array $publicMethods = array(), array $privateMethods = array())
     {
-        $class = $this->getClassMock('nom', $numberOfMethods);
+        $class = $this->getClassMock('npm', $numberOfMethods);
 
-        if (is_array($methodNames)) {
-            $class->expects($this->once())
-                ->method('getMethodNames')
-                ->will($this->returnValue($methodNames));
-        }
+        $class->expects($this->any())
+            ->method('getMethods')
+            ->will($this->returnValue(array_merge(
+                array_map(array($this, 'createPublicMethod'), $publicMethods),
+                array_map(array($this, 'createPrivateMethod'), $privateMethods)
+            )));
+
         return $class;
+    }
+
+    private function createPublicMethod($methodName)
+    {
+        $astMethod = new ASTMethod($methodName);
+        $astMethod->setModifiers(State::IS_PUBLIC);
+        return new MethodNode($astMethod);
+    }
+
+    private function createPrivateMethod($methodName)
+    {
+        $astMethod = new ASTMethod($methodName);
+        return new MethodNode($astMethod);
     }
 }
