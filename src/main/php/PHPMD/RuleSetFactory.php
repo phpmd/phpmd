@@ -358,7 +358,6 @@ class RuleSetFactory
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
         if (isset($ruleNode['file'])) {
-
             if (is_readable((string) $ruleNode['file'])) {
                 $fileName = (string) $ruleNode['file'];
 
