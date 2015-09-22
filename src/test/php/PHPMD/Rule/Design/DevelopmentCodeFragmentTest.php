@@ -68,7 +68,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
@@ -81,7 +81,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToMethodWithSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
@@ -94,7 +94,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getMethod());
     }
@@ -107,7 +107,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -120,7 +120,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToFunctionWithSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
@@ -133,7 +133,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('suspect-images', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getFunction());
     }

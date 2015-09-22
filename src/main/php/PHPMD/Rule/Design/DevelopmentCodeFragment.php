@@ -98,7 +98,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 'trim',
                 explode(
                     ',',
-                    $this->getStringProperty('suspect-images')
+                    $this->getStringProperty('unwanted-functions')
                 )
             )
         );
