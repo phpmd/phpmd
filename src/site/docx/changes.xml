@@ -11,7 +11,7 @@
 
     <body>
         <release version="2.3.0"
-                 date="2015/09/21"
+                 date="2015/09/22"
                  description="This new release contains several contributed bugfixes and additions to PHPMD. Beside that we now have better support for language constructs in the upcoming PHP 7.">
             <action date="180848f" dev="addiks" type="add" issue="232" system="github">
                 Three new features about references, includes and include-paths
