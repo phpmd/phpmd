@@ -67,9 +67,12 @@ class LongMethod extends AbstractRule implements FunctionAware, MethodAware
     {
         $threshold = $this->getIntProperty('minimum');
 
-        $loc = $node->getMetric('loc');
+        $loc = -1;
         if ($this->getBooleanProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
+        }
+        if (-1 === $loc) {
+            $loc = $node->getMetric('loc');
         }
 
         if ($loc < $threshold) {

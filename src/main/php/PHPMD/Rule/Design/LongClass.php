@@ -65,9 +65,12 @@ class LongClass extends AbstractRule implements ClassAware
     {
         $threshold = $this->getIntProperty('minimum');
 
-        $loc = $node->getMetric('loc');
+        $loc = -1;
         if ($this->getBooleanProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
+        }
+        if (-1 === $loc) {
+            $loc = $node->getMetric('loc');
         }
 
         if ($loc < $threshold) {
