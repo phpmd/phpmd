@@ -82,11 +82,7 @@ class Command
         }
 
         // Create a report stream
-        if ($opts->getReportFile() === null) {
-            $stream = STDOUT;
-        } else {
-            $stream = fopen($opts->getReportFile(), 'wb');
-        }
+        $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
 
         // Create renderer and configure output
         $renderer = $opts->createRenderer();
@@ -148,11 +144,10 @@ class Command
     {
         $build = __DIR__ . '/../../../../../build.properties';
 
+        $version = '@package_version@';
         if (file_exists($build)) {
             $data = @parse_ini_file($build);
             $version = $data['project.version'];
-        } else {
-            $version = '@package_version@';
         }
         return $version;
     }

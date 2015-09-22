@@ -48,9 +48,9 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class will detect excessive long classes.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
+ * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class LongClass extends AbstractRule implements ClassAware
 {
@@ -64,12 +64,10 @@ class LongClass extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
-        $ignoreWhitespace = $this->getBooleanProperty('ignore-whitespace');
 
-        if ($ignoreWhitespace) {
+        $loc = $node->getMetric('loc');
+        if ($this->getBooleanProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
-        } else {
-            $loc = $node->getMetric('loc');
         }
 
         if ($loc < $threshold) {

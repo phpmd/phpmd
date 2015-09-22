@@ -152,14 +152,13 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     private function removeUsedField(ASTNode $postfix)
     {
+        $image = '$';
+        $child = $postfix->getFirstChildOfType('Identifier');
+
         if ($postfix->getParent()->isStatic()) {
             $image = '';
             $child = $postfix->getFirstChildOfType('Variable');
-        } else {
-            $image = '$';
-            $child = $postfix->getFirstChildOfType('Identifier');
         }
-
 
         if ($this->isValidPropertyNode($child)) {
             unset($this->fields[$image . $child->getImage()]);

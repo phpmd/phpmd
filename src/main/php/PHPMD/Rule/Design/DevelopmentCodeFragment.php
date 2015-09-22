@@ -74,10 +74,9 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 continue;
             }
 
+            $image = $node->getImage();
             if ($node instanceof MethodNode) {
                 $image = sprintf('%s::%s', $node->getParentName(), $node->getImage());
-            } else {
-                $image = $node->getImage();
             }
 
             $this->addViolation($postfix, array($node->getType(), $image, $postfix->getImage()));
