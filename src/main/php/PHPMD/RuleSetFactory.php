@@ -354,17 +354,16 @@ class RuleSetFactory
     private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
     {
         $fileName = "";
-        
-        $ruleSetFilePath   = $ruleSet->getFileName();
-        $ruleSetFolderPath = dirname($ruleSetFilePath);
-        
+
+        $ruleSetFolderPath = dirname($ruleSet->getFileName());
+
         if (isset($ruleNode['file'])) {
-            
+
             if (is_readable((string) $ruleNode['file'])) {
                 $fileName = (string) $ruleNode['file'];
-                
+
             } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'])) {
-                $fileName       = $ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'];
+                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'];
             }
         }
 
