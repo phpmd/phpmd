@@ -10,6 +10,14 @@
     </properties>
 
     <body>
+        <release version="2.3.1"
+                 date="2015/09/22"
+                 description="Bugfix release for issue #311 introduced with the 2.3.0 release.">
+            <action date="0db4a3e" dev="manuelpichler" due-to="igdr" type="fix" issue="311" system="github">
+                Property "allow-underscore-test" does not exist.
+            </action>
+        </release>
+
         <release version="2.3.0"
                  date="2015/09/22"
                  description="This new release contains several contributed bugfixes and additions to PHPMD. Beside that we now have better support for language constructs in the upcoming PHP 7.">
