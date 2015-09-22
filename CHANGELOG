@@ -1,3 +1,11 @@
+phpmd-2.3.1 (2015/09/22)
+========================
+
+Bugfix release for issue #311 introduced with the 2.3.0 release.
+
+- Fixed #311: Property "allow-underscore-test" does not exist. Fixed 
+  in commit #0db4a3e.
+
 phpmd-2.3.0 (2015/09/22)
 ========================
 
