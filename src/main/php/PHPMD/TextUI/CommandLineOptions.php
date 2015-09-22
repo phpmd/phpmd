@@ -163,51 +163,39 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
-
                 case '--minimumpriority':
                     $this->minimumPriority = (int) array_shift($args);
                     break;
-
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
                     break;
-
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile(array_shift($args)));
                     break;
-
                 case '--coverage':
                     $this->coverageReport = array_shift($args);
                     break;
-
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
                     /* Deprecated: We use the suffixes option now */
-
                 case '--suffixes':
                     $this->extensions = array_shift($args);
                     break;
-
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
                     /* Deprecated: We use the exclude option now */
-
                 case '--exclude':
                     $this->ignore = array_shift($args);
                     break;
-
                 case '--version':
                     $this->version = true;
                     return;
-
                 case '--strict':
                     $this->strict = true;
                     break;
-
                 case (preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match) > 0):
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
-
                 default:
                     $arguments[] = $arg;
                     break;
@@ -359,16 +347,12 @@ class CommandLineOptions
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
-
             case 'xml':
                 return $this->createXmlRenderer();
-
             case 'html':
                 return $this->createHtmlRenderer();
-
             case 'text':
                 return $this->createTextRenderer();
-
             default:
                 return $this->createCustomRenderer();
         }

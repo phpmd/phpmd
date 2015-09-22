@@ -107,5 +107,4 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
 
         return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName);
     }
-
 }

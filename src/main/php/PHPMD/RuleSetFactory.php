@@ -182,13 +182,13 @@ class RuleSetFactory
             return $fileName;
         }
 
-        foreach(explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
+        foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
             $fileName = $includePath . '/' . $ruleSetOrFileName;
-            if(file_exists($fileName) === true) {
+            if (file_exists($fileName) === true) {
                 return $fileName;
             }
             $fileName = $includePath . '/' . $ruleSetOrFileName + ".xml";
-            if(file_exists($fileName) === true) {
+            if (file_exists($fileName) === true) {
                 return $fileName;
             }
         }
@@ -248,7 +248,7 @@ class RuleSetFactory
             if ($node->getName() === 'php-includepath') {
                 $includePath = (string) $node;
                 
-                if(is_dir(dirname($fileName) . DIRECTORY_SEPARATOR . $includePath)) {
+                if (is_dir(dirname($fileName) . DIRECTORY_SEPARATOR . $includePath)) {
                     $includePath = dirname($fileName) . DIRECTORY_SEPARATOR . $includePath;
                     $includePath = realpath($includePath);
                 }
@@ -360,7 +360,7 @@ class RuleSetFactory
         
         if (isset($ruleNode['file'])) {
             
-            if (is_readable((string) $ruleNode['file'])){
+            if (is_readable((string) $ruleNode['file'])) {
                 $fileName = (string) $ruleNode['file'];
                 
             } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'])) {
