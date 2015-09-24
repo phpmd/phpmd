@@ -10,6 +10,14 @@
     </properties>
 
     <body>
+        <release version="2.3.2"
+                 date="2015/09/24"
+                 description="With this release we make the Symfony dependency superfluous.">
+            <action date="1da75aa" dev="ravage84" type="update" issue="312" system="github">
+                No more hard Symfony dependency.
+            </action>
+        </release>
+
         <release version="2.3.1"
                  date="2015/09/22"
                  description="Bugfix release for issue #311 introduced with the 2.3.0 release.">
