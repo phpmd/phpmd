@@ -41,6 +41,7 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
@@ -115,13 +116,13 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     private function collectVariables(AbstractCallableNode $node)
     {
+        foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
+            $this->collectVariable($variable);
+        }
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if ($this->isLocal($variable)) {
                 $this->collectVariable($variable);
             }
-        }
-        foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
-            $this->collectVariable($variable);
         }
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
             if ($this->isFunctionNameEndingWith($func, 'compact')) {
@@ -175,6 +176,13 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if ($this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
+        if ($this->isAllowedUnusedVariableName($node)) {
+            return;
+        }
+        if ($this->hasSucceedingUsedParameters($node)) {
+            return;
+        }
+
         $this->addViolation($node, array($node->getImage()));
     }
 
@@ -210,6 +218,41 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     }
 
     /**
+     * Checks if an unused formal parameter has a succeeding formal parameter that is used in a closure.
+     *
+     * @param \PHPMD\Node\ASTNode $variable The variable to check.
+     *
+     * @return bool True if succeeding parameter found.
+     */
+    private function hasSucceedingUsedParameters(ASTNode $variable)
+    {
+        if (!$variable->getParent()->getNode() instanceof ASTFormalParameter) {
+            // This is not a closure.
+            return false;
+        }
+
+        $parameters = $variable->getParent()->getParent()->findChildrenOfType('VariableDeclarator');
+
+        // remove all preceding parameters
+        foreach ($parameters as $key => $parameter) {
+            unset($parameters[$key]);
+
+            if ($parameter->getImage() == $variable->getImage()) {
+                break;
+            }
+        }
+
+        // check whether a following parameter is used
+        foreach ($parameters as $parameter) {
+            if (count($this->images[$parameter->getImage()]) > 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Checks if the given node is a direct or indirect child of a node with
      * the given type.
      *
@@ -220,7 +263,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function isChildOf(AbstractNode $node, $type)
     {
         $parent = $node->getParent();
-        
+
         return $parent->isInstanceOf($type);
     }
 }

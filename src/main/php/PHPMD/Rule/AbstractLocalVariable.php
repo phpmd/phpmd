@@ -188,4 +188,30 @@ abstract class AbstractLocalVariable extends AbstractRule
 
         return (0 === strcasecmp(array_pop($parts), $name));
     }
+
+
+    /**
+     * Checks if an unused variable has a prefix that indicates an expected unused variable name.
+     *
+     * @param \PHPMD\Node\ASTNode $variable The variable to check.
+     * @return bool True if allowed, else false.
+     */
+    protected function isAllowedUnusedVariableName(ASTNode $variable)
+    {
+        $allowed = [
+            '$aux_',
+            '$unused_',
+            '$ditch_',
+            '$ignore_',
+            '$_',
+        ];
+
+        foreach ($allowed as $name) {
+            if (strpos($variable->getName(), $name) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

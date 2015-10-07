@@ -408,6 +408,16 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToUnusedParametersWithSpecificNames
+     */
+    public function testRuleDoesNotApplyToUnusedParametersWithSpecificNames()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
      * @test
      * @return void
      * @since 2.0.0
