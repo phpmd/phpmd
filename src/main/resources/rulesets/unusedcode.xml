@@ -48,6 +48,7 @@ Detects when a local variable is declared and/or assigned, but not used.
                     name="allow-unused-foreach-variables"
                     description="Allow unused variables in foreach language constructs."
                     value="false" />
+            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
         </properties>
         <example>
 <![CDATA[
