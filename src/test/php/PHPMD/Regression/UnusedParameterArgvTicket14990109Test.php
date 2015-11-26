@@ -69,8 +69,11 @@ class UnusedParameterArgvTicket14990109Test extends AbstractTest
      */
     public function testRuleDoesNotApplyToFunctionParameterNamedArgv()
     {
+        $rule = new UnusedFormalParameter();
+        $rule->addProperty('allow-unused-before-used', 'false');
+
         $ruleSet = new RuleSet();
-        $ruleSet->addRule(new UnusedFormalParameter());
+        $ruleSet->addRule($rule);
         $ruleSet->setReport($this->getReportMock(0));
 
         $ruleSet->apply($this->getFunction());
@@ -83,8 +86,11 @@ class UnusedParameterArgvTicket14990109Test extends AbstractTest
      */
     public function testRuleDoesNotApplyToMethodParameterNamedArgv()
     {
+        $rule = new UnusedFormalParameter();
+        $rule->addProperty('allow-unused-before-used', 'false');
+
         $ruleSet = new RuleSet();
-        $ruleSet->addRule(new UnusedFormalParameter());
+        $ruleSet->addRule($rule);
         $ruleSet->setReport($this->getReportMock(0));
 
         $ruleSet->apply($this->getMethod());

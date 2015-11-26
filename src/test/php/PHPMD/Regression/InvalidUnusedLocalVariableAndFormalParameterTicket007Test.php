@@ -77,6 +77,7 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007Test extends Abstract
     public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported()
     {
         $rule = new UnusedFormalParameter();
+        $rule->addProperty('allow-unused-before-used', 'false');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }

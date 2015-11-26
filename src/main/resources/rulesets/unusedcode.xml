@@ -89,6 +89,12 @@ class Something
 Avoid passing parameters to methods or constructors and then not using those parameters.
         </description>
         <priority>3</priority>
+        <properties>
+            <property
+                    name="allow-unused-before-used"
+                    description="Allow unused parameters to appear before used parameters."
+                    value="false" />
+        </properties>
         <example>
 <![CDATA[
 class Foo
