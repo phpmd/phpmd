@@ -434,7 +434,7 @@ class CommandLineOptions
                '--reportfile: send report output to a file; default to STDOUT' .
                \PHP_EOL .
                '--suffixes: comma-separated string of valid source code ' .
-               'filename extensions' . \PHP_EOL .
+               'filename extensions, e.g. php,phtml' . \PHP_EOL .
                '--exclude: comma-separated string of patterns that are used to ' .
                'ignore directories' . \PHP_EOL .
                 '--strict: also report those nodes with a @SuppressWarnings ' .
