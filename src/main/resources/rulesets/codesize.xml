@@ -336,7 +336,7 @@ public class Foo extends Bar {
     <rule name="TooManyMethods"
           since="0.1"
           class="PHPMD\Rule\Design\TooManyMethods"
-          message="The {0} {1} has {2} none getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
+          message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
           externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
             <![CDATA[
