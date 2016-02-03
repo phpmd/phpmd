@@ -118,6 +118,10 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             $exceptions = '';
         }
 
-        return explode(',', $exceptions);
+        $exceptionList = explode(',', $exceptions);
+        foreach ($exceptionList as $key => $exception) {
+            $exceptionList[$key] = trim($exception);
+        }
+        return $exceptionList;
     }
 }
