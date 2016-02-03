@@ -79,7 +79,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $className = $methodCall->getChild(0)->getNode()->getImage();
-            if (in_array($className, $exceptions)) {
+            if (in_array(ltrim('\\', $className), $exceptions)) {
                 continue;
             }
 
@@ -120,7 +120,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 
         $exceptionList = explode(',', $exceptions);
         foreach ($exceptionList as $key => $exception) {
-            $exceptionList[$key] = trim($exception);
+            $exceptionList[$key] = ltrim('\\', trim($exception));
         }
         return $exceptionList;
     }
