@@ -4,9 +4,9 @@ class testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedK
 {
     function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
     {
-        $array = [
+        return array(
             'foo' => 42,
             'bar' => 43,
-        ];
+        );
     }
 }

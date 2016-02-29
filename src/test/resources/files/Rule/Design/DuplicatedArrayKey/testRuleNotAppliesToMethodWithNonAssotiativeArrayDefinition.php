@@ -4,9 +4,9 @@ class testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
 {
     function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
     {
-        $array = [
+        return array(
             42,
             43,
-        ];
+        );
     }
 }

@@ -2,8 +2,8 @@
 
 function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
 {
-    $array = [
+    return array(
         'foo' => 42,
         "foo" => 43,
-    ];
+    );
 }

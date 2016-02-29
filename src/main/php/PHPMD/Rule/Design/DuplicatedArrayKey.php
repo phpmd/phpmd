@@ -80,7 +80,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         // small note regarding implementation - no need for recursion, as `apply()`
         // finds all Array nodes on all depts level
 
-        $keys = [];
+        $keys = array();
         foreach ($node->findChildrenOfType('ArrayElement') as $arrayElement) {
             // member of nested array - will be handled when `apply()` moves to that array
             // could be nice if PDepend provides a method to fetch just direct children
@@ -102,7 +102,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
 
             if (isset($keys[$key])) {
                 // duplicated key
-                $this->addViolation($arrayKey, [$key, $keys[$key]->getBeginLine()]);
+                $this->addViolation($arrayKey, array($key, $keys[$key]->getBeginLine()));
             } else {
                 // remember first occurance
                 $keys[$key] = $arrayKey;
@@ -123,7 +123,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         // numbers don't need any processing, they have plain value
 
         // this is string literal, not number
-        if (in_array($key[0], ['"', '\''])) {
+        if (in_array($key[0], array('"', '\''))) {
             $key = stripslashes($key);
             $key = mb_substr($key, 1, -1);
         }

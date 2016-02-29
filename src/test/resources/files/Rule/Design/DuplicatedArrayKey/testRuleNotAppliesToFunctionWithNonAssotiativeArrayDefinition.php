@@ -2,8 +2,8 @@
 
 function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
 {
-    $array = [
+    return array(
         42,
         43,
-    ];
+    );
 }

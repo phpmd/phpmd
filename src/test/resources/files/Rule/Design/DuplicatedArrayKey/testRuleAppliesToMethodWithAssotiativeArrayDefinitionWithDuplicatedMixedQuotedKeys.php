@@ -4,9 +4,9 @@ class testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQu
 {
     function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
     {
-        $array = [
+        return array(
             'foo' => 42,
             "foo" => 42,
-        ];
+        );
     }
 }
