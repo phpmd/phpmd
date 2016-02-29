@@ -2,7 +2,7 @@
 
 class testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
 {
-    function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys()
+    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys()
     {
         return array(
             'foo' => 42,

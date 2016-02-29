@@ -2,7 +2,7 @@
 
 class testRuleNotAppliesToMethodWithoutArrayDefinition
 {
-    function testRuleNotAppliesToMethodWithoutArrayDefinition()
+    public function testRuleNotAppliesToMethodWithoutArrayDefinition()
     {
     }
 }

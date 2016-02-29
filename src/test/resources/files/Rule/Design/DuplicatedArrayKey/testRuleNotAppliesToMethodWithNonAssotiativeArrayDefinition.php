@@ -2,7 +2,7 @@
 
 class testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
 {
-    function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
+    public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
     {
         return array(
             42,
