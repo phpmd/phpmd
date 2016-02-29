@@ -39,7 +39,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PHPMD\Rule\Design;
+namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTest;
 
@@ -50,7 +50,7 @@ use PHPMD\AbstractTest;
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PHPMD\Rule\Design\DuplicatedArrayKey
+ * @covers \PHPMD\Rule\CleanCode\DuplicatedArrayKey
  * @group phpmd
  * @group phpmd::rule
  * @group phpmd::rule::design

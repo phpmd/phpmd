@@ -39,7 +39,7 @@
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PHPMD\Rule\Design;
+namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
