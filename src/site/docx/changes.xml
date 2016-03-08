@@ -10,6 +10,16 @@
     </properties>
 
     <body>
+        <release version="2.4.0"
+                 date="2016/03/08"
+                 description="This release adds a new helper method to access the full qualified name of an analyzed node.">
+            <action date="e46a099" dev="manuelpichler" type="add" system="github">
+                Helper method added, so that we can access the full qualified name of a class, method, interface or function.
+            </action>
+        </release>
+        <release version="2.3.3"
+                 date="2016/03/08"
+                 description="Some minor issues fixed" />
         <release version="2.3.2"
                  date="2015/09/24"
                  description="With this release we make the Symfony dependency superfluous.">
