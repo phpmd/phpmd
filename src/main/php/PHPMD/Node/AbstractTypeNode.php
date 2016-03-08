@@ -133,6 +133,4 @@ abstract class AbstractTypeNode extends AbstractNode
     {
         return sprintf('%s\\%s', $this->getNamespaceName(), $this->getName());
     }
-
-
 }

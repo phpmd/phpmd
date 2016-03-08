@@ -61,6 +61,4 @@ class TraitNode extends AbstractTypeNode
     {
         parent::__construct($node);
     }
-
-
 }
