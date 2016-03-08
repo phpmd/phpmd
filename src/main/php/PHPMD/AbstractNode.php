@@ -282,6 +282,14 @@ abstract class AbstractNode
     abstract public function hasSuppressWarningsAnnotationFor(Rule $rule);
 
     /**
+     * Returns the full qualified name of a class, an interface, a method or
+     * a function.
+     *
+     * @return string
+     */
+    abstract public function getQName();
+
+    /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *

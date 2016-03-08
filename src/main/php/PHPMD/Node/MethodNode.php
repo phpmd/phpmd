@@ -87,6 +87,22 @@ class MethodNode extends AbstractCallableNode
     }
 
     /**
+     * Returns the full qualified name of a class, an interface, a method or
+     * a function.
+     *
+     * @return string
+     */
+    public function getQName()
+    {
+        return sprintf(
+            '%s\\%s::%s()',
+            $this->getNamespaceName(),
+            $this->getParentName(),
+            $this->getName()
+        );
+    }
+
+    /**
      * Returns <b>true</b> when the underlying method is declared as abstract or
      * is declared as child of an interface.
      *

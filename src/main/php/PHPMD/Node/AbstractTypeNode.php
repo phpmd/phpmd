@@ -122,4 +122,17 @@ abstract class AbstractTypeNode extends AbstractNode
     {
         return null;
     }
+
+    /**
+     * Returns the full qualified name of a class, an interface, a method or
+     * a function.
+     *
+     * @return string
+     */
+    public function getQName()
+    {
+        return sprintf('%s\\%s', $this->getNamespaceName(), $this->getName());
+    }
+
+
 }

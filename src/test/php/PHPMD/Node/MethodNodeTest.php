@@ -41,6 +41,9 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTest;
 
 /**
@@ -211,5 +214,23 @@ class MethodNodeTest extends AbstractTest
     {
         $method = $this->getMethod();
         $this->assertFalse($method->isDeclaration());
+    }
+
+    /**
+     * testGetQNameReturnsExpectedValue
+     *
+     * @return void
+     */
+    public function testGetQNameReturnsExpectedValue()
+    {
+        $class = new ASTClass('MyClass');
+        $class->setNamespace(new ASTNamespace('Sindelfingen'));
+
+        $method = new ASTMethod('beer');
+        $method->setParent($class);
+
+        $node = new MethodNode($method);
+
+        $this->assertSame('Sindelfingen\\MyClass::beer()', $node->getQName());
     }
 }

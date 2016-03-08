@@ -127,4 +127,17 @@ class ASTNodeTest extends AbstractTest
 
         $this->assertNull($node->getNamespaceName());
     }
+
+    /**
+     * testGetQNameReturnsNull
+     *
+     * @return void
+     */
+    public function testGetQNameReturnsNull()
+    {
+        $mock = $this->getMock('PDepend\Source\AST\ASTNode');
+        $node = new ASTNode($mock, __FILE__);
+
+        $this->assertNull($node->getQName());
+    }
 }

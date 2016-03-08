@@ -41,6 +41,9 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTest;
 
 /**
@@ -65,9 +68,9 @@ class ClassNodeTest extends AbstractTest
      */
     public function testGetMethodNamesReturnsExpectedResult()
     {
-        $class = new \PDepend\Source\AST\ASTClass(null);
-        $class->addMethod(new \PDepend\Source\AST\ASTMethod(__CLASS__));
-        $class->addMethod(new \PDepend\Source\AST\ASTMethod(__FUNCTION__));
+        $class = new ASTClass(null);
+        $class->addMethod(new ASTMethod(__CLASS__));
+        $class->addMethod(new ASTMethod(__FUNCTION__));
 
         $node = new ClassNode($class);
         $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
@@ -80,7 +83,7 @@ class ClassNodeTest extends AbstractTest
      */
     public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {
-        $class = new \PDepend\Source\AST\ASTClass(null);
+        $class = new ASTClass(null);
         $class->setDocComment('/** @SuppressWarnings("PMD") */');
 
         $rule = $this->getMock('PHPMD\\AbstractRule');
@@ -88,5 +91,20 @@ class ClassNodeTest extends AbstractTest
         $node = new ClassNode($class);
 
         $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testGetQNameReturnsExpectedValue
+     *
+     * @return void
+     */
+    public function testGetQNameReturnsExpectedValue()
+    {
+        $class = new ASTClass('MyClass');
+        $class->setNamespace(new ASTNamespace('Sindelfingen'));
+
+        $node = new ClassNode($class);
+
+        $this->assertSame('Sindelfingen\\MyClass', $node->getQName());
     }
 }
