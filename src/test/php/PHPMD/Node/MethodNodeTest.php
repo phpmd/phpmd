@@ -217,11 +217,11 @@ class MethodNodeTest extends AbstractTest
     }
 
     /**
-     * testGetQNameReturnsExpectedValue
+     * testGetFullQualifiedNameReturnsExpectedValue
      *
      * @return void
      */
-    public function testGetQNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue()
     {
         $class = new ASTClass('MyClass');
         $class->setNamespace(new ASTNamespace('Sindelfingen'));
@@ -231,6 +231,6 @@ class MethodNodeTest extends AbstractTest
 
         $node = new MethodNode($method);
 
-        $this->assertSame('Sindelfingen\\MyClass::beer()', $node->getQName());
+        $this->assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
     }
 }

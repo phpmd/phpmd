@@ -10,6 +10,10 @@
     </properties>
 
     <body>
+        <release version="2.4.1"
+                 date="2016/03/08"
+                 description="This release fixes a method naming issue, that was introduced with 2.4.0.">
+        </release>
         <release version="2.4.0"
                  date="2016/03/08"
                  description="This release adds a new helper method to access the full qualified name of an analyzed node.">

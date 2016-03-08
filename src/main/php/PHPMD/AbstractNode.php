@@ -287,7 +287,7 @@ abstract class AbstractNode
      *
      * @return string
      */
-    abstract public function getQName();
+    abstract public function getFullQualifiedName();
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no

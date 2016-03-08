@@ -94,17 +94,17 @@ class ClassNodeTest extends AbstractTest
     }
 
     /**
-     * testGetQNameReturnsExpectedValue
+     * testGetFullQualifiedNameReturnsExpectedValue
      *
      * @return void
      */
-    public function testGetQNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue()
     {
         $class = new ASTClass('MyClass');
         $class->setNamespace(new ASTNamespace('Sindelfingen'));
 
         $node = new ClassNode($class);
 
-        $this->assertSame('Sindelfingen\\MyClass', $node->getQName());
+        $this->assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
     }
 }

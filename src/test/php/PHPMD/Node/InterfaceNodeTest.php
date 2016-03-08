@@ -62,17 +62,17 @@ use PHPMD\AbstractTest;
 class InterfaceNodeTest extends AbstractTest
 {
     /**
-     * testGetQNameReturnsExpectedValue
+     * testGetFullQualifiedNameReturnsExpectedValue
      *
      * @return void
      */
-    public function testGetQNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue()
     {
         $interface = new ASTInterface('MyInterface');
         $interface->setNamespace(new ASTNamespace('Sindelfingen'));
 
         $node = new InterfaceNode($interface);
 
-        $this->assertSame('Sindelfingen\\MyInterface', $node->getQName());
+        $this->assertSame('Sindelfingen\\MyInterface', $node->getFullQualifiedName());
     }
 }
