@@ -13,6 +13,8 @@ php:
 #        - php: 7.0
 #        - php: hhvm
 
+sudo: false
+
 env:
   - TEST_CONFIG="phpunit.xml.dist"
 
