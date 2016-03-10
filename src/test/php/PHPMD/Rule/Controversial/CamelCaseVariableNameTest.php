@@ -2,6 +2,8 @@
 /**
  * This file is part of PHP Mess Detector.
  *
+ * PHP Version 5
+ *
  * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
@@ -37,76 +39,83 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link       https://www.pivotaltracker.com/story/show/10474873
- * @ticket     10474873
+ * @version   @project.version@
  */
 
-namespace PHPMD\Rule\Design;
+namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTest;
 
 /**
- * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
+ * Test case for the camel case variable name rule.
+ *
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link       https://www.pivotaltracker.com/story/show/10474873
- * @ticket     10474873
+ * @version   @project.version@
  *
- * @covers \PHPMD\Rule\Design\GotoStatement
+ * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName
  * @group phpmd
  * @group phpmd::rule
- * @group phpmd::rule::design
+ * @group phpmd::rule::controversial
  * @group unittest
  */
-class GotoStatementTest extends AbstractTest
+class CamelCaseVariableNameTest extends AbstractTest
 {
     /**
-     * testRuleNotAppliesToMethodWithoutGotoStatement
-     *
+     * Tests that the rule does apply for an invalid variable name
      * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutGotoStatement()
+    public function testRuleDoesApplyForInvariableNameWithUnderscore()
     {
-        $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleAppliesToMethodWithGotoStatement
+     * Tests that the rule does apply for an invalid variable name
+     * starting with a capital.
      *
      * @return void
      */
-    public function testRuleAppliesToMethodWithGotoStatement()
+    public function testRuleDoesApplyForVariableNameWithCapital()
     {
-        $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethod());
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleNotAppliesToFunctionWithoutGotoStatement
+     * Tests that the rule does NOT apply for a valid variable name
      *
      * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutGotoStatement()
+    public function testRuleDoesNotApplyForValidVariableName()
     {
-        $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getFunction());
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleAppliesToFunctionWithGotoStatement
+     * Tests that the rule does NOT apply for a statically accessed variable
      *
      * @return void
      */
-    public function testRuleAppliesToFunctionWithGotoStatement()
+    public function testRuleDoesNotApplyForStaticVariableAccess()
     {
-        $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getFunction());
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
     }
 }
