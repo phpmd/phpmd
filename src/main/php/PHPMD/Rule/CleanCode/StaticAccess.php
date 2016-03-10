@@ -79,7 +79,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $className = $methodCall->getChild(0)->getNode()->getImage();
-            if (in_array($this->trimClassName($className), $exceptions)) {
+            if (in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions)) {
                 continue;
             }
 
@@ -118,20 +118,11 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             $exceptions = '';
         }
 
-        $exceptionList = explode(',', $exceptions);
-        foreach ($exceptionList as $key => $exception) {
-            $exceptionList[$key] = $this->trimClassName($exception);
-        }
-        return $exceptionList;
-    }
-
-    /**
-     * Remove surrounding whitespace and preceding backslashes
-     * @param $className
-     * @return string
-     */
-    private function trimClassName($className)
-    {
-        return ltrim(trim($className), '\\');
+        return array_map(
+            function ($className) {
+                return trim($className, " \t\n\r\0\x0B\\");
+            },
+            explode(',', $exceptions)
+        );
     }
 }
