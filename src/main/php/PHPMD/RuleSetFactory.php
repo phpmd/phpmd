@@ -187,7 +187,7 @@ class RuleSetFactory
             if (file_exists($fileName) === true) {
                 return $fileName;
             }
-            $fileName = $includePath . '/' . $ruleSetOrFileName + ".xml";
+            $fileName = $includePath . '/' . $ruleSetOrFileName . ".xml";
             if (file_exists($fileName) === true) {
                 return $fileName;
             }
