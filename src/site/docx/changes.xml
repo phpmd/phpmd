@@ -10,6 +10,16 @@
     </properties>
 
     <body>
+        <release version="2.4.2"
+                 date="2016/03/10"
+                 description="">
+            <action date="2fd479b" dev="manuelpichler" type="fix" issue="328" due-to="radmen" system="github">
+                Cannot create new nodes, when internal state is frozen.
+            </action>
+            <action date="6a121ea" dev="lanfisis" type="fix" issue="354" system="github">
+                Replace plus by a dot as concat operator in filename creation.
+            </action>
+        </release>
         <release version="2.4.1"
                  date="2016/03/08"
                  description="This release fixes a method naming issue, that was introduced with 2.4.0.">
@@ -19,6 +29,12 @@
                  description="This release adds a new helper method to access the full qualified name of an analyzed node.">
             <action date="e46a099" dev="manuelpichler" type="add" system="github">
                 Helper method added, so that we can access the full qualified name of a class, method, interface or function.
+            </action>
+            <action date="59a6e8a" dev="dereckson" type="fix" issue="335" system="github">
+                Typo in clean code rule description fixed.
+            </action>
+            <action date="f8b017a" dev="darkain" type="add" issue="334" system="github">
+                Added __debugInfo to list of ignored methods.
             </action>
         </release>
         <release version="2.3.3"
