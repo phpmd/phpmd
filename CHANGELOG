@@ -1,3 +1,42 @@
+phpmd-2.4.2 (2016/03/10)
+========================
+
+
+
+- Fixed #261: Prove Issue 261 and added tests for 
+  CamelCaseVariableName Fixed in commit #319b398.
+- Fixed #328: Cannot create new nodes, when internal state is frozen. 
+  Fixed in commit #2fd479b.
+- Fixed #354: Replace plus by a dot as concat operator in filename 
+  creation. Fixed in commit #6a121ea.
+- Implemented #343: Trim exceptions for StaticAccess Implemented in 
+  commit #3121c58.
+
+phpmd-2.4.1 (2016/03/08)
+========================
+
+This release fixes a method naming issue, that was introduced with 
+2.4.0.
+
+phpmd-2.4.0 (2016/03/08)
+========================
+
+This release adds a new helper method to access the full qualified 
+name of an analyzed node.
+
+- Fixed #335: Typo in clean code rule description fixed. Fixed in 
+  commit #59a6e8a.
+- Helper method added, so that we can access the full qualified name 
+  of a class, method, interface or function. Implemented in commit 
+  #e46a099.
+- Implemented #334: Added __debugInfo to list of ignored methods. 
+  Implemented in commit #f8b017a.
+
+phpmd-2.3.3 (2016/03/08)
+========================
+
+Some minor issues fixed
+
 phpmd-2.3.2 (2015/09/24)
 ========================
 

@@ -13,8 +13,14 @@
         <release version="2.4.2"
                  date="2016/03/10"
                  description="">
+            <action date="319b398" dev="ravage84" type="fix" issue="261" system="github">
+                Prove Issue 261 and added tests for CamelCaseVariableName
+            </action>
             <action date="2fd479b" dev="manuelpichler" type="fix" issue="328" due-to="radmen" system="github">
                 Cannot create new nodes, when internal state is frozen.
+            </action>
+            <action date="3121c58" dev="Gisleburt" type="add" issue="343" system="github">
+                Trim exceptions for StaticAccess
             </action>
             <action date="6a121ea" dev="lanfisis" type="fix" issue="354" system="github">
                 Replace plus by a dot as concat operator in filename creation.
