@@ -8,10 +8,10 @@ php:
   - 7.0
   - hhvm
 
-matrix:
-    allow_failures:
-        - php: 7.0
-        - php: hhvm
+#matrix:
+#    allow_failures:
+#        - php: 7.0
+#        - php: hhvm
 
 env:
   - TEST_CONFIG="phpunit.xml.dist"
