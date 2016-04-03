@@ -97,7 +97,7 @@ is a modified version of the previous example: ::
       </phpmd>
   </target>
 
-Post processing the report file with XSLT
+Postprocessing the report file with XSLT
 =========================================
 
 There are several XSLT scripts which can be used to transform the XML

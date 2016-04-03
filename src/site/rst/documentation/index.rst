@@ -25,7 +25,7 @@ code to PHPMD.
 
 The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
-like a file system reference.
+like a filesystem reference.
 
 Command line options
 ====================
