@@ -8,7 +8,7 @@ project.
 Ant Task
 ========
 
-Simple task that allows a seamless integration of PHPMD into the 
+Simple task that allows a seamless integration of PHPMD into the
 `ant`__ build tool.
 
 __ http://ant.apache.org/

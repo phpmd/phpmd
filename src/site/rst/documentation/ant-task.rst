@@ -97,8 +97,8 @@ is a modified version of the previous example: ::
       </phpmd>
   </target>
 
-Postprocessing the report file with XSLT
-========================================
+Post processing the report file with XSLT
+=========================================
 
 There are several XSLT scripts which can be used to transform the XML
 report into some nice html pages. To do this, make sure you use the
@@ -111,5 +111,3 @@ Then, after the end of the PHPMD task, do this: ::
   <xslt in="${builddir}/~report.xml"
         style="${basedir}/report.xslt"
         out="${reportdir}/report.html" />
-
-

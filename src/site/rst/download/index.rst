@@ -5,7 +5,7 @@ Downloads
 Installing as a Phar
 ====================
 
-You can always fetch the latest stable version as a phar archive throught
+You can always fetch the latest stable version as a phar archive through
 the following version agnostic link: ::
 
   ~ $ wget -c http://static.phpmd.org/php/latest/phpmd.phar
@@ -36,7 +36,7 @@ __ http://getcomposer.org/composer.phar
 From the github repository
 ==========================
 
-If you like to participate on the social coding plattform `GitHub`__,
+If you like to participate on the social coding platform `GitHub`__,
 you can use PHPMD's mirror to fork and contribute to PHPMD. ::
 
   ~ $ git clone git://github.com/phpmd/phpmd.git

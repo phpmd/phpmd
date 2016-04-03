@@ -23,7 +23,7 @@ Clean Code Rules
 
 - `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
 - `ElseExpression`__: An if expression with an else branch is never necessary. You can rewrite the conditions in a way that the else is not necessary and the code becomes simpler to read. To achieve this use early return statements. To achieve this you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
-- `StaticAccess`__: Static acccess causes inexchangable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
+- `StaticAccess`__: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
 
 __ cleancode.html#booleanargumentflag
 __ cleancode.html#elseexpression
@@ -93,7 +93,7 @@ Naming Rules
 - `LongVariable`__: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName`__: Detects when very short method names are used.
 - `ConstructorWithNameAsEnclosingClass`__: A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
-- `ConstantNamingConventions`__: Class/Interface constant nanmes should always be defined in uppercase.
+- `ConstantNamingConventions`__: Class/Interface constant names should always be defined in uppercase.
 - `BooleanGetMethodName`__: Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
 
 __ naming.html#shortvariable

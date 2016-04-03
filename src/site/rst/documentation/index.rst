@@ -8,12 +8,12 @@ Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
     <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-      <violation beginline="67" 
-                 endline="224" 
-                 rule="TooManyMethods" 
-                 ruleset="Code Size Rules" 
+      <violation beginline="67"
+                 endline="224"
+                 rule="TooManyMethods"
+                 ruleset="Code Size Rules"
                  package="PHP_Depend\DbusUI"
-                 class="PHP_Depend_DbusUI_ResultPrinter" 
+                 class="PHP_Depend_DbusUI_ResultPrinter"
                  priority="3">
         This class has too many methods, consider refactoring it.
       </violation>
@@ -24,8 +24,8 @@ You can pass a file name or a directory name containing PHP source
 code to PHPMD.
 
 The PHPMD Phar distribution includes the rule set files inside
-its archive, even if the "rulesets/codesize.xml" parameter above looks 
-like a filesystem reference.
+its archive, even if the "rulesets/codesize.xml" parameter above looks
+like a file system reference.
 
 Command line options
 ====================
@@ -43,16 +43,16 @@ Command line options
   - ``--minimumpriority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 
-  - ``--reportfile`` - Sends the report output to the specified file, 
+  - ``--reportfile`` - Sends the report output to the specified file,
     instead of the default output target ``STDOUT``.
 
-  - ``--suffixes`` - Comma-separated string of valid source code filename 
+  - ``--suffixes`` - Comma-separated string of valid source code filename
     extensions, e.g. php,phtml.
 
-  - ``--exclude`` - Comma-separated string of patterns that are used to ignore 
+  - ``--exclude`` - Comma-separated string of patterns that are used to ignore
     directories.
 
-  - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation. 
+  - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
   An example command line: ::
 
@@ -62,7 +62,7 @@ Command line options
 Using multiple rule sets
 ````````````````````````
 
-PHPMD uses so called rule sets that configure/define a set of rules which will 
+PHPMD uses so called rule sets that configure/define a set of rules which will
 be applied against the source under test. The default distribution of PHPMD is
 already shipped with a few default sets, that can be used out-of-box. You can
 call PHPMD's cli tool with a set's name to apply this configuration: ::
@@ -92,10 +92,10 @@ PHPMD's command line tool currently defines three different exit codes.
 - *0*, This exit code indicates that everything worked as expected. This means
   there was no error/exception and PHPMD hasn't detected any rule violation
   in the code under test.
-- *1*, This exit code indicates that an error/exception occured which has
+- *1*, This exit code indicates that an error/exception occurred which has
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
-  without the occurence of an error/exception, but it has detected rule
+  without the occurrence of an error/exception, but it has detected rule
   violations in the analyzed source code.
 
 Renderers
@@ -106,4 +106,3 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
-

@@ -32,7 +32,7 @@
         <xsl:apply-templates select="pmd:description" />
         <xsl:apply-templates select="pmd:rule" />
         <xsl:value-of select="$nl" />
-            
+
         <xsl:text>
 Remark
 ======
@@ -275,5 +275,5 @@ __ http://pmd.sourceforge.net/
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-  
+
 </xsl:stylesheet>

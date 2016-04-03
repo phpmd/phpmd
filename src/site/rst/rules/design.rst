@@ -51,7 +51,7 @@ Goto makes code harder to read and it is nearly impossible to understand the con
 Example: ::
 
   class Foo {
-      public function bar($param)  {
+      public function bar($param) {
           A:
           if ($param === 42) {
               goto X;
@@ -81,9 +81,9 @@ A class with an excessive number of children is an indicator for an unbalanced c
 This rule has the following properties:
 
 =================================== =============== =============================================
- Name                                Default Value   Description                                 
+ Name                                Default Value   Description
 =================================== =============== =============================================
- minimum                             15              Maximum number of acceptable child classes. 
+ minimum                             15              Maximum number of acceptable child classes.
 =================================== =============== =============================================
 
 DepthOfInheritance
@@ -98,9 +98,9 @@ A class with many parents is an indicator for an unbalanced and wrong class hier
 This rule has the following properties:
 
 =================================== =============== ==============================================
- Name                                Default Value   Description                                  
+ Name                                Default Value   Description
 =================================== =============== ==============================================
- minimum                             6               Maximum number of acceptable parent classes. 
+ minimum                             6               Maximum number of acceptable parent classes.
 =================================== =============== ==============================================
 
 CouplingBetweenObjects
@@ -118,21 +118,21 @@ Example: ::
        * @var \foo\bar\X
        */
       private $x = null;
-  
+
       /**
        * @var \foo\bar\Y
        */
       private $y = null;
-  
+
       /**
        * @var \foo\bar\Z
        */
       private $z = null;
-  
+
       public function setFoo(\Foo $foo) {}
       public function setBar(\Bar $bar) {}
       public function setBaz(\Baz $baz) {}
-  
+
       /**
        * @return \SplObjectStorage
        * @throws \OutOfRangeException
@@ -140,16 +140,16 @@ Example: ::
        * @throws \ErrorException
        */
       public function process(\Iterator $it) {}
-  
+
       // ...
   }
 
 This rule has the following properties:
 
 =================================== =============== ============================================
- Name                                Default Value   Description                                
+ Name                                Default Value   Description
 =================================== =============== ============================================
- minimum                             13              Maximum number of acceptable dependencies. 
+ minimum                             13              Maximum number of acceptable dependencies.
 =================================== =============== ============================================
 
 
@@ -159,4 +159,3 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        
