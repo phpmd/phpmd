@@ -4,7 +4,6 @@
         <name>PHPMD Releases</name>
         <path>index.rst</path>
     </site>
-
     <directory>
         <name>1.1.1</name>
         <path>1.1.1/</path>

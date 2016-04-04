@@ -18,7 +18,7 @@ The Code Size Ruleset contains a collection of rules that find code size related
         <description>
             <![CDATA[
 Complexity is determined by the number of decision points in a method plus one for the
-method entry.  The decision points are 'if', 'while', 'for', and 'case labels'.  Generally,
+method entry. The decision points are 'if', 'while', 'for', and 'case labels'. Generally,
 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity,
  and 11+ is very high complexity.
             ]]>
@@ -37,24 +37,24 @@ method entry.  The decision points are 'if', 'while', 'for', and 'case labels'. 
             <![CDATA[
 // Cyclomatic Complexity = 12
 class Foo {
-1   public function example()  {
-2       if ($a == $b)  {
+1   public function example() {
+2       if ($a == $b) {
 3           if ($a1 == $b1) {
                 fiddle();
-4           } else if ($a2 == $b2) {
+4           } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
                 fiddle();
             }
-5       } else if ($c == $d) {
+5       } elseif ($c == $d) {
 6           while ($c == $d) {
                 fiddle();
             }
-7        } else if ($e == $f) {
+7        } elseif ($e == $f) {
 8           for ($n = 0; $n < $h; $n++) {
                 fiddle();
             }
-        } else{
+        } else {
             switch ($z) {
 9               case 1:
                     fiddle();
@@ -109,7 +109,7 @@ class Foo {
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
         <description>
 Violations of this rule usually indicate that the method is doing
-too much.  Try to reduce the method size by creating helper methods and removing any copy/pasted code.
+too much. Try to reduce the method size by creating helper methods and removing any copy/pasted code.
         </description>
         <priority>3</priority>
         <properties>
@@ -136,7 +136,7 @@ class Foo {
           externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
 Long Class files are indications that the class may be trying to
-do too much.  Try to break it down, and reduce the size to something
+do too much. Try to break it down, and reduce the size to something
 manageable.
         </description>
         <priority>3</priority>
@@ -395,23 +395,23 @@ methods also means that this class has a greater potential impact on derived cla
         <example>
             <![CDATA[
 class Foo {
-    public function bar()  {
+    public function bar() {
         if ($a == $b)  {
             if ($a1 == $b1) {
                 fiddle();
-            } else if ($a2 == $b2) {
+            } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
             }
         }
     }
-    public function baz()  {
-        if ($a == $b)  {
+    public function baz() {
+        if ($a == $b) {
             if ($a1 == $b1) {
                 fiddle();
-            } else if ($a2 == $b2) {
+            } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
             }
         }
     }

@@ -75,7 +75,7 @@ class Foo
           externalInfoUrl="http://phpmd.org/rules/cleancode.html#staticaccess">
         <description>
             <![CDATA[
-Static access causes inexchangable dependencies to other classes and leads to hard to test code. Avoid
+Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid
 using static access at all costs and instead inject dependencies through the constructor. The only
 case when static access is acceptable is when used for factory methods.
             ]]>

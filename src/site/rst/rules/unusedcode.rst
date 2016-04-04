@@ -45,9 +45,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ========================================================
- Name                                Default Value   Description                                            
+ Name                                Default Value   Description
 =================================== =============== ========================================================
- allow-unused-foreach-variables      false           Allow unused variables in foreach language constructs. 
+ allow-unused-foreach-variables      false           Allow unused variables in foreach language constructs.
 =================================== =============== ========================================================
 
 UnusedPrivateMethod
@@ -90,4 +90,3 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        

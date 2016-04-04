@@ -78,9 +78,9 @@ function generate_index( array $sets )
 {
     $content = '================' . PHP_EOL
              . 'Current Rulesets' . PHP_EOL
-             . '================' 
+             . '================'
              . PHP_EOL . PHP_EOL
-             . 'List of rulesets and rules contained in each ruleset.' 
+             . 'List of rulesets and rules contained in each ruleset.'
              . PHP_EOL . PHP_EOL;
 
     foreach ( $sets as $set )
@@ -92,7 +92,7 @@ function generate_index( array $sets )
             PHP_EOL
         );
     }
-    
+
     $content .= PHP_EOL;
     foreach ( $sets as $set )
     {
@@ -124,7 +124,7 @@ function generate_index( array $sets )
         {
             $content .= '__ ' . $rule['href'] . PHP_EOL;
         }
-        $content .= PHP_EOL;        
+        $content .= PHP_EOL;
     }
     $content .= PHP_EOL;
     $content .= 'Remark' . PHP_EOL .
@@ -134,7 +134,7 @@ function generate_index( array $sets )
                 'project. This means that most parts of the content ' .
                 'on this page are the intellectual work of the PMD ' .
                 'community and its contributors and not of the PHPMD ' .
-                'project.' . 
+                'project.' .
                 PHP_EOL . PHP_EOL .
                 '__ http://pmd.sourceforge.net/' .
                 PHP_EOL;

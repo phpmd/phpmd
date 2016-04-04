@@ -16,24 +16,24 @@ Example: ::
 
   // Cyclomatic Complexity = 12
   class Foo {
-  1   public function example()  {
-  2       if ($a == $b)  {
+  1   public function example() {
+  2       if ($a == $b) {
   3           if ($a1 == $b1) {
                   fiddle();
-  4           } else if ($a2 == $b2) {
+  4           } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
                   fiddle();
               }
-  5       } else if ($c == $d) {
+  5       } elseif ($c == $d) {
   6           while ($c == $d) {
                   fiddle();
               }
-  7        } else if ($e == $f) {
+  7        } elseif ($e == $f) {
   8           for ($n = 0; $n < $h; $n++) {
                   fiddle();
               }
-          } else{
+          } else {
               switch ($z) {
   9               case 1:
                       fiddle();
@@ -55,11 +55,11 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===================================================================
- Name                                Default Value   Description                                                       
+ Name                                Default Value   Description
 =================================== =============== ===================================================================
- reportLevel                         10              The Cyclomatic Complexity reporting threshold                     
- showClassesComplexity               true            Indicate if class average violation should be added to the report 
- showMethodsComplexity               true            Indicate if class average violation should be added to the report 
+ reportLevel                         10              The Cyclomatic Complexity reporting threshold
+ showClassesComplexity               true            Indicate if class average violation should be added to the report
+ showMethodsComplexity               true            Indicate if class average violation should be added to the report
 =================================== =============== ===================================================================
 
 NPathComplexity
@@ -81,9 +81,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===============================
- Name                                Default Value   Description                   
+ Name                                Default Value   Description
 =================================== =============== ===============================
- minimum                             200             The npath reporting threshold 
+ minimum                             200             The npath reporting threshold
 =================================== =============== ===============================
 
 ExcessiveMethodLength
@@ -107,10 +107,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description                             
+ Name                                Default Value   Description
 =================================== =============== =========================================
- minimum                             100             The method size reporting threshold     
- ignore-whitespace                   false           Count whitespace in reporting threshold 
+ minimum                             100             The method size reporting threshold
+ ignore-whitespace                   false           Count whitespace in reporting threshold
 =================================== =============== =========================================
 
 ExcessiveClassLength
@@ -132,10 +132,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description                             
+ Name                                Default Value   Description
 =================================== =============== =========================================
- minimum                             1000            The class size reporting threshold      
- ignore-whitespace                   false           Count whitespace in reporting threshold 
+ minimum                             1000            The class size reporting threshold
+ ignore-whitespace                   false           Count whitespace in reporting threshold
 =================================== =============== =========================================
 
 ExcessiveParameterList
@@ -158,9 +158,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description                             
+ Name                                Default Value   Description
 =================================== =============== =========================================
- minimum                             10              The parameter count reporting threshold 
+ minimum                             10              The parameter count reporting threshold
 =================================== =============== =========================================
 
 ExcessivePublicCount
@@ -178,7 +178,7 @@ Example: ::
       public $something;
       public $var;
       // [... more more public attributes ...]
-  
+
       public function doWork() {}
       public function doMoreWork() {}
       public function doWorkAgain() {}
@@ -188,9 +188,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =====================================
- Name                                Default Value   Description                         
+ Name                                Default Value   Description
 =================================== =============== =====================================
- minimum                             45              The public item reporting threshold 
+ minimum                             45              The public item reporting threshold
 =================================== =============== =====================================
 
 TooManyFields
@@ -213,9 +213,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ======================================
- Name                                Default Value   Description                          
+ Name                                Default Value   Description
 =================================== =============== ======================================
- maxfields                           15              The field count reporting threshold  
+ maxfields                           15              The field count reporting threshold
 =================================== =============== ======================================
 
 TooManyMethods
@@ -267,21 +267,21 @@ The Weighted Method Count (WMC) of a class is a good indicator of how much time 
 Example: ::
 
   class Foo {
-      public function bar()  {
-          if ($a == $b)  {
+      public function bar() {
+          if ($a == $b) {
               if ($a1 == $b1) {
                   fiddle();
-              } else if ($a2 == $b2) {
+              } elseif ($a2 == $b2) {
                   fiddle();
               }  else {
               }
           }
       }
-      public function baz()  {
-          if ($a == $b)  {
+      public function baz() {
+          if ($a == $b) {
               if ($a1 == $b1) {
                   fiddle();
-              } else if ($a2 == $b2) {
+              } elseif ($a2 == $b2) {
                   fiddle();
               }  else {
               }
@@ -293,9 +293,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ========================================
- Name                                Default Value   Description                            
+ Name                                Default Value   Description
 =================================== =============== ========================================
- maximum                             50              The maximum WMC tolerable for a class. 
+ maximum                             50              The maximum WMC tolerable for a class.
 =================================== =============== ========================================
 
 
@@ -305,4 +305,3 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        

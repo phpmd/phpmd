@@ -25,7 +25,7 @@ Detects when a field, local, or parameter has a very short name.
             <![CDATA[
 class Something {
     private $q = 15; // VIOLATION - Field
-    public static function main( array $as ) {  // VIOLATION - Formal
+    public static function main( array $as ) { // VIOLATION - Formal
         $r = 20 + $this->q; // VIOLATION - Local
         for (int $i = 0; $i < 10; $i++) { // Not a Violation (inside FOR)
             $r += $this->q;
@@ -51,10 +51,10 @@ Detects when a field, formal or local variable is declared with a long name.
         <example>
             <![CDATA[
 class Something {
-    protected $reallyLongIntName = -3;  // VIOLATION - Field
+    protected $reallyLongIntName = -3; // VIOLATION - Field
     public static function main( array $argumentsList[] ) { // VIOLATION - Formal
         $otherReallyLongName = -5; // VIOLATION - Local
-        for ($interestingIntIndex = 0;  // VIOLATION - For
+        for ($interestingIntIndex = 0; // VIOLATION - For
              $interestingIntIndex < 10;
              $interestingIntIndex++ ) {
         }
@@ -115,7 +115,7 @@ class MyClass {
           class="PHPMD\Rule\Naming\ConstantNamingConventions"
           externalInfoUrl="http://phpmd.org/rules/naming.html#constantnamingconventions">
         <description>
-Class/Interface constant nanmes should always be defined in uppercase.
+Class/Interface constant names should always be defined in uppercase.
         </description>
         <priority>4</priority>
         <properties />
