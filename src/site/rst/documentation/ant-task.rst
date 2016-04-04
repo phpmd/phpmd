@@ -98,7 +98,7 @@ is a modified version of the previous example: ::
   </target>
 
 Postprocessing the report file with XSLT
-=========================================
+========================================
 
 There are several XSLT scripts which can be used to transform the XML
 report into some nice html pages. To do this, make sure you use the
