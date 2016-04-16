@@ -83,6 +83,12 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      */
     public function apply(AbstractNode $node)
     {
+        $allowUnderscore = $this->getBooleanProperty('allow-underscore');
+        $pattern = '/^\$[a-zA-Z][a-zA-Z0-9]*$/';
+        if ($allowUnderscore === true) {
+            $pattern = '/^\$[_][a-zA-Z][a-zA-Z0-9]*$/';
+        }
+        
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             $image = $variable->getImage();
 
@@ -90,7 +96,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
                 continue;
             }
 
-            if (preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $image)) {
+            if (preg_match($pattern, $image)) {
                 continue;
             }
 
