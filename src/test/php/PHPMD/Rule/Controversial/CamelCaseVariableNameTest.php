@@ -73,7 +73,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
-        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore', 'true');
         $rule->apply($this->getClass());
     }
 
@@ -89,7 +89,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
-        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore', 'true');
         $rule->apply($this->getClass());
     }
 
@@ -104,7 +104,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
-        $rule->addProperty('allow-underscore', 'true');
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -119,7 +119,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
-        $rule->addProperty('allow-underscore', 'true');
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 }
