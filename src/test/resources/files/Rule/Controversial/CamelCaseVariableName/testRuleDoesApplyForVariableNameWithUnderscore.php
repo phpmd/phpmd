@@ -1,2 +1,8 @@
 <?php
-$data_module = 'foo';
+class testRuleDoesApplyForInvariableNameWithUnderscore
+{
+    public function invalidVariableNameWithUnderscore()
+    {
+        $data_module = 'foo';
+    }
+}
