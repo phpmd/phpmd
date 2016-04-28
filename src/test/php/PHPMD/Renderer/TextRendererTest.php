@@ -91,7 +91,6 @@ class TextRendererTest extends AbstractTest
         $renderer->end();
 
         $this->assertEquals(
-            PHP_EOL .
             "/bar.php:1\tTest description" . PHP_EOL .
             "/foo.php:2\tTest description" . PHP_EOL .
             "/foo.php:3\tTest description" . PHP_EOL,
@@ -131,7 +130,6 @@ class TextRendererTest extends AbstractTest
         $renderer->end();
 
         $this->assertEquals(
-            PHP_EOL .
             "/tmp/foo.php\t-\tFailed for file \"/tmp/foo.php\"." . PHP_EOL .
             "/tmp/bar.php\t-\tFailed for file \"/tmp/bar.php\"." . PHP_EOL .
             "/tmp/baz.php\t-\tFailed for file \"/tmp/baz.php\"." . PHP_EOL,
