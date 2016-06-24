@@ -174,7 +174,7 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
-     * testCliOptionsAcceptsVersionArgument
+     * testHasVersionReturnsFalseByDefault
      *
      * @return void
      */
@@ -197,6 +197,45 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasVersion());
+    }
+
+    /**
+     * testIgnoreExitViolationsReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testIgnoreExitViolationsReturnsFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $opts = new CommandLineOptions($args);
+
+        self::assertFalse($opts->ignoreExitViolations());
+    }
+
+    /**
+     * testCliOptionsAcceptsIgnoreViolationsOnExitArgument
+     *
+     * @return void
+     */
+    public function testCliOptionsAcceptsIgnoreViolationsOnExitArgument()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-violations-on-exit');
+        $opts = new CommandLineOptions($args);
+
+        self::assertTrue($opts->ignoreExitViolations());
+    }
+
+    /**
+     * testCliUsageContainsStrictOption
+     *
+     * @return void
+     */
+    public function testCliUsageContainsIgnoreViolationsOnExitOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertContains('--ignore-violations-on-exit:', $opts->usage());
     }
 
     /**

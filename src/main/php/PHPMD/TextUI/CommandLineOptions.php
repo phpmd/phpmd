@@ -200,7 +200,7 @@ class CommandLineOptions
                 case '--strict':
                     $this->strict = true;
                     break;
-                case '--ignore-exit-violations':
+                case '--ignore-violations-on-exit':
                     $this->ignoreExitViolations = true;
                     break;
                 case (preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match) > 0):
@@ -338,11 +338,11 @@ class CommandLineOptions
     }
 
     /**
-     * Was the <b>--ignore-exit-violations</b> passed to PHPMD's command line interface?
+     * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
      *
      * @return boolean
      */
-    public function hasIgnoreExitViolations()
+    public function ignoreExitViolations()
     {
         return $this->ignoreExitViolations;
     }
@@ -459,8 +459,8 @@ class CommandLineOptions
                'ignore directories' . \PHP_EOL .
                 '--strict: also report those nodes with a @SuppressWarnings ' .
                'annotation' . \PHP_EOL .
-                '--ignore-exit-violations: will exit with 0 even if a ' .
-                'violation is found ' . \PHP_EOL;
+                '--ignore-violations-on-exit: will exit with a zero code, ' .
+                'even if any violations are found' . \PHP_EOL;
     }
 
     /**

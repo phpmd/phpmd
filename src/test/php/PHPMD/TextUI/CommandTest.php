@@ -99,4 +99,29 @@ class CommandTest extends AbstractTest
         );
         $this->assertEquals(Command::EXIT_VIOLATION, $exitCode);
     }
+
+    /**
+     * testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     *
+     * @return void
+     * @covers \PHPMD\TextUI\Command
+     * @group phpmd
+     * @group phpmd::textui
+     * @group unittest
+     */
+    public function testMainReturnsSuccessExitCodeForSourceWithNPathViolationAndIgnoreViolationsOnExitFlag()
+    {
+        $exitCode = Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                'text',
+                'codesize',
+                '--reportfile',
+                self::createTempFileUri(),
+                '--ignore-violations-on-exit',
+            )
+        );
+        $this->assertEquals(Command::EXIT_SUCCESS, $exitCode);
+    }
 }

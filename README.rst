@@ -94,6 +94,9 @@ Command line options
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
+  - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
+    violations are found.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
@@ -144,7 +147,9 @@ PHPMD's command line tool currently defines three different exit codes.
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
   without the occurence of an error/exception, but it has detected rule
-  violations in the analyzed source code.
+  violations in the analyzed source code. You can also prevent this behaviour
+  with the ``--ignore-violations-on-exit`` flag, which will result to a *0*
+  even if any violations are found.
 
 Renderers
 ---------
