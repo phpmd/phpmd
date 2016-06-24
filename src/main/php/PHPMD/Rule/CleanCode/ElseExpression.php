@@ -43,6 +43,7 @@ namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -82,7 +83,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
-    private function isElseScope($scope, $parent)
+    private function isElseScope($scope, ASTNode $parent)
     {
         return (
             count($parent->getChildren()) === 3 &&
@@ -90,7 +91,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         );
     }
 
-    private function isIfOrElseIfStatement($parent)
+    private function isIfOrElseIfStatement(ASTNode $parent)
     {
         return ($parent->getName() === "if" || $parent->getName() === "elseif");
     }

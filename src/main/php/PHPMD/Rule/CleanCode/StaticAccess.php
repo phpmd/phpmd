@@ -87,7 +87,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
-    private function isStaticMethodCall($methodCall)
+    private function isStaticMethodCall(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
                $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -95,12 +95,12 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
                !$this->isCallingSelf($methodCall);
     }
 
-    private function isCallingParent($methodCall)
+    private function isCallingParent(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
-    private function isCallingSelf($methodCall)
+    private function isCallingSelf(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }

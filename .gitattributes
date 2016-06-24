@@ -28,3 +28,5 @@ build.xml         export-ignore
 phpunit.xml.dist  export-ignore
 pdepend.xml.dist  export-ignore
 composer.lock     export-ignore
+.editorconfig     export-ignore
+appveyor.yml      export-ignore

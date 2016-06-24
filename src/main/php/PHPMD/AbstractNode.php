@@ -100,7 +100,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return \PHPMD\AbstractNode
+     * @return ASTNode
      */
     public function getParent()
     {
