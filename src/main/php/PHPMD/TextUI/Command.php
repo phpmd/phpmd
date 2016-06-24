@@ -129,7 +129,7 @@ class Command
             $ruleSetFactory
         );
 
-        if ($phpmd->hasViolations()) {
+        if ($phpmd->hasViolations() && !$opts->hasIgnoreExitViolations()) {
             return self::EXIT_VIOLATION;
         }
         return self::EXIT_SUCCESS;
