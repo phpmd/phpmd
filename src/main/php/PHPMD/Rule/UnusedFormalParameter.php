@@ -42,6 +42,7 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
+use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -197,6 +198,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
+            /** @var $variable ASTNode */
             if ($this->isRegularVariable($variable)) {
                 unset($this->nodes[$variable->getImage()]);
             }

@@ -66,6 +66,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      */
     public function apply(AbstractNode $node)
     {
+        /** @var $node MethodNode */
         if ($this->isBooleanGetMethod($node)) {
             $this->addViolation($node, array($node->getImage()));
         }
