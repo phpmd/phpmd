@@ -77,7 +77,7 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     * Tests if main returns violation Exit Code for Source with NPath Violation
      *
      * @return void
      * @covers \PHPMD\TextUI\Command
@@ -101,7 +101,10 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     * Tests if main returns success Exit Code for Source with NPath Violation and IgnoreViolationsOnExit Flag
+     *
+     * @see ::testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     *      Same as the other test, but with '--ignore-violations-on-exit' set.
      *
      * @return void
      * @covers \PHPMD\TextUI\Command

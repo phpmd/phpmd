@@ -200,20 +200,20 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
-     * testIgnoreExitViolationsReturnsFalseByDefault
+     * Tests if ignoreViolationsOnExit returns false by default
      *
      * @return void
      */
-    public function testIgnoreExitViolationsReturnsFalseByDefault()
+    public function testIgnoreViolationsOnExitReturnsFalseByDefault()
     {
         $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
         $opts = new CommandLineOptions($args);
 
-        self::assertFalse($opts->ignoreExitViolations());
+        self::assertFalse($opts->ignoreViolationsOnExit());
     }
 
     /**
-     * testCliOptionsAcceptsIgnoreViolationsOnExitArgument
+     * Tests if CLI options accepts ignoreViolationsOnExit argument
      *
      * @return void
      */
@@ -222,11 +222,11 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-violations-on-exit');
         $opts = new CommandLineOptions($args);
 
-        self::assertTrue($opts->ignoreExitViolations());
+        self::assertTrue($opts->ignoreViolationsOnExit());
     }
 
     /**
-     * testCliUsageContainsStrictOption
+     * Tests if CLI usage contains ignoreViolationsOnExit option
      *
      * @return void
      */

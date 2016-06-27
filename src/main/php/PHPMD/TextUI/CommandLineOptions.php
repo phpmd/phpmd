@@ -144,7 +144,7 @@ class CommandLineOptions
      *
      * @var boolean
      */
-    protected $ignoreExitViolations = false;
+    protected $ignoreViolationsOnExit = false;
 
     /**
      * List of available rule-sets.
@@ -201,7 +201,7 @@ class CommandLineOptions
                     $this->strict = true;
                     break;
                 case '--ignore-violations-on-exit':
-                    $this->ignoreExitViolations = true;
+                    $this->ignoreViolationsOnExit = true;
                     break;
                 case (preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match) > 0):
                     $this->reportFiles[$match[1]] = array_shift($args);
@@ -342,9 +342,9 @@ class CommandLineOptions
      *
      * @return boolean
      */
-    public function ignoreExitViolations()
+    public function ignoreViolationsOnExit()
     {
-        return $this->ignoreExitViolations;
+        return $this->ignoreViolationsOnExit;
     }
 
     /**
