@@ -77,7 +77,7 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     * Tests if main returns violation Exit Code for Source with NPath Violation
      *
      * @return void
      * @covers \PHPMD\TextUI\Command
@@ -98,5 +98,33 @@ class CommandTest extends AbstractTest
             )
         );
         $this->assertEquals(Command::EXIT_VIOLATION, $exitCode);
+    }
+
+    /**
+     * Tests if main returns success Exit Code for Source with NPath Violation and IgnoreViolationsOnExit Flag
+     *
+     * @see ::testMainReturnsViolationExitCodeForSourceWithNPathViolation
+     *      Same as the other test, but with '--ignore-violations-on-exit' set.
+     *
+     * @return void
+     * @covers \PHPMD\TextUI\Command
+     * @group phpmd
+     * @group phpmd::textui
+     * @group unittest
+     */
+    public function testMainReturnsSuccessExitCodeForSourceWithNPathViolationAndIgnoreViolationsOnExitFlag()
+    {
+        $exitCode = Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                'text',
+                'codesize',
+                '--reportfile',
+                self::createTempFileUri(),
+                '--ignore-violations-on-exit',
+            )
+        );
+        $this->assertEquals(Command::EXIT_SUCCESS, $exitCode);
     }
 }
