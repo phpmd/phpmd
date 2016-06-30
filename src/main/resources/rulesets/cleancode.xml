@@ -37,16 +37,17 @@ class Foo {
 
     <rule name="ElseExpression"
           since="1.4.0"
-          message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
+          message="The method {0} uses an else expression. Else is not necessarily necessary and you can simplify the code to work without else."
           class="PHPMD\Rule\CleanCode\ElseExpression"
           externalInfoUrl="http://phpmd.org/rules/cleancode.html#eleseexpression">
         <description>
             <![CDATA[
-An if expression with an else branch is never necessary. You can rewrite the
-conditions in a way that the else is not necessary and the code becomes simpler
-to read.  To achieve this use early return statements. To achieve this you may
-need to split the code it several smaller methods. For very simple assignments
-you could also use the ternary operations.
+An if expression with an else branch is not necessarily necessary. You can rewrite the
+conditions in a way that the else is not necessary and the code sometimes becomes simpler
+to read.  To achieve this use early return statements. To achieve this you could
+ split the code it several smaller methods. For very simple assignments
+you could also use the ternary operations. 
+(BUT WE STILL THINK THAT BIG ASSIGNMNETS ELSE IS STILL THE SHIT, DEFINITELY USE THE ELSE) 
             ]]>
         </description>
         <priority>1</priority>
