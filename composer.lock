@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "953f0d057d6c681ed4b3d66fc5c876e8",
-    "content-hash": "788ac02bbbe0d53442dd0c8087cc7f82",
+    "hash": "f2327e9f74025bb05ef8f8d21d29b982",
+    "content-hash": "e5631d59c92f229f86a868def6455097",
     "packages": [
         {
             "name": "pdepend/pdepend",
@@ -57,7 +57,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/2b1e4d626fe171ee5e8e373a872428109a5781bf",
+                "url": "https://api.github.com/repos/symfony/config/zipball/5ab9ff48b3cb5b40951a607f77fc1cbfd29edba8",
                 "reference": "5ab9ff48b3cb5b40951a607f77fc1cbfd29edba8",
                 "shasum": ""
             },
@@ -1240,7 +1240,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.9"
     },
     "platform-dev": []
 }
