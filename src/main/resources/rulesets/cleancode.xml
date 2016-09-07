@@ -39,7 +39,7 @@ class Foo {
           since="1.4.0"
           message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
           class="PHPMD\Rule\CleanCode\ElseExpression"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#eleseexpression">
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#elseexpression">
         <description>
             <![CDATA[
 An if expression with an else branch is never necessary. You can rewrite the
