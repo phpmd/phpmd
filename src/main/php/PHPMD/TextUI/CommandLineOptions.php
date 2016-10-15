@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\JsonRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -353,6 +354,8 @@ class CommandLineOptions
                 return $this->createHtmlRenderer();
             case 'text':
                 return $this->createTextRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -380,6 +383,14 @@ class CommandLineOptions
     protected function createHtmlRenderer()
     {
         return new HTMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JsonRenderer
+     */
+    protected function createJsonRenderer()
+    {
+        return new JsonRenderer();
     }
 
     /**
