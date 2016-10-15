@@ -43,7 +43,6 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
-use PHPMD\PHPMDTest;
 use PHPMD\Report;
 use PHPMD\RuleViolation;
 
@@ -108,8 +107,11 @@ class JsonRenderer extends AbstractRenderer
         }
         $this->jsonData['violations'] = $violationList;
         $this->jsonData['errors'] = $errorList;
-
-        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PRETTY_PRINT;
+        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
+        // JSON_PRETTY_PRINT Available since PHP 5.4.0.
+        if (defined('JSON_PRETTY_PRINT')) {
+            $encodeOptions |= JSON_PRETTY_PRINT;
+        }
 
         $json = json_encode($this->jsonData, $encodeOptions);
         $writer->write($json . PHP_EOL);
