@@ -89,9 +89,9 @@ class JsonRenderer extends AbstractRenderer
                 'function' => $violation->getFunctionName(),
                 'class' => $violation->getClassName(),
                 'method' => $violation->getMethodName(),
+                'description' => $violation->getDescription(),
                 'rule' => $violation->getRule()->getName(),
                 'ruleSet' => $violation->getRule()->getRuleSetName(),
-                'description' => $violation->getRule()->getDescription(),
                 'externalInfoUrl' => $violation->getRule()->getExternalInfoUrl(),
                 'priority' => $violation->getRule()->getPriority(),
             );
