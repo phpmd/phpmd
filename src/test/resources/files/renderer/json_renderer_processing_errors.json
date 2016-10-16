@@ -2,7 +2,7 @@
     "version": "@package_version@",
     "package": "phpmd",
     "timestamp": "",
-    "violations": [],
+    "files": [],
     "errors": [
         {
             "fileName": "\/tmp\/foo.php",

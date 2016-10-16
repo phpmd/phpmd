@@ -73,12 +73,14 @@ class JsonRenderer extends AbstractRenderer
         $this->jsonData['package'] = 'phpmd';
         $this->jsonData['timestamp'] = date('c');
 
-        $violationList = array();
+        $filesList = array();
 
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
-            $violationList[] = array(
-                'fileName' => $violation->getFileName(),
+            $fileName = $violation->getFileName();
+            $rule = $violation->getRule();
+            $filesList[$fileName]['file'] = $fileName;
+            $filesList[$fileName]['violations'][] = array(
                 'beginLine' => $violation->getBeginLine(),
                 'endLine' => $violation->getEndLine(),
                 'package' => $violation->getNamespaceName(),
@@ -86,10 +88,10 @@ class JsonRenderer extends AbstractRenderer
                 'class' => $violation->getClassName(),
                 'method' => $violation->getMethodName(),
                 'description' => $violation->getDescription(),
-                'rule' => $violation->getRule()->getName(),
-                'ruleSet' => $violation->getRule()->getRuleSetName(),
-                'externalInfoUrl' => $violation->getRule()->getExternalInfoUrl(),
-                'priority' => $violation->getRule()->getPriority(),
+                'rule' => $rule->getName(),
+                'ruleSet' => $rule->getRuleSetName(),
+                'externalInfoUrl' => $rule->getExternalInfoUrl(),
+                'priority' => $rule->getPriority(),
             );
         }
 
@@ -101,7 +103,7 @@ class JsonRenderer extends AbstractRenderer
                 'message' => $error->getMessage(),
             );
         }
-        $this->jsonData['violations'] = $violationList;
+        $this->jsonData['files'] = array_values($filesList);
         $this->jsonData['errors'] = $errorList;
         $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
         // JSON_PRETTY_PRINT Available since PHP 5.4.0.
