@@ -64,11 +64,7 @@ class JsonRenderer extends AbstractRenderer
     private $jsonData;
 
     /**
-     * This method will be called when the engine has finished the source analysis
-     * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
+     * @inheritdoc
      */
     public function renderReport(Report $report)
     {
