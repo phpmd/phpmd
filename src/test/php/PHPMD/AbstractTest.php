@@ -481,6 +481,39 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Asserts the actual json output matches against the expected file.
+     *
+     * @param string $actualOutput     Generated json output.
+     * @param string $expectedFileName File with expected json result.
+     *
+     * @return void
+     */
+    public function assertJsonEquals($actualOutput, $expectedFileName)
+    {
+        $actual = json_decode($actualOutput, true);
+        // Remove dynamic timestamp and duration attribute
+        if (isset($actual['timestamp'])) {
+            $actual['timestamp'] = '';
+        }
+        if (isset($actual['duration'])) {
+            $actual['duration'] = '';
+        }
+        if (isset($actual['version'])) {
+            $actual['version'] = '@package_version@';
+        }
+
+        $expected = str_replace(
+            '#{rootDirectory}',
+            self::$filesDirectory,
+            file_get_contents(self::createFileUri($expectedFileName))
+        );
+
+        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
+
+        self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
+    }
+
+    /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
      *
