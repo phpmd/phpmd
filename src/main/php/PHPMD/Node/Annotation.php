@@ -107,7 +107,7 @@ class Annotation
     {
         if (in_array($this->value, array('PHPMD', 'PMD'))) {
             return true;
-        } elseif (strpos($this->value, 'PMD.' . $rule->getName()) !== false) {
+        } elseif (preg_match('/^(PH)?PMD\.' . $rule->getName() . '/', $this->value)) {
             return true;
         }
         return (stripos($rule->getName(), $this->value) !== false);
