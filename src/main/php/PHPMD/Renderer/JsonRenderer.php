@@ -55,26 +55,29 @@ use PHPMD\RuleViolation;
  */
 class JsonRenderer extends AbstractRenderer
 {
-
     /**
-     * Temporary property that holds data for report
+     * Create report data and add renderer meta properties
      *
-     * @var array
+     * return array
      */
-    private $jsonData;
+    private function initReportData()
+    {
+        $data = array(
+            'version' => PHPMD::VERSION,
+            'package' => 'phpmd',
+            'timestamp' => date('c'),
+        );
+
+        return $data;
+    }
 
     /**
      * {@inheritDoc}
      */
     public function renderReport(Report $report)
     {
-        $writer = $this->getWriter();
-        $this->jsonData['version'] = PHPMD::VERSION;
-        $this->jsonData['package'] = 'phpmd';
-        $this->jsonData['timestamp'] = date('c');
-
+        $data = $this->initReportData();
         $filesList = array();
-
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
@@ -94,24 +97,35 @@ class JsonRenderer extends AbstractRenderer
                 'priority' => $rule->getPriority(),
             );
         }
-
-        $errorList = array();
-
+        $errorsList = array();
         foreach ($report->getErrors() as $error) {
-            $errorList[] = array(
+            $errorsList[] = array(
                 'fileName' => $error->getFile(),
                 'message' => $error->getMessage(),
             );
         }
-        $this->jsonData['files'] = array_values($filesList);
-        $this->jsonData['errors'] = $errorList;
+        $data['files'] = array_values($filesList);
+        $data['errors'] = $errorsList;
+        $json = $this->encodeReport($data);
+        $writer = $this->getWriter();
+        $writer->write($json . PHP_EOL);
+    }
+
+    /**
+     * Encode report data to the JSON representation string
+     *
+     * @param $data array The report data
+     *
+     * @return string
+     */
+    private function encodeReport($data)
+    {
         $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP;
         // JSON_PRETTY_PRINT Available since PHP 5.4.0.
         if (defined('JSON_PRETTY_PRINT')) {
             $encodeOptions |= JSON_PRETTY_PRINT;
         }
 
-        $json = json_encode($this->jsonData, $encodeOptions);
-        $writer->write($json . PHP_EOL);
+        return json_encode($data, $encodeOptions);
     }
 }
