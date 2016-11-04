@@ -46,7 +46,7 @@ use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
 /**
- * Test case for the json renderer implementation.
+ * Test case for the JSON renderer implementation.
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.

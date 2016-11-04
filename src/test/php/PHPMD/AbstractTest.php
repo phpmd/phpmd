@@ -481,10 +481,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Asserts the actual json output matches against the expected file.
+     * Asserts the actual JSON output matches against the expected file.
      *
-     * @param string $actualOutput     Generated json output.
-     * @param string $expectedFileName File with expected json result.
+     * @param string $actualOutput     Generated JSON output.
+     * @param string $expectedFileName File with expected JSON result.
      *
      * @return void
      */

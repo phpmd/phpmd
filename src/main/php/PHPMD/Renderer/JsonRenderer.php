@@ -47,7 +47,7 @@ use PHPMD\Report;
 use PHPMD\RuleViolation;
 
 /**
- * This class will render a json-report.
+ * This class will render a JSON report.
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
@@ -64,7 +64,7 @@ class JsonRenderer extends AbstractRenderer
     private $jsonData;
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function renderReport(Report $report)
     {
