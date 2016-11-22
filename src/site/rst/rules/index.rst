@@ -7,7 +7,7 @@ List of rulesets and rules contained in each ruleset.
 - `Clean Code Rules`__: The Clean Code ruleset contains rules that enforce a clean code base. This includes rules from SOLID and object calisthenics.
 - `Code Size Rules`__: The Code Size Ruleset contains a collection of rules that find code size related problems.
 - `Controversial Rules`__: This ruleset contains a collection of controversial rules.
-- `Design Rules`__: The Code Size Ruleset contains a collection of rules that find software design related problems.
+- `Design Rules`__: The Design Ruleset contains a collection of rules that find software design related problems.
 - `Naming Rules`__: The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
 - `Unused Code Rules`__: The Unused Code Ruleset contains a collection of rules that find unused code.
 

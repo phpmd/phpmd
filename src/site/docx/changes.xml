@@ -10,6 +10,14 @@
     </properties>
 
     <body>
+        <release version="2.4.4"
+                 date="2016/11/22"
+                 description="Maintenance release with new PDepend version bundled">
+            <action date="8e80aaa" dev="k-jackson" type="fix" issue="347" system="github">
+                Fixed UnexpectedTokenException on null coalesce operator.
+            </action>
+        </release>
+
         <release version="2.4.2"
                  date="2016/03/10"
                  description="">

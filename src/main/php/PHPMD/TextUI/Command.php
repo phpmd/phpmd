@@ -70,6 +70,9 @@ class Command
      * found in the analyzed code. Otherwise this method will return a value
      * equal to <b>EXIT_VIOLATION</b>.
      *
+     * The use of flag <b>--ignore-violations-on-exit</b> will result to a
+     * <b>EXIT_SUCCESS</b> even if any violation is found.
+     *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
      * @return integer
@@ -129,7 +132,7 @@ class Command
             $ruleSetFactory
         );
 
-        if ($phpmd->hasViolations()) {
+        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
             return self::EXIT_VIOLATION;
         }
         return self::EXIT_SUCCESS;
