@@ -16,10 +16,11 @@ php:
 sudo: false
 
 env:
-  - TEST_CONFIG="phpunit.xml.dist"
+  - TEST_CONFIG="phpunit.xml.dist" COMPOSER_OPTS="install"
+  - TEST_CONFIG="phpunit.xml.dist" COMPOSER_OPTS="update --prefer-lowest"
 
 before_script:
-  - composer install
+  - composer $COMPOSER_OPTS
 
 script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
 
