@@ -40,6 +40,7 @@ Code Size Rules
 - `ExcessivePublicCount`__: A large number of public methods and attributes declared in a class can indicate the class may need to be broken up as increased effort will be required to thoroughly test it.
 - `TooManyFields`__: Classes that have too many fields could be redesigned to have fewer fields, possibly through some nested object grouping of some of the information. For example, a class with city/state/zip fields could instead have one Address field.
 - `TooManyMethods`__: A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
+- `TooManyPublicMethods`__: A class with too many public methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
 - `ExcessiveClassComplexity`__: The Weighted Method Count (WMC) of a class is a good indicator of how much time and effort is required to modify and maintain this class. The WMC metric is defined as the sum of complexities of all methods declared in a class. A large number of methods also means that this class has a greater potential impact on derived classes.
 
 __ codesize.html#cyclomaticcomplexity
