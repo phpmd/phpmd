@@ -39,5 +39,5 @@ Additional Resources
 
 * [Existing issues](https://github.com/phpmd/phpmd/issues/)
 * [General GitHub documentation](https://help.github.com/)
-* [GitHub pull request documentation](https://help.github.com/send-pull-requests/)
+* [GitHub pull request documentation](https://help.github.com/articles/creating-a-pull-request/)
 * [PHPMD IRC Channel on freenode.org](http://webchat.freenode.net/?channels=phpmd)
