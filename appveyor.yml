@@ -9,6 +9,8 @@ branches:
 install:
   - cinst -y OpenSSL.Light
   - SET PATH=C:\Program Files\OpenSSL;%PATH%
+  - sc config wuauserv start= auto
+  - net start wuauserv
   - cinst -y php
   - cd c:\tools\php
   - copy php.ini-production php.ini
