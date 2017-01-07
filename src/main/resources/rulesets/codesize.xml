@@ -35,7 +35,7 @@ method entry. The decision points are 'if', 'while', 'for', and 'case labels'. G
         </properties>
         <example>
             <![CDATA[
-// Cyclomatic Complexity = 12
+// Cyclomatic Complexity = 11
 class Foo {
 1   public function example() {
 2       if ($a == $b) {
@@ -65,7 +65,7 @@ class Foo {
 11              case 3:
                     fiddle();
                     break;
-12              default:
+                default:
                     fiddle();
                     break;
             }
