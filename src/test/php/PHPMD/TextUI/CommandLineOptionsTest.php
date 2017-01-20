@@ -42,6 +42,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
+use PHPMD\Rule;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\CommandLineOptions} class.
@@ -57,6 +58,24 @@ use PHPMD\AbstractTest;
  */
 class CommandLineOptionsTest extends AbstractTest
 {
+    /**
+     * @var resource
+     */
+    private $stderrStreamFilter;
+
+    /**
+     * @return void
+     */
+    protected function tearDown()
+    {
+        if (is_resource($this->stderrStreamFilter)) {
+            stream_filter_remove($this->stderrStreamFilter);
+        }
+        $this->stderrStreamFilter = null;
+
+        parent::tearDown();
+    }
+
     /**
      * testAssignsInputArgumentToInputProperty
      *
@@ -101,7 +120,7 @@ class CommandLineOptionsTest extends AbstractTest
 
     /**
      * testThrowsExpectedExceptionWhenRequiredArgumentsNotSet
-     * 
+     *
      * @return void
      * @since 1.1.0
      * @expectedException \InvalidArgumentException
@@ -240,7 +259,7 @@ class CommandLineOptionsTest extends AbstractTest
 
     /**
      * testCliUsageContainsStrictOption
-     * 
+     *
      * @return void
      */
     public function testCliUsageContainsStrictOption()
@@ -253,7 +272,7 @@ class CommandLineOptionsTest extends AbstractTest
 
     /**
      * testCliOptionsIsStrictReturnsFalseByDefault
-     * 
+     *
      * @return void
      * @since 1.2.0
      */
@@ -267,7 +286,7 @@ class CommandLineOptionsTest extends AbstractTest
 
     /**
      * testCliOptionsAcceptsStrictArgument
-     * 
+     *
      * @return void
      * @since 1.2.0
      */
@@ -277,5 +296,182 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasStrict());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionsAcceptsMinimumpriorityArgument()
+    {
+        $args = array(__FILE__, '--minimumpriority', 42, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals(42, $opts->getMinimumPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMinimumPriorityReturnsLowestValueByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals(Rule::LOWEST_PRIORITY, $opts->getMinimumPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCoverageReportReturnsNullByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertNull($opts->getCoverageReport());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCoverageReportWithCliOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--coverage', __METHOD__);
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals(__METHOD__, $opts->getCoverageReport());
+    }
+
+    /**
+     * @param string $reportFormat
+     * @param string $expectedClass
+     * @return void
+     * @dataProvider dataProviderCreateRenderer
+     */
+    public function testCreateRenderer($reportFormat, $expectedClass)
+    {
+        $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertInstanceOf($expectedClass, $opts->createRenderer($reportFormat));
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderCreateRenderer()
+    {
+        return array(
+            array('html', 'PHPMD\\Renderer\\HtmlRenderer'),
+            array('text', 'PHPMD\\Renderer\\TextRenderer'),
+            array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
+            array('PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'),
+            array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
+            /* Test what happens when class already exists. */
+            array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
+        );
+    }
+
+    /**
+     * @param string $reportFormat
+     * @return void
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp (^Can\'t )
+     * @dataProvider dataProviderCreateRendererThrowsException
+     */
+    public function testCreateRendererThrowsException($reportFormat)
+    {
+        $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
+        $opts = new CommandLineOptions($args);
+        $opts->createRenderer();
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderCreateRendererThrowsException()
+    {
+        return array(
+            array(''),
+            array('PHPMD\\Test\\Renderer\\NotExistsRenderer')
+        );
+    }
+
+    /**
+     * @param string $deprecatedName
+     * @param string $newName
+     * @dataProvider dataProviderDeprecatedCliOptions
+     */
+    public function testDeprecatedCliOptions($deprecatedName, $newName)
+    {
+        stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
+
+        $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
+
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
+        new CommandLineOptions($args);
+
+        $this->assertContains(
+            sprintf(
+                'The --%s option is deprecated, please use --%s instead.',
+                $deprecatedName,
+                $newName
+            ),
+            StreamFilter::$streamHandle
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderDeprecatedCliOptions()
+    {
+        return array(
+            array('extensions', 'suffixes'),
+            array('ignore', 'exclude')
+        );
+    }
+
+    /**
+     * @param array $options
+     * @param array $expected
+     * @return void
+     * @dataProvider dataProviderGetReportFiles
+     */
+    public function testGetReportFiles(array $options, array $expected)
+    {
+        $args = array_merge(array(__FILE__, __FILE__, 'text', 'codesize'), $options);
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals($expected, $opts->getReportFiles());
+    }
+
+    public function dataProviderGetReportFiles()
+    {
+        return array(
+            array(
+                array('--reportfile-xml', __FILE__),
+                array('xml' => __FILE__)
+            ),
+            array(
+                array('--reportfile-html', __FILE__),
+                array('html' => __FILE__)
+            ),
+            array(
+                array('--reportfile-text', __FILE__),
+                array('text' => __FILE__)
+            ),
+            array(
+                array(
+                    '--reportfile-text',
+                    __FILE__,
+                    '--reportfile-xml',
+                    __FILE__,
+                    '--reportfile-html',
+                    __FILE__,
+                ),
+                array('text' => __FILE__, 'xml' => __FILE__, 'html' => __FILE__)
+            ),
+        );
     }
 }

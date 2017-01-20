@@ -57,19 +57,42 @@
         Parameters:
             ${-package:phar:filename}  Name of the created phar file.
     -->
-    <target name="-phpmd:package:phar:after~hooked" extensionOf="-package:phar:after~hook">
+    <target name="-phpmd:phar:after~hooked" extensionOf="-phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${-package:phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
+        <echo message="  ${-phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${commons.srcdir.php}"
-              executable="${-package:phar:filename}"
+              executable="${-phar:filename}"
               failonerror="true">
 
             <arg value="PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
         </exec>
+    </target>
+
+    <target name="-phar:before~hooked" extensionOf="-phar:before~hook">
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
+            <arg line="update" />
+            <arg line="--no-dev" />
+            <arg line="--prefer-dist" />
+            <arg line="--prefer-lowest" />
+            <arg line="--prefer-stable" />
+        </exec>
+    </target>
+
+    <target name="-phar:after~hooked" extensionOf="-phar:after~hook">
+        <!--
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+            <arg line="drop" />
+        </exec>
+        -->
     </target>
 
     <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />

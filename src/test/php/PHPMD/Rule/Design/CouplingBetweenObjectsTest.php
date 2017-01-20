@@ -60,7 +60,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
 {
     /**
      * testRuleNotAppliesToClassWithCboLessThanThreshold
-     * 
+     *
      * @return void
      */
     public function testRuleNotAppliesToClassWithCboLessThanThreshold()

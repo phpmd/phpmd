@@ -587,7 +587,7 @@ class UnusedLocalVariableTest extends AbstractTest
      * @return void
      * @since 2.0.0
      */
-    public function test_compact_function_rule_works_case_insensitive()
+    public function testCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
@@ -624,7 +624,7 @@ class UnusedLocalVariableTest extends AbstractTest
      * @return void
      * @since 2.0.1
      */
-    public function test_namespaced_compact_function_rule_works_case_insensitive()
+    public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');

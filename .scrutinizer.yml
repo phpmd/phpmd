@@ -1,0 +1,19 @@
+build:
+    environment:
+        php:
+            version: 7.1.0
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=some-file'
+                coverage:
+                    file: 'some-file'
+                    format: 'clover'
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+filter:
+    excluded_paths:
+        - src/test/resources/files/

@@ -172,9 +172,7 @@ class Command
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {
-            fwrite(STDERR, $e->getMessage());
-            fwrite(STDERR, PHP_EOL);
-            
+            fwrite(STDERR, $e->getMessage() . PHP_EOL);
             $exitCode = self::EXIT_EXCEPTION;
         }
         return $exitCode;

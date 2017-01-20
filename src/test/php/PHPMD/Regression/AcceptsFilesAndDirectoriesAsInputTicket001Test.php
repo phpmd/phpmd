@@ -61,7 +61,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
 {
     /**
      * testCliAcceptsDirectoryAsInput
-     * 
+     *
      * @return void
      */
     public function testCliAcceptsDirectoryAsInput()

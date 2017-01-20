@@ -37,53 +37,30 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link       https://www.pivotaltracker.com/story/show/10096717
  */
 
-namespace PHPMD\Regression;
-
-use PHPMD\Rule\Naming\LongVariable;
+namespace PHPMD\TextUI;
 
 /**
- * Regression test for issue 10096717.
+ * Utility to test stream related stuff
  *
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link       https://www.pivotaltracker.com/story/show/10096717
- * @since      1.1.0
- *
- * @ticket 10096717
- * @covers stdClass
- * @group phpmd
- * @group phpmd::integration
- * @group integrationtest
  */
-class LongVariablePrivatePropertiesTicket010096717Test extends AbstractTest
+class StreamFilter extends \php_user_filter
 {
-    /**
-     * testRuleNotAppliesForLongPrivateProperty
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesForLongPrivateProperty()
-    {
-        $rule = new LongVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('maximum', 17);
-        $rule->apply($this->getClass());
-    }
+    public static $streamHandle;
 
-    /**
-     * testRuleNotAppliesForLongPrivateStaticProperty
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesForLongPrivateStaticProperty()
+    public function filter($in, $out, &$consumed, $closing)
     {
-        $rule = new LongVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('maximum', 17);
-        $rule->apply($this->getClass());
+        self::$streamHandle = '';
+
+        while ($bucket = stream_bucket_make_writeable($in)) {
+            self::$streamHandle .= $bucket->data;
+            $consumed += $bucket->datalen;
+        }
+
+        return PSFS_PASS_ON;
     }
 }

@@ -82,7 +82,7 @@ class RuleSetTest extends AbstractTest
 
     /**
      * testApplyNotInvokesRuleWhenSuppressAnnotationExists
-     * 
+     *
      * @return void
      */
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
@@ -96,7 +96,7 @@ class RuleSetTest extends AbstractTest
 
     /**
      * testApplyInvokesRuleWhenStrictModeIsSet
-     * 
+     *
      * @return void
      */
     public function testApplyInvokesRuleWhenStrictModeIsSet()
@@ -115,10 +115,9 @@ class RuleSetTest extends AbstractTest
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
      *
-     * @param string $name
      * @return \PHPMD\AbstractRule
      */
-    private function createRuleSetFixture($name = null)
+    private function createRuleSetFixture()
     {
         $ruleSet = new RuleSet();
         for ($i = 0; $i < func_num_args(); ++$i) {

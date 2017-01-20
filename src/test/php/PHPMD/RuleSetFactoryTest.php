@@ -645,7 +645,7 @@ class RuleSetFactoryTest extends AbstractTest
         $rulesetFilepath = 'rulesets/ruleset-refs.xml';
         $fileName = self::createFileUri($rulesetFilepath);
         
-        try{
+        try {
             $factory = new RuleSetFactory();
             $factory->createRuleSets($fileName);
             
@@ -653,7 +653,7 @@ class RuleSetFactoryTest extends AbstractTest
             $actualIncludePaths   = explode(PATH_SEPARATOR, get_include_path());
             $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
         
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
             set_include_path($includePathBefore);
             throw $exception;
         }
@@ -676,7 +676,7 @@ class RuleSetFactoryTest extends AbstractTest
      */
     private function createRuleSetsFromAbsoluteFiles($file)
     {
-        $files = func_get_args();
+        $files = (1 === func_num_args() ? array($file) : func_get_args());
         $files = array_map(array(__CLASS__, 'createFileUri'), $files);
 
         return call_user_func_array(array($this, 'createRuleSetsFromFiles'), $files);

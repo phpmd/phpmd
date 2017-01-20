@@ -131,7 +131,7 @@ class UnusedPrivateMethodTest extends AbstractTest
 
     /**
      * testRuleAppliesWhenMethodWithSimilarNameIsInInvocationChain
-     * 
+     *
      * <code>
      * class Foo {
      *     protected $bar;
