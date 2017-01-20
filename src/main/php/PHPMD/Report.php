@@ -54,7 +54,7 @@ class Report
     /**
      * List of rule violations detected in the analyzed source code.
      *
-     * @var \PHPMD\RuleViolation[]
+     * @var array
      */
     private $ruleViolations = array();
 
@@ -115,7 +115,7 @@ class Report
     /**
      * Returns an iterator with all occurred rule violations.
      *
-     * @return \Iterator
+     * @return \PHPMD\RuleViolation[]
      */
     public function getRuleViolations()
     {
