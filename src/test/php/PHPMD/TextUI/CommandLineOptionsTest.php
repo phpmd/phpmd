@@ -415,7 +415,7 @@ class CommandLineOptionsTest extends AbstractTest
         if (defined('HHVM_VERSION')) {
             $this->markTestSkipped('HHVM works different here.');
         }
-        
+
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
 
         $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
