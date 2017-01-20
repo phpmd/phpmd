@@ -4,38 +4,39 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6126090f2c042d347153ad783b90f7d",
+    "content-hash": "7d47fe31c67f6da6848af4f510c480ff",
     "packages": [
         {
             "name": "pdepend/pdepend",
-            "version": "2.2.0",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "eceacb580af64e9039b274a1e9c6997fc69756c7"
+                "reference": "0c50874333149c0dad5a2877801aed148f2767ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/eceacb580af64e9039b274a1e9c6997fc69756c7",
-                "reference": "eceacb580af64e9039b274a1e9c6997fc69756c7",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/0c50874333149c0dad5a2877801aed148f2767ff",
+                "reference": "0c50874333149c0dad5a2877801aed148f2767ff",
                 "shasum": ""
             },
             "require": {
-                "symfony/config": ">=2.4",
-                "symfony/dependency-injection": ">=2.4",
-                "symfony/filesystem": ">=2.4"
+                "php": ">=5.3.7",
+                "symfony/config": "^2.3.0|^3",
+                "symfony/dependency-injection": "^2.3.0|^3",
+                "symfony/filesystem": "^2.3.0|^3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*@stable",
-                "squizlabs/php_codesniffer": "@stable"
+                "phpunit/phpunit": "^4.4.0,<4.8",
+                "squizlabs/php_codesniffer": "^2.0.0"
             },
             "bin": [
                 "src/bin/pdepend"
             ],
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "PDepend\\": "src/main/php/"
+                "psr-4": {
+                    "PDepend\\": "src/main/php/PDepend"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -43,21 +44,21 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2015-09-20T20:30:27+00:00"
+            "time": "2017-01-19T14:23:36+00:00"
         },
         {
             "name": "symfony/config",
-            "version": "v2.4.0",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "1bbd1159264c95ea0aeb342ae1923013331cc0f7"
+                "reference": "9b798bb01eddf0a86df0ea1498b05d426d2aa17d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/1bbd1159264c95ea0aeb342ae1923013331cc0f7",
-                "reference": "1bbd1159264c95ea0aeb342ae1923013331cc0f7",
+                "url": "https://api.github.com/repos/symfony/config/zipball/9b798bb01eddf0a86df0ea1498b05d426d2aa17d",
+                "reference": "9b798bb01eddf0a86df0ea1498b05d426d2aa17d",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +68,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -91,21 +92,21 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-26T16:40:27+00:00"
+            "time": "2013-05-18T21:11:24+00:00"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.4.0",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/DependencyInjection",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "66c1eb29c6b6b0d3631d29c85c6d3f00f83f6a6f"
+                "reference": "402b1c843d77b6b6aa8e2aaa21641d6047ccac2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/66c1eb29c6b6b0d3631d29c85c6d3f00f83f6a6f",
-                "reference": "66c1eb29c6b6b0d3631d29c85c6d3f00f83f6a6f",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/402b1c843d77b6b6aa8e2aaa21641d6047ccac2f",
+                "reference": "402b1c843d77b6b6aa8e2aaa21641d6047ccac2f",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +114,6 @@
             },
             "require-dev": {
                 "symfony/config": "~2.2",
-                "symfony/expression-language": "~2.4",
                 "symfony/yaml": "~2.0"
             },
             "suggest": {
@@ -124,7 +124,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -148,21 +148,21 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2013-12-03T14:52:22+00:00"
+            "time": "2013-05-13T14:36:40+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.4.0",
+            "version": "v2.3.0",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "79acd777762e81d0f3414ca25a602deeeb48240d"
+                "reference": "93ca76c45530d146d0def76d1eb6f60a939a2104"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/79acd777762e81d0f3414ca25a602deeeb48240d",
-                "reference": "79acd777762e81d0f3414ca25a602deeeb48240d",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/93ca76c45530d146d0def76d1eb6f60a939a2104",
+                "reference": "93ca76c45530d146d0def76d1eb6f60a939a2104",
                 "shasum": ""
             },
             "require": {
@@ -171,7 +171,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.3-dev"
                 }
             },
             "autoload": {
@@ -195,7 +195,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2013-11-16T15:13:54+00:00"
+            "time": "2013-05-06T20:03:44+00:00"
         }
     ],
     "packages-dev": [
