@@ -42,22 +42,17 @@
 namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTInterface;
-use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTest;
 
 /**
  * Test case for the interface node implementation.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
+ * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- *
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PHPMD\Node\InterfaceNode
  * @covers \PHPMD\Node\AbstractTypeNode
- * @group phpmd
- * @group phpmd::node
- * @group unittest
  */
 class InterfaceNodeTest extends AbstractTest
 {
@@ -74,5 +69,32 @@ class InterfaceNodeTest extends AbstractTest
         $node = new InterfaceNode($interface);
 
         $this->assertSame('Sindelfingen\\MyInterface', $node->getFullQualifiedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCountReturnsZeroByDefault()
+    {
+        $interface = new InterfaceNode(new ASTInterface('MyInterface'));
+        $this->assertSame(0, $interface->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCount()
+    {
+        $class = $this->getInterface();
+        $this->assertSame(3, $class->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetParentNameReturnsNull()
+    {
+        $interface = new InterfaceNode(new ASTInterface('MyInterface'));
+        $this->assertNull($interface->getParentName());
     }
 }

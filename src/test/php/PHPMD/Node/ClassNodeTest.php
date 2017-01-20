@@ -84,7 +84,7 @@ class ClassNodeTest extends AbstractTest
     public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {
         $class = new ASTClass(null);
-        $class->setDocComment('/** @SuppressWarnings("PMD") */');
+        $class->setComment('/** @SuppressWarnings("PMD") */');
 
         $rule = $this->getMock('PHPMD\\AbstractRule');
 
@@ -106,5 +106,32 @@ class ClassNodeTest extends AbstractTest
         $node = new ClassNode($class);
 
         $this->assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCountReturnsZeroByDefault()
+    {
+        $class = new ClassNode(new ASTClass('MyClass'));
+        $this->assertSame(0, $class->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCount()
+    {
+        $class = $this->getClass();
+        $this->assertSame(3, $class->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetParentNameReturnsNull()
+    {
+        $class = new ClassNode(new ASTClass('MyClass'));
+        $this->assertNull($class->getParentName());
     }
 }

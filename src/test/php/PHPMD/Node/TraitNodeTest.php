@@ -41,45 +41,51 @@
 
 namespace PHPMD\Node;
 
-use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTTrait;
+use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for the function node implementation.
+ * Test case for the trait node implementation.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
+ * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PHPMD\Node\FunctionNode
- * @covers \PHPMD\Node\AbstractCallableNode
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @covers \PHPMD\Node\TraitNode
+ * @covers \PHPMD\Node\AbstractTypeNode
  */
-class FunctionNodeTest extends AbstractTest
+class TraitNodeTest extends AbstractTest
 {
     /**
-     * testMagicCallDelegatesToWrappedPHPDependFunction
+     * testGetFullQualifiedNameReturnsExpectedValue
      *
      * @return void
      */
-    public function testMagicCallDelegatesToWrappedPHPDependFunction()
+    public function testGetFullQualifiedNameReturnsExpectedValue()
     {
-        $function = $this->getMock('PDepend\\Source\\AST\\ASTFunction', array(), array(null));
-        $function->expects($this->once())
-            ->method('getStartLine');
+        $trait = new ASTTrait('MyTrait');
+        $trait->setNamespace(new ASTNamespace('Sindelfingen'));
 
-        $node = new FunctionNode($function);
-        $node->getStartLine();
+        $node = new TraitNode($trait);
+
+        $this->assertSame('Sindelfingen\\MyTrait', $node->getFullQualifiedName());
     }
 
     /**
-     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     *
      * @return void
-     * @expectedException BadMethodCallException
      */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
+    public function testGetConstantCountReturnsZeroByDefault()
     {
-        $node = new FunctionNode(new ASTFunction(null));
-        $node->getFooBar();
+        $trait = new TraitNode(new ASTTrait('MyTrait'));
+        $this->assertSame(0, $trait->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetParentNameReturnsNull()
+    {
+        $trait = new TraitNode(new ASTTrait('MyTrait'));
+        $this->assertNull($trait->getParentName());
     }
 }

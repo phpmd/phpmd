@@ -115,6 +115,17 @@ class MethodNodeTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testGetParentTypeReturnsTrait()
+    {
+        $this->assertInstanceOf(
+            'PHPMD\\Node\\TraitNode',
+            $this->getMethod()->getParentType()
+        );
+    }
+
+    /**
      * testHasSuppressWarningsExecutesDefaultImplementation
      *
      * @return void
@@ -214,6 +225,15 @@ class MethodNodeTest extends AbstractTest
     {
         $method = $this->getMethod();
         $this->assertFalse($method->isDeclaration());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsDeclarationReturnsTrueForPrivateMethod()
+    {
+        $method = $this->getMethod();
+        $this->assertTrue($method->isDeclaration());
     }
 
     /**

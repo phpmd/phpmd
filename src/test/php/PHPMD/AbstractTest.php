@@ -49,6 +49,7 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\TraitNode;
 use PHPMD\Stubs\RuleStub;
 
 /**
@@ -127,6 +128,18 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return new InterfaceNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getInterfaces()
+            )
+        );
+    }
+
+    /**
+     * @return \PHPMD\Node\InterfaceNode
+     */
+    protected function getTrait()
+    {
+        return new TraitNode(
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getTraits()
             )
         );
     }
