@@ -73,6 +73,10 @@
     </target>
 
     <target name="-phar:before~hooked" extensionOf="-phar:before~hook">
+        <!-- Stash all pending changes -->
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+        </exec>
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />
             <arg line="update" />
@@ -84,7 +88,6 @@
     </target>
 
     <target name="-phar:after~hooked" extensionOf="-phar:after~hook">
-        <!--
         <exec executable="git" dir="${basedir}" failonerror="true">
             <arg line="stash" />
         </exec>
@@ -92,7 +95,10 @@
             <arg line="stash" />
             <arg line="drop" />
         </exec>
-        -->
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="stash" />
+            <arg line="pop" />
+        </exec>
     </target>
 
     <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />
