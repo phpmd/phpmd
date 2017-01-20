@@ -1,7 +1,7 @@
 @echo off
 REM This file is part of PHP Mess Detector.
 REM
-REM Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+REM Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
 REM All rights reserved.
 REM
 REM Redistribution and use in source and binary forms, with or without
