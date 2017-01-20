@@ -336,8 +336,16 @@ class CommandLineOptionsTest extends AbstractTest
      */
     public function testGetCoverageReportWithCliOption()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--coverage', __METHOD__);
-        $opts = new CommandLineOptions($args);
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+                '--coverage',
+                __METHOD__
+            )
+        );
 
         $this->assertEquals(__METHOD__, $opts->getCoverageReport());
     }
@@ -404,6 +412,10 @@ class CommandLineOptionsTest extends AbstractTest
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName)
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM works different here.');
+        }
+        
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
 
         $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
