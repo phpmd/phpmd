@@ -1,3 +1,59 @@
+phpmd-2.6.0 (2017/01/20)
+========================
+
+This release incorporates several pending PRs. Beside that we have 
+rebased PHPMD on PDepend 2.5 which should complete support for PHP 7 
+language features.
+
+- Fixed #345: Development Code Fragment feature is not working Fixed 
+  in commit #1c0afd4.
+- Fixed #384: use-statement for functions returns in: 
+  UnexpectedTokenException Fixed in commit #1c0afd4.
+- Fixed #409: Test for PHPMD or PMD on SuppressWarnings Fixed in 
+  commit #147beb1.
+- Fixed #418: Add missing link to TooManyPublicMethods rule in the 
+  rules document Fixed in commit #eccacb0.
+- Fixed #419: Fix a link to github help because the link is broken 
+  Fixed in commit #3c9ef0b.
+- Fixed #426: Enable Windows Update service on AppVeyor Fixed in 
+  commit #4bd2516.
+- Fixed #429: Added ext-xml to require in composer.json file Fixed in 
+  commit #0aecd07.
+- Fixed #433: Mistake in documentation of CCN Fixed in commit 
+  #f686673.
+- Implemented #379: Code cleaning. Implemented in commit #902da6c.
+- Implemented #412: Add .mailmap file to fix git shortlog Implemented 
+  in commit #7fe3d6b.
+- Implemented #416: Test against lowest possible dependencies 
+  Implemented in commit #d2b58b3.
+
+phpmd-2.5.0 (2016/11/23)
+========================
+
+This release closes several minor/major issues in PHPMD itself and it 
+bundles a new version of PDepend that also provides fixes for several 
+bugs.
+
+- Fixed #386: English language fixes Fixed in commit #2a31103.
+- Fixed #395: Fix typo in rulesets/cleancode Fixed in commit #f6aa5be.
+- Fix copy &amp; paste error Fixed in commit #c51ea72.
+- Fixed #411: Unexpected token: list
+- Fixed #389: Unexpected token: EMPTY
+- Implemented #365: Remove the leading blank line from the 
+  TextRenderer Implemented in commit #ca59154.
+- Implemented #380: add --ignore-exit-violations CLI flag to allow 
+  exit code 0 event if violation is found (will allow successfull 
+  build for CI) Implemented in commit #9f71d98.
+- Bump PHP dependency to 5.3.9 Implemented in commit #540d61c.
+
+phpmd-2.4.4 (2016/11/22)
+========================
+
+Maintenance release with new PDepend version bundled
+
+- Fixed #347: Fixed UnexpectedTokenException on null coalesce 
+  operator. Fixed in commit #8e80aaa.
+
 phpmd-2.4.2 (2016/03/10)
 ========================
 

@@ -97,6 +97,22 @@
     <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />
 
     <target name="-phpmd:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="pull" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--all" />
+        </exec>
+
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="tag" />
+            <arg line="${project.version}" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--tags" />
+        </exec>
 
         <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
 
@@ -107,6 +123,10 @@
         <exec dir="${commons:builddir}" executable="scp" failonerror="true">
             <arg line="dist/${project.name}-${project.version}.phar" />
             <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.phar" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="scp" failonerror="true">
+            <arg line="dist/${project.name}-${project.version}.phar" />
+            <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.bz2.phar" />
         </exec>
         <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
             <arg line="${remote.shell.credentials}" />
