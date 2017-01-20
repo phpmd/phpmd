@@ -72,11 +72,7 @@
         </exec>
     </target>
 
-    <target name="-phar:before~hooked" extensionOf="-phar:before~hook">
-        <!-- Stash all pending changes -->
-        <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="stash" />
-        </exec>
+    <target name="-copy-vendor-dir:before~hooked" extensionOf="-copy-vendor-dir:before~hook">
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />
             <arg line="update" />
@@ -87,17 +83,14 @@
         </exec>
     </target>
 
-    <target name="-phar:after~hooked" extensionOf="-phar:after~hook">
+    <target name="-copy-vendor-dir:after~hooked" extensionOf="-copy-vendor-dir:after~hook">
         <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="stash" />
+            <arg line="checkout" />
+            <arg line="composer.lock" />
         </exec>
-        <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="stash" />
-            <arg line="drop" />
-        </exec>
-        <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="stash" />
-            <arg line="pop" />
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
+            <arg line="install" />
         </exec>
     </target>
 
