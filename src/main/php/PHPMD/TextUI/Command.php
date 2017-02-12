@@ -150,16 +150,13 @@ class Command
         // Create a report stream
         $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
 
-        $renderer = $opts->createRenderer();
-        $renderer->setWriter(new StreamWriter($stream));
-
-        $renderers = array($renderer);
+        $renderers[] = $opts->createRenderer(new StreamWriter($stream));;
 
         foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
-            $reportRenderer = $opts->createRenderer($reportFormat);
-            $reportRenderer->setWriter(new StreamWriter(fopen($reportFile, 'wb')));
-
-            $renderers[] = $reportRenderer;
+            $renderers[] = $opts->createRenderer(
+                new StreamWriter(fopen($reportFile, 'wb')),
+                $reportFormat
+            );
         }
 
         return $renderers;

@@ -65,30 +65,32 @@ abstract class RendererFactory
      *   <li>text</li>
      * </ul>
      *
+     * @param AbstractWriter $writer Asociated output writer instance
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
-    public static function createRenderer($reportFormat)
+    public static function createRenderer(AbstractWriter $writer, $reportFormat)
     {
         switch ($reportFormat) {
             case 'xml':
-                return new XMLRenderer();
+                return new XMLRenderer($writer);
             case 'html':
-                return new HTMLRenderer();
+                return new HTMLRenderer($writer);
             case 'text':
-                return new TextRenderer();
+                return new TextRenderer($writer);
             default:
-                return static::createCustomRenderer($reportFormat);
+                return static::createCustomRenderer($writer, $reportFormat);
         }
     }
 
     /**
+     * @param AbstractWriter $writer Asociated output writer instance
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException
      */
-    private static function createCustomRenderer($reportFormat)
+    private static function createCustomRenderer(AbstractWriter $writer, $reportFormat)
     {
         if ('' === $reportFormat) {
             throw new \InvalidArgumentException(
@@ -97,7 +99,7 @@ abstract class RendererFactory
         }
 
         if (class_exists($reportFormat)) {
-            return new $reportFormat();
+            return new $reportFormat($writer);
         }
 
         // Try to load a custom renderer
@@ -116,6 +118,6 @@ abstract class RendererFactory
 
         include_once $fileName;
 
-        return new $reportFormat();
+        return new $reportFormat($writer);
     }
 }

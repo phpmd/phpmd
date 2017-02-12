@@ -66,9 +66,6 @@ class TextRendererTest extends AbstractTest
      */
     public function testRendererCreatesExpectedNumberOfTextEntries()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
-
         $violations = array(
             $this->getRuleViolationMock('/bar.php', 1),
             $this->getRuleViolationMock('/foo.php', 2),
@@ -83,8 +80,9 @@ class TextRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        $renderer = new TextRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new TextRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
@@ -105,9 +103,6 @@ class TextRendererTest extends AbstractTest
      */
     public function testRendererAddsProcessingErrorsToTextReport()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
-
         $errors = array(
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
@@ -122,8 +117,9 @@ class TextRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($errors)));
 
-        $renderer = new TextRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new TextRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);

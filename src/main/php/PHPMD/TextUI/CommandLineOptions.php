@@ -41,6 +41,7 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\AbstractWriter;
 use PHPMD\RendererFactory;
 use PHPMD\Rule;
 
@@ -359,15 +360,16 @@ class CommandLineOptions
      *   <li>text</li>
      * </ul>
      *
+     * @param \PHPMD\AbstractWriter $writer Asociated output writer instance
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer($reportFormat = null)
+    public function createRenderer(AbstractWriter $writer, $reportFormat = null)
     {
         try {
             $reportFormat = $reportFormat ?: $this->reportFormat;
-            return RendererFactory::createRenderer($reportFormat);
+            return RendererFactory::createRenderer($writer, $reportFormat);
         } catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException(
                 $e->getMessage(),

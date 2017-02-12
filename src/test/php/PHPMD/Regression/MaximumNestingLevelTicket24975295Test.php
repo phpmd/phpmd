@@ -73,8 +73,9 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
      */
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
     {
-        $renderer = new TextRenderer();
-        $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
+        $renderer = new TextRenderer(
+            new StreamWriter(self::createTempFileUri())
+        );
 
         $inputs   = self::createCodeResourceUriForTest();
         $rules    = 'unusedcode';

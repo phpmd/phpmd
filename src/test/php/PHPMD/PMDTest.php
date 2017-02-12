@@ -68,8 +68,7 @@ class PHPMDTest extends AbstractTest
 
         $writer = new WriterStub();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter($writer);
+        $renderer = new XMLRenderer($writer);
 
         $phpmd = new PHPMD();
 
@@ -94,8 +93,7 @@ class PHPMDTest extends AbstractTest
 
         $writer = new WriterStub();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter($writer);
+        $renderer = new XMLRenderer($writer);
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
@@ -119,8 +117,7 @@ class PHPMDTest extends AbstractTest
 
         $writer = new WriterStub();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter($writer);
+        $renderer = new XMLRenderer($writer);
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
@@ -140,7 +137,7 @@ class PHPMDTest extends AbstractTest
      */
     public function testHasViolationsReturnsFalseByDefault()
     {
-        $phpmd = new PHPMD();
+        $phpmd = new PHPMD(new WriterStub());
         $this->assertFalse($phpmd->hasViolations());
     }
 
@@ -153,8 +150,7 @@ class PHPMDTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer = new XMLRenderer(new WriterStub());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
@@ -176,8 +172,7 @@ class PHPMDTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer = new XMLRenderer(new WriterStub());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(

@@ -43,6 +43,7 @@ namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
 use PHPMD\Rule;
+use PHPMD\Stubs\WriterStub;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\CommandLineOptions} class.
@@ -361,7 +362,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertInstanceOf($expectedClass, $opts->createRenderer($reportFormat));
+        $this->assertInstanceOf($expectedClass, $opts->createRenderer(new WriterStub(), $reportFormat));
     }
 
     /**

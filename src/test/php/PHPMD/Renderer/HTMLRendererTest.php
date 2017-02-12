@@ -66,8 +66,6 @@ class HTMLRendererTest extends AbstractTest
      */
     public function testRendererCreatesExpectedHtmlTableRow()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
 
         $violations = array(
             $this->getRuleViolationMock('/bar.php', 1),
@@ -83,8 +81,9 @@ class HTMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        $renderer = new HTMLRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new HTMLRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
@@ -108,9 +107,6 @@ class HTMLRendererTest extends AbstractTest
      */
     public function testRendererAddsProcessingErrorsToHtmlReport()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
-
         $errors = array(
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
@@ -125,8 +121,9 @@ class HTMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($errors)));
 
-        $renderer = new HTMLRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new HTMLRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);

@@ -41,6 +41,8 @@
 
 namespace PHPMD;
 
+use PHPMD\AbstractWriter;
+
 /**
  * Abstract base class for PHPMD rendering engines.
  *
@@ -57,6 +59,11 @@ abstract class AbstractRenderer
      */
     private $writer = null;
 
+    public function __construct(AbstractWriter $writer)
+    {
+        $this->writer = $writer;
+    }
+
     /**
      * Returns the associated output writer instance.
      *
@@ -65,17 +72,6 @@ abstract class AbstractRenderer
     public function getWriter()
     {
         return $this->writer;
-    }
-
-    /**
-     * Returns the associated output writer instance.
-     *
-     * @param \PHPMD\AbstractWriter $writer
-     * @return void
-     */
-    public function setWriter(AbstractWriter $writer)
-    {
-        $this->writer = $writer;
     }
 
     /**

@@ -68,8 +68,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer = new XMLRenderer(new WriterStub());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
@@ -89,8 +88,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer = new XMLRenderer(new WriterStub());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(

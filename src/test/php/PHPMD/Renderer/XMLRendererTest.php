@@ -66,9 +66,6 @@ class XMLRendererTest extends AbstractTest
      */
     public function testRendererCreatesExpectedNumberOfXmlElements()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
-        
         $violations = array(
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
@@ -83,8 +80,9 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new XMLRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
@@ -104,9 +102,6 @@ class XMLRendererTest extends AbstractTest
      */
     public function testRendererAddsProcessingErrorsToXmlReport()
     {
-        // Create a writer instance.
-        $writer = new WriterStub();
-
         $processingErrors = array(
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
@@ -121,8 +116,9 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));
 
-        $renderer = new XMLRenderer();
-        $renderer->setWriter($writer);
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $renderer = new XMLRenderer($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
