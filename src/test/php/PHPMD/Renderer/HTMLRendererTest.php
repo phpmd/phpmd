@@ -81,7 +81,6 @@ class HTMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        // Create a writer instance.
         $writer = new WriterStub();
         $renderer = new HTMLRenderer($writer);
 
@@ -121,7 +120,6 @@ class HTMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($errors)));
 
-        // Create a writer instance.
         $writer = new WriterStub();
         $renderer = new HTMLRenderer($writer);
 

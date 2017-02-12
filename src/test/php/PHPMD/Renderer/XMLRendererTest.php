@@ -80,7 +80,6 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        // Create a writer instance.
         $writer = new WriterStub();
         $renderer = new XMLRenderer($writer);
 
@@ -116,7 +115,6 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));
 
-        // Create a writer instance.
         $writer = new WriterStub();
         $renderer = new XMLRenderer($writer);
 

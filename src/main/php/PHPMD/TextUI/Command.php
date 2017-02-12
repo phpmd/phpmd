@@ -147,10 +147,8 @@ class Command
      */
     private function getRenderers(CommandLineOptions $opts)
     {
-        // Create a report stream
         $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
-
-        $renderers[] = $opts->createRenderer(new StreamWriter($stream));;
+        $renderers[] = $opts->createRenderer(new StreamWriter($stream));
 
         foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
             $renderers[] = $opts->createRenderer(
