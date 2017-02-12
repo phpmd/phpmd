@@ -41,9 +41,6 @@
 
 namespace PHPMD\TextUI;
 
-use PHPMD\Renderer\HTMLRenderer;
-use PHPMD\Renderer\TextRenderer;
-use PHPMD\Renderer\XMLRenderer;
 use PHPMD\RendererFactory;
 use PHPMD\Rule;
 
@@ -368,80 +365,15 @@ class CommandLineOptions
      */
     public function createRenderer($reportFormat = null)
     {
-        $renderer = RendererFactory::createRenderer();
-        $reportFormat = $reportFormat ?: $this->reportFormat;
-
-        switch ($reportFormat) {
-            case 'xml':
-                return $this->createXmlRenderer();
-            case 'html':
-                return $this->createHtmlRenderer();
-            case 'text':
-                return $this->createTextRenderer();
-            default:
-                return $this->createCustomRenderer();
-        }
-    }
-
-    /**
-     * @return \PHPMD\Renderer\XMLRenderer
-     */
-    protected function createXmlRenderer()
-    {
-        return new XMLRenderer();
-    }
-
-    /**
-     * @return \PHPMD\Renderer\XMLRenderer
-     */
-    protected function createTextRenderer()
-    {
-        return new TextRenderer();
-    }
-
-    /**
-     * @return \PHPMD\Renderer\HTMLRenderer
-     */
-    protected function createHtmlRenderer()
-    {
-        return new HTMLRenderer();
-    }
-
-    /**
-     * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException
-     */
-    protected function createCustomRenderer()
-    {
-        if ('' === $this->reportFormat) {
+        try {
+            $reportFormat = $reportFormat ?: $this->reportFormat;
+            return RendererFactory::createRenderer($reportFormat);
+        } catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException(
-                'Can\'t create report with empty format.',
+                $e->getMessage(),
                 self::INPUT_ERROR
             );
         }
-
-        if (class_exists($this->reportFormat)) {
-            return new $this->reportFormat();
-        }
-
-        // Try to load a custom renderer
-        $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
-
-        $fileHandle = @fopen($fileName, 'r', true);
-        if (is_resource($fileHandle) === false) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Can\'t find the custom report class: %s',
-                    $this->reportFormat
-                ),
-                self::INPUT_ERROR
-            );
-        }
-        @fclose($fileHandle);
-
-        include_once $fileName;
-
-        return new $this->reportFormat();
     }
 
     /**

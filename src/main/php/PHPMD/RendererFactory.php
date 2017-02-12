@@ -41,6 +41,10 @@
 
 namespace PHPMD;
 
+use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\XMLRenderer;
+
 /**
  * Factory responsible for creating PHPMD rendering engines.
  *
@@ -65,19 +69,53 @@ abstract class RendererFactory
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
-    public static function createRenderer()
+    public static function createRenderer($reportFormat)
     {
-        $reportFormat = $reportFormat ?: $this->reportFormat;
-
         switch ($reportFormat) {
             case 'xml':
-                return $this->createXmlRenderer();
+                return new XMLRenderer();
             case 'html':
-                return $this->createHtmlRenderer();
+                return new HTMLRenderer();
             case 'text':
-                return $this->createTextRenderer();
+                return new TextRenderer();
             default:
-                return $this->createCustomRenderer();
+                return static::createCustomRenderer($reportFormat);
         }
+    }
+
+    /**
+     * @param string $reportFormat
+     * @return \PHPMD\AbstractRenderer
+     * @throws \InvalidArgumentException
+     */
+    private static function createCustomRenderer($reportFormat)
+    {
+        if ('' === $reportFormat) {
+            throw new \InvalidArgumentException(
+                'Can\'t create report with empty format.'
+            );
+        }
+
+        if (class_exists($reportFormat)) {
+            return new $reportFormat();
+        }
+
+        // Try to load a custom renderer
+        $fileName = strtr($reportFormat, '_\\', '//') . '.php';
+
+        $fileHandle = @fopen($fileName, 'r', true);
+        if (is_resource($fileHandle) === false) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Can\'t find the custom report class: %s',
+                    $reportFormat
+                )
+            );
+        }
+        @fclose($fileHandle);
+
+        include_once $fileName;
+
+        return new $reportFormat();
     }
 }

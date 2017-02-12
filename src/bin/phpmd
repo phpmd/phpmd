@@ -31,6 +31,7 @@ class_alias('PHPMD\\AbstractRule', 'PHP_PMD_AbstractRule');
 class_alias('PHPMD\\Parser', 'PHP_PMD_Parser');
 class_alias('PHPMD\\ParserFactory', 'PHP_PMD_ParserFactory');
 class_alias('PHPMD\\ProcessingError', 'PHP_PMD_ProcessingError');
+class_alias('PHPMD\\RendererFactory', 'PHP_PMD_RendererFactory');
 class_alias('PHPMD\\Report', 'PHP_PMD_Report');
 class_alias('PHPMD\\Rule', 'PHP_PMD_Rule');
 class_alias('PHPMD\\RuleClassFileNotFoundException', 'PHP_PMD_RuleClassFileNotFoundException');
