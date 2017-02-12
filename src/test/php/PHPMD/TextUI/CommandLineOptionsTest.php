@@ -392,7 +392,7 @@ class CommandLineOptionsTest extends AbstractTest
     {
         $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
         $opts = new CommandLineOptions($args);
-        $opts->createRenderer();
+        $opts->createRenderer(new WriterStub());
     }
 
     /**
