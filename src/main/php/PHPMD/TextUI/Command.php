@@ -84,22 +84,6 @@ class Command
             return self::EXIT_SUCCESS;
         }
 
-        // Create a report stream
-        $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
-
-        // Create renderer and configure output
-        $renderer = $opts->createRenderer();
-        $renderer->setWriter(new StreamWriter($stream));
-
-        $renderers = array($renderer);
-
-        foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
-            $reportRenderer = $opts->createRenderer($reportFormat);
-            $reportRenderer->setWriter(new StreamWriter(fopen($reportFile, 'wb')));
-
-            $renderers[] = $reportRenderer;
-        }
-
         // Configure a rule set factory
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
         if ($opts->hasStrict()) {
@@ -128,7 +112,7 @@ class Command
         $phpmd->processFiles(
             $opts->getInputPath(),
             $opts->getRuleSets(),
-            $renderers,
+            $this->getRenderers($opts),
             $ruleSetFactory
         );
 
@@ -153,6 +137,32 @@ class Command
             $version = $data['project.version'];
         }
         return $version;
+    }
+
+    /**
+     * Returns renderers asked by user
+     *
+     * @param \PHPMD\TextUI\CommandLineOptions $opts
+     * @return \PHPMD\AbstractRenderer[]
+     */
+    private function getRenderers(CommandLineOptions $opts)
+    {
+        // Create a report stream
+        $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
+
+        $renderer = $opts->createRenderer();
+        $renderer->setWriter(new StreamWriter($stream));
+
+        $renderers = array($renderer);
+
+        foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
+            $reportRenderer = $opts->createRenderer($reportFormat);
+            $reportRenderer->setWriter(new StreamWriter(fopen($reportFile, 'wb')));
+
+            $renderers[] = $reportRenderer;
+        }
+
+        return $renderers;
     }
 
     /**
