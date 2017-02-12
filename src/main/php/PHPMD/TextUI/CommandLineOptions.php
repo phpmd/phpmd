@@ -44,6 +44,7 @@ namespace PHPMD\TextUI;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
+use PHPMD\RendererFactory;
 use PHPMD\Rule;
 
 /**
@@ -367,6 +368,7 @@ class CommandLineOptions
      */
     public function createRenderer($reportFormat = null)
     {
+        $renderer = RendererFactory::createRenderer();
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
