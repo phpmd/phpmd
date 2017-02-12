@@ -353,13 +353,6 @@ class CommandLineOptions
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
-     * Valid renderers are:
-     * <ul>
-     *   <li>xml</li>
-     *   <li>html</li>
-     *   <li>text</li>
-     * </ul>
-     *
      * @param \PHPMD\AbstractWriter $writer Asociated output writer instance
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer

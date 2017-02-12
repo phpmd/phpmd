@@ -69,7 +69,7 @@ abstract class AbstractRenderer
      *
      * @return \PHPMD\AbstractWriter
      */
-    public function getWriter()
+    protected function getWriter()
     {
         return $this->writer;
     }
