@@ -140,7 +140,7 @@ class Command
     }
 
     /**
-     * Returns renderers asked by user
+     * Returns renderers requested by user
      *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
      * @return \PHPMD\AbstractRenderer[]

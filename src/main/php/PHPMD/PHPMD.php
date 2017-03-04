@@ -75,7 +75,7 @@ class PHPMD
      * @var string
      */
     private $input;
-    
+
     /**
      * This property will be set to <b>true</b> when an error or a violation
      * was found in the processed source code.
@@ -225,7 +225,7 @@ class PHPMD
         foreach ($renderers as $renderer) {
             $renderer->start();
         }
-        
+
         foreach ($renderers as $renderer) {
             $renderer->renderReport($report);
         }

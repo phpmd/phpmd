@@ -34,7 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author Prytoegrian <prytoegrian@protonmail.com>
+ * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -51,6 +51,7 @@ use PHPMD\Renderer\XMLRenderer;
  * @author Prytoegrian <prytoegrian@protonmail.com>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @see ::createRenderer For creating Renderers.
  */
 abstract class RendererFactory
 {
@@ -58,17 +59,9 @@ abstract class RendererFactory
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
-     * Valid renderers are:
-     * <ul>
-     *   <li>xml</li>
-     *   <li>html</li>
-     *   <li>text</li>
-     * </ul>
-     *
-     * @param AbstractWriter $writer Asociated output writer instance
-     * @param string $reportFormat
+     * @param AbstractWriter $writer Associated output writer instance
+     * @param string $reportFormat Format within xml, html, text or a custom one
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
     public static function createRenderer(AbstractWriter $writer, $reportFormat)
     {
@@ -85,28 +78,37 @@ abstract class RendererFactory
     }
 
     /**
-     * @param AbstractWriter $writer Asociated output writer instance
-     * @param string $reportFormat
+     * Create a custom renderer, for user's specific needs
+     *
+     * @param AbstractWriter $writer Associated output writer instance
+     * @param string $reportFormat A custom format, created by the user (for instance, json)
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException When the format is empty
      */
     private static function createCustomRenderer(AbstractWriter $writer, $reportFormat)
     {
-        if ('' === $reportFormat) {
+        if ($reportFormat === '') {
             throw new \InvalidArgumentException(
                 'Can\'t create report with empty format.'
             );
         }
-
-        if (class_exists($reportFormat)) {
-            return new $reportFormat($writer);
+        if (!class_exists($reportFormat)) {
+            static::loadCustomRendererClassFile($reportFormat);
         }
 
-        // Try to load a custom renderer
-        $fileName = strtr($reportFormat, '_\\', '//') . '.php';
+        return new $reportFormat($writer);
+    }
 
-        $fileHandle = @fopen($fileName, 'r', true);
-        if (is_resource($fileHandle) === false) {
+    /**
+     * Try to load a custom renderer class file
+     *
+     * @param string $reportFormat A custom format, created by the user (for instance, json)
+     * @throws \InvalidArgumentException When there's no file loadable
+     */
+    private static function loadCustomRendererClassFile($reportFormat)
+    {
+        $fileName = strtr($reportFormat, '_\\', '//') . '.php';
+        if (!file_exists($fileName)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
@@ -114,10 +116,7 @@ abstract class RendererFactory
                 )
             );
         }
-        @fclose($fileHandle);
 
         include_once $fileName;
-
-        return new $reportFormat($writer);
     }
 }

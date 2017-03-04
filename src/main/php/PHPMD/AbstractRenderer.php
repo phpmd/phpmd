@@ -59,19 +59,34 @@ abstract class AbstractRenderer
      */
     private $writer = null;
 
-    public function __construct(AbstractWriter $writer)
+    public function __construct(AbstractWriter $writer = null)
     {
-        $this->writer = $writer;
+        if ($writer instanceof AbstractWriter) {
+            $this->setWriter($writer);
+        }
     }
 
     /**
      * Returns the associated output writer instance.
      *
      * @return \PHPMD\AbstractWriter
+     * @todo 2.6.0 : Change scope from public to protected in next major release
      */
-    protected function getWriter()
+    public function getWriter()
     {
         return $this->writer;
+    }
+
+    /**
+     * Sets the associated output writer instance.
+     *
+     * @param \PHPMD\AbstractWriter $writer
+     * @return void
+     * @deprecated 2.6.0 To delete in next major release
+     */
+    public function setWriter(AbstractWriter $writer)
+    {
+        $this->writer = $writer;
     }
 
     /**
