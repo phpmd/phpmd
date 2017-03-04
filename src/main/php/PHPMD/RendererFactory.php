@@ -73,7 +73,7 @@ abstract class RendererFactory
             case 'text':
                 return new TextRenderer($writer);
             default:
-                return static::createCustomRenderer($writer, $reportFormat);
+                return static::createCustomRenderer($reportFormat, $writer);
         }
     }
 
