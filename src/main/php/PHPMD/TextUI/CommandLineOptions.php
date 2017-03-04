@@ -358,11 +358,11 @@ class CommandLineOptions
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer(AbstractWriter $writer, $reportFormat = null)
+    public function createRenderer(AbstractWriter $writer = null, $reportFormat = null)
     {
         try {
             $reportFormat = $reportFormat ?: $this->reportFormat;
-            return RendererFactory::createRenderer($writer, $reportFormat);
+            return RendererFactory::createRenderer($reportFormat, $writer);
         } catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException(
                 $e->getMessage(),

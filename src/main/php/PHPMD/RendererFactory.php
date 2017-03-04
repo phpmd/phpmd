@@ -59,11 +59,11 @@ abstract class RendererFactory
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
-     * @param AbstractWriter $writer Associated output writer instance
      * @param string $reportFormat Format within xml, html, text or a custom one
+     * @param AbstractWriter $writer Associated output writer instance
      * @return \PHPMD\AbstractRenderer
      */
-    public static function createRenderer(AbstractWriter $writer, $reportFormat)
+    public static function createRenderer($reportFormat, AbstractWriter $writer = null)
     {
         switch ($reportFormat) {
             case 'xml':
@@ -80,12 +80,12 @@ abstract class RendererFactory
     /**
      * Create a custom renderer, for user's specific needs
      *
-     * @param AbstractWriter $writer Associated output writer instance
      * @param string $reportFormat A custom format, created by the user (for instance, json)
+     * @param AbstractWriter $writer Associated output writer instance
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException When the format is empty
      */
-    private static function createCustomRenderer(AbstractWriter $writer, $reportFormat)
+    private static function createCustomRenderer($reportFormat, AbstractWriter $writer = null)
     {
         if ($reportFormat === '') {
             throw new \InvalidArgumentException(

@@ -82,7 +82,7 @@ abstract class AbstractRenderer
      *
      * @param \PHPMD\AbstractWriter $writer
      * @return void
-     * @deprecated 2.6.0 To delete in next major release
+     * @deprecated 2.6.0 To delete in next major release for ensuring contract on the class
      */
     public function setWriter(AbstractWriter $writer)
     {
