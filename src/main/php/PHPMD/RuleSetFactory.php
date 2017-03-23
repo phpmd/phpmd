@@ -192,7 +192,7 @@ class RuleSetFactory
                 return $fileName;
             }
         }
-        
+
         throw new RuleSetNotFoundException($ruleSetOrFileName);
     }
 
@@ -247,17 +247,17 @@ class RuleSetFactory
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'php-includepath') {
                 $includePath = (string) $node;
-                
+
                 if (is_dir(dirname($fileName) . DIRECTORY_SEPARATOR . $includePath)) {
                     $includePath = dirname($fileName) . DIRECTORY_SEPARATOR . $includePath;
                     $includePath = realpath($includePath);
                 }
-                
+
                 $includePath = get_include_path() . PATH_SEPARATOR . $includePath;
                 set_include_path($includePath);
             }
         }
-        
+
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'description') {
                 $ruleSet->setDescription((string) $node);
@@ -360,14 +360,13 @@ class RuleSetFactory
         if (isset($ruleNode['file'])) {
             if (is_readable((string) $ruleNode['file'])) {
                 $fileName = (string) $ruleNode['file'];
-
             } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'])) {
                 $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'];
             }
         }
 
         $className = (string) $ruleNode['class'];
-        
+
         if (!is_readable($fileName)) {
             $fileName = strtr($className, '\\', '/') . '.php';
         }
@@ -375,7 +374,7 @@ class RuleSetFactory
         if (!is_readable($fileName)) {
             $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
         }
-        
+
         if (class_exists($className) === false) {
             $handle = @fopen($fileName, 'r', true);
             if ($handle === false) {
