@@ -4,7 +4,6 @@ class testRuleDoesNotApplyToImplementedInterfaceMethodClass
 {
     public function testRuleDoesNotApplyToImplementedInterfaceMethod($foo, $bar, $baz)
     {
-
     }
 }
 
