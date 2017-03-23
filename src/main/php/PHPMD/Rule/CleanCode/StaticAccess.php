@@ -36,7 +36,7 @@
  *
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule\CleanCode;
@@ -58,7 +58,7 @@ use PHPMD\Rule\MethodAware;
  *
  * @author    Benjamin Eberlei <benjamin@qafoo.com>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 {
