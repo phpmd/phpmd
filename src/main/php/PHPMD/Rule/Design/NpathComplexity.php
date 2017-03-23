@@ -36,7 +36,7 @@
  *
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule\Design;
@@ -52,7 +52,7 @@ use PHPMD\Rule\MethodAware;
  *
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
 {

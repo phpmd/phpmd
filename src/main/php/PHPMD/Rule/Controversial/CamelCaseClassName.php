@@ -36,7 +36,7 @@
  *
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @since      1.1.0
  */
 
@@ -52,7 +52,7 @@ use PHPMD\Rule\InterfaceAware;
  *
  * @author     Francis Besset <francis.besset@gmail.com>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @since      1.1.0
  */
 class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware
