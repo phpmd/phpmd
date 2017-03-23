@@ -66,6 +66,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $class)
     {
+        /** @var $class ClassNode */
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, array($node->getImage()));
         }
@@ -131,6 +132,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     private function removeUsedMethods(ClassNode $class, array $methods)
     {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
+            /** @var $postfix ASTNode */
             if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
             }

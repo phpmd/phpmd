@@ -245,6 +245,7 @@ class RuleSetFactory
         }
 
         foreach ($xml->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'php-includepath') {
                 $includePath = (string) $node;
 
@@ -402,6 +403,7 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
             } elseif ($node->getName() === 'example') {
@@ -451,6 +453,7 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
             } elseif ($node->getName() === 'example') {
@@ -488,6 +491,7 @@ class RuleSetFactory
     private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode)
     {
         foreach ($propertiesNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'property') {
                 $this->addProperty($rule, $node);
             }
@@ -556,6 +560,7 @@ class RuleSetFactory
             }
 
             foreach ($xml->children() as $node) {
+                /** @var $node \SimpleXMLElement */
                 if ($node->getName() === 'exclude-pattern') {
                     $excludes[] = '' . $node;
                 }
