@@ -378,7 +378,6 @@ abstract class AbstractRule implements Rule
             return $this->properties[$name];
         }
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
-
     }
 
     /**
