@@ -159,3 +159,10 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+
+API docs
+--------
+
+You find the up to date class API docs at `codedoc.pub`__.
+
+__ https://codedoc.pub/phpmd/phpmd/master/index.html
