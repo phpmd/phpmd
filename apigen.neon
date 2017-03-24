@@ -1,0 +1,18 @@
+# ApiGen configuration
+
+source:
+    - src/main/php
+
+title: "PHPMD"
+
+templateTheme: bootstrap
+
+# Options
+accessLevels: [public, protected]
+sourceCode: true
+download: false
+php: false
+debug: true
+internal: true
+deprecated: true
+todo: true
