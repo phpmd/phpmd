@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pmd version="@package_version@" timestamp="">
   <file name="#{rootDirectory}_DS_source_DS_ccn_function.php">
-    <violation beginline="5" endline="34" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity" function="ccn_function" priority="3">
+    <violation beginline="5" endline="34" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#cyclomaticcomplexity" function="ccn_function" priority="3">
       The function ccn_function() has a Cyclomatic Complexity of 12. The configured cyclomatic complexity threshold is 10.
     </violation>
   </file>

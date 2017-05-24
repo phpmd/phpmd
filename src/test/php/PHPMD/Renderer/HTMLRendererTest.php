@@ -95,7 +95,7 @@ class HTMLRendererTest extends AbstractTest
             '<td align="center">2</td>' . PHP_EOL .
             '<td>/foo.php</td>' . PHP_EOL .
             '<td align="center" width="5%">2</td>' . PHP_EOL .
-            '<td><a href="http://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
+            '<td><a href="https://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
             '</tr>',
             $writer->getData()
         );

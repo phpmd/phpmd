@@ -32,7 +32,7 @@ http://phpmd.org
 Installation
 ------------
 
-See http://phpmd.org/download/index.html
+See https://phpmd.org/download/index.html
 
 Command line usage
 ------------------
@@ -65,7 +65,7 @@ The `PHPMD Phar distribution`__ includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
 like a filesystem reference.
 
-__ http://phpmd.org/download/index.html
+__ https://phpmd.org/download/index.html
 
 Command line options
 --------------------
@@ -121,7 +121,7 @@ You can also mix custom `rule set files`__ with build-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
 
-__ http://phpmd.org/documentation/creating-a-ruleset.html
+__ https://phpmd.org/documentation/creating-a-ruleset.html
 
 That's it. With this behavior you can specify you own combination of rule sets
 that will check the source code.

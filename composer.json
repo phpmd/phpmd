@@ -10,7 +10,7 @@
     ],
     "type": "project",
     "license": "BSD-3-Clause",
-    "homepage": "http://phpmd.org/",
+    "homepage": "https://phpmd.org/",
     "authors": [
         {
             "name": "Manuel Pichler",

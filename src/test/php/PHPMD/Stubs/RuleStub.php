@@ -65,7 +65,7 @@ class RuleStub extends AbstractRule implements ClassAware
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')
     {
         $this->setName($ruleName);
-        $this->setExternalInfoUrl('http://phpmd.org/rules/index.html');
+        $this->setExternalInfoUrl('https://phpmd.org/rules/index.html');
         $this->setRuleSetName($ruleSetName);
         $this->setSince('42.23');
         $this->setDescription('Simple rule stub');
