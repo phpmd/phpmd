@@ -11,7 +11,7 @@
           since="0.1"
           message="Test message"
           class="rules_TestRule"
-          externalInfoUrl="http://phpmd.org/">
+          externalInfoUrl="https://phpmd.org/">
         <description>...</description>
         <priority>3</priority>
         <properties />
