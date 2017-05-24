@@ -51,7 +51,7 @@
     "bin": ["src/bin/phpmd"],
     "scripts": {
         "test": "phpunit",
-        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/main/php",
-        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/main/php"
+        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php"
     }
 }
