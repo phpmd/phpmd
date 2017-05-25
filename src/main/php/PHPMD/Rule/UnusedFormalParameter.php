@@ -94,6 +94,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         $this->removeUsedParameters($node);
 
         foreach ($this->nodes as $node) {
+            if ($this->isAllowedUnusedVariableName($node)) {
+                continue;
+            }
+
             $this->addViolation($node, array($node->getImage()));
         }
     }

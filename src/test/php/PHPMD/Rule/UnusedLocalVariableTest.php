@@ -254,6 +254,31 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+
+    /**
+     * testRuleDoesNotApplyToUnusedParameters
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToUnusedVariablesWithSpecificNames()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleDoesNotApplyToUnusedClosureParametersWithSucceedingUsedParameters
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToUnusedClosureParametersWithSucceedingUsedParameters()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
     /**
      * testRuleDoesNotApplyToArgcSuperGlobal
      *
