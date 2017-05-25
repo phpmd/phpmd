@@ -12,12 +12,11 @@ install:
   - sc config wuauserv start= auto
   - net start wuauserv
   - cinst -y php
-  - cd c:\tools\php
+  - cd c:\tools\php71
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini
   - echo extension_dir=ext >> php.ini
   - echo extension=php_openssl.dll >> php.ini
-  - SET PATH=C:\tools\php;%PATH%
   - cd C:\projects\phpmd
   - php -r "readfile('http://getcomposer.org/installer');" | php
   - php composer.phar install --prefer-source --no-interaction
