@@ -168,7 +168,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
     /**
      * This method extracts all parameters for the given function or method node
-     * and it stores the parameter images in the <b>$_images</b> property.
+     * and it stores the parameter images in the <b>$nodes</b> property.
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
@@ -187,6 +187,32 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
 
     /**
+     * Removes the given parameter name from the list of unused parameters. If
+     * the 'allow-unused-before-used' property is true, it also removes any
+     * unused parameters that appear positionally before the given parameter name.
+     *
+     * @param string $parameterName
+     * @return void
+     */
+    private function removeParameter($parameterName)
+    {
+        if (!isset($this->nodes[$parameterName])) {
+            return;
+        }
+
+        if ($this->getBooleanProperty('allow-unused-before-used')) {
+            foreach (array_keys($this->nodes) as $unusedParameterName) {
+                unset($this->nodes[$unusedParameterName]);
+                if ($parameterName == $unusedParameterName) {
+                    break;
+                }
+            }
+        } else {
+            unset($this->nodes[$parameterName]);
+        }
+    }
+
+    /**
      * This method collects all local variables in the body of the currently
      * analyzed method or function and removes those parameters that are
      * referenced by one of the collected variables.
@@ -200,7 +226,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         foreach ($variables as $variable) {
             /** @var $variable ASTNode */
             if ($this->isRegularVariable($variable)) {
-                unset($this->nodes[$variable->getImage()]);
+                $this->removeParameter($variable->getImage());
             }
         }
 
@@ -214,7 +240,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
                 foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
-                    unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
+                    $this->removeParameter('$' . trim($literal->getImage(), '"\''));
                 }
             }
         }
