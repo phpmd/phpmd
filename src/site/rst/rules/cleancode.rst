@@ -67,6 +67,21 @@ This rule has the following properties:
  exceptions                                          Comma-separated class name list of exceptions 
 =================================== =============== ===============================================
 
+DuplicatedArrayKey
+==============
+
+Defining another value for the same key in array literal overrides previous one, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+
+
+Example: ::
+
+  function createArray() {
+      return [
+          'foo' => 'bar', // this one makes no effect
+          "foo" => 'baz',
+      ];
+  }
+
 
 Remark
 ======
