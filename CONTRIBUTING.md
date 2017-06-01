@@ -30,8 +30,11 @@ Make sure your code changes comply with the PSR-2 coding standard by
 using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 from within your PHPMD folder:
 
-    vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=src/tests/resources $(git ls-files -om --exclude-standard | grep '\.php$') > phpcs.txt
+    vendor/bin/phpcs -p --extensions=php --standard=PSR2 src > phpcs.txt
 
+Linux | OS X users may extend this command to exclude files, that are not part of a commit:
+
+    vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=src/tests/resources $(git ls-files -om --exclude-standard | grep '\.php$') > phpcs.txt
 Check the ``phpcs.txt`` once it finished.
 
 Additional Resources
