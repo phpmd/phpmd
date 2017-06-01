@@ -5,7 +5,7 @@ function testRuleAppliesToMultilevelIfConditions()
     if (1 || 0) {
         if (1 == 1 || $foo = 'baz') {
             // applied
-        } elseif (1 != [] && 'foo' != 'baz' && $bar = 'baz') {
+        } elseif (1 != array() && 'foo' != 'baz' && $bar = 'baz') {
             // applied
         } elseif (1 % 2 !== !false && $baz = 1 + 1 + 1 - 3) {
             // applied
@@ -16,7 +16,7 @@ function testRuleAppliesToMultilevelIfConditions()
                     if (true) {
                         // not applied
                         if (1) {
-                            // applied
+                            // not applied
                         } elseif ($foo = 1) {
                             // applied
                         } elseif ($foo = 2) {

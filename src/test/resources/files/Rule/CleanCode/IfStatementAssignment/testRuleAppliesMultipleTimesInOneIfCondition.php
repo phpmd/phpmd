@@ -6,8 +6,6 @@ function testRuleAppliesMultipleTimesInOneIfCondition()
         // not applied
     }
     if ($foo = 'bar' && $bar = 'baz' || $baz = 'foo') {
-        // applied
-        // applied
-        // applied
+        // applied 3 times
     }
 }

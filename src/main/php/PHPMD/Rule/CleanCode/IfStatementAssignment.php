@@ -48,6 +48,15 @@ use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
+ * This rule covers the following cases:
+ * - single assignment in an if clause
+ * - multiple assignments in same if clause
+ * - assignments in nested if clauses
+ * - assignments in elseif clauses
+ * - duplicated assignments (multiple conditions before and after *=* sign)
+ *
+ * Empty if clauses are skipped
+ *
  * @author    Kamil Szymanski <kamilszymanski@gmail.com>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
@@ -55,9 +64,10 @@ use PHPMD\Rule\MethodAware;
 class IfStatementAssignment extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * This method checks if method/function has any if statement that uses assignment instead of comparison.
+     * This method checks if method/function has if clauses
+     * that use assignment instead of comparison.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
      * @return void
      */
     public function apply(AbstractNode $node)
@@ -65,12 +75,15 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
         $statements = $this->getStatements($node);
         $expressions = $this->getExpressions($statements);
         $assignments = $this->getAssignments($expressions);
+
         $this->addViolations($node, $assignments);
     }
 
     /**
-     * @param AbstractNode $node
-     * @return array
+     * Extracts if and elseif statements from method/function body
+     *
+     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
+     * @return array<ASTStatement>
      */
     private function getStatements(AbstractNode $node)
     {
@@ -81,23 +94,27 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     }
 
     /**
-     * @param array $scopes
-     * @return array
+     * Extracts all expression from statements array
+     *
+     * @param array<ASTStatement> $scopes Array of if and elseif clauses
+     * @return array<ASTExpression>
      */
-    private function getExpressions(array $scopes)
+    private function getExpressions(array $statements)
     {
         $expressions = array();
-        /** @var ASTNode $scope */
-        foreach ($scopes as $scope) {
-            $expressions = array_merge($expressions, $scope->findChildrenOfType('Expression'));
+        /** @var ASTNode $statement */
+        foreach ($statements as $statement) {
+            $expressions = array_merge($expressions, $statement->findChildrenOfType('Expression'));
         }
 
         return $expressions;
     }
 
     /**
-     * @param array $expressions
-     * @return array
+     * Extracts all assignments from expressions array
+     *
+     * @param array<ASTExpression> $expressions Array of expressions
+     * @return array<ASTAssignmentExpression>
      */
     private function getAssignments(array $expressions)
     {
@@ -111,8 +128,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     }
 
     /**
-     * @param AbstractNode $node
-     * @param array $assignments
+     * Signals if any violations have been found in given method or function
+     *
+     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
+     * @param array<ASTAssignmentExpression> $assignments Array of assignments
      */
     private function addViolations(AbstractNode $node, array $assignments)
     {
@@ -122,6 +141,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
             if (null === $assignment || $assignment->getImage() !== '=') {
                 continue;
             }
+
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
             if (!in_array($uniqueHash, $processesViolations)) {
                 $processesViolations[] = $uniqueHash;

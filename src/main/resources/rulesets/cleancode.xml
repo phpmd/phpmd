@@ -70,15 +70,16 @@ class Foo
 
     <rule name="IfStatementAssignment"
           since="2.7.0"
-          message="Avoid assigning values to variables in if statement (line '{0}', column '{1}')."
+          message="Avoid assigning values to variables in if clauses and the like (line '{0}', column '{1}')."
           class="PHPMD\Rule\CleanCode\IfStatementAssignment"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#elseexpression">
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#ifstatementassignment">
         <description>
             <![CDATA[
-If assignments are considered an anti-pattern. Assignments in PHP return
-right operand as a result. In many cases it's an expected behavior, but
-in reality may be a source of many bugs, especially when right operand
-may result in 0, null or empty string.
+Assignments in if clauses the like are considered a code smell.
+Assignments in PHP return the right operand as their result.
+In many cases, this is an expected behavior, but can lead
+to many difficult to spot bugs, especially when the right
+operand could result in zero, null or an empty string.
             ]]>
         </description>
         <priority>1</priority>
@@ -89,11 +90,11 @@ class Foo
 {
     public function bar($flag)
     {
-        if ($foo = 'bar') {
-            // possible typo
+        if ($foo = 'bar') { // possible typo
+            // ...
         }
-        if ($baz = 0) {
-            // always false
+        if ($baz = 0) { // always false
+            // ...
         }
     }
 }
