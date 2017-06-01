@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Renderer;
@@ -48,9 +48,9 @@ use PHPMD\Stubs\WriterStub;
 /**
  * Test case for the html renderer implementation.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PHPMD\Renderer\HTMLRenderer
  * @group phpmd
@@ -95,7 +95,7 @@ class HTMLRendererTest extends AbstractTest
             '<td align="center">2</td>' . PHP_EOL .
             '<td>/foo.php</td>' . PHP_EOL .
             '<td align="center" width="5%">2</td>' . PHP_EOL .
-            '<td><a href="http://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
+            '<td><a href="https://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
             '</tr>',
             $writer->getData()
         );

@@ -10,7 +10,7 @@
     ],
     "type": "project",
     "license": "BSD-3-Clause",
-    "homepage": "http://phpmd.org/",
+    "homepage": "https://phpmd.org/",
     "authors": [
         {
             "name": "Manuel Pichler",
@@ -36,7 +36,8 @@
     "minimum-stability" : "stable",
     "require": {
         "php": ">=5.3.9",
-        "pdepend/pdepend": "^2.0.4"
+        "pdepend/pdepend": "^2.5",
+        "ext-xml": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.0",
@@ -49,6 +50,8 @@
     },
     "bin": ["src/bin/phpmd"],
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php"
     }
 }

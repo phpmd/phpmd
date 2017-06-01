@@ -402,7 +402,7 @@ __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAwar
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
 __ http://pmd.sf.net/
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
-__ http://phpmd.org/documentation/creating-a-ruleset.html
+__ https://phpmd.org/documentation/creating-a-ruleset.html
 
 __ http://pdepend.org
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php

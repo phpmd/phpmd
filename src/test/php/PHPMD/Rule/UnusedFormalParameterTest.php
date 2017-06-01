@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule;
@@ -46,9 +46,9 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the unused formal parameter rule.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PHPMD\Rule\UnusedFormalParameter
  * @covers \PHPMD\Rule\AbstractLocalVariable
@@ -325,7 +325,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.0
      */
-    public function test_func_get_args_rule_works_case_insensitive()
+    public function testFuncGetArgsRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
@@ -412,7 +412,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.0
      */
-    public function test_compact_function_rule_does_not_apply()
+    public function testCompactFunctionRuleDoesNotApply()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
@@ -424,7 +424,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.0
      */
-    public function test_compact_function_rule_only_applies_to_used_parameters()
+    public function testCompactFunctionRuleOnlyAppliesToUsedParameters()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(2));
@@ -436,7 +436,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.0
      */
-    public function test_compact_function_rule_works_case_insensitive()
+    public function testCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
@@ -448,7 +448,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.1
      */
-    public function test_namespaced_compact_function_rule_does_not_apply()
+    public function testNamespacedCompactFunctionRuleDoesNotApply()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
@@ -460,7 +460,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.1
      */
-    public function test_namespaced_compact_function_rule_only_applies_to_used_parameters()
+    public function testNamespacedCompactFunctionRuleOnlyAppliesToUsedParameters()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(2));
@@ -472,7 +472,7 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      * @since 2.0.1
      */
-    public function test_namespaced_compact_function_rule_works_case_insensitive()
+    public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));

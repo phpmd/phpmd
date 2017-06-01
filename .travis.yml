@@ -1,12 +1,17 @@
 language: php
 
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
+matrix:
+  include:
+    - php: 5.3
+      env: DEPENDENCIES=low
+    - php: 5.4
+      env: DEPENDENCIES=low
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: hhvm
+  fast_finish: true
 
 #matrix:
 #    allow_failures:
@@ -16,12 +21,17 @@ php:
 sudo: false
 
 env:
-  - TEST_CONFIG="phpunit.xml.dist"
+    global:
+        TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
-  - composer install
+  - composer self-update
+  - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
+  - if [ ! $DEPENDENCIES ] ; then composer install ; fi
 
-script: phpunit --configuration $TEST_CONFIG --colors --coverage-text
+script:
+  - if [ $TRAVIS_PHP_VERSION != 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG ; fi
+  - if [ $TRAVIS_PHP_VERSION  = 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
 
 notifications:
   irc: "irc.freenode.org#phpmd"

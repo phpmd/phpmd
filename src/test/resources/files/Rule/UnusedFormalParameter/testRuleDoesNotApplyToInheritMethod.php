@@ -12,6 +12,5 @@ class testRuleDoesNotApplyToInheritMethodParentClass
 {
     public function testRuleDoesNotApplyToInheritMethod($foo, $bar)
     {
-
     }
 }

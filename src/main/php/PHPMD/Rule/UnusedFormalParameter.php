@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,23 +34,24 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
+use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
@@ -197,6 +198,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
+            /** @var $variable ASTNode */
             if ($this->isRegularVariable($variable)) {
                 unset($this->nodes[$variable->getImage()]);
             }

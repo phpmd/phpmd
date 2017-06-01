@@ -14,7 +14,7 @@ The Clean Code ruleset contains rules that enforce a clean code base. This inclu
           since="1.4.0"
           message="The method {0} has a boolean flag argument {1}, which is a certain sign of a Single Responsibility Principle violation."
           class="PHPMD\Rule\CleanCode\BooleanArgumentFlag"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#booleanargumentflag">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#booleanargumentflag">
         <description>
             <![CDATA[
 A boolean flag argument is a reliable indicator for a violation of
@@ -39,7 +39,7 @@ class Foo {
           since="1.4.0"
           message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
           class="PHPMD\Rule\CleanCode\ElseExpression"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#elseexpression">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#elseexpression">
         <description>
             <![CDATA[
 An if expression with an else branch is never necessary. You can rewrite the
@@ -72,7 +72,7 @@ class Foo
           since="1.4.0"
           message="Avoid using static access to class '{0}' in method '{1}'."
           class="PHPMD\Rule\CleanCode\StaticAccess"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#staticaccess">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#staticaccess">
         <description>
             <![CDATA[
 Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid

@@ -1,0 +1,7 @@
+linters:
+  phpcs:
+    standard: 'PSR2'
+    extensions: '.php'
+    tab_width: 4
+branches:
+    ignore: ['1.5.x']

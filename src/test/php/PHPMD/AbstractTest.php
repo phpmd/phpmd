@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,25 +34,30 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD;
 
+use PDepend\Source\Language\PHP\PHPBuilder;
+use PDepend\Source\Language\PHP\PHPParserGeneric;
+use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\TraitNode;
 use PHPMD\Stubs\RuleStub;
 
 /**
  * Abstract base class for PHPMD test cases.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -123,6 +128,18 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return new InterfaceNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getInterfaces()
+            )
+        );
+    }
+
+    /**
+     * @return \PHPMD\Node\InterfaceNode
+     */
+    protected function getTrait()
+    {
+        return new TraitNode(
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getTraits()
             )
         );
     }
@@ -248,7 +265,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * in that file.
      *
      * @param string $sourceFile
-     * @return PHP_Depend_Code_Package
+     * @return \PDepend\Source\AST\ASTNamespace
+     * @throws \ErrorException
      */
     private function parseSource($sourceFile)
     {
@@ -256,15 +274,15 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             throw new \ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
-        $tokenizer = new \PDepend\Source\Language\PHP\PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $builder =  new \PDepend\Source\Language\PHP\PHPBuilder();
+        $builder =  new PHPBuilder();
 
-        $parser = new \PDepend\Source\Language\PHP\PHPParserGeneric(
+        $parser = new PHPParserGeneric(
             $tokenizer,
             $builder,
-            new \PDepend\Util\Cache\Driver\MemoryCacheDriver()
+            new MemoryCacheDriver()
         );
         $parser->parse();
 
@@ -361,7 +379,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getReportMock($expectedInvokes = -1)
     {
-        $expects = null;
         if ($expectedInvokes < 0) {
             $expects = $this->atLeastOnce();
         } elseif ($expectedInvokes === 0) {
@@ -488,7 +505,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             file_get_contents(self::createFileUri($expectedFileName))
         );
 
-		$expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
+        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
         self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }

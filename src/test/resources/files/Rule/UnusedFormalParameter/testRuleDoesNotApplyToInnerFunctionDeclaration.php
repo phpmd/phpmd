@@ -2,11 +2,10 @@
 function testRuleDoesNotApplyToInnerFunctionDeclaration($x, $y, $z)
 {
     function z_testRuleDoesNotApplyToInnerFunctionDeclaration(
-        $a, 
-        $b, 
+        $a,
+        $b,
         $c
     ) {
-
     }
     return ($x + $y + $z);
 }

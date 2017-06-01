@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Node;
@@ -49,9 +49,9 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the class node implementation.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers \PHPMD\Node\ClassNode
  * @covers \PHPMD\Node\AbstractTypeNode
@@ -84,7 +84,7 @@ class ClassNodeTest extends AbstractTest
     public function testHasSuppressWarningsAnnotationForReturnsTrue()
     {
         $class = new ASTClass(null);
-        $class->setDocComment('/** @SuppressWarnings("PMD") */');
+        $class->setComment('/** @SuppressWarnings("PMD") */');
 
         $rule = $this->getMock('PHPMD\\AbstractRule');
 
@@ -106,5 +106,32 @@ class ClassNodeTest extends AbstractTest
         $node = new ClassNode($class);
 
         $this->assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCountReturnsZeroByDefault()
+    {
+        $class = new ClassNode(new ASTClass('MyClass'));
+        $this->assertSame(0, $class->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConstantCount()
+    {
+        $class = $this->getClass();
+        $this->assertSame(3, $class->getConstantCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetParentNameReturnsNull()
+    {
+        $class = new ClassNode(new ASTClass('MyClass'));
+        $this->assertNull($class->getParentName());
     }
 }

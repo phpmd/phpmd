@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule;
@@ -49,9 +49,9 @@ use PHPMD\Node\ASTNode;
  * This rule collects all local variables within a given function or method
  * that are not used by any code in the analyzed source artifact.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
@@ -73,6 +73,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     {
         $this->images = array();
 
+        /** @var $node AbstractCallableNode */
         $this->collectVariables($node);
         $this->removeParameters($node);
 
@@ -116,6 +117,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function collectVariables(AbstractCallableNode $node)
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
+            /** @var $variable ASTNode */
             if ($this->isLocal($variable)) {
                 $this->collectVariable($variable);
             }
@@ -126,6 +128,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
             if ($this->isFunctionNameEndingWith($func, 'compact')) {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
+                    /** @var $literal ASTNode */
                     $this->collectLiteral($literal);
                 }
             }
@@ -164,10 +167,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     /**
      * Template method that performs the real node image check.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param ASTNode $node
      * @return void
      */
-    protected function doCheckNodeImage(AbstractNode $node)
+    protected function doCheckNodeImage(ASTNode $node)
     {
         if ($this->isNameAllowedInContext($node)) {
             return;

@@ -10,6 +10,6 @@
           since="0.1"
           message="Test message"
           class="PHPMD\Stubs\ClassFileNotFoundRule"
-          externalInfoUrl="http://phpmd.org/">
+          externalInfoUrl="https://phpmd.org/">
     </rule>
 </ruleset>

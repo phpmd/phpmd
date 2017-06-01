@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Stubs;
@@ -48,9 +48,9 @@ use PHPMD\Rule\ClassAware;
 /**
  * Simple rule stub implementation
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class RuleStub extends AbstractRule implements ClassAware
 {
@@ -65,7 +65,7 @@ class RuleStub extends AbstractRule implements ClassAware
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')
     {
         $this->setName($ruleName);
-        $this->setExternalInfoUrl('http://phpmd.org/rules/index.html');
+        $this->setExternalInfoUrl('https://phpmd.org/rules/index.html');
         $this->setRuleSetName($ruleSetName);
         $this->setSince('42.23');
         $this->setDescription('Simple rule stub');

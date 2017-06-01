@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,15 +34,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -54,8 +55,8 @@ use PHPMD\Rule\MethodAware;
  * avoided by simple guard clause or return statements.
  *
  * @author    Benjamin Eberlei <benjamin@qafoo.com>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
 {
@@ -82,7 +83,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
-    private function isElseScope($scope, $parent)
+    private function isElseScope($scope, ASTNode $parent)
     {
         return (
             count($parent->getChildren()) === 3 &&
@@ -90,7 +91,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         );
     }
 
-    private function isIfOrElseIfStatement($parent)
+    private function isIfOrElseIfStatement(ASTNode $parent)
     {
         return ($parent->getName() === "if" || $parent->getName() === "elseif");
     }

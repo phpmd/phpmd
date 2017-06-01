@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\TextUI;
@@ -50,9 +50,9 @@ use PHPMD\Rule;
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class CommandLineOptions
 {
@@ -203,7 +203,10 @@ class CommandLineOptions
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
-                case (preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match) > 0):
+                case '--reportfile-html':
+                case '--reportfile-text':
+                case '--reportfile-xml':
+                    preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -408,28 +411,35 @@ class CommandLineOptions
      */
     protected function createCustomRenderer()
     {
-        if ($this->reportFormat !== '') {
-            if (class_exists($this->reportFormat)) {
-                return new $this->reportFormat();
-            }
+        if ('' === $this->reportFormat) {
+            throw new \InvalidArgumentException(
+                'Can\'t create report with empty format.',
+                self::INPUT_ERROR
+            );
+        }
 
-            // Try to load a custom renderer
-            $fileName = strtr($this->reportFormat, '_', '/') . '.php';
-
-            $fileHandle = @fopen($fileName, 'r', true);
-            if (is_resource($fileHandle) === false) {
-                $message = 'Can\'t find the custom report class: '
-                    . $this->reportFormat;
-                throw new \InvalidArgumentException($message, self::INPUT_ERROR);
-            }
-            @fclose($fileHandle);
-
-            include_once $fileName;
-
+        if (class_exists($this->reportFormat)) {
             return new $this->reportFormat();
         }
-        $message = 'Can\'t create report with format of ' . $this->reportFormat;
-        throw new \InvalidArgumentException($message, self::INPUT_ERROR);
+
+        // Try to load a custom renderer
+        $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
+
+        $fileHandle = @fopen($fileName, 'r', true);
+        if (is_resource($fileHandle) === false) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Can\'t find the custom report class: %s',
+                    $this->reportFormat
+                ),
+                self::INPUT_ERROR
+            );
+        }
+        @fclose($fileHandle);
+
+        include_once $fileName;
+
+        return new $this->reportFormat();
     }
 
     /**
@@ -478,7 +488,7 @@ class CommandLineOptions
             $newName
         );
 
-        fwrite(STDERR, $message . \PHP_EOL . \PHP_EOL);
+        fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
     }
 
     /**

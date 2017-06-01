@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Node;
@@ -46,12 +46,17 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 /**
  * Abstract base class for classes and interfaces.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractTypeNode extends AbstractNode
 {
+    /**
+     * @var \PDepend\Source\AST\AbstractASTClassOrInterface
+     */
+    private $node;
+
     /**
      * Constructs a new generic class or interface node.
      *
@@ -60,6 +65,8 @@ abstract class AbstractTypeNode extends AbstractNode
     public function __construct(AbstractASTClassOrInterface $node)
     {
         parent::__construct($node);
+
+        $this->node = $node;
     }
 
     /**
@@ -71,7 +78,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethods()
     {
         $methods = array();
-        foreach ($this->getNode()->getMethods() as $method) {
+        foreach ($this->node->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
         return $methods;
@@ -86,7 +93,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethodNames()
     {
         $names = array();
-        foreach ($this->getNode()->getMethods() as $method) {
+        foreach ($this->node->getMethods() as $method) {
             $names[] = $method->getName();
         }
         return $names;
@@ -99,7 +106,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getConstantCount()
     {
-        return $this->getNode()->getConstants()->count();
+        return count($this->node->getConstants());
     }
 
     /**
@@ -109,7 +116,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getNamespaceName()
     {
-        return $this->getNode()->getNamespace()->getName();
+        return $this->node->getNamespace()->getName();
     }
 
     /**

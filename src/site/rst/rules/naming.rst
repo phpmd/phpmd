@@ -27,10 +27,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===========================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                               
 =================================== =============== ===========================================================
- minimum                             3               Minimum length for a variable, property or parameter name
- exceptions                                          Comma-separated list of exceptions
+ minimum                             3               Minimum length for a variable, property or parameter name 
+ exceptions                                          Comma-separated list of exceptions                        
 =================================== =============== ===========================================================
 
 LongVariable
@@ -57,9 +57,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- maximum                             20              The variable length reporting threshold
+ maximum                             20              The variable length reporting threshold 
 =================================== =============== =========================================
 
 ShortMethodName
@@ -80,10 +80,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ==============================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                  
 =================================== =============== ==============================================
- minimum                             3               Minimum length for a method or function name
- exceptions                                          Comma-separated list of exceptions
+ minimum                             3               Minimum length for a method or function name 
+ exceptions                                          Comma-separated list of exceptions           
 =================================== =============== ==============================================
 
 ConstructorWithNameAsEnclosingClass
@@ -97,7 +97,7 @@ A constructor method should not have the same name as the enclosing class, consi
 Example: ::
 
   class MyClass {
-      // this is bad because it is PHP 4 style
+       // this is bad because it is PHP 4 style
       public function MyClass() {}
       // this is good because it is a PHP 5 constructor
       public function __construct() {}
@@ -146,9 +146,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ============================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                                
 =================================== =============== ============================================================
- checkParameterizedMethods           false           Applies only to methods without parameter when set to true
+ checkParameterizedMethods           false           Applies only to methods without parameter when set to true 
 =================================== =============== ============================================================
 
 
@@ -158,3 +158,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
+        

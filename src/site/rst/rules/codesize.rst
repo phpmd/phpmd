@@ -14,7 +14,7 @@ Complexity is determined by the number of decision points in a method plus one f
 
 Example: ::
 
-  // Cyclomatic Complexity = 12
+  // Cyclomatic Complexity = 11
   class Foo {
   1   public function example() {
   2       if ($a == $b) {
@@ -44,7 +44,7 @@ Example: ::
   11              case 3:
                       fiddle();
                       break;
-  12              default:
+                  default:
                       fiddle();
                       break;
               }
@@ -55,11 +55,11 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===================================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                                       
 =================================== =============== ===================================================================
- reportLevel                         10              The Cyclomatic Complexity reporting threshold
- showClassesComplexity               true            Indicate if class average violation should be added to the report
- showMethodsComplexity               true            Indicate if class average violation should be added to the report
+ reportLevel                         10              The Cyclomatic Complexity reporting threshold                     
+ showClassesComplexity               true            Indicate if class average violation should be added to the report 
+ showMethodsComplexity               true            Indicate if class average violation should be added to the report 
 =================================== =============== ===================================================================
 
 NPathComplexity
@@ -81,9 +81,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===============================
- Name                                Default Value   Description
+ Name                                Default Value   Description                   
 =================================== =============== ===============================
- minimum                             200             The npath reporting threshold
+ minimum                             200             The npath reporting threshold 
 =================================== =============== ===============================
 
 ExcessiveMethodLength
@@ -107,10 +107,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             100             The method size reporting threshold
- ignore-whitespace                   false           Count whitespace in reporting threshold
+ minimum                             100             The method size reporting threshold     
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
 =================================== =============== =========================================
 
 ExcessiveClassLength
@@ -132,10 +132,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             1000            The class size reporting threshold
- ignore-whitespace                   false           Count whitespace in reporting threshold
+ minimum                             1000            The class size reporting threshold      
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
 =================================== =============== =========================================
 
 ExcessiveParameterList
@@ -158,9 +158,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             10              The parameter count reporting threshold
+ minimum                             10              The parameter count reporting threshold 
 =================================== =============== =========================================
 
 ExcessivePublicCount
@@ -178,7 +178,7 @@ Example: ::
       public $something;
       public $var;
       // [... more more public attributes ...]
-
+  
       public function doWork() {}
       public function doMoreWork() {}
       public function doWorkAgain() {}
@@ -188,9 +188,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =====================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                         
 =================================== =============== =====================================
- minimum                             45              The public item reporting threshold
+ minimum                             45              The public item reporting threshold 
 =================================== =============== =====================================
 
 TooManyFields
@@ -213,9 +213,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ======================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                          
 =================================== =============== ======================================
- maxfields                           15              The field count reporting threshold
+ maxfields                           15              The field count reporting threshold  
 =================================== =============== ======================================
 
 TooManyMethods
@@ -223,38 +223,32 @@ TooManyMethods
 
 Since: PHPMD 0.1
 
-A class with too many methods is probably a good suspect for refactoring,
-in order to reduce its complexity and find a way to have more fine grained objects.
-By default it ignores methods starting with 'get' or 'set'.
-
-The default was changed from 10 to 25 in PHPMD 2.3.
+A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'. The default was changed from 10 to 25 in PHPMD 2.3.
 
 This rule has the following properties:
 
-=================================== =============== =======================================
- Name                                Default Value   Description
-=================================== =============== =======================================
- maxmethods                          25              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
-=================================== =============== =======================================
+=================================== =============== ======================================
+ Name                                Default Value   Description                          
+=================================== =============== ======================================
+ maxmethods                          25              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
+=================================== =============== ======================================
 
 TooManyPublicMethods
 ====================
 
-Since: PHPMD 2.3
+Since: PHPMD 0.1
 
-A class with too many public methods is probably a good suspect for refactoring,
-in order to reduce its complexity and find a way to have more fine grained objects.
-By default it ignores methods starting with 'get' or 'set'.
+A class with too many public methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'.
 
 This rule has the following properties:
 
-=================================== =============== =======================================
- Name                                Default Value   Description
-=================================== =============== =======================================
- maxmethods                          10              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
-=================================== =============== =======================================
+=================================== =============== ======================================
+ Name                                Default Value   Description                          
+=================================== =============== ======================================
+ maxmethods                          10              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
+=================================== =============== ======================================
 
 ExcessiveClassComplexity
 ========================
@@ -268,12 +262,12 @@ Example: ::
 
   class Foo {
       public function bar() {
-          if ($a == $b) {
+          if ($a == $b)  {
               if ($a1 == $b1) {
                   fiddle();
               } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
               }
           }
       }
@@ -283,7 +277,7 @@ Example: ::
                   fiddle();
               } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
               }
           }
       }
@@ -293,9 +287,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                            
 =================================== =============== ========================================
- maximum                             50              The maximum WMC tolerable for a class.
+ maximum                             50              The maximum WMC tolerable for a class. 
 =================================== =============== ========================================
 
 
@@ -305,3 +299,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
+        
