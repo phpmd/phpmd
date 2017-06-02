@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the very short method and function name rule.
- *_Naming
  *
  * @covers PHPMD\Rule\Naming\ShortMethodName
  * @group phpmd

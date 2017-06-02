@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the really long variable, parameter and property name rule.
- *_Naming
  *
  * @covers PHPMD\Rule\Naming\LongVariable
  * @group phpmd

@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the constructor name rule.
- *_Naming
  *
  * @covers PHPMD\Rule\Naming\ConstantNamingConventions
  * @group phpmd

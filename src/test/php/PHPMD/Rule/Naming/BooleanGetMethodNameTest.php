@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
- *_Naming
  *
  * @covers PHPMD\Rule\Naming\BooleanGetMethodName
  * @group phpmd
