@@ -26,10 +26,6 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class will detect methods that define a php4 style constructor
  * method while has the same name as the enclosing class.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
 {

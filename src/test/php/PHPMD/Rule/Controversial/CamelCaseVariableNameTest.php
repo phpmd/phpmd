@@ -22,10 +22,6 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the camel case variable name rule.
  *
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @version   @project.version@
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName

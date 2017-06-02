@@ -25,10 +25,6 @@ use PHPMD\Node\ClassNode;
 /**
  * This rule collects all private fields in a class that aren't used in any
  * method of the analyzed class.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class UnusedPrivateField extends AbstractRule implements ClassAware
 {

@@ -24,10 +24,6 @@ use PDepend\Input\ExtensionFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class ParserFactory
 {

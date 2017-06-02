@@ -22,10 +22,6 @@ use PHPMD\Node\ASTNode;
 /**
  * This is an abstract base class for PHPMD code nodes, it is just a wrapper
  * around PDepend's object model.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractNode
 {

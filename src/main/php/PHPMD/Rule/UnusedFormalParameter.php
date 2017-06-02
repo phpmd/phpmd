@@ -24,10 +24,6 @@ use PHPMD\Node\MethodNode;
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {

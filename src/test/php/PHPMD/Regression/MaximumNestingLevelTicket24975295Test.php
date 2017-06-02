@@ -25,9 +25,6 @@ use PHPMD\Writer\StreamWriter;
 /**
  * Regression test for issue 14990109.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/24975295
  * @since      1.3.1
  *
