@@ -34,9 +34,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @author    Grégoire Paris <postmaster@greg0ire.fr>
+ * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PHPMD\Rule\Design;
@@ -50,8 +50,9 @@ use PHPMD\Rule\MethodAware;
  * This rule class detects empty catch blocks
  *
  * @author    Grégoire Paris <postmaster@greg0ire.fr>
+ * @author    Kamil Szymanski <kamilszymanski@gmail.com>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
  */
 class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
 {
