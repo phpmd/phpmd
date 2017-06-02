@@ -257,4 +257,16 @@ class UnusedPrivateMethodTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
 }
