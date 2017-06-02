@@ -22,9 +22,6 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
  *_Naming
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers PHPMD\Rule\Naming\BooleanGetMethodName
  * @group phpmd
