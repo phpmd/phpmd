@@ -20,10 +20,6 @@ namespace PHPMD;
 /**
  * Test case for the parser factory class.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2009 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\ParserFactory
  * @group phpmd
  * @group unittest

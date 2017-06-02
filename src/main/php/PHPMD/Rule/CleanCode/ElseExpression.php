@@ -29,10 +29,6 @@ use PHPMD\Rule\MethodAware;
  *
  * Object Calisthenics teaches us, that an else expression can always be
  * avoided by simple guard clause or return statements.
- *
- * @author    Benjamin Eberlei <benjamin@qafoo.com>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
 {
