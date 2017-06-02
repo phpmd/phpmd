@@ -81,6 +81,7 @@ Design Rules
 - `DepthOfInheritance`__: A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.
 - `CouplingBetweenObjects`__: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 - `DevelopmentCodeFragment`__: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
+- `IfStatementAssignment`__: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 
 __ design.html#exitexpression
 __ design.html#evalexpression
@@ -89,6 +90,7 @@ __ design.html#numberofchildren
 __ design.html#depthofinheritance
 __ design.html#couplingbetweenobjects
 __ design.html#developmentcodefragment
+__ design.html#ifstatementassignment
 
 Naming Rules
 ============
