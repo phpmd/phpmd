@@ -24,7 +24,7 @@ ElseExpression
 
 Since: PHPMD 1.4.0
 
-An if expression with an else branch is never necessary. You can rewrite the conditions in a way that the else is not necessary and the code becomes simpler to read. To achieve this use early return statements. To achieve this you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
 
 
 Example: ::

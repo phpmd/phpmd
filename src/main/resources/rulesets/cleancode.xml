@@ -37,20 +37,20 @@ class Foo {
 
     <rule name="ElseExpression"
           since="1.4.0"
-          message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
+          message="The method {0} uses an else expression. Else clauses are basically not necessary and you can simplify the code by not using them."
           class="PHPMD\Rule\CleanCode\ElseExpression"
           externalInfoUrl="https://phpmd.org/rules/cleancode.html#elseexpression">
         <description>
             <![CDATA[
-An if expression with an else branch is never necessary. You can rewrite the
-conditions in a way that the else is not necessary and the code becomes simpler
-to read.  To achieve this use early return statements. To achieve this you may
+An if expression with an else branch is basically not necessary. You can rewrite the
+conditions in a way that the else clause is not necessary and the code becomes simpler
+to read.  To achieve this, use early return statements, though you may
 need to split the code it several smaller methods. For very simple assignments
 you could also use the ternary operations.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties/>
         <example>
             <![CDATA[
 class Foo
