@@ -98,7 +98,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all expression from statements array
      *
-     * @param array<ASTStatement> $scopes Array of if and elseif clauses
+     * @param array<ASTStatement> $statements Array of if and elseif clauses
      * @return array<ASTExpression>
      */
     private function getExpressions(array $statements)
