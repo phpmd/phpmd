@@ -25,7 +25,6 @@ use PHPMD\Rule\Naming\LongVariable;
  * @link       https://www.pivotaltracker.com/story/show/10096717
  * @since      1.1.0
  *
- * @ticket 10096717
  * @covers stdClass
  * @group phpmd
  * @group phpmd::integration

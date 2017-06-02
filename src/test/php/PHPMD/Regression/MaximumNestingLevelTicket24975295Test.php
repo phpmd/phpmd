@@ -28,7 +28,6 @@ use PHPMD\Writer\StreamWriter;
  * @link       https://www.pivotaltracker.com/story/show/24975295
  * @since      1.3.1
  *
- * @ticket 24975295
  * @covers \stdClass
  * @group phpmd
  * @group phpmd::regression

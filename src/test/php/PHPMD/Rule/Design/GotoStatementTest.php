@@ -23,7 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
  *
  * @link       https://www.pivotaltracker.com/story/show/10474873
- * @ticket     10474873
  *
  * @covers \PHPMD\Rule\Design\GotoStatement
  * @group phpmd

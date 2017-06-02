@@ -26,7 +26,6 @@ use PHPMD\RuleSet;
  * @link       https://www.pivotaltracker.com/story/show/14990109
  * @since      1.1.0
  *
- * @ticket 14990109
  * @covers \stdClass
  * @group phpmd
  * @group phpmd::regression
