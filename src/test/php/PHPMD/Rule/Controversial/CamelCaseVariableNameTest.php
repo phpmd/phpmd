@@ -22,8 +22,6 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the camel case variable name rule.
  *
- * @version   @project.version@
- *
  * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName
  * @group phpmd
  * @group phpmd::rule

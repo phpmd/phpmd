@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the camel case property name rule.
- * @version   @project.version@
  *
  * @covers \PHPMD\Rule\Controversial\CamelCasePropertyName
  * @group phpmd
