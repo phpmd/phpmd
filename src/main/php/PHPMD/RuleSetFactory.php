@@ -139,32 +139,32 @@ class RuleSetFactory
      */
     private function createRuleSetFileName($ruleSetOrFileName)
     {
-        if (file_exists($ruleSetOrFileName) === true) {
+        if (!is_dir($ruleSetOrFileName) && is_readable($ruleSetOrFileName)) {
             return $ruleSetOrFileName;
         }
 
         $fileName = $this->location . '/' . $ruleSetOrFileName;
-        if (file_exists($fileName) === true) {
+        if (!is_dir($fileName) && is_readable($fileName)) {
             return $fileName;
         }
 
         $fileName = $this->location . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (file_exists($fileName) === true) {
+        if (!is_dir($fileName) && is_readable($fileName)) {
             return $fileName;
         }
 
         $fileName = getcwd() . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (file_exists($fileName) === true) {
+        if (!is_dir($fileName) && is_readable($fileName)) {
             return $fileName;
         }
 
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
             $fileName = $includePath . '/' . $ruleSetOrFileName;
-            if (file_exists($fileName) === true) {
+            if (!is_dir($fileName) && is_readable($fileName)) {
                 return $fileName;
             }
             $fileName = $includePath . '/' . $ruleSetOrFileName . ".xml";
-            if (file_exists($fileName) === true) {
+            if (!is_dir($fileName) && is_readable($fileName)) {
                 return $fileName;
             }
         }
