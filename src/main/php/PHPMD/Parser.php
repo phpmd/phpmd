@@ -154,8 +154,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     *
-     * @return boolean
+     * @return void
      */
     public function log(Analyzer $analyzer)
     {

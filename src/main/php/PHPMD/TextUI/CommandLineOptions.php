@@ -394,7 +394,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\XMLRenderer
+     * @return \PHPMD\Renderer\TextRenderer
      */
     protected function createTextRenderer()
     {
