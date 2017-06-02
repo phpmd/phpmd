@@ -82,6 +82,7 @@ Design Rules
 - `CouplingBetweenObjects`__: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 - `DevelopmentCodeFragment`__: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
 - `IfStatementAssignment`__: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
+- `EmptyCatchBlock`__: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
 
 __ design.html#exitexpression
 __ design.html#evalexpression
@@ -91,6 +92,7 @@ __ design.html#depthofinheritance
 __ design.html#couplingbetweenobjects
 __ design.html#developmentcodefragment
 __ design.html#ifstatementassignment
+__ design.html#emptycatchblock
 
 Naming Rules
 ============
