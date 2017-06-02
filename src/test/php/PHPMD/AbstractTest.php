@@ -232,6 +232,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the trace frame of the calling test case.
      *
      * @return array
+     * @throws \ErrorException
      */
     private static function getCallingTestCase()
     {
@@ -248,6 +249,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param \Iterator $nodes
      * @return PHP_Depend_Code_AbstractItem
+     * @throws \ErrorException
      */
     private function getNodeForCallingTestCase(\Iterator $nodes)
     {

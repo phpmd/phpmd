@@ -185,12 +185,16 @@ class CommandLineOptions
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
                     /* Deprecated: We use the suffixes option now */
+                    $this->extensions = array_shift($args);
+                    break;
                 case '--suffixes':
                     $this->extensions = array_shift($args);
                     break;
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
                     /* Deprecated: We use the exclude option now */
+                    $this->ignore = array_shift($args);
+                    break;
                 case '--exclude':
                     $this->ignore = array_shift($args);
                     break;

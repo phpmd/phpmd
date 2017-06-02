@@ -41,6 +41,8 @@
 
 namespace PHPMD;
 
+use PDepend\Source\Parser\InvalidStateException;
+
 /**
  * Test case for the PHP_Depend backend adapter class.
  *
@@ -66,7 +68,7 @@ class ParserTest extends AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(true));
 
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\ClassNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -85,7 +87,7 @@ class ParserTest extends AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(false));
 
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -98,7 +100,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\MethodNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock());
@@ -112,7 +114,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock(null));
@@ -125,7 +127,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\FunctionNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock());
@@ -139,7 +141,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock(null));
@@ -161,10 +163,10 @@ class ParserTest extends AbstractTest
         $pdepend->expects($this->once())
             ->method('getExceptions')
             ->will($this->returnValue(array(
-                new \PDepend\Source\Parser\InvalidStateException(42, __FILE__, 'foo')
+                new InvalidStateException(42, __FILE__, 'foo')
             )));
 
-        $parser = new \PHPMD\Parser($pdepend);
+        $parser = new Parser($pdepend);
         $parser->parse($report);
     }
 

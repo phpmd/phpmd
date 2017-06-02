@@ -41,6 +41,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Report;
+
 /**
  * Base interface for a PHPMD rule.
  *
@@ -179,17 +181,17 @@ interface Rule
     /**
      * Returns the violation report for this rule.
      *
-     * @return \PHPMD\Report
+     * @return Report
      */
     public function getReport();
 
     /**
      * Sets the violation report for this rule.
      *
-     * @param \PHPMD\Report $report
+     * @param Report $report
      * @return void
      */
-    public function setReport(\PHPMD\Report $report);
+    public function setReport(Report $report);
 
     /**
      * Adds a configuration property to this rule instance.
