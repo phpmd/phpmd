@@ -32,6 +32,10 @@ from within your PHPMD folder:
 
     vendor/bin/phpcs -p --extensions=php --standard=PSR2 src > phpcs.txt
 
+Linux / OS X users may extend this command to exclude files, that are not part of a commit:
+
+    vendor/bin/phpcs -p --extensions=php --standard=PSR2 --ignore=src/tests/resources $(git ls-files -om --exclude-standard | grep '\.php$') > phpcs.txt
+
 Check the ``phpcs.txt`` once it finished.
 
 Additional Resources

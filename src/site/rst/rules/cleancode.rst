@@ -67,6 +67,29 @@ This rule has the following properties:
  exceptions                                          Comma-separated class name list of exceptions 
 =================================== =============== ===============================================
 
+IfStatementAssignment
+=============
+
+Since: PHPMD 2.7.0
+
+Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
+
+
+Example: ::
+
+  class Foo
+  {
+      public function bar($flag)
+      {
+          if ($foo = 'bar') { // possible typo
+              // ...
+          }
+          if ($baz = 0) { // always false
+              // ...
+          }
+      }
+  }
+
 
 Remark
 ======

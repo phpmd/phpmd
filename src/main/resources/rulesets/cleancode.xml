@@ -68,6 +68,40 @@ class Foo
         </example>
     </rule>
 
+    <rule name="IfStatementAssignment"
+          since="2.7.0"
+          message="Avoid assigning values to variables in if clauses and the like (line '{0}', column '{1}')."
+          class="PHPMD\Rule\CleanCode\IfStatementAssignment"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#ifstatementassignment">
+        <description>
+            <![CDATA[
+Assignments in if clauses and the like are considered a code smell.
+Assignments in PHP return the right operand as their result.
+In many cases, this is an expected behavior, but can lead
+to many difficult to spot bugs, especially when the right
+operand could result in zero, null or an empty string and the like.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties></properties>
+        <example>
+            <![CDATA[
+class Foo
+{
+    public function bar($flag)
+    {
+        if ($foo = 'bar') { // possible typo
+            // ...
+        }
+        if ($baz = 0) { // always false
+            // ...
+        }
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="StaticAccess"
           since="1.4.0"
           message="Avoid using static access to class '{0}' in method '{1}'."
