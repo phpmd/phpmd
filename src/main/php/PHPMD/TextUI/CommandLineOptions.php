@@ -454,13 +454,15 @@ class CommandLineOptions
      */
     public function usage()
     {
+        $availableRenderers = $this->getListOfAvailableRenderers();
+
         return 'Mandatory arguments:' . \PHP_EOL .
             '1) A php source code filename or directory. Can be a comma-' .
             'separated string' . \PHP_EOL .
             '2) A report format' . \PHP_EOL .
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
-            'Available formats: xml, text, html.' . \PHP_EOL .
+            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
@@ -476,6 +478,31 @@ class CommandLineOptions
             'annotation' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
             'even if any violations are found' . \PHP_EOL;
+    }
+
+    /**
+     * Get a list of available renderers
+     *
+     * @return string The list of renderers found.
+     */
+    protected function getListOfAvailableRenderers()
+    {
+        $renderersDirPathName=__DIR__.'/../Renderer';
+        $renderers = array();
+
+        foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
+                $renderers[] =  strtolower($rendererName[1]);
+            }
+        }
+
+        sort($renderers);
+
+        if (count($renderers) > 1) {
+            return implode(', ', $renderers);
+        }
+
+        return array_pop($list);
     }
 
     /**
