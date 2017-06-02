@@ -53,7 +53,7 @@ class RuleClassNotFoundException extends \RuntimeException
     /**
      * Constructs a new class not found exception.
      *
-     * @param <type> $className The configured but not found ruke class name.
+     * @param string $className The configured but not found ruke class name.
      */
     public function __construct($className)
     {

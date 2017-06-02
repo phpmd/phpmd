@@ -83,6 +83,13 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
+    /**
+     * Whether the given scope is an else clause
+     *
+     * @param $scope
+     * @param ASTNode $parent
+     * @return bool
+     */
     private function isElseScope($scope, ASTNode $parent)
     {
         return (
@@ -91,6 +98,12 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         );
     }
 
+    /**
+     * Whether the parent node is an if or an elseif clause
+     *
+     * @param ASTNode $parent
+     * @return bool
+     */
     private function isIfOrElseIfStatement(ASTNode $parent)
     {
         return ($parent->getName() === "if" || $parent->getName() === "elseif");

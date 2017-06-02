@@ -84,7 +84,7 @@ class MethodNodeTest extends AbstractTest
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
-        $node = new MethodNode(new \PDepend\Source\AST\ASTMethod(null));
+        $node = new MethodNode(new ASTMethod(null));
         $node->getFooBar();
     }
 
