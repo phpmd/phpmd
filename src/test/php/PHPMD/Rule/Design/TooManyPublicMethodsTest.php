@@ -24,7 +24,6 @@ use PHPMD\Node\MethodNode;
 
 /**
  * Test case for the too many public methods rule.
- *_Design
  *
  * @covers \PHPMD\Rule\Design\TooManyPublicMethods
  * @group phpmd

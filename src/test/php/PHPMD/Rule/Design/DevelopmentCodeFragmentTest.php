@@ -21,7 +21,6 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DevelopmentCodeFragment} class.
- *_Design
  *
  * @see https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
