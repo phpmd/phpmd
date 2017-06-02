@@ -120,7 +120,7 @@ class RuleSetFactory
     /**
      * Lists available rule-set identifiers.
      *
-     * @return array(string)
+     * @return string[]
      */
     public function listAvailableRuleSets()
     {
@@ -177,7 +177,7 @@ class RuleSetFactory
      *
      * @param string $directory The directory to scan for rule-sets.
      *
-     * @return array(string)
+     * @return string[]
      */
     private static function listRuleSetsInDirectory($directory)
     {

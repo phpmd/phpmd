@@ -94,7 +94,7 @@ class PHPMD
     /**
      * Returns an array with valid php source file extensions.
      *
-     * @return array(string)
+     * @return string[]
      * @since 0.2.0
      */
     public function getFileExtensions()
@@ -117,7 +117,7 @@ class PHPMD
     /**
      * Returns an array with string patterns that mark a file path as invalid.
      *
-     * @return array(string)
+     * @return string[]
      * @since 0.2.0
      */
     public function getIgnorePattern()

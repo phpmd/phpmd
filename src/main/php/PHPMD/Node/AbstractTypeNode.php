@@ -64,7 +64,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns an array with the names of all methods within this class or
      * interface node.
      *
-     * @return array(string)
+     * @return string[]
      */
     public function getMethodNames()
     {

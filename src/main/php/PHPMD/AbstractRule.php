@@ -211,7 +211,7 @@ abstract class AbstractRule implements Rule
     /**
      * Returns a list of examples for this rule.
      *
-     * @return array(string)
+     * @return string[]
      */
     public function getExamples()
     {
