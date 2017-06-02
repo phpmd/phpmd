@@ -1,8 +1,17 @@
 <?php
+
 function testRuleAppliesToFunctionWithEmptyCatchBlock()
 {
     try {
-        // do some stuff
+        // ...
     } catch (Exception $e) {
+    }
+    try {
+        // ...
+    } catch (OutOfRangeException $e) {
+    }
+    try {
+        // ...
+    } catch (\ErrorException $e) {
     }
 }

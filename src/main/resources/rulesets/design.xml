@@ -225,4 +225,40 @@ class SuspectCode {
             ]]>
         </example>
     </rule>
+
+    <rule name="EmptyCatchBlock"
+          since="2.7.0"
+          message="Avoid using empty try-catch blocks in {0}."
+          class="PHPMD\Rule\Design\EmptyCatchBlock"
+          externalInfoUrl="https://phpmd.org/rules/design.html#emptycatchblock">
+        <description>
+            <![CDATA[
+Usually empty try-catch is a bad idea because you are silently swallowing an error condition
+and then continuing execution. Occasionally this may be the right thing to do, but often
+it's a sign that a developer saw an exception, didn't know what to do about it,
+and so used an empty catch to silence the problem.
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="unwanted-functions" value="var_dump,print_r,debug_zval_dump,debug_print_backtrace" description="Comma separated list of suspect function images." />
+        </properties>
+        <example>
+            <![CDATA[
+class SuspectCode {
+
+    public function doSomething(array $items)
+    {
+        foreach ($items as $i => $item) {
+            // …
+
+            if ('qafoo' == $item) var_dump($i);
+
+            // …
+        }
+    }
+}
+            ]]>
+        </example>
+    </rule>
 </ruleset>

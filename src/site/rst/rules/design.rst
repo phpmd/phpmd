@@ -184,6 +184,34 @@ This rule has the following properties:
  unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images. 
 =================================== =============== ==================================================
 
+EmptyCatchBlock
+=======================
+
+Since: PHPMD 2.7.0
+
+Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
+
+
+Example: ::
+
+  class Foo {
+
+      public function bar()
+      {
+          try {
+              // ...
+          } catch (Exception $e) {}
+      }
+  }
+
+This rule has the following properties:
+
+=================================== =============== ==================================================
+ Name                                Default Value   Description
+=================================== =============== ==================================================
+ unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images.
+=================================== =============== ==================================================
+
 
 Remark
 ======

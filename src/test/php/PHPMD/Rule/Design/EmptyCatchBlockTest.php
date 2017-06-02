@@ -59,11 +59,11 @@ use PHPMD\AbstractTest;
 class EmptyCatchBlockTest extends AbstractTest
 {
     /**
-     * testRuleNotAppliesToMethodWithoutCatchBlock
+     * testRuleNotAppliesToMethodWithoutTryCatchBlock
      *
      * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutCatchBlock()
+    public function testRuleNotAppliesToMethodWithoutTryCatchBlock()
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportMock(0));
@@ -78,7 +78,7 @@ class EmptyCatchBlockTest extends AbstractTest
     public function testRuleAppliesToFunctionWithEmptyCatchBlock()
     {
         $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getFunction());
     }
 
@@ -88,6 +88,30 @@ class EmptyCatchBlockTest extends AbstractTest
      * @return void
      */
     public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock()
+    {
+        $rule = new EmptyCatchBlock();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToNonStandardExceptions
+     *
+     * @return void
+     */
+    public function testRuleAppliesToNonStandardExceptions()
+    {
+        $rule = new EmptyCatchBlock();
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleNotAppliesToCatchBlockWithComments
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToCatchBlockWithComments()
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportMock(0));
