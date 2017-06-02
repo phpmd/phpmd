@@ -48,6 +48,8 @@ use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
+ * If Statement Assignment Rule
+ *
  * This rule covers the following cases:
  * - single assignment in an if clause
  * - multiple assignments in same if clause

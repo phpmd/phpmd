@@ -9,19 +9,19 @@ class Foo
     {
         $foo = 'bar';
 
-        if (true) {
-            // not applied
-        } else {
-            // not applied
+        if (true) { // not applied
+            // ...
+        } else { // not applied
+            // ...
         }
-        if (null) {
-            // not applied
+        if (null) { // not applied
+            // ...
         }
-        if (rand()) {
-            // not applied
+        if (rand()) { // not applied
+            // ...
         }
-        if ($foo) {
-            // not applied
+        if ($foo) { // not applied
+            // ...
         }
     }
 }

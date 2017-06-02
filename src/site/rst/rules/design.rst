@@ -184,28 +184,6 @@ This rule has the following properties:
  unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images. 
 =================================== =============== ==================================================
 
-IfStatementAssignment
-=============
-
-Since: PHPMD 2.7.0
-
-Assignments in if clauses the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string
-
-
-Example: ::
-
-  class Foo
-  {
-      public function bar($flag)
-      {
-          if ($foo = 'bar') { // possible typo
-              // ...
-          }
-          if ($baz = 0) { // always false
-              // ...
-          }
-      }
-  }
 
 Remark
 ======

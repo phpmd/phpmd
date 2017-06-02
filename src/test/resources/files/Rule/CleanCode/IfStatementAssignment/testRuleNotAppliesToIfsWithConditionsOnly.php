@@ -9,29 +9,29 @@ class Foo
     {
         $foo = 'bar';
 
-        if ($foo == 'bar') {
-            // not applied
+        if ($foo == 'bar') { // not applied
+            // ...
         }
-        if ($foo === 'bar') {
-            // not applied
+        if ($foo === 'bar') { // not applied
+            // ...
         }
-        if ($foo != 'bar') {
-            // not applied
+        if ($foo != 'bar') { // not applied
+            // ...
         }
-        if ($foo !== 'bar') {
-            // not applied
+        if ($foo !== 'bar') { // not applied
+            // ...
         }
-        if ($foo > 1) {
-            // not applied
+        if ($foo > 1) { // not applied
+            // ...
         }
-        if ($foo >= 1) {
-            // not applied
+        if ($foo >= 1) { // not applied
+            // ...
         }
-        if ($foo < 1) {
-            // not applied
+        if ($foo < 1) { // not applied
+            // ...
         }
-        if ($foo <= 1) {
-            // not applied
+        if ($foo <= 1) { // not applied
+            // ...
         }
     }
 }

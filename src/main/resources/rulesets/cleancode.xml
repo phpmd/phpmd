@@ -75,11 +75,11 @@ class Foo
           externalInfoUrl="http://phpmd.org/rules/cleancode.html#ifstatementassignment">
         <description>
             <![CDATA[
-Assignments in if clauses the like are considered a code smell.
+Assignments in if clauses and the like are considered a code smell.
 Assignments in PHP return the right operand as their result.
 In many cases, this is an expected behavior, but can lead
 to many difficult to spot bugs, especially when the right
-operand could result in zero, null or an empty string.
+operand could result in zero, null or an empty string and the like.
             ]]>
         </description>
         <priority>1</priority>
