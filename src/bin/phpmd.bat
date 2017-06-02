@@ -10,7 +10,7 @@ REM Redistributions of files must retain the above copyright notice.
 REM
 REM @author Manuel Pichler <mapi@phpmd.org>
 REM @copyright Manuel Pichler. All rights reserved.
-REM @license https://www.opensource.org/licenses/bsd-license.php BSD License
+REM @license https://opensource.org/licenses/bsd-license.php BSD License
 REM @link http://phpmd.org/
 
 if "%PHPBIN%" == "" set PHPBIN=@php_bin@
