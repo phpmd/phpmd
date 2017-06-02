@@ -2,7 +2,7 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) 2008-2017, Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @author    Grégoire Paris <postmaster@greg0ire.fr>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
@@ -44,17 +44,9 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for the {@link \PHPMD\Rule\Design\EmptyCatchBlock} class.
- *
  * @author    Grégoire Paris <postmaster@greg0ire.fr>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @covers \PHPMD\Rule\Design\EmptyCatchBlock
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class EmptyCatchBlockTest extends AbstractTest
 {
@@ -95,18 +87,6 @@ class EmptyCatchBlockTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesToNonStandardExceptions
-     *
-     * @return void
-     */
-    public function testRuleAppliesToNonStandardExceptions()
-    {
-        $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getFunction());
-    }
-
-    /**
      * testRuleNotAppliesToCatchBlockWithComments
      *
      * @return void
@@ -115,6 +95,18 @@ class EmptyCatchBlockTest extends AbstractTest
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleNotAppliesToCatchBlockWithComments
+     *
+     * @return void
+     */
+    public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions()
+    {
+        $rule = new EmptyCatchBlock();
+        $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
 }

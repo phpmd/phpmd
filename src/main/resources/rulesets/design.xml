@@ -240,23 +240,17 @@ and so used an empty catch to silence the problem.
             ]]>
         </description>
         <priority>2</priority>
-        <properties>
-            <property name="unwanted-functions" value="var_dump,print_r,debug_zval_dump,debug_print_backtrace" description="Comma separated list of suspect function images." />
-        </properties>
+        <properties />
         <example>
             <![CDATA[
-class SuspectCode {
+class Foo {
 
-    public function doSomething(array $items)
-    {
-        foreach ($items as $i => $item) {
-            // …
-
-            if ('qafoo' == $item) var_dump($i);
-
-            // …
-        }
-    }
+  public function bar()
+  {
+      try {
+          // ...
+      } catch (Exception $e) {} // empty catch block
+  }
 }
             ]]>
         </example>

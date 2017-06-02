@@ -185,7 +185,7 @@ This rule has the following properties:
 =================================== =============== ==================================================
 
 EmptyCatchBlock
-=======================
+===============
 
 Since: PHPMD 2.7.0
 
@@ -200,17 +200,9 @@ Example: ::
       {
           try {
               // ...
-          } catch (Exception $e) {}
+          } catch (Exception $e) {} // empty catch block
       }
   }
-
-This rule has the following properties:
-
-=================================== =============== ==================================================
- Name                                Default Value   Description
-=================================== =============== ==================================================
- unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images.
-=================================== =============== ==================================================
 
 
 Remark
