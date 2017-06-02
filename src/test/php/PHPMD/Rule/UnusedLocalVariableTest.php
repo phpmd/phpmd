@@ -476,6 +476,47 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * testRuleDoesNotApplyToUnusedForeachKeyWhenWhitelisted
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToUnusedForeachKeyWhenWhitelisted()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->addProperty('exceptions', '_');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotAppliesToWhitelistedUnusedLocaleVariable
+     *
+     * @return void
+     */
+    public function testRuleDoesNotAppliesToWhitelistedUnusedLocaleVariable()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->addProperty('exceptions', '_');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleStillAppliesWhenSomeUnusedLocaleAreWhitelisted
+     *
+     * @return void
+     */
+    public function testRuleStillAppliesWhenSomeUnusedLocaleAreWhitelisted()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->addProperty('exceptions', '_');
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
 
     /**
      * testRuleDoesNotApplyToUnusedForeachValueWhenIgnored

@@ -154,6 +154,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if ($this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
+        $exceptions = $this->getExceptionsList();
+        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+            return;
+        }
         $this->addViolation($node, array($node->getImage()));
     }
 
@@ -201,5 +205,21 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $parent = $node->getParent();
 
         return $parent->isInstanceOf($type);
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+        try {
+            $exceptions = $this->getStringProperty('exceptions');
+        } catch (\OutOfBoundsException $e) {
+            $exceptions = '';
+        }
+
+        return explode(',', $exceptions);
     }
 }
