@@ -171,7 +171,7 @@ class CommandLineOptions
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
                 case '--minimumpriority':
-                    $this->minimumPriority = (int) array_shift($args);
+                    $this->minimumPriority = (int)array_shift($args);
                     break;
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
@@ -200,6 +200,7 @@ class CommandLineOptions
                     break;
                 case '--version':
                     $this->version = true;
+
                     return;
                 case '--strict':
                     $this->strict = true;
@@ -223,9 +224,9 @@ class CommandLineOptions
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath    = (string) array_shift($arguments);
-        $this->reportFormat = (string) array_shift($arguments);
-        $this->ruleSets     = (string) array_shift($arguments);
+        $this->inputPath = (string)array_shift($arguments);
+        $this->reportFormat = (string)array_shift($arguments);
+        $this->ruleSets = (string)array_shift($arguments);
     }
 
     /**
@@ -453,28 +454,55 @@ class CommandLineOptions
      */
     public function usage()
     {
+        $availableRenderers = $this->getListOfAvailableRenderers();
+
         return 'Mandatory arguments:' . \PHP_EOL .
-               '1) A php source code filename or directory. Can be a comma-' .
-               'separated string' . \PHP_EOL .
-               '2) A report format' . \PHP_EOL .
-               '3) A ruleset filename or a comma-separated string of ruleset' .
-               'filenames' . \PHP_EOL . \PHP_EOL .
-               'Available formats: xml, text, html.' . \PHP_EOL .
-               'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
-               'Optional arguments that may be put after the mandatory arguments:' .
-               \PHP_EOL .
-               '--minimumpriority: rule priority threshold; rules with lower ' .
-               'priority than this will not be used' . \PHP_EOL .
-               '--reportfile: send report output to a file; default to STDOUT' .
-               \PHP_EOL .
-               '--suffixes: comma-separated string of valid source code ' .
-               'filename extensions, e.g. php,phtml' . \PHP_EOL .
-               '--exclude: comma-separated string of patterns that are used to ' .
-               'ignore directories' . \PHP_EOL .
-                '--strict: also report those nodes with a @SuppressWarnings ' .
-               'annotation' . \PHP_EOL .
-                '--ignore-violations-on-exit: will exit with a zero code, ' .
-                'even if any violations are found' . \PHP_EOL;
+            '1) A php source code filename or directory. Can be a comma-' .
+            'separated string' . \PHP_EOL .
+            '2) A report format' . \PHP_EOL .
+            '3) A ruleset filename or a comma-separated string of ruleset' .
+            'filenames' . \PHP_EOL . \PHP_EOL .
+            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
+            'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
+            'Optional arguments that may be put after the mandatory arguments:' .
+            \PHP_EOL .
+            '--minimumpriority: rule priority threshold; rules with lower ' .
+            'priority than this will not be used' . \PHP_EOL .
+            '--reportfile: send report output to a file; default to STDOUT' .
+            \PHP_EOL .
+            '--suffixes: comma-separated string of valid source code ' .
+            'filename extensions, e.g. php,phtml' . \PHP_EOL .
+            '--exclude: comma-separated string of patterns that are used to ' .
+            'ignore directories' . \PHP_EOL .
+            '--strict: also report those nodes with a @SuppressWarnings ' .
+            'annotation' . \PHP_EOL .
+            '--ignore-violations-on-exit: will exit with a zero code, ' .
+            'even if any violations are found' . \PHP_EOL;
+    }
+
+    /**
+     * Get a list of available renderers
+     *
+     * @return string The list of renderers found.
+     */
+    protected function getListOfAvailableRenderers()
+    {
+        $renderersDirPathName=__DIR__.'/../Renderer';
+        $renderers = array();
+
+        foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
+                $renderers[] =  strtolower($rendererName[1]);
+            }
+        }
+
+        sort($renderers);
+
+        if (count($renderers) > 1) {
+            return implode(', ', $renderers);
+        }
+
+        return array_pop($list);
     }
 
     /**

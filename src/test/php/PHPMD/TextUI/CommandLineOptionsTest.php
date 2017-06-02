@@ -258,6 +258,19 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * Tests if CLI usage contains the auto-discovered renderers
+     *
+     * @return void
+     */
+    public function testCliUsageContainsAutoDiscoveredRenderers()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertContains('Available formats: html, text, xml.', $opts->usage());
+    }
+
+    /**
      * testCliUsageContainsStrictOption
      *
      * @return void
