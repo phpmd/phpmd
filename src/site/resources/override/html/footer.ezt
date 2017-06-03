@@ -31,6 +31,6 @@
         licensed under <strong>{$content->metadata->license}</strong>
     {/if}
     <br />
-    Displayed with <a href="http://web-content-viewer.org/" title="Web Content Viewer">WCV</a>
+    Displayed with Web Content Viewer
     licensed under <a href="http://www.gnu.org/licenses/gpl.txt" title="GNU General Public License - Version 3">GPLv3</a>
 </div>
