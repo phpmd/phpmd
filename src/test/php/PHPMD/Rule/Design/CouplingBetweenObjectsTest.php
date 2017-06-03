@@ -36,7 +36,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportMock(0));
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cbo', 41));
     }
 
@@ -49,7 +49,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportMock(1));
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cbo', 42));
     }
 
@@ -62,7 +62,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportMock(1));
-        $rule->addProperty('minimum', '41');
+        $rule->addProperty('maximum', '41');
         $rule->apply($this->getClassMock('cbo', 42));
     }
 }
