@@ -38,7 +38,7 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node)
     {
         $cbo = $node->getMetric('cbo');
-        if ($cbo >= ($threshold = $this->getIntProperty('minimum'))) {
+        if ($cbo >= ($threshold = $this->getIntProperty('maximum'))) {
             $this->addViolation($node, array($node->getName(), $cbo, $threshold));
         }
     }

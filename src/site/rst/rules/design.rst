@@ -149,7 +149,7 @@ This rule has the following properties:
 =================================== =============== ============================================
  Name                                Default Value   Description                                
 =================================== =============== ============================================
- minimum                             13              Maximum number of acceptable dependencies. 
+ maximum                             13              Maximum number of acceptable dependencies.
 =================================== =============== ============================================
 
 DevelopmentCodeFragment
