@@ -27,10 +27,6 @@ use PHPMD\Rule\MethodAware;
  * Check for a boolean flag in the method/function signature.
  *
  * Boolean flags are signs for single responsibility principle violations.
- *
- * @author    Benjamin Eberlei <benjamin@qafoo.com>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionAware
 {

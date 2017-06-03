@@ -31,10 +31,6 @@ use PHPMD\Rule\MethodAware;
  *
  * Static access is known to cause hard dependencies between classes
  * and is a bad practice.
- *
- * @author    Benjamin Eberlei <benjamin@qafoo.com>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 {

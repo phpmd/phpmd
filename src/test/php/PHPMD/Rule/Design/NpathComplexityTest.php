@@ -22,15 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * This is a test case for the NPath complexity rule.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\Rule\Design\NpathComplexity
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class NpathComplexityTest extends AbstractTest
 {

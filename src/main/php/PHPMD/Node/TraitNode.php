@@ -21,10 +21,6 @@ use PDepend\Source\AST\ASTTrait;
 
 /**
  * Wrapper around PHP_Depend's interface objects.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class TraitNode extends AbstractTypeNode
 {

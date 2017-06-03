@@ -20,10 +20,6 @@ namespace PHPMD;
 /**
  * This type of exception is thrown when the class file for a configured rule
  * does not exist within php's include path.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class RuleClassFileNotFoundException extends \RuntimeException
 {

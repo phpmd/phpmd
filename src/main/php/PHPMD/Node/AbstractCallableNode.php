@@ -21,10 +21,6 @@ use PDepend\Source\AST\AbstractASTCallable;
 
 /**
  * Abstract base class for PHP_Depend function and method wrappers.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractCallableNode extends AbstractNode
 {

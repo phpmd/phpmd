@@ -22,13 +22,7 @@ use PDepend\Source\Parser\InvalidStateException;
 /**
  * Test case for the PHP_Depend backend adapter class.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\Parser
- * @group phpmd
- * @group unittest
  */
 class ParserTest extends AbstractTest
 {

@@ -22,17 +22,9 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/10474873
- * @ticket     10474873
  *
  * @covers \PHPMD\Rule\Design\GotoStatement
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class GotoStatementTest extends AbstractTest
 {

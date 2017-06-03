@@ -22,15 +22,9 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the weighted method count rule.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @since      0.2.5
  *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class WeightedMethodCountTest extends AbstractTest
 {

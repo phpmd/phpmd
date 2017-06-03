@@ -23,10 +23,6 @@ use PHPMD\AbstractRule;
 /**
  * This rule checks a given method or function against the configured cyclomatic
  * complexity threshold.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
 {

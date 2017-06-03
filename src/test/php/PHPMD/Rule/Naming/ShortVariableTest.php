@@ -21,16 +21,8 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the really short variable, parameter and property name rule.
- *_Naming
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  *
  * @covers PHPMD\Rule\Naming\ShortVariable
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::naming
- * @group unittest
  */
 class ShortVariableTest extends AbstractTest
 {

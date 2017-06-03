@@ -23,10 +23,6 @@ use PHPMD\AbstractRule;
 /**
  * This rule checks the number of public methods and fields in a given class.
  * Then it compares the number of public members against a configured threshold.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class ExcessivePublicCount extends AbstractRule implements ClassAware
 {

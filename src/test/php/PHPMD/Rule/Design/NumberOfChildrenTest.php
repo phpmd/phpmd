@@ -22,15 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\NumberOfChildren} class.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\Rule\Design\NumberOfChildren
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class NumberOfChildrenTest extends AbstractTest
 {

@@ -19,10 +19,6 @@ namespace PHPMD\Rule;
 
 /**
  * This interface is used to mark a rule implementation as class aware.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 interface ClassAware
 {

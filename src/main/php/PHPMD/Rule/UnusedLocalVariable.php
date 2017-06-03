@@ -24,10 +24,6 @@ use PHPMD\Node\ASTNode;
 /**
  * This rule collects all local variables within a given function or method
  * that are not used by any code in the analyzed source artifact.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {

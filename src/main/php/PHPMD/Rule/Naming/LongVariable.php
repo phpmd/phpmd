@@ -26,10 +26,6 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
 {

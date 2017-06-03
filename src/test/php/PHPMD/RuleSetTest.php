@@ -22,13 +22,7 @@ use PHPMD\Stubs\RuleStub;
 /**
  * Test case for the {@link \PHPMD\RuleSet} class.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\RuleSet
- * @group phpmd
- * @group unittest
  */
 class RuleSetTest extends AbstractTest
 {

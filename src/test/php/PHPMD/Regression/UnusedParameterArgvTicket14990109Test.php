@@ -23,17 +23,10 @@ use PHPMD\RuleSet;
 /**
  * Regression test for issue 14990109.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/14990109
  * @since      1.1.0
  *
- * @ticket 14990109
  * @covers \stdClass
- * @group phpmd
- * @group phpmd::regression
- * @group regressiontest
  */
 class UnusedParameterArgvTicket14990109Test extends AbstractTest
 {

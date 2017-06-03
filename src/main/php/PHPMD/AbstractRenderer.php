@@ -19,10 +19,6 @@ namespace PHPMD;
 
 /**
  * Abstract base class for PHPMD rendering engines.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 abstract class AbstractRenderer
 {

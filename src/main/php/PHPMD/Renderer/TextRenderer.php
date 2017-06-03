@@ -23,10 +23,6 @@ use PHPMD\Report;
 /**
  * This renderer output a textual log with all found violations and suspect
  * software artifacts.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class TextRenderer extends AbstractRenderer
 {

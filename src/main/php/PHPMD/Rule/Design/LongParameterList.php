@@ -24,10 +24,6 @@ use PHPMD\Rule\MethodAware;
 
 /**
  * This rule class checks for excessive long function and method parameter lists.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class LongParameterList extends AbstractRule implements FunctionAware, MethodAware
 {

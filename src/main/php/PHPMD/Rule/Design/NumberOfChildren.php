@@ -23,10 +23,6 @@ use PHPMD\Rule\ClassAware;
 
 /**
  * This rule will detect class that have to much direct child classes.
- *
- * @author Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
  */
 class NumberOfChildren extends AbstractRule implements ClassAware
 {
