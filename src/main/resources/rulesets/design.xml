@@ -153,7 +153,7 @@ maintainability and understandability
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
+            <property name="maximum" value="13" description="Maximum number of acceptable dependencies." />
         </properties>
         <example>
             <![CDATA[
