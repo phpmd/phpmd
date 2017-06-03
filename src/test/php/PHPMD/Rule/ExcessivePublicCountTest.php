@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the excessive use of public members rule.
  *
  * @covers \PHPMD\Rule\ExcessivePublicCount
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class ExcessivePublicCountTest extends AbstractTest
 {

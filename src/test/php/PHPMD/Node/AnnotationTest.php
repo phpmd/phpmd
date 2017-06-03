@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Node\Annotation} class.
  *
  * @covers \PHPMD\Node\Annotation
- * @group phpmd
- * @group phpmd::node
- * @group unittest
  */
 class AnnotationTest extends AbstractTest
 {

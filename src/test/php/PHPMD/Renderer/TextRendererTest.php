@@ -25,9 +25,6 @@ use PHPMD\Stubs\WriterStub;
  * Test case for the text renderer implementation.
  *
  * @covers \PHPMD\Renderer\TextRenderer
- * @group phpmd
- * @group phpmd::renderer
- * @group unittest
  */
 class TextRendererTest extends AbstractTest
 {

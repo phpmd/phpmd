@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the too many methods rule.
  *
  * @covers \PHPMD\Rule\Design\TooManyMethods
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class TooManyMethodsTest extends AbstractTest
 {

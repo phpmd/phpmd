@@ -26,8 +26,6 @@ use PHPMD\Stubs\WriterStub;
  * Regression test for issue 001.
  *
  * @covers \stdClass
- * @group phpmd
- * @group regression
  */
 class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
 {

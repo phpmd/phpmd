@@ -27,9 +27,6 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Node\ClassNode
  * @covers \PHPMD\Node\AbstractTypeNode
- * @group phpmd
- * @group phpmd::node
- * @group unittest
  */
 class ClassNodeTest extends AbstractTest
 {

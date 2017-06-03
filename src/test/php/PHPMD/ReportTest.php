@@ -21,8 +21,6 @@ namespace PHPMD;
  * Test case for the report class.
  *
  * @covers \PHPMD\Report
- * @group phpmd
- * @group unittest
  */
 class ReportTest extends AbstractTest
 {

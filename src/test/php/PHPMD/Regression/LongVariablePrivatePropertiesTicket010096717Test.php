@@ -26,9 +26,6 @@ use PHPMD\Rule\Naming\LongVariable;
  * @since      1.1.0
  *
  * @covers stdClass
- * @group phpmd
- * @group phpmd::integration
- * @group integrationtest
  */
 class LongVariablePrivatePropertiesTicket010096717Test extends AbstractTest
 {

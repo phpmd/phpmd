@@ -24,8 +24,6 @@ use PHPMD\RuleSet;
  * Regression test for issue 015.
  *
  * @covers stdClass
- * @group phpmd
- * @group regression
  */
 class ExcessivePublicCountRuleNeverExecutedTicket015Test extends AbstractTest
 {

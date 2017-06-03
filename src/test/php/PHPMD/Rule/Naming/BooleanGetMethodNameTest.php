@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
  *
  * @covers PHPMD\Rule\Naming\BooleanGetMethodName
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::naming
- * @group unittest
  */
 class BooleanGetMethodNameTest extends AbstractTest
 {

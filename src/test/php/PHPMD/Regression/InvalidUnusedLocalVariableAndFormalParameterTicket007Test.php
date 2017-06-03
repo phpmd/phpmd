@@ -24,8 +24,6 @@ use PHPMD\Rule\UnusedLocalVariable;
  * Regression test for issue 007.
  *
  * @covers stdClass
- * @group phpmd
- * @group regression
  */
 class InvalidUnusedLocalVariableAndFormalParameterTicket007Test extends AbstractTest
 {

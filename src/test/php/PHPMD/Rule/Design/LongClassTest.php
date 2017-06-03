@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the excessive long class rule.
  *
  * @covers \PHPMD\Rule\Design\LongClass
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class LongClassTest extends AbstractTest
 {

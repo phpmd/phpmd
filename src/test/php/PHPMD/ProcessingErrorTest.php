@@ -23,8 +23,6 @@ namespace PHPMD;
  * @since     1.2.1
  *
  * @covers \PHPMD\ProcessingError
- * @group phpmd
- * @group unittest
  */
 class ProcessingErrorTest extends AbstractTest
 {

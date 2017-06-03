@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Rule\Design\DepthOfInheritance} class.
  *
  * @covers \PHPMD\Rule\Design\DepthOfInheritance
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class DepthOfInheritanceTest extends AbstractTest
 {

@@ -29,9 +29,6 @@ use PHPMD\Writer\StreamWriter;
  * @since      1.3.1
  *
  * @covers \stdClass
- * @group phpmd
- * @group phpmd::regression
- * @group regressiontest
  */
 class MaximumNestingLevelTicket24975295Test extends AbstractTest
 {

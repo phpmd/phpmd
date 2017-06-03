@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Rule\Design\NumberOfChildren} class.
  *
  * @covers \PHPMD\Rule\Design\NumberOfChildren
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class NumberOfChildrenTest extends AbstractTest
 {

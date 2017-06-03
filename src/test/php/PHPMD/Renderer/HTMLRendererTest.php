@@ -25,9 +25,6 @@ use PHPMD\Stubs\WriterStub;
  * Test case for the html renderer implementation.
  *
  * @covers \PHPMD\Renderer\HTMLRenderer
- * @group phpmd
- * @group phpmd::renderer
- * @group unittest
  */
 class HTMLRendererTest extends AbstractTest
 {

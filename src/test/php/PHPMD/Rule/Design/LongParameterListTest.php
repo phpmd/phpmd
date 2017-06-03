@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the excessive long parameter list rule.
  *
  * @covers \PHPMD\Rule\Design\LongParameterList
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class LongParameterListTest extends AbstractTest
 {

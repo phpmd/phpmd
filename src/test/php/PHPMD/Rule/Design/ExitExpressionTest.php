@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Rule\Design\ExitExpression} class.
  *
  * @covers \PHPMD\Rule\Design\ExitExpression
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class ExitExpressionTest extends AbstractTest
 {

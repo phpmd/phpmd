@@ -27,9 +27,6 @@ use PHPMD\RuleSet;
  * @since      1.1.0
  *
  * @covers \stdClass
- * @group phpmd
- * @group phpmd::regression
- * @group regressiontest
  */
 class UnusedParameterArgvTicket14990109Test extends AbstractTest
 {

@@ -24,9 +24,6 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Rule\UnusedLocalVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class UnusedLocalVariableTest extends AbstractTest
 {

@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\Node\ASTNode} class.
  *
  * @covers \PHPMD\Node\ASTNode
- * @group phpmd
- * @group phpmd::node
- * @group unittest
  */
 class ASTNodeTest extends AbstractTest
 {

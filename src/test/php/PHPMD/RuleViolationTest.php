@@ -23,8 +23,6 @@ namespace PHPMD;
  * @since     0.2.5
  *
  * @covers \PHPMD\RuleViolation
- * @group phpmd
- * @group unittest
  */
 class RuleViolationTest extends AbstractTest
 {

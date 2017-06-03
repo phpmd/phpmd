@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the camel case variable name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::controversial
- * @group unittest
  */
 class CamelCaseVariableNameTest extends AbstractTest
 {

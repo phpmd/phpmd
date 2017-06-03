@@ -25,9 +25,6 @@ use PHPMD\AbstractTest;
  * @since      0.2.5
  *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class WeightedMethodCountTest extends AbstractTest
 {

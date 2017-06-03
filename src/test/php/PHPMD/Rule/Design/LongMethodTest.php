@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the excessive long method rule.
  *
  * @covers \PHPMD\Rule\Design\LongMethod
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class LongMethodTest extends AbstractTest
 {

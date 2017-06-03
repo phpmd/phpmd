@@ -21,8 +21,6 @@ namespace PHPMD;
  * Test case for the {@link \PHPMD\AbstractRule} class.
  *
  * @covers \PHPMD\AbstractRule
- * @group phpmd
- * @group unittest
  */
 class RuleTest extends AbstractTest
 {

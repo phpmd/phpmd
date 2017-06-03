@@ -26,10 +26,6 @@ use PHPMD\AbstractTest;
  * @since 2.3.0
  *
  * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class DevelopmentCodeFragmentTest extends AbstractTest
 {

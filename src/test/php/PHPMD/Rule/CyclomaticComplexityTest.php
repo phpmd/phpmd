@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the cyclomatic complexity violation rule.
  *
  * @covers \PHPMD\Rule\CyclomaticComplexity
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class CyclomaticComplexityTest extends AbstractTest
 {

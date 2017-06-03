@@ -24,9 +24,6 @@ use PHPMD\AbstractTest;
  *
  * @link https://www.pivotaltracker.com/story/show/10474987
  * @covers \PHPMD\Rule\Design\CouplingBetweenObjects
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
  */
 class CouplingBetweenObjectsTest extends AbstractTest
 {

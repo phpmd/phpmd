@@ -24,8 +24,6 @@ use PHPMD\RuleSet;
  * Regression test for issue 036.
  *
  * @covers stdClass
- * @group phpmd
- * @group regression
  */
 class SuppressWarningsNotAppliesToUnusedPrivateMethod036Test extends AbstractTest
 {

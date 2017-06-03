@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the really short variable, parameter and property name rule.
  *
  * @covers PHPMD\Rule\Naming\ShortVariable
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::naming
- * @group unittest
  */
 class ShortVariableTest extends AbstractTest
 {

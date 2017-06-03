@@ -24,10 +24,6 @@ use PHPMD\TextUI\Command;
  * Test case for the goto statement GotoStatementIntegrationTest.
  *
  * @since      1.1.0
- *
- * @group phpmd
- * @group phpmd::integration
- * @group integrationtest
  */
 class GotoStatementIntegrationTest extends AbstractTest
 {

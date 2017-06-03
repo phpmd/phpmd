@@ -21,8 +21,6 @@ namespace PHPMD;
  * Test case for the rule set factory class.
  *
  * @covers \PHPMD\RuleSetFactory
- * @group phpmd
- * @group unittest
  */
 class RuleSetFactoryTest extends AbstractTest
 {

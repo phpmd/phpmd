@@ -24,10 +24,6 @@ use PHPMD\TextUI\Command;
  * Integration tests for the coupling between objects rule class.
  *
  * @since      1.1.0
- *
- * @group phpmd
- * @group phpmd::integration
- * @group integrationtest
  */
 class CouplingBetweenObjectsIntegrationTest extends AbstractTest
 {

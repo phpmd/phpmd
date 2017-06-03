@@ -21,8 +21,6 @@ namespace PHPMD;
  * Test case for the parser factory class.
  *
  * @covers \PHPMD\ParserFactory
- * @group phpmd
- * @group unittest
  */
 class ParserFactoryTest extends AbstractTest
 {

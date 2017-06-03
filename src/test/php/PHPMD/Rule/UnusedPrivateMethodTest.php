@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the unused private method rule.
  *
  * @covers \PHPMD\Rule\UnusedPrivateMethod
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class UnusedPrivateMethodTest extends AbstractTest
 {

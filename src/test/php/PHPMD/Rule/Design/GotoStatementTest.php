@@ -25,10 +25,6 @@ use PHPMD\AbstractTest;
  * @link       https://www.pivotaltracker.com/story/show/10474873
  *
  * @covers \PHPMD\Rule\Design\GotoStatement
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class GotoStatementTest extends AbstractTest
 {

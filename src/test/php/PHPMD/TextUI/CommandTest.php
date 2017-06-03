@@ -23,7 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the {@link \PHPMD\TextUI\Command} class.
  *
  * @covers \PHPMD\TextUI\Command
- * @group unittest
  */
 class CommandTest extends AbstractTest
 {

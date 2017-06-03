@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the camel case property name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCasePropertyName
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::controversial
- * @group unittest
  */
 class CamelCasePropertyNameTest extends AbstractTest
 {

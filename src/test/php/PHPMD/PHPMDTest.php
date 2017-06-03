@@ -24,8 +24,6 @@ use PHPMD\Stubs\WriterStub;
  * Test case for the main PHPMD class.
  *
  * @covers \PHPMD\PHPMD
- * @group phpmd
- * @group unittest
  */
 class PHPMDTest extends AbstractTest
 {

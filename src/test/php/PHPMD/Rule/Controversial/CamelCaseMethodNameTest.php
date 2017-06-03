@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the camel case method name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseMethodName
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::controversial
- * @group unittest
  */
 class CamelCaseMethodNameTest extends AbstractTest
 {

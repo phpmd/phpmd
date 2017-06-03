@@ -26,10 +26,6 @@ use PHPMD\Node\MethodNode;
  * Test case for the too many public methods rule.
  *
  * @covers \PHPMD\Rule\Design\TooManyPublicMethods
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class TooManyPublicMethodsTest extends AbstractTest
 {

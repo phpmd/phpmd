@@ -23,9 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the unused private field rule.
  *
  * @covers \PHPMD\Rule\UnusedPrivateField
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class UnusedPrivateFieldTest extends AbstractTest
 {

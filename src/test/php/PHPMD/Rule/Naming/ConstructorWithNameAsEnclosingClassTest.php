@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the constructor name rule.
  *
  * @covers PHPMD\Rule\Naming\ConstructorWithNameAsEnclosingClass
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::naming
- * @group unittest
  */
 class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
 {

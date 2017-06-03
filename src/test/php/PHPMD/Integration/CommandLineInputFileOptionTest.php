@@ -24,10 +24,6 @@ use PHPMD\TextUI\Command;
  * Integration tests for the command line option <em>--inputfile</em>.
  *
  * @since      1.1.0
- *
- * @group phpmd
- * @group phpmd::integration
- * @group integrationtest
  */
 class CommandLineInputFileOptionTest extends AbstractTest
 {

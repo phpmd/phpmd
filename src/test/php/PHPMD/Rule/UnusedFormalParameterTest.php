@@ -24,9 +24,6 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Rule\UnusedFormalParameter
  * @covers \PHPMD\Rule\AbstractLocalVariable
- * @group phpmd
- * @group phpmd::rule
- * @group unittest
  */
 class UnusedFormalParameterTest extends AbstractTest
 {

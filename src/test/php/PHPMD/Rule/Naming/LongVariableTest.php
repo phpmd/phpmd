@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * Test case for the really long variable, parameter and property name rule.
  *
  * @covers PHPMD\Rule\Naming\LongVariable
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::naming
- * @group unittest
  */
 class LongVariableTest extends AbstractTest
 {

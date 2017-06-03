@@ -25,9 +25,6 @@ use PHPMD\Stubs\WriterStub;
  * Test case for the xml renderer implementation.
  *
  * @covers \PHPMD\Renderer\XMLRenderer
- * @group phpmd
- * @group phpmd::renderer
- * @group unittest
  */
 class XMLRendererTest extends AbstractTest
 {

@@ -23,8 +23,6 @@ use PHPMD\Stubs\RuleStub;
  * Test case for the {@link \PHPMD\RuleSet} class.
  *
  * @covers \PHPMD\RuleSet
- * @group phpmd
- * @group unittest
  */
 class RuleSetTest extends AbstractTest
 {

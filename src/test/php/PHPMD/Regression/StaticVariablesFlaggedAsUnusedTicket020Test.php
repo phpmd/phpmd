@@ -23,8 +23,6 @@ use PHPMD\Rule\UnusedLocalVariable;
  * Regression test for issue 020.
  *
  * @covers \stdClass
- * @group phpmd
- * @group regression
  */
 class StaticVariablesFlaggedAsUnusedTicket020Test extends AbstractTest
 {

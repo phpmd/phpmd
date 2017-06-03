@@ -23,10 +23,6 @@ use PHPMD\AbstractTest;
  * This is a test case for the NPath complexity rule.
  *
  * @covers \PHPMD\Rule\Design\NpathComplexity
- * @group phpmd
- * @group phpmd::rule
- * @group phpmd::rule::design
- * @group unittest
  */
 class NpathComplexityTest extends AbstractTest
 {

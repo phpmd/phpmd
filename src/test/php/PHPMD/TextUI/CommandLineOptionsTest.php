@@ -24,9 +24,6 @@ use PHPMD\Rule;
  * Test case for the {@link \PHPMD\TextUI\CommandLineOptions} class.
  *
  * @covers \PHPMD\TextUI\CommandLineOptions
- * @group phpmd
- * @group phpmd::textui
- * @group unittest
  */
 class CommandLineOptionsTest extends AbstractTest
 {
