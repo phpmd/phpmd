@@ -83,7 +83,7 @@ operand could result in zero, null or an empty string and the like.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties />
         <example>
             <![CDATA[
 class Foo
@@ -125,6 +125,37 @@ class Foo
     public function bar()
     {
         Bar::baz();
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="IfStatementWithoutLogic"
+          since="2.7.0"
+          message="Unneeded if statement on line '{0}' in method '{1}'."
+          class="PHPMD\Rule\CleanCode\IfStatementWithoutLogic"
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#ifstatementwithoutlogic">
+        <description>
+            <![CDATA[
+Having if conditions without any logic should be avoided. It usually tells us,
+that we are dealing with development code fragment, debug data, etc.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo
+{
+    public function bar()
+    {
+        if (true) { // always true
+            // ...
+        }
+        if (1 !== 1) { // always false
+            // ...
+        }
     }
 }
             ]]>
