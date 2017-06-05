@@ -90,14 +90,13 @@ interface testRuleAppliesWhenKeyIsDeclaredInNonStandardWayInterface
     const INTERFACE_DUPLICATED_KEY = 'foo';
 }
 
-abstract class testRuleAppliesWhenKeyIsDeclaredInNonStandardWayAbstract
-    implements testRuleAppliesWhenKeyIsDeclaredInNonStandardWayInterface
+abstract class testRuleAppliesWhenKeyIsDeclaredInNonStandardWayAbstract implements
+    testRuleAppliesWhenKeyIsDeclaredInNonStandardWayInterface
 {
     const DUPLICATED_KEY = 'foo';
 }
 
-class testRuleAppliesWhenKeyIsDeclaredInNonStandardWayParent
-    extends testRuleAppliesWhenKeyIsDeclaredInNonStandardWayAbstract
+class testRuleAppliesWhenKeyIsDeclaredInNonStandardWayParent extends testRuleAppliesWhenKeyIsDeclaredInNonStandardWayAbstract
 {
     const DUPLICATED_KEY = 'foo';
 }

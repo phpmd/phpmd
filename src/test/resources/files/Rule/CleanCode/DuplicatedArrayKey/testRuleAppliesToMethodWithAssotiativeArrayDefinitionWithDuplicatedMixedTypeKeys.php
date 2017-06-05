@@ -15,6 +15,8 @@
  * @link http://phpmd.org/
  */
 
+namespace PHPMDTest;
+
 class testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
 {
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
