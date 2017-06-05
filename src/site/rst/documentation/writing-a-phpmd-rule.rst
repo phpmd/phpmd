@@ -1,6 +1,6 @@
-============================
-Howto write a Rule for PHPMD
-============================
+=============================
+How to write a Rule for PHPMD
+=============================
 
 :Author:       Manuel Pichler
 :Copyright:    All rights reserved
@@ -40,10 +40,10 @@ argument. This node instance represents the different high level code artifacts
 found in the analyzed source code. In this context high level artifact means
 *interfaces*, *classes*, *methods* and *functions*. But how do we tell PHPMD
 which of these artifacts are interesting for our rule, because we do not want
-duplicate implementations of the descision code in every rule? To solve this
+duplicate implementations of the decision code in every rule? To solve this
 problem PHPMD uses so-called marker interfaces. The only purpose of these
-interfaces is to label a rule class, which says: Hey I'm interessted in nodes
-of type class and interface, or I am interessted in function artifacts. The
+interfaces is to label a rule class, which says: Hey I'm interested in nodes
+of type class and interface, or I am interested in function artifacts. The
 following list shows the available marker interfaces:
 
 - `\\PHPMD\\Rule\\ClassAware`__
@@ -81,7 +81,7 @@ That's it. The only thing left to do is adding a configuration entry for this
 rule to a rule set file. This ruleset file is an XML document where all settings
 of one or more rules can be configured, so that everyone can customize an
 existing rule without any changes the rule's source. The syntax of the rule set
-file is completly adapted from PHPMD's inspiring example `PMD`__. To get
+file is completely adapted from PHPMD's inspiring example `PMD`__. To get
 started with a custom rule set you should take a look at one of the existing
 `XML files`__ and then adapt one of the rule configurations for a newly created
 rule. The most important elements of a rule configuration are:
@@ -335,7 +335,7 @@ Now we will learn how to develop a PHPMD rule that utilizes PHP_Depend's
 abstract syntax tree to detect violations or possible error in the analyzed
 source code. The ability to access PHP_Depend's abstract syntax tree gives you
 the most powerful way to write rules for PHPMD, because you can analyze nearly
-all apects of the software under test. The syntax tree can be accessed through
+all aspects of the software under test. The syntax tree can be accessed through
 the ``getFirstChildOfType()`` and ``findChildrenOfType()`` methods of the
 `\\PHPMD\\AbstractNode`__ class.
 
@@ -380,7 +380,7 @@ where ::
   \PDepend\Source\AST\AST
 
 is fixed and everything else depends on the node type. And this fixed part of
-the class name can be ommitted in PHPMD when searching for an abstract syntax
+the class name can be omitted in PHPMD when searching for an abstract syntax
 tree node. To implement additional rules you should take a look at PHP_Depend's
 `Code package`__ where you can find all currently supported code nodes.
 
@@ -402,7 +402,7 @@ __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAwar
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
 __ http://pmd.sf.net/
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
-__ http://phpmd.org/documentation/creating-a-ruleset.html
+__ https://phpmd.org/documentation/creating-a-ruleset.html
 
 __ http://pdepend.org
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php

@@ -2,7 +2,7 @@
 Design Rules
 ============
 
-The Code Size Ruleset contains a collection of rules that find software design related problems.
+The Design Ruleset contains a collection of rules that find software design related problems.
 
 ExitExpression
 ==============
@@ -149,8 +149,60 @@ This rule has the following properties:
 =================================== =============== ============================================
  Name                                Default Value   Description                                
 =================================== =============== ============================================
- minimum                             13              Maximum number of acceptable dependencies. 
+ maximum                             13              Maximum number of acceptable dependencies.
 =================================== =============== ============================================
+
+DevelopmentCodeFragment
+=======================
+
+Since: PHPMD 2.3.0
+
+Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
+
+
+Example: ::
+
+  class SuspectCode {
+  
+      public function doSomething(array $items)
+      {
+          foreach ($items as $i => $item) {
+              // …
+  
+              if ('qafoo' == $item) var_dump($i);
+  
+              // …
+          }
+      }
+  }
+
+This rule has the following properties:
+
+=================================== =============== ==================================================
+ Name                                Default Value   Description                                      
+=================================== =============== ==================================================
+ unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images. 
+=================================== =============== ==================================================
+
+EmptyCatchBlock
+===============
+
+Since: PHPMD 2.7.0
+
+Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
+
+
+Example: ::
+
+  class Foo {
+
+      public function bar()
+      {
+          try {
+              // ...
+          } catch (Exception $e) {} // empty catch block
+      }
+  }
 
 
 Remark
@@ -159,4 +211,3 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        

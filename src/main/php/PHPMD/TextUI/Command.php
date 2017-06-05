@@ -2,41 +2,17 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
  *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Manuel Pichler nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -47,10 +23,6 @@ use PHPMD\Writer\StreamWriter;
 
 /**
  * This class provides a command line interface for PHPMD
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class Command
 {
@@ -70,6 +42,9 @@ class Command
      * found in the analyzed code. Otherwise this method will return a value
      * equal to <b>EXIT_VIOLATION</b>.
      *
+     * The use of flag <b>--ignore-violations-on-exit</b> will result to a
+     * <b>EXIT_SUCCESS</b> even if any violation is found.
+     *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
      * @return integer
@@ -82,7 +57,7 @@ class Command
         }
 
         // Create a report stream
-        $stream = $opts->getReportFile() ? fopen($opts->getReportFile(), 'wb') : STDOUT;
+        $stream = $opts->getReportFile() ? $opts->getReportFile() : STDOUT;
 
         // Create renderer and configure output
         $renderer = $opts->createRenderer();
@@ -92,7 +67,7 @@ class Command
 
         foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
             $reportRenderer = $opts->createRenderer($reportFormat);
-            $reportRenderer->setWriter(new StreamWriter(fopen($reportFile, 'wb')));
+            $reportRenderer->setWriter(new StreamWriter($reportFile));
 
             $renderers[] = $reportRenderer;
         }
@@ -129,7 +104,7 @@ class Command
             $ruleSetFactory
         );
 
-        if ($phpmd->hasViolations()) {
+        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
             return self::EXIT_VIOLATION;
         }
         return self::EXIT_SUCCESS;
@@ -169,9 +144,7 @@ class Command
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {
-            fwrite(STDERR, $e->getMessage());
-            fwrite(STDERR, PHP_EOL);
-            
+            fwrite(STDERR, $e->getMessage() . PHP_EOL);
             $exitCode = self::EXIT_EXCEPTION;
         }
         return $exitCode;

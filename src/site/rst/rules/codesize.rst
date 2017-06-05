@@ -14,26 +14,26 @@ Complexity is determined by the number of decision points in a method plus one f
 
 Example: ::
 
-  // Cyclomatic Complexity = 12
+  // Cyclomatic Complexity = 11
   class Foo {
-  1   public function example()  {
-  2       if ($a == $b)  {
+  1   public function example() {
+  2       if ($a == $b) {
   3           if ($a1 == $b1) {
                   fiddle();
-  4           } else if ($a2 == $b2) {
+  4           } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
                   fiddle();
               }
-  5       } else if ($c == $d) {
+  5       } elseif ($c == $d) {
   6           while ($c == $d) {
                   fiddle();
               }
-  7        } else if ($e == $f) {
+  7        } elseif ($e == $f) {
   8           for ($n = 0; $n < $h; $n++) {
                   fiddle();
               }
-          } else{
+          } else {
               switch ($z) {
   9               case 1:
                       fiddle();
@@ -44,7 +44,7 @@ Example: ::
   11              case 3:
                       fiddle();
                       break;
-  12              default:
+                  default:
                       fiddle();
                       break;
               }
@@ -223,38 +223,32 @@ TooManyMethods
 
 Since: PHPMD 0.1
 
-A class with too many methods is probably a good suspect for refactoring,
-in order to reduce its complexity and find a way to have more fine grained objects.
-By default it ignores methods starting with 'get' or 'set'.
-
-The default was changed from 10 to 25 in PHPMD 2.3.
+A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'. The default was changed from 10 to 25 in PHPMD 2.3.
 
 This rule has the following properties:
 
-=================================== =============== =======================================
- Name                                Default Value   Description
-=================================== =============== =======================================
- maxmethods                          25              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
-=================================== =============== =======================================
+=================================== =============== ======================================
+ Name                                Default Value   Description                          
+=================================== =============== ======================================
+ maxmethods                          25              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
+=================================== =============== ======================================
 
 TooManyPublicMethods
 ====================
 
-Since: PHPMD 2.3
+Since: PHPMD 0.1
 
-A class with too many public methods is probably a good suspect for refactoring,
-in order to reduce its complexity and find a way to have more fine grained objects.
-By default it ignores methods starting with 'get' or 'set'.
+A class with too many public methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'.
 
 This rule has the following properties:
 
-=================================== =============== =======================================
- Name                                Default Value   Description
-=================================== =============== =======================================
- maxmethods                          10              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
-=================================== =============== =======================================
+=================================== =============== ======================================
+ Name                                Default Value   Description                          
+=================================== =============== ======================================
+ maxmethods                          10              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
+=================================== =============== ======================================
 
 ExcessiveClassComplexity
 ========================
@@ -267,23 +261,23 @@ The Weighted Method Count (WMC) of a class is a good indicator of how much time 
 Example: ::
 
   class Foo {
-      public function bar()  {
+      public function bar() {
           if ($a == $b)  {
               if ($a1 == $b1) {
                   fiddle();
-              } else if ($a2 == $b2) {
+              } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
               }
           }
       }
-      public function baz()  {
-          if ($a == $b)  {
+      public function baz() {
+          if ($a == $b) {
               if ($a1 == $b1) {
                   fiddle();
-              } else if ($a2 == $b2) {
+              } elseif ($a2 == $b2) {
                   fiddle();
-              }  else {
+              } else {
               }
           }
       }

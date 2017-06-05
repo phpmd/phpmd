@@ -57,13 +57,13 @@
         Parameters:
             ${-package:phar:filename}  Name of the created phar file.
     -->
-    <target name="-phpmd:package:phar:after~hooked" extensionOf="-package:phar:after~hook">
+    <target name="-phpmd:phar:after~hooked" extensionOf="-phar:after~hook">
 
         <echo message="Executing:" level="verbose" />
-        <echo message="  ${-package:phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
+        <echo message="  ${-phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
         <exec dir="${commons.srcdir.php}"
-              executable="${-package:phar:filename}"
+              executable="${-phar:filename}"
               failonerror="true">
 
             <arg value="PHPMD/Rule" />
@@ -72,9 +72,47 @@
         </exec>
     </target>
 
+    <target name="-copy-vendor-dir:before~hooked" extensionOf="-copy-vendor-dir:before~hook">
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
+            <arg line="update" />
+            <arg line="--no-dev" />
+            <arg line="--prefer-dist" />
+            <arg line="--prefer-lowest" />
+            <arg line="--prefer-stable" />
+        </exec>
+    </target>
+
+    <target name="-copy-vendor-dir:after~hooked" extensionOf="-copy-vendor-dir:after~hook">
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="checkout" />
+            <arg line="composer.lock" />
+        </exec>
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
+            <arg line="install" />
+        </exec>
+    </target>
+
     <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />
 
     <target name="-phpmd:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="pull" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--all" />
+        </exec>
+
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="tag" />
+            <arg line="${project.version}" />
+        </exec>
+        <exec executable="git" dir="${basedir}" failonerror="true">
+            <arg line="push" />
+            <arg line="--tags" />
+        </exec>
 
         <property name="project.web.release.dir" value="${project.web.root}/static.${project.uri}/php/${project.version}" />
 
@@ -85,6 +123,10 @@
         <exec dir="${commons:builddir}" executable="scp" failonerror="true">
             <arg line="dist/${project.name}-${project.version}.phar" />
             <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.phar" />
+        </exec>
+        <exec dir="${commons:builddir}" executable="scp" failonerror="true">
+            <arg line="dist/${project.name}-${project.version}.phar" />
+            <arg line="${remote.shell.credentials}:${project.web.release.dir}/${project.name}.bz2.phar" />
         </exec>
         <exec dir="${commons:builddir}" executable="ssh" failonerror="true">
             <arg line="${remote.shell.credentials}" />

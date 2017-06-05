@@ -2,41 +2,17 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
  *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Manuel Pichler nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
  */
 
 namespace PHPMD;
@@ -44,13 +20,7 @@ namespace PHPMD;
 /**
  * Test case for the rule set factory class.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\RuleSetFactory
- * @group phpmd
- * @group unittest
  */
 class RuleSetFactoryTest extends AbstractTest
 {
@@ -204,7 +174,7 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsForLocalFileNameReturnsArray()
     {
         self::changeWorkingDirectory();
-        
+
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
         $this->assertInternalType('array', $ruleSets);
     }
@@ -287,11 +257,11 @@ class RuleSetFactoryTest extends AbstractTest
 
         $actual   = array();
         $expected = array('RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet');
-        
+
         foreach ($ruleSets[0]->getRules() as $rule) {
             $actual[] = $rule->getName();
         }
-        
+
         $this->assertEquals($expected, $actual);
     }
 
@@ -306,7 +276,7 @@ class RuleSetFactoryTest extends AbstractTest
 
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1');
-        
+
         $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSet);
     }
 
@@ -630,36 +600,36 @@ class RuleSetFactoryTest extends AbstractTest
 
         $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
     }
-    
+
     /**
      * Tests that adding an include-path via ruleset works.
      * Also implicitly tests (by parsing the ruleset) that
      * reference-by-includepath and explicit-classfile-declaration works.
      *
      * @return void
+     * @throws \Exception
      */
     public function testAddPHPIncludePath()
     {
         $includePathBefore = get_include_path();
-        
+
         $rulesetFilepath = 'rulesets/ruleset-refs.xml';
         $fileName = self::createFileUri($rulesetFilepath);
-        
-        try{
+
+        try {
             $factory = new RuleSetFactory();
             $factory->createRuleSets($fileName);
-            
+
             $expectedIncludePath  = "/foo/bar/baz";
             $actualIncludePaths   = explode(PATH_SEPARATOR, get_include_path());
             $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
-        
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
             set_include_path($includePathBefore);
             throw $exception;
         }
-        
+
         set_include_path($includePathBefore);
-        
+
         $this->assertTrue(
             $isIncludePathPresent,
             "The include-path from '{$rulesetFilepath}' was not set!"
@@ -676,7 +646,7 @@ class RuleSetFactoryTest extends AbstractTest
      */
     private function createRuleSetsFromAbsoluteFiles($file)
     {
-        $files = func_get_args();
+        $files = (1 === func_num_args() ? array($file) : func_get_args());
         $files = array_map(array(__CLASS__, 'createFileUri'), $files);
 
         return call_user_func_array(array($this, 'createRuleSetsFromFiles'), $files);

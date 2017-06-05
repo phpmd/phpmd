@@ -16,7 +16,7 @@ Example: ::
 
   class Something {
       private $q = 15; // VIOLATION - Field
-      public static function main( array $as ) {  // VIOLATION - Formal
+      public static function main( array $as ) { // VIOLATION - Formal
           $r = 20 + $this->q; // VIOLATION - Local
           for (int $i = 0; $i < 10; $i++) { // Not a Violation (inside FOR)
               $r += $this->q;
@@ -44,10 +44,10 @@ Detects when a field, formal or local variable is declared with a long name.
 Example: ::
 
   class Something {
-      protected $reallyLongIntName = -3;  // VIOLATION - Field
+      protected $reallyLongIntName = -3; // VIOLATION - Field
       public static function main( array $argumentsList[] ) { // VIOLATION - Formal
           $otherReallyLongName = -5; // VIOLATION - Local
-          for ($interestingIntIndex = 0;  // VIOLATION - For
+          for ($interestingIntIndex = 0; // VIOLATION - For
                $interestingIntIndex < 10;
                $interestingIntIndex++ ) {
           }
@@ -108,7 +108,7 @@ ConstantNamingConventions
 
 Since: PHPMD 0.2
 
-Class/Interface constant nanmes should always be defined in uppercase.
+Class/Interface constant names should always be defined in uppercase.
 
 
 Example: ::

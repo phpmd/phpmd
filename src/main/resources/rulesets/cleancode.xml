@@ -14,7 +14,7 @@ The Clean Code ruleset contains rules that enforce a clean code base. This inclu
           since="1.4.0"
           message="The method {0} has a boolean flag argument {1}, which is a certain sign of a Single Responsibility Principle violation."
           class="PHPMD\Rule\CleanCode\BooleanArgumentFlag"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#booleanargumentflag">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#booleanargumentflag">
         <description>
             <![CDATA[
 A boolean flag argument is a reliable indicator for a violation of
@@ -37,20 +37,20 @@ class Foo {
 
     <rule name="ElseExpression"
           since="1.4.0"
-          message="The method {0} uses an else expression. Else is never necessary and you can simplify the code to work without else."
+          message="The method {0} uses an else expression. Else clauses are basically not necessary and you can simplify the code by not using them."
           class="PHPMD\Rule\CleanCode\ElseExpression"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#eleseexpression">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#elseexpression">
         <description>
             <![CDATA[
-An if expression with an else branch is never necessary. You can rewrite the
-conditions in a way that the else is not necessary and the code becomes simpler
-to read.  To achieve this use early return statements. To achieve this you may
+An if expression with an else branch is basically not necessary. You can rewrite the
+conditions in a way that the else clause is not necessary and the code becomes simpler
+to read.  To achieve this, use early return statements, though you may
 need to split the code it several smaller methods. For very simple assignments
 you could also use the ternary operations.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties/>
         <example>
             <![CDATA[
 class Foo
@@ -68,14 +68,48 @@ class Foo
         </example>
     </rule>
 
+    <rule name="IfStatementAssignment"
+          since="2.7.0"
+          message="Avoid assigning values to variables in if clauses and the like (line '{0}', column '{1}')."
+          class="PHPMD\Rule\CleanCode\IfStatementAssignment"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#ifstatementassignment">
+        <description>
+            <![CDATA[
+Assignments in if clauses and the like are considered a code smell.
+Assignments in PHP return the right operand as their result.
+In many cases, this is an expected behavior, but can lead
+to many difficult to spot bugs, especially when the right
+operand could result in zero, null or an empty string and the like.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties></properties>
+        <example>
+            <![CDATA[
+class Foo
+{
+    public function bar($flag)
+    {
+        if ($foo = 'bar') { // possible typo
+            // ...
+        }
+        if ($baz = 0) { // always false
+            // ...
+        }
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="StaticAccess"
           since="1.4.0"
           message="Avoid using static access to class '{0}' in method '{1}'."
           class="PHPMD\Rule\CleanCode\StaticAccess"
-          externalInfoUrl="http://phpmd.org/rules/cleancode.html#staticaccess">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#staticaccess">
         <description>
             <![CDATA[
-Static access causes inexchangable dependencies to other classes and leads to hard to test code. Avoid
+Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid
 using static access at all costs and instead inject dependencies through the constructor. The only
 case when static access is acceptable is when used for factory methods.
             ]]>
@@ -113,8 +147,10 @@ the key will have different value, there is usually no point in defining first o
             <![CDATA[
 function createArray() {
     return [
-        'foo' => 'bar', // this one makes no effect
-        "foo" => 'baz',
+        'non-associative 0element', // not applied
+        0 => 'associative 0-element', // applied
+        'foo' => 'bar', // not applied
+        "foo" => 'baz', // applied
     ];
 }
             ]]>

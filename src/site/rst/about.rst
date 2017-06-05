@@ -10,7 +10,7 @@ to configure frontend for the raw metrics measured by PHP Depend.
 __ http://pdepend.org
 __ http://pmd.sourceforge.net
 
-What PHPMD does is: It takes a given PHP source code base and look 
+What PHPMD does is: It takes a given PHP source code base and look
 for several potential problems within that source. These problems
 can be things like:
 

@@ -2,41 +2,17 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
  *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Manuel Pichler nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
  */
 
 namespace PHPMD;
@@ -44,10 +20,6 @@ namespace PHPMD;
 /**
  * This factory class is used to create the {@link \PHPMD\RuleSet} instance
  * that PHPMD will use to analyze the source code.
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class RuleSetFactory
 {
@@ -144,7 +116,7 @@ class RuleSetFactory
     /**
      * Lists available rule-set identifiers.
      *
-     * @return array(string)
+     * @return string[]
      */
     public function listAvailableRuleSets()
     {
@@ -187,12 +159,12 @@ class RuleSetFactory
             if (file_exists($fileName) === true) {
                 return $fileName;
             }
-            $fileName = $includePath . '/' . $ruleSetOrFileName + ".xml";
+            $fileName = $includePath . '/' . $ruleSetOrFileName . ".xml";
             if (file_exists($fileName) === true) {
                 return $fileName;
             }
         }
-        
+
         throw new RuleSetNotFoundException($ruleSetOrFileName);
     }
 
@@ -201,7 +173,7 @@ class RuleSetFactory
      *
      * @param string $directory The directory to scan for rule-sets.
      *
-     * @return array(string)
+     * @return string[]
      */
     private static function listRuleSetsInDirectory($directory)
     {
@@ -245,19 +217,20 @@ class RuleSetFactory
         }
 
         foreach ($xml->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'php-includepath') {
                 $includePath = (string) $node;
-                
+
                 if (is_dir(dirname($fileName) . DIRECTORY_SEPARATOR . $includePath)) {
                     $includePath = dirname($fileName) . DIRECTORY_SEPARATOR . $includePath;
                     $includePath = realpath($includePath);
                 }
-                
+
                 $includePath = get_include_path() . PATH_SEPARATOR . $includePath;
                 set_include_path($includePath);
             }
         }
-        
+
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'description') {
                 $ruleSet->setDescription((string) $node);
@@ -360,14 +333,13 @@ class RuleSetFactory
         if (isset($ruleNode['file'])) {
             if (is_readable((string) $ruleNode['file'])) {
                 $fileName = (string) $ruleNode['file'];
-
             } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'])) {
                 $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . (string) $ruleNode['file'];
             }
         }
 
         $className = (string) $ruleNode['class'];
-        
+
         if (!is_readable($fileName)) {
             $fileName = strtr($className, '\\', '/') . '.php';
         }
@@ -375,7 +347,7 @@ class RuleSetFactory
         if (!is_readable($fileName)) {
             $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
         }
-        
+
         if (class_exists($className) === false) {
             $handle = @fopen($fileName, 'r', true);
             if ($handle === false) {
@@ -403,6 +375,7 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
             } elseif ($node->getName() === 'example') {
@@ -452,6 +425,7 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string) $node);
             } elseif ($node->getName() === 'example') {
@@ -489,6 +463,7 @@ class RuleSetFactory
     private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode)
     {
         foreach ($propertiesNode->children() as $node) {
+            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'property') {
                 $this->addProperty($rule, $node);
             }
@@ -534,9 +509,9 @@ class RuleSetFactory
      *
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
-     * @param $fileName     The filename of a rule-set definition.
+     * @param string $fileName The filename of a rule-set definition.
      *
-     * @return array
+     * @return array|null
      * @throws \RuntimeException
      */
     public function getIgnorePattern($fileName)
@@ -557,6 +532,7 @@ class RuleSetFactory
             }
 
             foreach ($xml->children() as $node) {
+                /** @var $node \SimpleXMLElement */
                 if ($node->getName() === 'exclude-pattern') {
                     $excludes[] = '' . $node;
                 }
@@ -564,5 +540,6 @@ class RuleSetFactory
 
             return $excludes;
         }
+        return null;
     }
 }

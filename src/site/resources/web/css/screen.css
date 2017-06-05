@@ -7,9 +7,7 @@
 
     text-decoration: none;
 
-    list-style: none;
-    list-style-image: none;
-    list-style-position: outside;
+    list-style: none outside none;
 }
 
 html {
@@ -217,7 +215,7 @@ table td {
 	width: 400px;
 
 	list-style-type: circle;
-	margin: 0px;
+	margin: 0;
 	padding: 2px 2px 2px 15px;
 
 	border: 1px solid #555753;
@@ -227,13 +225,13 @@ table td {
 }
 
 #footer .revision ul li {
-	margin: 1px 0px;
-	padding: 0px;
+	margin: 1px 0;
+	padding: 0;
 }
 
 #footer .revision ul li p {
-	margin: 1px 0px;
-	padding: 0px;
+	margin: 1px 0;
+	padding: 0;
 }
 
 #formats {

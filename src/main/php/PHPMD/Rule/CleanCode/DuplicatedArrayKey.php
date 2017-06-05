@@ -2,56 +2,39 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
  *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Manuel Pichler nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @author    Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
  */
+
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
+ * Duplicated Array Key Rule
+ *
  * This rule detects if array literal has duplicated entries for any key.
  *
- * @author    Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
+ * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  */
 class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAware
 {
@@ -59,75 +42,84 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * This method checks if a given function or method contains an array literal
      * with duplicated entries for any key and emits a rule violation if so.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param AbstractNode $node
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        foreach ($node->findChildrenOfType('Array') as $array) {
-            $this->analyzeArray($array);
+        foreach ($node->findChildrenOfType('Array') as $arrayNode) {
+            /** @var ASTNode $arrayNode */
+            $this->analyzeArray($arrayNode);
         }
     }
 
     /**
      * Analyzes single array.
      *
-     * @param \PHPMD\AbstractNode $node Array node.
+     * @param ASTNode $node Array node.
      * @return void
      */
-    private function analyzeArray(AbstractNode $node)
+    private function analyzeArray(ASTNode $node)
     {
-        // small note regarding implementation - no need for recursion, as `apply()`
-        // finds all Array nodes on all depts level
-
         $keys = array();
-        foreach ($node->findChildrenOfType('ArrayElement') as $arrayElement) {
-            // member of nested array - will be handled when `apply()` moves to that array
-            // could be nice if PDepend provides a method to fetch just direct children
-            if ($arrayElement->getParent() != $node) {
+        /** @var ASTArrayElement $arrayElement */
+        foreach ($node->getChildren() as $index => $arrayElement) {
+            $arrayElement = $this->normalizeKey($arrayElement, $index);
+            if (null === $arrayElement) {
+                // skip everything that can't be resolved easily
                 continue;
             }
-
-            $children = $arrayElement->getChildren();
-            // non-associative array
-            if (count($children) == 1) {
-                continue;
-            }
-
-            // $children is not wrapped as PHPMD's ASTNodes!
-            $arrayKey = $arrayElement->getChild(0);
-
-            // normalize key quoting
-            $key = $this->normalizeKey($arrayKey->getName());
-
+            $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
-                // duplicated key
-                $this->addViolation($arrayKey, array($key, $keys[$key]->getBeginLine()));
-            } else {
-                // remember first occurance
-                $keys[$key] = $arrayKey;
+                $this->addViolation($node, array($key, $arrayElement->getStartLine()));
+                continue;
             }
+            $keys[$key] = $arrayElement;
         }
     }
 
     /**
-     * Returns normalized key name.
+     * Sets normalized name as node's image.
      *
-     * @param string $key Literal key.
-     * @return Normalized key.
+     * @param AbstractASTNode $node Array key to evaluate.
+     * @param int $index Fallback in case of non-associative arrays
+     * @return AbstractASTNode Key name
      */
-    private function normalizeKey($key)
+    private function normalizeKey(AbstractASTNode $node, $index)
     {
-        // in PHP keys are considered equal based on value
-        // so integer and string with same content will still point to same entry
-        // numbers don't need any processing, they have plain value
-
-        // this is string literal, not number
-        if (in_array($key[0], array('"', '\''))) {
-            $key = stripslashes($key);
-            $key = mb_substr($key, 1, -1);
+        if (count($node->getChildren()) === 0) {
+            $node->setImage((string) $index);
+            return $node;
         }
+        
+        $node = $node->getChild(0);
+        if (!($node instanceof ASTLiteral)) {
+            // skip expressions, method calls, globals and constants
+            return null;
+        }
+        $node->setImage($this->stringFromLiteral($node));
 
-        return $key;
+        return $node;
+    }
+
+    /**
+     * Cleans string literals and casts boolean and null values as PHP engine does
+     *
+     * @param PDependASTNode $key
+     * @return string
+     */
+    private function stringFromLiteral(PDependASTNode $key)
+    {
+        $value = $key->getImage();
+        switch ($value) {
+            case 'false':
+                return '0';
+            case 'true':
+                return '1';
+            case 'null':
+                return '';
+            default:
+                return trim($value, '\'""');
+        }
     }
 }

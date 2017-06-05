@@ -24,9 +24,7 @@
         <name>Support &amp; Contact</name>
         <path>support/</path>
     </directory>
-
     <media>
         <path>robots.txt</path>
     </media>
 </index>
-

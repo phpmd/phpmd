@@ -3,7 +3,7 @@ PHPMD
 
 PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the well known Java tool PMD. PHPMD can be seen as an user friendly frontend application for the raw metrics stream measured by PHP Depend.
 
-http://phpmd.org
+https://phpmd.org
 
 .. image:: https://poser.pugx.org/phpmd/phpmd/v/stable.svg
    :target: https://packagist.org/packages/phpmd/phpmd
@@ -32,7 +32,7 @@ http://phpmd.org
 Installation
 ------------
 
-See http://phpmd.org/download/index.html
+See https://phpmd.org/download/index.html
 
 Command line usage
 ------------------
@@ -65,7 +65,7 @@ The `PHPMD Phar distribution`__ includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
 like a filesystem reference.
 
-__ http://phpmd.org/download/index.html
+__ https://phpmd.org/download/index.html
 
 Command line options
 --------------------
@@ -94,6 +94,9 @@ Command line options
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
+  - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
+    violations are found.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
@@ -118,7 +121,7 @@ You can also mix custom `rule set files`__ with build-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
 
-__ http://phpmd.org/documentation/creating-a-ruleset.html
+__ https://phpmd.org/documentation/creating-a-ruleset.html
 
 That's it. With this behavior you can specify you own combination of rule sets
 that will check the source code.
@@ -144,7 +147,9 @@ PHPMD's command line tool currently defines three different exit codes.
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
   without the occurence of an error/exception, but it has detected rule
-  violations in the analyzed source code.
+  violations in the analyzed source code. You can also prevent this behaviour
+  with the ``--ignore-violations-on-exit`` flag, which will result to a *0*
+  even if any violations are found.
 
 Renderers
 ---------
@@ -154,3 +159,10 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+
+API docs
+--------
+
+You find the up to date class API docs at `codedoc.pub`__.
+
+__ https://codedoc.pub/phpmd/phpmd/master/index.html

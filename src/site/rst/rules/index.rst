@@ -7,7 +7,7 @@ List of rulesets and rules contained in each ruleset.
 - `Clean Code Rules`__: The Clean Code ruleset contains rules that enforce a clean code base. This includes rules from SOLID and object calisthenics.
 - `Code Size Rules`__: The Code Size Ruleset contains a collection of rules that find code size related problems.
 - `Controversial Rules`__: This ruleset contains a collection of controversial rules.
-- `Design Rules`__: The Code Size Ruleset contains a collection of rules that find software design related problems.
+- `Design Rules`__: The Design Ruleset contains a collection of rules that find software design related problems.
 - `Naming Rules`__: The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
 - `Unused Code Rules`__: The Unused Code Ruleset contains a collection of rules that find unused code.
 
@@ -22,8 +22,8 @@ Clean Code Rules
 ================
 
 - `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
-- `ElseExpression`__: An if expression with an else branch is never necessary. You can rewrite the conditions in a way that the else is not necessary and the code becomes simpler to read. To achieve this use early return statements. To achieve this you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
-- `StaticAccess`__: Static acccess causes inexchangable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
+- `ElseExpression`__: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+- `StaticAccess`__: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
 
 __ cleancode.html#booleanargumentflag
 __ cleancode.html#elseexpression
@@ -39,7 +39,8 @@ Code Size Rules
 - `ExcessiveParameterList`__: Long parameter lists can indicate that a new object should be created to wrap the numerous parameters. Basically, try to group the parameters together.
 - `ExcessivePublicCount`__: A large number of public methods and attributes declared in a class can indicate the class may need to be broken up as increased effort will be required to thoroughly test it.
 - `TooManyFields`__: Classes that have too many fields could be redesigned to have fewer fields, possibly through some nested object grouping of some of the information. For example, a class with city/state/zip fields could instead have one Address field.
-- `TooManyMethods`__: A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects.
+- `TooManyMethods`__: A class with too many methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'. The default was changed from 10 to 25 in PHPMD 2.3.
+- `TooManyPublicMethods`__: A class with too many public methods is probably a good suspect for refactoring, in order to reduce its complexity and find a way to have more fine grained objects. By default it ignores methods starting with 'get' or 'set'.
 - `ExcessiveClassComplexity`__: The Weighted Method Count (WMC) of a class is a good indicator of how much time and effort is required to modify and maintain this class. The WMC metric is defined as the sum of complexities of all methods declared in a class. A large number of methods also means that this class has a greater potential impact on derived classes.
 
 __ codesize.html#cyclomaticcomplexity
@@ -50,6 +51,7 @@ __ codesize.html#excessiveparameterlist
 __ codesize.html#excessivepubliccount
 __ codesize.html#toomanyfields
 __ codesize.html#toomanymethods
+__ codesize.html#toomanypublicmethods
 __ codesize.html#excessiveclasscomplexity
 
 Controversial Rules
@@ -78,6 +80,9 @@ Design Rules
 - `NumberOfChildren`__: A class with an excessive number of children is an indicator for an unbalanced class hierarchy. You should consider to refactor this class hierarchy.
 - `DepthOfInheritance`__: A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.
 - `CouplingBetweenObjects`__: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
+- `DevelopmentCodeFragment`__: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
+- `IfStatementAssignment`__: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
+- `EmptyCatchBlock`__: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
 
 __ design.html#exitexpression
 __ design.html#evalexpression
@@ -85,6 +90,9 @@ __ design.html#gotostatement
 __ design.html#numberofchildren
 __ design.html#depthofinheritance
 __ design.html#couplingbetweenobjects
+__ design.html#developmentcodefragment
+__ design.html#ifstatementassignment
+__ design.html#emptycatchblock
 
 Naming Rules
 ============
@@ -93,7 +101,7 @@ Naming Rules
 - `LongVariable`__: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName`__: Detects when very short method names are used.
 - `ConstructorWithNameAsEnclosingClass`__: A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
-- `ConstantNamingConventions`__: Class/Interface constant nanmes should always be defined in uppercase.
+- `ConstantNamingConventions`__: Class/Interface constant names should always be defined in uppercase.
 - `BooleanGetMethodName`__: Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
 
 __ naming.html#shortvariable

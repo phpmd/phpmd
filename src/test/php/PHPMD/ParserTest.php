@@ -2,55 +2,27 @@
 /**
  * This file is part of PHP Mess Detector.
  *
- * Copyright (c) 2008-2012, Manuel Pichler <mapi@phpmd.org>.
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
  *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Manuel Pichler nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
  */
 
 namespace PHPMD;
 
+use PDepend\Source\Parser\InvalidStateException;
+
 /**
  * Test case for the PHP_Depend backend adapter class.
  *
- * @author    Manuel Pichler <mapi@phpmd.org>
- * @copyright 2008-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PHPMD\Parser
- * @group phpmd
- * @group unittest
  */
 class ParserTest extends AbstractTest
 {
@@ -66,7 +38,7 @@ class ParserTest extends AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(true));
 
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\ClassNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -85,7 +57,7 @@ class ParserTest extends AbstractTest
             ->method('isUserDefined')
             ->will($this->returnValue(false));
 
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitClass($mock);
@@ -98,7 +70,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\MethodNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock());
@@ -112,7 +84,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitMethod($this->getPHPDependMethodMock(null));
@@ -125,7 +97,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\FunctionNode'));
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock());
@@ -139,7 +111,7 @@ class ParserTest extends AbstractTest
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
     {
-        $adapter = new \PHPMD\Parser($this->getPHPDependMock());
+        $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
         $adapter->setReport($this->getReportMock(0));
         $adapter->visitFunction($this->getPHPDependFunctionMock(null));
@@ -161,10 +133,10 @@ class ParserTest extends AbstractTest
         $pdepend->expects($this->once())
             ->method('getExceptions')
             ->will($this->returnValue(array(
-                new \PDepend\Source\Parser\InvalidStateException(42, __FILE__, 'foo')
+                new InvalidStateException(42, __FILE__, 'foo')
             )));
 
-        $parser = new \PHPMD\Parser($pdepend);
+        $parser = new Parser($pdepend);
         $parser->parse($report);
     }
 

@@ -14,11 +14,11 @@ The Code Size Ruleset contains a collection of rules that find code size related
           since="0.1"
           message = "The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}."
           class="PHPMD\Rule\CyclomaticComplexity"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#cyclomaticcomplexity">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#cyclomaticcomplexity">
         <description>
             <![CDATA[
 Complexity is determined by the number of decision points in a method plus one for the
-method entry.  The decision points are 'if', 'while', 'for', and 'case labels'.  Generally,
+method entry. The decision points are 'if', 'while', 'for', and 'case labels'. Generally,
 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity,
  and 11+ is very high complexity.
             ]]>
@@ -35,26 +35,26 @@ method entry.  The decision points are 'if', 'while', 'for', and 'case labels'. 
         </properties>
         <example>
             <![CDATA[
-// Cyclomatic Complexity = 12
+// Cyclomatic Complexity = 11
 class Foo {
-1   public function example()  {
-2       if ($a == $b)  {
+1   public function example() {
+2       if ($a == $b) {
 3           if ($a1 == $b1) {
                 fiddle();
-4           } else if ($a2 == $b2) {
+4           } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
                 fiddle();
             }
-5       } else if ($c == $d) {
+5       } elseif ($c == $d) {
 6           while ($c == $d) {
                 fiddle();
             }
-7        } else if ($e == $f) {
+7        } elseif ($e == $f) {
 8           for ($n = 0; $n < $h; $n++) {
                 fiddle();
             }
-        } else{
+        } else {
             switch ($z) {
 9               case 1:
                     fiddle();
@@ -65,7 +65,7 @@ class Foo {
 11              case 3:
                     fiddle();
                     break;
-12              default:
+                default:
                     fiddle();
                     break;
             }
@@ -81,7 +81,7 @@ class Foo {
           since="0.1"
           message="The {0} {1}() has an NPath complexity of {2}. The configured NPath complexity threshold is {3}."
           class="PHPMD\Rule\Design\NpathComplexity"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#npathcomplexity">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#npathcomplexity">
         <description>
 The NPath complexity of a method is the number of acyclic execution paths through that method.
 A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
@@ -106,10 +106,10 @@ class Foo {
           since="0.1"
           message="The {0} {1}() has {2} lines of code. Current threshold is set to {3}. Avoid really long methods."
           class="PHPMD\Rule\Design\LongMethod"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivemethodlength">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#excessivemethodlength">
         <description>
 Violations of this rule usually indicate that the method is doing
-too much.  Try to reduce the method size by creating helper methods and removing any copy/pasted code.
+too much. Try to reduce the method size by creating helper methods and removing any copy/pasted code.
         </description>
         <priority>3</priority>
         <properties>
@@ -133,10 +133,10 @@ class Foo {
  	  since="0.1"
           message="The class {0} has {1} lines of code. Current threshold is {2}. Avoid really long classes."
           class="PHPMD\Rule\Design\LongClass"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasslength">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
 Long Class files are indications that the class may be trying to
-do too much.  Try to break it down, and reduce the size to something
+do too much. Try to break it down, and reduce the size to something
 manageable.
         </description>
         <priority>3</priority>
@@ -158,9 +158,9 @@ class Foo {
 
     <rule name="ExcessiveParameterList"
           since="0.1"
-          message="The {0} {1} has {2} parameters. Consider to reduce parameter number under {3}."
+          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to less than {3}."
           class="PHPMD\Rule\Design\LongParameterList"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveparameterlist">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
 Long parameter lists can indicate that a new object should be created to
 wrap the numerous parameters.  Basically, try to group the parameters together.
@@ -184,9 +184,9 @@ class Foo {
 
     <rule name="ExcessivePublicCount"
           since="0.1"
-          message="The {0} {1} has {2} public methods and attributes. Consider to reduce the number of public items under {3}."
+          message="The {0} {1} has {2} public methods and attributes. Consider reducing the number of public items to less than {3}."
           class="PHPMD\Rule\ExcessivePublicCount"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessivepubliccount">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
 A large number of public methods and attributes declared in a class can indicate
 the class may need to be broken up as increased effort will be required to
@@ -215,9 +215,9 @@ public class Foo {
 
     <rule name="TooManyFields"
           since="0.1"
-          message="The {0} {1} has {2} fields. Consider to redesign {1} to keep the number of fields under {3}."
+          message="The {0} {1} has {2} fields. Consider redesigning {1} to keep the number of fields under {3}."
           class="PHPMD\Rule\Design\TooManyFields"
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanyfields">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanyfields">
         <description>
 Classes that have too many fields could be redesigned to have fewer fields,
 possibly through some nested object grouping of some of the information. For
@@ -337,7 +337,7 @@ public class Foo extends Bar {
           since="0.1"
           class="PHPMD\Rule\Design\TooManyMethods"
           message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
             <![CDATA[
 A class with too many methods is probably a good suspect for refactoring, in
@@ -359,7 +359,7 @@ The default was changed from 10 to 25 in PHPMD 2.3.
           since="0.1"
           class="PHPMD\Rule\Design\TooManyPublicMethods"
           message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanypublicmethods">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanypublicmethods">
         <description>
             <![CDATA[
 A class with too many public methods is probably a good suspect for refactoring, in
@@ -379,7 +379,7 @@ By default it ignores methods starting with 'get' or 'set'.
           since="0.2.5"
           class="PHPMD\Rule\Design\WeightedMethodCount"
           message="The class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
+          externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
         <description>
             <![CDATA[
 The Weighted Method Count (WMC) of a class is a good indicator of how much time
@@ -395,23 +395,23 @@ methods also means that this class has a greater potential impact on derived cla
         <example>
             <![CDATA[
 class Foo {
-    public function bar()  {
+    public function bar() {
         if ($a == $b)  {
             if ($a1 == $b1) {
                 fiddle();
-            } else if ($a2 == $b2) {
+            } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
             }
         }
     }
-    public function baz()  {
-        if ($a == $b)  {
+    public function baz() {
+        if ($a == $b) {
             if ($a1 == $b1) {
                 fiddle();
-            } else if ($a2 == $b2) {
+            } elseif ($a2 == $b2) {
                 fiddle();
-            }  else {
+            } else {
             }
         }
     }

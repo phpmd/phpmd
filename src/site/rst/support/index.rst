@@ -2,11 +2,11 @@
 Support & Contact
 =================
 
-If you think you found an error or you have an improvment for
-PHPMD, you can send questions and suggestions to our mailinglist.
-Or if you are interested in helping to improve this software, 
-by writing patches, extensions or just providing new ideas, you 
-should feel free to join PHPMD's `IRC channel`__ or send a 
+If you think you found an error or you have an improvement for
+PHPMD, you can send questions and suggestions to our mailing list.
+Or if you are interested in helping to improve this software,
+by writing patches, extensions or just providing new ideas, you
+should feel free to join PHPMD's `IRC channel`__ or send a
 message to the phpmd-users@phpmd.org mailinglist.
 
 IRC

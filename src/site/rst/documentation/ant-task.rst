@@ -15,7 +15,7 @@ The first option is to copy or link the ``*.jar`` file into the ``lib``
 directory of your ant installation. ::
 
   mapi@arwen ~ $ wget \
-       http://phpmd.org/download/extensions/ant-phpmd-0.1.0.jar
+       https://phpmd.org/download/extensions/ant-phpmd-0.1.0.jar
   ...
   mapi@arwen ~ $ ln -s ~/ant-phpmd-0.1.0.jar /opt/ant/lib/ant-phpmd.jar
 
@@ -111,5 +111,3 @@ Then, after the end of the PHPMD task, do this: ::
   <xslt in="${builddir}/~report.xml"
         style="${basedir}/report.xslt"
         out="${reportdir}/report.html" />
-
-
