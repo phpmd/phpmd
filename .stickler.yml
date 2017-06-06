@@ -2,6 +2,9 @@ linters:
   phpcs:
     standard: 'PSR2'
     extensions: '.php'
+    exclude:
+      - 'Squiz.Classes.ValidClassName'
+      - 'PEAR.NamingConventions.ValidClassName'
     tab_width: 4
 branches:
     ignore: ['1.5.x']
