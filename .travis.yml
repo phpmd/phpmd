@@ -1,4 +1,5 @@
 language: php
+sudo: false
 
 matrix:
   include:
