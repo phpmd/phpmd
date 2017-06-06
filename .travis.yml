@@ -1,5 +1,10 @@
 language: php
 
+addons:
+  apt:
+    packages:
+      - phpcpd
+
 matrix:
   include:
     - php: 5.3
@@ -26,6 +31,7 @@ before_script:
 script:
   - if [ $TRAVIS_PHP_VERSION != 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG ; fi
   - if [ $TRAVIS_PHP_VERSION  = 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
+  - phpcpd src/main/
 
 notifications:
   irc: "irc.freenode.org#phpmd"
