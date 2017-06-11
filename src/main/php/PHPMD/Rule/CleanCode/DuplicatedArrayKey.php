@@ -79,6 +79,8 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     }
 
     /**
+     * Changes key name to its string format.
+     *
      * To compare keys, we have to cast them to string.
      * Non-associative keys have to use index as its key,
      * while boolean and nulls have to be casted respectively.
