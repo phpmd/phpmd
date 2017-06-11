@@ -218,4 +218,16 @@ class DuplicatedArrayKeyTest extends AbstractTest
         $rule->setReport($this->getReportMock(4));
         $rule->apply($this->getFunction());
     }
+
+    /**
+     * testRuleAppliesCorrectlyToMultipleArrays
+     *
+     * @return void
+     */
+    public function testRuleAppliesCorrectlyToMultipleArrays()
+    {
+        $rule = new DuplicatedArrayKey();
+        $rule->setReport($this->getReportMock(4));
+        $rule->apply($this->getFunction());
+    }
 }

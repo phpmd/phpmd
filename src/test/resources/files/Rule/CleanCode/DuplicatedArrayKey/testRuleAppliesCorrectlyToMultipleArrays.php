@@ -15,10 +15,29 @@
  * @link http://phpmd.org/
  */
 
-function testRuleNotAppliesToFunctionWithoutArrayDefinition()
+function testRuleAppliesCorrectlyToMultipleArrays()
 {
-    $foo = 'bar';
-    $foo .= 'baz';
+    $arrayOne = array(
+        'foo' => 'bar',
+        'foo' => 'bar',
+    );
 
-    return $foo;
+    $arrayTwo = array(
+        'foo' => 'bar',
+    );
+
+    $arrayThree = array(
+        'foo' => 'bar',
+        'foo' => 'bar',
+        'foo' => 'bar',
+    );
+
+    $arrayFour = array(
+        'foo' => array(
+            'foo' => array(
+                'foo' => 'bar',
+                'foo' => 'bar',
+            ),
+        ),
+    );
 }

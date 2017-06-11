@@ -15,7 +15,6 @@
  * @link http://phpmd.org/
  */
 
-
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTNode;
@@ -31,7 +30,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * Duplicated Array Key Rule
  *
- * This rule detects if array literal has duplicated entries for any key.
+ * This rule detects duplicated array keys.
  *
  * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
@@ -39,8 +38,7 @@ use PHPMD\Rule\MethodAware;
 class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * This method checks if a given function or method contains an array literal
-     * with duplicated entries for any key and emits a rule violation if so.
+     * Retrieves all arrays from single node and performs comparison logic on it
      *
      * @param AbstractNode $node
      * @return void
@@ -49,17 +47,18 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     {
         foreach ($node->findChildrenOfType('Array') as $arrayNode) {
             /** @var ASTNode $arrayNode */
-            $this->analyzeArray($arrayNode);
+            $this->checkForDuplicatedArrayKeys($arrayNode);
         }
     }
 
     /**
-     * Analyzes single array.
+     * This method checks if a given function or method contains an array literal
+     * with duplicated entries for any key and emits a rule violation if so.
      *
      * @param ASTNode $node Array node.
      * @return void
      */
-    private function analyzeArray(ASTNode $node)
+    private function checkForDuplicatedArrayKeys(ASTNode $node)
     {
         $keys = array();
         /** @var ASTArrayElement $arrayElement */
@@ -69,6 +68,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
                 // skip everything that can't be resolved easily
                 continue;
             }
+
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
                 $this->addViolation($node, array($key, $arrayElement->getStartLine()));
@@ -79,7 +79,11 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     }
 
     /**
-     * Sets normalized name as node's image.
+     * To compare keys, we have to cast them to string.
+     * Non-associative keys have to use index as its key,
+     * while boolean and nulls have to be casted respectively.
+     * As current logic doesn't evaluate expressions nor constants,
+     * statics, globals, etc. we simply skip them.
      *
      * @param AbstractASTNode $node Array key to evaluate.
      * @param int $index Fallback in case of non-associative arrays
@@ -87,6 +91,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      */
     private function normalizeKey(AbstractASTNode $node, $index)
     {
+        // non-associative - key name equals to its index
         if (count($node->getChildren()) === 0) {
             $node->setImage((string) $index);
             return $node;
@@ -97,7 +102,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
             // skip expressions, method calls, globals and constants
             return null;
         }
-        $node->setImage($this->stringFromLiteral($node));
+        $node->setImage($this->castStringFromLiteral($node));
 
         return $node;
     }
@@ -108,7 +113,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param PDependASTNode $key
      * @return string
      */
-    private function stringFromLiteral(PDependASTNode $key)
+    private function castStringFromLiteral(PDependASTNode $key)
     {
         $value = $key->getImage();
         switch ($value) {

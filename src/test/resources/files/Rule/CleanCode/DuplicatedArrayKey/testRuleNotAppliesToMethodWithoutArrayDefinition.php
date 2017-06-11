@@ -21,5 +21,6 @@ class testRuleNotAppliesToMethodWithoutArrayDefinition
 {
     public function testRuleNotAppliesToMethodWithoutArrayDefinition()
     {
+        $someVar = '';
     }
 }

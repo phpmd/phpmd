@@ -26,7 +26,7 @@ class testRuleAppliesWhenKeyIsDeclaredInNonStandardWay extends testRuleAppliesWh
 {
     const DUPLICATED_KEY = 'foo';
 
-    static $classStaticPropertyDuplicate = 'foo';
+    public static $classStaticPropertyDuplicate = 'foo';
 
     private $classPrivatePropertyDuplicate = 'foo';
 
@@ -47,32 +47,33 @@ class testRuleAppliesWhenKeyIsDeclaredInNonStandardWay extends testRuleAppliesWh
 
         return array(
             // not applied - comment
-            0 => 'b/ar', // not applied - first occurrence
+            // 0 => 'bar', // not applied - comment with content
+            0 => 'bar', // not applied - first occurrence
             false => 'bar', // applied - shallow cast to integer 0
             1 => 'bar', // not applied - first occurrence
             true => 'bar', // applied - shallow cast to integer 1
             '' => 'bar', // not applied - first occurrence
             null => 'bar', // applied - shallow cast to empty string
             'foo' => 'bar', // not applied - first occurrence
-            'f' . 'o' . 'o' => 'bar', // not applied - resolves in string 'foo' (to be implemented?)
+            'f' . 'o' . 'o' => 'bar', // not applied - resolves in string 'foo' (not supported yet)
             'f' . 'o' . (14 * 1) || 1 . 'o' => 'bar', // not applied - resolves in string 'foo' (to be implemented?)
-            self::DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
-            parent::DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
-            static::DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
-            self::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
-            parent::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
-            static::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (to be implemented?)
+            self::DUPLICATED_KEY => 'bar', // not applied (not supported yet)
+            parent::DUPLICATED_KEY => 'bar', // not applied (not supported yet)
+            static::DUPLICATED_KEY => 'bar', // not applied (not supported yet)
+            self::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (not supported yet)
+            parent::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (not supported yet)
+            static::INTERFACE_DUPLICATED_KEY => 'bar', // not applied (not supported yet)
             $foo => 'bar', // not applied - resolving variables is impossible in this context
-            $baz => 'bar', // not applied - see above
+            $baz => 'bar', // not applied - resolving variables is impossible in this context
             $this->getDuplicatedName() => 'bar', // not applied - resolving variable depends on inheritance tree
             self::$classStaticPropertyDuplicate => 'bar', // not applied - static property may be modified externally
-            self::$classPrivateStaticPropertyDuplicate, // not applied - see above
+            self::$classPrivateStaticPropertyDuplicate, // not applied - static property may be modified externally
             $this->classPrivatePropertyDuplicate => 'bar', // not applied - may be modified at any time
-            $this->classProtectedPropertyDuplicate => 'bar', // not applied - see above
-            $this->classPublicPropertyDuplicate => 'bar', // not applied - see above
+            $this->classProtectedPropertyDuplicate => 'bar', // not applied - may be modified at any time
+            $this->classPublicPropertyDuplicate => 'bar', // not applied - may be modified at any time
             global_function_duplicate() => 'bar', // not applied - may be different depending on namespace
             GLOBAL_DUPLICATE => 'bar', // not applied - may be different depending on context
-            "foo" => 'bar', // applied - checkpoint
+            "foo" => 'bar', // applied - duplicated variable to check if none of above breaks execution
         );
     }
 
