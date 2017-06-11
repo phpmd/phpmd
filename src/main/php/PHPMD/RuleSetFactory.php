@@ -493,8 +493,8 @@ class RuleSetFactory
      * @param string $fileName The filename of a rule-set definition.
      *
      * @return array|null
-     * @throws \RuntimeException
-     * @throws RuleSetNotFoundException
+     * @throws \RuntimeException Thrown if file is not proper xml
+     * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     public function getIgnorePattern($fileName)
     {
@@ -526,15 +526,15 @@ class RuleSetFactory
     }
 
     /**
-     * Checks if given file location exists, is file (or symlink to file)
+     * Checks if given file path exists, is file (or symlink to file)
      * and is readable by current user
      *
-     * @param string $location File path to check against
+     * @param string $filePath File path to check against
      * @return bool True if file exists and is readable, false otherwise
      */
-    private function isReadableFile($location)
+    private function isReadableFile($filePath)
     {
-        if (is_readable($location) && is_file($location)) {
+        if (is_readable($filePath) && is_file($filePath)) {
             return true;
         }
         return false;

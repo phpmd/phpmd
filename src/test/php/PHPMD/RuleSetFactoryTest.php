@@ -654,8 +654,8 @@ class RuleSetFactoryTest extends AbstractTest
     /**
      * Checks if PHPMD doesn't treat directories named as code rule as files
      *
-     * @see https://github.com/phpmd/phpmd/issues/47
      * @return void
+     * @link https://github.com/phpmd/phpmd/issues/47
      */
     public function testIfGettingRuleFilePathExcludeUnreadablePaths()
     {
