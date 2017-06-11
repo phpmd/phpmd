@@ -68,7 +68,7 @@ This rule has the following properties:
 =================================== =============== ===============================================
 
 IfStatementAssignment
-=============
+=====================
 
 Since: PHPMD 2.7.0
 
@@ -88,6 +88,27 @@ Example: ::
               // ...
           }
       }
+  }
+
+
+DuplicateArrayKey
+=================
+
+Since: PHPMD 2.7.0
+
+Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+
+
+Example: ::
+
+  function createArray() {
+      return [
+          'non-associative 0-element', // not applied
+          0 => 'associative 0-element', // applied
+          false => 'associative 0-element', // applied
+          'foo' => 'bar', // not applied
+          "foo" => 'baz', // applied
+      ];
   }
 
 
