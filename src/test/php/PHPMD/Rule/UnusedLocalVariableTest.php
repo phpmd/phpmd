@@ -641,4 +641,17 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleNotAppliesToPredefinedVariables.php
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToPredefinedVariables()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getMethod());
+    }
 }
