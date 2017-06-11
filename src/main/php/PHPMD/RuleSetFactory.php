@@ -135,37 +135,14 @@ class RuleSetFactory
      * the input when it is already a filename.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
-     * @return string
+     * @return string Path to rule set file name
+     * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     private function createRuleSetFileName($ruleSetOrFileName)
     {
-        if (!is_dir($ruleSetOrFileName) && is_readable($ruleSetOrFileName)) {
-            return $ruleSetOrFileName;
-        }
-
-        $fileName = $this->location . '/' . $ruleSetOrFileName;
-        if (!is_dir($fileName) && is_readable($fileName)) {
-            return $fileName;
-        }
-
-        $fileName = $this->location . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (!is_dir($fileName) && is_readable($fileName)) {
-            return $fileName;
-        }
-
-        $fileName = getcwd() . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (!is_dir($fileName) && is_readable($fileName)) {
-            return $fileName;
-        }
-
-        foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
-            $fileName = $includePath . '/' . $ruleSetOrFileName;
-            if (!is_dir($fileName) && is_readable($fileName)) {
-                return $fileName;
-            }
-            $fileName = $includePath . '/' . $ruleSetOrFileName . ".xml";
-            if (!is_dir($fileName) && is_readable($fileName)) {
-                return $fileName;
+        foreach ($this->filePaths($ruleSetOrFileName) as $filePath) {
+            if ($this->isReadableFile($filePath)) {
+                return $filePath;
             }
         }
 
@@ -545,5 +522,43 @@ class RuleSetFactory
             return $excludes;
         }
         return null;
+    }
+
+    /**
+     * Checks if given file location exists, is file (or symlink to file)
+     * and is readable by current user
+     *
+     * @param string $location File path to check against
+     * @return bool True if file exists and is readable, false otherwise
+     */
+    private function isReadableFile($location)
+    {
+        if (is_readable($location) && is_file($location)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns list of possible file paths to search against code rules
+     *
+     * @param string $fileName Rule set file name
+     * @return array Array of possible file locations
+     */
+    private function filePaths($fileName)
+    {
+        $filePathParts = array(
+            array($fileName),
+            array($this->location, $fileName),
+            array($this->location, 'rulesets', $fileName . '.xml'),
+            array(getcwd(), 'rulesets', $fileName . '.xml'),
+        );
+
+        foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
+            $filePathParts[] = array($includePath, $fileName);
+            $filePathParts[] = array($includePath, $fileName . '.xml');
+        }
+
+        return array_map('implode', $filePathParts, array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR));
     }
 }
