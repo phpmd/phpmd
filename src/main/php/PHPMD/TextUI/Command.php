@@ -132,7 +132,6 @@ class Command
      * value can be used as exit code.
      *
      * @param array $args The raw command line arguments array.
-     *
      * @return integer
      */
     public static function main(array $args)

@@ -42,7 +42,6 @@ class ProcessingErrorTest extends AbstractTest
      * a given exception message,
      *
      * @param string $message The original exception message
-     *
      * @return void
      * @dataProvider getParserExceptionMessages
      */

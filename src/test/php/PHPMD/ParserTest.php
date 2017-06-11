@@ -178,7 +178,6 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend function instance.
      *
      * @param string $fileName Optional file name for the source file.
-     *
      * @return PHP_Depend_Code_Function
      */
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
@@ -195,7 +194,6 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend method instance.
      *
      * @param string $fileName Optional file name for the source file.
-     *
      * @return PHP_Depend_Code_CodeMethod
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
@@ -212,7 +210,6 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend file instance.
      *
      * @param string $fileName The temporary file name.
-     *
      * @return PHP_Depend_Code_File
      */
     protected function getPHPDependFileMock($fileName)
