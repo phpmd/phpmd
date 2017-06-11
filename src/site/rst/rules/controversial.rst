@@ -11,7 +11,6 @@ Since: PHPMD 0.2
 
 Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.
 
-
 Example: ::
 
   class Foo {
@@ -27,7 +26,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the CamelCase notation to name classes.
 
-
 Example: ::
 
   class class_name {
@@ -39,7 +37,6 @@ CamelCasePropertyName
 Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name attributes.
-
 
 Example: ::
 
@@ -62,7 +59,6 @@ CamelCaseMethodName
 Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name methods.
-
 
 Example: ::
 
@@ -87,7 +83,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name parameters.
 
-
 Example: ::
 
   class ClassName {
@@ -102,7 +97,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name variables.
 
-
 Example: ::
 
   class ClassName {
@@ -110,7 +104,6 @@ Example: ::
           $data_module = new DataModule();
       }
   }
-
 
 Remark
 ======

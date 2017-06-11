@@ -146,7 +146,6 @@ attribute ``@name`` which specifies the name of the excluded rule.
 
 __ /rules/naming.html
 
-
 ::
 
   <?xml version="1.0"?>

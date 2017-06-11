@@ -57,7 +57,6 @@ class StaticAccessTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
-
     public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded()
     {
         $rule = new StaticAccess();

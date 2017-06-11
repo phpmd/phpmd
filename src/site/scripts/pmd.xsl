@@ -232,7 +232,6 @@ __ http://pmd.sourceforge.net/
         </xsl:choose>
     </xsl:template>
 
-
     <xsl:template name="trim">
         <xsl:param name="text" />
         <xsl:call-template name="trim.left">

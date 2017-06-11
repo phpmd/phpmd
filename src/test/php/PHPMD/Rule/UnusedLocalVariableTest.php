@@ -441,7 +441,6 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
-
     /**
      * testRuleAppliesToUnusedForeachValueWhenNotIgnored
      *
@@ -454,7 +453,6 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
-
 
     /**
      * testRuleDoesNotApplyToUnusedForeachKeyWhenIgnored

@@ -193,7 +193,6 @@
             </action>
         </release>
 
-
         <release version="2.2.2"
                  date="2015/03/26"
                  description="Bugfix release that closes some issues in phpmd's core and in the project documentation.">

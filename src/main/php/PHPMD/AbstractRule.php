@@ -327,7 +327,6 @@ abstract class AbstractRule implements Rule
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
-
     /**
      * Returns the raw string value of a configured property or throws an
      * exception when no property with <b>$name</b> exists.
