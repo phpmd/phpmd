@@ -23,7 +23,7 @@
 class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule{
 
     /**
-     * A method that returnes foo, bar and baz.
+     * A method that returns foo, bar and baz.
      *
      * @return string
      */
