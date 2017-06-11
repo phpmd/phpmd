@@ -494,6 +494,7 @@ class RuleSetFactory
      *
      * @return array|null
      * @throws \RuntimeException
+     * @throws RuleSetNotFoundException
      */
     public function getIgnorePattern($fileName)
     {

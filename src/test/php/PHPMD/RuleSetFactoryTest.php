@@ -660,12 +660,24 @@ class RuleSetFactoryTest extends AbstractTest
     public function testIfGettingRuleFilePathExcludeUnreadablePaths()
     {
         self::changeWorkingDirectory(__DIR__);
-        set_include_path($this->getIncludePathForFileAccessTest());
-
         $factory = new RuleSetFactory();
+        $runtimeExceptionCount = 0;
+        $ruleSetNotFoundExceptionCount = 0;
 
-        $this->assertEquals(array('some/excluded/files'), $factory->getIgnorePattern(self::DIR_UNDER_TESTS));
-        restore_include_path();
+        foreach ($this->getPathsForFileAccessTest() as $path) {
+            try {
+                $this->assertEquals(
+                    array('some/excluded/files'),
+                    $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
+                );
+            } catch (RuleSetNotFoundException $e) {
+                $ruleSetNotFoundExceptionCount++;
+            } catch (\RuntimeException $e) {
+                $runtimeExceptionCount++;
+            }
+        }
+        $this->assertEquals(0, $runtimeExceptionCount);
+        $this->assertEquals(5, $ruleSetNotFoundExceptionCount);
     }
 
     /**
@@ -703,9 +715,9 @@ class RuleSetFactoryTest extends AbstractTest
     /**
      * Sets up files and directories for XML rule file access test
      *
-     * @return string Include paths
+     * @return array Paths to test against
      */
-    public function getIncludePathForFileAccessTest()
+    public function getPathsForFileAccessTest()
     {
         $fileContent = file_get_contents(__DIR__ . '/../../resources/files/rulesets/exclude-pattern.xml');
         $structure = array(
@@ -733,15 +745,13 @@ class RuleSetFactoryTest extends AbstractTest
         $root->getChild('dir3/' . self::DIR_UNDER_TESTS)->chown(vfsStream::OWNER_ROOT)->chgrp(vfsStream::GROUP_ROOT);
         $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(000);
 
-        $includePaths = array(
+        return array(
             $root->url(),
-            $root->url() . '/dir1',
-            $root->url() . '/dir2',
-            $root->url() . '/dir3',
-            $root->url() . '/dirÅ/foo',
-            $root->url() . '/dirÅ/bar',
+            $root->url() . '/dir1/',
+            $root->url() . '/dir2/',
+            $root->url() . '/dir3/',
+            $root->url() . '/dirÅ/foo/',
+            $root->url() . '/dirÅ/bar/',
         );
-
-        return implode(PATH_SEPARATOR, $includePaths);
     }
 }
