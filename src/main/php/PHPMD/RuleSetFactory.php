@@ -74,7 +74,6 @@ class RuleSetFactory
      * Sets the minimum priority that a rule must have.
      *
      * @param integer $minimumPriority The minimum priority value.
-     *
      * @return void
      */
     public function setMinimumPriority($minimumPriority)
@@ -149,7 +148,6 @@ class RuleSetFactory
      * Lists available rule-set identifiers in given directory.
      *
      * @param string $directory The directory to scan for rule-sets.
-     *
      * @return string[]
      */
     private static function listRuleSetsInDirectory($directory)
@@ -487,7 +485,6 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     *
      * @return array|null
      * @throws \RuntimeException Thrown if file is not proper xml
      * @throws RuleSetNotFoundException Thrown if no readable file found

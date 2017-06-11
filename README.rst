@@ -134,7 +134,6 @@ to create one output for certain parts of your code ::
 
  ~ $ phpmd /path/to/code,index.php,/another/place/with/code text codesize
 
-
 Exit codes
 ----------
 

@@ -18,7 +18,7 @@
 namespace PHPMDTest;
 
 /**
- * @see https://github.com/phpmd/phpmd/issues/110
+ * @link https://github.com/phpmd/phpmd/issues/110
  */
 class testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo
 {

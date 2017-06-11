@@ -23,7 +23,6 @@ The second option is to call ant with the command line switch ``-lib`` ::
 
   mapi@arwen ~ $ ant -lib ant-phpmd-0.1.0.jar
 
-
 Now we can start using PHPMD in our ant ``build.xml`` file by adding
 a task definition that informs ant about the new task and registers
 it with a custom identifier. ::

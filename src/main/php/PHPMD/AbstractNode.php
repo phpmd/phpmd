@@ -86,7 +86,6 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param integer $index The child offset.
-     *
      * @return \PHPMD\Node\ASTNode
      */
     public function getChild($index)
@@ -220,7 +219,6 @@ abstract class AbstractNode
      * <b>null</b> when no such metric exists.
      *
      * @param string $name The metric name or abbreviation.
-     *
      * @return mixed
      */
     public function getMetric($name)

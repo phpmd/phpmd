@@ -165,7 +165,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
-     *
      * @return string
      * @since 1.1.0
      */
@@ -310,7 +309,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $metric The metric acronym used by PHP_Depend.
      * @param mixed  $value  The expected metric return value.
-     *
      * @return \PHPMD\Node\FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
@@ -348,7 +346,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a mocked report instance.
      *
      * @param integer $expectedInvokes Number of expected invokes.
-     *
      * @return \PHPMD\Report
      */
     protected function getReportMock($expectedInvokes = -1)
@@ -456,7 +453,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $actualOutput     Generated xml output.
      * @param string $expectedFileName File with expected xml result.
-     *
      * @return void
      */
     public static function assertXmlEquals($actualOutput, $expectedFileName)
@@ -515,7 +511,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Changes the working directory for a single test.
      *
      * @param string $localPath The temporary working directory.
-     *
      * @return void
      */
     protected static function changeWorkingDirectory($localPath = '')

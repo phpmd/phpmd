@@ -1,36 +1,36 @@
 body {
-	font-size: 12px;
-	font-family: sans-serif;
+    font-size: 12px;
+    font-family: sans-serif;
 }
 
 a {
-	color: inherit;
+    color: inherit;
 }
 
 p {
-	font-size: 12px;
-	font-family: sans-serif;
-	color: #000000;
-	margin-bottom: 1em;
+    font-size: 12px;
+    font-family: sans-serif;
+    color: #000000;
+    margin-bottom: 1em;
 }
 
 img {
-	border: none;
+    border: none;
 }
 
 code {
-	white-space: pre;
-	display: block;
+    white-space: pre;
+    display: block;
 }
 
 div.footer {
-	margin-top: 10px;
-	font-size: 10px;
+    margin-top: 10px;
+    font-size: 10px;
 }
 
 /* Hide unimportant stuff */
 fieldset,
 div.changelog,
 ul.navigation {
-	display: none;
+    display: none;
 }

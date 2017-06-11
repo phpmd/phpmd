@@ -61,7 +61,6 @@ Command line options
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
 
-
 Using multiple rule sets
 ````````````````````````
 

@@ -57,8 +57,6 @@ Maintenance release with new PDepend version bundled
 phpmd-2.4.2 (2016/03/10)
 ========================
 
-
-
 - Fixed #261: Prove Issue 261 and added tests for 
   CamelCaseVariableName Fixed in commit #319b398.
 - Fixed #328: Cannot create new nodes, when internal state is frozen. 
@@ -267,8 +265,6 @@ outstanding pull requests.
 
 phpmd-2.1.1 (2014/09/09)
 ========================
-
-
 
 - Fixed #181: 404 error on your website release area
 - Fixed #168: --version argument doesn't return version Fixed in 

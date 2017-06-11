@@ -96,7 +96,6 @@ class RuleSet implements \IteratorAggregate
      * Sets the file name where the definition of this rule-set comes from.
      *
      * @param string $fileName The file name.
-     *
      * @return void
      */
     public function setFileName($fileName)
@@ -118,7 +117,6 @@ class RuleSet implements \IteratorAggregate
      * Sets the name of this rule-set.
      *
      * @param string $name The name of this rule-set.
-     *
      * @return void
      */
     public function setName($name)
@@ -140,7 +138,6 @@ class RuleSet implements \IteratorAggregate
      * Sets the description text for this rule-set instance.
      *
      * @param string $description The description text.
-     *
      * @return void
      */
     public function setDescription($description)

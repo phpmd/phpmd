@@ -11,7 +11,6 @@ Since: PHPMD 0.2
 
 Detects when a field, local, or parameter has a very short name.
 
-
 Example: ::
 
   class Something {
@@ -39,7 +38,6 @@ LongVariable
 Since: PHPMD 0.2
 
 Detects when a field, formal or local variable is declared with a long name.
-
 
 Example: ::
 
@@ -69,7 +67,6 @@ Since: PHPMD 0.2
 
 Detects when very short method names are used.
 
-
 Example: ::
 
   class ShortMethod {
@@ -93,7 +90,6 @@ Since: PHPMD 0.2
 
 A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
 
-
 Example: ::
 
   class MyClass {
@@ -110,7 +106,6 @@ Since: PHPMD 0.2
 
 Class/Interface constant names should always be defined in uppercase.
 
-
 Example: ::
 
   class Foo {
@@ -124,7 +119,6 @@ BooleanGetMethodName
 Since: PHPMD 0.2
 
 Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
-
 
 Example: ::
 
@@ -150,7 +144,6 @@ This rule has the following properties:
 =================================== =============== ============================================================
  checkParameterizedMethods           false           Applies only to methods without parameter when set to true 
 =================================== =============== ============================================================
-
 
 Remark
 ======

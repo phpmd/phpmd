@@ -11,7 +11,6 @@ Since: PHPMD 0.1
 
 Complexity is determined by the number of decision points in a method plus one for the method entry. The decision points are 'if', 'while', 'for', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.
 
-
 Example: ::
 
   // Cyclomatic Complexity = 11
@@ -69,7 +68,6 @@ Since: PHPMD 0.1
 
 The NPath complexity of a method is the number of acyclic execution paths through that method. A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
 
-
 Example: ::
 
   class Foo {
@@ -92,7 +90,6 @@ ExcessiveMethodLength
 Since: PHPMD 0.1
 
 Violations of this rule usually indicate that the method is doing too much. Try to reduce the method size by creating helper methods and removing any copy/pasted code.
-
 
 Example: ::
 
@@ -120,7 +117,6 @@ Since: PHPMD 0.1
 
 Long Class files are indications that the class may be trying to do too much. Try to break it down, and reduce the size to something manageable.
 
-
 Example: ::
 
   class Foo {
@@ -145,7 +141,6 @@ Since: PHPMD 0.1
 
 Long parameter lists can indicate that a new object should be created to wrap the numerous parameters. Basically, try to group the parameters together.
 
-
 Example: ::
 
   class Foo {
@@ -169,7 +164,6 @@ ExcessivePublicCount
 Since: PHPMD 0.1
 
 A large number of public methods and attributes declared in a class can indicate the class may need to be broken up as increased effort will be required to thoroughly test it.
-
 
 Example: ::
 
@@ -199,7 +193,6 @@ TooManyFields
 Since: PHPMD 0.1
 
 Classes that have too many fields could be redesigned to have fewer fields, possibly through some nested object grouping of some of the information. For example, a class with city/state/zip fields could instead have one Address field.
-
 
 Example: ::
 
@@ -257,7 +250,6 @@ Since: PHPMD 0.2.5
 
 The Weighted Method Count (WMC) of a class is a good indicator of how much time and effort is required to modify and maintain this class. The WMC metric is defined as the sum of complexities of all methods declared in a class. A large number of methods also means that this class has a greater potential impact on derived classes.
 
-
 Example: ::
 
   class Foo {
@@ -291,7 +283,6 @@ This rule has the following properties:
 =================================== =============== ========================================
  maximum                             50              The maximum WMC tolerable for a class. 
 =================================== =============== ========================================
-
 
 Remark
 ======

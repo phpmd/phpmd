@@ -27,7 +27,7 @@ use PHPMD\Rule\MethodAware;
  * This rule class detects possible development code fragments that were left
  * into the code.
  *
- * @see https://github.com/phpmd/phpmd/issues/265
+ * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
  */
 class DevelopmentCodeFragment extends AbstractRule implements MethodAware, FunctionAware
