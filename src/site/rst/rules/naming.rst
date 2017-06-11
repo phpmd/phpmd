@@ -45,7 +45,7 @@ Example: ::
 
   class Something {
       protected $reallyLongIntName = -3; // VIOLATION - Field
-      public static function main( array $argumentsList[] ) { // VIOLATION - Formal
+      public static function main( array $interestingArgumentsList[] ) { // VIOLATION - Formal
           $otherReallyLongName = -5; // VIOLATION - Local
           for ($interestingIntIndex = 0; // VIOLATION - For
                $interestingIntIndex < 10;
