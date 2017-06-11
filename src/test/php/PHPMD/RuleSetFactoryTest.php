@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use org\bovigo\vfs\vfsStream;
+
 /**
  * Test case for the rule set factory class.
  *
@@ -24,6 +26,13 @@ namespace PHPMD;
  */
 class RuleSetFactoryTest extends AbstractTest
 {
+    /**
+     * Used to test files/directories access for ignore code rule
+     *
+     * @var string
+     */
+    const DIR_UNDER_TESTS = 'designăôü0汉字';
+
     /**
      * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
      *
@@ -637,6 +646,35 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
+     * Checks if PHPMD doesn't treat directories named as code rule as files
+     *
+     * @return void
+     * @link https://github.com/phpmd/phpmd/issues/47
+     */
+    public function testIfGettingRuleFilePathExcludeUnreadablePaths()
+    {
+        self::changeWorkingDirectory(__DIR__);
+        $factory = new RuleSetFactory();
+        $runtimeExceptionCount = 0;
+        $ruleSetNotFoundExceptionCount = 0;
+
+        foreach ($this->getPathsForFileAccessTest() as $path) {
+            try {
+                $this->assertEquals(
+                    array('some/excluded/files'),
+                    $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
+                );
+            } catch (RuleSetNotFoundException $e) {
+                $ruleSetNotFoundExceptionCount++;
+            } catch (\RuntimeException $e) {
+                $runtimeExceptionCount++;
+            }
+        }
+        $this->assertEquals(0, $runtimeExceptionCount);
+        $this->assertEquals(5, $ruleSetNotFoundExceptionCount);
+    }
+
+    /**
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
@@ -666,5 +704,48 @@ class RuleSetFactoryTest extends AbstractTest
 
         $factory = new RuleSetFactory();
         return $factory->createRuleSets(join(',', $args));
+    }
+
+    /**
+     * Sets up files and directories for XML rule file access test
+     *
+     * @return array Paths to test against
+     */
+    public function getPathsForFileAccessTest()
+    {
+        $fileContent = file_get_contents(__DIR__ . '/../../resources/files/rulesets/exclude-pattern.xml');
+        $structure = array(
+            'dir1' => array(
+                self::DIR_UNDER_TESTS => array(), // directory - skipped
+                'foo' => array(), // directory, criteria do not apply
+            ),
+            'dir2' => array(
+                self::DIR_UNDER_TESTS => array(), // directory, wrong permissions
+            ),
+            'dir3' => array(
+                self::DIR_UNDER_TESTS => array(), // directory, wrong owner and group
+            ),
+            'dirÅ' => array( // check UTF-8 characters handling
+                'foo' => array(
+                    self::DIR_UNDER_TESTS => $fileContent, // wrong permissions
+                ),
+                'bar' => array(
+                    self::DIR_UNDER_TESTS => $fileContent, // OK
+                ),
+            ),
+        );
+        $root = vfsStream::setup('root', null, $structure);
+        $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(000);
+        $root->getChild('dir3/' . self::DIR_UNDER_TESTS)->chown(vfsStream::OWNER_ROOT)->chgrp(vfsStream::GROUP_ROOT);
+        $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(000);
+
+        return array(
+            $root->url(),
+            $root->url() . '/dir1/',
+            $root->url() . '/dir2/',
+            $root->url() . '/dir3/',
+            $root->url() . '/dirÅ/foo/',
+            $root->url() . '/dirÅ/bar/',
+        );
     }
 }
