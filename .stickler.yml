@@ -3,5 +3,6 @@ linters:
     standard: 'PSR2'
     extensions: '.php'
     tab_width: 4
+    ignore: 'src/test/resources/*'
 branches:
     ignore: ['1.5.x']

@@ -17,13 +17,13 @@
 
 /**
  * Some class that stands as an example for classes not following PSR-0.
-
+ *
  * @author Gerrit Addiks <gerrit@addiks.de>
  */
 class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule{
 
     /**
-     * A method that returnes foo, bar and baz.
+     * A method that returns foo, bar and baz.
      *
      * @return string
      */
