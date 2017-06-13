@@ -28,7 +28,8 @@ use PHPMD\Rule\ClassAware;
  *
  * Performs a scan to check if loops use
  * count() or sizeof() in expressions.
- * Works with:
+ *
+ * Checks for:
  * - for() loops
  * - while() loops
  * - do-while() loops
@@ -42,31 +43,31 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      *
      * @var array
      */
-    private $violatingFunctions = array('count', 'sizeof');
+    private $unwantedFunctions = array('count', 'sizeof');
 
     /**
      * List of already processed functions
      *
      * @var array
      */
-    private $processedFunctions = array();
+    protected $processedFunctions = array();
 
     /**
      * Functions in classes tends to be name-spaced
      *
      * @var string
      */
-    private $namespaceName = '';
+    protected $currentNamespace = '';
 
     /**
-     * Gets a list of loops in node and iterates over them
+     * Gets a list of loops in a node and iterates over them
      *
      * @param AbstractNode $node
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        $this->namespaceName = $node->getNamespaceName() . '\\';
+        $this->currentNamespace = $node->getNamespaceName() . '\\';
         $loops = array_merge(
             $node->findChildrenOfType('ForStatement'),
             $node->findChildrenOfType('WhileStatement'),
@@ -75,7 +76,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
 
         /** @var AbstractNode $loop */
         foreach ($loops as $loop) {
-            $this->findPossibleViolations($loop);
+            $this->findViolations($loop);
         }
     }
 
@@ -85,7 +86,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      *
      * @param AbstractNode $loop Loop statement to look against
      */
-    private function findPossibleViolations(AbstractNode $loop)
+    protected function findViolations(AbstractNode $loop)
     {
         foreach ($loop->findChildrenOfType('Expression') as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
@@ -93,7 +94,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
             }
 
             foreach ($expression->findChildrenOfType('FunctionPostfix') as $function) {
-                if (!$this->isViolatingRule($function)) {
+                if (!$this->isUnwantedFunction($function)) {
                     continue;
                 }
 
@@ -109,24 +110,32 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
     }
 
     /**
-     * Checks if expression node in a direct child of loop
+     * Checks whether node in a direct child of the loop
      *
      * @param AbstractNode $loop
      * @param ASTNode $expression
      * @return bool
      */
-    private function isDirectChild(AbstractNode $loop, ASTNode $expression)
+    protected function isDirectChild(AbstractNode $loop, ASTNode $expression)
     {
         return $this->getHash($expression->getParent()->getNode()) !== $this->getHash($loop->getNode());
     }
 
     /**
-     * Generates unique hash for given node
+     * Generates an unique hash for a given node
+     *
+     * PDepend method getChildrenOfType() iterates trough all children of a node.
+     * As the result one function may be found more than once, we use hash (which
+     * in reality is a clone of node's metadata) to check, if given node hasn't
+     * already been processed.
+     *
+     * Example hash:
+     * 22:22:10:15:PHPMD\count
      *
      * @param AbstractASTNode $node
      * @return string
      */
-    private function getHash(AbstractASTNode $node)
+    protected function getHash(AbstractASTNode $node)
     {
         return sprintf(
             '%s:%s:%s:%s:%s',
@@ -139,15 +148,15 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
     }
 
     /**
-     * Checks if given function exists in violations array
+     * Checks the given function against the list of unwanted functions
      *
      * @param ASTNode $function
      * @return bool
      */
-    private function isViolatingRule(ASTNode $function)
+    protected function isUnwantedFunction(ASTNode $function)
     {
-        $functionName = str_replace($this->namespaceName, '', $function->getImage());
+        $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 
-        return in_array($functionName, $this->violatingFunctions);
+        return in_array($functionName, $this->unwantedFunctions);
     }
 }
