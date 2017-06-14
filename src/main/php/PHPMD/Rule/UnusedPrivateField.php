@@ -176,15 +176,33 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     protected function isInScopeOfClass(ClassNode $class, ASTNode $postfix)
     {
-        $owner = $postfix->getParent()->getChild(0);
-        if ($owner->isInstanceOf('PropertyPostfix')) {
-            $owner = $owner->getParent()->getParent()->getChild(0);
-        }
+        $owner = $this->getOwner($postfix);
+
         return (
             $owner->isInstanceOf('SelfReference') ||
             $owner->isInstanceOf('StaticReference') ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
+    }
+
+    /**
+     * Looks for owner of given variable.
+     *
+     * @param \PHPMD\Node\ASTNode $postfix
+     * @return \PHPMD\Node\ASTNode
+     */
+    protected function getOwner(ASTNode $postfix)
+    {
+        $owner = $postfix->getParent()->getChild(0);
+        if ($owner->isInstanceOf('PropertyPostfix')) {
+            $owner = $owner->getParent()->getParent()->getChild(0);
+        }
+
+        if ($owner->getParent()->isInstanceOf('ArrayIndexExpression')) {
+            $owner = $owner->getParent()->getParent()->getChild(0);
+        }
+
+        return $owner;
     }
 }
