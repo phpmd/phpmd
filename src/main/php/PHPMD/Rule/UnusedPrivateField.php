@@ -187,7 +187,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     }
 
     /**
-     * Looks for owner of given variable.
+     * Looks for owner of the given variable.
      *
      * @param \PHPMD\Node\ASTNode $postfix
      * @return \PHPMD\Node\ASTNode
