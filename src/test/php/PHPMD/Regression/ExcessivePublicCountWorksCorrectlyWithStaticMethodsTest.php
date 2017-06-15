@@ -64,14 +64,15 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
+        $self = $this;
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will(
                 $this->returnCallback(
-                    function (Report $report) {
+                    function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), self::VIOLATION_MESSAGE) === 0) {
+                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
                                 $isViolating = true;
                                 break;
                             }
@@ -103,14 +104,15 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
+        $self = $this;
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will(
                 $this->returnCallback(
-                    function (Report $report) {
+                    function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), self::VIOLATION_MESSAGE) === 0) {
+                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
                                 $isViolating = true;
                                 break;
                             }
