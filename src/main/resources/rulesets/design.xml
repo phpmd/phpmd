@@ -275,9 +275,9 @@ class Foo {
 
   public function bar()
   {
-    $arr = array();
+    $array = array();
 
-    for ($i = 0; count($arr); $i++) {
+    for ($i = 0; count($array); $i++) {
       // ...
     }
   }
