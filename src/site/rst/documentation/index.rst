@@ -110,3 +110,4 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *json*, formats JSON report.
