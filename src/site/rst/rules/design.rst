@@ -194,6 +194,28 @@ Example: ::
       }
   }
 
+CountInLoopExpression
+=====================
+
+Since: PHPMD 2.7.0
+
+Using count/sizeof in loops expressions is considered bad practice and is a potential source of
+many bugs, especially when the loop manipulates an array, as count happens on each iteration.
+
+Example: ::
+
+  class Foo {
+
+    public function bar()
+    {
+      $arr = array();
+
+      for ($i = 0; count($arr); $i++) {
+        // ...
+      }
+    }
+  }
+
 Remark
 ======
 
