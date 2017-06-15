@@ -45,7 +45,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     {
         $this->renderer = $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
             ->disableOriginalConstructor()
-            ->setMethods(['renderReport', 'start', 'end'])
+            ->setMethods(array('renderReport', 'start', 'end'))
             ->getMock();
     }
 
@@ -84,7 +84,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
             'codesize',
-            [$this->renderer],
+            array($this->renderer),
             new RuleSetFactory()
         );
     }
@@ -123,7 +123,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
             'codesize',
-            [$this->renderer],
+            array($this->renderer),
             new RuleSetFactory()
         );
     }
