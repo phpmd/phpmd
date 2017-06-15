@@ -121,9 +121,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     private function collectCompoundVariableInString(ASTNode $node)
     {
-        $parent     = $node->getParent();
-        $parentNode = $parent->getNode();
-
+        $parentNode = $node->getParent()->getNode();
         $candidateParentNodes = $node->getParentsOfType('PDepend\Source\AST\ASTString');
 
         if (in_array($parentNode, $candidateParentNodes)) {
