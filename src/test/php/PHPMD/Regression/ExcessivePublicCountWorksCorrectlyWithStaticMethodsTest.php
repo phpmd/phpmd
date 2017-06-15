@@ -67,7 +67,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will($this->returnCallback(
-                function(Report $report) {
+                function (Report $report) {
                     $isViolating = false;
                     foreach ($report->getRuleViolations() as $ruleViolation) {
                         if (strpos($ruleViolation->getDescription(), self::VIOLATION_MESSAGE) === 0) {
@@ -104,7 +104,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will($this->returnCallback(
-                function(Report $report) {
+                function (Report $report) {
                     $isViolating = false;
                     foreach ($report->getRuleViolations() as $ruleViolation) {
                         if (strpos($ruleViolation->getDescription(), self::VIOLATION_MESSAGE) === 0) {
