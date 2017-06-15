@@ -125,8 +125,8 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      * Generates an unique hash for a given node
      *
      * PDepend method getChildrenOfType() iterates trough all children of a node.
-     * As the result one function may be found more than once, we use hash (which
-     * in reality is a clone of node's metadata) to check, if given node hasn't
+     * As one function may be found more than once, we use a hash (which in reality
+     * is a clone of the node's metadata) to check, if a given node hasn't
      * already been processed.
      *
      * Example hash:
