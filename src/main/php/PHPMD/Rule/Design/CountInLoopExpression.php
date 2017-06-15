@@ -81,8 +81,8 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
     }
 
     /**
-     * Scans for expressions and count() or sizeof() functions inside.
-     * If found, triggers violation
+     * Scans for expressions and count() or sizeof() functions inside,
+     * if found, triggers a violation
      *
      * @param AbstractNode $loop Loop statement to look against
      */
