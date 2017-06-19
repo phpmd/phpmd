@@ -18,7 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Renderer\HTMLRenderer;
-use PHPMD\Renderer\JsonRenderer;
+use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -387,11 +387,11 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\JsonRenderer
+     * @return \PHPMD\Renderer\JSONRenderer
      */
     protected function createJsonRenderer()
     {
-        return new JsonRenderer();
+        return new JSONRenderer();
     }
 
     /**
