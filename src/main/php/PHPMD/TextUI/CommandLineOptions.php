@@ -184,6 +184,7 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
+                case '--reportfile-json':
                     preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
