@@ -16,7 +16,7 @@
                     "rule": "RuleStub",
                     "ruleSet": "TestRuleSet",
                     "description": "Test description",
-                    "externalInfoUrl": "http:\/\/phpmd.org\/rules\/index.html",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
                     "priority": 5
                 },
                 {
@@ -29,7 +29,7 @@
                     "rule": "RuleStub",
                     "ruleSet": "TestRuleSet",
                     "description": "Test description",
-                    "externalInfoUrl": "http:\/\/phpmd.org\/rules\/index.html",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
                     "priority": 5
                 }
             ]
@@ -47,7 +47,7 @@
                     "rule": "RuleStub",
                     "ruleSet": "TestRuleSet",
                     "description": "Test description",
-                    "externalInfoUrl": "http:\/\/phpmd.org\/rules\/index.html",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
                     "priority": 5
                 }
             ]
