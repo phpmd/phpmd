@@ -12,7 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @link https://phpmd.org/
  */
 
 namespace PHPMD\Node;
@@ -49,7 +49,6 @@ class Annotations
         foreach (array_keys($matches[0]) as $i) {
             $name  = $matches[1][$i];
             $value = trim($matches[2][$i], '" ');
-
             $this->annotations[] = new Annotation($name, $value);
         }
     }

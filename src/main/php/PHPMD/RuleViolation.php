@@ -22,8 +22,8 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 
 /**
- * This class is used as container for a single rule violation related to a source
- * node.
+ * This class is used as container for a single rule violation related to
+ * a source node.
  */
 class RuleViolation
 {
