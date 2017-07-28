@@ -23,8 +23,8 @@ use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
 /**
- * This is a helper class that collects the specified cli arguments and puts them
- * into accessible properties.
+ * This is a helper class that collects the specified cli arguments and
+ * puts them into accessible properties.
  */
 class CommandLineOptions
 {
@@ -142,9 +142,11 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '--minimum-priority':
                 case '--minimumpriority':
                     $this->minimumPriority = (int)array_shift($args);
                     break;
+                case '--report-file':
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
                     break;
@@ -176,6 +178,8 @@ class CommandLineOptions
                     return;
                 case '--strict':
                     $this->strict = true;
+                case '--not-strict':
+                    $this->strict = false;
                     break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;

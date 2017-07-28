@@ -12,7 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @link https://phpmd.org/
  */
 
 namespace PHPMD\Node;
@@ -77,9 +77,8 @@ class Annotation
      */
     private function isSuppressed(Rule $rule)
     {
-        if (in_array($this->value, array('PHPMD', 'PMD'))) {
-            return true;
-        } elseif (preg_match('/^(PH)?PMD\.' . $rule->getName() . '/', $this->value)) {
+        if (in_array($this->value, array('PHPMD', 'PMD')) ||
+            preg_match('/^(PH)?PMD\.' . $rule->getName() . '/', $this->value)) {
             return true;
         }
         return (stripos($rule->getName(), $this->value) !== false);

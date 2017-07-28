@@ -12,7 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @link https://phpmd.org/
  */
 
 namespace PHPMD;
@@ -81,7 +81,7 @@ class Report
      */
     public function isEmpty()
     {
-        return (count($this->ruleViolations) === 0);
+        return count($this->ruleViolations) === 0;
     }
 
     /**
