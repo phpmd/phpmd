@@ -23,8 +23,8 @@ use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
 /**
- * This is a helper class that collects the specified cli arguments and puts them
- * into accessible properties.
+ * This is a helper class that collects the specified cli arguments
+ * and puts them into accessible properties.
  */
 class CommandLineOptions
 {
@@ -149,7 +149,9 @@ class CommandLineOptions
                     $this->reportFile = array_shift($args);
                     break;
                 case '--inputfile':
-                    array_unshift($arguments, $this->readInputFile(array_shift($args)));
+                    array_unshift(
+                        $arguments, $this->readInputFile(array_shift($args))
+                    );
                     break;
                 case '--coverage':
                     $this->coverageReport = array_shift($args);
@@ -183,7 +185,9 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match);
+                    preg_match(
+                        '(^\-\-reportfile\-(xml|html|text)$)', $arg, $match
+                    );
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -193,7 +197,9 @@ class CommandLineOptions
         }
 
         if (count($arguments) < 3) {
-            throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+            throw new \InvalidArgumentException(
+                $this->usage(), self::INPUT_ERROR
+            );
         }
 
         $this->inputPath = (string)array_shift($arguments);
@@ -511,6 +517,8 @@ class CommandLineOptions
         if (file_exists($inputFile)) {
             return join(',', array_map('trim', file($inputFile)));
         }
-        throw new \InvalidArgumentException("Input file '{$inputFile}' not exists.");
+        throw new \InvalidArgumentException(
+            "Input file '{$inputFile}' not exists."
+        );
     }
 }

@@ -81,7 +81,7 @@ class Report
      */
     public function isEmpty()
     {
-        return (count($this->ruleViolations) === 0);
+        return count($this->ruleViolations) === 0;
     }
 
     /**

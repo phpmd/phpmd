@@ -22,8 +22,8 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 
 /**
- * This class is used as container for a single rule violation related to a source
- * node.
+ * This class is used as container for a single rule violation related to
+ * a source node.
  */
 class RuleViolation
 {
@@ -86,7 +86,9 @@ class RuleViolation
      * @param string $violationMessage
      * @param mixed $metric
      */
-    public function __construct(Rule $rule, AbstractNode $node, $violationMessage, $metric = null)
+    public function __construct(
+        Rule $rule, AbstractNode $node,  $violationMessage, $metric = null
+    )
     {
         $this->rule        = $rule;
         $this->node        = $node;

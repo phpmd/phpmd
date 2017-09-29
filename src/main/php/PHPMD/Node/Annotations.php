@@ -49,7 +49,6 @@ class Annotations
         foreach (array_keys($matches[0]) as $i) {
             $name  = $matches[1][$i];
             $value = trim($matches[2][$i], '" ');
-
             $this->annotations[] = new Annotation($name, $value);
         }
     }
