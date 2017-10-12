@@ -86,9 +86,10 @@ class PrettyHTMLRenderer extends AbstractRenderer
 	{
 		$writer = $this->getWriter();
 
-		$borderRadius = "border-radius: 0.5ex;";
-		$borderTopRadius = "border-top-left-radius: 0.5ex; border-top-right-radius: 0.5ex;";
-		$borderBottomRadius = "border-bottom-left-radius: 0.5ex; border-bottom-right-radius: 0.5ex;";
+		$brSize = "0.5ex";
+		$borderRadius = "border-radius: $brSize;";
+		$borderTopRadius = "border-top-left-radius: $brSize; border-top-right-radius: $brSize;";
+		$borderBottomRadius = "border-bottom-left-radius: $brSize; border-bottom-right-radius: $brSize;";
 
 		// Avoid inlining styles.
 		$style = "
@@ -105,8 +106,7 @@ class PrettyHTMLRenderer extends AbstractRenderer
 				}
 
 				.code-line {
-					position: relative;
-					height: 1.2em;
+					display: flex;
 					line-height: 1.2em;
 					font-family: monospace;
 					white-space: nowrap;
@@ -117,10 +117,8 @@ class PrettyHTMLRenderer extends AbstractRenderer
 				}
 
 				.line-number {
-					position: absolute;
 					width: 5%;
-					height: 100%;
-					left: 0;
+					min-width: 5em;
 					text-align: right;
 					border-right: 2px solid rgba(0, 0, 0, 0.2);
 					padding-right: 1ex;
@@ -128,32 +126,52 @@ class PrettyHTMLRenderer extends AbstractRenderer
 				}
 
 				.line-content {
-					position: absolute;
 					padding-left: 1ex;
 					white-space: pre-wrap;
 					box-sizing: border-box;
-					width: 95%;
-					height: 100%;
-					right: 0;
+					word-wrap: break-word;
+					overflow: hidden;
 				}
 
 				.line-highlight {
 					background: #ffee99 !important
 				}
 
-				.violation {
+				.line-highlight .line-number {
+					background-color: rgba(250, 150, 0, 0.4);
+					font-weight: bold;
+				}
+
+				.problem {
 					background: #afc3ca;
 					padding: 1ex;
 					margin-bottom: 2em;
 					$borderRadius
 				}
 
-				.violation-info {
-					background: rgba(255, 255, 255, 0.75);
-					font-weight: bold;
-					padding: 1ex;
+				.problem > header {
+					display: flex;
 					margin-bottom: 1ex;
+					font-weight: bold;
 					font-size: 0.9rem;
+				}
+
+				.problem-info {
+					background: rgba(255, 255, 255, 0.75);
+					padding: 1ex;
+					flex: 1;
+					$borderRadius
+				}
+
+				.problem-index {
+					display: flex;
+					width: 3em;
+					background: rgba(255, 255, 255, 0.5);
+					padding: 1ex;
+					text-align: center;
+					justify-content: center;
+					flex-direction: column;
+					margin: 0 1ex 1px 0;
 					$borderRadius
 				}
 
@@ -180,14 +198,14 @@ class PrettyHTMLRenderer extends AbstractRenderer
 						background-color: #f7c0ff;
 					}
 
-				.violation-file {
+				.problem-file {
 					padding: 1ex;
-					background: #fffec9;
+					background: #fbfbc0;
 					font-size: 0.8rem;
 					$borderTopRadius
 				}
 
-				.violation-link {
+				.problem-link {
 					font-style: italic;
 				}
 
@@ -210,12 +228,15 @@ class PrettyHTMLRenderer extends AbstractRenderer
 	{
 		$w = $this->getWriter();
 
+		$index = 0;
 		$violations = $report->getRuleViolations();
 
 		$w->write(sprintf('<h2>%d problems found</h2>', count($violations)));
 		$w->write(PHP_EOL);
 
 		foreach ($violations as $violation) {
+
+			$index++;
 
 			// Get excerpt of the code from validated file.
 			$excerptHtml = null;
@@ -226,10 +247,10 @@ class PrettyHTMLRenderer extends AbstractRenderer
 			);
 
 			foreach ($excerpt as $line => $code) {
-				$class = $line === $violation->getBeginLine() ? 'line-highlight' : null;
-				$codeHtml = htmlentities($code);
+				$class = $line === $violation->getBeginLine() ? ' line-highlight' : null;
+				$codeHtml = htmlspecialchars($code);
 				$excerptHtml .= "
-					<div class='code-line {$class}'>
+					<div class='code-line{$class}'>
 						<div class='line-number'>{$line}</div>
 						<div class='line-content'>{$codeHtml}</div>
 					</div>
@@ -240,18 +261,22 @@ class PrettyHTMLRenderer extends AbstractRenderer
 			$fileHtml = self::highlightFile($violation->getFileName());
 			$linkHtml = null;
 			if ($url = $violation->getRule()->getExternalInfoUrl()) {
-				$linkHtml = "<a class='violation-link' href='{$url}' target='_blank'>(info)</a>";
+				$linkHtml = "<a class='problem-link' href='{$url}' target='_blank'>(info)</a>";
 			}
 
 			$html = "
-				<div class='violation'>
-					<header class='violation-info'>Problem {$linkHtml}: {$infoHtml}</header>
-					<div class='violation-file'><b>File:</b> {$fileHtml}</div>
+				<div class='problem'>
+					<header>
+						<div class='problem-index'>{$index}</div>
+						<div class='problem-info'>{$infoHtml} {$linkHtml}</div>
+					</header>
+					<div class='problem-file'><b>File:</b> {$fileHtml}</div>
 					<div class='excerpt'>{$excerptHtml}</div>
 				</div>
 			";
 
-			$w->write($html);
+			// Remove unnecessary tab/space characters at the line beginnings.
+			$w->write(preg_replace('#^\s+#mu', null, $html));
 
 		}
 
