@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\PrettyHTMLRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -351,6 +352,8 @@ class CommandLineOptions
                 return $this->createXmlRenderer();
             case 'html':
                 return $this->createHtmlRenderer();
+            case 'pretty-html':
+                return $this->createPrettyHTMLRenderer();
             case 'text':
                 return $this->createTextRenderer();
             default:
@@ -380,6 +383,11 @@ class CommandLineOptions
     protected function createHtmlRenderer()
     {
         return new HTMLRenderer();
+    }
+
+    protected function createPrettyHtmlRenderer()
+    {
+        return new PrettyHTMLRenderer();
     }
 
     /**
