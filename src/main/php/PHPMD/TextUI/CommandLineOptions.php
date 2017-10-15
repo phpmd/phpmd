@@ -142,12 +142,16 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '--min-priority':
+                case '--minimum-priority':
                 case '--minimumpriority':
                     $this->minimumPriority = (int)array_shift($args);
                     break;
+                case '--report-file':
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
                     break;
+                case '--input-file':
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile(array_shift($args)));
                     break;
@@ -176,6 +180,9 @@ class CommandLineOptions
                     return;
                 case '--strict':
                     $this->strict = true;
+                    break;
+                case '--not-strict':
+                    $this->strict = false;
                     break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
