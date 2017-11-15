@@ -27,11 +27,12 @@ use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends TestCase
 {
     /**
      * Directory with test files.

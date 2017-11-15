@@ -40,9 +40,10 @@
     "ext-xml": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.0",
+    "phpunit/phpunit": "^4.8.35",
     "squizlabs/php_codesniffer": "^2.0",
-    "mikey179/vfsStream": "v1.6.4"
+    "mikey179/vfsStream": "v1.6.4",
+    "doctrine/instantiator": "~1.0.5"
   },
   "autoload": {
     "psr-0": {
@@ -56,5 +57,10 @@
     "test": "phpunit",
     "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
     "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.x-dev"
+    }
   }
 }
