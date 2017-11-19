@@ -60,7 +60,7 @@ class HTMLRenderer extends AbstractRenderer
 	const CATEGORY_RULESET = "category_ruleset";
 	const CATEGORY_RULE = "category_rule";
 
-	const PRIORITY_TITLES = [
+	private static $priority_titles = [
 		1 => "Top (1)",
 		2 => "High (2)",
 		3 => "Moderate (3)",
@@ -69,19 +69,16 @@ class HTMLRenderer extends AbstractRenderer
 	];
 
 	// Used in self::colorize() method.
-	const INFO_HIGHLIGHTING = [
-		'method' => [
-			// Method names.
+	private static $desc_highlight_rules = [
+		'method' => [ // Method names.
 			'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
 			'css-class' => 'hlt-method',
 		],
-		'quoted' => [
-			// Quoted strings.
+		'quoted' => [ // Quoted strings.
 			'regex' => '(["\'][^\'"]+["\'])',
 			'css-class' => 'hlt-quoted',
 		],
-		'variable' => [
-			// Variables.
+		'variable' => [ // Variables.
 			'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
 			'css-class' => 'hlt-variable',
 		],
@@ -243,6 +240,11 @@ class HTMLRenderer extends AbstractRenderer
 					background: #ffee99 !important
 				}
 
+				.prio {
+					color: #333;
+					float: right;
+				}
+
 				.indx {
 					padding: 0.5ex 1ex;
 					background-color: #000;
@@ -296,7 +298,7 @@ class HTMLRenderer extends AbstractRenderer
 						background-color: #f7c0ff;
 					}
 
-				.file-pth {
+				.sub-info {
 					padding: 1ex 0.5ex;
 				}
 
@@ -400,7 +402,7 @@ class HTMLRenderer extends AbstractRenderer
 			// Create an external link to rule's help, if there's any provided.
 			$linkHtml = null;
 			if ($url = $violation->getRule()->getExternalInfoUrl()) {
-				$linkHtml = "<a class='info-lnk' href='{$url}' target='_blank'>(info)</a>";
+				$linkHtml = "<a class='info-lnk' href='{$url}' target='_blank'>(help)</a>";
 			}
 
 			// HTML snippet handling the toggle to display the file's code.
@@ -409,15 +411,16 @@ class HTMLRenderer extends AbstractRenderer
 					Show code &#x25BC;
 				</a>";
 
+			$prio = self::$priority_titles[$violation->getRule()->getPriority()];
 			$html = "
 				<section class='prb' id='$htmlId'>
 					<header>
 						<h3>
 							<a href='#$htmlId' class='indx'>#{$index}</a>
-							{$descHtml} {$linkHtml}
+							{$descHtml} {$linkHtml} <span class='prio'>{$prio}</span>
 						</h3>
 					</header>
-					<div class='file-pth'><b>File:</b> {$fileHtml} {$showCodeAnchor}</div>
+					<div class='sub-info'><b>File:</b> {$fileHtml} {$showCodeAnchor}</div>
 					<ul class='code hidden' id='$htmlId-code'>%s</ul>
 				</section>";
 
@@ -449,6 +452,11 @@ class HTMLRenderer extends AbstractRenderer
 	 */
 	protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
 	{
+
+		if (!is_readable($file)) {
+			return [];
+		}
+
 		$file = new \SplFileObject($file);
 
 		// We have to subtract 1 to extract correct lines via SplFileObject.
@@ -470,7 +478,7 @@ class HTMLRenderer extends AbstractRenderer
 
 	/**
 	 * Take a rule description text and try to decorate/stylize parts of it with HTML.
-	 * Based on self::INFO_HIGHLIGHTING config.
+	 * Based on self::$desc_highlight_rules config.
 	 *
 	 * @return string
 	 */
@@ -479,7 +487,7 @@ class HTMLRenderer extends AbstractRenderer
 		// Compile final regex, if not done already.
 		if (!self::$compiledHighlightRegex) {
 
-			$prepared = self::INFO_HIGHLIGHTING;
+			$prepared = self::$desc_highlight_rules;
 			array_walk($prepared, function(&$v, $k) {
 				$v = "(?<{$k}>{$v['regex']})";
 			});
@@ -492,7 +500,7 @@ class HTMLRenderer extends AbstractRenderer
 
 			// Extract currently matched specification of highlighting (Match groups
 			// are named and we can find out which is not empty.).
-			$definition = array_keys(array_intersect_key(self::INFO_HIGHLIGHTING, array_filter($x)));
+			$definition = array_keys(array_intersect_key(self::$desc_highlight_rules, array_filter($x)));
 			$definition = reset($definition);
 
 			return "<span class='hlt-info {$definition}'>{$x[0]}</span>";
@@ -586,7 +594,7 @@ class HTMLRenderer extends AbstractRenderer
 			$rule = $v->getRule();
 
 			// Friendly priority -> Add a describing word to "just number".
-			$friendlyPriority = self::PRIORITY_TITLES[$rule->getPriority()];
+			$friendlyPriority = self::$priority_titles[$rule->getPriority()];
 			$ref = &$result[self::CATEGORY_PRIORITY][$friendlyPriority];
 			$ref = isset($ref) ? $ref + 1 : 1;
 
