@@ -40,6 +40,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
         $rule->apply($this->getMethod());
     }
 
@@ -59,6 +60,8 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
+
         $rule->apply($method);
     }
 
@@ -78,6 +81,8 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
+
         $rule->apply($method);
     }
 
@@ -96,6 +101,8 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
+
         $rule->apply($method);
     }
 
@@ -114,6 +121,8 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'true');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
+
         $rule->apply($method);
     }
 
@@ -132,6 +141,8 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
+
         $rule->apply($method);
     }
 
@@ -150,6 +161,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'true');
+        $rule->addProperty('allow-multiple-underscore-test', 'true');
         $rule->apply($method);
     }
 
@@ -168,6 +180,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'true');
+        $rule->addProperty('allow-multiple-underscore-test', 'true');
         $rule->apply($method);
     }
 
@@ -186,6 +199,45 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'true');
+        $rule->addProperty('allow-multiple-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply to for test method names that
+     * have multiple underscore in the declaration of test
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTestMethodWithMultipleUnderscores()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply to for test method names that
+     * have multiple underscore in the declaration of test
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForTestMethodWithMultipleUnderscoreWhenAllowed()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportMock(1);
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
         $rule->apply($method);
     }
 
