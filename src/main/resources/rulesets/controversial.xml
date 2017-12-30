@@ -7,7 +7,7 @@
          xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
 
     <description>
-This ruleset contains a collection of controversial rules.
+        This ruleset contains a collection of controversial rules.
     </description>
 
     <rule name="Superglobals"
@@ -72,6 +72,9 @@ It is considered best practice to use the camelCase notation to name attributes.
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
                       value="false" />
+            <property name="allow-multiple-underscore-test"
+                      description="Is it allowed to have multiple underscores in test method names."
+                      value="false" />
         </properties>
         <example>
             <![CDATA[
@@ -99,6 +102,9 @@ It is considered best practice to use the camelCase notation to name methods.
                       value="false" />
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
+                      value="false" />
+            <property name="allow-multiple-underscore-test"
+                      description="Is it allowed to have multiple underscores in test method names."
                       value="false" />
         </properties>
         <example>
