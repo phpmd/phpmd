@@ -180,7 +180,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'true');
-        $rule->addProperty('allow-multiple-underscore-test', 'true');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
         $rule->apply($method);
     }
 
@@ -199,7 +199,7 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->setReport($report);
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'true');
-        $rule->addProperty('allow-multiple-underscore-test', 'true');
+        $rule->addProperty('allow-multiple-underscore-test', 'false');
         $rule->apply($method);
     }
 
