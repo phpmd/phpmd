@@ -20,6 +20,10 @@
         <name>People behind</name>
         <path>people-behind.rst</path>
     </site>
+    <site>
+        <name>Projects using it</name>
+        <path>projects-using-it.rst</path>
+    </site>
     <directory>
         <name>Support &amp; Contact</name>
         <path>support/</path>
