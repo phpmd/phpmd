@@ -42,6 +42,12 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
             return;
         }
 
+        $exceptions = $this->getExceptionsList();
+
+        if (in_array($node->getName(), $exceptions)) {
+            return;
+        }
+
         $this->addViolation(
             $node,
             array(
@@ -51,5 +57,21 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
                 $threshold
             )
         );
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+        try {
+            $exceptions = $this->getStringProperty('exceptions');
+        } catch (\OutOfBoundsException $e) {
+            $exceptions = '';
+        }
+
+        return explode(',', $exceptions);
     }
 }
