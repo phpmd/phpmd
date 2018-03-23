@@ -45,6 +45,12 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
             return;
         }
 
+        $exceptions = $this->getExceptionsList();
+
+        if (in_array($node->getName(), $exceptions)) {
+            return;
+        }
+
         $this->addViolation(
             $node,
             [
@@ -54,5 +60,21 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
                 (string) $threshold,
             ]
         );
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+        try {
+            $exceptions = $this->getStringProperty('exceptions');
+        } catch (\OutOfBoundsException $e) {
+            $exceptions = '';
+        }
+
+        return explode(',', $exceptions);
     }
 }
