@@ -35,6 +35,13 @@ class ElseExpressionTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    public function testRuleNotAppliesToGenerator()
+    {
+        $rule = new ElseExpression();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
     public function testRuleAppliesMultipleTimesToMethodWithMultipleElseExpressions()
     {
         $rule = new ElseExpression();

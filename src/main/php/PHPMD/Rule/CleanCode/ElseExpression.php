@@ -51,6 +51,10 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
                 continue;
             }
 
+            if (true === $this->hasYieldOrYieldFrom($scope)) {
+                continue;
+            }
+
             $this->addViolation($scope, array($node->getImage()));
         }
     }
@@ -79,5 +83,16 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
     private function isIfOrElseIfStatement(ASTNode $parent)
     {
         return ($parent->getName() === "if" || $parent->getName() === "elseif");
+    }
+
+    /**
+     * Whether the given scope has a yield or yield from clause
+     *
+     * @param $scope
+     * @return bool
+     */
+    private function hasYieldOrYieldFrom($scope)
+    {
+        return (bool) $scope->getFirstChildOfType('YieldStatement');
     }
 }
