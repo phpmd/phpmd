@@ -9,13 +9,8 @@
         <xsl:text>
 </xsl:text>
     </xsl:variable>
-    <!-- <xsl:variable name="column.name.length" select="35" /> -->
-    <!-- <xsl:variable name="column.value.length" select="50" /> -->
 
     <xsl:template match="/">
-        <!--
-        <xsl:apply-templates select="*" />
-        -->
         <xsl:apply-templates select="pmd:ruleset" />
     </xsl:template>
 
@@ -162,7 +157,14 @@ __ http://pmd.sourceforge.net/
         <xsl:for-each select="pmd:property/@name">
             <xsl:sort select="string-length(.)" order="descending" />
             <xsl:if test="position() = 1">
-                <xsl:value-of select="string-length(.) + 2" />
+                <xsl:choose>
+                    <xsl:when test="(string-length(.) + 2) &lt; 35">
+                        <xsl:value-of select="35" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="string-length(.) + 2" />
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
@@ -180,12 +182,14 @@ __ http://pmd.sourceforge.net/
         <xsl:for-each select="pmd:property/@value">
             <xsl:sort select="string-length(.)" order="descending" />
             <xsl:if test="position() = 1">
-                <xsl:if test="(string-length(.) + 2) &lt; 15">
-                    <xsl:value-of select="15" />
-                </xsl:if>
-            </xsl:if>
-            <xsl:if test="(string-length(.) + 2) &gt;&#61; 15">
-                <xsl:value-of select="string-length(.) + 2" />
+                <xsl:choose>
+                    <xsl:when test="(string-length(.) + 2) &lt; 15">
+                        <xsl:value-of select="15" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="string-length(.) + 2" />
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
