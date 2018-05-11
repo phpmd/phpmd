@@ -29,14 +29,6 @@ use PHPMD\AbstractTest;
  */
 class DevelopmentCodeFragmentTest extends AbstractTest
 {
-
-    private function _getRule() {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
-        $rule->addProperty('ignore-namespaces', 'false');
-        return $rule;
-    }
-
     /**
      * testRuleNotAppliesToMethodWithoutSuspectFunctionCall
      *
@@ -44,7 +36,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
@@ -56,7 +48,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToMethodWithSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
@@ -68,7 +60,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getMethod());
     }
@@ -80,7 +72,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getFunction());
     }
@@ -92,7 +84,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToFunctionWithSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getFunction());
     }
@@ -104,23 +96,44 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getFunction());
     }
 
+    /**
+     * testRuleAppliesToMethodWithinNamespace
+     *
+     * @return void
+     */
     public function testRuleAppliesToMethodWithinNamespace()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->addProperty('ignore-namespaces', 'true');
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
 
+    /**
+     * testRuleNotAppliesToMethodWithinNamespaceByDefault
+     *
+     * @return void
+     */
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
     {
-        $rule = $this->_getRule();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
+    }
+
+    /**
+     * Get a configured DevelopmentCodeFragment rule
+     * @return DevelopmentCodeFragment
+     */
+    private function getRule() {
+        $rule = new DevelopmentCodeFragment();
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('ignore-namespaces', 'false');
+        return $rule;
     }
 }
