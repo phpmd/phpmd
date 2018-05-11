@@ -16,8 +16,9 @@ Clean Code Rules
 
 - `BooleanArgumentFlag <cleancode.html#booleanargumentflag>`_: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
 - `ElseExpression <cleancode.html#elseexpression>`_: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
-- `StaticAccess <cleancode.html#staticaccess>`_: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
-- `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+- `StaticAccess <cleancode.html#staticaccess`_: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
+- `IfStatementAssignment <cleancode.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string and the like.
+- `DuplicatedArrayKey <cleancode.html#duplicatedarraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 
 Code Size Rules
 ===============
@@ -55,8 +56,7 @@ Design Rules
 - `DevelopmentCodeFragment <design.html#developmentcodefragment>`_: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
 - `IfStatementAssignment <design.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `EmptyCatchBlock <design.html#emptycatchblock>`_: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
-- `CountInLoopExpression <design.html#countinloopexpression>`_: Using count/sizeof in loops expressions is considered bad practice and is a potential source of
-many bugs, especially when the loop manipulates an array, as count happens on each iteration.
+- `CountInLoopExpression <design.html#countinloopexpression>`_: Using count/sizeof in loops expressions is considered bad practice and is a potential source of many bugs, especially when the loop manipulates an array, as count happens on each iteration.
 
 Naming Rules
 ============
@@ -76,9 +76,10 @@ Unused Code Rules
 - `UnusedPrivateMethod <unusedcode.html#unusedprivatemethod>`_: Unused Private Method detects when a private method is declared but is unused.
 - `UnusedFormalParameter <unusedcode.html#unusedformalparameter>`_: Avoid passing parameters to methods or constructors and then not using those parameters.
 
+
 Remark
 ======
 
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
-__ http://pmd.sourceforge.net/
+__ https://pmd.sourceforge.net/

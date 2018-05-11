@@ -11,6 +11,7 @@ Since: PHPMD 0.2
 
 Detects when a field, local, or parameter has a very short name.
 
+
 Example: ::
 
   class Something {
@@ -25,12 +26,12 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===========================================================
- Name                                Default Value   Description                                               
-=================================== =============== ===========================================================
- minimum                             3               Minimum length for a variable, property or parameter name 
- exceptions                                          Comma-separated list of exceptions                        
-=================================== =============== ===========================================================
+========= =============== ===========================================================
+ Name      Default Value   Description
+========= =============== ===========================================================
+ minimum   3               Minimum length for a variable, property or parameter name
+ exceptions                  Comma-separated list of exceptions
+========= =============== ===========================================================
 
 LongVariable
 ============
@@ -38,6 +39,7 @@ LongVariable
 Since: PHPMD 0.2
 
 Detects when a field, formal or local variable is declared with a long name.
+
 
 Example: ::
 
@@ -54,11 +56,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== =========================================
- Name                                Default Value   Description                             
-=================================== =============== =========================================
- maximum                             20              The variable length reporting threshold 
-=================================== =============== =========================================
+========= =============== =========================================
+ Name      Default Value   Description
+========= =============== =========================================
+ maximum   20              The variable length reporting threshold
+========= =============== =========================================
 
 ShortMethodName
 ===============
@@ -66,6 +68,7 @@ ShortMethodName
 Since: PHPMD 0.2
 
 Detects when very short method names are used.
+
 
 Example: ::
 
@@ -76,12 +79,12 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ==============================================
- Name                                Default Value   Description                                  
-=================================== =============== ==============================================
- minimum                             3               Minimum length for a method or function name 
- exceptions                                          Comma-separated list of exceptions           
-=================================== =============== ==============================================
+========= =============== ==============================================
+ Name      Default Value   Description
+========= =============== ==============================================
+ minimum   3               Minimum length for a method or function name
+ exceptions                  Comma-separated list of exceptions
+========= =============== ==============================================
 
 ConstructorWithNameAsEnclosingClass
 ===================================
@@ -89,6 +92,7 @@ ConstructorWithNameAsEnclosingClass
 Since: PHPMD 0.2
 
 A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
+
 
 Example: ::
 
@@ -106,6 +110,7 @@ Since: PHPMD 0.2
 
 Class/Interface constant names should always be defined in uppercase.
 
+
 Example: ::
 
   class Foo {
@@ -119,6 +124,7 @@ BooleanGetMethodName
 Since: PHPMD 0.2
 
 Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
+
 
 Example: ::
 
@@ -139,11 +145,12 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ============================================================
- Name                                Default Value   Description                                                
-=================================== =============== ============================================================
- checkParameterizedMethods           false           Applies only to methods without parameter when set to true 
-=================================== =============== ============================================================
+=========================== =============== ============================================================
+ Name                        Default Value   Description
+=========================== =============== ============================================================
+ checkParameterizedMethods   false           Applies only to methods without parameter when set to true
+=========================== =============== ============================================================
+
 
 Remark
 ======
