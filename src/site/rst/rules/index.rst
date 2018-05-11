@@ -23,13 +23,15 @@ Clean Code Rules
 
 - `BooleanArgumentFlag`__: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
 - `ElseExpression`__: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+- `IfStatementAssignment`__: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string and the like.
 - `StaticAccess`__: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
-- `DuplicateArrayKey`__: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+- `DuplicatedArrayKey`__: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 
 __ cleancode.html#booleanargumentflag
 __ cleancode.html#elseexpression
+__ cleancode.html#ifstatementassignment
 __ cleancode.html#staticaccess
-__ cleancode.html#duplicatearraykey
+__ cleancode.html#duplicatedarraykey
 
 Code Size Rules
 ===============
@@ -83,10 +85,8 @@ Design Rules
 - `DepthOfInheritance`__: A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.
 - `CouplingBetweenObjects`__: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 - `DevelopmentCodeFragment`__: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
-- `IfStatementAssignment`__: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `EmptyCatchBlock`__: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
-- `CountInLoopExpression`__: Using count/sizeof in loops expressions is considered bad practice and is a potential source of
-many bugs, especially when the loop manipulates an array, as count happens on each iteration.
+- `CountInLoopExpression`__: Using count/sizeof in loops expressions is considered bad practice and is a potential source of many bugs, especially when the loop manipulates an array, as count happens on each iteration.
 
 __ design.html#exitexpression
 __ design.html#evalexpression
@@ -95,7 +95,6 @@ __ design.html#numberofchildren
 __ design.html#depthofinheritance
 __ design.html#couplingbetweenobjects
 __ design.html#developmentcodefragment
-__ design.html#ifstatementassignment
 __ design.html#emptycatchblock
 __ design.html#countinloopexpression
 
@@ -129,9 +128,10 @@ __ unusedcode.html#unusedlocalvariable
 __ unusedcode.html#unusedprivatemethod
 __ unusedcode.html#unusedformalparameter
 
+
 Remark
 ======
 
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
-__ http://pmd.sourceforge.net/
+__ https://pmd.sourceforge.net/

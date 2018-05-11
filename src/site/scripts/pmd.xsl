@@ -9,8 +9,8 @@
         <xsl:text>
 </xsl:text>
     </xsl:variable>
-    <xsl:variable name="column.name.length" select="35" />
-    <xsl:variable name="column.value.length" select="15" />
+    <!-- <xsl:variable name="column.name.length" select="35" /> -->
+    <!-- <xsl:variable name="column.value.length" select="50" /> -->
 
     <xsl:template match="/">
         <!--
@@ -85,8 +85,14 @@ __ http://pmd.sourceforge.net/
 
     <xsl:template match="pmd:properties">
         <xsl:if test="pmd:property">
-            <xsl:variable name="length">
+            <xsl:variable name="descriptionLength">
                 <xsl:call-template name="max.description.length" />
+            </xsl:variable>
+            <xsl:variable name="valueLength">
+                <xsl:call-template name="max.value.length" />
+            </xsl:variable>
+            <xsl:variable name="nameLength">
+                <xsl:call-template name="max.name.length" />
             </xsl:variable>
 
             <xsl:value-of select="$nl" />
@@ -96,34 +102,34 @@ __ http://pmd.sourceforge.net/
             <xsl:call-template name="property.table.columns" />
             <xsl:call-template name="pad.right">
                 <xsl:with-param name="text" select="'Name'" />
-                <xsl:with-param name="length" select="$column.name.length" />
+                <xsl:with-param name="length" select="$nameLength" />
             </xsl:call-template>
             <xsl:text> </xsl:text>
             <xsl:call-template name="pad.right">
                 <xsl:with-param name="text" select="'Default Value'" />
-                <xsl:with-param name="length" select="$column.value.length" />
+                <xsl:with-param name="length" select="$valueLength" />
             </xsl:call-template>
             <xsl:text> </xsl:text>
             <xsl:call-template name="pad.right">
                 <xsl:with-param name="text" select="'Description'" />
-                <xsl:with-param name="length" select="$length" />
+                <xsl:with-param name="length" select="$descriptionLength" />
             </xsl:call-template>
             <xsl:value-of select="$nl" />
             <xsl:call-template name="property.table.columns" />
             <xsl:for-each select="pmd:property">
                 <xsl:call-template name="pad.right">
                     <xsl:with-param name="text" select="@name" />
-                    <xsl:with-param name="length" select="$column.name.length" />
+                    <xsl:with-param name="length" select="$nameLength" />
                 </xsl:call-template>
                 <xsl:text> </xsl:text>
                 <xsl:call-template name="pad.right">
                     <xsl:with-param name="text" select="@value" />
-                    <xsl:with-param name="length" select="$column.value.length" />
+                    <xsl:with-param name="length" select="$valueLength" />
                 </xsl:call-template>
                 <xsl:text> </xsl:text>
                 <xsl:call-template name="pad.right">
                     <xsl:with-param name="text" select="@description" />
-                    <xsl:with-param name="length" select="$length" />
+                    <xsl:with-param name="length" select="$descriptionLength" />
                 </xsl:call-template>
                 <xsl:value-of select="$nl" />
             </xsl:for-each>
@@ -133,11 +139,15 @@ __ http://pmd.sourceforge.net/
 
     <xsl:template name="property.table.columns">
         <xsl:call-template name="line.char">
-            <xsl:with-param name="length" select="$column.name.length" />
+            <xsl:with-param name="length">
+                <xsl:call-template name="max.name.length" />
+            </xsl:with-param>
         </xsl:call-template>
         <xsl:text> </xsl:text>
         <xsl:call-template name="line.char">
-            <xsl:with-param name="length" select="$column.value.length" />
+            <xsl:with-param name="length">
+                <xsl:call-template name="max.value.length" />
+            </xsl:with-param>
         </xsl:call-template>
         <xsl:text> </xsl:text>
         <xsl:call-template name="line.char">
@@ -148,10 +158,33 @@ __ http://pmd.sourceforge.net/
         <xsl:value-of select="$nl" />
     </xsl:template>
 
+    <xsl:template name="max.name.length">
+        <xsl:for-each select="pmd:property/@name">
+            <xsl:sort select="string-length(.)" order="descending" />
+            <xsl:if test="position() = 1">
+                <xsl:value-of select="string-length(.) + 2" />
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+
     <xsl:template name="max.description.length">
         <xsl:for-each select="pmd:property/@description">
             <xsl:sort select="string-length(.)" order="descending" />
             <xsl:if test="position() = 1">
+                <xsl:value-of select="string-length(.) + 2" />
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="max.value.length">
+        <xsl:for-each select="pmd:property/@value">
+            <xsl:sort select="string-length(.)" order="descending" />
+            <xsl:if test="position() = 1">
+                <xsl:if test="(string-length(.) + 2) &lt; 15">
+                    <xsl:value-of select="15" />
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="(string-length(.) + 2) &gt;&#61; 15">
                 <xsl:value-of select="string-length(.) + 2" />
             </xsl:if>
         </xsl:for-each>
