@@ -26,12 +26,12 @@ Example: ::
 
 This rule has the following properties:
 
-========= =============== ===========================================================
- Name      Default Value   Description
-========= =============== ===========================================================
- minimum   3               Minimum length for a variable, property or parameter name
- exceptions                  Comma-separated list of exceptions
-========= =============== ===========================================================
+=================================== =============== ===========================================================
+ Name                                Default Value   Description
+=================================== =============== ===========================================================
+ minimum                             3               Minimum length for a variable, property or parameter name
+ exceptions                                          Comma-separated list of exceptions
+=================================== =============== ===========================================================
 
 LongVariable
 ============
@@ -56,11 +56,11 @@ Example: ::
 
 This rule has the following properties:
 
-========= =============== =========================================
- Name      Default Value   Description
-========= =============== =========================================
- maximum   20              The variable length reporting threshold
-========= =============== =========================================
+=================================== =============== =========================================
+ Name                                Default Value   Description
+=================================== =============== =========================================
+ maximum                             20              The variable length reporting threshold
+=================================== =============== =========================================
 
 ShortMethodName
 ===============
@@ -79,12 +79,12 @@ Example: ::
 
 This rule has the following properties:
 
-========= =============== ==============================================
- Name      Default Value   Description
-========= =============== ==============================================
- minimum   3               Minimum length for a method or function name
- exceptions                  Comma-separated list of exceptions
-========= =============== ==============================================
+=================================== =============== ==============================================
+ Name                                Default Value   Description
+=================================== =============== ==============================================
+ minimum                             3               Minimum length for a method or function name
+ exceptions                                          Comma-separated list of exceptions
+=================================== =============== ==============================================
 
 ConstructorWithNameAsEnclosingClass
 ===================================
@@ -145,11 +145,11 @@ Example: ::
 
 This rule has the following properties:
 
-=========================== =============== ============================================================
- Name                        Default Value   Description
-=========================== =============== ============================================================
- checkParameterizedMethods   false           Applies only to methods without parameter when set to true
-=========================== =============== ============================================================
+=================================== =============== ============================================================
+ Name                                Default Value   Description
+=================================== =============== ============================================================
+ checkParameterizedMethods           false           Applies only to methods without parameter when set to true
+=================================== =============== ============================================================
 
 
 Remark
