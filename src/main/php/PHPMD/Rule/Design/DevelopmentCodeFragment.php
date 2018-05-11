@@ -41,9 +41,15 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      */
     public function apply(AbstractNode $node)
     {
+        $ignoreNS = $this->getBooleanProperty('ignore-namespaces');
+        $namespace = $node->getNamespaceName();
         foreach ($node->findChildrenOfType('FunctionPostfix') as $postfix) {
-            $image = strtolower($postfix->getImage());
-            if (false === in_array($image, $this->getSuspectImages())) {
+            $fragment = $postfix->getImage();
+            if ($ignoreNS) {
+                $fragment = str_replace("{$namespace}\\", "", $fragment);
+            }
+            $fragment = strtolower($fragment);
+            if (false === in_array($fragment, $this->getSuspectImages())) {
                 continue;
             }
 
@@ -52,7 +58,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 $image = sprintf('%s::%s', $node->getParentName(), $node->getImage());
             }
 
-            $this->addViolation($postfix, array($node->getType(), $image, $postfix->getImage()));
+            $this->addViolation($postfix, array($node->getType(), $image, $fragment));
         }
     }
 
