@@ -43,6 +43,9 @@ Command line options
   - ``--minimumpriority`` ``--min-priority`` ``--minimum-priority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 
+  - ``--maximumpriority`` ``--max-priority`` ``--maximum-priority`` - The rule priority threshold; rules with higher
+    priority than this will not be used.
+
   - ``--reportfile`` ``--report-file`` - Sends the report output to the specified file,
     instead of the default output target ``STDOUT``.
 
