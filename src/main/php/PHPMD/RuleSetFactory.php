@@ -431,7 +431,7 @@ class RuleSetFactory
             }
         }
 
-	if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
         }
     }
