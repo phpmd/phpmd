@@ -370,7 +370,7 @@ class RuleSetFactoryTest extends AbstractTest
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        $this->assertSame(-42, $rule->getPriority());
+        $this->assertSame(4, $rule->getPriority());
     }
 
     /**
