@@ -52,10 +52,6 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         if ($node->getType() === 'class') {
             $fields = $node->findChildrenOfType('FieldDeclaration');
             foreach ($fields as $field) {
-                if ($field->isPrivate()) {
-                    continue;
-                }
-
                 $declarators = $field->findChildrenOfType('VariableDeclarator');
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);

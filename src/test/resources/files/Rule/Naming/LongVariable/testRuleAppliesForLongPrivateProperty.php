@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesForLongPrivateStaticProperty
+class testRuleAppliesForLongPrivateProperty
 {
-    private static $testRuleNotAppliesForLongPrivateStaticProperty = 23;
+    private $testRuleNotAppliesForLongPrivateProperty = 42;
 }
