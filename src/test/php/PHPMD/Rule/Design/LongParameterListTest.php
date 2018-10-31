@@ -27,6 +27,29 @@ use PHPMD\AbstractTest;
 class LongParameterListTest extends AbstractTest
 {
     /**
+     * testApplyIgnoresConstructorsWithMoreParametersThanMinimum
+     *
+     * @return void
+     */
+    public function testApplyIgnoresConstructorsWithMoreParametersThanMinimum()
+    {
+        $node = $this->getMock('PHPMD\\Node\\MethodNode', array(), array(null), '', false);
+        $node->expects($this->once())
+            ->method('getParameterCount')
+            ->willReturn(3);
+
+        $node->expects($this->once())
+            ->method('getName')
+            ->willReturn('__construct');
+
+        $rule = new LongParameterList();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('minimum', '0');
+        $rule->addProperty('ignoreConstructors', 'true');
+        $rule->apply($node);
+    }
+
+    /**
      * testApplyIgnoresMethodsWithLessParametersThanMinimum
      *
      * @return void

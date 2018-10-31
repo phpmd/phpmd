@@ -41,6 +41,9 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
         if ($count < $threshold) {
             return;
         }
+        if ($node->getName() === '__construct' && $this->getBooleanProperty('ignoreConstructors')) {
+            return;
+        }
 
         $this->addViolation(
             $node,
