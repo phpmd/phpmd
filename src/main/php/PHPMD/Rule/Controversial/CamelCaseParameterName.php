@@ -40,6 +40,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     public function apply(AbstractNode $node)
     {
         foreach ($node->getParameters() as $parameter) {
+            $exceptions = $this->getExceptionsList();
             if (in_array(substr($parameter->getName(), 1), $exceptions)) {
                 continue;
             }
