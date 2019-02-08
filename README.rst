@@ -158,6 +158,7 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *ansi*, a command line friendly format.
 
 API docs
 --------

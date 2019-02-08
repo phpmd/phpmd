@@ -236,7 +236,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: html, text, xml.', $opts->usage());
+        $this->assertContains('Available formats: ansi, html, text, xml.', $opts->usage());
     }
 
     /**
@@ -355,6 +355,7 @@ class CommandLineOptionsTest extends AbstractTest
             array('html', 'PHPMD\\Renderer\\HtmlRenderer'),
             array('text', 'PHPMD\\Renderer\\TextRenderer'),
             array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
+            array('ansi', 'PHPMD\\Renderer\\AnsiRenderer'),
             array('PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'),
             array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
             /* Test what happens when class already exists. */

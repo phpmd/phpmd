@@ -449,6 +449,35 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Creates a mocked rul violation instance.
+     *
+     * @param string  $file
+     * @param string  $message
+     * @return \PHPMD\ProcessingError
+     */
+    protected function getErrorMock(
+        $file = '/foo/baz.php',
+        $message = 'Error in file "/foo/baz.php"') {
+
+        $processingError = $this->getMock(
+            'PHPMD\\ProcessingError',
+            array(),
+            array(null),
+            '',
+            false
+        );
+
+        $processingError->expects($this->any())
+            ->method('getFile')
+            ->will($this->returnValue($file));
+        $processingError->expects($this->any())
+            ->method('getMessage')
+            ->will($this->returnValue($message));
+
+        return $processingError;
+    }
+
+    /**
      * Asserts the actual xml output matches against the expected file.
      *
      * @param string $actualOutput     Generated xml output.
