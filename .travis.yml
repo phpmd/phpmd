@@ -2,12 +2,10 @@ language: php
 
 matrix:
   include:
-    - php: 5.4
-      env: DEPENDENCIES=low
-    - php: 5.5
-    - php: 5.6
-    - php: 7.0
     - php: 7.1
+    - php: 7.2
+    - php: 7.3
+      env: DEPENDENCIES=low
   fast_finish: true
 
 sudo: false
@@ -22,8 +20,7 @@ before_script:
   - if [ ! $DEPENDENCIES ] ; then composer install ; fi
 
 script:
-  - if [ $TRAVIS_PHP_VERSION != 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG ; fi
-  - if [ $TRAVIS_PHP_VERSION  = 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
+  - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text
 
 notifications:
   irc: "irc.freenode.org#phpmd"
