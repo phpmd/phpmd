@@ -1,0 +1,8 @@
+{
+    "output": "build/phpmd.phar",
+    "compression": "GZ",
+    "directories": ["src/main", "vendor"],
+    "banner": [
+        "This file is part of phpmd."
+    ]
+}

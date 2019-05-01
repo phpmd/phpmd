@@ -4,6 +4,7 @@
 .project
 .buildpath
 .settings
+build
 composer.lock
 composer.phar
 vendor
