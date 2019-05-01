@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="src/test/php/bootstrap.php">
+<phpunit bootstrap="src/test/php/bootstrap.php"
+         beStrictAboutTestsThatDoNotTestAnything="false"
+>
     <testsuites>
         <testsuite name="PHPMD AllTests">
             <directory suffix="Test.php">src/test/php</directory>

@@ -27,11 +27,12 @@ use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends TestCase
 {
     /**
      * Directory with test files.
@@ -72,6 +73,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         self::$tempFiles = array();
 
         parent::tearDown();
+    }
+
+    protected function setExpectedException(string $exception, string $message = '')
+    {
+        $this->expectException($exception);
+        if (!empty($message)) {
+            $this->expectExceptionMessage($message);
+        }
     }
 
     /**
@@ -271,13 +280,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMock(
-            'PHPMD\\Node\\ClassNode',
-            array(),
-            array(null),
-            '',
-            false
-        );
+        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+            ->setMethods(array())
+            ->disableOriginalConstructor()
+            ->getMock();
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -286,6 +292,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->will($this->returnValue($value));
         }
         return $class;
+    }
+
+    protected function getMock(string $class, array $methods = [])
+    {
+        return $this->getMockBuilder($class)
+                ->setMethods($methods)
+                ->disableOriginalConstructor()
+                ->getMock();
     }
 
     /**
@@ -298,7 +312,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\MethodNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\MethodNode')
+                ->setMethods(array())
+                ->disableOriginalConstructor()
+                ->getMock(),
             $metric,
             $value
         );
@@ -314,7 +331,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\FunctionNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                ->setMethods(array())
+                ->disableOriginalConstructor()
+                ->getMock(),
             $metric,
             $value
         );
@@ -360,7 +380,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->getMock('PHPMD\\Report');
+        $report = $this->createMock('PHPMD\\Report');
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -386,7 +406,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMock('PHPMD\RuleSet');
+        $ruleSet = $this->createMock('PHPMD\RuleSet');
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
@@ -414,13 +434,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $endLine = 42,
         $rule = null
     ) {
-        $ruleViolation = $this->getMock(
-            'PHPMD\\RuleViolation',
-            array(),
-            array(null, null, null),
-            '',
-            false
-        );
+        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
+            ->setMethods(array())
+            ->disableOriginalConstructor()
+            ->getMock();
 
         if ($rule === null) {
             $rule = new RuleStub();
