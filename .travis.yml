@@ -3,6 +3,7 @@ language: php
 matrix:
   include:
     - php: 7.1
+      env: EXECUTE_DEPLOYMENT=true
     - php: 7.2
     - php: 7.3
       env: DEPENDENCIES=low
@@ -24,3 +25,14 @@ script:
 
 notifications:
   irc: "irc.freenode.org#phpmd"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: icQlTSpa4CcURs7lPKprP5phajvmFXZSnretThumG6zGYWlvB9XgHAyQVcFihlsTF9Xz9Nl2nFJi2SP4Acyx0tkTFHRC36b15uubZo60D8bgFY/Y5bguBFGQSurqwgbXjBm6UoOvMqLvTBDXLUCg+wJqwfCOl+prcK0aM/L/w141JA8Uk/Uj9/RYdbjyFMvO8ZqFY2syjeHn6JIiyqknhS3ocONz/bcujMslaQ7A3o8PEOehZ6UirJO46Y1sSWgRGvk+sDjigLfgnY7vfj93PXxXo7SISLjIOlrIHyGnbxU7y2tn5fFL9cM2v2yw9fO0Ak+ic6qixsJ25/w9ZjYGMd3/0ZuAg7VlcueE3LRBTZ8nco39vbuwkuma+xMEmZW3sy8K279HzTxnKcVKoW6hLK7QLrNr2DobnsqTaUHoGxF8tybXCi9nwfEj93INihiwprvRwcdXeli3rVy2muT/dRkU9YjZnV/mClttdDDUdbWDdqgt9ESC/2szgzplElBJ/S7ALO6Hv2WuI0zPirmrf12zGFpFzn+esttG4KjjAuX8tuBq3RFaUZAzSMwlaY79vPOLVSDAvFAUqucvjZ5rIcnCkrldILWDg/FTlHIETspO+gV0l7ff/tDlRcFuJ0PSzVarxeQQdRJJgEWgjRMvCrDbVabyO51gAw51IQAHpVw=
+  file: build/phpmd.phar
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: jakzal/phpmd
+    condition: "$EXECUTE_DEPLOYMENT"
