@@ -22,6 +22,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text
+  - make package && build/phpmd.phar --version
 
 notifications:
   irc: "irc.freenode.org#phpmd"
