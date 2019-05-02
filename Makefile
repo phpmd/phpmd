@@ -34,9 +34,10 @@ phpunit-coverage: tools/phpunit
 .PHONY: phpunit
 
 package: tools/box
-	@rm -rf build/phar && mkdir -p build/phar build/phar/bin
+	@rm -rf build/phar && mkdir -p build/phar build/phar/src
 
-	cp -r src/main composer.json LICENSE build/phar
+	cp -r src/bin src/main build/phar/src
+	cp -r composer.json LICENSE build/phar
 
 	cd build/phar && composer config platform.php 7.1 && composer update --no-dev -o -a
 
