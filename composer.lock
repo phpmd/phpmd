@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a1a4d3becfe564c08d0b7f87794f46f",
+    "content-hash": "85cbdbbd22ba06db3e96b52f1ccf35b9",
     "packages": [
         {
             "name": "pdepend/pdepend",
@@ -244,7 +244,7 @@
             "time": "2018-08-06T09:38:17+00:00"
         },
         {
-            "name": "mikey179/vfsstream",
+            "name": "mikey179/vfsStream",
             "version": "v1.6.4",
             "source": {
                 "type": "git",
