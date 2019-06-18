@@ -76,6 +76,7 @@ function cacheDirectory($dir, $base = '')
                 $content
             );
             $content = $parser->parse($content);
+            // Add one level to every title <h1> to <h2>, <h2> to <h3> etc.
             $content = preg_replace_callback('/(<\/?h)([1-6])/', function ($match) {
                 return $match[1].($match[2] + 1);
             }, $content);

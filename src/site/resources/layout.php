@@ -10,14 +10,14 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Thu, 21 Apr 2016 09:02:49 +0200" />
+    <meta name="date" content="<?php echo date('r'); ?>" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Thu, 21 Apr 2016 09:02:49 +0200" />
-    <meta name="DC.rights" content="CC by-nc-sa" />
+    <meta name="DC.date" content="<?php echo date('r'); ?>" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 

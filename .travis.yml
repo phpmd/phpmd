@@ -9,7 +9,7 @@ matrix:
     - php: 7.0
     - php: 7.1
     - php: 7.3
-      env: website=true
+      env: WEBSITE=true
   fast_finish: true
 
 sudo: false
@@ -24,9 +24,9 @@ before_script:
   - if [[ ! $DEPENDENCIES ]]; then composer install; fi
 
 script:
-  - if [[ $website  = 'true' ]]; then php bin/build-website.php; fi
-  - if [[ $website != 'true' && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
-  - if [[ $website != 'true' && $TRAVIS_PHP_VERSION  = 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
+  - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
+  - if [[ $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
+  - if [[ $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
 
 notifications:
   irc: "irc.freenode.org#phpmd"
@@ -38,4 +38,4 @@ deploy:
   local_dir: dist/website
   on:
     branch: master
-    condition: $website
+    condition: $WEBSITE
