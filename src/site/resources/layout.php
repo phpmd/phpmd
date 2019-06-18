@@ -50,13 +50,8 @@
 </div>
 
 <div id="footer">
-    By
-    <strong>Manuel Pichler</strong>
-    at <strong>Thu, 21 Apr 2016 09:02:49 +0200</strong>
-    licensed under <strong>CC by-nc-sa</strong>
-    <br />
-    Displayed with <a href="http://web-content-viewer.org/" title="Web Content Viewer">WCV</a>
-    licensed under <a href="http://www.gnu.org/licenses/gpl.txt" title="GNU General Public License - Version 3">GPLv3</a>
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
 </div>
 <script>
     [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
