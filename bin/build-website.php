@@ -21,6 +21,8 @@ function removeDirectory($src)
     }
 
     closedir($dir);
+
+    @rmdir($src);
 }
 
 function copyDirectory($src, $dst)
@@ -47,15 +49,15 @@ function copyDirectory($src, $dst)
 
 function cacheDirectory($dir, $base = '')
 {
-    global $parser, $websiteDirectory;
+    global $parser, $websiteDirectory, $changelogContent;
 
     foreach (scandir($dir) as $item) {
         if (substr($item, 0, 1) === '.') {
             continue;
         }
 
-        if (is_dir("$dir/$item")) {
-            cacheDirectory("$dir/$item", "$base/$item");
+        if (is_dir($dir.'/'.$item)) {
+            cacheDirectory($dir.'/'.$item, $base.'/'.$item);
 
             continue;
         }
@@ -67,7 +69,13 @@ function cacheDirectory($dir, $base = '')
                 mkdir($directory, 0777, true);
             }
 
-            $content = $parser->parse(file_get_contents("$dir/$item"));
+            $content = file_get_contents($dir.'/'.$item);
+            $content = str_replace(
+                '.. include:: ../release/parts/latest.rst',
+                $changelogContent,
+                $content
+            );
+            $content = $parser->parse($content);
             $content = preg_replace_callback('/(<\/?h)([1-6])/', function ($match) {
                 return $match[1].($match[2] + 1);
             }, $content);
@@ -96,6 +104,17 @@ function isIndex($node)
     return false;
 }
 
+function isHidden($node)
+{
+    foreach ($node->attributes() as $name => $value) {
+        if ($name === 'display' && strval($value[0]) === 'false') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function buildMenu($uri)
 {
     global $rstDir;
@@ -107,7 +126,7 @@ function buildMenu($uri)
         $path = $node->xpath('path');
         $name = $node->xpath('name');
 
-        if (!isset($path[0], $name[0])) {
+        if (!isset($path[0], $name[0]) || isHidden($node)) {
             continue;
         }
 
@@ -129,7 +148,7 @@ function buildMenu($uri)
             $output .= '<ul>';
 
             foreach ($subMenu->children() as $node) {
-                if (isIndex($node)) {
+                if (isIndex($node) || isHidden($node)) {
                     continue;
                 }
 
@@ -159,6 +178,7 @@ $websiteDirectory = __DIR__.'/../dist/website';
 
 $parser = new Gregwar\RST\Parser;
 
+$changelogContent = file_get_contents(__DIR__.'/../CHANGELOG');
 removeDirectory($websiteDirectory);
 @mkdir($websiteDirectory, 0777, true);
 copyDirectory(__DIR__.'/../src/site/resources/web', $websiteDirectory);
