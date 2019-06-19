@@ -185,3 +185,7 @@ removeDirectory($websiteDirectory);
 copyDirectory(__DIR__.'/../src/site/resources/web', $websiteDirectory);
 cacheDirectory($rstDir);
 copy($websiteDirectory.'/about.html', $websiteDirectory.'/index.html');
+
+if ($cname = getenv('CNAME')) {
+    file_put_contents($websiteDirectory.'/CNAME', $cname);
+}
