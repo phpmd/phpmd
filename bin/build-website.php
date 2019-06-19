@@ -80,6 +80,11 @@ function cacheDirectory($dir, $base = '')
             $content = preg_replace_callback('/(<\/?h)([1-6])/', function ($match) {
                 return $match[1].($match[2] + 1);
             }, $content);
+            $content = preg_replace(
+                '/phpmd-(\d+\.\S+)/',
+                '<a href="https://github.com/phpmd/phpmd/releases/tag/$1" title="$0 release">$0</a>',
+                $content
+            );
             $uri = $base.'/'.substr($item, 0, -4).'.html';
 
             $menu = buildMenu($uri);
