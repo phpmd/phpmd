@@ -19,10 +19,10 @@
     <meta name="DC.date" content="<?php echo date('r'); ?>" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="<?php echo $baseHref ?? ''; ?>/favicon.ico" type="image/x-icon" />
 
-    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
-    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+    <link rel="Stylesheet" type="text/css" href="<?php echo $baseHref ?? ''; ?>/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="<?php echo $baseHref ?? ''; ?>/css/print.css" media="print" />
 
     <title>PHPMD - PHP Mess Detector</title>
 </head>
@@ -33,7 +33,7 @@
 <div id="content">
     <?php
 
-    echo $content;
+    echo $content ?? '';
 
     ?>
 </div>
@@ -43,7 +43,7 @@
     <ul>
         <?php
 
-        echo $menu;
+        echo $menu ?? '';
 
         ?>
     </ul>

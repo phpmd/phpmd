@@ -3,9 +3,9 @@
 use Gregwar\RST\Parser;
 
 /**
- * Recursive remove a directory
+ * Remove a directory and all sub-directories and files inside.
  *
- * @param $directory
+ * @param string $directory
  *
  * @return void
  */
@@ -35,10 +35,10 @@ function removeDirectory($directory)
 }
 
 /**
- * Recursive copy a directory with all content to another directory
+ * Deep copy a directory with all content to another directory.
  *
- * @param $source
- * @param $destination
+ * @param string $source
+ * @param string $destination
  *
  * @return void
  */
@@ -65,18 +65,19 @@ function copyDirectory($source, $destination)
 }
 
 /**
- * Create a cache of the directory
+ * Create a HTML files from RST sources.
  *
  * @param string $dir
- * @param Parser $parser
- * @param string $websiteDirectory
- * @param string $changelogContent
- * @param string $rstDir
- * @param string $base
+ * @param Parser $parser           RST file parser
+ * @param string $websiteDirectory Output directory
+ * @param string $changelogContent Content of the CHANGELOG file
+ * @param string $rstDir           Directory containing .rst files
+ * @param string $baseHref         Base of link to be used if website is deplpoyed in a folder URI
+ * @param string $base             Base path for recursion
  *
  * @return void
  */
-function cacheDirectory($dir, $parser, $websiteDirectory, $changelogContent, $rstDir, $base = '')
+function buildWebsite($dir, $parser, $websiteDirectory, $changelogContent, $rstDir, $baseHref, $base = '')
 {
     foreach (scandir($dir) as $item) {
         if (substr($item, 0, 1) === '.') {
@@ -84,13 +85,13 @@ function cacheDirectory($dir, $parser, $websiteDirectory, $changelogContent, $rs
         }
 
         if (is_dir($dir.'/'.$item)) {
-            cacheDirectory($dir.'/'.$item, $parser, $websiteDirectory, $changelogContent, $rstDir, $base.'/'.$item);
+            buildWebsite($dir.'/'.$item, $parser, $websiteDirectory, $changelogContent, $rstDir, $baseHref, $base.'/'.$item);
 
             continue;
         }
 
         if (substr($item, -4) !== '.rst') {
-            contine;
+            continue;
         }
         $directory = $websiteDirectory.$base;
 
@@ -116,7 +117,7 @@ function cacheDirectory($dir, $parser, $websiteDirectory, $changelogContent, $rs
         );
         $uri = $base.'/'.substr($item, 0, -4).'.html';
 
-        $menu = buildMenu($uri, $rstDir);
+        $menu = buildMenu($uri, $rstDir, $baseHref);
 
         ob_start();
         include __DIR__.'/../src/site/resources/layout.php';
@@ -128,9 +129,9 @@ function cacheDirectory($dir, $parser, $websiteDirectory, $changelogContent, $rs
 }
 
 /**
- * Check if the node is index (that is skiped in the building of the menu)
+ * Check if the node is index (that is skipped in the building of the menu)
  *
- * @param SimpleXMLElement $node
+ * @param SimpleXMLElement $node menu item node
  *
  * @return bool
  */
@@ -146,9 +147,9 @@ function isIndex($node)
 }
 
 /**
- * Check if the item is hidden (that is skiped in the building of the menu)
+ * Check if the item is hidden (that is skipped in the building of the menu)
  *
- * @param SimpleXMLElement $node
+ * @param SimpleXMLElement $node menu item node
  *
  * @return bool
  */
@@ -164,14 +165,16 @@ function isHidden($node)
 }
 
 /**
- * @param string $uri
- * @param string $rstDir
+ * Return the menu as HTML.
+ *
+ * @param string $uri      URI of the current page
+ * @param string $rstDir   Directory containing .rst files
+ * @param string $baseHref Base of link to be used if website is deplpoyed in a folder URI
  *
  * @return string
  */
-function buildMenu($uri, $rstDir)
+function buildMenu($uri, $rstDir, $baseHref)
 {
-
     $output = '';
     $menu = simplexml_load_file($rstDir.'/.index.xml');
 
@@ -190,7 +193,7 @@ function buildMenu($uri, $rstDir)
         $root = $isDirectory ? $href : substr($href, 0, -4).'.html';
         $href = $isDirectory ? $href.'index.html' : $root;
         $selected = substr($uri, 0, strlen($root)) === $root;
-        $output .= '<li><a href="'.$href.'" title="'.$name.'">';
+        $output .= '<li><a href="'.$baseHref.$href.'" title="'.$name.'">';
         $output .= $selected ? '<strong>'.$name.'</strong>' : $name;
         $output .= '</a>';
 
@@ -200,17 +203,17 @@ function buildMenu($uri, $rstDir)
 
             $output .= '<ul>';
 
-            foreach ($subMenu->children() as $node) {
-                if (isIndex($node) || isHidden($node)) {
+            foreach ($subMenu->children() as $subNode) {
+                if (isIndex($subNode) || isHidden($subNode)) {
                     continue;
                 }
 
-                $isDirectory = $node->getName() === 'directory';
-                $name = htmlspecialchars(strval($node->xpath('name')[0] ?? 'unknown'));
-                $href = '/'.$upperPath.ltrim(strval($node->xpath('path')[0] ?? 'unknown'), '/');
+                $isDirectory = $subNode->getName() === 'directory';
+                $name = htmlspecialchars(strval($subNode->xpath('name')[0] ?? 'unknown'));
+                $href = '/'.$upperPath.ltrim(strval($subNode->xpath('path')[0] ?? 'unknown'), '/');
                 $root = $isDirectory ? $href : substr($href, 0, -4).'.html';
                 $href = $isDirectory ? $href.'index.html' : $root;
-                $output .= '<li><a href="'.$href.'" title="'.$name.'">';
+                $output .= '<li><a href="'.$baseHref.$href.'" title="'.$name.'">';
                 $output .= substr($uri, 0, strlen($root)) === $root ? '<strong>'.$name.'</strong>' : $name;
                 $output .= '</a>';
             }
@@ -230,12 +233,13 @@ $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
 
 $parser = new Parser;
+$baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
 
 $changelogContent = file_get_contents(__DIR__.'/../CHANGELOG');
 removeDirectory($websiteDirectory);
 @mkdir($websiteDirectory, 0777, true);
 copyDirectory(__DIR__.'/../src/site/resources/web', $websiteDirectory);
-cacheDirectory($rstDir, $parser, $websiteDirectory, $changelogContent, $rstDir);
+buildWebsite($rstDir, $parser, $websiteDirectory, $changelogContent, $rstDir, $baseHref);
 copy($websiteDirectory.'/about.html', $websiteDirectory.'/index.html');
 
 if ($cname = getenv('CNAME')) {
