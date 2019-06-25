@@ -482,7 +482,7 @@ class CommandLineOptions
             return implode(', ', $renderers);
         }
 
-        return array_pop($list);
+        return array_pop($renderers);
     }
 
     /**
