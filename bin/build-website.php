@@ -106,9 +106,14 @@ function buildWebsite($dir, $parser, $websiteDirectory, $changelogContent, $rstD
             $content
         );
         $content = $parser->parse($content);
-        // Add one level to every title <h1> to <h2>, <h2> to <h3> etc.
-        $content = preg_replace_callback('/(<\/?h)([1-6])/', function ($match) {
-            return $match[1].($match[2] + 1);
+        $content = preg_replace_callback('/(<a id="[^"]+"><\/a>)\s*<h(?<level>[1-6])([^>]*>)(?<content>[\s\S]*)<\/h\\g<level>>/U', function ($match) {
+            // Add one level to every title <h1> to <h2>, <h2> to <h3> etc.
+            $level = $match['level'] + 1;
+            $content = $match['content'];
+            // Use content as anchor
+            $hash = preg_replace('/[^a-z0-9]+/', '-', strtolower(trim($match['content'])));
+
+            return "<a id=\"$hash\"></a>\n<h$level>$content</h$level>";
         }, $content);
         $content = preg_replace(
             '/phpmd-(\d+\.\S+)/',
