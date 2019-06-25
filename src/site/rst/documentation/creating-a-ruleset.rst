@@ -185,12 +185,13 @@ Changing individual properties in a rule set
 ============================================
 
 We would like to use the `clean code`__ rule set, but our code uses the
-static constructors of the PHP date and time classes. This causes errors
-with the ``StaticAccess`` rule. To modify the ``exceptions`` property of
-that rule while still keeping the rest of the rule set, we need to import
-the whole rule set, excluding the ``StaticAccess`` rule and then include the
-``StaticAccess`` rule individually. Instead of using a ``value`` attribute
-for the property you can also use a ``<value>`` tag to make it more readable.
+static constructors of the PHP date and time classes. This causes rule
+violations with the ``StaticAccess`` rule. To modify the ``exceptions``
+property of that rule while still keeping the rest of the rule set, we
+need to import the whole rule set, excluding the ``StaticAccess`` rule
+and then include the ``StaticAccess`` rule individually. Instead of using
+a ``value`` attribute for the property you can also use a ``<value>`` tag
+to make it more readable.
 
 __ /rules/cleancode.html
 
