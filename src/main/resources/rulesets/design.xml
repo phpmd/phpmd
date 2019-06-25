@@ -245,12 +245,12 @@ and so used an empty catch to silence the problem.
             <![CDATA[
 class Foo {
 
-    public function bar()
-    {
-        try {
-            // ...
-        } catch (Exception $e) {} // empty catch block
-    }
+  public function bar()
+  {
+    try {
+        // ...
+    } catch (Exception $e) {} // empty catch block
+  }
 }
             ]]>
         </example>
@@ -278,7 +278,7 @@ class Foo {
     $array = array();
 
     for ($i = 0; count($array); $i++) {
-        // ...
+      // ...
     }
   }
 }

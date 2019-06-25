@@ -68,35 +68,6 @@ class Foo
         </example>
     </rule>
 
-    <rule name="StaticAccess"
-          since="1.4.0"
-          message="Avoid using static access to class '{0}' in method '{1}'."
-          class="PHPMD\Rule\CleanCode\StaticAccess"
-          externalInfoUrl="https://phpmd.org/rules/cleancode.html#staticaccess">
-        <description>
-            <![CDATA[
-Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid
-using static access at all costs and instead inject dependencies through the constructor. The only
-case when static access is acceptable is when used for factory methods.
-            ]]>
-        </description>
-        <priority>1</priority>
-        <properties>
-            <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
-        </properties>
-        <example>
-            <![CDATA[
-class Foo
-{
-    public function bar()
-    {
-        Bar::baz();
-    }
-}
-            ]]>
-        </example>
-    </rule>
-
     <rule name="IfStatementAssignment"
           since="2.7.0"
           message="Avoid assigning values to variables in if clauses and the like (line '{0}', column '{1}')."
@@ -131,6 +102,35 @@ class Foo
         </example>
     </rule>
 
+    <rule name="StaticAccess"
+          since="1.4.0"
+          message="Avoid using static access to class '{0}' in method '{1}'."
+          class="PHPMD\Rule\CleanCode\StaticAccess"
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#staticaccess">
+        <description>
+            <![CDATA[
+Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid
+using static access at all costs and instead inject dependencies through the constructor. The only
+case when static access is acceptable is when used for factory methods.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+class Foo
+{
+    public function bar()
+    {
+        Bar::baz();
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="DuplicatedArrayKey"
           since="2.7.0"
           message="Duplicated array key {0}, first declared at line {1}."
@@ -148,7 +148,7 @@ will have different value, there is usually no point in defining first one.
             <![CDATA[
 function createArray() {
     return [
-        'non-associative 0-element', // not applied
+        'non-associative 0element', // not applied
         0 => 'associative 0-element', // applied
         false => 'associative 0-element', // applied
         'foo' => 'bar', // not applied
