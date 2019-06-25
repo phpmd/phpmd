@@ -182,7 +182,7 @@ __ /rules/naming.html
   </ruleset>
 
 Changing individual properties in a rule set
-==============================================
+============================================
 We would like to use the `clean code`__ rule set, but our code uses the
 static constructors of the PHP date and time classes. This causes errors
 with the ``StaticAccess`` rule. To modify the ``exceptions`` property of
