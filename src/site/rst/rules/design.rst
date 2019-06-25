@@ -81,9 +81,9 @@ A class with an excessive number of children is an indicator for an unbalanced c
 This rule has the following properties:
 
 =================================== =============== =============================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                 
 =================================== =============== =============================================
- minimum                             15              Maximum number of acceptable child classes.
+ minimum                             15              Maximum number of acceptable child classes. 
 =================================== =============== =============================================
 
 DepthOfInheritance
@@ -98,9 +98,9 @@ A class with many parents is an indicator for an unbalanced and wrong class hier
 This rule has the following properties:
 
 =================================== =============== ==============================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                  
 =================================== =============== ==============================================
- minimum                             6               Maximum number of acceptable parent classes.
+ minimum                             6               Maximum number of acceptable parent classes. 
 =================================== =============== ==============================================
 
 CouplingBetweenObjects
@@ -147,7 +147,7 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ============================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                
 =================================== =============== ============================================
  maximum                             13              Maximum number of acceptable dependencies. 
 =================================== =============== ============================================
@@ -195,6 +195,7 @@ Usually empty try-catch is a bad idea because you are silently swallowing an err
 Example: ::
 
   class Foo {
+  
     public function bar()
     {
         try {
@@ -218,7 +219,7 @@ Example: ::
     public function bar()
     {
       $array = array();
-
+  
       for ($i = 0; count($array); $i++) {
         // ...
       }

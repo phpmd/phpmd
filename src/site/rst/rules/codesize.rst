@@ -55,11 +55,11 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===================================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                                       
 =================================== =============== ===================================================================
- reportLevel                         10              The Cyclomatic Complexity reporting threshold
- showClassesComplexity               true            Indicate if class average violation should be added to the report
- showMethodsComplexity               true            Indicate if class average violation should be added to the report
+ reportLevel                         10              The Cyclomatic Complexity reporting threshold                     
+ showClassesComplexity               true            Indicate if class average violation should be added to the report 
+ showMethodsComplexity               true            Indicate if class average violation should be added to the report 
 =================================== =============== ===================================================================
 
 NPathComplexity
@@ -81,9 +81,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ===============================
- Name                                Default Value   Description
+ Name                                Default Value   Description                   
 =================================== =============== ===============================
- minimum                             200             The npath reporting threshold
+ minimum                             200             The npath reporting threshold 
 =================================== =============== ===============================
 
 ExcessiveMethodLength
@@ -107,10 +107,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             100             The method size reporting threshold
- ignore-whitespace                   false           Count whitespace in reporting threshold
+ minimum                             100             The method size reporting threshold     
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
 =================================== =============== =========================================
 
 ExcessiveClassLength
@@ -132,10 +132,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             1000            The class size reporting threshold
- ignore-whitespace                   false           Count whitespace in reporting threshold
+ minimum                             1000            The class size reporting threshold      
+ ignore-whitespace                   false           Count whitespace in reporting threshold 
 =================================== =============== =========================================
 
 ExcessiveParameterList
@@ -158,9 +158,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                             
 =================================== =============== =========================================
- minimum                             10              The parameter count reporting threshold
+ minimum                             10              The parameter count reporting threshold 
 =================================== =============== =========================================
 
 ExcessivePublicCount
@@ -188,9 +188,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =====================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                         
 =================================== =============== =====================================
- minimum                             45              The public item reporting threshold
+ minimum                             45              The public item reporting threshold 
 =================================== =============== =====================================
 
 TooManyFields
@@ -213,9 +213,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ======================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                          
 =================================== =============== ======================================
- maxfields                           15              The field count reporting threshold
+ maxfields                           15              The field count reporting threshold  
 =================================== =============== ======================================
 
 TooManyMethods
@@ -228,10 +228,10 @@ A class with too many methods is probably a good suspect for refactoring, in ord
 This rule has the following properties:
 
 =================================== =============== ======================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                          
 =================================== =============== ======================================
- maxmethods                          25              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
+ maxmethods                          25              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
 =================================== =============== ======================================
 
 TooManyPublicMethods
@@ -244,10 +244,10 @@ A class with too many public methods is probably a good suspect for refactoring,
 This rule has the following properties:
 
 =================================== =============== ======================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                          
 =================================== =============== ======================================
- maxmethods                          10              The method count reporting threshold
- ignorepattern                       (^(set|get))i   Ignore methods matching this regex
+ maxmethods                          10              The method count reporting threshold 
+ ignorepattern                       (^(set|get))i   Ignore methods matching this regex   
 =================================== =============== ======================================
 
 ExcessiveClassComplexity
@@ -287,9 +287,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== ========================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                            
 =================================== =============== ========================================
- maximum                             50              The maximum WMC tolerable for a class.
+ maximum                             50              The maximum WMC tolerable for a class. 
 =================================== =============== ========================================
 
 

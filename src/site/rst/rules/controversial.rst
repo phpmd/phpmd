@@ -50,10 +50,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                             
 =================================== =============== =========================================================
- allow-underscore                    false           Allow an optional, single underscore at the beginning.
- allow-underscore-test               false           Is it allowed to have underscores in test method names.
+ allow-underscore                    false           Allow an optional, single underscore at the beginning.  
+ allow-underscore-test               false           Is it allowed to have underscores in test method names. 
 =================================== =============== =========================================================
 
 CamelCaseMethodName
@@ -74,10 +74,10 @@ Example: ::
 This rule has the following properties:
 
 =================================== =============== =========================================================
- Name                                Default Value   Description
+ Name                                Default Value   Description                                             
 =================================== =============== =========================================================
- allow-underscore                    false           Allow an optional, single underscore at the beginning.
- allow-underscore-test               false           Is it allowed to have underscores in test method names.
+ allow-underscore                    false           Allow an optional, single underscore at the beginning.  
+ allow-underscore-test               false           Is it allowed to have underscores in test method names. 
 =================================== =============== =========================================================
 
 CamelCaseParameterName
