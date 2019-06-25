@@ -198,9 +198,9 @@ Example: ::
   
     public function bar()
     {
-        try {
-            // ...
-        } catch (Exception $e) {} // empty catch block
+      try {
+          // ...
+      } catch (Exception $e) {} // empty catch block
     }
   }
 
