@@ -15,7 +15,24 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesForLongPrivateStaticProperty
+class testHasSuppressWarningsIgnoresCaseFirstLetterClass
 {
-    private static $testRuleNotAppliesForLongPrivateStaticProperty = 23;
+    /**
+     * @suppressWarnings("PHPMD.FooBar")
+     */
+    function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    {
+
+    }
+}
+
+class testHasSuppressWarningsIgnoresCaseFirstLetterClass
+{
+    /**
+     * @suppressWarnings("PHPMD.FooBar")
+     */
+    function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    {
+
+    }
 }

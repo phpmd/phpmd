@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "182f5d3e38bd1c4d28be9f53d5d2e790",
+    "content-hash": "4a1a4d3becfe564c08d0b7f87794f46f",
     "packages": [
         {
             "name": "pdepend/pdepend",
@@ -200,16 +200,60 @@
     ],
     "packages-dev": [
         {
-            "name": "mikey179/vfsStream",
+            "name": "gregwar/rst",
+            "version": "v1.0.5",
+            "target-dir": "Gregwar/RST",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/RST.git",
+                "reference": "c839bf7ee0c8c19592e2ecaffddbb01df063088f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/RST/zipball/c839bf7ee0c8c19592e2ecaffddbb01df063088f",
+                "reference": "c839bf7ee0c8c19592e2ecaffddbb01df063088f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gregwar\\RST": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                }
+            ],
+            "description": "PHP library to parse reStructuredText documents",
+            "homepage": "https://github.com/Gregwar/RST",
+            "keywords": [
+                "markup",
+                "parser",
+                "rst"
+            ],
+            "time": "2018-08-06T09:38:17+00:00"
+        },
+        {
+            "name": "mikey179/vfsstream",
             "version": "v1.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikey179/vfsStream.git",
+                "url": "https://github.com/bovigo/vfsStream.git",
                 "reference": "0247f57b2245e8ad2e689d7cee754b45fbabd592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/0247f57b2245e8ad2e689d7cee754b45fbabd592",
+                "url": "https://api.github.com/repos/bovigo/vfsStream/zipball/0247f57b2245e8ad2e689d7cee754b45fbabd592",
                 "reference": "0247f57b2245e8ad2e689d7cee754b45fbabd592",
                 "shasum": ""
             },
@@ -617,6 +661,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2014-03-07T06:53:16+00:00"
         },
         {
