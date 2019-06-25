@@ -11,8 +11,4 @@
     <directory display="false">
         <path>release/</path>
     </directory>
-    <directory>
-        <name>Extensions</name>
-        <path>extensions/</path>
-    </directory>
 </index>

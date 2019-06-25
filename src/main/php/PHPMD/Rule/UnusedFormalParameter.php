@@ -176,6 +176,19 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             }
         }
 
+        $compoundVariables = $node->findChildrenOfType('CompoundVariable');
+        foreach ($compoundVariables as $compoundVariable) {
+            $variablePrefix = $compoundVariable->getImage();
+
+            foreach ($compoundVariable->findChildrenOfType('Expression') as $child) {
+                $variableImage = $variablePrefix . $child->getImage();
+
+                if (isset($this->nodes[$variableImage])) {
+                    unset($this->nodes[$variableImage]);
+                }
+            }
+        }
+
         /* If the method calls func_get_args() then all parameters are
          * automatically referenced */
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');

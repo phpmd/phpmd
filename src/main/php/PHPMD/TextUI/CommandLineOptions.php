@@ -441,6 +441,7 @@ class CommandLineOptions
             '2) A report format' . \PHP_EOL .
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
+            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
             'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
@@ -481,7 +482,7 @@ class CommandLineOptions
             return implode(', ', $renderers);
         }
 
-        return array_pop($list);
+        return array_pop($renderers);
     }
 
     /**
