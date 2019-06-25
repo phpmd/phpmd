@@ -27,6 +27,7 @@ Since: PHPMD 1.4.0
 An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
 
 
+
 Example: ::
 
   class Foo
@@ -67,6 +68,30 @@ Example: ::
 StaticAccess
 ============
 
+Since: PHPMD 2.7.0
+
+Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string and the like.
+
+
+
+Example: ::
+
+  class Foo
+  {
+      public function bar($flag)
+      {
+          if ($foo = 'bar') { // possible typo
+              // ...
+          }
+          if ($baz = 0) { // always false
+              // ...
+          }
+      }
+  }
+
+StaticAccess
+============
+
 Since: PHPMD 1.4.0
 
 Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
@@ -84,16 +109,6 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===============================================
- Name                                Default Value   Description
-=================================== =============== ===============================================
- exceptions                                          Comma-separated class name list of exceptions
-=================================== =============== ===============================================
-
-DuplicatedArrayKey
-==================
-
-Since: PHPMD
 
 Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 

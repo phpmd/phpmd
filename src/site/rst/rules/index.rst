@@ -77,6 +77,7 @@ Unused Code Rules
 - `UnusedFormalParameter <unusedcode.html#unusedformalparameter>`_: Avoid passing parameters to methods or constructors and then not using those parameters.
 
 
+
 Remark
 ======
 

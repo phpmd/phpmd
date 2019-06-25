@@ -149,7 +149,7 @@ This rule has the following properties:
 =================================== =============== ============================================
  Name                                Default Value   Description
 =================================== =============== ============================================
- maximum                             13              Maximum number of acceptable dependencies.
+ maximum                             13              Maximum number of acceptable dependencies. 
 =================================== =============== ============================================
 
 DevelopmentCodeFragment
@@ -179,9 +179,9 @@ Example: ::
 This rule has the following properties:
 
 =================================== ======================================================== ==================================================
- Name                                Default Value                                            Description
+ Name                                Default Value                                            Description                                      
 =================================== ======================================================== ==================================================
- unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace   Comma separated list of suspect function images.
+ unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace   Comma separated list of suspect function images. 
 =================================== ======================================================== ==================================================
 
 EmptyCatchBlock
@@ -195,7 +195,6 @@ Usually empty try-catch is a bad idea because you are silently swallowing an err
 Example: ::
 
   class Foo {
-
     public function bar()
     {
         try {
@@ -215,7 +214,7 @@ Using count/sizeof in loops expressions is considered bad practice and is a pote
 Example: ::
 
   class Foo {
-
+  
     public function bar()
     {
       $array = array();
@@ -233,3 +232,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
+        
