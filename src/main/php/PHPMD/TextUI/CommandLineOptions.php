@@ -41,6 +41,13 @@ class CommandLineOptions
     protected $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
+     * The maximum rule priority.
+     *
+     * @var integer
+     */
+    protected $maximumPriority = Rule::HIGHEST_PRIORITY;
+
+    /**
      * A php source code filename or directory.
      *
      * @var string
@@ -146,6 +153,11 @@ class CommandLineOptions
                 case '--minimum-priority':
                 case '--minimumpriority':
                     $this->minimumPriority = (int)array_shift($args);
+                    break;
+                case '--max-priority':
+                case '--maximum-priority':
+                case '--maximumpriority':
+                    $this->maximumPriority = (int)array_shift($args);
                     break;
                 case '--report-file':
                 case '--reportfile':
@@ -268,6 +280,16 @@ class CommandLineOptions
     public function getMinimumPriority()
     {
         return $this->minimumPriority;
+    }
+
+    /**
+     * Returns the maximum rule priority.
+     *
+     * @return integer
+     */
+    public function getMaximumPriority()
+    {
+        return $this->maximumPriority;
     }
 
     /**
