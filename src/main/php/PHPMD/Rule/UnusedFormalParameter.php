@@ -168,6 +168,13 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     private function removeUsedParameters(AbstractNode $node)
     {
+        $this->removeRegularVariables($node);
+        $this->removeVariableImages($node);
+        $this->removeArguments($node);
+    }
+
+    private function removeRegularVariables(AbstractNode $node)
+    {
         $variables = $node->findChildrenOfType('Variable');
         foreach ($variables as $variable) {
             /** @var $variable ASTNode */
@@ -175,7 +182,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
                 unset($this->nodes[$variable->getImage()]);
             }
         }
+    }
 
+    private function removeVariableImages(AbstractNode $node)
+    {
         $compoundVariables = $node->findChildrenOfType('CompoundVariable');
         foreach ($compoundVariables as $compoundVariable) {
             $variablePrefix = $compoundVariable->getImage();
@@ -188,9 +198,11 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
                 }
             }
         }
+    }
 
-        /* If the method calls func_get_args() then all parameters are
-         * automatically referenced */
+    private function removeArguments(AbstractNode $node)
+    {
+        // If the method calls func_get_args() then all parameters are automatically referenced
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
