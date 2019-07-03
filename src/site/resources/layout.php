@@ -28,7 +28,7 @@
 </head>
 <body>
 <h1>
-    <a href="/">PHPMD - PHP Mess Detector</a>
+    <a href="<?php echo $baseHref ?? ''; ?>/">PHPMD - PHP Mess Detector</a>
 </h1>
 <div id="content">
     <?php
