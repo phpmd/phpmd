@@ -169,10 +169,16 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function removeUsedParameters(AbstractNode $node)
     {
         $this->removeRegularVariables($node);
-        $this->removeVariableImages($node);
-        $this->removeArguments($node);
+        $this->removeCompoundVariables($node);
+        $this->removeVariablesUsedByFuncGetArgs($node);
     }
 
+    /**
+     * Removes all the regular variables from a given node 
+     *
+     * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
+     * @return void
+     */
     private function removeRegularVariables(AbstractNode $node)
     {
         $variables = $node->findChildrenOfType('Variable');
@@ -183,8 +189,26 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             }
         }
     }
-
-    private function removeVariableImages(AbstractNode $node)
+    
+    /**
+     * Removes all the compound variables from a given node 
+     *
+     * Such as
+     *
+     * <code>
+     * //   ------
+     * Foo::${BAR}();
+     * //   ------
+     *
+     * //    ------
+     * Foo::$${BAR}();
+     * //    ------
+     * </code>
+     *
+     * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.
+     * @return void
+     */
+    private function removeCompoundVariables(AbstractNode $node)
     {
         $compoundVariables = $node->findChildrenOfType('CompoundVariable');
         foreach ($compoundVariables as $compoundVariable) {
@@ -200,9 +224,16 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         }
     }
 
-    private function removeArguments(AbstractNode $node)
+    /**
+     * Removes all the variables from a given node, if func_get_args() is called within
+     *
+     * If the given method calls func_get_args() then all parameters are automatically referenced.
+     *
+     * @param \PHPMD\AbstractNode $node The node to remove the referneced variables from.
+     * @return void
+     */
+    private function removeVariablesUsedByFuncGetArgs(AbstractNode $node)
     {
-        // If the method calls func_get_args() then all parameters are automatically referenced
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
