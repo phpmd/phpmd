@@ -41,7 +41,6 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\PHPMD;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 
@@ -60,7 +59,7 @@ class HTMLRenderer extends AbstractRenderer
 	const CATEGORY_RULESET = "category_ruleset";
 	const CATEGORY_RULE = "category_rule";
 
-	private static $priority_titles = [
+	const PRIORITY_TITLES = [
 		1 => "Top (1)",
 		2 => "High (2)",
 		3 => "Moderate (3)",
@@ -69,7 +68,7 @@ class HTMLRenderer extends AbstractRenderer
 	];
 
 	// Used in self::colorize() method.
-	private static $desc_highlight_rules = [
+	const DESC_HIGHLIGHT_RULES = [
 		'method' => [ // Method names.
 			'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
 			'css-class' => 'hlt-method',
@@ -411,7 +410,7 @@ class HTMLRenderer extends AbstractRenderer
 					Show code &#x25BC;
 				</a>";
 
-			$prio = self::$priority_titles[$violation->getRule()->getPriority()];
+			$prio = self::PRIORITY_TITLES[$violation->getRule()->getPriority()];
 			$html = "
 				<section class='prb' id='$htmlId'>
 					<header>
@@ -478,7 +477,7 @@ class HTMLRenderer extends AbstractRenderer
 
 	/**
 	 * Take a rule description text and try to decorate/stylize parts of it with HTML.
-	 * Based on self::$desc_highlight_rules config.
+	 * Based on self::DESC_HIGHLIGHT_RULES config.
 	 *
 	 * @return string
 	 */
@@ -487,7 +486,7 @@ class HTMLRenderer extends AbstractRenderer
 		// Compile final regex, if not done already.
 		if (!self::$compiledHighlightRegex) {
 
-			$prepared = self::$desc_highlight_rules;
+			$prepared = self::DESC_HIGHLIGHT_RULES;
 			array_walk($prepared, function(&$v, $k) {
 				$v = "(?<{$k}>{$v['regex']})";
 			});
@@ -500,7 +499,7 @@ class HTMLRenderer extends AbstractRenderer
 
 			// Extract currently matched specification of highlighting (Match groups
 			// are named and we can find out which is not empty.).
-			$definition = array_keys(array_intersect_key(self::$desc_highlight_rules, array_filter($x)));
+			$definition = array_keys(array_intersect_key(self::DESC_HIGHLIGHT_RULES, array_filter($x)));
 			$definition = reset($definition);
 
 			return "<span class='hlt-info {$definition}'>{$x[0]}</span>";
@@ -594,7 +593,7 @@ class HTMLRenderer extends AbstractRenderer
 			$rule = $v->getRule();
 
 			// Friendly priority -> Add a describing word to "just number".
-			$friendlyPriority = self::$priority_titles[$rule->getPriority()];
+			$friendlyPriority = self::PRIORITY_TITLES[$rule->getPriority()];
 			$ref = &$result[self::CATEGORY_PRIORITY][$friendlyPriority];
 			$ref = isset($ref) ? $ref + 1 : 1;
 
