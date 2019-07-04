@@ -467,7 +467,7 @@ class HTMLRenderer extends AbstractRenderer
 		if (!$file->eof()) {
 			$file->seek($line);
 			for ($i = 0; $i <= ($extra * 2); $i++) {
-				$result[++$line] = trim($file->current(), "\n");
+				$result[++$line] = trim((string) $file->current(), "\n");
 				$file->next();
 			}
 		}
