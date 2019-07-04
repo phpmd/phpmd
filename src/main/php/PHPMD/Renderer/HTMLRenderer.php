@@ -460,7 +460,7 @@ class HTMLRenderer extends AbstractRenderer
 		$file = new \SplFileObject($file);
 
 		// We have to subtract 1 to extract correct lines via SplFileObject.
-		$line = $lineNumber - 1 - $extra;
+		$line = max($lineNumber - 1 - $extra, 0);
 
 		$result = [];
 
