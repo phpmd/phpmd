@@ -290,11 +290,11 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
-     * Tests that the rule-set factory applies a set priority filter correct.
+     * Tests that the rule-set factory applies a set minimum priority filter correct.
      *
      * @return void
      */
-    public function testCreateRuleSetWithSpecifiedPriorityOnlyContainsMatchingRules()
+    public function testCreateRuleSetWithSpecifiedMinimumPriorityOnlyContainsMatchingRules()
     {
         self::changeWorkingDirectory();
 
@@ -303,6 +303,39 @@ class RuleSetFactoryTest extends AbstractTest
 
         $ruleSet = $factory->createSingleRuleSet('set1');
         $this->assertSame(1, iterator_count($ruleSet->getRules()));
+    }
+
+    /**
+     * Tests that the rule-set factory applies a set maximum priority filter correct.
+     *
+     * @return void
+     */
+    public function testCreateRuleSetWithSpecifiedMaximumPriorityOnlyContainsMatchingRules()
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new RuleSetFactory();
+        $factory->setMaximumPriority(2);
+
+        $ruleSet = $factory->createSingleRuleSet('set1');
+        $this->assertSame(1, iterator_count($ruleSet->getRules()));
+    }
+
+    /**
+     * Tests that the rule-set factory applies a set maximum priority filter correct.
+     *
+     * @return void
+     */
+    public function testCreateRuleSetWithSpecifiedPrioritiesOnlyContainsMatchingRules()
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new RuleSetFactory();
+        $factory->setMinimumPriority(2);
+        $factory->setMaximumPriority(2);
+
+        $ruleSet = $factory->createSingleRuleSet('set1');
+        $this->assertCount(0, $ruleSet->getRules());
     }
 
     /**
@@ -337,7 +370,7 @@ class RuleSetFactoryTest extends AbstractTest
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        $this->assertSame(-42, $rule->getPriority());
+        $this->assertSame(4, $rule->getPriority());
     }
 
     /**

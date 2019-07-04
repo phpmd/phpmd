@@ -41,6 +41,13 @@ class CommandLineOptions
     protected $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
+     * The maximum rule priority.
+     *
+     * @var integer
+     */
+    protected $maximumPriority = Rule::HIGHEST_PRIORITY;
+
+    /**
      * A php source code filename or directory.
      *
      * @var string
@@ -142,12 +149,21 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '--min-priority':
+                case '--minimum-priority':
                 case '--minimumpriority':
                     $this->minimumPriority = (int)array_shift($args);
                     break;
+                case '--max-priority':
+                case '--maximum-priority':
+                case '--maximumpriority':
+                    $this->maximumPriority = (int)array_shift($args);
+                    break;
+                case '--report-file':
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
                     break;
+                case '--input-file':
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile(array_shift($args)));
                     break;
@@ -176,6 +192,9 @@ class CommandLineOptions
                     return;
                 case '--strict':
                     $this->strict = true;
+                    break;
+                case '--not-strict':
+                    $this->strict = false;
                     break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
@@ -261,6 +280,16 @@ class CommandLineOptions
     public function getMinimumPriority()
     {
         return $this->minimumPriority;
+    }
+
+    /**
+     * Returns the maximum rule priority.
+     *
+     * @return integer
+     */
+    public function getMaximumPriority()
+    {
+        return $this->maximumPriority;
     }
 
     /**
@@ -434,6 +463,7 @@ class CommandLineOptions
             '2) A report format' . \PHP_EOL .
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
+            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
             'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
@@ -474,7 +504,7 @@ class CommandLineOptions
             return implode(', ', $renderers);
         }
 
-        return array_pop($list);
+        return array_pop($renderers);
     }
 
     /**

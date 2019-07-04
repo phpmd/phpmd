@@ -62,11 +62,11 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  ${-phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${commons.srcdir.php}"
+        <exec dir="${basedir}"
               executable="${-phar:filename}"
               failonerror="true">
 
-            <arg value="PHPMD/Rule" />
+            <arg value="${commons.srcdir.php}/PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
         </exec>
