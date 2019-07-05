@@ -1,3 +1,13 @@
+phpmd-2.6.1 (2019/07/06)
+========================
+
+This is the first release of the new maintainer team of PHPMD. It is a 
+re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to 
+GitHub releases.
+
+- Implemented #616: Build the PHAR file on Travis-CI and publish it to 
+  GitHub releases Implemented in commit #135327d.
+
 phpmd-2.6.0 (2017/01/20)
 ========================
 

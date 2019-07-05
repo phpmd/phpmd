@@ -10,6 +10,13 @@
     </properties>
 
     <body>
+        <release version="2.6.1"
+                 date="2019/07/06"
+                 description="This is the first release of the new maintainer team of PHPMD. It is a re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to GitHub releases.">
+            <action date="135327d" dev="jakzal" type="update" system="github" issue="616">
+                Build the PHAR file on Travis-CI and publish it to GitHub releases
+            </action>
+        </release>
         <release version="2.6.0"
                  date="2017/01/20"
                  description="This release incorporates several pending PRs. Beside that we have rebased PHPMD on PDepend 2.5 which should complete support for PHP 7 language features.">
