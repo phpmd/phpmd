@@ -33,7 +33,8 @@ script:
 notifications:
   webhooks:
     urls:
-      - https://webhooks.gitter.im/e/5a993c0b870b2fa9141e
+      - https://webhooks.gitter.im/e/5a993c0b870b2fa9141e # PHPMD Gitter Core Channel
+      - https://webhooks.gitter.im/e/1c62ab29700f53c70ec5 # PHPMD Gitter Community Channel
     on_success: change
     on_failure: always
     on_start: never
