@@ -59,7 +59,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             $image = $variable->getImage();
 
-            if (in_array($image, $this->exceptions)) {
+            if (in_array($image, $this->exceptions, true)) {
                 continue;
             }
 
@@ -71,7 +71,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
                 continue;
             }
             $exceptions = $this->getExceptionsList();
-            if (in_array(substr($image, 1), $exceptions)) {
+            if (in_array(substr($image, 1), $exceptions, true)) {
                 continue;
             }
 
