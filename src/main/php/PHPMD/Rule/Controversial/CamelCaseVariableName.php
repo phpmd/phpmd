@@ -87,10 +87,9 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     private function getExceptionsList()
     {
         try {
-            $exceptions = $this->getStringProperty('exceptions');
+            return $this->getStringProperty('exceptions');
         } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
+            return [];
         }
-        return explode(',', $exceptions);
     }
 }
