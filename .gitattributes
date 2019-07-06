@@ -30,3 +30,5 @@ pdepend.xml.dist  export-ignore
 composer.lock     export-ignore
 .editorconfig     export-ignore
 appveyor.yml      export-ignore
+CNAME             export-ignore
+/bin/             export-ignore

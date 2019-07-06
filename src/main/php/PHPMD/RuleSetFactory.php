@@ -47,6 +47,13 @@ class RuleSetFactory
     private $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
+     * The maximum priority for rules to load.
+     *
+     * @var integer
+     */
+    private $maximumPriority = Rule::HIGHEST_PRIORITY;
+
+    /**
      * Constructs a new default rule-set factory instance.
      */
     public function __construct()
@@ -79,6 +86,17 @@ class RuleSetFactory
     public function setMinimumPriority($minimumPriority)
     {
         $this->minimumPriority = $minimumPriority;
+    }
+
+    /**
+     * Sets the maximum priority that a rule must have.
+     *
+     * @param integer $maximumPriority The maximum priority value.
+     * @return void
+     */
+    public function setMaximumPriority($maximumPriority)
+    {
+        $this->maximumPriority = $maximumPriority;
     }
 
     /**
@@ -266,6 +284,7 @@ class RuleSetFactory
     {
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
+        $ruleSetFactory->setMaximumPriority($this->maximumPriority);
 
         return $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
     }
@@ -362,7 +381,7 @@ class RuleSetFactory
             }
         }
 
-        if ($rule->getPriority() <= $this->minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
         }
     }
@@ -412,7 +431,7 @@ class RuleSetFactory
             }
         }
 
-        if ($rule->getPriority() <= $this->minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
         }
     }

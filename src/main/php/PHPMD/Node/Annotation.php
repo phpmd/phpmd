@@ -27,7 +27,7 @@ class Annotation
     /**
      * Name of the suppress warnings annotation.
      */
-    const SUPPRESS_ANNOTATION = 'SuppressWarnings';
+    const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
     /**
      * The annotation name.
@@ -63,7 +63,7 @@ class Annotation
      */
     public function suppresses(Rule $rule)
     {
-        if ($this->name === self::SUPPRESS_ANNOTATION) {
+        if (lcfirst($this->name) === self::SUPPRESS_ANNOTATION) {
             return $this->isSuppressed($rule);
         }
         return false;

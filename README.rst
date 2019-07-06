@@ -29,6 +29,10 @@ https://phpmd.org
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/?branch=master
    :alt: Scrutinizer Code Quality
 
+.. image:: https://badges.gitter.im/phpmd/community.svg
+   :target: https://gitter.im/phpmd/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+   :alt: Chat to us on Gitter
+
 Installation
 ------------
 
@@ -158,10 +162,3 @@ At the moment PHPMD comes with the following three renderers:
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
-
-API docs
---------
-
-You find the up to date class API docs at `codedoc.pub`__.
-
-__ https://codedoc.pub/phpmd/phpmd/master/index.html
