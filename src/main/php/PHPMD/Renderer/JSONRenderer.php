@@ -48,7 +48,6 @@ class JSONRenderer extends AbstractRenderer
      */
     public function renderReport(Report $report)
     {
-        $data = $this->initReportData();
         $filesList = array();
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
@@ -69,6 +68,7 @@ class JSONRenderer extends AbstractRenderer
                 'priority' => $rule->getPriority(),
             );
         }
+
         $errorsList = array();
         foreach ($report->getErrors() as $error) {
             $errorsList[] = array(
@@ -76,10 +76,13 @@ class JSONRenderer extends AbstractRenderer
                 'message' => $error->getMessage(),
             );
         }
+        
+        $data = $this->initReportData();
         $data['files'] = array_values($filesList);
         $data['errors'] = $errorsList;
-        $json = $this->encodeReport($data);
+
         $writer = $this->getWriter();
+        $json = $this->encodeReport($data);
         $writer->write($json . PHP_EOL);
     }
 
