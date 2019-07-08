@@ -38,7 +38,7 @@ env:
 before_script:
   - composer self-update
   - if [[ $DEPENDENCIES = low ]]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
-  - if [[ ! $DEPENDENCIES ]]; then composer update --prefer-dist --prefer-stable; fi
+  - if [[ ! $DEPENDENCIES ]]; then rm composer.lock && composer install; fi
 
 script:
   - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
