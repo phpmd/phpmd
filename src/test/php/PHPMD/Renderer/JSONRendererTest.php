@@ -35,7 +35,6 @@ class JSONRendererTest extends AbstractTest
      */
     public function testRendererCreatesExpectedNumberOfJsonElements()
     {
-        // Create a writer instance.
         $writer = new WriterStub();
         
         $violations = array(
@@ -72,7 +71,6 @@ class JSONRendererTest extends AbstractTest
      */
     public function testRendererAddsProcessingErrorsToJsonReport()
     {
-        // Create a writer instance.
         $writer = new WriterStub();
 
         $processingErrors = array(
