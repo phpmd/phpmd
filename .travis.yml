@@ -18,11 +18,11 @@ matrix:
     - php: 7.1
       env: DEPENDENCIES=low
     - php: 7.2
-    - php: 7.2
-      env: DEPENDENCIES=low
+    # - php: 7.2
+    #   env: DEPENDENCIES=low
     - php: 7.3
-    - php: 7.3
-      env: DEPENDENCIES=low
+    # - php: 7.3
+    #   env: DEPENDENCIES=low
     - php: 5.4
       env: BUILD_PHAR=true
     - php: 7.3
