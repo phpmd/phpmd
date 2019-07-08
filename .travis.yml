@@ -43,7 +43,7 @@ before_script:
   - if [[ ! $DEPENDENCIES ]]; then rm composer.lock && composer install; fi
 
 script:
-  - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
+  - if [[ $WEBSITE  = 'true' ]]; then composer build-website; fi
   - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
   - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
   - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi

@@ -3,13 +3,16 @@
 use Gregwar\RST\Parser;
 
 $parser = new Parser;
-$changelogContent = file_get_contents(__DIR__.'/../CHANGELOG');
+$changelogContent = file_get_contents(__DIR__.'/../../CHANGELOG');
 
 return [
+    'index' => 'about.html',
     'baseHref' => ltrim(getenv('BASE_HREF') ?: '', ':'),
     'cname' => getenv('CNAME'),
-    'websiteDirectory' => __DIR__.'/../dist/website',
-    'rstDir' => __DIR__.'/../src/site/rst',
+    'websiteDirectory' => __DIR__.'/../../dist/website',
+    'sourceDirectory' => __DIR__.'/rst',
+    'assetsDirectory' => __DIR__.'/resources/web',
+    'layout' => __DIR__.'/resources/layout.php',
     'extensions' => [
         'rst' => function ($file) use ($parser, $changelogContent) {
             $content = file_get_contents($file);
