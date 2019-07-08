@@ -79,7 +79,9 @@ class JSONRenderer extends AbstractRenderer
         
         $data = $this->initReportData();
         $data['files'] = array_values($filesList);
-        $data['errors'] = $errorsList;
+        if (count($errorsList)) {
+            $data['errors'] = $errorsList;
+        }
 
         $writer = $this->getWriter();
         $json = $this->encodeReport($data);
