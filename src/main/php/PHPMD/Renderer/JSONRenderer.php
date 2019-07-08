@@ -30,7 +30,7 @@ class JSONRenderer extends AbstractRenderer
     /**
      * Create report data and add renderer meta properties
      *
-     * return array
+     * @returns array
      */
     private function initReportData()
     {
