@@ -19,8 +19,8 @@ can be things like:
 - Overcomplicated expressions
 - Unused parameters, methods, properties
 
-PHPMD is a young project and so it only provides a limited set of
-pre defined rules, compared with its brother PMD, that detect code
+PHPMD is a mature project and provides a diverse set of pre defined
+rules (though may be not as many its Java brother PMD) to detect code
 smells and possible errors within the analyzed source code. Checkout
 the `rules section`__ to learn more about all implemented rules.
 
