@@ -137,6 +137,20 @@ class MethodNodeTest extends AbstractTest
     }
 
     /**
+     * testHasSuppressWarningsIgnoresCaseFirstLetter
+     *
+     * @return void
+     */
+    public function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    {
+        $rule = $this->getRuleMock();
+        $rule->setName('FooBar');
+
+        $method = $this->getMethod();
+        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
      * testIsDeclarationReturnsTrueForMethodDeclaration
      *
      * @return void

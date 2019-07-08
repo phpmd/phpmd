@@ -138,11 +138,11 @@ isn't customized in a rule reference.
 Excluding rules from a rule set
 ===============================
 
-Finally we would like to reuse the `naming`__ rule set of PHPMD. But we
-don't like the two variable naming rules, so that we must exclude them
-from out rule set file. This exclusion can be achieved by declaring an
-``<exclude />`` element within the rule reference. This element has an
-attribute ``@name`` which specifies the name of the excluded rule.
+We would like to reuse the `naming`__ rule set of PHPMD. But we don't like
+the two variable naming rules, so that we must exclude them from out rule
+set file. This exclusion can be achieved by declaring an ``<exclude />``
+element within the rule reference. This element has an attribute ``@name``
+which specifies the name of the excluded rule.
 
 __ /rules/naming.html
 
@@ -178,6 +178,71 @@ __ /rules/naming.html
       <rule ref="rulesets/naming.xml">
           <exclude name="ShortVariable" />
           <exclude name="LongVariable" />
+      </rule>
+  </ruleset>
+
+Changing individual properties in a rule set
+============================================
+
+We would like to use the `clean code`__ rule set, but our code uses the
+static constructors of the PHP date and time classes. This causes rule
+violations with the ``StaticAccess`` rule. To modify the ``exceptions``
+property of that rule while still keeping the rest of the rule set, we
+need to import the whole rule set, excluding the ``StaticAccess`` rule
+and then include the ``StaticAccess`` rule individually. Instead of using
+a ``value`` attribute for the property you can also use a ``<value>`` tag
+to make it more readable.
+
+__ /rules/cleancode.html
+
+::
+
+  <?xml version="1.0"?>
+  <ruleset name="My first PHPMD rule set"
+           xmlns="http://pmd.sf.net/ruleset/1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                       http://pmd.sf.net/ruleset_xml_schema.xsd"
+           xsi:noNamespaceSchemaLocation="
+                       http://pmd.sf.net/ruleset_xml_schema.xsd">
+      <description>
+          My custom rule set that checks my code...
+      </description>
+
+      <!-- Import the entire unused code rule set -->
+      <rule ref="rulesets/unusedcode.xml" />
+
+      <!--
+          Import the entire cyclomatic complexity rule and
+          customize the rule configuration.
+      -->
+      <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+          <priority>1</priority>
+          <properties>
+              <property name="reportLevel" value="5" />
+          </properties>
+      </rule>
+
+      <!-- Import entire naming rule set and exclude rules -->
+      <rule ref="rulesets/naming.xml">
+          <exclude name="ShortVariable" />
+          <exclude name="LongVariable" />
+      </rule>
+
+      <!-- Import entire clean code rule set, modify StaticAccess rule -->
+      <rule ref="rulesets/cleancode.xml">
+          <exclude name="StaticAccess" />
+      </rule>
+      <rule ref="rulesets/cleancode.xml/StaticAccess">
+          <properties>
+              <property name="exceptions">
+                  <value>
+                    \DateTime,
+                    \DateInterval,
+                    \DateTimeZone
+                  </value>
+              </property>
+          </properties>
       </rule>
   </ruleset>
 

@@ -294,6 +294,17 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @return void
      */
+    public function testCliOptionsAcceptsMaximumpriorityArgument()
+    {
+        $args = array(__FILE__, '--maximumpriority', 42, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals(42, $opts->getMaximumPriority());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetMinimumPriorityReturnsLowestValueByDefault()
     {
         $args = array(__FILE__, __FILE__, 'text', 'codesize');

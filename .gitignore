@@ -6,3 +6,4 @@
 .settings
 composer.phar
 vendor
+dist

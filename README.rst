@@ -29,6 +29,18 @@ https://phpmd.org
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/?branch=master
    :alt: Scrutinizer Code Quality
 
+.. image:: https://badges.gitter.im/phpmd/community.svg
+   :target: https://gitter.im/phpmd/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+   :alt: Chat to us on Gitter
+
+.. image:: https://poser.pugx.org/phpmd/phpmd/d/monthly
+   :target: https://packagist.org/packages/phpmd/phpmd
+   :alt: Monthly downloads
+
+.. image:: https://poser.pugx.org/phpmd/phpmd/downloads
+   :target: https://packagist.org/packages/phpmd/phpmd
+   :alt: Total downloads
+
 Installation
 ------------
 

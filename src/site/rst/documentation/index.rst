@@ -40,10 +40,13 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
-  - ``--minimumpriority`` - The rule priority threshold; rules with lower
+  - ``--minimumpriority`` ``--min-priority`` ``--minimum-priority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 
-  - ``--reportfile`` - Sends the report output to the specified file,
+  - ``--maximumpriority`` ``--max-priority`` ``--maximum-priority`` - The rule priority threshold; rules with higher
+    priority than this will not be used.
+
+  - ``--reportfile`` ``--report-file`` - Sends the report output to the specified file,
     instead of the default output target ``STDOUT``.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
@@ -53,6 +56,8 @@ Command line options
     directories.
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
+
+  - ``--not-strict`` - Does not report those nodes with a @SuppressWarnings annotation.
 
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.

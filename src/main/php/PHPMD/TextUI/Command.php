@@ -74,6 +74,7 @@ class Command
 
         // Configure a rule set factory
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
+        $ruleSetFactory->setMaximumPriority($opts->getMaximumPriority());
         if ($opts->hasStrict()) {
             $ruleSetFactory->setStrict();
         }
