@@ -51,10 +51,10 @@ class JSONRenderer extends AbstractRenderer
         $data = $this->initReportData();
         $data = $this->addViolationsToReport($report, $data);
         $data = $this->addErrorsToReport($report, $data);
+        $jsonData = $this->encodeReport($data);
 
         $writer = $this->getWriter();
-        $json = $this->encodeReport($data);
-        $writer->write($json . PHP_EOL);
+        $writer->write($jsonData . PHP_EOL);
     }
 
     /**
