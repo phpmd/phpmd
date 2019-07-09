@@ -83,17 +83,6 @@
         </exec>
     </target>
 
-    <target name="-copy-vendor-dir:after~hooked" extensionOf="-copy-vendor-dir:after~hook">
-        <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="checkout" />
-            <arg line="composer.lock" />
-        </exec>
-        <exec executable="php" failonerror="true">
-            <arg line="composer.phar" />
-            <arg line="install" />
-        </exec>
-    </target>
-
     <target name="phpmd:deploy" depends="-phpmd:deploy:after~hooked" />
 
     <target name="-phpmd:deploy:after~hooked" extensionOf="-deploy:after~hook" if="release">

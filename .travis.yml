@@ -3,12 +3,30 @@ language: php
 matrix:
   include:
     - php: 5.4
-      env: BUILD_PHAR=true
+    - php: 5.4
+      env: DEPENDENCIES=low
+    - php: 5.5
     - php: 5.5
       env: DEPENDENCIES=low
     - php: 5.6
+    - php: 5.6
+      env: DEPENDENCIES=low
     - php: 7.0
+    - php: 7.0
+      env: DEPENDENCIES=low
     - php: 7.1
+    - php: 7.1
+      env: DEPENDENCIES=low
+    - php: 7.2
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.2
+    #   env: DEPENDENCIES=low
+    - php: 7.3
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.3
+    #   env: DEPENDENCIES=low
+    - php: 5.4
+      env: BUILD_PHAR=true
     - php: 7.3
       env: WEBSITE=true
   fast_finish: true
@@ -22,12 +40,12 @@ env:
 before_script:
   - composer self-update
   - if [[ $DEPENDENCIES = low ]]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
-  - if [[ ! $DEPENDENCIES ]]; then composer install; fi
+  - if [[ ! $DEPENDENCIES ]]; then rm composer.lock && composer install; fi
 
 script:
   - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
-  - if [[ $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
-  - if [[ $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.1 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
+  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
+  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
   - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi
 
 notifications:
