@@ -28,6 +28,19 @@ use PHPMD\RuleViolation;
 class JSONRenderer extends AbstractRenderer
 {
     /**
+     * {@inheritDoc}
+     */
+    public function renderReport(Report $report)
+    {
+        $data = $this->initReportData();
+        $data = $this->addViolationsToReport($report, $data);
+        $data = $this->addErrorsToReport($report, $data);
+        $jsonData = $this->encodeReport($data);
+
+        $writer = $this->getWriter();
+        $writer->write($jsonData . PHP_EOL);
+    }
+    /**
      * Create report data and add renderer meta properties
      *
      * @return array
@@ -41,20 +54,6 @@ class JSONRenderer extends AbstractRenderer
         );
 
         return $data;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function renderReport(Report $report)
-    {
-        $data = $this->initReportData();
-        $data = $this->addViolationsToReport($report, $data);
-        $data = $this->addErrorsToReport($report, $data);
-        $jsonData = $this->encodeReport($data);
-
-        $writer = $this->getWriter();
-        $writer->write($jsonData . PHP_EOL);
     }
 
     /**
