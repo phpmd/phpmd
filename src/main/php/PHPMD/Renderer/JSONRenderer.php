@@ -48,7 +48,25 @@ class JSONRenderer extends AbstractRenderer
      */
     public function renderReport(Report $report)
     {
-        $filesList = array();
+        $data = $this->initReportData();
+        $data = $this->addViolationsToReport($report, $data);
+        $data = $this->addErrorsToReport($report, $data);
+
+        $writer = $this->getWriter();
+        $json = $this->encodeReport($data);
+        $writer->write($json . PHP_EOL);
+    }
+
+    /**
+     * Add violations, if any, to the report data
+     *
+     * @param Report $report The report with potential violations.
+     * @param array $data The report output to add the violations to.
+     * @return array The report output with violations, if any.
+     */
+    private function addViolationsToReport(Report $report, array $data)
+    {
+        $filesList = [];
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
@@ -68,19 +86,13 @@ class JSONRenderer extends AbstractRenderer
                 'priority' => $rule->getPriority(),
             );
         }
-        
-        $data = $this->initReportData();
         $data['files'] = array_values($filesList);
 
-        $data = $this->addErrorsToReport($report, $data);
-
-        $writer = $this->getWriter();
-        $json = $this->encodeReport($data);
-        $writer->write($json . PHP_EOL);
+        return $data;
     }
 
     /**
-     * Add erros, if any, to the report data
+     * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
      * @param array $data The report output to add the errors to.
@@ -91,10 +103,10 @@ class JSONRenderer extends AbstractRenderer
         $errors = $report->getErrors();
         if ($errors) {
             foreach ($errors as $error) {
-                $data['errors'][] = [
+                $data['errors'][] = array(
                     'fileName' => $error->getFile(),
                     'message' => $error->getMessage(),
-                ];
+                );
             }
         }
 
