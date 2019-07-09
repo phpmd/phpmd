@@ -68,19 +68,18 @@ class JSONRenderer extends AbstractRenderer
                 'priority' => $rule->getPriority(),
             );
         }
-
-        $errorsList = array();
-        foreach ($report->getErrors() as $error) {
-            $errorsList[] = array(
-                'fileName' => $error->getFile(),
-                'message' => $error->getMessage(),
-            );
-        }
         
         $data = $this->initReportData();
         $data['files'] = array_values($filesList);
-        if (count($errorsList)) {
-            $data['errors'] = $errorsList;
+
+        $errors = $report->getErrors();
+        if ($errors) {
+            foreach ($errors as $error) {
+                $data['errors'][] = array(
+                    'fileName' => $error->getFile(),
+                    'message' => $error->getMessage(),
+                );
+            }
         }
 
         $writer = $this->getWriter();
