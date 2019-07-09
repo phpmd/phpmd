@@ -18,9 +18,11 @@ matrix:
     - php: 7.1
       env: DEPENDENCIES=low
     - php: 7.2
+    # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.2
     #   env: DEPENDENCIES=low
     - php: 7.3
+    # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
     - php: 5.4
