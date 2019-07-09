@@ -488,7 +488,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function assertJsonEquals($actualOutput, $expectedFileName)
+    public static function assertJsonEquals($actualOutput, $expectedFileName)
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
