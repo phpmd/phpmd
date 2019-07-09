@@ -40,7 +40,7 @@ class JSONRendererTest extends AbstractTest
         $violations = array(
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
-            $this->getRuleViolationMock('/bar.php'),
+            $this->getRuleViolationMock('/bar.php'), // TODO Set with description "foo <?php bar".
         );
 
         $report = $this->getReportMock(0);
