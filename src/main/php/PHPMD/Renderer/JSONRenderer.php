@@ -72,19 +72,33 @@ class JSONRenderer extends AbstractRenderer
         $data = $this->initReportData();
         $data['files'] = array_values($filesList);
 
-        $errors = $report->getErrors();
-        if ($errors) {
-            foreach ($errors as $error) {
-                $data['errors'][] = array(
-                    'fileName' => $error->getFile(),
-                    'message' => $error->getMessage(),
-                );
-            }
-        }
+        $data = $this->addErrorsToReport($report, $data);
 
         $writer = $this->getWriter();
         $json = $this->encodeReport($data);
         $writer->write($json . PHP_EOL);
+    }
+
+    /**
+     * Add erros, if any, to the report data
+     *
+     * @param Report $report The report with potential errors.
+     * @param array $data The report output to add the errors to.
+     * @return array The report output with errors, if any.
+     */
+    private function addErrorsToReport(Report $report, array $data)
+    {
+        $errors = $report->getErrors();
+        if ($errors) {
+            foreach ($errors as $error) {
+                $data['errors'][] = [
+                    'fileName' => $error->getFile(),
+                    'message' => $error->getMessage(),
+                ];
+            }
+        }
+
+        return $data;
     }
 
     /**
