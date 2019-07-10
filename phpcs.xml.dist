@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset
+        name="PHPMD"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+>
+    <description>The PHPMD coding standard.</description>
+
+    <file>src/main/php</file>
+    <!--<file>src/test/php</file>-->
+
+    <config name="testVersion" value="5.4-"/>
+    <!-- check PHP Compatibility-->
+    <rule ref="PHPCompatibility"/>
+
+
+    <rule ref="Doctrine">
+        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
+        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+        <exclude name="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
+        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration"/>
+        <exclude name="Generic.PHP.ForbiddenFunctions"/>
+        <exclude name="Generic.CodeAnalysis.UselessOverridingMethod"/>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+        <properties>
+            <property name="allAnnotationsAreUseful" value="true"/>
+            <property name="traversableTypeHints" type="array">
+                <element value="\ArrayIterator"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
