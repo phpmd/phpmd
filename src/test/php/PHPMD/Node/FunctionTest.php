@@ -17,6 +17,7 @@
 
 namespace PHPMD\Node;
 
+use BadMethodCallException;
 use PDepend\Source\AST\ASTFunction;
 use PHPMD\AbstractTest;
 
@@ -50,10 +51,10 @@ class FunctionTest extends AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @expectedException BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
+        $this->expectException(BadMethodCallException::class);
         $node = new FunctionNode(new ASTFunction(null));
         $node->getFooBar();
     }

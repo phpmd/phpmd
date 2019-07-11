@@ -52,6 +52,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
+
+        $this->assertSame($uri, $phpmd->getInput());
     }
 
     /**
@@ -76,5 +78,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
+
+        $this->assertSame($uri, $phpmd->getInput());
     }
 }

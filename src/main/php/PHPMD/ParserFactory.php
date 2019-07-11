@@ -122,7 +122,7 @@ class ParserFactory
      */
     private function initIgnores(Engine $pdepend, PHPMD $phpmd)
     {
-        if (count($phpmd->getIgnorePatterns()) > 0) {
+        if (count($phpmd->getIgnorePatterns() ?: []) > 0) {
             $pdepend->addFileFilter(
                 new ExcludePathFilter($phpmd->getIgnorePatterns())
             );
@@ -138,7 +138,7 @@ class ParserFactory
      */
     private function initExtensions(Engine $pdepend, PHPMD $phpmd)
     {
-        if (count($phpmd->getFileExtensions()) > 0) {
+        if (count($phpmd->getFileExtensions() ?: []) > 0) {
             $pdepend->addFileFilter(
                 new ExtensionFilter($phpmd->getFileExtensions())
             );
@@ -166,7 +166,7 @@ class ParserFactory
     private function initOptions(Engine $pdepend, PHPMD $phpmd)
     {
         $options = array();
-        foreach (array_filter($phpmd->getOptions()) as $name => $value) {
+        foreach (array_filter($phpmd->getOptions() ?: []) as $name => $value) {
             if (isset($this->phpmd2pdepend[$name])) {
                 $options[$this->phpmd2pdepend[$name]] = $value;
             }
