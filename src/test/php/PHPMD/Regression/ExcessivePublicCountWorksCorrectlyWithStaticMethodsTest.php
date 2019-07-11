@@ -41,7 +41,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     /**
      * Sets up the renderer mock
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->renderer = $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
             ->disableOriginalConstructor()

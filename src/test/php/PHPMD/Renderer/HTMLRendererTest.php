@@ -59,7 +59,7 @@ class HTMLRendererTest extends AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             '<tr>' . PHP_EOL .
             '<td align="center">2</td>' . PHP_EOL .
             '<td>/foo.php</td>' . PHP_EOL .
@@ -101,7 +101,7 @@ class HTMLRendererTest extends AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             '<tr>' .
             '<td>/tmp/bar.php</td>' .
             '<td>Failed for file &quot;/tmp/bar.php&quot;.</td>' .
