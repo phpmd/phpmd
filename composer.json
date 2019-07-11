@@ -36,7 +36,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^7.2",
-    "pdepend/pdepend": "^2.5",
+    "pdepend/pdepend": "^2.5.2",
     "ext-xml": "*"
   },
   "require-dev": {

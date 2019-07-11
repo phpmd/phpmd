@@ -8,7 +8,7 @@ matrix:
     - php: 7.3
     - php: 7.3
       env: DEPENDENCIES=low
-    - php: 5.4
+    - php: 7.2
       env: BUILD_PHAR=true
     - php: 7.3
       env: WEBSITE=true
@@ -17,8 +17,8 @@ matrix:
 sudo: false
 
 env:
-    global:
-        TEST_CONFIG="phpunit.xml.dist"
+  global:
+    TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
   - composer self-update
@@ -41,23 +41,23 @@ notifications:
     on_start: never
 
 deploy:
-- provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: dist/website
-  on:
-    branch: master
-    condition: $WEBSITE
-- provider: releases
-  api_key: $GITHUB_TOKEN
-  file: phpmd.phar
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: phpmd/phpmd
-    condition: "$BUILD_PHAR"
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    local_dir: dist/website
+    on:
+      branch: master
+      condition: $WEBSITE
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file: phpmd.phar
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: phpmd/phpmd
+      condition: "$BUILD_PHAR"
 
 addons:
   snaps:
-  - name: ant
-    classic: true
+    - name: ant
+      classic: true
