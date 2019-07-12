@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -202,7 +203,8 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match);
+                case '--reportfile-json':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -365,6 +367,7 @@ class CommandLineOptions
      *   <li>xml</li>
      *   <li>html</li>
      *   <li>text</li>
+     *   <li>json</li>
      * </ul>
      *
      * @param string $reportFormat
@@ -382,6 +385,8 @@ class CommandLineOptions
                 return $this->createHtmlRenderer();
             case 'text':
                 return $this->createTextRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -409,6 +414,14 @@ class CommandLineOptions
     protected function createHtmlRenderer()
     {
         return new HTMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createJsonRenderer()
+    {
+        return new JSONRenderer();
     }
 
     /**

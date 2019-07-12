@@ -86,7 +86,7 @@ You can also mix custom `rule set files`__ with build-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
 
-__ /documentation/creating-a-ruleset.html
+__ creating-a-ruleset.html
 
 That's it. With this behavior you can specify you own combination of rule sets
 that will check the source code.
@@ -110,8 +110,9 @@ PHPMD's command line tool currently defines three different exit codes.
 Renderers
 =========
 
-At the moment PHPMD comes with the following three renderers:
+At the moment PHPMD comes with the following four renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *json*, formats JSON report.
