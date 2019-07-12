@@ -7,10 +7,21 @@ class PhpMdEnvironment extends Environment
 {
     public static $letters = array('=', '-', '`', '~', '*', '^', '"');
 
+    /**
+     * @var string
+     */
+    protected $baseHref;
+
+    public function getBaseHref()
+    {
+        return $this->baseHref;
+    }
+
     public function reset()
     {
         parent::reset();
 
+        $this->baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
         $this->titleLetters = [
             2 => '=',
             3 => '-',
@@ -21,14 +32,22 @@ class PhpMdEnvironment extends Environment
             8 => '"',
         ];
     }
+
+    public function relativeUrl($url)
+    {
+        $root = substr($url, 0, 1) === '/';
+
+        return ($root ? $this->getBaseHref().'/' : '').parent::relativeUrl($url);
+    }
 }
 
 $changelogContent = file_get_contents(__DIR__.'/../../CHANGELOG');
-$parser = new Parser(new PhpMdEnvironment);
+$env = new PhpMdEnvironment;
+$parser = new Parser($env);
 
 return [
     'index' => 'about.html',
-    'baseHref' => ltrim(getenv('BASE_HREF') ?: '', ':'),
+    'baseHref' => $env->getBaseHref(),
     'cname' => getenv('CNAME'),
     'websiteDirectory' => __DIR__.'/../../dist/website',
     'sourceDirectory' => __DIR__.'/rst',
