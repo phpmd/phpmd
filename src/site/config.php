@@ -41,7 +41,6 @@ class PhpMdEnvironment extends Environment
     }
 }
 
-$changelogContent = file_get_contents(__DIR__.'/../../CHANGELOG');
 $env = new PhpMdEnvironment;
 $parser = new Parser($env);
 
@@ -54,14 +53,9 @@ return [
     'assetsDirectory' => __DIR__.'/resources/web',
     'layout' => __DIR__.'/resources/layout.php',
     'extensions' => [
-        'rst' => function ($file) use ($parser, $changelogContent) {
-            $content = file_get_contents($file);
-            $content = str_replace(
-                '.. include:: ../release/parts/latest.rst',
-                $changelogContent,
-                $content
-            );
-            $content = $parser->parse($content);
+        'rst' => function ($file) use ($parser) {
+            $parser->getEnvironment()->setCurrentDirectory(dirname($file));
+            $content = $parser->parseFile($file);
             // Rewrite links anchors
             $content = preg_replace_callback('/(<a id="[^"]+"><\/a>)\s*<h(?<level>[1-6])([^>]*>)(?<content>[\s\S]*)<\/h\\g<level>>/U', function ($match) {
                 $level = $match['level'];
