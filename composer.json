@@ -44,7 +44,7 @@
     "squizlabs/php_codesniffer": "^2.0",
     "mikey179/vfsstream": "^1.6.4",
     "gregwar/rst": "^1.0",
-    "easy-doc/easy-doc": "0.0.0 || ^1.1"
+    "easy-doc/easy-doc": "0.0.0 || ^1.2.2"
   },
   "autoload": {
     "psr-0": {

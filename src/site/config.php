@@ -1,9 +1,30 @@
 <?php
 
+use Gregwar\RST\Environment;
 use Gregwar\RST\Parser;
 
-$parser = new Parser;
+class PhpMdEnvironment extends Environment
+{
+    public static $letters = array('=', '-', '`', '~', '*', '^', '"');
+
+    public function reset()
+    {
+        parent::reset();
+
+        $this->titleLetters = [
+            2 => '=',
+            3 => '-',
+            4 => '`',
+            5 => '~',
+            6 => '*',
+            7 => '^',
+            8 => '"',
+        ];
+    }
+}
+
 $changelogContent = file_get_contents(__DIR__.'/../../CHANGELOG');
+$parser = new Parser(new PhpMdEnvironment);
 
 return [
     'index' => 'about.html',
@@ -22,9 +43,9 @@ return [
                 $content
             );
             $content = $parser->parse($content);
+            // Rewrite links anchors
             $content = preg_replace_callback('/(<a id="[^"]+"><\/a>)\s*<h(?<level>[1-6])([^>]*>)(?<content>[\s\S]*)<\/h\\g<level>>/U', function ($match) {
-                // Add one level to every title <h1> to <h2>, <h2> to <h3> etc.
-                $level = $match['level'] + 1;
+                $level = $match['level'];
                 $content = $match['content'];
                 // Use content as anchor
                 $hash = preg_replace('/[^a-z0-9]+/', '-', strtolower(trim($match['content'])));
