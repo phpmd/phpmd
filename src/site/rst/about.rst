@@ -3,8 +3,8 @@ PHPMD - PHP Mess Detector
 =========================
 
 This is the project site of *PHPMD*. It is a spin-off project of
-`PHP Depend <http://pmd.sourceforge.net>`_ and aims to be a PHP equivalent of the well known
-Java tool `PMD <http://pdepend.org>`_. PHPMD can be seen as an user friendly and easy
+`PHP Depend <https://pdepend.org>`_ and aims to be a PHP equivalent of the well known
+Java tool `PMD <https://pmd.github.io>`_. PHPMD can be seen as an user friendly and easy
 to configure frontend for the raw metrics measured by PHP Depend.
 
 What PHPMD does is: It takes a given PHP source code base and look
