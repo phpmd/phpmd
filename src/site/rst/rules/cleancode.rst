@@ -105,6 +105,19 @@ Example: ::
       ];
   }
 
+MissingImport
+=================
+
+Since: PHPMD 2.8.0
+
+Importing all external classes in use statement show all external class dependencies in file top.
+
+Example: ::
+
+  function make() {
+      return new \stdClass();
+  }
+
 Remark
 ======
 

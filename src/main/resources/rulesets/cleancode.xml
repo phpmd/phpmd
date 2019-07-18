@@ -157,4 +157,25 @@ function createArray() {
             ]]>
         </example>
     </rule>
+
+    <rule name="MissingImport"
+          since="2.8.0"
+          message="Missing class importing via use statement (line '{0}', column '{1}')."
+          class="PHPMD\Rule\CleanCode\MissingImport"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#MissingImport">
+        <description>
+            <![CDATA[
+Importing all external classes in use statement show all external class dependencies in file top.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties></properties>
+        <example>
+            <![CDATA[
+function make() {
+    return new \stdClass();
+}
+            ]]>
+        </example>
+    </rule>
 </ruleset>
