@@ -147,7 +147,7 @@ class ParserTest extends AbstractTest
      */
     private function getPHPDependMock()
     {
-        return $this->getMock('PDepend\Engine', array(), array(null), '', false);
+        return $this->createMock('PDepend\Engine', array(), array(null), '', false);
     }
 
     /**
@@ -157,7 +157,7 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependClassMock()
     {
-        $class = $this->getMock('PDepend\\Source\\AST\\ASTClass', array(), array(null));
+        $class = $this->createMock('PDepend\\Source\\AST\\ASTClass', array(), array(null));
         $class->expects($this->any())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
@@ -182,7 +182,7 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
     {
-        $function = $this->getMock('PDepend\Source\AST\ASTFunction', array(), array(null));
+        $function = $this->createMock('PDepend\Source\AST\ASTFunction', array(), array(null));
         $function->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -198,7 +198,7 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {
-        $method = $this->getMock('PDepend\Source\AST\ASTMethod', array(), array(null));
+        $method = $this->createMock('PDepend\Source\AST\ASTMethod', array(), array(null));
         $method->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -214,7 +214,7 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependFileMock($fileName)
     {
-        $file = $this->getMock('PDepend\Source\AST\ASTCompilationUnit', array(), array(null));
+        $file = $this->createMock('PDepend\Source\AST\ASTCompilationUnit', array(), array(null));
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue($fileName));

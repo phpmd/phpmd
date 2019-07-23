@@ -34,7 +34,7 @@ class CommandTest extends AbstractTest
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (is_resource($this->stderrStreamFilter)) {
             stream_filter_remove($this->stderrStreamFilter);
@@ -184,7 +184,7 @@ class CommandTest extends AbstractTest
             )
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Can\'t find the custom report class: ',
             StreamFilter::$streamHandle
         );

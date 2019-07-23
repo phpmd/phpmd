@@ -37,6 +37,8 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007Test extends Abstract
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
+
+        $this->assertSame('', $rule->getMessage());
     }
 
     /**
@@ -49,5 +51,7 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007Test extends Abstract
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
+
+        $this->assertSame('', $rule->getMessage());
     }
 }

@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use OutOfBoundsException;
+
 /**
  * Test case for the {@link \PHPMD\AbstractRule} class.
  *
@@ -93,10 +95,10 @@ class RuleTest extends AbstractTest
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->expectException(OutOfBoundsException::class);
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getIntProperty(__FUNCTION__);
     }
@@ -105,10 +107,10 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->expectException(OutOfBoundsException::class);
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getBooleanProperty(__FUNCTION__);
     }
@@ -117,10 +119,10 @@ class RuleTest extends AbstractTest
      * testStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->expectException(OutOfBoundsException::class);
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getStringProperty(__FUNCTION__);
     }
