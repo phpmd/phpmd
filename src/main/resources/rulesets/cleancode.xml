@@ -160,7 +160,7 @@ function createArray() {
 
     <rule name="MissingImport"
           since="2.7.0"
-          message="Missing class importing via use statement (line '{0}', column '{1}')."
+          message="Missing class import via use statement (line '{0}', column '{1}')."
           class="PHPMD\Rule\CleanCode\MissingImport"
           externalInfoUrl="http://phpmd.org/rules/cleancode.html#MissingImport">
         <description>
