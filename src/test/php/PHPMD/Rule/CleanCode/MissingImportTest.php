@@ -19,6 +19,11 @@ namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTest;
 
+/**
+ * MissingImport Tests
+ *
+ * @coversDefaultClass \PHPMD\Rule\CleanCode\MissingImport
+ */
 class MissingImportTest extends AbstractTest
 {
     public function testRuleNotAppliesToClassWithoutAnyDependencies()
