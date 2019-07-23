@@ -40,7 +40,8 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             if ($allocationNode) {
                 $classNode = $allocationNode->getChild(0);
 
-                if (in_array($classNode->getImage(), ['self', 'static'], true)) {
+                $selfReferences = ['self', 'static'];
+                if (in_array($classNode->getImage(), $selfReferences, true)) {
                     continue;
                 }
 
