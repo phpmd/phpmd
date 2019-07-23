@@ -26,6 +26,12 @@ use PHPMD\AbstractTest;
  */
 class MissingImportTest extends AbstractTest
 {
+    /**
+     * Tests that it does not apply to a class without any class dependencies
+     *
+     * @return void
+     * @covers ::apply
+     */
     public function testRuleNotAppliesToClassWithoutAnyDependencies()
     {
         $rule = new MissingImport();
@@ -33,6 +39,13 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * Tests that it does not apply to a class with only imported classes
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
     {
         $rule = new MissingImport();
@@ -40,6 +53,13 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * Tests that it applies to a class that has fully qualified class names
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleAppliesToClassWithNotImportedDependencies()
     {
         $rule = new MissingImport();
@@ -47,6 +67,13 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * Tests that it does not apply to a class that uses self references
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
     {
         $rule = new MissingImport();
@@ -54,6 +81,12 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * Tests that it does not apply to a function without any class dependencies
+     *
+     * @return void
+     * @covers ::apply
+     */
     public function testRuleNotAppliesToFunctionWithoutAnyDependencies()
     {
         $rule = new MissingImport();
@@ -61,6 +94,13 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getFunction());
     }
 
+    /**
+     * Tests that it does not apply to a function with only imported classes
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleNotAppliesToFunctionWithOnlyImportedDependencies()
     {
         $rule = new MissingImport();
@@ -68,6 +108,13 @@ class MissingImportTest extends AbstractTest
         $rule->apply($this->getFunction());
     }
 
+    /**
+     * Tests that it applies to a function that has fully qualified class names
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleAppliesToFunctionWithNotImportedDependencies()
     {
         $rule = new MissingImport();
