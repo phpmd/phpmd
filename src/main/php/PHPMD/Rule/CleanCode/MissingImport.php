@@ -27,7 +27,6 @@ use PHPMD\Rule\MethodAware;
  */
 class MissingImport extends AbstractRule implements MethodAware, FunctionAware
 {
-
     /**
      * Method checks for missing class import and warns about it.
      *
