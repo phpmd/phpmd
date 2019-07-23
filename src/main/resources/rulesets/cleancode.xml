@@ -169,7 +169,6 @@ Importing all external classes in a file through use statements makes them clear
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
         <example>
             <![CDATA[
 function make() {
