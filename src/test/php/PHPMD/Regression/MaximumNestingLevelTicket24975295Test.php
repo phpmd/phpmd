@@ -50,5 +50,11 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
 
         $phpmd = new PHPMD();
         $phpmd->processFiles($inputs, $rules, $renderes, $factory);
+
+        $this->assertSame(
+            realpath(__DIR__.'/../../../resources/files/Regression/24975295/'.
+                'testLocalVariableUsedInDoubleQuoteStringGetsNotReported.php'),
+            realpath($phpmd->getInput())
+        );
     }
 }
