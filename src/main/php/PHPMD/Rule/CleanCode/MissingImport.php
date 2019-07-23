@@ -19,6 +19,7 @@ namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -49,7 +50,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
 
             $classNode = $allocationNode->getChild(0);
 
-            if (in_array($classNode->getImage(), $this->selfReferences, true)) {
+            if ($this->isSelfReference($classNode)) {
                 continue;
             }
 
@@ -57,5 +58,16 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
                 $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
             }
         }
+    }
+
+    /**
+     * Check whether a given class node is a self reference
+     *
+     * @param ASTNode $classNode A class node to check.
+     * @return bool Whether the given class node is a self reference.
+     */
+    protected function isSelfReference(ASTNode $classNode)
+    {
+        return in_array($classNode->getImage(), $this->selfReferences, true);
     }
 }
