@@ -110,7 +110,7 @@ MissingImport
 
 Since: PHPMD 2.7.0
 
-Importing all external classes in use statement show all external class dependencies in file top.
+Importing all external classes in a file through use statements makes them clearly visible.
 
 Example: ::
 
