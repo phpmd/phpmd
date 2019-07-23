@@ -35,13 +35,13 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=5.4.0",
-    "pdepend/pdepend": "^2.5",
+    "php": "^7.2",
+    "pdepend/pdepend": "^2.5.2",
     "ext-xml": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8.36 || ^5.7.27",
-    "squizlabs/php_codesniffer": "^3.0",
+    "phpunit/phpunit": "^8.2",
+    "squizlabs/php_codesniffer": "^3.4",
     "mikey179/vfsstream": "^1.6.4",
     "gregwar/rst": "^1.0",
     "phpcompatibility/php-compatibility": "^9.2",

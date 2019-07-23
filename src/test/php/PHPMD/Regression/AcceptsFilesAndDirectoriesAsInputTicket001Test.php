@@ -43,11 +43,13 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source'),
+            ($uri = self::createFileUri('source')),
             'pmd-refset1',
             array($renderer),
             new RuleSetFactory()
         );
+
+        $this->assertSame($uri, $phpmd->getInput());
     }
 
     /**
@@ -64,10 +66,12 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/FooBar.php'),
+            ($uri = self::createFileUri('source/FooBar.php')),
             'pmd-refset1',
             array($renderer),
             new RuleSetFactory()
         );
+
+        $this->assertSame($uri, $phpmd->getInput());
     }
 }

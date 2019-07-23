@@ -27,11 +27,12 @@ use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends TestCase
 {
     /**
      * Directory with test files.
@@ -59,7 +60,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (self::$originalWorkingDirectory !== null) {
             chdir(self::$originalWorkingDirectory);
@@ -271,7 +272,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMock(
+        $class = $this->createMock(
             'PHPMD\\Node\\ClassNode',
             array(),
             array(null),
@@ -285,6 +286,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->with($this->equalTo($metric))
                 ->will($this->returnValue($value));
         }
+
         return $class;
     }
 
@@ -298,7 +300,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\MethodNode', array(), array(null), '', false),
+            $this->createMock('PHPMD\\Node\\MethodNode'),
             $metric,
             $value
         );
@@ -314,7 +316,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\FunctionNode', array(), array(null), '', false),
+            $this->createMock('PHPMD\\Node\\FunctionNode', array(), array(null), '', false),
             $metric,
             $value
         );
@@ -360,7 +362,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->getMock('PHPMD\\Report');
+        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -386,7 +388,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMock('PHPMD\RuleSet');
+        $ruleSet = $this->createMock('PHPMD\RuleSet');
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
@@ -416,7 +418,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $rule = null,
         $description = null
     ) {
-        $ruleViolation = $this->getMock(
+        $ruleViolation = $this->createMock(
             'PHPMD\\RuleViolation',
             array(),
             array(null, null, null),
@@ -525,7 +527,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 
