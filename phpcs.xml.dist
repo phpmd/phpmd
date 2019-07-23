@@ -1,40 +1,208 @@
-<?xml version="1.0"?>
-<ruleset
-        name="PHPMD"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
->
-    <description>The PHPMD coding standard.</description>
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/3.4.2/phpcs.xsd">
+
+    <description>
+        The PHPMD coding standard.
+    </description>
 
     <file>src/main/php</file>
-    <!--<file>src/test/php</file>-->
 
-    <config name="testVersion" value="5.4-"/>
+
+    <!--<config name="testVersion" value="5.4-"/>-->
     <!-- check PHP Compatibility-->
-    <rule ref="PHPCompatibility"/>
+    <!--<rule ref="PHPCompatibility"/>-->
 
-
-    <rule ref="Doctrine">
-        <exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
-        <exclude name="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
-        <exclude name="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
-        <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
-        <exclude name="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
-        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-        <exclude name="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.DeclareStrictTypes"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration"/>
-        <exclude name="Generic.PHP.ForbiddenFunctions"/>
-        <exclude name="Generic.CodeAnalysis.UselessOverridingMethod"/>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+    <!-- Forbid `array(...)` -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <!-- force all parameters in for loop -->
+    <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
+    <!-- For loops should not call functions inside the test for the loop when they can be computed beforehand. -->
+    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
+    <!-- Incrementers in nested loops should use different variable names.-->
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+    <!-- If statements that are always evaluated should not be used.-->
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+    <!-- Methods should not be declared final inside of classes that are declared final.-->
+    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+    <!-- Methods should not be defined that only call the parent method.-->
+    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
+    <!-- Unix-style line endings are preferred ("\n" instead of "\r\n").-->
+    <rule ref="Generic.Files.LineEndings"/>
+    <!-- It is recommended to keep lines at approximately 120 characters long for better code readability.-->
+    <rule ref="Generic.Files.LineLength">
         <properties>
-            <property name="allAnnotationsAreUseful" value="true"/>
-            <property name="traversableTypeHints" type="array">
-                <element value="\ArrayIterator"/>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
+        </properties>
+    </rule>
+    <!-- Multiple statements are not allowed on a single line.-->
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <!-- There should be one space on either side of an equals sign used to assign a value to a variable.
+    In the case of a block of related assignments, more space may be inserted to promote readability.-->
+    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+    <!-- Spaces are not allowed after casting operators.-->
+    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
+    <!-- Forbid deprecated functions -->
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <!-- Forbid alias functions, i.e. `sizeof()` -->
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+    <!-- The <em>true</em>, <em>false</em> and <em>null</em> constants must always be lowercase.-->
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <!-- Suppressing Errors is not allowed.-->
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <!-- Spaces should be used for indentation instead of tabs.-->
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+    <!-- Indentation for control structures, classes, and functions should be 4 spaces per level.-->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
+        </properties>
+    </rule>
+    <!-- The opening brace of a class must be on the line after the definition by itself.-->
+    <rule ref="PEAR.Classes.ClassDeclaration"/>
+    <!-- Control structures should use one space around the parentheses in conditions-->
+    <rule ref="PEAR.ControlStructures.ControlSignature"/>
+    <!-- Arguments with default values go at the end of the argument list.-->
+    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+    <!-- Force CamelCase Classnames-->
+    <rule ref="PEAR.NamingConventions.ValidClassName"/>
+    <!-- A php file should either contain declarations with no side effects-->
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols"/>
+    <!-- Import PSR-2 coding standard (base) -->
+    <rule ref="PSR2"/>
+    <!-- Method names should not be prefixed with an underscore to indicate visibility-->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore"/>
+
+    <!-- Require comma after last element in multi-line array -->
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
+    <!-- Require presence of constant visibility -->
+    <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+
+    <!-- Forbid useless comments -->
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenComments">
+        <properties>
+            <property name="forbiddenCommentPatterns" type="array">
+                <element value="~^(?:(?!private|protected|static)\S+ )?(?:con|de)structor\.\z~i"/>
+                <element value="~^Created by .+\.\z~i"/>
+                <element value="~^(User|Date|Time): \S+\z~i"/>
+                <element value="~^\S+ [gs]etter\.\z~i"/>
+                <element value="~^Class \S+\z~i"/>
             </property>
         </properties>
     </rule>
+    <!-- Forbid unreachable catch blocks: -->
+    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
+    <!-- Require use statements to be alphabetically sorted -->
+    <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
+    <!-- Exception must be referenced via a fully qualified name: -->
+    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
+    <!-- Forbid unused use statements -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="searchAnnotations" value="true"/>
+        </properties>
+    </rule>
+    <!-- Forbid superfluous leading backslash in use statements -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
+    <!-- Forbid useless uses of the same namespace -->
+    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+    <!-- Forbid weak comparisons -->
+    <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
+    <!-- Require presence of declare(strict_types=1) -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
+        <properties>
+            <property name="newlinesCountBetweenOpenTagAndDeclare" value="0"/>
+            <property name="newlinesCountAfterDeclare" value="2"/>
+            <property name="spacesCountAroundEqualsSign" value="0"/>
+        </properties>
+    </rule>
+    <!-- Disallows usage of array type hint syntax (eg. int[], bool[][]) in phpDocs in favour of generic type hint syntax (eg. array<int>, array<array<bool>>). -->
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
+    <!-- Require one space between typehint and variable, require no space between nullability sign and typehint -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+    <!-- Require space around colon in return types -->
+    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing"/>
+    <!-- Require types to be written as natively if possible;
+             require iterable types to specify phpDoc with their content;
+             forbid useless/duplicated information in phpDoc -->
+    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration">
+        <properties>
+            <property name="traversableTypeHints" type="array" value="\Doctrine\Common\Collections\Collection"/>
+            <property name="allAnnotationsAreUseful" value="true"/>
+        </properties>
+    </rule>
+    <!-- Disable alignment of braces -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+        <severity>0</severity>
+    </rule>
+    <!-- Disable alignment of values with opening brace -->
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned"/>
+    <!--    The <em>array</em> keyword must be lowercase.-->
+    <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+
+    <!-- Force phpDoc alignment -->
+    <rule ref="Squiz.Commenting.DocCommentAlignment">
+        <!-- Allow extra spaces after star, i.e. for indented annotations -->
+        <exclude name="Squiz.Commenting.DocCommentAlignment.SpaceAfterStar"/>
+    </rule>
+    <!-- There should be a space between each element of a foreach loop and the as keyword should be lowercase.-->
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <!-- The php keywords if, else, elseif, foreach, for, do, switch, while, try, and catch should be lowercase.-->
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+
+    <rule ref="Squiz.Functions.FunctionDeclaration"/>
+
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
+    <!-- Forbid `AND` and `OR`, require `&&` and `||` -->
+    <rule ref="Squiz.Operators.ValidLogicalOperators"/>
+    <!--    Use of eval() is discouraged-->
+    <rule ref="Squiz.PHP.Eval"/>
+    <!-- Forbid dead code -->
+    <rule ref="Squiz.PHP.NonExecutableCode"/>
+    <!--    force use of visibility in Prooperties -->
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+    <!--    force use of visibility in Methods -->
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <!--    Static methods should not use $this.-->
+    <rule ref="Squiz.Scope.StaticThisUsage"/>
+    <!-- Force whitespace before and after concatenation -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="ignoreNewlines" value="true"/>
+        </properties>
+    </rule>
+    <!-- Require 1 line before and after function, except at the top and bottom -->
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+            <property name="spacingBeforeFirst" value="0"/>
+            <property name="spacingAfterLast" value="0"/>
+        </properties>
+    </rule>
+    <!-- Require space after language constructs -->
+    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+    <!-- Require space around logical operators -->
+    <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+    <!-- Require space around MermberVars -->
+    <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
+    <!-- Forbid spaces before semicolon `;` -->
+    <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+    <!-- Forbid superfluous whitespaces -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+    <!-- Files should not have closing php tags.-->
+    <rule ref="Zend.Files.ClosingTag"/>
 </ruleset>
