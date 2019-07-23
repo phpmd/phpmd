@@ -23,14 +23,16 @@ use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
- * Checks if class full qualified class name is used
+ * Checks that all classes are imported
+ *
+ * This rule can be used to prevent use of fully qualified class names.
  */
 class MissingImport extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * Method checks for missing class import and warns about it.
+     * Checks for missing class imports and warns about it
      *
-     * @param AbstractNode $node
+     * @param AbstractNode $node The node to check upon.
      * @return void
      */
     public function apply(AbstractNode $node)
