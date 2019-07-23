@@ -106,7 +106,7 @@ Example: ::
   }
 
 MissingImport
-=================
+=============
 
 Since: PHPMD 2.8.0
 
