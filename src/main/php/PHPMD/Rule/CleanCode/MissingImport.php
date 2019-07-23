@@ -43,16 +43,18 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     public function apply(AbstractNode $node)
     {
         foreach ($node->findChildrenOfType('AllocationExpression') as $allocationNode) {
-            if ($allocationNode) {
-                $classNode = $allocationNode->getChild(0);
+            if (!$allocationNode) {
+                continue;
+            }
 
-                if (in_array($classNode->getImage(), $this->selfReferences, true)) {
-                    continue;
-                }
+            $classNode = $allocationNode->getChild(0);
 
-                if ($classNode->getEndColumn() - $classNode->getStartColumn() + 1 === strlen($classNode->getImage())) {
-                    $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
-                }
+            if (in_array($classNode->getImage(), $this->selfReferences, true)) {
+                continue;
+            }
+
+            if ($classNode->getEndColumn() - $classNode->getStartColumn() + 1 === strlen($classNode->getImage())) {
+                $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
             }
         }
     }
