@@ -30,6 +30,11 @@ use PHPMD\Rule\MethodAware;
 class MissingImport extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
+     * @var array Self reference class names.
+     */
+    protected $selfReferences = ['self', 'static'];
+
+    /**
      * Checks for missing class imports and warns about it
      *
      * @param AbstractNode $node The node to check upon.
@@ -41,8 +46,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             if ($allocationNode) {
                 $classNode = $allocationNode->getChild(0);
 
-                $selfReferences = ['self', 'static'];
-                if (in_array($classNode->getImage(), $selfReferences, true)) {
+                if (in_array($classNode->getImage(), $this->selfReferences, true)) {
                     continue;
                 }
 
