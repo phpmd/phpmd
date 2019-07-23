@@ -165,7 +165,7 @@ function createArray() {
           externalInfoUrl="http://phpmd.org/rules/cleancode.html#MissingImport">
         <description>
             <![CDATA[
-Importing all external classes in use statement show all external class dependencies in file top.
+Importing all external classes in a file through use statements makes them clearly visible.
             ]]>
         </description>
         <priority>1</priority>
