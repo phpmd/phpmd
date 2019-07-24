@@ -12,5 +12,5 @@ If possible add a URL to the incorrect web page/documentation.
 * [ ] Be sure that there isn't already an issue about this. See: [Issues list](https://github.com/phpmd/phpmd/issues)
 * [ ] Be sure that there isn't already a pull request about this. See: [Pull requests](https://github.com/phpmd/phpmd/pulls)
 * [ ] Tell if you have the possibility to create a Pull Request to solve this issue.
-* [ ] If possible add a url to the incorrect website or documentation.
+* [ ] If possible add a URL to the incorrect website or documentation.
 * [ ] This issue is about 1 documentation or website issue and nothing more.
