@@ -3,10 +3,14 @@ language: php
 matrix:
   include:
     - php: 5.4
+      dist: trusty
     - php: 5.4
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.5
+      dist: trusty
     - php: 5.5
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.6
     - php: 5.6
@@ -26,6 +30,7 @@ matrix:
     # - php: 7.3
     #   env: DEPENDENCIES=low
     - php: 5.4
+      dist: trusty
       env: BUILD_PHAR=true
     - php: 7.3
       env: WEBSITE=true
