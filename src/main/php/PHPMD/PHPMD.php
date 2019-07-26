@@ -101,7 +101,7 @@ class PHPMD
     /**
      * Sets a list of filename extensions for valid php source code files.
      *
-     * @param array(string) $fileExtensions Extensions without leading dot.
+     * @param array<string> $fileExtensions Extensions without leading dot.
      * @return void
      */
     public function setFileExtensions(array $fileExtensions)
@@ -124,7 +124,7 @@ class PHPMD
      * Sets a list of ignore patterns that is used to exclude directories from
      * the source analysis.
      *
-     * @param array(string) $ignorePatterns List of ignore patterns.
+     * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
      */
     public function setIgnorePattern(array $ignorePatterns)
