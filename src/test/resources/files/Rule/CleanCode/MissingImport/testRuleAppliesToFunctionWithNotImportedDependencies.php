@@ -15,11 +15,8 @@
  * @link http://phpmd.org/
  */
 
-function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
-{
-    return array(
-        42,
-        43,
-        43,
-    );
+namespace PHPMDTest;
+
+function testRuleAppliesToFunctionWithNotImportedDependencies(){
+    $a = new \stdClass();
 }

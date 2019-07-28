@@ -15,11 +15,13 @@
  * @link http://phpmd.org/
  */
 
-function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
+namespace PHPMDTest;
+
+class Foo
 {
-    return array(
-        42,
-        43,
-        43,
-    );
+    public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
+    {
+        $self = new self();
+        new static();
+    }
 }

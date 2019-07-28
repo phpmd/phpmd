@@ -105,6 +105,19 @@ Example: ::
       ];
   }
 
+MissingImport
+=============
+
+Since: PHPMD 2.7.0
+
+Importing all external classes in a file through use statements makes them clearly visible.
+
+Example: ::
+
+  function make() {
+      return new \stdClass();
+  }
+
 Remark
 ======
 

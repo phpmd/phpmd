@@ -55,11 +55,7 @@ class AnsiRenderer extends AbstractRenderer
     {
         $maxLength = null;
         foreach ($report->getRuleViolations() as $violation) {
-            if ($maxLength === null) {
-                $maxLength = strlen($violation->getBeginLine());
-                continue;
-            }
-            if (strlen($violation->getBeginLine()) > $maxLength) {
+            if ($maxLength === null || strlen($violation->getBeginLine()) > $maxLength) {
                 $maxLength = strlen($violation->getBeginLine());
             }
         }
