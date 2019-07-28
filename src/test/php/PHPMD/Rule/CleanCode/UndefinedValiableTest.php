@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Rule;
+namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTest;
 
@@ -81,6 +81,18 @@ class UndefinedVariableTest extends AbstractTest
      * @return void
      */
     public function testRuleDoesNotApplyToSuperGlobals()
+    {
+        $rule = new UndefinedVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToUsedProperties
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToUsedProperties()
     {
         $rule = new UndefinedVariable();
         $rule->setReport($this->getReportMock(0));

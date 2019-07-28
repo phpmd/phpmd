@@ -103,27 +103,4 @@ class Foo
         </example>
     </rule>
 
-    <rule name="UndefinedVariable"
-          since="2.7"
-          message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
-          class="PHPMD\Rule\UndefinedVariable"
-          externalInfoUrl="">
-        <description>
-Detects when a variable is used that has not been defined before.
-        </description>
-        <priority>3</priority>
-        <example>
-<![CDATA[
-class Foo
-{
-    private function bar()
-    {
-        // $message is undefined
-        echo $message;
-    }
-}
-]]>
-        </example>
-    </rule>
-
 </ruleset>

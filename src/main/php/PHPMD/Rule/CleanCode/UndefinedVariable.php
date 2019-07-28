@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Rule;
+namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
@@ -23,6 +23,9 @@ use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\AbstractLocalVariable;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\MethodAware;
 
 /**
  * This rule collects all undefined variables within a given function or method
