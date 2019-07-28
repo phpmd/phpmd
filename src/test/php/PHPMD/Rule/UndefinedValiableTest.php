@@ -74,4 +74,16 @@ class UndefinedVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleAppliesToUndefinedVariableOnArrayWithKeys
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToSuperGlobals()
+    {
+        $rule = new UndefinedVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }

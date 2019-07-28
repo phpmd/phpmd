@@ -17,9 +17,12 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
+use PHPMD\Node\MethodNode;
 
 /**
  * This rule collects all undefined variables within a given function or method
@@ -93,7 +96,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
         foreach ($catchStatements as $catchStatement) {
             foreach ($catchStatement->getChildren() as $children) {
-                if ($children instanceof \PDepend\Source\AST\ASTVariable) {
+                if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
                 }
             }
@@ -130,7 +133,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
         foreach ($foreachStatements as $foreachStatement) {
             foreach ($foreachStatement->getChildren() as $children) {
-                if ($children instanceof \PDepend\Source\AST\ASTVariable) {
+                if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
                 }
             }
@@ -210,7 +213,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
         foreach ($propertyes as $property) {
             foreach ($property->getChildren() as $children) {
-                if ($children instanceof \PDepend\Source\AST\ASTVariable) {
+                if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
                 }
             }
@@ -241,9 +244,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     private function isNameAllowedInContext(AbstractCallableNode $node, ASTNode $variable)
     {
         return (
-            $node instanceof \PHPMD\Node\MethodNode &&
+            $node instanceof MethodNode &&
             $variable->getImage() === '$this' &&
-            ($node->getModifiers() & \PDepend\Source\AST\State::IS_STATIC) === 0
+            ($node->getModifiers() & State::IS_STATIC) === 0
         );
     }
 }
