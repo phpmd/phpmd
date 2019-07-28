@@ -125,6 +125,42 @@ class TooManyMethodsTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testRuleIgnoresHassers()
+    {
+        $rule = new TooManyMethods();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
+        $rule->apply($this->createClassMock(2, array('invoke', 'hasClass')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleIgnoresIssers()
+    {
+        $rule = new TooManyMethods();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
+        $rule->apply($this->createClassMock(2, array('invoke', 'isClass')));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleIgnoresWithers()
+    {
+        $rule = new TooManyMethods();
+        $rule->setReport($this->getReportMock(0));
+        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
+        $rule->apply($this->createClassMock(2, array('invoke', 'withClass')));
+    }
+
+    /**
      * Creates a prepared class node mock
      *
      * @param integer $numberOfMethods

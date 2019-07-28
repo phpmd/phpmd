@@ -10,7 +10,7 @@
       Test description
     </violation>
     <violation beginline="23" endline="42" rule="RuleStub" ruleset="TestRuleSet" package="TestStubPackage" externalInfoUrl="https://phpmd.org/rules/index.html" priority="5">
-      Test description
+      foo &lt;?php bar
     </violation>
   </file>
 </pmd>

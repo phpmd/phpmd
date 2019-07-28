@@ -68,6 +68,7 @@ class_alias('PHPMD\\Node\\TraitNode', 'PHP_PMD_Node_Trait');
 class_alias('PHPMD\\Renderer\\HTMLRenderer', 'PHP_PMD_Renderer_HTMLRenderer');
 class_alias('PHPMD\\Renderer\\TextRenderer', 'PHP_PMD_Renderer_TextRenderer');
 class_alias('PHPMD\\Renderer\\XMLRenderer', 'PHP_PMD_Renderer_XMLRenderer');
+class_alias('PHPMD\\Renderer\\JSONRenderer', 'PHP_PMD_Renderer_JSONRenderer');
 class_alias('PHPMD\\Rule\\AbstractLocalVariable', 'PHP_PMD_Rule_AbstractLocalVariable');
 class_alias('PHPMD\\Rule\\CyclomaticComplexity', 'PHP_PMD_Rule_CyclomaticComplexity');
 class_alias('PHPMD\\Rule\\ClassAware', 'PHP_PMD_Rule_IClassAware');

@@ -255,4 +255,34 @@ class Foo {
             ]]>
         </example>
     </rule>
+
+    <rule name="CountInLoopExpression"
+          since="2.7.0"
+          message="Avoid using {0}() function in {1} loops."
+          class="PHPMD\Rule\Design\CountInLoopExpression"
+          externalInfoUrl="https://phpmd.org/rules/design.html#countinloopexpression">
+        <description>
+            <![CDATA[
+Using count/sizeof in loops expressions is considered bad practice and is a potential source of
+many bugs, especially when the loop manipulates an array, as count happens on each iteration.
+            ]]>
+        </description>
+        <priority>2</priority>
+        <properties />
+        <example>
+            <![CDATA[
+class Foo {
+
+  public function bar()
+  {
+    $array = array();
+
+    for ($i = 0; count($array); $i++) {
+      // ...
+    }
+  }
+}
+            ]]>
+        </example>
+    </rule>
 </ruleset>

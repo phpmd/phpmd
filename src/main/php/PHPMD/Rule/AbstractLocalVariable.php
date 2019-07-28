@@ -33,20 +33,23 @@ abstract class AbstractLocalVariable extends AbstractRule
      * can never be unused local variables.
      *
      * @var array(string=>boolean)
+     * @link http://php.net/manual/en/reserved.variables.php
      */
     private static $superGlobals = array(
-        '$argc'                => true,
-        '$argv'                => true,
-        '$_COOKIE'             => true,
-        '$_ENV'                => true,
-        '$_FILES'              => true,
-        '$_GET'                => true,
-        '$_POST'               => true,
-        '$_REQUEST'            => true,
-        '$_SERVER'             => true,
-        '$_SESSION'            => true,
-        '$GLOBALS'             => true,
-        '$HTTP_RAW_POST_DATA'  => true,
+        '$argc' => true,
+        '$argv' => true,
+        '$_COOKIE' => true,
+        '$_ENV' => true,
+        '$_FILES' => true,
+        '$_GET' => true,
+        '$_POST' => true,
+        '$_REQUEST' => true,
+        '$_SERVER' => true,
+        '$_SESSION' => true,
+        '$GLOBALS' => true,
+        '$HTTP_RAW_POST_DATA' => true,
+        '$php_errormsg' => true,
+        '$http_response_header' => true,
     );
 
     /**
