@@ -13,4 +13,4 @@ Try to describe the benefits but also the consequences of the proposal.
 * [ ] Be sure that there isn't already a pull request about this. See: [Pull requests](https://github.com/phpmd/phpmd/pulls)
 * [ ] Tell if you have the option to provide the code for this proposal.
 * [ ] This issue is about 1 feature proposal and nothing more.
-* [ ] The issue has a descriptive title. (Example add json render option.)
+* [ ] The issue has a descriptive title. For example: "Add JSON render option".
