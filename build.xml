@@ -62,11 +62,11 @@
         <echo message="Executing:" level="verbose" />
         <echo message="  ${-phar:filename} PHPMD/Rule text ${phpmd.rulesets}" level="verbose" />
 
-        <exec dir="${commons.srcdir.php}"
+        <exec dir="${basedir}"
               executable="${-phar:filename}"
               failonerror="true">
 
-            <arg value="PHPMD/Rule" />
+            <arg value="${commons.srcdir.php}/PHPMD/Rule" />
             <arg value="text" />
             <arg value="${phpmd.rulesets}" />
         </exec>
@@ -80,17 +80,6 @@
             <arg line="--prefer-dist" />
             <arg line="--prefer-lowest" />
             <arg line="--prefer-stable" />
-        </exec>
-    </target>
-
-    <target name="-copy-vendor-dir:after~hooked" extensionOf="-copy-vendor-dir:after~hook">
-        <exec executable="git" dir="${basedir}" failonerror="true">
-            <arg line="checkout" />
-            <arg line="composer.lock" />
-        </exec>
-        <exec executable="php" failonerror="true">
-            <arg line="composer.phar" />
-            <arg line="install" />
         </exec>
     </target>
 

@@ -348,7 +348,7 @@ The default was changed from 10 to 25 in PHPMD 2.3.
         <priority>3</priority>
         <properties>
             <property name="maxmethods" description="The method count reporting threshold" value="25"/>
-            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get|is|has|with))i"/>
         </properties>
     </rule>
 
@@ -368,7 +368,7 @@ By default it ignores methods starting with 'get' or 'set'.
         <priority>3</priority>
         <properties>
             <property name="maxmethods" description="The method count reporting threshold" value="10"/>
-            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get|is|has|with))i"/>
         </properties>
     </rule>
 

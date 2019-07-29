@@ -15,11 +15,24 @@
  * @link http://phpmd.org/
  */
 
-function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
+class testHasSuppressWarningsIgnoresCaseFirstLetterClass
 {
-    return array(
-        42,
-        43,
-        43,
-    );
+    /**
+     * @suppressWarnings("PHPMD.FooBar")
+     */
+    function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    {
+
+    }
+}
+
+class testHasSuppressWarningsIgnoresCaseFirstLetterClass
+{
+    /**
+     * @suppressWarnings("PHPMD.FooBar")
+     */
+    function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    {
+
+    }
 }

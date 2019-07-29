@@ -65,6 +65,7 @@ The following attributes can be defined on the PHPMD task xml-element.
  failonerror           Whether or not to fail the build if any errors occur while processing the files                                           No
  failOnRuleViolation   Whether or not to fail the build if PHPMD finds any problems                                                              No
  minimumPriority       The rule priority threshold; rules with lower priority than they will not be used                                         No
+ maximumPriority       The rule priority threshold; rules with higher priority than this will not be used                                         No
 ===================== ========================================================================================================================= ================================================
 
 Nested xml elements

@@ -93,8 +93,13 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      */
     private function normalizeKey(AbstractASTNode $node, $index)
     {
+        $childCount = count($node->getChildren());
+        // Skip, if there is no array key, just an array value
+        if ($childCount === 1) {
+            return null;
+        }
         // non-associative - key name equals to its index
-        if (count($node->getChildren()) === 0) {
+        if ($childCount === 0) {
             $node->setImage((string) $index);
             return $node;
         }

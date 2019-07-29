@@ -3,11 +3,37 @@ language: php
 matrix:
   include:
     - php: 5.4
+      dist: trusty
+    - php: 5.4
+      dist: trusty
       env: DEPENDENCIES=low
     - php: 5.5
+      dist: trusty
+    - php: 5.5
+      dist: trusty
+      env: DEPENDENCIES=low
     - php: 5.6
+    - php: 5.6
+      env: DEPENDENCIES=low
     - php: 7.0
+    - php: 7.0
+      env: DEPENDENCIES=low
     - php: 7.1
+    - php: 7.1
+      env: DEPENDENCIES=low
+    - php: 7.2
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.2
+    #   env: DEPENDENCIES=low
+    - php: 7.3
+    # Could be enabled when we'll upgrade PHPUnit
+    # - php: 7.3
+    #   env: DEPENDENCIES=low
+    - php: 5.4
+      dist: trusty
+      env: BUILD_PHAR=true
+    - php: 7.3
+      env: WEBSITE=true
   fast_finish: true
 
 sudo: false
@@ -18,12 +44,42 @@ env:
 
 before_script:
   - composer self-update
-  - if [ $DEPENDENCIES = low ] ; then composer update --prefer-dist --prefer-lowest --prefer-stable ; fi
-  - if [ ! $DEPENDENCIES ] ; then composer install ; fi
+  - if [[ $DEPENDENCIES = low ]]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
+  - if [[ ! $DEPENDENCIES ]]; then composer install; fi
 
 script:
-  - if [ $TRAVIS_PHP_VERSION != 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG ; fi
-  - if [ $TRAVIS_PHP_VERSION  = 7.1 ]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text ; fi
+  - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
+  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
+  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
+  - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi
 
 notifications:
-  irc: "irc.freenode.org#phpmd"
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/5a993c0b870b2fa9141e # PHPMD Gitter Core Channel
+      - https://webhooks.gitter.im/e/1c62ab29700f53c70ec5 # PHPMD Gitter Community Channel
+    on_success: change
+    on_failure: always
+    on_start: never
+
+deploy:
+- provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/website
+  on:
+    branch: master
+    condition: $WEBSITE
+- provider: releases
+  api_key: $GITHUB_TOKEN
+  file: phpmd.phar
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: phpmd/phpmd
+    condition: "$BUILD_PHAR"
+
+addons:
+  snaps:
+  - name: ant
+    classic: true

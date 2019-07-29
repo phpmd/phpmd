@@ -1,0 +1,24 @@
+{
+    "version": "@package_version@",
+    "package": "phpmd",
+    "timestamp": "",
+    "files": [],
+    "errors": [
+        {
+            "fileName": "\/tmp\/foo.php",
+            "message": "Failed for file \u0022\/tmp\/foo.php\u0022."
+        },
+        {
+            "fileName": "\/tmp\/bar.php",
+            "message": "Failed for file \u0022\/tmp\/bar.php\u0022."
+        },
+        {
+            "fileName": "\/tmp\/baz.php",
+            "message": "Failed for file \u0022\/tmp\/baz.php\u0022."
+        },
+        {
+            "fileName": "\/tmp\/foo.php",
+            "message": "Cannot read file \u0022\/tmp\/foo.php\u0022. Permission denied."
+        }
+    ]
+}

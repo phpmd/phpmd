@@ -236,7 +236,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: html, text, xml.', $opts->usage());
+        $this->assertContains('Available formats: html, json, text, xml.', $opts->usage());
     }
 
     /**
@@ -289,6 +289,17 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         $this->assertEquals(42, $opts->getMinimumPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionsAcceptsMaximumpriorityArgument()
+    {
+        $args = array(__FILE__, '--maximumpriority', 42, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertEquals(42, $opts->getMaximumPriority());
     }
 
     /**

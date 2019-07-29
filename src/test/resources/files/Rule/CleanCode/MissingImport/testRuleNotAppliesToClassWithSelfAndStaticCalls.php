@@ -15,7 +15,13 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesForLongPrivateProperty
+namespace PHPMDTest;
+
+class Foo
 {
-    private $testRuleNotAppliesForLongPrivateProperty = 42;
+    public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
+    {
+        $self = new self();
+        new static();
+    }
 }

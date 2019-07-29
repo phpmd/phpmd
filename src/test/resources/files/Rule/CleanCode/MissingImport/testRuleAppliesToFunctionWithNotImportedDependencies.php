@@ -15,7 +15,8 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesForLongPrivateStaticProperty
-{
-    private static $testRuleNotAppliesForLongPrivateStaticProperty = 23;
+namespace PHPMDTest;
+
+function testRuleAppliesToFunctionWithNotImportedDependencies(){
+    $a = new \stdClass();
 }
