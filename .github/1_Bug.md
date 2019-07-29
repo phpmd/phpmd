@@ -22,4 +22,4 @@ Explain **all** the steps you did to create this bug so we can reproduce it.
 * [ ] I have added every step to reproduce the bug.
 * [ ] If possible I added relevant code examples.
 * [ ] This issue is about 1 bug and nothing more.
-* [ ] The issue has a descriptive title. (Example json render failed on windows for filenames with space.)
+* [ ] The issue has a descriptive title. For example:  "JSON rendering failed on Windows for filenames with space".
