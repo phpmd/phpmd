@@ -22,26 +22,25 @@ use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
 /**
- * Test case for the xml renderer implementation.
+ * Test case for the JSON renderer implementation.
  *
- * @covers \PHPMD\Renderer\XMLRenderer
+ * @covers \PHPMD\Renderer\JSONRenderer
  */
-class XMLRendererTest extends AbstractTest
+class JSONRendererTest extends AbstractTest
 {
     /**
-     * testRendererCreatesExpectedNumberOfXmlElements
+     * testRendererCreatesExpectedNumberOfJsonElements
      *
      * @return void
      */
-    public function testRendererCreatesExpectedNumberOfXmlElements()
+    public function testRendererCreatesExpectedNumberOfJsonElements()
     {
-        // Create a writer instance.
         $writer = new WriterStub();
-
+        
         $violations = array(
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
-            $this->getRuleViolationMock('/foo.php', 23, 42, null, 'foo <?php bar'),
+            $this->getRuleViolationMock('/bar.php'), // TODO Set with description "foo <?php bar".
         );
 
         $report = $this->getReportMock(0);
@@ -52,34 +51,33 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator(array())));
 
-        $renderer = new XMLRenderer();
+        $renderer = new JSONRenderer();
         $renderer->setWriter($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertXmlEquals(
+        $this->assertJsonEquals(
             $writer->getData(),
-            'renderer/xml_renderer_expected1.xml'
+            'renderer/json_renderer_expected.json'
         );
     }
 
     /**
-     * testRendererAddsProcessingErrorsToXmlReport
+     * testRendererAddsProcessingErrorsToJsonReport
      *
      * @return void
-     * @since 1.2.1
      */
-    public function testRendererAddsProcessingErrorsToXmlReport()
+    public function testRendererAddsProcessingErrorsToJsonReport()
     {
-        // Create a writer instance.
         $writer = new WriterStub();
 
         $processingErrors = array(
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "/tmp/baz.php".'),
+            new ProcessingError('Cannot read file "/tmp/foo.php". Permission denied.'),
         );
 
         $report = $this->getReportMock(0);
@@ -90,16 +88,16 @@ class XMLRendererTest extends AbstractTest
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));
 
-        $renderer = new XMLRenderer();
+        $renderer = new JSONRenderer();
         $renderer->setWriter($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertXmlEquals(
+        $this->assertJsonEquals(
             $writer->getData(),
-            'renderer/xml_renderer_processing_errors.xml'
+            'renderer/json_renderer_processing_errors.json'
         );
     }
 }

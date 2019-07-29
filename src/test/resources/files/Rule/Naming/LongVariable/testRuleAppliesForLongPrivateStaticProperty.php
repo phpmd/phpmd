@@ -15,11 +15,7 @@
  * @link http://phpmd.org/
  */
 
-function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
+class testRuleAppliesForLongPrivateStaticProperty
 {
-    return array(
-        42,
-        43,
-        43,
-    );
+    private static $testRuleNotAppliesForLongPrivateStaticProperty = 23;
 }
