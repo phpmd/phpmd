@@ -6,6 +6,7 @@ about: 'Report a problem with PHPMD'
 - PHPMD version: #.#.#
 - PHP Version: #.#.#
 - Installation type: (phar file/ composer)
+- Operating System / Distribution & Version: (Windows 10 / CentOS 7.6 / ...)
 
 ### Current Behavior
 Explain the result that you get.
