@@ -97,9 +97,9 @@ class ParserFactory
         foreach (explode(',', $phpmd->getInput()) as $path) {
             if (is_dir(trim($path))) {
                 $pdepend->addDirectory(trim($path));
-            } else {
-                $pdepend->addFile(trim($path));
+                continue;
             }
+            $pdepend->addFile(trim($path));
         }
     }
 

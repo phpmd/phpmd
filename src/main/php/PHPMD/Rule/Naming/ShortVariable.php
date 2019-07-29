@@ -50,25 +50,36 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('FieldDeclaration');
-            foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('VariableDeclarator');
-                foreach ($declarators as $declarator) {
-                    $this->checkNodeImage($declarator);
-                }
-            }
-        } else {
-            $declarators = $node->findChildrenOfType('VariableDeclarator');
+            $this->applyClass();
+            return;
+        }
+
+        $this->applyNoClass();
+    }
+
+    private function applyClass(AbstractNode $node)
+    {
+        $fields = $node->findChildrenOfType('FieldDeclaration');
+        foreach ($fields as $field) {
+            $declarators = $field->findChildrenOfType('VariableDeclarator');
             foreach ($declarators as $declarator) {
                 $this->checkNodeImage($declarator);
             }
+        }
+        $this->resetProcessed();
+    }
 
-            $variables = $node->findChildrenOfType('Variable');
-            foreach ($variables as $variable) {
-                $this->checkNodeImage($variable);
-            }
+    private function applyNoClass(AbstractNode $node)
+    {
+        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        foreach ($declarators as $declarator) {
+            $this->checkNodeImage($declarator);
         }
 
+        $variables = $node->findChildrenOfType('Variable');
+        foreach ($variables as $variable) {
+            $this->checkNodeImage($variable);
+        }
         $this->resetProcessed();
     }
 
