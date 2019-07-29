@@ -4,7 +4,7 @@ about: 'Do you see something incorrect or do you miss some information in the do
 ---
 
 ## Description
-Describe what you miss or is incorrect on the website or our documentation. Be as explicit as possible.  
+Describe what you miss or is incorrect on the [website](https://phpmd.org/) or our documentation. Be as explicit as possible.  
 If possible add a URL to the incorrect web page/documentation.
 
 
