@@ -157,7 +157,7 @@
                 Adjusted Stickler-CI config for ignoring test resource files
             </action>
             <action date="dfaa509" dev="kylekatarnls" type="fix" system="github" issue="632">
-                Changed Scrutinizer settings to use local PHPUnit
+                Changed Scrutinizer CI settings to use local PHPUnit
             </action>
             <action date="4514235" dev="ravage84" type="add" system="github" issue="460">
                 Added ApiGen config file
