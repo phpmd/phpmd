@@ -232,7 +232,7 @@
             <action date="63ff5bf" dev="eeree" type="update" system="github" issue="469">
                 Improved contributing guide for Linux / OS X users
             </action>
-            <action date="3c6b69b" dev="ravage84" due-to="richvigorito" type="update" system="github" issue="383">
+            <action date="6f02406" dev="ravage84" due-to="richvigorito" type="update" system="github" issue="383">
                 Improved the ElseExpression description
             </action>
             <action date="85e48ad" dev="BenjaminPaap" type="fix" system="github" issue="582">
