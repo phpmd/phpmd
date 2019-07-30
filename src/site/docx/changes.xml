@@ -11,7 +11,7 @@
 
     <body>
         <release version="2.7.0"
-                 date="2019/07/31"
+                 date="2019/07/30"
                  description="This is the first minor release of the new PHPMD maintainer team.
                  It contains all the new features, improvements and fixes from two and a half years since 2.6.0.
                  Please take note of a backwards compatibility breaking property renaming in the CouplingBetweenObjects rule.">
