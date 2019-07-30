@@ -14,8 +14,7 @@
                  date="2019/07/31"
                  description="This is the first minor release of the new PHPMD maintainer team.
                  It contains all the new features, improvements and fixes from two and a half years since 2.6.0.
-                 Please take note of a backwards compatibility breaking property renaming in the CouplingBetweenObjects rule.
-                 With this release we also drop support for PHP 5.3.">
+                 Please take note of a backwards compatibility breaking property renaming in the CouplingBetweenObjects rule.">
             <action date="716ecf5" dev="eeree" type="add" system="github" issue="472">
                 Added rule for assignment within conditional (IfStatementAssignment)
             </action>
@@ -86,7 +85,10 @@
                 Added support for both @SuppressWarnings and @suppressWarnings annotation cases
             </action>
             <action date="0a69edf" dev="liviascapin" type="update" system="github" issue="528">
-                Bumped minimal PHP version to 5.4 since Travis-CI does not support anything below, anymore
+                Fixed Travis-CI build by temporarily remove PHP 5.3
+            </action>
+            <action date="4a8a567" dev="kylekatarnls" type="update" system="github" issue="643">
+                Fixed Travis-CI build to run PHP 5.3 and fixed 5.3 compatibility
             </action>
             <action date="d5c1372" dev="eeree" type="update" system="github" issue="475">
                 Added tests that show support for chained methods (fluent interfaces) for UnusedPrivateMethod rule
