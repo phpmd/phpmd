@@ -46,7 +46,7 @@
                 Added new options to CLI (min-priority, minimum-priority, report-file, input-file, not-strict)
             </action>
             <action date="45de3be" dev="tominventisbe" type="add" system="github" issue="579">
-                Added support for setting a maximum execution priority through CLI (max-priority, maximum-priority, maximumpriority)
+                Added support for setting the maximum execution priority through CLI (max-priority, maximum-priority, maximumpriority)
             </action>
             <action date="63047d9" dev="eeree" due-to="schinkel" type="add" system="github" issue="489">
                 Added new predefined variables to AbstractLocalVariable rule
