@@ -49,7 +49,7 @@
             <action date="45de3be" dev="tominventisbe" type="add" system="github" issue="579">
                 Added support for setting a maximum execution priority through CLI (max-priority, maximum-priority, maximumpriority)
             </action>
-            <action date="63047d9" dev="eeree" due-to="schinkel" type="update" system="github" issue="489">
+            <action date="63047d9" dev="eeree" due-to="schinkel" type="add" system="github" issue="489">
                 Added new predefined variables to AbstractLocalVariable rule
             </action>
             <action date="609c6bb" dev="dxops" type="update" system="github" issue="382">
@@ -98,9 +98,9 @@
                 Added annotations to allow IDEs to reference correct classes
             </action>
             <action date="858c9fd" dev="JeroenDeDauw" type="update" system="github" issue="639">
-                Use standard type syntax for arrays
+                Used standard type syntax for arrays
             </action>
-            <action date="d68e511" dev="kylekatarnls" type="update" system="github" issue="640">
+            <action date="d68e511" dev="kylekatarnls" type="add" system="github" issue="640">
                 Added type hint annotations
             </action>
             <action date="08a38d4" dev="ravage84" type="update" system="github" issue="481">
@@ -220,7 +220,7 @@
             <action date="b073ad2" dev="RyDroid" type="update" system="github" issue="455">
                 Used HTTPS instead of HTTP for resource files
             </action>
-            <action date="e12e59c" dev="Marius786" type="update" system="github" issue="566">
+            <action date="e12e59c" dev="Marius786" type="add" system="github" issue="566">
                 Added CLI usage example
             </action>
             <action date="c116054" dev="ravage84" type="update" system="github" issue="621">
@@ -250,7 +250,7 @@
             <action date="7c8d9bc" dev="MarkVaughn" type="add" system="github" issue="615">
                 Added Gitter badge
             </action>
-            <action date="1e86639" dev="tvbeek" type="update" system="github" issue="618">
+            <action date="1e86639" dev="tvbeek" type="add" system="github" issue="618">
                 Added badges for the monthly and total downloads
             </action>
         </release>
