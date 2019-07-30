@@ -61,7 +61,7 @@
                 Renamed minimum property to maximum in CouplingBetweenObjects rule (backwards incompatible)
             </action>
             <action date="5305f5b" dev="ravage84" type="fix" system="github" issue="626">
-                Fixed special chars escaping in violation description for XML output
+                Fixed special characters escaping in violation description for XML output
             </action>
             <action date="67bd7c6" dev="jaymoulin" type="fix" system="github" issue="378">
                 Fixed warning/error when trying to export to a non-existing path
