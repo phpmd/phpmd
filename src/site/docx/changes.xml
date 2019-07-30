@@ -14,7 +14,7 @@
                  date="2019/07/30"
                  description="This is the first minor release of the new PHPMD maintainer team.
                  It contains all the new features, improvements and fixes from two and a half years since 2.6.0.
-                 Please take note of a backwards compatibility breaking property renaming in the CouplingBetweenObjects rule.">
+                 Please take note of a backwards incompatible property renaming in the CouplingBetweenObjects rule.">
             <action date="716ecf5" dev="eeree" type="add" system="github" issue="472">
                 Added rule for assignment within conditional (IfStatementAssignment)
             </action>
