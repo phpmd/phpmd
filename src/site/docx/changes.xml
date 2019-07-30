@@ -85,7 +85,7 @@
                 Added support for both @SuppressWarnings and @suppressWarnings annotation cases
             </action>
             <action date="0a69edf" dev="liviascapin" type="update" system="github" issue="528">
-                Fixed Travis-CI build by temporarily remove PHP 5.3
+                Fixed Travis-CI build by temporarily removing PHP 5.3
             </action>
             <action date="4a8a567" dev="kylekatarnls" type="update" system="github" issue="643">
                 Fixed Travis-CI build to run PHP 5.3 and fixed 5.3 compatibility
