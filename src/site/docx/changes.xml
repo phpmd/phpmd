@@ -58,7 +58,7 @@
                 Fixed DuplicatedArrayKey rule to check only arrays with keys
             </action>
             <action date="9210116" dev="ravage84" due-to="jhoff" type="fix" system="github" issue="482">
-                Renamed minimum property to maximum in CouplingBetweenObjects rule
+                Renamed minimum property to maximum in CouplingBetweenObjects rule (backwards incompatible)
             </action>
             <action date="5305f5b" dev="ravage84" type="fix" system="github" issue="626">
                 Fixed special chars escaping in violation description for XML output
