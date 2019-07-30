@@ -163,13 +163,13 @@
                 Added ApiGen config file
             </action>
             <action date="2b55442" dev="eeree" type="update" system="github" issue="471">
-                Modified default PHP installation directory to match Chocolatey package in AppVeyor config
+                Modified default PHP installation directory to match Chocolatey package in AppVeyor CI config
             </action>
             <action date="252b178" dev="OndraM" type="update" system="github" issue="552">
-                Updated PHP in AppVeyor builds to 7.1
+                Updated PHP in AppVeyor CI builds to 7.1
             </action>
             <action date="40189f3" dev="kylekatarnls" type="fix" system="github" issue="633">
-                Fixed AppVeyor build
+                Fixed AppVeyor CI build
             </action>
             <action date="6f56a8f" dev="kylekatarnls" due-to="edhgoose" type="add" system="github" issue="605">
                 Added a pure PHP build script to generate the website as static files
