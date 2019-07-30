@@ -53,10 +53,10 @@
                 Added new predefined variables to AbstractLocalVariable rule
             </action>
             <action date="609c6bb" dev="dxops" type="update" system="github" issue="382">
-                Ignored isser-, hasser-, wither-method for TooManyMethods
+                Changed TooManyMethods rule to ignore isser-, hasser-, wither-methods
             </action>
             <action date="43d4ed0" dev="ravage84" type="update" system="github" issue="625">
-                Skipped DuplicatedArrayKey rule check, if there is no array key...
+                Fixed DuplicatedArrayKey rule to check only arrays with keys
             </action>
             <action date="9210116" dev="ravage84" due-to="jhoff" type="fix" system="github" issue="482">
                 Renamed minimum property to maximum in CouplingBetweenObjects rule
@@ -155,7 +155,7 @@
                 Adjusted Stickler-CI config for ignoring test resource files
             </action>
             <action date="dfaa509" dev="kylekatarnls" type="fix" system="github" issue="632">
-                Changed Scrutinizer settings to use PHPUnit
+                Changed Scrutinizer settings to use local PHPUnit
             </action>
             <action date="4514235" dev="ravage84" type="add" system="github" issue="460">
                 Added ApiGen config file
@@ -164,7 +164,7 @@
                 Modified default PHP installation directory to match Chocolatey package in AppVeyor config
             </action>
             <action date="252b178" dev="OndraM" type="update" system="github" issue="552">
-                Update PHP in AppVeyor builds to 7.1
+                Updated PHP in AppVeyor builds to 7.1
             </action>
             <action date="40189f3" dev="kylekatarnls" type="fix" system="github" issue="633">
                 Fixed AppVeyor build
