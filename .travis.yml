@@ -2,6 +2,11 @@ language: php
 
 matrix:
   include:
+    - php: 5.3
+      dist: precise
+    - php: 5.3
+      dist: trusty
+      env: DEPENDENCIES=low
     - php: 5.4
       dist: trusty
     - php: 5.4
@@ -29,8 +34,8 @@ matrix:
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
-    - php: 5.4
-      dist: trusty
+    - php: 5.3
+      dist: precise
       env: BUILD_PHAR=true
     - php: 7.3
       env: WEBSITE=true

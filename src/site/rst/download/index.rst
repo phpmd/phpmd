@@ -62,7 +62,7 @@ PHPMD itself is considered as an early development version at its
 current state. It relies on the following software products:
 
 - `PHP_Depend >= 2.0.0`__
-- `PHP >= 5.4.0`__
+- `PHP >= 5.3.9`__
 
 __ https://github.com/phpmd/phpmd
 __ http://getcomposer.org/composer.phar
