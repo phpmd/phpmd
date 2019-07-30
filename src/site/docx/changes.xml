@@ -29,7 +29,7 @@
                 Add rule for empty catch block (EmptyCatchBlock)
             </action>
             <action date="3a82eab" dev="DmitryNaum" due-to="mindplay-dk" type="add" system="github" issue="636">
-                Add rule for missing import (MissingImport(
+                Add rule for missing import (MissingImport)
             </action>
             <action date="c7009d5" dev="john-whitley" type="add" system="github" issue="443">
                 Add support for compound variables in UnusedLocalVariable rule
