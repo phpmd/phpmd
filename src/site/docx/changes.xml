@@ -6,7 +6,7 @@
 
     <properties>
         <title>PHPMD</title>
-        <author email="mapi@phpmd.org">Manuel Pichler</author>
+        <author email="github@phpmd.org">PHPMD maintainer team</author>
     </properties>
 
     <body>
