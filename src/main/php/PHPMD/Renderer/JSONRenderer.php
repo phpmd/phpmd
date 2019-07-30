@@ -121,7 +121,8 @@ class JSONRenderer extends AbstractRenderer
      */
     private function encodeReport($data)
     {
-        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PRETTY_PRINT;
+        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |
+            (defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0);
 
         return json_encode($data, $encodeOptions);
     }

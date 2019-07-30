@@ -5,7 +5,7 @@ matrix:
     - php: 5.3
       dist: precise
     - php: 5.3
-      dist: trusty
+      dist: precise
       env: DEPENDENCIES=low
     - php: 5.4
       dist: trusty
