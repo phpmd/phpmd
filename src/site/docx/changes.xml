@@ -142,13 +142,13 @@
                 Renamed mikey179/vfsStream to mikey179/vfsstream to prevent Composer error
             </action>
             <action date="a2c64bf" dev="kylekatarnls" type="update" system="github" issue="623">
-                Extended test matrix &amp; do only one job per build on Travis
+                Extended test matrix &amp; do only one job per build on Travis-CI
             </action>
             <action date="e1a4cd7" dev="ravage84" type="update" system="github" issue="617">
-                Replaced Travis build notification from IRC to the new Gitter core channel
+                Replaced Travis-CI build notification from IRC to the new Gitter core channel
             </action>
             <action date="f1c05bf" dev="ravage84" type="add" system="github" issue="620">
-                Added PHPMD Gitter Community Channel notifications for Travis
+                Added PHPMD Gitter Community Channel notifications for Travis-CI
             </action>
             <action date="d106330" dev="ravage84" type="add" system="github" issue="459">
                 Integrated Stickler CI
