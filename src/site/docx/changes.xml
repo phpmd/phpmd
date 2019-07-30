@@ -187,10 +187,10 @@
                 Removed section about commercial support from website
             </action>
             <action date="3e94d6b" dev="ravage84" type="update" system="github" issue="612">
-                Removed IRC, add Gitter &amp; reword Support &amp; Contact section from website
+                Removed IRC, add Gitter &amp; reword Support &amp; Contact section from/on website
             </action>
             <action date="3c5b534" dev="DmitryNaum" type="fix" system="github" issue="631">
-                Fixed URL to "How to create a custom rule set" documentation page from website
+                Fixed URL to "How to create a custom rule set" documentation page on website
             </action>
             <action date="67cdab2" dev="RyDroid" type="fix" system="github" issue="449">
                 Improved code style
