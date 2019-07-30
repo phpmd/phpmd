@@ -98,7 +98,7 @@
                 Added annotations to allow IDEs to reference correct classes
             </action>
             <action date="858c9fd" dev="JeroenDeDauw" type="update" system="github" issue="639">
-                Used standard type syntax for arrays
+                Fixed arrays types to use standard type syntax
             </action>
             <action date="d68e511" dev="kylekatarnls" type="add" system="github" issue="640">
                 Added type hint annotations
@@ -155,7 +155,7 @@
                 Adjusted Stickler-CI config for ignoring test resource files
             </action>
             <action date="dfaa509" dev="kylekatarnls" type="fix" system="github" issue="632">
-                Used local PHPUnit in Scrutinizer
+                Changed Scrutinizer settings to use PHPUnit
             </action>
             <action date="4514235" dev="ravage84" type="add" system="github" issue="460">
                 Added ApiGen config file
@@ -164,7 +164,7 @@
                 Modified default PHP installation directory to match Chocolatey package in AppVeyor config
             </action>
             <action date="252b178" dev="OndraM" type="update" system="github" issue="552">
-                Used PHP 7.1 in AppVeyor builds
+                Update PHP in AppVeyor builds to 7.1
             </action>
             <action date="40189f3" dev="kylekatarnls" type="fix" system="github" issue="633">
                 Fixed AppVeyor build
@@ -206,19 +206,19 @@
                 Changed HTTP to HTTPS in some files
             </action>
             <action date="51eb887" dev="RyDroid" type="update" system="github" issue="448">
-                Used HTTPS instead of HTTP in some files
+                Switched from HTTP to HTTPS in some files
             </action>
             <action date="409b276" dev="RyDroid" type="update" system="github" issue="524">
-                Used HTTPS instead of HTTP in resource file
+                Switched from HTTP to HTTPS in resource file
             </action>
             <action date="f1c1426" dev="RyDroid" type="update" system="github" issue="454">
-                Used HTTPS instead of HTTP for test files
+                Switched from HTTP to HTTPS for test files
             </action>
             <action date="9a77c48" dev="RyDroid" type="update" system="github" issue="451">
-                Used HTTPS instead of HTTP for main files
+                Switched from HTTP to HTTPS for main files
             </action>
             <action date="b073ad2" dev="RyDroid" type="update" system="github" issue="455">
-                Used HTTPS instead of HTTP for resource files
+                Switched from HTTP to HTTPS for resource files
             </action>
             <action date="e12e59c" dev="Marius786" type="add" system="github" issue="566">
                 Added CLI usage example
@@ -227,7 +227,7 @@
                 Updated wording about PHPMD
             </action>
             <action date="e850660" dev="kylekatarnls" type="update" system="github" issue="606">
-                Used BSD 3-clause license template
+                Updated license according to BSD 3-clause template
             </action>
             <action date="63ff5bf" dev="eeree" type="update" system="github" issue="469">
                 Improved contributing guide for Linux / OS X users
