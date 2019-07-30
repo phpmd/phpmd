@@ -142,7 +142,7 @@
             <action date="a2c64bf" dev="kylekatarnls" type="update" system="github" issue="623">
                 Extended test matrix &amp; do only one job per build on Travis
             </action>
-            <action date="8e1e9e8" dev="ravage84" type="update" system="github" issue="617">
+            <action date="e1a4cd7" dev="ravage84" type="update" system="github" issue="617">
                 Replaced Travis build notification from IRC to the new Gitter core channel
             </action>
             <action date="f1c05bf" dev="ravage84" type="add" system="github" issue="620">
@@ -247,7 +247,7 @@
             <action date="7c8d9bc" dev="ravage84" type="update" system="github" issue="614">
                 Removed API docs that do not exist anymore
             </action>
-            <action date="7c8d9bc" dev="MarkVaughn" type="add" system="github" issue="615">
+            <action date="8e1e9e8" dev="MarkVaughn" type="add" system="github" issue="615">
                 Added Gitter badge
             </action>
             <action date="1e86639" dev="tvbeek" type="add" system="github" issue="618">
