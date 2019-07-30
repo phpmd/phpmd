@@ -33,7 +33,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * @var array Self reference class names.
      */
-    protected $selfReferences = ['self', 'static'];
+    protected $selfReferences = array('self', 'static');
 
     /**
      * Checks for missing class imports and warns about it
