@@ -170,10 +170,10 @@
                 Fixed AppVeyor build
             </action>
             <action date="6f56a8f" dev="kylekatarnls" due-to="edhgoose" type="add" system="github" issue="605">
-                Built the website as static files using pure PHP
+                Added a pure PHP build script to generate the website as static files
             </action>
             <action date="6cf7a2d" dev="kylekatarnls" type="update" system="github" issue="608">
-                Handled anchor links and use direct links whenever possible in website build script
+                Updated the website build script to handle anchor links and to use direct links whenever possible
             </action>
             <action date="f3b68be" dev="kylekatarnls" type="fix" system="github" issue="609">
                 Fixed main logo link in website build script
