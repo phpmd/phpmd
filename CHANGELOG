@@ -1,3 +1,172 @@
+phpmd-2.7.0 (2019/07/30)
+========================
+
+This is the first minor release of the new PHPMD maintainer team. It 
+contains all the new features, improvements and fixes from two and a 
+half years since 2.6.0. Please take note of a backwards incompatible 
+property renaming in the CouplingBetweenObjects rule.
+
+- Fixed #482: Renamed minimum property to maximum in 
+  CouplingBetweenObjects rule (backwards incompatible) Fixed in commit 
+  #9210116.
+- Fixed #626: Fixed special characters escaping in violation 
+  description for XML output Fixed in commit #5305f5b.
+- Fixed #378: Fixed warning/error when trying to export to a 
+  non-existing path Fixed in commit #67bd7c6.
+- Fixed #575: Fixed UnusedFormalParameter false positive in string 
+  compound variable Fixed in commit #8790cbb.
+- Fixed #480: Fixed "Start tag expected, '<' not found" error Fixed in 
+  commit #3e2e058.
+- Fixed #494: Fixed UnusedPrivateField false positive Fixed in commit 
+  #99f3ba9.
+- Fixed #583: Changed LongNaming rule to apply on private fields too 
+  Fixed in commit #42bf8ad.
+- Fixed #598: Fixed a bug in the renderer auto-discovery Fixed in 
+  commit #cc06bfd.
+- Fixed #572: Added support for both @SuppressWarnings and 
+  @suppressWarnings annotation cases Fixed in commit #bb2cfe9.
+- Fixed invalid "array of strings" type hints Fixed in commit 
+  #16e4eda.
+- Fixed #599: Fixed Composer package type Fixed in commit #0ca4eff.
+- Fixed #604: Renamed mikey179/vfsStream to mikey179/vfsstream to 
+  prevent Composer error Fixed in commit #f66247f.
+- Fixed #632: Changed Scrutinizer CI settings to use local PHPUnit 
+  Fixed in commit #dfaa509.
+- Fixed #633: Fixed AppVeyor CI build Fixed in commit #40189f3.
+- Fixed #609: Fixed main logo link in website build script Fixed in 
+  commit #f3b68be.
+- Fixed #631: Fixed URL to "How to create a custom rule set" 
+  documentation page on website Fixed in commit #3c5b534.
+- Fixed #449: Improved code style Fixed in commit #67cdab2.
+- Fixed #447: Improved code style Fixed in commit #3ef4ba8.
+- Fixed #450: Improved code style Fixed in commit #9525da7.
+- Fixed #582: Fixed a typo in Clean Code Rules documentation Fixed in 
+  commit #85e48ad.
+- Fixed #567: Fixed a typo in Clean Code Rules documentation Fixed in 
+  commit #175b08f.
+- Implemented #472: Added rule for assignment within conditional 
+  (IfStatementAssignment) Implemented in commit #716ecf5.
+- Implemented #490: Added rule for count in loop (CountInLoop) 
+  Implemented in commit #0e30d82.
+- Implemented #484: Added rule for duplicated array key 
+  (DuplicatedArrayKey) Implemented in commit #a295850.
+- Implemented #476: Added rule for empty catch block (EmptyCatchBlock) 
+  Implemented in commit #4bc19bd.
+- Implemented #636: Added rule for missing import (MissingImport) 
+  Implemented in commit #3a82eab.
+- Implemented #443: Added support for compound variables in 
+  UnusedLocalVariable rule Implemented in commit #c7009d5.
+- Implemented #329: Added support to whitelist variables in the 
+  UnusedLocalVariable rule Implemented in commit #55ca654.
+- Implemented #478: Implemented renderer auto-discovery Implemented in 
+  commit #91c4ca8.
+- Implemented #405: Added JSON output format Implemented in commit 
+  #7552089.
+- Implemented #525: Added new options to CLI (min-priority, 
+  minimum-priority, report-file, input-file, not-strict) Implemented 
+  in commit #71b52be.
+- Implemented #579: Added support for setting the maximum execution 
+  priority through CLI (max-priority, maximum-priority, 
+  maximumpriority) Implemented in commit #45de3be.
+- Implemented #489: Added new predefined variables to 
+  AbstractLocalVariable rule Implemented in commit #63047d9.
+- Implemented #382: Changed TooManyMethods rule to ignore isser-, 
+  hasser-, wither-methods Implemented in commit #609c6bb.
+- Implemented #625: Fixed DuplicatedArrayKey rule to check only arrays 
+  with keys Implemented in commit #43d4ed0.
+- Implemented #528: Fixed Travis-CI build by temporarily removing PHP 
+  5.3 Implemented in commit #0a69edf.
+- Implemented #643: Fixed Travis-CI build to run PHP 5.3 and fixed 5.3 
+  compatibility Implemented in commit #4a8a567.
+- Implemented #475: Added tests that show support for chained methods 
+  (fluent interfaces) for UnusedPrivateMethod rule Implemented in 
+  commit #d5c1372.
+- Implemented #495: Added test for SuppressWarnings for 
+  ExcessivePublicCount Implemented in commit #b1c15f8.
+- Implemented #381: Added annotations to allow IDEs to reference 
+  correct classes Implemented in commit #2dbae11.
+- Implemented #639: Fixed arrays types to use standard type syntax 
+  Implemented in commit #858c9fd.
+- Implemented #640: Added type hint annotations Implemented in commit 
+  #d68e511.
+- Implemented #481: Cleaned boc block comments Implemented in commit 
+  #08a38d4.
+- Implemented #491: Cleaned whitespaces Implemented in commit 
+  #dcdd61a.
+- Implemented #477: Fixed code formatting Implemented in commit 
+  #3c6b69b.
+- Implemented #548: Updated PDepend to 2.5.2 Implemented in commit 
+  #f1c145e.
+- Implemented #474: Dropped HHVM support Implemented in commit 
+  #9f7b4d2.
+- Implemented #458: Updated PHPCS dev dependency from 2.3.4 to 2.8.1 
+  Implemented in commit #f2ae09f.
+- Implemented #458: Updated PHPCS & added Composer scripts Implemented 
+  in commit #24ff5a9.
+- Implemented #469: Updated Coding Standard command Implemented in 
+  commit #9962dae.
+- Implemented #627: Removed composer.lock Implemented in commit 
+  #981c78f.
+- Implemented #623: Extended test matrix & do only one job per build 
+  on Travis-CI Implemented in commit #a2c64bf.
+- Implemented #617: Replaced Travis-CI build notification from IRC to 
+  the new Gitter core channel Implemented in commit #e1a4cd7.
+- Implemented #620: Added PHPMD Gitter Community Channel notifications 
+  for Travis-CI Implemented in commit #f1c05bf.
+- Implemented #459: Integrated Stickler CI Implemented in commit 
+  #d106330.
+- Implemented #492: Adjusted Stickler-CI config for ignoring test 
+  resource files Implemented in commit #9b18153.
+- Implemented #460: Added ApiGen config file Implemented in commit 
+  #4514235.
+- Implemented #471: Modified default PHP installation directory to 
+  match Chocolatey package in AppVeyor CI config Implemented in commit 
+  #2b55442.
+- Implemented #552: Updated PHP in AppVeyor CI builds to 7.1 
+  Implemented in commit #252b178.
+- Implemented #605: Added a pure PHP build script to generate the 
+  website as static files Implemented in commit #6f56a8f.
+- Implemented #608: Updated the website build script to handle anchor 
+  links and to use direct links whenever possible Implemented in 
+  commit #6cf7a2d.
+- Implemented #483: Removed broken link to Web Content Viewer from 
+  website Implemented in commit #eeea9ee.
+- Implemented #611: Removed section about commercial support from 
+  website Implemented in commit #671760a.
+- Implemented #612: Removed IRC, add Gitter & reword Support & Contact 
+  section from/on website Implemented in commit #3e94d6b.
+- Implemented #479: Replaced all file header doc blocks with uniform 
+  one Implemented in commit #fff046c.
+- Implemented #470: Changed HTTP to HTTPS in some files Implemented in 
+  commit #1ca30d0.
+- Implemented #448: Switched from HTTP to HTTPS in some files 
+  Implemented in commit #51eb887.
+- Implemented #524: Switched from HTTP to HTTPS in resource file 
+  Implemented in commit #409b276.
+- Implemented #454: Switched from HTTP to HTTPS for test files 
+  Implemented in commit #f1c1426.
+- Implemented #451: Switched from HTTP to HTTPS for main files 
+  Implemented in commit #9a77c48.
+- Implemented #455: Switched from HTTP to HTTPS for resource files 
+  Implemented in commit #b073ad2.
+- Implemented #566: Added CLI usage example Implemented in commit 
+  #e12e59c.
+- Implemented #621: Updated wording about PHPMD Implemented in commit 
+  #c116054.
+- Implemented #606: Updated license according to BSD 3-clause template 
+  Implemented in commit #e850660.
+- Implemented #469: Improved contributing guide for Linux / OS X users 
+  Implemented in commit #63ff5bf.
+- Implemented #383: Improved the ElseExpression description 
+  Implemented in commit #6f02406.
+- Implemented #565: Added example for modifying properties in a rule 
+  set Implemented in commit #59551fc.
+- Implemented #614: Removed API docs that do not exist anymore 
+  Implemented in commit #7c8d9bc.
+- Implemented #615: Added Gitter badge Implemented in commit #8e1e9e8.
+- Implemented #618: Added badges for the monthly and total downloads 
+  Implemented in commit #1e86639.
+
 phpmd-2.6.1 (2019/07/06)
 ========================
 
@@ -66,6 +235,8 @@ Maintenance release with new PDepend version bundled
 
 phpmd-2.4.2 (2016/03/10)
 ========================
+
+
 
 - Fixed #261: Prove Issue 261 and added tests for 
   CamelCaseVariableName Fixed in commit #319b398.
@@ -275,6 +446,8 @@ outstanding pull requests.
 
 phpmd-2.1.1 (2014/09/09)
 ========================
+
+
 
 - Fixed #181: 404 error on your website release area
 - Fixed #168: --version argument doesn't return version Fixed in 
