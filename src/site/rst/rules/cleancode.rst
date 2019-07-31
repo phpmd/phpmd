@@ -87,7 +87,7 @@ Example: ::
   }
 
 DuplicatedArrayKey
-=================
+==================
 
 Since: PHPMD 2.7.0
 
