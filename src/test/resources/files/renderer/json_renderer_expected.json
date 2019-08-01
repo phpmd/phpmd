@@ -1,0 +1,56 @@
+{
+    "version": "@package_version@",
+    "package": "phpmd",
+    "timestamp": "",
+    "files": [
+        {
+            "file": "\/bar.php",
+            "violations": [
+                {
+                    "beginLine": 23,
+                    "endLine": 42,
+                    "package": "TestStubPackage",
+                    "function": null,
+                    "class": null,
+                    "method": null,
+                    "rule": "RuleStub",
+                    "ruleSet": "TestRuleSet",
+                    "description": "Test description",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
+                    "priority": 5
+                },
+                {
+                    "beginLine": 23,
+                    "endLine": 42,
+                    "package": "TestStubPackage",
+                    "function": null,
+                    "class": null,
+                    "method": null,
+                    "rule": "RuleStub",
+                    "ruleSet": "TestRuleSet",
+                    "description": "Test description",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
+                    "priority": 5
+                }
+            ]
+        },
+        {
+            "file": "\/foo.php",
+            "violations": [
+                {
+                    "beginLine": 23,
+                    "endLine": 42,
+                    "package": "TestStubPackage",
+                    "function": null,
+                    "class": null,
+                    "method": null,
+                    "rule": "RuleStub",
+                    "ruleSet": "TestRuleSet",
+                    "description": "Test description",
+                    "externalInfoUrl": "https:\/\/phpmd.org\/rules\/index.html",
+                    "priority": 5
+                }
+            ]
+        }
+    ]
+}

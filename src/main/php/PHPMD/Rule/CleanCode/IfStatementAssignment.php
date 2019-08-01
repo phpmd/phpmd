@@ -17,6 +17,9 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -57,7 +60,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * Extracts if and elseif statements from method/function body
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return array<ASTStatement>
+     * @return ASTStatement[]
      */
     private function getStatements(AbstractNode $node)
     {
@@ -70,8 +73,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all expression from statements array
      *
-     * @param array<ASTStatement> $statements Array of if and elseif clauses
-     * @return array<ASTExpression>
+     * @param ASTStatement[] $statements Array of if and elseif clauses
+     * @return ASTExpression[]
      */
     private function getExpressions(array $statements)
     {
@@ -87,8 +90,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all assignments from expressions array
      *
-     * @param array<ASTExpression> $expressions Array of expressions
-     * @return array<ASTAssignmentExpression>
+     * @param ASTExpression[] $expressions Array of expressions
+     * @return ASTAssignmentExpression[]
      */
     private function getAssignments(array $expressions)
     {
@@ -105,7 +108,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * Signals if any violations have been found in given method or function
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @param array<ASTAssignmentExpression> $assignments Array of assignments
+     * @param ASTAssignmentExpression[] $assignments Array of assignments
      */
     private function addViolations(AbstractNode $node, array $assignments)
     {
