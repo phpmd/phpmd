@@ -18,6 +18,7 @@ Clean Code Rules
 - `ElseExpression <cleancode.html#elseexpression>`_: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
 - `StaticAccess <cleancode.html#staticaccess>`_: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
 - `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+- `MissingImport <cleancode.html#missingimport>`_: Importing all external classes in a file through use statements makes them clearly visible.
 
 Code Size Rules
 ===============
