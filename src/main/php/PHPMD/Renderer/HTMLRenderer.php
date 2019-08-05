@@ -59,7 +59,7 @@ class HTMLRenderer extends AbstractRenderer
 	const CATEGORY_RULESET = "category_ruleset";
 	const CATEGORY_RULE = "category_rule";
 
-	protected $priorityTitles = array(
+	protected static $priorityTitles = array(
 		1 => "Top (1)",
 		2 => "High (2)",
 		3 => "Moderate (3)",
@@ -68,7 +68,7 @@ class HTMLRenderer extends AbstractRenderer
 	);
 
 	// Used in self::colorize() method.
-	protected $descHighlightRules = array(
+	protected static $descHighlightRules = array(
 		'method' => array( // Method names.
 			'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
 			'css-class' => 'hlt-method',
@@ -453,7 +453,7 @@ class HTMLRenderer extends AbstractRenderer
 	{
 
 		if (!is_readable($file)) {
-			return [];
+			return array();
 		}
 
 		$file = new \SplFileObject($file);
@@ -461,7 +461,7 @@ class HTMLRenderer extends AbstractRenderer
 		// We have to subtract 1 to extract correct lines via SplFileObject.
 		$line = max($lineNumber - 1 - $extra, 0);
 
-		$result = [];
+		$result = array();
 
 		if (!$file->eof()) {
 			$file->seek($line);
@@ -573,12 +573,12 @@ class HTMLRenderer extends AbstractRenderer
 	 */
 	protected static function sumUpViolations($violations)
 	{
-		$result = [
-			self::CATEGORY_PRIORITY => [],
-			self::CATEGORY_NAMESPACE => [],
-			self::CATEGORY_RULESET => [],
-			self::CATEGORY_RULE => [],
-		];
+		$result = array(
+			self::CATEGORY_PRIORITY => array(),
+			self::CATEGORY_NAMESPACE => array(),
+			self::CATEGORY_RULESET => array(),
+			self::CATEGORY_RULE => array(),
+		);
 
 		foreach ($violations as $v) {
 
