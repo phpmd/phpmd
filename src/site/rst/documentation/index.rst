@@ -50,7 +50,7 @@ Command line options
     instead of the default output target ``STDOUT``.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
-    extensions, e.g. php,phtml.
+    extensions, e.g. php, phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
     directories.
