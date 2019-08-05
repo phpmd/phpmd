@@ -59,29 +59,29 @@ class HTMLRenderer extends AbstractRenderer
 	const CATEGORY_RULESET = "category_ruleset";
 	const CATEGORY_RULE = "category_rule";
 
-	const PRIORITY_TITLES = [
+	protected $priorityTitles = array(
 		1 => "Top (1)",
 		2 => "High (2)",
 		3 => "Moderate (3)",
 		4 => "Low (4)",
 		5 => "Lowest (5)",
-	];
+	);
 
 	// Used in self::colorize() method.
-	const DESC_HIGHLIGHT_RULES = [
-		'method' => [ // Method names.
+	protected $descHighlightRules = array(
+		'method' => array( // Method names.
 			'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
 			'css-class' => 'hlt-method',
-		],
-		'quoted' => [ // Quoted strings.
+		),
+		'quoted' => array( // Quoted strings.
 			'regex' => '(["\'][^\'"]+["\'])',
 			'css-class' => 'hlt-quoted',
-		],
-		'variable' => [ // Variables.
+		),
+		'variable' => array( // Variables.
 			'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
 			'css-class' => 'hlt-variable',
-		],
-	];
+		),
+	);
 
 	protected static $compiledHighlightRegex = null;
 
@@ -410,7 +410,7 @@ class HTMLRenderer extends AbstractRenderer
 					Show code &#x25BC;
 				</a>";
 
-			$prio = self::PRIORITY_TITLES[$violation->getRule()->getPriority()];
+			$prio = self::$priorityTitles[$violation->getRule()->getPriority()];
 			$html = "
 				<section class='prb' id='$htmlId'>
 					<header>
@@ -477,7 +477,7 @@ class HTMLRenderer extends AbstractRenderer
 
 	/**
 	 * Take a rule description text and try to decorate/stylize parts of it with HTML.
-	 * Based on self::DESC_HIGHLIGHT_RULES config.
+	 * Based on self::$descHighlightRules config.
 	 *
 	 * @return string
 	 */
@@ -486,7 +486,7 @@ class HTMLRenderer extends AbstractRenderer
 		// Compile final regex, if not done already.
 		if (!self::$compiledHighlightRegex) {
 
-			$prepared = self::DESC_HIGHLIGHT_RULES;
+			$prepared = self::$descHighlightRules;
 			array_walk($prepared, function(&$v, $k) {
 				$v = "(?<{$k}>{$v['regex']})";
 			});
@@ -499,7 +499,7 @@ class HTMLRenderer extends AbstractRenderer
 
 			// Extract currently matched specification of highlighting (Match groups
 			// are named and we can find out which is not empty.).
-			$definition = array_keys(array_intersect_key(self::DESC_HIGHLIGHT_RULES, array_filter($x)));
+			$definition = array_keys(array_intersect_key(self::$descHighlightRules, array_filter($x)));
 			$definition = reset($definition);
 
 			return "<span class='hlt-info {$definition}'>{$x[0]}</span>";
@@ -593,7 +593,7 @@ class HTMLRenderer extends AbstractRenderer
 			$rule = $v->getRule();
 
 			// Friendly priority -> Add a describing word to "just number".
-			$friendlyPriority = self::PRIORITY_TITLES[$rule->getPriority()];
+			$friendlyPriority = self::$priorityTitles[$rule->getPriority()];
 			$ref = &$result[self::CATEGORY_PRIORITY][$friendlyPriority];
 			$ref = isset($ref) ? $ref + 1 : 1;
 
