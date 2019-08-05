@@ -495,11 +495,13 @@ class HTMLRenderer extends AbstractRenderer
 
 		}
 
-		return preg_replace_callback(self::$compiledHighlightRegex, function($x) {
+        $rules = self::$descHighlightRules;
+
+		return preg_replace_callback(self::$compiledHighlightRegex, function($x) use ($rules) {
 
 			// Extract currently matched specification of highlighting (Match groups
 			// are named and we can find out which is not empty.).
-			$definition = array_keys(array_intersect_key(self::$descHighlightRules, array_filter($x)));
+			$definition = array_keys(array_intersect_key($rules, array_filter($x)));
 			$definition = reset($definition);
 
 			return "<span class='hlt-info {$definition}'>{$x[0]}</span>";
