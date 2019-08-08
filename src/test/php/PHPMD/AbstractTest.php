@@ -271,7 +271,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->createMock('PHPMD\\Node\\ClassNode');
+        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')->getMock();
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -292,7 +292,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->createMock('PHPMD\\Node\\MethodNode'),
+            $this->getMockBuilder('PHPMD\\Node\\MethodNode')->getMock(),
             $metric,
             $value
         );
@@ -308,7 +308,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->createMock('PHPMD\\Node\\FunctionNode'),
+            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')->getMock(),
             $metric,
             $value
         );
@@ -354,7 +354,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->createMock('PHPMD\\Report');
+        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -410,7 +410,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $rule = null,
         $description = null
     ) {
-        $ruleViolation = $this->createMock('PHPMD\\RuleViolation');
+        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')->getMock();
 
         if ($rule === null) {
             $rule = new RuleStub();

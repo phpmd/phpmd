@@ -147,7 +147,7 @@ class ParserTest extends AbstractTest
      */
     private function getPHPDependMock()
     {
-        return $this->createMock('PDepend\Engine');
+        return $this->getMockBuilder('PDepend\Engine')->getMock();
     }
 
     /**
