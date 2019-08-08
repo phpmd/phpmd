@@ -53,7 +53,6 @@ class ExcessivePublicCountTest extends AbstractTest
     }
 
     /**
-     * @group i
      * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
      *
      * @return void
