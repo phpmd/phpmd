@@ -122,7 +122,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
             if (!in_array($uniqueHash, $processesViolations)) {
                 $processesViolations[] = $uniqueHash;
-                $this->addViolation($node, array($assignment->getStartColumn(), $assignment->getStartLine()));
+                $this->addViolation($node, array($assignment->getStartLine(), $assignment->getStartColumn()));
             }
         }
     }
