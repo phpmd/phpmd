@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -26,6 +29,7 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
+use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 
 /**
@@ -271,7 +275,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')->getMock();
+        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+            ->setConstructorArgs(array(new ASTClass('FooBar')))
+            ->getMock();
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -292,7 +298,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMockBuilder('PHPMD\\Node\\MethodNode')->getMock(),
+            $this->getMockBuilder('PHPMD\\Node\\MethodNode')
+                ->setConstructorArgs(array(new ASTMethod('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -308,7 +316,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')->getMock(),
+            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                ->setConstructorArgs(array(new ASTFunction('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -410,7 +420,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $rule = null,
         $description = null
     ) {
-        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')->getMock();
+        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
+            ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+            ->getMock();
 
         if ($rule === null) {
             $rule = new RuleStub();

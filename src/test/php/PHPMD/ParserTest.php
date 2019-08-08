@@ -17,7 +17,11 @@
 
 namespace PHPMD;
 
+use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Source\Parser\InvalidStateException;
+use PDepend\Util\Cache\CacheFactory;
+use PDepend\Util\Configuration;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Test case for the PHP_Depend backend adapter class.
@@ -147,7 +151,16 @@ class ParserTest extends AbstractTest
      */
     private function getPHPDependMock()
     {
-        return $this->getMockBuilder('PDepend\Engine')->getMock();
+        $container = new Container();
+        $config = new Configuration((object) array());
+
+        return $this->getMockBuilder('PDepend\Engine')
+            ->setConstructorArgs(array(
+                $config,
+                new CacheFactory($config),
+                new AnalyzerFactory($container),
+            ))
+            ->getMock();
     }
 
     /**
