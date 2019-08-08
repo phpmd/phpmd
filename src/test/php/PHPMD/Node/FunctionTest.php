@@ -35,7 +35,9 @@ class FunctionNodeTest extends AbstractTest
      */
     public function testMagicCallDelegatesToWrappedPHPDependFunction()
     {
-        $function = $this->getMock('PDepend\\Source\\AST\\ASTFunction', array(), array(null));
+        $function = $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $function->expects($this->once())
             ->method('getStartLine');
 

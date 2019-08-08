@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -26,6 +29,7 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
+use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 
 /**
@@ -271,13 +275,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMock(
-            'PHPMD\\Node\\ClassNode',
-            array(),
-            array(null),
-            '',
-            false
-        );
+        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+            ->setConstructorArgs(array(new ASTClass('FooBar')))
+            ->getMock();
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -298,7 +298,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\MethodNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\MethodNode')
+                ->setConstructorArgs(array(new ASTMethod('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -314,7 +316,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\FunctionNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                ->setConstructorArgs(array(new ASTFunction('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -360,7 +364,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->getMock('PHPMD\\Report');
+        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -386,7 +390,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMock('PHPMD\RuleSet');
+        $ruleSet = $this->getMockBuilder('PHPMD\RuleSet')->getMock();
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
@@ -416,13 +420,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $rule = null,
         $description = null
     ) {
-        $ruleViolation = $this->getMock(
-            'PHPMD\\RuleViolation',
-            array(),
-            array(null, null, null),
-            '',
-            false
-        );
+        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
+            ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+            ->getMock();
 
         if ($rule === null) {
             $rule = new RuleStub();
@@ -465,13 +465,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $file = '/foo/baz.php',
         $message = 'Error in file "/foo/baz.php"') {
 
-        $processingError = $this->getMock(
-            'PHPMD\\ProcessingError',
-            array(),
-            array(null),
-            '',
-            false
-        );
+        $processingError = $this->getMockBuilder('PHPMD\\ProcessingError')
+            ->setConstructorArgs(array(null))
+            ->setMethods(array('getFile', 'getMessage'))
+            ->getMock();
 
         $processingError->expects($this->any())
             ->method('getFile')
