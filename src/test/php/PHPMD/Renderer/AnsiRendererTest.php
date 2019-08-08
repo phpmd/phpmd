@@ -76,7 +76,8 @@ class AnsiRendererTest extends AbstractTest
             PHP_EOL . "FILE: /foo.php" . PHP_EOL . "--------------" . PHP_EOL,
             " 2 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
             " 3 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
-            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . "--------------------------------" . PHP_EOL,
+            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . "--------------------------------" .
+            (version_compare(PHP_VERSION, '5.4.0-dev', '<') ? '--' : '') . PHP_EOL,
             "Error in file \"/foo/baz.php\"" . PHP_EOL,
             PHP_EOL . "Found 3 violations and 1 error in 200ms" . PHP_EOL,
         );
