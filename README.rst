@@ -172,3 +172,8 @@ At the moment PHPMD comes with the following renderers:
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
+
+Support PHPMD
+-------------
+
+[Get supported phpmd/phpmd with the Tidelift Subscription](https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme)
