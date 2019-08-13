@@ -45,7 +45,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
-        /** @var $node ClassNode */
+        /** @var ClassNode $field */
         foreach ($this->collectUnusedPrivateFields($node) as $field) {
             $this->addViolation($field, array($field->getImage()));
         }
@@ -78,7 +78,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     private function collectPrivateFields(ClassNode $class)
     {
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
-            /** @var $declaration ASTNode */
+            /** @var ASTNode $declaration */
             if ($declaration->isPrivate()) {
                 $this->collectPrivateField($declaration);
             }
