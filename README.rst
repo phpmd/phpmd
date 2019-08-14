@@ -176,4 +176,6 @@ At the moment PHPMD comes with the following renderers:
 Support PHPMD
 -------------
 
-[Get supported phpmd/phpmd with the Tidelift Subscription](https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme)
+`Get supported phpmd/phpmd with the Tidelift Subscription`__
+
+__ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme
