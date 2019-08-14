@@ -455,8 +455,9 @@ class RuleSetFactory
     private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode) {
         /** @var \Iterator $it */
         $it = $ruleSet->getRules();
+        $attributes = $ruleNode->attributes();
 
-        $ruleName = (string)$ruleNode->attributes()['name'];
+        $ruleName = (string) $attributes['name'];
 
         // find existing rule
         while ($it->valid()) {
