@@ -342,6 +342,12 @@ class RuleSetFactory
             $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
         }
 
+        if ($className === '') {
+            $this->modifyExistingRuleset($ruleSet, $ruleNode);
+
+            return;
+        }
+
         if (class_exists($className) === false) {
             $handle = @fopen($fileName, 'r', true);
             if ($handle === false) {
@@ -433,6 +439,36 @@ class RuleSetFactory
 
         if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
+        }
+    }
+
+    /**
+     * modifyExistingRuleset
+     *
+     * set/modify properties for existing rules with parameters set in config file
+     *
+     * @param RuleSet           $ruleSet
+     * @param \SimpleXMLElement $ruleNode
+     *
+     * @return void
+     */
+    private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode) {
+        /** @var \Iterator $it */
+        $it = $ruleSet->getRules();
+
+        $ruleName = (string)$ruleNode->attributes()['name'];
+
+        // find existing rule
+        while ($it->valid()) {
+            /** @var AbstractRule $rule */
+            $rule = $it->current();
+
+            // rule found, modify properties
+            if ($rule->getName() === $ruleName) {
+                $this->parsePropertiesNode($rule, $ruleNode->properties);
+            }
+
+            $it->next();
         }
     }
 
