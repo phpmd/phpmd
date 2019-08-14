@@ -246,6 +246,49 @@ __ /rules/cleancode.html
       </rule>
   </ruleset>
 
+Changing properties in a rule set for multiple rules
+============================================
+
+We want to use the basic codesize ruleset, but change parameter values for several rules
+
+__ /rules/codesize.html
+
+::
+
+  <?xml version="1.0"?>
+  <ruleset name="My first PHPMD rule set"
+           xmlns="http://pmd.sf.net/ruleset/1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                       http://pmd.sf.net/ruleset_xml_schema.xsd"
+           xsi:noNamespaceSchemaLocation="
+                       http://pmd.sf.net/ruleset_xml_schema.xsd">
+      <description>
+          My custom rule set that checks my code...
+      </description>
+
+      <!--
+          Import the entire codesize ruleset and
+          customize the configuration for some rules.
+      -->
+      <rule ref="rulesets/codesize.xml"/>
+      <rule name="ExcessiveParameterList">
+          <properties>
+              <property name="minimum" value="15"/>
+          </properties>
+      </rule>
+      <rule name="TooManyFields">
+          <properties>
+              <property name="maxfields" value="35"/>
+          </properties>
+      </rule>
+      <rule name="TooManyMethods">
+          <properties>
+              <property name="maxmethods" value="35"/>
+          </properties>
+      </rule>
+  </ruleset>
+
 Conclusion
 ==========
 

@@ -708,6 +708,71 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
+     * testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettings
+     *
+     * @return void
+     */
+    public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettings()
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset5');
+
+        $expected = array(
+            'RuleOneInThirdRuleSet' => array(
+                'test1' => '42'
+            ),
+            'RuleTwoInThirdRuleSet' => array(
+                'test1' => 'g',
+                'test2' => 'NA'
+            )
+        );
+        
+        /** @var \ArrayIterator $rules */
+        for ($rules = $ruleSets[0]->getRules(); $rules->valid(); $rules->next()) {
+            /** @var Rule $rule */
+            $rule = $rules->current();
+
+            $name = $rule->getName();
+
+            if (array_key_exists($name, $expected)) {
+                $props = $expected[$name];
+
+                foreach ($props as $name => $value) {
+                    $this->assertEquals($value, $rule->getStringProperty($name));
+                }
+            }
+        }
+    }
+
+    /**
+     * testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties
+     *
+     * @return void
+     */
+    public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties()
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset5');
+
+        /** @var \ArrayIterator $rules */
+        for ($rules = $ruleSets[0]->getRules(); $rules->valid(); $rules->next()) {
+            $rule = $rules->current();
+            $success = true;
+            try {
+                $this->assertEquals('something', $rule->getStringProperty('test'));
+            } catch (\Exception $exception) {
+                $success = false;
+            }
+
+            $this->assertFalse($success);
+        }
+    }
+
+    /**
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
