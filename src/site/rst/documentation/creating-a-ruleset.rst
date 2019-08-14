@@ -247,7 +247,7 @@ __ /rules/cleancode.html
   </ruleset>
 
 Changing properties in a rule set for multiple rules
-============================================
+====================================================
 
 We want to use the basic codesize ruleset, but change parameter values for several rules
 
