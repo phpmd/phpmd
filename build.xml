@@ -77,7 +77,7 @@
             <arg line="composer.phar" />
             <arg line="config" />
             <arg line="platform.php" />
-            <arg line="5.3"/>
+            <arg line="5.3.9"/>
         </exec>
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />
