@@ -75,11 +75,16 @@
     <target name="-copy-vendor-dir:before~hooked" extensionOf="-copy-vendor-dir:before~hook">
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />
+            <arg line="config" />
+            <arg line="platform.php" />
+            <arg line="5.3.9"/>
+        </exec>
+        <exec executable="php" failonerror="true">
+            <arg line="composer.phar" />
             <arg line="update" />
             <arg line="--no-dev" />
             <arg line="--optimize-autoloader"/>
             <arg line="--prefer-dist" />
-            <arg line="--prefer-lowest" />
             <arg line="--prefer-stable" />
         </exec>
     </target>
