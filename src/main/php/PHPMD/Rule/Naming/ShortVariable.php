@@ -50,11 +50,11 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $this->applyClass();
+            $this->applyClass($node);
             return;
         }
 
-        $this->applyNoClass();
+        $this->applyNoClass($node);
     }
 
     private function applyClass(AbstractNode $node)
