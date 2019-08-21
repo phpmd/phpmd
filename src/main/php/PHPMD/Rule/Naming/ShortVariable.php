@@ -57,6 +57,14 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->applyNoClass($node);
     }
 
+    /**
+     * Extracts all variable and variable declarator nodes from the given class node
+     * and checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
     private function applyClass(AbstractNode $node)
     {
         $fields = $node->findChildrenOfType('FieldDeclaration');
@@ -69,6 +77,14 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->resetProcessed();
     }
 
+    /**
+     * Extracts all variable and variable declarator nodes from the given no class node
+     * and checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
     private function applyNoClass(AbstractNode $node)
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
