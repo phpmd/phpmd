@@ -31,6 +31,7 @@ matrix:
     # - php: 7.2
     #   env: DEPENDENCIES=low
     - php: 7.3
+      env: COVERAGE=true
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
@@ -48,14 +49,18 @@ env:
         TEST_CONFIG="phpunit.xml.dist"
 
 before_script:
+  - phpenv config-rm xdebug.ini || echo "XDebug is not enabled"
   - composer self-update
   - if [[ $DEPENDENCIES = low ]]; then composer update --prefer-dist --prefer-lowest --prefer-stable; fi
   - if [[ ! $DEPENDENCIES ]]; then composer install; fi
 
 script:
   - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
-  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION != 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG; fi
-  - if [[ $BUILD_PHAR != 'true' && $WEBSITE != 'true' && $TRAVIS_PHP_VERSION  = 7.3 ]]; then vendor/phpunit/phpunit/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
+  - |
+    if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
+      if [ "$COVERAGE" != "true" ]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
+      if [ "$COVERAGE" = "true" ]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
+    fi
   - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi
 
 notifications:
