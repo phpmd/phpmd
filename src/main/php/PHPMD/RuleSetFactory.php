@@ -475,7 +475,7 @@ class RuleSetFactory
      *
      * @throws \RuntimeException if no matching rule was found
      */
-    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName): AbstractRule {
+    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName) {
         /** @var \Iterator $it */
         $it = $ruleSet->getRules();
 
