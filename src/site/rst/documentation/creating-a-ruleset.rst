@@ -247,9 +247,11 @@ __ /rules/cleancode.html
   </ruleset>
 
 Changing properties in a rule set for multiple rules
-============================================
+====================================================
 
-We want to use the basic codesize ruleset, but change parameter values for several rules
+We want to use the basic codesize ruleset, but change parameter values for
+several rules. To avoid excluding every single (modified) rule, properties
+can be changed/overwritten without excluding the rules.
 
 __ /rules/codesize.html
 
