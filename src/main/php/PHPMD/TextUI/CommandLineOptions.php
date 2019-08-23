@@ -125,7 +125,7 @@ class CommandLineOptions
      *
      * @var boolean
      */
-    protected $dontExitOnViolations = false;
+    protected $ignoreViolationsOnExit = false;
 
     /**
      * List of available rule-sets.
@@ -199,7 +199,7 @@ class CommandLineOptions
                     $this->strict = false;
                     break;
                 case '--ignore-violations-on-exit':
-                    $this->dontExitOnViolations = true;
+                    $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-html':
                 case '--reportfile-text':
@@ -356,7 +356,7 @@ class CommandLineOptions
      */
     public function ignoreViolationsOnExit()
     {
-        return $this->dontExitOnViolations;
+        return $this->ignoreViolationsOnExit;
     }
 
     /**
