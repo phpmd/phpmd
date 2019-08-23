@@ -708,7 +708,7 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
-     * testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettings
+     * Check if rule properties are changed by name only without having to exclude a rule first
      *
      * @return void
      */
@@ -720,15 +720,15 @@ class RuleSetFactoryTest extends AbstractTest
         $ruleSets = $factory->createRuleSets('refset5');
 
         $expected = array(
-            'RuleOneInThirdRuleSet' => array(
+            'RuleOneInFifthRuleSet' => array(
                 'test1' => '42'
             ),
-            'RuleTwoInThirdRuleSet' => array(
+            'RuleTwoInFifthRuleSet' => array(
                 'test1' => 'g',
                 'test2' => 'NA'
             )
         );
-        
+
         /** @var \ArrayIterator $rules */
         for ($rules = $ruleSets[0]->getRules(); $rules->valid(); $rules->next()) {
             /** @var Rule $rule */
@@ -747,7 +747,7 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
-     * testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties
+     * Check if properties are changed, but no additional properties are added to rules
      *
      * @return void
      */
