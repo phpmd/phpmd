@@ -443,9 +443,8 @@ class RuleSetFactory
     }
 
     /**
-     * modifyExistingRuleset
-     *
-     * set/modify properties for existing rules with parameters set in config file
+     * This method modifies properties of a given rule in an existing rule-set by calling
+     * the parsePropertiesNode method
      *
      * @param RuleSet           $ruleSet
      * @param \SimpleXMLElement $ruleNode
@@ -453,11 +452,32 @@ class RuleSetFactory
      * @return void
      */
     private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode) {
-        /** @var \Iterator $it */
-        $it = $ruleSet->getRules();
         $attributes = $ruleNode->attributes();
 
         $ruleName = (string) $attributes['name'];
+
+        try {
+            $rule = $this->findRuleInRulesetByName($ruleSet, $ruleName);
+
+            $this->parsePropertiesNode($rule, $ruleNode->properties);
+        } catch(\RuntimeException $exception) {
+            return;
+        }
+    }
+
+    /**
+     * Search Rule in given Ruleset by name
+     *
+     * @param RuleSet $ruleSet
+     * @param string  $ruleName
+     *
+     * @return AbstractRule
+     *
+     * @throws \RuntimeException if no matching rule was found
+     */
+    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName): AbstractRule {
+        /** @var \Iterator $it */
+        $it = $ruleSet->getRules();
 
         // find existing rule
         while ($it->valid()) {
@@ -466,11 +486,17 @@ class RuleSetFactory
 
             // rule found, modify properties
             if ($rule->getName() === $ruleName) {
-                $this->parsePropertiesNode($rule, $ruleNode->properties);
+                return $rule;
             }
-
             $it->next();
         }
+
+        throw new \RuntimeException(
+            sprintf(
+                'Rule %s not found',
+                $ruleName
+            )
+        );
     }
 
     /**
