@@ -41,6 +41,14 @@ use PHPMD\Rule\MethodAware;
 class IfStatementAssignment extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
+     * @var array List of statement types where to forbid assignation.
+     */
+    protected $ifStatements = array(
+        'IfStatement',
+        'ElseIfStatement',
+    );
+
+    /**
      * This method checks if method/function has if clauses
      * that use assignment instead of comparison.
      *
@@ -64,10 +72,9 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      */
     private function getStatements(AbstractNode $node)
     {
-        $ifStatements = $node->findChildrenOfType('IfStatement');
-        $elseIfStatements = $node->findChildrenOfType('ElseIfStatement');
-
-        return array_merge($ifStatements, $elseIfStatements);
+        return call_user_func_array('array_merge', array_map(function ($type) use ($node) {
+            return $node->findChildrenOfType($type);
+        }, $this->ifStatements));
     }
 
     /**
@@ -79,9 +86,12 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     private function getExpressions(array $statements)
     {
         $expressions = array();
+
         /** @var ASTNode $statement */
         foreach ($statements as $statement) {
-            $expressions = array_merge($expressions, $statement->findChildrenOfType('Expression'));
+            $expressions = array_merge($expressions, array_filter($statement->findChildrenOfType('Expression'), function (ASTNode $node) {
+                return !count($node->getParent()->findChildrenOfType('FunctionPostfix'));
+            }));
         }
 
         return $expressions;
