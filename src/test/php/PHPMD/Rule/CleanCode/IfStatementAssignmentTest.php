@@ -28,6 +28,13 @@ class IfStatementAssignmentTest extends AbstractTest
         $rule->apply($this->getMethod());
     }
 
+    public function testRuleNotAppliesInsideClosureCallbacks()
+    {
+        $rule = new IfStatementAssignment();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
     public function testRuleNotAppliesToIfsWithoutAssignment()
     {
         $rule = new IfStatementAssignment();
