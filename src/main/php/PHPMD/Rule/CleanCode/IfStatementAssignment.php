@@ -19,7 +19,6 @@ namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTExpression;
-use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -68,7 +67,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * Extracts if and elseif statements from method/function body
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return ASTStatement[]
+     * @return ASTNode[]
      */
     private function getStatements(AbstractNode $node)
     {
@@ -80,21 +79,14 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all expression from statements array
      *
-     * @param ASTStatement[] $statements Array of if and elseif clauses
+     * @param ASTNode[] $statements Array of if and elseif clauses
      * @return ASTExpression[]
      */
     private function getExpressions(array $statements)
     {
-        $expressions = array();
-
-        /** @var ASTNode $statement */
-        foreach ($statements as $statement) {
-            $expressions = array_merge($expressions, array_filter($statement->findChildrenOfType('Expression'), function (ASTNode $node) {
-                return !count($node->getParent()->findChildrenOfType('FunctionPostfix'));
-            }));
-        }
-
-        return $expressions;
+        return array_map(function (ASTNode $statement) {
+            return $statement->getFirstChildOfType('Expression');
+        }, $statements);
     }
 
     /**
