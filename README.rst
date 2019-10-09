@@ -63,8 +63,8 @@ While the ``rulesets.xml`` ruleset file could look like this::
                          http://pmd.sf.net/ruleset_xml_schema.xsd"
            xsi:noNamespaceSchemaLocation="
                          http://pmd.sf.net/ruleset_xml_schema.xsd">
-      <description>
-        My custom rule set that checks my code...
+    <description>
+      My custom rule set that checks my code...
     </description>
 
     <rule ref="rulesets/codesize.xml" />
@@ -77,19 +77,19 @@ While the ``rulesets.xml`` ruleset file could look like this::
 
 The xml report would like like this::
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
-  <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-     <violation beginline="81"
-                endline="81"
-                rule="UnusedFormalParameter"
-                ruleset="Unused Code Rules"
-                externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedformalparameter"
-                priority="3">
-       Avoid unused parameters such as '$builder'.
-    </violation>
-  </file>
-</pmd>
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
+    <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
+      <violation beginline="81"
+                 endline="81"
+                 rule="UnusedFormalParameter"
+                 ruleset="Unused Code Rules"
+                 externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedformalparameter"
+                 priority="3">
+        Avoid unused parameters such as '$builder'.
+      </violation>
+    </file>
+  </pmd>
 
 You can pass a file name or a directory name containing PHP source
 code to PHPMD.
