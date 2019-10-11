@@ -234,8 +234,13 @@ function buildMenu($uri, $rstDir, $baseHref)
 
 include __DIR__.'/../vendor/autoload.php';
 
+// This is the version we download for the latest phar file
+$pharVersion = '2.7.0';
+
 $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
+$pharDestinationDirectory = $websiteDirectory . '/static/latest';
+$pharUrl = 'https://github.com/phpmd/phpmd/releases/download/'.$pharVersion.'/phpmd.phar';
 
 $parser = new Parser;
 $baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
@@ -246,6 +251,10 @@ removeDirectory($websiteDirectory);
 copyDirectory(__DIR__.'/../src/site/resources/web', $websiteDirectory);
 buildWebsite($rstDir, $parser, $websiteDirectory, $changelogContent, $rstDir, $baseHref);
 copy($websiteDirectory.'/about.html', $websiteDirectory.'/index.html');
+
+// Copy the phar file to the destination
+@mkdir($pharDestinationDirectory, 0777, true);
+copy($pharUrl, $pharDestinationDirectory . '/phpmd.phar');
 
 if ($cname = getenv('CNAME')) {
     file_put_contents($websiteDirectory.'/CNAME', $cname);
