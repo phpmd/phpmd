@@ -239,7 +239,7 @@ $pharVersion = '2.7.0';
 
 $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
-$pharDestinationDirectory = $websiteDirectory . '/static/latest';
+$pharDestinationDirectory = $websiteDirectory.'/static/latest';
 $pharUrl = 'https://github.com/phpmd/phpmd/releases/download/'.$pharVersion.'/phpmd.phar';
 
 $parser = new Parser;
