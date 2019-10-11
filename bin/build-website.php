@@ -234,8 +234,9 @@ function buildMenu($uri, $rstDir, $baseHref)
 
 include __DIR__.'/../vendor/autoload.php';
 
-// This is the version we download for the latest phar file
-$pharVersion = '2.7.0';
+// We get the latest version from the GitHub API
+$latestRelease = json_decode(file_get_contents('https://api.github.com/repos/phpmd/phpmd/releases/latest'));
+$pharVersion = $latestRelease->tag_name;
 
 $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
