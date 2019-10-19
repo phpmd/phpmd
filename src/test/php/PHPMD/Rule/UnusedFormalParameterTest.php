@@ -447,4 +447,48 @@ class UnusedFormalParameterTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable
+     *
+     * <code>
+     * class Foo {
+     *     public function foo($bar) {
+     *         return "me_${bar}";
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable
+     *
+     * <code>
+     * class Foo {
+     *     public function foo($bar) {
+     *         return $this->baz("${bar}");
+     *     }
+     *
+     *     private function baz($bar) {
+     *         return "who ${bar}?";
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }

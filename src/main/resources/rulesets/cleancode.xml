@@ -157,4 +157,48 @@ function createArray() {
             ]]>
         </example>
     </rule>
+
+    <rule name="MissingImport"
+          since="2.7.0"
+          message="Missing class import via use statement (line '{0}', column '{1}')."
+          class="PHPMD\Rule\CleanCode\MissingImport"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#MissingImport">
+        <description>
+            <![CDATA[
+Importing all external classes in a file through use statements makes them clearly visible.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <example>
+            <![CDATA[
+function make() {
+    return new \stdClass();
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="UndefinedVariable"
+          since="2.7"
+          message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
+          class="PHPMD\Rule\CleanCode\UndefinedVariable"
+          externalInfoUrl="">
+        <description>
+            Detects when a variable is used that has not been defined before.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+class Foo
+{
+    private function bar()
+    {
+        // $message is undefined
+        echo $message;
+    }
+}
+]]>
+        </example>
+    </rule>
+
 </ruleset>

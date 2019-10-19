@@ -23,7 +23,7 @@ ElseExpression
 
 Since: PHPMD 1.4.0
 
-An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
 
 Example: ::
 
@@ -58,11 +58,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===============================================
- Name                                Default Value   Description                                   
-=================================== =============== ===============================================
- exceptions                                          Comma-separated class name list of exceptions 
-=================================== =============== ===============================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| exceptions                        |               | Comma-separated class name list of exceptions              |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 IfStatementAssignment
 =====================
@@ -86,8 +86,8 @@ Example: ::
       }
   }
 
-DuplicateArrayKey
-=================
+DuplicatedArrayKey
+==================
 
 Since: PHPMD 2.7.0
 
@@ -103,6 +103,19 @@ Example: ::
           'foo' => 'bar', // not applied
           "foo" => 'baz', // applied
       ];
+  }
+
+MissingImport
+=============
+
+Since: PHPMD 2.7.0
+
+Importing all external classes in a file through use statements makes them clearly visible.
+
+Example: ::
+
+  function make() {
+      return new \stdClass();
   }
 
 Remark

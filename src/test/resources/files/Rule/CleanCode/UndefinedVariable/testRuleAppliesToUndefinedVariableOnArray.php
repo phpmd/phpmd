@@ -15,7 +15,11 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesForLongPrivateStaticProperty
+class testRuleAppliesToUndefinedVariableOnArray extends AbstractTest
 {
-    private static $testRuleNotAppliesForLongPrivateStaticProperty = 23;
+    function testRuleAppliesToUndefinedVariableOnArray()
+    {
+        $x = [42, $y];
+        echo $x;
+    }
 }

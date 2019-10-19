@@ -17,7 +17,9 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -39,6 +41,13 @@ class CommandLineOptions
      * @var integer
      */
     protected $minimumPriority = Rule::LOWEST_PRIORITY;
+
+    /**
+     * The maximum rule priority.
+     *
+     * @var integer
+     */
+    protected $maximumPriority = Rule::HIGHEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
@@ -147,6 +156,11 @@ class CommandLineOptions
                 case '--minimumpriority':
                     $this->minimumPriority = (int)array_shift($args);
                     break;
+                case '--max-priority':
+                case '--maximum-priority':
+                case '--maximumpriority':
+                    $this->maximumPriority = (int)array_shift($args);
+                    break;
                 case '--report-file':
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
@@ -190,7 +204,8 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match);
+                case '--reportfile-json':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -271,6 +286,16 @@ class CommandLineOptions
     }
 
     /**
+     * Returns the maximum rule priority.
+     *
+     * @return integer
+     */
+    public function getMaximumPriority()
+    {
+        return $this->maximumPriority;
+    }
+
+    /**
      * Returns the file name of a supplied code coverage report or <b>NULL</b>
      * if the user has not supplied the --coverage option.
      *
@@ -343,6 +368,7 @@ class CommandLineOptions
      *   <li>xml</li>
      *   <li>html</li>
      *   <li>text</li>
+     *   <li>json</li>
      * </ul>
      *
      * @param string $reportFormat
@@ -360,6 +386,10 @@ class CommandLineOptions
                 return $this->createHtmlRenderer();
             case 'text':
                 return $this->createTextRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
+            case 'ansi':
+                return $this->createAnsiRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -382,11 +412,27 @@ class CommandLineOptions
     }
 
     /**
+     * @return \PHPMD\Renderer\AnsiRenderer
+     */
+    protected function createAnsiRenderer()
+    {
+        return new AnsiRenderer();
+    }
+
+    /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer()
     {
         return new HTMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createJsonRenderer()
+    {
+        return new JSONRenderer();
     }
 
     /**
@@ -441,6 +487,7 @@ class CommandLineOptions
             '2) A report format' . \PHP_EOL .
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
+            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
             'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
@@ -481,7 +528,7 @@ class CommandLineOptions
             return implode(', ', $renderers);
         }
 
-        return array_pop($list);
+        return array_pop($renderers);
     }
 
     /**
