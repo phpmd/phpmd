@@ -91,7 +91,7 @@ class XMLRenderer extends AbstractRenderer
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);
-            $writer->write('      ' . $violation->getDescription() . PHP_EOL);
+            $writer->write('      ' . htmlspecialchars($violation->getDescription()) . PHP_EOL);
             $writer->write('    </violation>' . PHP_EOL);
         }
 
@@ -117,7 +117,6 @@ class XMLRenderer extends AbstractRenderer
      *
      * @param string $attr  The xml attribute name.
      * @param string $value The attribute value.
-     *
      * @return void
      */
     private function maybeAdd($attr, $value)

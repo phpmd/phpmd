@@ -71,6 +71,17 @@ class AnnotationTest extends AbstractTest
     }
 
     /**
+     * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst
+     *
+     * @return void
+     */
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst()
+    {
+        $annotation = new Annotation('suppressWarnings', 'PHPMD');
+        $this->assertTrue($annotation->suppresses($this->getRuleMock()));
+    }
+
+    /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName
      *
      * @return void

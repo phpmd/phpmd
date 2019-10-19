@@ -11,7 +11,6 @@ Since: PHPMD 0.2
 
 Detects when a private field is declared and/or assigned a value, but not used.
 
-
 Example: ::
 
   class Something
@@ -32,7 +31,6 @@ Since: PHPMD 0.2
 
 Detects when a local variable is declared and/or assigned, but not used.
 
-
 Example: ::
 
   class Foo {
@@ -44,12 +42,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ========================================================
- Name                                Default Value   Description                                            
-=================================== =============== ========================================================
- allow-unused-foreach-variables      false           Allow unused variables in foreach language constructs. 
- exceptions                                          Comma-separated list of exceptions                     
-=================================== =============== ========================================================
++-----------------------------------+---------------+--------------------------------------------------------+
+| Name                              | Default Value | Description                                            |
++===================================+===============+========================================================+
+| allow-unused-foreach-variables    | false         | Allow unused variables in foreach language constructs. |
++-----------------------------------+---------------+--------------------------------------------------------+
+| exceptions                        |               | Comma-separated list of exceptions                     |
++-----------------------------------+---------------+--------------------------------------------------------+
 
 UnusedPrivateMethod
 ===================
@@ -57,7 +56,6 @@ UnusedPrivateMethod
 Since: PHPMD 0.2
 
 Unused Private Method detects when a private method is declared but is unused.
-
 
 Example: ::
 
@@ -73,7 +71,6 @@ Since: PHPMD 0.2
 
 Avoid passing parameters to methods or constructors and then not using those parameters.
 
-
 Example: ::
 
   class Foo
@@ -83,7 +80,6 @@ Example: ::
           // $howdy is not used
       }
   }
-
 
 Remark
 ======

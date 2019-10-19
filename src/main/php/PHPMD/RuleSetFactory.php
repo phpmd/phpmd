@@ -47,6 +47,13 @@ class RuleSetFactory
     private $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
+     * The maximum priority for rules to load.
+     *
+     * @var integer
+     */
+    private $maximumPriority = Rule::HIGHEST_PRIORITY;
+
+    /**
      * Constructs a new default rule-set factory instance.
      */
     public function __construct()
@@ -74,12 +81,22 @@ class RuleSetFactory
      * Sets the minimum priority that a rule must have.
      *
      * @param integer $minimumPriority The minimum priority value.
-     *
      * @return void
      */
     public function setMinimumPriority($minimumPriority)
     {
         $this->minimumPriority = $minimumPriority;
+    }
+
+    /**
+     * Sets the maximum priority that a rule must have.
+     *
+     * @param integer $maximumPriority The maximum priority value.
+     * @return void
+     */
+    public function setMaximumPriority($maximumPriority)
+    {
+        $this->maximumPriority = $maximumPriority;
     }
 
     /**
@@ -131,37 +148,14 @@ class RuleSetFactory
      * the input when it is already a filename.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
-     * @return string
+     * @return string Path to rule set file name
+     * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     private function createRuleSetFileName($ruleSetOrFileName)
     {
-        if (file_exists($ruleSetOrFileName) === true) {
-            return $ruleSetOrFileName;
-        }
-
-        $fileName = $this->location . '/' . $ruleSetOrFileName;
-        if (file_exists($fileName) === true) {
-            return $fileName;
-        }
-
-        $fileName = $this->location . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (file_exists($fileName) === true) {
-            return $fileName;
-        }
-
-        $fileName = getcwd() . '/rulesets/' . $ruleSetOrFileName . '.xml';
-        if (file_exists($fileName) === true) {
-            return $fileName;
-        }
-
-        foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
-            $fileName = $includePath . '/' . $ruleSetOrFileName;
-            if (file_exists($fileName) === true) {
-                return $fileName;
-            }
-            $fileName = $includePath . '/' . $ruleSetOrFileName . ".xml";
-            if (file_exists($fileName) === true) {
-                return $fileName;
+        foreach ($this->filePaths($ruleSetOrFileName) as $filePath) {
+            if ($this->isReadableFile($filePath)) {
+                return $filePath;
             }
         }
 
@@ -172,7 +166,6 @@ class RuleSetFactory
      * Lists available rule-set identifiers in given directory.
      *
      * @param string $directory The directory to scan for rule-sets.
-     *
      * @return string[]
      */
     private static function listRuleSetsInDirectory($directory)
@@ -291,6 +284,7 @@ class RuleSetFactory
     {
         $ruleSetFactory = new RuleSetFactory();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
+        $ruleSetFactory->setMaximumPriority($this->maximumPriority);
 
         return $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
     }
@@ -387,7 +381,7 @@ class RuleSetFactory
             }
         }
 
-        if ($rule->getPriority() <= $this->minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
         }
     }
@@ -437,7 +431,7 @@ class RuleSetFactory
             }
         }
 
-        if ($rule->getPriority() <= $this->minimumPriority) {
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
             $ruleSet->addRule($rule);
         }
     }
@@ -510,9 +504,9 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     *
      * @return array|null
-     * @throws \RuntimeException
+     * @throws \RuntimeException Thrown if file is not proper xml
+     * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     public function getIgnorePattern($fileName)
     {
@@ -541,5 +535,43 @@ class RuleSetFactory
             return $excludes;
         }
         return null;
+    }
+
+    /**
+     * Checks if given file path exists, is file (or symlink to file)
+     * and is readable by current user
+     *
+     * @param string $filePath File path to check against
+     * @return bool True if file exists and is readable, false otherwise
+     */
+    private function isReadableFile($filePath)
+    {
+        if (is_readable($filePath) && is_file($filePath)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns list of possible file paths to search against code rules
+     *
+     * @param string $fileName Rule set file name
+     * @return array Array of possible file locations
+     */
+    private function filePaths($fileName)
+    {
+        $filePathParts = array(
+            array($fileName),
+            array($this->location, $fileName),
+            array($this->location, 'rulesets', $fileName . '.xml'),
+            array(getcwd(), 'rulesets', $fileName . '.xml'),
+        );
+
+        foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
+            $filePathParts[] = array($includePath, $fileName);
+            $filePathParts[] = array($includePath, $fileName . '.xml');
+        }
+
+        return array_map('implode', array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR), $filePathParts);
     }
 }

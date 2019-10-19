@@ -128,8 +128,8 @@ class ShortMethodNameTest extends AbstractTest
      *
      * @return void
      * @since 2.2.2
-     * @see https://github.com/phpmd/phpmd/issues/80
-     * @see https://github.com/phpmd/phpmd/issues/270
+     * @link https://github.com/phpmd/phpmd/issues/80
+     * @link https://github.com/phpmd/phpmd/issues/270
      */
     public function testRuleAlsoWorksWithoutExceptionListConfigured()
     {

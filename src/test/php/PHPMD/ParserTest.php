@@ -17,7 +17,11 @@
 
 namespace PHPMD;
 
+use PDepend\Metrics\AnalyzerFactory;
 use PDepend\Source\Parser\InvalidStateException;
+use PDepend\Util\Cache\CacheFactory;
+use PDepend\Util\Configuration;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Test case for the PHP_Depend backend adapter class.
@@ -147,7 +151,16 @@ class ParserTest extends AbstractTest
      */
     private function getPHPDependMock()
     {
-        return $this->getMock('PDepend\Engine', array(), array(null), '', false);
+        $container = new Container();
+        $config = new Configuration((object) array());
+
+        return $this->getMockBuilder('PDepend\Engine')
+            ->setConstructorArgs(array(
+                $config,
+                new CacheFactory($config),
+                new AnalyzerFactory($container),
+            ))
+            ->getMock();
     }
 
     /**
@@ -157,7 +170,9 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependClassMock()
     {
-        $class = $this->getMock('PDepend\\Source\\AST\\ASTClass', array(), array(null));
+        $class = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $class->expects($this->any())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
@@ -178,12 +193,13 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend function instance.
      *
      * @param string $fileName Optional file name for the source file.
-     *
      * @return PHP_Depend_Code_Function
      */
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
     {
-        $function = $this->getMock('PDepend\Source\AST\ASTFunction', array(), array(null));
+        $function = $this->getMockBuilder('PDepend\Source\AST\ASTFunction')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $function->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -195,12 +211,13 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend method instance.
      *
      * @param string $fileName Optional file name for the source file.
-     *
      * @return PHP_Depend_Code_CodeMethod
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {
-        $method = $this->getMock('PDepend\Source\AST\ASTMethod', array(), array(null));
+        $method = $this->getMockBuilder('PDepend\Source\AST\ASTMethod')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $method->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -212,12 +229,13 @@ class ParserTest extends AbstractTest
      * Creates a mocked PHP_Depend file instance.
      *
      * @param string $fileName The temporary file name.
-     *
      * @return PHP_Depend_Code_File
      */
     protected function getPHPDependFileMock($fileName)
     {
-        $file = $this->getMock('PDepend\Source\AST\ASTCompilationUnit', array(), array(null));
+        $file = $this->getMockBuilder('PDepend\Source\AST\ASTCompilationUnit')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue($fileName));

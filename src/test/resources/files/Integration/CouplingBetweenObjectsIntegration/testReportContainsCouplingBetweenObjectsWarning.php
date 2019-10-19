@@ -18,8 +18,9 @@
 class testReportContainsCouplingBetweenObjectsWarning
 {
     /**
-     * @param \ReflectionParameter $p
+     * addParameter
      *
+     * @param \ReflectionParameter $p
      * @return void
      * @throws \OutOfBoundsException
      */
@@ -29,8 +30,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param \ReflectionClass $c
+     * setClass
      *
+     * @param \ReflectionClass $c
      * @return void
      * @throws \OutOfBoundsException
      */
@@ -40,8 +42,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param \ReflectionClass $c
+     * setParentClass
      *
+     * @param \ReflectionClass $c
      * @return void
      * @throws \OutOfBoundsException
      */
@@ -51,8 +54,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param \ReflectionProperty $p
+     * addProperty
      *
+     * @param \ReflectionProperty $p
      * @return void
      * @throws \OutOfBoundsException
      */
@@ -62,8 +66,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param DOMNode $node
+     * traverse
      *
+     * @param DOMNode $node
      * @return void
      * @throws \InvalidArgumentException
      */
@@ -73,8 +78,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param \SplObjectStorage $storage
+     * setStorage
      *
+     * @param \SplObjectStorage $storage
      * @return void
      */
     public function setStorage(\SplObjectStorage $storage)
@@ -83,6 +89,8 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
+     * getIterator
+     *
      * @return \Iterator
      */
     public function getIterator()
@@ -91,6 +99,8 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
+     * getElement
+     *
      * @return DOMElement
      */
     public function getElement()
@@ -98,6 +108,8 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
+     * getOwnerDocument
+     *
      * @return DOMDocument
      */
     public function getOwnerDocument()
@@ -105,8 +117,9 @@ class testReportContainsCouplingBetweenObjectsWarning
     }
 
     /**
-     * @param DOMXPath $xpath
+     * find
      *
+     * @param DOMXPath $xpath
      * @return DOMNodeList
      */
     public function find(DOMXPath $xpath)

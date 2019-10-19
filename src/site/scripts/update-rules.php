@@ -63,7 +63,6 @@ $index .= '</index>';
 file_put_contents($output . '/index.rst', generate_index($sets));
 file_put_contents($output . '/.index.xml', $index);
 
-
 exit(0);
 
 function normalize($elem)

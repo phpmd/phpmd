@@ -267,4 +267,16 @@ class UnusedPrivateFieldTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleDoesNotApplyToFieldWithMethodsThatReturnArray
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToFieldWithMethodsThatReturnArray()
+    {
+        $rule = new UnusedPrivateField();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
 }

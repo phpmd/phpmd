@@ -2,39 +2,19 @@
 Support & Contact
 =================
 
-If you think you found an error or you have an improvement for
-PHPMD, you can send questions and suggestions to our mailing list.
-Or if you are interested in helping to improve this software,
-by writing patches, extensions or just providing new ideas, you
-should feel free to join PHPMD's `IRC channel`__ or send a
-message to the phpmd-users@phpmd.org mailinglist.
+Support Channel
+===============
 
-IRC
-===
-
-- You will always find help on PHPMD related topics in the
-  `#phpmd`__  channel on the `Freenode`__ network.
+If you have trouble using PHPMD, you may find help in our
+`Gitter channel <https://gitter.im/phpmd/community>`_.
 
 Issue-Tracker
 =============
 
-- You can file a ticket in PHPMD's `Issue tracker`__ when you
-  think you found a bug or you have a feature request for future
-  versions of PHPMD.
+You can file an issue in PHPMD's
+`issue tracker <https://github.com/phpmd/phpmd/issues>`_ when
+you think you found a bug or you have a feature request for future
+versions of PHPMD.
+If you can even provide a fix for a bug or provide a new feature,
+please open a `pull request <https://github.com/phpmd/phpmd/pulls>`_.
 
-Commercial support
-==================
-
-There are also companies providing commercial support for PHPMD:
-
-- `Qafoo GmbH - passion for software quality`__
-
-  Founded by me, the lead developer of PHPMD, and two friends, Qafoo
-  provides support for PHPMD and general consulting and training on
-  software quality tools and processes.
-
-__ irc://irc.freenode.net/#phpmd
-__ irc://irc.freenode.net/#phpmd
-__ http://freenode.net
-__ https://github.com/phpmd/phpmd/issues
-__ http://qafoo.com

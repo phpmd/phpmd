@@ -6,10 +6,263 @@
 
     <properties>
         <title>PHPMD</title>
-        <author email="mapi@phpmd.org">Manuel Pichler</author>
+        <author email="github@phpmd.org">PHPMD maintainer team</author>
     </properties>
 
     <body>
+        <release version="2.7.0"
+                 date="2019/07/30"
+                 description="This is the first minor release of the new PHPMD maintainer team.
+                 It contains all the new features, improvements and fixes from two and a half years since 2.6.0.
+                 Please take note of a backwards incompatible property renaming in the CouplingBetweenObjects rule.">
+            <action date="716ecf5" dev="eeree" type="add" system="github" issue="472">
+                Added rule for assignment within conditional (IfStatementAssignment)
+            </action>
+            <action date="0e30d82" dev="eeree" type="add" system="github" issue="490">
+                Added rule for count in loop (CountInLoop)
+            </action>
+            <action date="a295850" dev="eeree" due-to="rafalwrzeszcz" type="add" system="github" issue="484">
+                Added rule for duplicated array key (DuplicatedArrayKey)
+            </action>
+            <action date="4bc19bd" dev="eeree" type="add" system="github" issue="476">
+                Added rule for empty catch block (EmptyCatchBlock)
+            </action>
+            <action date="3a82eab" dev="DmitryNaum" due-to="mindplay-dk" type="add" system="github" issue="636">
+                Added rule for missing import (MissingImport)
+            </action>
+            <action date="c7009d5" dev="john-whitley" type="add" system="github" issue="443">
+                Added support for compound variables in UnusedLocalVariable rule
+            </action>
+            <action date="55ca654" dev="JulienPalard" type="add" system="github" issue="329">
+                Added support to whitelist variables in the UnusedLocalVariable rule
+            </action>
+            <action date="91c4ca8" dev="ravage84" due-to="KOLANICH" type="add" system="github" issue="478">
+                Implemented renderer auto-discovery
+            </action>
+            <action date="7552089" dev="exploitfate" type="add" system="github" issue="405">
+                Added JSON output format
+            </action>
+            <action date="71b52be" dev="RyDroid" type="add" system="github" issue="525">
+                Added new options to CLI (min-priority, minimum-priority, report-file, input-file, not-strict)
+            </action>
+            <action date="45de3be" dev="tominventisbe" type="add" system="github" issue="579">
+                Added support for setting the maximum execution priority through CLI (max-priority, maximum-priority, maximumpriority)
+            </action>
+            <action date="63047d9" dev="eeree" due-to="schinkel" type="add" system="github" issue="489">
+                Added new predefined variables to AbstractLocalVariable rule
+            </action>
+            <action date="609c6bb" dev="dxops" type="update" system="github" issue="382">
+                Changed TooManyMethods rule to ignore isser-, hasser-, wither-methods
+            </action>
+            <action date="43d4ed0" dev="ravage84" type="update" system="github" issue="625">
+                Fixed DuplicatedArrayKey rule to check only arrays with keys
+            </action>
+            <action date="9210116" dev="ravage84" due-to="jhoff" type="fix" system="github" issue="482">
+                Renamed minimum property to maximum in CouplingBetweenObjects rule (backwards incompatible)
+            </action>
+            <action date="5305f5b" dev="ravage84" type="fix" system="github" issue="626">
+                Fixed special characters escaping in violation description for XML output
+            </action>
+            <action date="67bd7c6" dev="jaymoulin" type="fix" system="github" issue="378">
+                Fixed warning/error when trying to export to a non-existing path
+            </action>
+            <action date="8790cbb" dev="avmnu-sng" due-to="EvgenyOrekhov" type="fix" system="github" issue="575">
+                Fixed UnusedFormalParameter false positive in string compound variable
+            </action>
+            <action date="3e2e058" dev="eeree" type="fix" system="github" issue="480">
+                Fixed "Start tag expected, '&lt;' not found" error
+            </action>
+            <action date="99f3ba9" dev="eeree" due-to="1ma" type="fix" system="github" issue="494">
+                Fixed UnusedPrivateField false positive
+            </action>
+            <action date="42bf8ad" dev="HappyHippyHippo" due-to="duncancumming" type="fix" system="github" issue="583">
+                Changed LongNaming rule to apply on private fields too
+            </action>
+            <action date="cc06bfd" dev="vt-iwamoto" type="fix" system="github" issue="598">
+                Fixed a bug in the renderer auto-discovery
+            </action>
+            <action date="bb2cfe9" dev="choult" type="fix" system="github" issue="572">
+                Added support for both @SuppressWarnings and @suppressWarnings annotation cases
+            </action>
+            <action date="0a69edf" dev="liviascapin" type="update" system="github" issue="528">
+                Fixed Travis-CI build by temporarily removing PHP 5.3
+            </action>
+            <action date="4a8a567" dev="kylekatarnls" type="update" system="github" issue="643">
+                Fixed Travis-CI build to run PHP 5.3 and fixed 5.3 compatibility
+            </action>
+            <action date="d5c1372" dev="eeree" type="update" system="github" issue="475">
+                Added tests that show support for chained methods (fluent interfaces) for UnusedPrivateMethod rule
+            </action>
+            <action date="b1c15f8" dev="eeree" type="update" system="github" issue="495">
+                Added test for SuppressWarnings for ExcessivePublicCount
+            </action>
+            <action date="2dbae11" dev="jaymoulin" type="update" system="github" issue="381">
+                Added annotations to allow IDEs to reference correct classes
+            </action>
+            <action date="858c9fd" dev="JeroenDeDauw" type="update" system="github" issue="639">
+                Fixed arrays types to use standard type syntax
+            </action>
+            <action date="d68e511" dev="kylekatarnls" type="add" system="github" issue="640">
+                Added type hint annotations
+            </action>
+            <action date="08a38d4" dev="ravage84" type="update" system="github" issue="481">
+                Cleaned boc block comments
+            </action>
+            <action date="16e4eda" dev="ravage84" type="fix" system="github">
+                Fixed invalid "array of strings" type hints
+            </action>
+            <action date="dcdd61a" dev="ravage84" type="update" system="github" issue="491">
+                Cleaned whitespaces
+            </action>
+            <action date="3c6b69b" dev="ravage84" type="update" system="github" issue="477">
+                Fixed code formatting
+            </action>
+            <action date="f1c145e" dev="emirb" type="update" system="github" issue="548">
+                Updated PDepend to 2.5.2
+            </action>
+            <action date="9f7b4d2" dev="ravage84" type="update" system="github" issue="474">
+                Dropped HHVM support
+            </action>
+            <action date="f2ae09f" dev="ravage84" type="update" system="github" issue="458">
+                Updated PHPCS dev dependency from 2.3.4 to 2.8.1
+            </action>
+            <action date="24ff5a9" dev="ravage84" type="update" system="github" issue="458">
+                Updated PHPCS &amp; added Composer scripts
+            </action>
+            <action date="9962dae" dev="eeree" type="update" system="github" issue="469">
+                Updated Coding Standard command
+            </action>
+            <action date="0ca4eff" dev="kylekatarnls" type="fix" system="github" issue="599">
+                Fixed Composer package type
+            </action>
+            <action date="981c78f" dev="kylekatarnls" type="update" system="github" issue="627">
+                Removed composer.lock
+            </action>
+            <action date="f66247f" dev="tvbeek" type="fix" system="github" issue="604">
+                Renamed mikey179/vfsStream to mikey179/vfsstream to prevent Composer error
+            </action>
+            <action date="a2c64bf" dev="kylekatarnls" type="update" system="github" issue="623">
+                Extended test matrix &amp; do only one job per build on Travis-CI
+            </action>
+            <action date="e1a4cd7" dev="ravage84" type="update" system="github" issue="617">
+                Replaced Travis-CI build notification from IRC to the new Gitter core channel
+            </action>
+            <action date="f1c05bf" dev="ravage84" type="add" system="github" issue="620">
+                Added PHPMD Gitter Community Channel notifications for Travis-CI
+            </action>
+            <action date="d106330" dev="ravage84" type="add" system="github" issue="459">
+                Integrated Stickler CI
+            </action>
+            <action date="9b18153" dev="ravage84" type="update" system="github" issue="492">
+                Adjusted Stickler-CI config for ignoring test resource files
+            </action>
+            <action date="dfaa509" dev="kylekatarnls" type="fix" system="github" issue="632">
+                Changed Scrutinizer CI settings to use local PHPUnit
+            </action>
+            <action date="4514235" dev="ravage84" type="add" system="github" issue="460">
+                Added ApiGen config file
+            </action>
+            <action date="2b55442" dev="eeree" type="update" system="github" issue="471">
+                Modified default PHP installation directory to match Chocolatey package in AppVeyor CI config
+            </action>
+            <action date="252b178" dev="OndraM" type="update" system="github" issue="552">
+                Updated PHP in AppVeyor CI builds to 7.1
+            </action>
+            <action date="40189f3" dev="kylekatarnls" type="fix" system="github" issue="633">
+                Fixed AppVeyor CI build
+            </action>
+            <action date="6f56a8f" dev="kylekatarnls" due-to="edhgoose" type="add" system="github" issue="605">
+                Added a pure PHP build script to generate the website as static files
+            </action>
+            <action date="6cf7a2d" dev="kylekatarnls" type="update" system="github" issue="608">
+                Updated the website build script to handle anchor links and to use direct links whenever possible
+            </action>
+            <action date="f3b68be" dev="kylekatarnls" type="fix" system="github" issue="609">
+                Fixed main logo link in website build script
+            </action>
+            <action date="eeea9ee" dev="ravage84" due-to="mermshaus" type="update" system="github" issue="483">
+                Removed broken link to Web Content Viewer from website
+            </action>
+            <action date="671760a" dev="ravage84" due-to="manuelpichler" type="update" system="github" issue="611">
+                Removed section about commercial support from website
+            </action>
+            <action date="3e94d6b" dev="ravage84" type="update" system="github" issue="612">
+                Removed IRC, add Gitter &amp; reword Support &amp; Contact section from/on website
+            </action>
+            <action date="3c5b534" dev="DmitryNaum" type="fix" system="github" issue="631">
+                Fixed URL to "How to create a custom rule set" documentation page on website
+            </action>
+            <action date="67cdab2" dev="RyDroid" type="fix" system="github" issue="449">
+                Improved code style
+            </action>
+            <action date="3ef4ba8" dev="RyDroid" type="fix" system="github" issue="447">
+                Improved code style
+            </action>
+            <action date="9525da7" dev="RyDroid" type="fix" system="github" issue="450">
+                Improved code style
+            </action>
+            <action date="fff046c" dev="ravage84" type="update" system="github" issue="479">
+                Replaced all file header doc blocks with uniform one
+            </action>
+            <action date="1ca30d0" dev="eeree" type="update" system="github" issue="470">
+                Changed HTTP to HTTPS in some files
+            </action>
+            <action date="51eb887" dev="RyDroid" type="update" system="github" issue="448">
+                Switched from HTTP to HTTPS in some files
+            </action>
+            <action date="409b276" dev="RyDroid" type="update" system="github" issue="524">
+                Switched from HTTP to HTTPS in resource file
+            </action>
+            <action date="f1c1426" dev="RyDroid" type="update" system="github" issue="454">
+                Switched from HTTP to HTTPS for test files
+            </action>
+            <action date="9a77c48" dev="RyDroid" type="update" system="github" issue="451">
+                Switched from HTTP to HTTPS for main files
+            </action>
+            <action date="b073ad2" dev="RyDroid" type="update" system="github" issue="455">
+                Switched from HTTP to HTTPS for resource files
+            </action>
+            <action date="e12e59c" dev="Marius786" type="add" system="github" issue="566">
+                Added CLI usage example
+            </action>
+            <action date="c116054" dev="ravage84" type="update" system="github" issue="621">
+                Updated wording about PHPMD
+            </action>
+            <action date="e850660" dev="kylekatarnls" type="update" system="github" issue="606">
+                Updated license according to BSD 3-clause template
+            </action>
+            <action date="63ff5bf" dev="eeree" type="update" system="github" issue="469">
+                Improved contributing guide for Linux / OS X users
+            </action>
+            <action date="6f02406" dev="ravage84" due-to="richvigorito" type="update" system="github" issue="383">
+                Improved the ElseExpression description
+            </action>
+            <action date="85e48ad" dev="BenjaminPaap" type="fix" system="github" issue="582">
+                Fixed a typo in Clean Code Rules documentation
+            </action>
+            <action date="175b08f" dev="fbertolotti" type="fix" system="github" issue="567">
+                Fixed a typo in Clean Code Rules documentation
+            </action>
+            <action date="59551fc" dev="gbirke" type="add" system="github" issue="565">
+                Added example for modifying properties in a rule set
+            </action>
+            <action date="7c8d9bc" dev="ravage84" type="update" system="github" issue="614">
+                Removed API docs that do not exist anymore
+            </action>
+            <action date="8e1e9e8" dev="MarkVaughn" type="add" system="github" issue="615">
+                Added Gitter badge
+            </action>
+            <action date="1e86639" dev="tvbeek" type="add" system="github" issue="618">
+                Added badges for the monthly and total downloads
+            </action>
+        </release>
+        <release version="2.6.1"
+                 date="2019/07/06"
+                 description="This is the first release of the new maintainer team of PHPMD. It is a re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to GitHub releases.">
+            <action date="135327d" dev="jakzal" type="update" system="github" issue="616">
+                Build the PHAR file on Travis-CI and publish it to GitHub releases
+            </action>
+        </release>
         <release version="2.6.0"
                  date="2017/01/20"
                  description="This release incorporates several pending PRs. Beside that we have rebased PHPMD on PDepend 2.5 which should complete support for PHP 7 language features.">
@@ -192,7 +445,6 @@
                 Underlying PDepend version bumped.
             </action>
         </release>
-
 
         <release version="2.2.2"
                  date="2015/03/26"

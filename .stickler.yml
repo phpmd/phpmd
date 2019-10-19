@@ -6,5 +6,6 @@ linters:
       - 'Squiz.Classes.ValidClassName'
       - 'PEAR.NamingConventions.ValidClassName'
     tab_width: 4
+    ignore: 'src/test/resources/*'
 branches:
     ignore: ['1.5.x']

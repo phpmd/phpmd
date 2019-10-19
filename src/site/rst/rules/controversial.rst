@@ -11,7 +11,6 @@ Since: PHPMD 0.2
 
 Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.
 
-
 Example: ::
 
   class Foo {
@@ -27,7 +26,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the CamelCase notation to name classes.
 
-
 Example: ::
 
   class class_name {
@@ -40,7 +38,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name attributes.
 
-
 Example: ::
 
   class ClassName {
@@ -49,12 +46,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== =========================================================
- Name                                Default Value   Description                                             
-=================================== =============== =========================================================
- allow-underscore                    false           Allow an optional, single underscore at the beginning.  
- allow-underscore-test               false           Is it allowed to have underscores in test method names. 
-=================================== =============== =========================================================
++-----------------------------------+---------------+---------------------------------------------------------+
+| Name                              | Default Value | Description                                             |
++===================================+===============+=========================================================+
+| allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
++-----------------------------------+---------------+---------------------------------------------------------+
+| allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseMethodName
 ===================
@@ -62,7 +60,6 @@ CamelCaseMethodName
 Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name methods.
-
 
 Example: ::
 
@@ -73,12 +70,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== =========================================================
- Name                                Default Value   Description                                             
-=================================== =============== =========================================================
- allow-underscore                    false           Allow an optional, single underscore at the beginning.  
- allow-underscore-test               false           Is it allowed to have underscores in test method names. 
-=================================== =============== =========================================================
++-----------------------------------+---------------+---------------------------------------------------------+
+| Name                              | Default Value |  Description                                            |
++===================================+===============+=========================================================+
+| allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
++-----------------------------------+---------------+---------------------------------------------------------+
+| allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseParameterName
 ======================
@@ -86,7 +84,6 @@ CamelCaseParameterName
 Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name parameters.
-
 
 Example: ::
 
@@ -102,7 +99,6 @@ Since: PHPMD 0.2
 
 It is considered best practice to use the camelCase notation to name variables.
 
-
 Example: ::
 
   class ClassName {
@@ -110,7 +106,6 @@ Example: ::
           $data_module = new DataModule();
       }
   }
-
 
 Remark
 ======

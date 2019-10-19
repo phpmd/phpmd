@@ -74,6 +74,7 @@ class Command
 
         // Configure a rule set factory
         $ruleSetFactory->setMinimumPriority($opts->getMinimumPriority());
+        $ruleSetFactory->setMaximumPriority($opts->getMaximumPriority());
         if ($opts->hasStrict()) {
             $ruleSetFactory->setStrict();
         }
@@ -132,7 +133,6 @@ class Command
      * value can be used as exit code.
      *
      * @param array $args The raw command line arguments array.
-     *
      * @return integer
      */
     public static function main(array $args)

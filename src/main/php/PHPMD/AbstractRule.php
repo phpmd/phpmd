@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Node\ClassNode;
+
 /**
  * This is the abstract base class for pmd rules.
  *
@@ -108,7 +110,6 @@ abstract class AbstractRule implements Rule
      * Sets the name for this rule instance.
      *
      * @param string $name The rule name.
-     *
      * @return void
      */
     public function setName($name)
@@ -130,7 +131,6 @@ abstract class AbstractRule implements Rule
      * Sets the version since when this rule is available.
      *
      * @param string $since The version number.
-     *
      * @return void
      */
     public function setSince($since)
@@ -152,7 +152,6 @@ abstract class AbstractRule implements Rule
      * Sets the violation message text for this rule.
      *
      * @param string $message The violation message
-     *
      * @return void
      */
     public function setMessage($message)
@@ -174,7 +173,6 @@ abstract class AbstractRule implements Rule
      * Sets an url will external information for this rule.
      *
      * @param string $externalInfoUrl The info url.
-     *
      * @return void
      */
     public function setExternalInfoUrl($externalInfoUrl)
@@ -196,7 +194,6 @@ abstract class AbstractRule implements Rule
      * Sets the description text for this rule instance.
      *
      * @param string $description The description text.
-     *
      * @return void
      */
     public function setDescription($description)
@@ -218,7 +215,6 @@ abstract class AbstractRule implements Rule
      * Adds a code example for this rule.
      *
      * @param string $example The code example.
-     *
      * @return void
      */
     public function addExample($example)
@@ -240,7 +236,6 @@ abstract class AbstractRule implements Rule
      * Set the priority of this rule.
      *
      * @param integer $priority The rule priority
-     *
      * @return void
      */
     public function setPriority($priority)
@@ -262,7 +257,6 @@ abstract class AbstractRule implements Rule
      * Sets the name of the parent rule set instance.
      *
      * @param string $ruleSetName The rule-set name.
-     *
      * @return void
      */
     public function setRuleSetName($ruleSetName)
@@ -335,7 +329,6 @@ abstract class AbstractRule implements Rule
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
-
     /**
      * Returns the raw string value of a configured property or throws an
      * exception when no property with <b>$name</b> exists.
@@ -377,6 +370,22 @@ abstract class AbstractRule implements Rule
 
         $ruleViolation = new RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
+    }
+
+    /**
+     * Apply the current rule on each method of a class node.
+     *
+     * @param ClassNode $node class node containing methods.
+     */
+    protected function applyOnClassMethods(ClassNode $node)
+    {
+        foreach ($node->getMethods() as $method) {
+            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+                continue;
+            }
+
+            $this->apply($method);
+        }
     }
 
     /**
