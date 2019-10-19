@@ -165,9 +165,17 @@ PHPMD's command line tool currently defines three different exit codes.
 Renderers
 ---------
 
-At the moment PHPMD comes with the following four renderers:
+At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
+- *ansi*, a command line friendly format.
+
+Support PHPMD
+-------------
+
+`Get supported phpmd/phpmd with the Tidelift Subscription`__
+
+__ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme

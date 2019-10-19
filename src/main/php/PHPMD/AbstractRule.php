@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Node\ClassNode;
+
 /**
  * This is the abstract base class for pmd rules.
  *
@@ -368,6 +370,22 @@ abstract class AbstractRule implements Rule
 
         $ruleViolation = new RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
+    }
+
+    /**
+     * Apply the current rule on each method of a class node.
+     *
+     * @param ClassNode $node class node containing methods.
+     */
+    protected function applyOnClassMethods(ClassNode $node)
+    {
+        foreach ($node->getMethods() as $method) {
+            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+                continue;
+            }
+
+            $this->apply($method);
+        }
     }
 
     /**

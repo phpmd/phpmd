@@ -572,6 +572,6 @@ class RuleSetFactory
             $filePathParts[] = array($includePath, $fileName . '.xml');
         }
 
-        return array_map('implode', $filePathParts, array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR));
+        return array_map('implode', array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR), $filePathParts);
     }
 }
