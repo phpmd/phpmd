@@ -26,7 +26,6 @@ use PHPMD\Node\ASTNode;
 abstract class AbstractNode
 {
     /**
-     *
      * @var \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node
      */
     private $node = null;
@@ -34,7 +33,7 @@ abstract class AbstractNode
     /**
      * The collected metrics for this node.
      *
-     * @var array(string=>mixed) $_metrics
+     * @var array<string, mixed>
      */
     private $metrics = null;
 
@@ -50,7 +49,7 @@ abstract class AbstractNode
 
     /**
      * The magic call method is used to pipe requests from rules direct
-     * to the underlying PDepend ast node.
+     * to the underlying PDepend AST node.
      *
      * @param string $name
      * @param array $args
@@ -60,12 +59,13 @@ abstract class AbstractNode
      */
     public function __call($name, array $args)
     {
-        if (method_exists($this->getNode(), $name)) {
-            return call_user_func_array(array($this->getNode(), $name), $args);
+        $node = $this->getNode();
+        if (!method_exists($node, $name)) {
+            throw new \BadMethodCallException(
+                sprintf('Invalid method %s() called.', $name)
+            );
         }
-        throw new \BadMethodCallException(
-            sprintf('Invalid method %s() called.', $name)
-        );
+        return call_user_func_array(array($node, $name), $args);
     }
 
     /**
@@ -232,7 +232,7 @@ abstract class AbstractNode
     /**
      * This method will set the metrics for this node.
      *
-     * @param array(string=>mixed) $metrics The collected node metrics.
+     * @param array<string, mixed> $metrics The collected node metrics.
      * @return void
      */
     public function setMetrics(array $metrics)
