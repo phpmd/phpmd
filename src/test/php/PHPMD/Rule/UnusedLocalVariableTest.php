@@ -100,6 +100,28 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesApplyToCompoundVariableInString
+     *
+     * <code>
+     * class Foo
+     *     function bar() {
+     *         $baz = 23;
+     *         return "${baz}_wibble";
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyToCompoundVariableInString()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable
      *
      * <code>
@@ -637,6 +659,19 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
         $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleNotAppliesToPredefinedVariables.php
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToPredefinedVariables()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getMethod());
     }
 }

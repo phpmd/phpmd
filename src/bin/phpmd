@@ -16,6 +16,7 @@
  * @link http://phpmd.org/
  */
 
+use Composer\XdebugHandler\XdebugHandler;
 use PHPMD\TextUI\Command;
 
 if (file_exists(__DIR__ . '/../../../../autoload.php')) {
@@ -35,6 +36,11 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
         );
     }
 }
+
+// Restart if xdebug is loading, unless the environment variable PHPMD_ALLOW_XDEBUG is set.
+$xdebug = new XdebugHandler('PHPMD');
+$xdebug->check();
+unset($xdebug);
 
 if (!ini_get('date.timezone')) {
     date_default_timezone_set('UTC');
@@ -68,6 +74,7 @@ class_alias('PHPMD\\Node\\TraitNode', 'PHP_PMD_Node_Trait');
 class_alias('PHPMD\\Renderer\\HTMLRenderer', 'PHP_PMD_Renderer_HTMLRenderer');
 class_alias('PHPMD\\Renderer\\TextRenderer', 'PHP_PMD_Renderer_TextRenderer');
 class_alias('PHPMD\\Renderer\\XMLRenderer', 'PHP_PMD_Renderer_XMLRenderer');
+class_alias('PHPMD\\Renderer\\JSONRenderer', 'PHP_PMD_Renderer_JSONRenderer');
 class_alias('PHPMD\\Rule\\AbstractLocalVariable', 'PHP_PMD_Rule_AbstractLocalVariable');
 class_alias('PHPMD\\Rule\\CyclomaticComplexity', 'PHP_PMD_Rule_CyclomaticComplexity');
 class_alias('PHPMD\\Rule\\ClassAware', 'PHP_PMD_Rule_IClassAware');
@@ -82,6 +89,7 @@ class_alias('PHPMD\\Rule\\UnusedPrivateMethod', 'PHP_PMD_Rule_UnusedPrivateMetho
 class_alias('PHPMD\\Rule\\CleanCode\\BooleanArgumentFlag', 'PHP_PMD_Rule_CleanCode_BooleanArgumentFlag');
 class_alias('PHPMD\\Rule\\CleanCode\\ElseExpression', 'PHP_PMD_Rule_CleanCode_ElseExpression');
 class_alias('PHPMD\\Rule\\CleanCode\\StaticAccess', 'PHP_PMD_Rule_CleanCode_StaticAccess');
+class_alias('PHPMD\\Rule\\CleanCode\\UndefinedVariable', 'PHP_PMD_Rule_CleanCode_UndefinedVariable');
 class_alias('PHPMD\\Rule\\Controversial\\CamelCaseClassName', 'PHP_PMD_Rule_Controversial_CamelCaseClassName');
 class_alias('PHPMD\\Rule\\Controversial\\CamelCaseMethodName', 'PHP_PMD_Rule_Controversial_CamelCaseMethodName');
 class_alias('PHPMD\\Rule\\Controversial\\CamelCaseParameterName', 'PHP_PMD_Rule_Controversial_CamelCaseParameterName');

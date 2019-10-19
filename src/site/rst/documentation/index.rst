@@ -40,19 +40,24 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
-  - ``--minimumpriority`` - The rule priority threshold; rules with lower
+  - ``--minimumpriority`` ``--min-priority`` ``--minimum-priority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 
-  - ``--reportfile`` - Sends the report output to the specified file,
+  - ``--maximumpriority`` ``--max-priority`` ``--maximum-priority`` - The rule priority threshold; rules with higher
+    priority than this will not be used.
+
+  - ``--reportfile`` ``--report-file`` - Sends the report output to the specified file,
     instead of the default output target ``STDOUT``.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
-    extensions, e.g. php,phtml.
+    extensions, e.g. php, phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
     directories.
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
+
+  - ``--not-strict`` - Does not report those nodes with a @SuppressWarnings annotation.
 
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
@@ -81,7 +86,7 @@ You can also mix custom `rule set files`__ with build-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
 
-__ /documentation/creating-a-ruleset.html
+__ creating-a-ruleset.html
 
 That's it. With this behavior you can specify you own combination of rule sets
 that will check the source code.
@@ -105,8 +110,9 @@ PHPMD's command line tool currently defines three different exit codes.
 Renderers
 =========
 
-At the moment PHPMD comes with the following three renderers:
+At the moment PHPMD comes with the following four renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *json*, formats JSON report.

@@ -58,14 +58,25 @@ Parameters
 
 The following attributes can be defined on the PHPMD task xml-element.
 
-===================== ========================================================================================================================= ================================================
- Attribute             Description                                                                                                               Required
-===================== ========================================================================================================================= ================================================
- rulesetfiles          A comma delimited list of ruleset files ('rulesets/basic.xml,rulesets/design.xml') or identifiers of build-in rulesets.   Yes, unless the ruleset nested element is used
- failonerror           Whether or not to fail the build if any errors occur while processing the files                                           No
- failOnRuleViolation   Whether or not to fail the build if PHPMD finds any problems                                                              No
- minimumPriority       The rule priority threshold; rules with lower priority than they will not be used                                         No
-===================== ========================================================================================================================= ================================================
++---------------------+---------------------------------------------------+---------------------------------------------+
+| Attribute           | Description                                       | Required                                    |
++=====================+===================================================+=============================================+
+| rulesetfiles        | A comma delimited list of ruleset files           | Yes, unless the ruleset nested element is   |
+|                     | ('rulesets/basic.xml,rulesets/design.xml') or     | used                                        |
+|                     | identifiers of build-in rulesets.                 |                                             |
++---------------------+---------------------------------------------------+---------------------------------------------+
+| failonerror         | Whether or not to fail the build if any errors    | No                                          |
+|                     | occur while processing the files                  |                                             |
++---------------------+---------------------------------------------------+---------------------------------------------+
+| failOnRuleViolation | Whether or not to fail the build if PHPMD finds   | No                                          |
+|                     | any problems                                      |                                             |
++---------------------+---------------------------------------------------+---------------------------------------------+
+| minimumPriority     | The rule priority threshold; rules with lower     | No                                          |
+|                     | priority than they will not be used               |                                             |
++---------------------+---------------------------------------------------+---------------------------------------------+
+| maximumPriority     | The rule priority threshold; rules with higher    | No                                          |
+|                     | priority than this will not be used               |                                             |
++---------------------+---------------------------------------------------+---------------------------------------------+
 
 Nested xml elements
 ===================
@@ -75,12 +86,13 @@ which the report is written.
 
 **Parameters**
 
-=========== =================================================================== ==========
- Attribute   Description                                                         Required
-=========== =================================================================== ==========
- format      The report output format. Supported formats are xml,html and text.  Yes
- toFile      A filename into which the report is written                         Yes
-=========== =================================================================== ==========
++------------+--------------------------------------------------------------------+----------+
+| Attribute  | Description                                                        | Required |
++============+====================================================================+==========+
+| format     | The report output format. Supported formats are xml,html and text. | Yes      |
++------------+--------------------------------------------------------------------+----------+
+| toFile     | A filename into which the report is written                        | Yes      |
++------------+--------------------------------------------------------------------+----------+
 
 The ``<ruleset />`` xml element is another way to specify rulesets. Here
 is a modified version of the previous example: ::

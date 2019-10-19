@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -26,6 +29,7 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
+use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 
 /**
@@ -271,13 +275,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMock(
-            'PHPMD\\Node\\ClassNode',
-            array(),
-            array(null),
-            '',
-            false
-        );
+        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+            ->setConstructorArgs(array(new ASTClass('FooBar')))
+            ->getMock();
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -298,7 +298,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\MethodNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\MethodNode')
+                ->setConstructorArgs(array(new ASTMethod('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -314,7 +316,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMock('PHPMD\\Node\\FunctionNode', array(), array(null), '', false),
+            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                ->setConstructorArgs(array(new ASTFunction('fooBar')))
+                ->getMock(),
             $metric,
             $value
         );
@@ -360,7 +364,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->getMock('PHPMD\\Report');
+        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -386,7 +390,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMock('PHPMD\RuleSet');
+        $ruleSet = $this->getMockBuilder('PHPMD\RuleSet')->getMock();
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
@@ -400,30 +404,32 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Creates a mocked rul violation instance.
+     * Creates a mocked rule violation instance.
      *
-     * @param string  $fileName
-     * @param integer $beginLine
-     * @param integer $endLine
-     * @param object  $rule
-     * @return \PHPMD\RuleViolation
+     * @param string $fileName The filename to use.
+     * @param integer $beginLine The begin of violation line number to use.
+     * @param integer $endLine The end of violation line number to use.
+     * @param null|object $rule The rule object to use.
+     * @param null|string $description The violation description to use.
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleViolationMock(
         $fileName = '/foo/bar.php',
         $beginLine = 23,
         $endLine = 42,
-        $rule = null
+        $rule = null,
+        $description = null
     ) {
-        $ruleViolation = $this->getMock(
-            'PHPMD\\RuleViolation',
-            array(),
-            array(null, null, null),
-            '',
-            false
-        );
+        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
+            ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+            ->getMock();
 
         if ($rule === null) {
             $rule = new RuleStub();
+        }
+
+        if ($description === null) {
+            $description = 'Test description';
         }
 
         $ruleViolation->expects($this->any())
@@ -443,9 +449,35 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('TestStubPackage'));
         $ruleViolation->expects($this->any())
             ->method('getDescription')
-            ->will($this->returnValue('Test description'));
+            ->will($this->returnValue($description));
 
         return $ruleViolation;
+    }
+
+    /**
+     * Creates a mocked rul violation instance.
+     *
+     * @param string  $file
+     * @param string  $message
+     * @return \PHPMD\ProcessingError
+     */
+    protected function getErrorMock(
+        $file = '/foo/baz.php',
+        $message = 'Error in file "/foo/baz.php"') {
+
+        $processingError = $this->getMockBuilder('PHPMD\\ProcessingError')
+            ->setConstructorArgs(array(null))
+            ->setMethods(array('getFile', 'getMessage'))
+            ->getMock();
+
+        $processingError->expects($this->any())
+            ->method('getFile')
+            ->will($this->returnValue($file));
+        $processingError->expects($this->any())
+            ->method('getMessage')
+            ->will($this->returnValue($message));
+
+        return $processingError;
     }
 
     /**
@@ -478,6 +510,39 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
         self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
+    }
+
+    /**
+     * Asserts the actual JSON output matches against the expected file.
+     *
+     * @param string $actualOutput     Generated JSON output.
+     * @param string $expectedFileName File with expected JSON result.
+     *
+     * @return void
+     */
+    public static function assertJsonEquals($actualOutput, $expectedFileName)
+    {
+        $actual = json_decode($actualOutput, true);
+        // Remove dynamic timestamp and duration attribute
+        if (isset($actual['timestamp'])) {
+            $actual['timestamp'] = '';
+        }
+        if (isset($actual['duration'])) {
+            $actual['duration'] = '';
+        }
+        if (isset($actual['version'])) {
+            $actual['version'] = '@package_version@';
+        }
+
+        $expected = str_replace(
+            '#{rootDirectory}',
+            self::$filesDirectory,
+            file_get_contents(self::createFileUri($expectedFileName))
+        );
+
+        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
+
+        self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
     }
 
     /**

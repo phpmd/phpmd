@@ -271,30 +271,30 @@ class LongVariableTest extends AbstractTest
         }
     }
     /**
-     * testRuleNotAppliesForLongPrivateProperty
+     * testRuleAppliesForLongPrivateProperty
      *
      * @return void
      * @since 1.1.0
      */
-    public function testRuleNotAppliesForLongPrivateProperty()
+    public function testRuleAppliesForLongPrivateProperty()
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
 
     /**
-     * testRuleNotAppliesForLongPrivateStaticProperty
+     * testRuleAppliesForLongPrivateStaticProperty
      *
      * @return void
      * @since 1.1.0
      */
-    public function testRuleNotAppliesForLongPrivateStaticProperty()
+    public function testRuleAppliesForLongPrivateStaticProperty()
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
 }

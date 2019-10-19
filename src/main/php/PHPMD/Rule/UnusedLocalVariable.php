@@ -94,6 +94,11 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
                 $this->collectVariable($variable);
             }
         }
+
+        foreach ($node->findChildrenOfType('CompoundVariable') as $variable) {
+            $this->collectCompoundVariableInString($variable);
+        }
+
         foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
             $this->collectVariable($variable);
         }
@@ -108,6 +113,29 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     }
 
     /**
+     * Stores the given compound variable node in an internal list of found variables.
+     *
+     * @param \PHPMD\Node\ASTNode $node
+     * @return void
+     */
+    private function collectCompoundVariableInString(ASTNode $node)
+    {
+        $parentNode = $node->getParent()->getNode();
+        $candidateParentNodes = $node->getParentsOfType('PDepend\Source\AST\ASTString');
+
+        if (in_array($parentNode, $candidateParentNodes)) {
+            $variablePrefix = $node->getImage();
+
+            foreach ($node->findChildrenOfType('Expression') as $child) {
+                $variableName = $child->getImage();
+                $variableImage = $variablePrefix . $variableName;
+
+                $this->storeImage($variableImage, $node);
+            }
+        }
+    }
+
+    /**
      * Stores the given variable node in an internal list of found variables.
      *
      * @param \PHPMD\Node\ASTNode $node
@@ -115,10 +143,23 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     private function collectVariable(ASTNode $node)
     {
-        if (!isset($this->images[$node->getImage()])) {
-            $this->images[$node->getImage()] = array();
+        $imageName = $node->getImage();
+        $this->storeImage($imageName, $node);
+    }
+
+    /**
+     * Safely add node to $this->images.
+     *
+     * @param string $imageName         the name to store the node as
+     * @param \PHPMD\Node\ASTNode $node the node being stored
+     * @return void
+     */
+    private function storeImage($imageName, ASTNode $node)
+    {
+        if (!isset($this->images[$imageName])) {
+            $this->images[$imageName] = array();
         }
-        $this->images[$node->getImage()][] = $node;
+        $this->images[$imageName][] = $node;
     }
 
     /**

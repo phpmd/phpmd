@@ -37,7 +37,9 @@ class MethodNodeTest extends AbstractTest
      */
     public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
-        $method = $this->getMock('PDepend\\Source\\AST\\ASTMethod', array(), array(null));
+        $method = $this->getMockBuilder('PDepend\\Source\\AST\\ASTMethod')
+            ->setConstructorArgs(array(null))
+            ->getMock();
         $method->expects($this->once())
             ->method('getStartLine');
 
@@ -128,6 +130,20 @@ class MethodNodeTest extends AbstractTest
      * @return void
      */
     public function testHasSuppressWarningsDelegatesToParentInterfaceMethod()
+    {
+        $rule = $this->getRuleMock();
+        $rule->setName('FooBar');
+
+        $method = $this->getMethod();
+        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testHasSuppressWarningsIgnoresCaseFirstLetter
+     *
+     * @return void
+     */
+    public function testHasSuppressWarningsIgnoresCaseFirstLetter()
     {
         $rule = $this->getRuleMock();
         $rule->setName('FooBar');

@@ -23,7 +23,7 @@ ElseExpression
 
 Since: PHPMD 1.4.0
 
-An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code it several smaller methods. For very simple assignments you could also use the ternary operations.
+An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
 
 Example: ::
 
@@ -58,11 +58,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===============================================
- Name                                Default Value   Description                                   
-=================================== =============== ===============================================
- exceptions                                          Comma-separated class name list of exceptions 
-=================================== =============== ===============================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| exceptions                        |               | Comma-separated class name list of exceptions              |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 IfStatementAssignment
 =====================
@@ -86,8 +86,8 @@ Example: ::
       }
   }
 
-DuplicateArrayKey
-=================
+DuplicatedArrayKey
+==================
 
 Since: PHPMD 2.7.0
 
@@ -108,7 +108,7 @@ Example: ::
 ErrorControlOperator
 ====================
 
-Since: PHPMD 2.7.0
+Since: PHPMD 2.9.0
 
 Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it slows down execution of your code by average of 1.75x. Consider changing error_reporting() level and/or setting up your own error handler.
 
@@ -117,6 +117,19 @@ Example: ::
   function foo($filePath) {
       $file = @fopen($filPath); // hides exceptions
       $key = @$array[$notExistingKey]; // assigns null to $key
+  }
+
+MissingImport
+=============
+
+Since: PHPMD 2.7.0
+
+Importing all external classes in a file through use statements makes them clearly visible.
+
+Example: ::
+
+  function make() {
+      return new \stdClass();
   }
 
 Remark

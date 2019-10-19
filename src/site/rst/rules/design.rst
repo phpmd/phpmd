@@ -75,11 +75,11 @@ A class with an excessive number of children is an indicator for an unbalanced c
 
 This rule has the following properties:
 
-=================================== =============== =============================================
- Name                                Default Value   Description                                 
-=================================== =============== =============================================
- minimum                             15              Maximum number of acceptable child classes. 
-=================================== =============== =============================================
++-----------------------------------+---------------+---------------------------------------------+
+| Name                              | Default Value | Description                                 |
++===================================+===============+=============================================+
+| minimum                           | 15            | Maximum number of acceptable child classes. |
++-----------------------------------+---------------+---------------------------------------------+
 
 DepthOfInheritance
 ==================
@@ -90,11 +90,11 @@ A class with many parents is an indicator for an unbalanced and wrong class hier
 
 This rule has the following properties:
 
-=================================== =============== ==============================================
- Name                                Default Value   Description                                  
-=================================== =============== ==============================================
- minimum                             6               Maximum number of acceptable parent classes. 
-=================================== =============== ==============================================
++-----------------------------------+---------------+----------------------------------------------+
+| Name                              | Default Value | Description                                  |
++===================================+===============+==============================================+
+| minimum                           | 6             | Maximum number of acceptable parent classes. |
++-----------------------------------+---------------+----------------------------------------------+
 
 CouplingBetweenObjects
 ======================
@@ -138,11 +138,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ============================================
- Name                                Default Value   Description                                
-=================================== =============== ============================================
- maximum                             13              Maximum number of acceptable dependencies.
-=================================== =============== ============================================
++-----------------------------------+---------------+----------------------------------------------+
+| Name                              | Default Value | Description                                  |
++===================================+===============+==============================================+
+| maximum                           | 13            | Maximum number of acceptable dependencies.   |
++-----------------------------------+---------------+----------------------------------------------+
 
 DevelopmentCodeFragment
 =======================
@@ -169,11 +169,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ==================================================
- Name                                Default Value   Description                                      
-=================================== =============== ==================================================
- unwanted-functions                  var_dump,print_r,debug_zval_dump,debug_print_backtrace  Comma separated list of suspect function images. 
-=================================== =============== ==================================================
++----------------------------------+--------------------------------------------------------+---------------------------------------------------------+
+| Name                             | Default Value                                          | Description                                             |
++==================================+========================================================+=========================================================+
+| unwanted-functions               | var_dump,print_r,debug_zval_dump,debug_print_backtrace | Comma separated list of suspect function images.        |
++----------------------------------+--------------------------------------------------------+---------------------------------------------------------+
+| ignore-namespaces                | false                                                  | Ignore namespaces when looking for dev. fragments       |
++----------------------------------+--------------------------------------------------------+---------------------------------------------------------+
 
 EmptyCatchBlock
 ===============
@@ -192,6 +194,28 @@ Example: ::
               // ...
           } catch (Exception $e) {} // empty catch block
       }
+  }
+
+CountInLoopExpression
+=====================
+
+Since: PHPMD 2.7.0
+
+Using count/sizeof in loops expressions is considered bad practice and is a potential source of
+many bugs, especially when the loop manipulates an array, as count happens on each iteration.
+
+Example: ::
+
+  class Foo {
+
+    public function bar()
+    {
+      $arr = array();
+
+      for ($i = 0; count($arr); $i++) {
+        // ...
+      }
+    }
   }
 
 Remark
