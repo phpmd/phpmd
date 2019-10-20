@@ -54,7 +54,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $this->applyNoClass($node);
+        $this->applyNonClass($node);
     }
 
     /**
@@ -85,7 +85,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode $node
      * @return void
      */
-    private function applyNoClass(AbstractNode $node)
+    private function applyNonClass(AbstractNode $node)
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
         foreach ($declarators as $declarator) {
