@@ -39,7 +39,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param \PHPMD\AbstractNode $node
@@ -59,7 +60,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Extracts all variable and variable declarator nodes from the given class node
-     * and checks the variable name length against the configured minimum
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param AbstractNode $node
@@ -78,8 +80,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     }
 
     /**
-     * Extracts all variable and variable declarator nodes from the given no class node
-     * and checks the variable name length against the configured minimum
+     * Extracts all variable and variable declarator nodes from the given non-class node
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param AbstractNode $node
