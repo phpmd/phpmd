@@ -39,7 +39,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param \PHPMD\AbstractNode $node
@@ -54,12 +55,13 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $this->applyNoClass($node);
+        $this->applyNonClass($node);
     }
 
     /**
      * Extracts all variable and variable declarator nodes from the given class node
-     * and checks the variable name length against the configured minimum
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param AbstractNode $node
@@ -78,14 +80,15 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     }
 
     /**
-     * Extracts all variable and variable declarator nodes from the given no class node
-     * and checks the variable name length against the configured minimum
+     * Extracts all variable and variable declarator nodes from the given non-class node
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param AbstractNode $node
      * @return void
      */
-    private function applyNoClass(AbstractNode $node)
+    private function applyNonClass(AbstractNode $node)
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
         foreach ($declarators as $declarator) {
