@@ -50,25 +50,52 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('FieldDeclaration');
-            foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('VariableDeclarator');
-                foreach ($declarators as $declarator) {
-                    $this->checkNodeImage($declarator);
-                }
-            }
-        } else {
-            $declarators = $node->findChildrenOfType('VariableDeclarator');
+            $this->applyClass($node);
+            return;
+        }
+
+        $this->applyNoClass($node);
+    }
+
+    /**
+     * Extracts all variable and variable declarator nodes from the given class node
+     * and checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
+    private function applyClass(AbstractNode $node)
+    {
+        $fields = $node->findChildrenOfType('FieldDeclaration');
+        foreach ($fields as $field) {
+            $declarators = $field->findChildrenOfType('VariableDeclarator');
             foreach ($declarators as $declarator) {
                 $this->checkNodeImage($declarator);
             }
+        }
+        $this->resetProcessed();
+    }
 
-            $variables = $node->findChildrenOfType('Variable');
-            foreach ($variables as $variable) {
-                $this->checkNodeImage($variable);
-            }
+    /**
+     * Extracts all variable and variable declarator nodes from the given no class node
+     * and checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
+    private function applyNoClass(AbstractNode $node)
+    {
+        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        foreach ($declarators as $declarator) {
+            $this->checkNodeImage($declarator);
         }
 
+        $variables = $node->findChildrenOfType('Variable');
+        foreach ($variables as $variable) {
+            $this->checkNodeImage($variable);
+        }
         $this->resetProcessed();
     }
 

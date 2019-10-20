@@ -27,6 +27,8 @@ use PHPMD\Rule;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
+ * 
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class CommandLineOptions
 {
