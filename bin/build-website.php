@@ -246,12 +246,9 @@ usort($releaseVersions,'version_compare');
 $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
 
-// The total limit of all the phar files, size in bytes
+// The total limit of all the phar files, size in bytes.
 // 94.371.840 B = 90 MB
 $totalLimitPharFiles = 94371840;
-
-$pharDestinationDirectory = $websiteDirectory.'/static/latest';
-$pharUrl = 'https://github.com/phpmd/phpmd/releases/download/'.$pharVersion.'/phpmd.phar';
 
 $parser = new Parser;
 $baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
