@@ -155,7 +155,7 @@ class Foo {
 
     <rule name="ExcessiveParameterList"
           since="0.1"
-          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to less than {3}."
+          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to fewer than {3}."
           class="PHPMD\Rule\Design\LongParameterList"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
@@ -181,7 +181,7 @@ class Foo {
 
     <rule name="ExcessivePublicCount"
           since="0.1"
-          message="The {0} {1} has {2} public methods and attributes. Consider reducing the number of public items to less than {3}."
+          message="The {0} {1} has {2} public methods and attributes. Consider reducing the number of public items to fewer than {3}."
           class="PHPMD\Rule\ExcessivePublicCount"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
