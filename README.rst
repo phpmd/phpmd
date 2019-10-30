@@ -31,7 +31,7 @@ https://phpmd.org
 
 .. image:: https://badges.gitter.im/phpmd/community.svg
    :target: https://gitter.im/phpmd/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-   :alt: Chat to us on Gitter
+   :alt: Chat with us on Gitter
 
 .. image:: https://poser.pugx.org/phpmd/phpmd/d/monthly
    :target: https://packagist.org/packages/phpmd/phpmd
