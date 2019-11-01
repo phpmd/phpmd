@@ -5,6 +5,7 @@ phpmd-2.8.0 (2019/11/04)
 - Improved performances by disabling XDebug if in use
 - Added #571: ignore-namespaces property to DevelopmentCodeFragment rule
 - Added #21: Renderer which writes an ansi report string
+- Fixed #657: IfStatementAssignment violation message
 
 phpmd-2.7.0 (2019/07/30)
 ========================
