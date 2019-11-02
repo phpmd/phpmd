@@ -118,6 +118,30 @@ Example: ::
       return new \stdClass();
   }
 
+IfStatementWithoutLogic
+=======================
+
+Since: PHPMD 2.7.0
+
+Having if conditions without any logic should be avoided. It usually tells us, that we are dealing with development code fragment, debug data, etc.
+
+
+Example: ::
+
+  class Foo
+  {
+      public function bar()
+      {
+          if (true) { // always true
+              // ...
+          }
+          if (1 !== 1) { // always false
+              // ...
+          }
+      }
+  }
+
+
 Remark
 ======
 
