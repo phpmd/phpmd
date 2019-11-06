@@ -39,7 +39,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
+     *
+     * Checks the variable name length against the configured minimum
      * length.
      *
      * @param \PHPMD\AbstractNode $node
@@ -50,25 +51,54 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('FieldDeclaration');
-            foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('VariableDeclarator');
-                foreach ($declarators as $declarator) {
-                    $this->checkNodeImage($declarator);
-                }
-            }
-        } else {
-            $declarators = $node->findChildrenOfType('VariableDeclarator');
+            $this->applyClass($node);
+            return;
+        }
+
+        $this->applyNonClass($node);
+    }
+
+    /**
+     * Extracts all variable and variable declarator nodes from the given class node
+     *
+     * Checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
+    private function applyClass(AbstractNode $node)
+    {
+        $fields = $node->findChildrenOfType('FieldDeclaration');
+        foreach ($fields as $field) {
+            $declarators = $field->findChildrenOfType('VariableDeclarator');
             foreach ($declarators as $declarator) {
                 $this->checkNodeImage($declarator);
             }
+        }
+        $this->resetProcessed();
+    }
 
-            $variables = $node->findChildrenOfType('Variable');
-            foreach ($variables as $variable) {
-                $this->checkNodeImage($variable);
-            }
+    /**
+     * Extracts all variable and variable declarator nodes from the given non-class node
+     *
+     * Checks the variable name length against the configured minimum
+     * length.
+     *
+     * @param AbstractNode $node
+     * @return void
+     */
+    private function applyNonClass(AbstractNode $node)
+    {
+        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        foreach ($declarators as $declarator) {
+            $this->checkNodeImage($declarator);
         }
 
+        $variables = $node->findChildrenOfType('Variable');
+        foreach ($variables as $variable) {
+            $this->checkNodeImage($variable);
+        }
         $this->resetProcessed();
     }
 

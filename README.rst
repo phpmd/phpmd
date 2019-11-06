@@ -31,7 +31,7 @@ https://phpmd.org
 
 .. image:: https://badges.gitter.im/phpmd/community.svg
    :target: https://gitter.im/phpmd/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-   :alt: Chat to us on Gitter
+   :alt: Chat with us on Gitter
 
 .. image:: https://poser.pugx.org/phpmd/phpmd/d/monthly
    :target: https://packagist.org/packages/phpmd/phpmd
@@ -51,21 +51,42 @@ Command line usage
 
 Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
-  mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
+  mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
-While the ``rulesets/codesize.xml`` ruleset file could look like this::
+While the ``rulesets.xml`` ruleset file could look like this::
+
+  <?xml version="1.0"?>
+  <ruleset name="My first PHPMD rule set"
+           xmlns="http://pmd.sf.net/ruleset/1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                         http://pmd.sf.net/ruleset_xml_schema.xsd"
+           xsi:noNamespaceSchemaLocation="
+                         http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+      My custom rule set that checks my code...
+    </description>
+
+    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/cleancode.xml" />
+    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/design.xml" />
+    <rule ref="rulesets/naming.xml" />
+    <rule ref="rulesets/unusedcode.xml" />
+  </ruleset>
+
+The xml report would like like this::
 
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
     <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-      <violation beginline="67"
-                 endline="224"
-                 rule="TooManyMethods"
-                 ruleset="Code Size Rules"
-                 package="PHP_Depend\DbusUI"
-                 class="PHP_Depend_DbusUI_ResultPrinter"
+      <violation beginline="81"
+                 endline="81"
+                 rule="UnusedFormalParameter"
+                 ruleset="Unused Code Rules"
+                 externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedformalparameter"
                  priority="3">
-        This class has too many methods, consider refactoring it.
+        Avoid unused parameters such as '$builder'.
       </violation>
     </file>
   </pmd>
@@ -176,4 +197,6 @@ At the moment PHPMD comes with the following renderers:
 Support PHPMD
 -------------
 
-[Get supported phpmd/phpmd with the Tidelift Subscription](https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme)
+`Get supported phpmd/phpmd with the Tidelift Subscription`__
+
+__ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=readme
