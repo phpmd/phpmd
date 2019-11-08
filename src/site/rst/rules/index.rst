@@ -20,6 +20,7 @@ Clean Code Rules
 - `IfStatementAssignment <cleancode.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 - `MissingImport <cleancode.html#missingimport>`_: Importing all external classes in a file through use statements makes them clearly visible.
+- `UndefinedVariable <cleancode.html#undefinedvariable>`_: Detects when a variable is used that has not been defined before.
 
 Code Size Rules
 ===============
