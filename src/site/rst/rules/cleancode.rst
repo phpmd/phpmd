@@ -119,11 +119,11 @@ Example: ::
   }
 
 UndefinedVariable
-=============
+=================
 
 Since: PHPMD 2.8.0
 
-Detects when a variable is used that has not been defined before.
+Detects when a variable that is used has not been defined before.
 
 Example: ::
 
