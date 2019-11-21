@@ -1,4 +1,4 @@
-phpmd-2.8.0 (2019/11/04)
+phpmd-2.8.0 (2019/12)
 ========================
 
 - Added #497: Undefined variable rule
@@ -6,6 +6,9 @@ phpmd-2.8.0 (2019/11/04)
 - Added #571: ignore-namespaces property to DevelopmentCodeFragment rule
 - Added #21: Renderer which writes an ansi report string
 - Fixed #657: IfStatementAssignment violation message
+- Optimized Composer autoloader when building Phar
+- Fixed #661: IfStatementAssignment thrown incorrectly
+- Fixed #676: Handle @SuppressWarnings on each method for CountInLoop
 
 phpmd-2.7.0 (2019/07/30)
 ========================
