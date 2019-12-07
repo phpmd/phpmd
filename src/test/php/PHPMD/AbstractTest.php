@@ -439,6 +439,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             ->method('getFileName')
             ->will($this->returnValue($fileName));
         $ruleViolation->expects($this->any())
+            ->method('getBaseName')
+            ->will($this->returnValue($fileName));
+        $ruleViolation->expects($this->any())
             ->method('getBeginLine')
             ->will($this->returnValue($beginLine));
         $ruleViolation->expects($this->any())
