@@ -142,6 +142,28 @@ class RuleViolation
     {
         return $this->node->getFileName();
     }
+    
+    /**
+     * Returns the base name where this rule violation was detected.
+     *
+     * @return string
+     */
+    public function getBaseName()
+    {
+        $cwd = explode(DIRECTORY_SEPARATOR, getcwd());
+        $path = explode(DIRECTORY_SEPARATOR, realpath($this->getFileName()));
+
+        foreach ($cwd as $index => $directory) {
+            if ($directory !== $path[$index]) {
+                break;
+            }
+
+            unset($path[$index]);
+            unset($cwd[$index]);
+        }
+
+        return str_repeat('../', count($cwd)).implode('/', $path);
+    }
 
     /**
      * Returns the first line of the node that causes this rule violation.
