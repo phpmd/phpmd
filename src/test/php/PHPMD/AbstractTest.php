@@ -411,6 +411,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @param integer $endLine The end of violation line number to use.
      * @param null|object $rule The rule object to use.
      * @param null|string $description The violation description to use.
+     * @param string $baseName The basename to use.
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleViolationMock(
@@ -418,7 +419,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $beginLine = 23,
         $endLine = 42,
         $rule = null,
-        $description = null
+        $description = null,
+        $baseName = 'bar.php'
     ) {
         $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
             ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
@@ -440,7 +442,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($fileName));
         $ruleViolation->expects($this->any())
             ->method('getBaseName')
-            ->will($this->returnValue($fileName));
+            ->will($this->returnValue($baseName));
         $ruleViolation->expects($this->any())
             ->method('getBeginLine')
             ->will($this->returnValue($beginLine));

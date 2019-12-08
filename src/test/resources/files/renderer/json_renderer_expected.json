@@ -5,7 +5,7 @@
     "files": [
         {
             "file": "\/bar.php",
-            "baseName": "\/bar.php",
+            "baseName": "bar.php",
             "violations": [
                 {
                     "beginLine": 23,
@@ -37,7 +37,7 @@
         },
         {
             "file": "\/foo.php",
-            "baseName": "\/foo.php",
+            "baseName": "foo.php",
             "violations": [
                 {
                     "beginLine": 23,
