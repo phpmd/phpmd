@@ -35,6 +35,7 @@ matrix:
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
+    - php: 7.4
     - php: 5.4
       dist: trusty
       env: BUILD_PHAR=true
