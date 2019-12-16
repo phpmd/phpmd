@@ -234,8 +234,21 @@ function buildMenu($uri, $rstDir, $baseHref)
 
 include __DIR__.'/../vendor/autoload.php';
 
+// We get the releases from the GitHub API
+$releases = json_decode(file_get_contents('https://api.github.com/repos/phpmd/phpmd/releases'));
+$releaseVersions = array_map(static function ($release) {
+    return $release->tag_name;
+}, $releases);
+
+// we sort the releases with version_compare
+usort($releaseVersions,'version_compare');
+
 $rstDir = __DIR__.'/../src/site/rst';
 $websiteDirectory = __DIR__.'/../dist/website';
+
+// The total limit of all the phar files, size in bytes.
+// 94.371.840 B = 90 MB
+$totalLimitPharFiles = 94371840;
 
 $parser = new Parser;
 $baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
@@ -246,6 +259,32 @@ removeDirectory($websiteDirectory);
 copyDirectory(__DIR__.'/../src/site/resources/web', $websiteDirectory);
 buildWebsite($rstDir, $parser, $websiteDirectory, $changelogContent, $rstDir, $baseHref);
 copy($websiteDirectory.'/about.html', $websiteDirectory.'/index.html');
+
+
+// A counter for the total size for all the downloaded phar files.
+$totalPharSize = 0;
+
+// we iterate each version
+foreach ($releaseVersions as $version) {
+    $pharUrl = 'https://github.com/phpmd/phpmd/releases/download/'.$version.'/phpmd.phar';
+    $pharDestinationDirectory = $websiteDirectory.'/static/' . $version;
+    @mkdir($pharDestinationDirectory, 0777, true);
+    copy($pharUrl, $pharDestinationDirectory . '/phpmd.phar');
+    $filesize = filesize($pharDestinationDirectory . '/phpmd.phar');
+
+    if ($totalPharSize === 0) {
+        // the first one is the latest
+        $pharDestinationDirectory = $websiteDirectory.'/static/latest';
+        @mkdir($pharDestinationDirectory, 0777, true);
+        copy($pharUrl, $pharDestinationDirectory . '/phpmd.phar');
+        $totalPharSize += $filesize;
+    }
+    $totalPharSize += $filesize;
+    if ($totalPharSize > $totalLimitPharFiles) {
+        // we have reached the limit
+        break;
+    }
+}
 
 if ($cname = getenv('CNAME')) {
     file_put_contents($websiteDirectory.'/CNAME', $cname);
