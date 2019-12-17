@@ -179,7 +179,7 @@ function make() {
     </rule>
 
     <rule name="UndefinedVariable"
-          since="2.7"
+          since="2.8.0"
           message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
           class="PHPMD\Rule\CleanCode\UndefinedVariable"
           externalInfoUrl="">

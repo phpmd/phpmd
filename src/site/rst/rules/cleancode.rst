@@ -118,6 +118,20 @@ Example: ::
       return new \stdClass();
   }
 
+UndefinedVariable
+=================
+
+Since: PHPMD 2.8.0
+
+Detects when a variable that is used has not been defined before.
+
+Example: ::
+
+  function printX() {
+      echo $x;
+  }
+
+
 Remark
 ======
 

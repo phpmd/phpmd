@@ -1,5 +1,5 @@
 Type: (bugfix / feature / refactoring / documentation update)  
-Issue: #.. the corresponding issue for this PR (if exist)
+Issue: Resolves #.. the corresponding issue for this PR (if exist)
 Breaking change: yes/no (if yes explain why)
 
 <!--
