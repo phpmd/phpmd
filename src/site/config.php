@@ -12,6 +12,8 @@ class PhpMdEnvironment extends Environment
      */
     protected $baseHref;
 
+    public $websiteDirectory = __DIR__.'/../../dist/website';
+
     public function getBaseHref()
     {
         return $this->baseHref;
@@ -21,7 +23,7 @@ class PhpMdEnvironment extends Environment
     {
         parent::reset();
 
-        $this->baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
+        $this->baseHref = ltrim($this->env('BASE_HREF') ?: '', ':');
         $this->titleLetters = [
             2 => '=',
             3 => '-',
@@ -39,16 +41,170 @@ class PhpMdEnvironment extends Environment
 
         return ($root ? $this->getBaseHref().'/' : '').parent::relativeUrl($url);
     }
+
+    public function env($var)
+    {
+        static $settings = null;
+
+        if ($settings === null) {
+            $settings = file_exists('.env') ? parse_ini_file('.env') : [];
+            echo (file_exists('.env') ? '.env file loaded: '.var_export(array_keys($settings), true) : 'no .env file.')."\n";
+        }
+
+        $value = getenv($var);
+
+        if ($value === false) {
+            return isset($settings[$var]) ? $settings[$var] : null;
+        }
+
+        return $value;
+    }
+
+    private function prefixRequest($prefix, $url, $repo = null, $data = null, $withToken = true, $file = null)
+    {
+        $repo = $repo ?: 'phpmd/phpmd';
+
+        return $this->request("$prefix$repo/$url", $data, $withToken, $file);
+    }
+
+    private function webRequest($url, $repo = null, $data = null, $withToken = true, $file = null)
+    {
+        return $this->prefixRequest('https://github.com/', $url, $repo, $data, $withToken, $file);
+    }
+
+    private function apiRequest($url, $repo = null, $data = null, $withToken = true, $file = null)
+    {
+        return $this->prefixRequest('https://api.github.com/repos/', $url, $repo, $data, $withToken, $file);
+    }
+
+    private function download($file, $url, $repo = null, $data = null, $withToken = true)
+    {
+        return $this->webRequest($url, $repo, $data, $withToken, $file);
+    }
+
+    private function request($url, $data = null, $withToken = false, $file = null)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        if ($file) {
+            $file = fopen($file, 'w');
+            if ($file) {
+                curl_setopt($curl, CURLOPT_FILE, $file);
+            }
+        }
+
+        if ($data) {
+            $payload = json_encode($data);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+        }
+
+        if ($data || $withToken) {
+            $token = $this->env('GITHUB_TOKEN');
+
+            if (!$token) {
+                throw new RuntimeException('No Github token provided.');
+            }
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Authorization: token '.$token,
+            ]);
+        }
+
+        $content = curl_exec($curl);
+        $error = null;
+
+        if (!$content) {
+            $error = curl_error($curl);
+        }
+
+        curl_close($curl);
+
+        if ($file) {
+            fclose($file);
+        }
+
+        if ($error) {
+            throw new RuntimeException("$url failed:\n$error");
+        }
+
+        return $content;
+    }
+
+    private function json($url)
+    {
+        return json_decode($this->apiRequest($url, null, null, true));
+    }
+
+    public function publishPhar()
+    {
+        if (!$this->env('GITHUB_TOKEN')) {
+            echo "PHAR publishing skipped as GITHUB_TOKEN is missing.\n";
+
+            return;
+        }
+
+        // We get the releases from the GitHub API
+        $releases = $this->json('releases');
+        $releaseVersions = array_map(static function ($release) {
+            return $release->tag_name;
+        }, $releases);
+
+        // we sort the releases with version_compare
+        usort($releaseVersions, 'version_compare');
+
+        // The total limit of all the phar files, size in bytes.
+        // 94.371.840 B = 90 MB
+        $totalLimitPharFiles = 94371840;
+
+        // A counter for the total size for all the downloaded phar files.
+        $totalPharSize = 0;
+
+        // we iterate each version
+        foreach ($releaseVersions as $version) {
+            $pharUrl = 'releases/download/'.$version.'/phpmd.phar';
+            $pharDestinationDirectory = $this->websiteDirectory.'/static/'.$version;
+            @mkdir($pharDestinationDirectory, 0777, true);
+            $this->download($pharDestinationDirectory.'/phpmd.phar', $pharUrl);
+            $filesize = filesize($pharDestinationDirectory.'/phpmd.phar');
+
+            echo $pharDestinationDirectory.'/phpmd.phar downloaded: '.number_format($filesize / 1024 / 1024, 2).' MB';
+
+            if ($totalPharSize === 0) {
+                echo ' (latest)';
+                // the first one is the latest
+                $latestPharDestinationDirectory = $this->websiteDirectory.'/static/latest';
+                @mkdir($latestPharDestinationDirectory, 0777, true);
+                copy($pharDestinationDirectory.'/phpmd.phar', $latestPharDestinationDirectory.'/phpmd.phar');
+                $totalPharSize += $filesize;
+            }
+
+            echo "\n";
+
+            $totalPharSize += $filesize;
+
+            if ($totalPharSize > $totalLimitPharFiles) {
+                // we have reached the limit
+                break;
+            }
+        }
+    }
 }
 
 $env = new PhpMdEnvironment;
+$env->publishPhar();
 $parser = new Parser($env);
 
 return [
     'index' => 'about.html',
     'baseHref' => $env->getBaseHref(),
-    'cname' => getenv('CNAME'),
-    'websiteDirectory' => __DIR__.'/../../dist/website',
+    'cname' => $env->env('CNAME'),
+    'websiteDirectory' => $env->websiteDirectory,
     'sourceDirectory' => __DIR__.'/rst',
     'assetsDirectory' => __DIR__.'/resources/web',
     'layout' => __DIR__.'/resources/layout.php',
