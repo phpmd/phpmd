@@ -31,6 +31,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_MockObject_MockBuilder;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -275,9 +276,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getClassMock($metric = null, $value = null)
     {
-        $class = $this->getMockBuilder('PHPMD\\Node\\ClassNode')
-            ->setConstructorArgs(array(new ASTClass('FooBar')))
-            ->getMock();
+        $class = $this->getMockFromBuilder(
+            $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+                ->setConstructorArgs(array(new ASTClass('FooBar')))
+        );
 
         if ($metric !== null) {
             $class->expects($this->atLeastOnce())
@@ -298,9 +300,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function getMethodMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMockBuilder('PHPMD\\Node\\MethodNode')
-                ->setConstructorArgs(array(new ASTMethod('fooBar')))
-                ->getMock(),
+            $this->getMockFromBuilder(
+                $this->getMockBuilder('PHPMD\\Node\\MethodNode')
+                    ->setConstructorArgs(array(new ASTMethod('fooBar')))
+            ),
             $metric,
             $value
         );
@@ -316,9 +319,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
-            $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
-                ->setConstructorArgs(array(new ASTFunction('fooBar')))
-                ->getMock(),
+            $this->getMockFromBuilder(
+                $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                    ->setConstructorArgs(array(new ASTFunction('fooBar')))
+            ),
             $metric,
             $value
         );
@@ -364,11 +368,20 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $expects = $this->exactly($expectedInvokes);
         }
 
-        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
+        $report = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\\Report'));
         $report->expects($expects)
             ->method('addRuleViolation');
 
         return $report;
+    }
+
+    protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
+    {
+        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+            return $builder->getMock();
+        }
+
+        return @$builder->getMock();
     }
 
     /**
@@ -378,7 +391,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleMock()
     {
-        return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+            return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+        }
+
+        return @$this->getMockForAbstractClass('PHPMD\\AbstractRule');
     }
 
     /**
@@ -390,7 +407,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMockBuilder('PHPMD\RuleSet')->getMock();
+        $ruleSet = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\RuleSet'));
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
         } else {
@@ -420,9 +437,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $rule = null,
         $description = null
     ) {
-        $ruleViolation = $this->getMockBuilder('PHPMD\\RuleViolation')
-            ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
-            ->getMock();
+        $ruleViolation = $this->getMockFromBuilder(
+            $this->getMockBuilder('PHPMD\\RuleViolation')
+                ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+        );
 
         if ($rule === null) {
             $rule = new RuleStub();
@@ -465,10 +483,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $file = '/foo/baz.php',
         $message = 'Error in file "/foo/baz.php"') {
 
-        $processingError = $this->getMockBuilder('PHPMD\\ProcessingError')
-            ->setConstructorArgs(array(null))
-            ->setMethods(array('getFile', 'getMessage'))
-            ->getMock();
+        $processingError = $this->getMockFromBuilder(
+            $this->getMockBuilder('PHPMD\\ProcessingError')
+                ->setConstructorArgs(array(null))
+                ->setMethods(array('getFile', 'getMessage'))
+        );
 
         $processingError->expects($this->any())
             ->method('getFile')

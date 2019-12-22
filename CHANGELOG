@@ -1,6 +1,10 @@
-phpmd-2.8.0 (2019/12)
+phpmd-2.8.0 (2019/12/18)
 ========================
 
+- Required at least pdepend/pdepend 2.6:
+  - Added PHP 7.1 to 7.3 syntax support
+  - Added Symfony 5 support
+  See full changes list: https://github.com/pdepend/pdepend/releases/tag/2.6.0
 - Added #497: Undefined variable rule
 - Improved performances by disabling XDebug if in use
 - Added #571: ignore-namespaces property to DevelopmentCodeFragment rule

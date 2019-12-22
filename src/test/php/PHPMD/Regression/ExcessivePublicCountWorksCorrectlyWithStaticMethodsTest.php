@@ -43,10 +43,11 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
      */
     public function setUp()
     {
-        $this->renderer = $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
-            ->disableOriginalConstructor()
-            ->setMethods(array('renderReport', 'start', 'end'))
-            ->getMock();
+        $this->renderer = $this->getMockFromBuilder(
+            $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
+                ->disableOriginalConstructor()
+                ->setMethods(array('renderReport', 'start', 'end'))
+        );
     }
 
     /**
