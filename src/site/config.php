@@ -42,7 +42,7 @@ class PhpMdEnvironment extends Environment
         return ($root ? $this->getBaseHref().'/' : '').parent::relativeUrl($url);
     }
 
-    public function env($var)
+    public function env(string $var)
     {
         static $settings = null;
 
@@ -60,29 +60,29 @@ class PhpMdEnvironment extends Environment
         return $value;
     }
 
-    private function prefixRequest($prefix, $url, $repo = null, $data = null, $withToken = true, $file = null)
+    private function prefixRequest(string $prefix, string $url, string $repo = null, $data = null, bool $withToken = true, string $file = null)
     {
         $repo = $repo ?: 'phpmd/phpmd';
 
         return $this->request("$prefix$repo/$url", $data, $withToken, $file);
     }
 
-    private function webRequest($url, $repo = null, $data = null, $withToken = true, $file = null)
+    private function webRequest(string $url, string $repo = null, $data = null, bool $withToken = true, string $file = null)
     {
         return $this->prefixRequest('https://github.com/', $url, $repo, $data, $withToken, $file);
     }
 
-    private function apiRequest($url, $repo = null, $data = null, $withToken = true, $file = null)
+    private function apiRequest(string $url, string $repo = null, $data = null, bool $withToken = true, string $file = null)
     {
         return $this->prefixRequest('https://api.github.com/repos/', $url, $repo, $data, $withToken, $file);
     }
 
-    private function download($file, $url, $repo = null, $data = null, $withToken = true)
+    private function download(string $file, string $url, string $repo = null, $data = null, bool $withToken = true)
     {
         return $this->webRequest($url, $repo, $data, $withToken, $file);
     }
 
-    private function request($url, $data = null, $withToken = false, $file = null)
+    private function request(string $url, $data = null, bool $withToken = false, string $file = null)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -91,19 +91,19 @@ class PhpMdEnvironment extends Environment
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-        if ($file) {
-            $file = fopen($file, 'w');
-            if ($file) {
+        if ($file !== null) {
+            $file = fopen($file, 'w') ?: null;
+            if ($file !== null) {
                 curl_setopt($curl, CURLOPT_FILE, $file);
             }
         }
 
-        if ($data) {
+        if ($data !== null) {
             $payload = json_encode($data);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
         }
 
-        if ($data || $withToken) {
+        if ($data !== null || $withToken) {
             $token = $this->env('GITHUB_TOKEN');
 
             if (!$token) {
@@ -125,18 +125,18 @@ class PhpMdEnvironment extends Environment
 
         curl_close($curl);
 
-        if ($file) {
+        if ($file !== null) {
             fclose($file);
         }
 
-        if ($error) {
+        if ($error !== null) {
             throw new RuntimeException("$url failed:\n$error");
         }
 
         return $content;
     }
 
-    private function json($url)
+    private function json(string $url)
     {
         return json_decode($this->apiRequest($url, null, null, true));
     }
