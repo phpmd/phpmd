@@ -56,7 +56,7 @@ before_script:
   - if [[ ! $DEPENDENCIES ]]; then composer install; fi
 
 script:
-  - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
+  - if [[ $WEBSITE  = 'true' ]]; then composer build-website; fi
   - |
     if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
       if [ "$COVERAGE" != "true" ]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi

@@ -44,7 +44,8 @@
     "phpunit/phpunit": "^4.8.36 || ^5.7.27",
     "squizlabs/php_codesniffer": "^2.0",
     "mikey179/vfsstream": "^1.6.4",
-    "gregwar/rst": "^1.0"
+    "gregwar/rst": "^1.0",
+    "easy-doc/easy-doc": "0.0.0 || ^1.3.2"
   },
   "autoload": {
     "psr-0": {
@@ -57,6 +58,7 @@
   "scripts": {
     "test": "phpunit",
     "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
-    "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php"
+    "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src/main/php ./src/test/php",
+    "build-website": "easy-doc build src/site/config.php --verbose"
   }
 }
