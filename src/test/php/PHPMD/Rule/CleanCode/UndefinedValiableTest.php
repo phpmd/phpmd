@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the undefined variable rule.
  *
- * @covers \PHPMD\Rule\UndefinedVariable
+ * @covers \PHPMD\Rule\CleanCode\UndefinedVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
  */
 class UndefinedVariableTest extends AbstractTest
