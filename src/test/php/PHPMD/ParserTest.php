@@ -154,13 +154,14 @@ class ParserTest extends AbstractTest
         $container = new Container();
         $config = new Configuration((object) array());
 
-        return $this->getMockBuilder('PDepend\Engine')
-            ->setConstructorArgs(array(
-                $config,
-                new CacheFactory($config),
-                new AnalyzerFactory($container),
-            ))
-            ->getMock();
+        return $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\Engine')
+                ->setConstructorArgs(array(
+                    $config,
+                    new CacheFactory($config),
+                    new AnalyzerFactory($container),
+                ))
+        );
     }
 
     /**
@@ -170,9 +171,10 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependClassMock()
     {
-        $class = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
-            ->setConstructorArgs(array(null))
-            ->getMock();
+        $class = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
+                ->setConstructorArgs(array(null))
+        );
         $class->expects($this->any())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
@@ -197,9 +199,10 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
     {
-        $function = $this->getMockBuilder('PDepend\Source\AST\ASTFunction')
-            ->setConstructorArgs(array(null))
-            ->getMock();
+        $function = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\Source\AST\ASTFunction')
+                ->setConstructorArgs(array(null))
+        );
         $function->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -215,9 +218,10 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {
-        $method = $this->getMockBuilder('PDepend\Source\AST\ASTMethod')
-            ->setConstructorArgs(array(null))
-            ->getMock();
+        $method = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\Source\AST\ASTMethod')
+                ->setConstructorArgs(array(null))
+        );
         $method->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
@@ -233,9 +237,10 @@ class ParserTest extends AbstractTest
      */
     protected function getPHPDependFileMock($fileName)
     {
-        $file = $this->getMockBuilder('PDepend\Source\AST\ASTCompilationUnit')
-            ->setConstructorArgs(array(null))
-            ->getMock();
+        $file = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\Source\AST\ASTCompilationUnit')
+                ->setConstructorArgs(array(null))
+        );
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue($fileName));

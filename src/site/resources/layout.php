@@ -58,5 +58,6 @@
         code.className += ' block';
     });
 </script>
+<?php echo getenv('FOOTER_HOOK') ?: ''; ?>
 </body>
 </html>
