@@ -1,3 +1,10 @@
+phpmd-2.8.1 (2019/12/27)
+========================
+
+- Fixed PHP 7.4 unit tests compatibility
+- Improved documentation
+- Automated website generation and PHAR publishing
+
 phpmd-2.8.0 (2019/12/18)
 ========================
 
