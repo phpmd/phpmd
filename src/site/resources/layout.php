@@ -58,10 +58,10 @@
     <?php
 
     $uri = $uri ?? '';
-    $sourceUri = substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst';
+    $sourceUri = ltrim(substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
 
     ?>
-    <a href="/<?php echo $sourceUri; ?>">Source</a>
+    <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/<?php echo $sourceUri; ?>">Source</a>
     |
     <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/<?php echo $sourceUri; ?>">Edit</a>
 </div>
