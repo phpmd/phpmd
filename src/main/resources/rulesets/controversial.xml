@@ -72,7 +72,7 @@ It is considered best practice to use the camelCase notation to name attributes.
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
                       value="false" />
-            <property name="allow-multiple-underscore-test"
+            <property name="allow-multiple-underscores-test"
                       description="Is it allowed to have multiple underscores in test method names."
                       value="false" />
         </properties>
@@ -103,7 +103,7 @@ It is considered best practice to use the camelCase notation to name methods.
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
                       value="false" />
-            <property name="allow-multiple-underscore-test"
+            <property name="allow-multiple-underscores-test"
                       description="Is it allowed to have multiple underscores in test method names."
                       value="false" />
         </properties>
