@@ -53,7 +53,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+------------------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names.          |
 +-----------------------------------+---------------+------------------------------------------------------------------+
-| allow-multiple-underscores-test    | false         | Is it allowed to have multiple underscores in test method names. |
+| allow-multiple-underscores-test   | false         | Is it allowed to have multiple underscores in test method names. |
 +-----------------------------------+---------------+------------------------------------------------------------------+
 
 CamelCaseMethodName
@@ -79,7 +79,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+------------------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names.          |
 +-----------------------------------+---------------+------------------------------------------------------------------+
-| allow-multiple-underscores-test    | false         | Is it allowed to have multiple underscores in test method names. |
+| allow-multiple-underscores-test   | false         | Is it allowed to have multiple underscores in test method names. |
 +-----------------------------------+---------------+------------------------------------------------------------------+
 
 CamelCaseParameterName
