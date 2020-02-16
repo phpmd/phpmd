@@ -118,6 +118,27 @@ class CamelCaseMethodNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule does not apply for a valid method name
+     * with an underscore at the beginning when it is not allowed.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForMagicMethods()
+    {
+        $methods = $this->getClass()->getMethods();
+
+        foreach ($methods as $method) {
+            $report = $this->getReportMock($method->getName() === '__notAllowed' ? 1 : 0);
+
+            $rule = new CamelCaseMethodName();
+            $rule->setReport($report);
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->addProperty('allow-underscore-test', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
      * Tests that the rule does apply for a valid test method name
      * with an underscore.
      *
