@@ -1,4 +1,4 @@
-phpmd-2.8.2 (?)
+phpmd-2.8.2 (2020/02/24)
 ========================
 
 - Fixed #732: Added __serialize and __unserialize to list of ignored methods for camelCase rule.
