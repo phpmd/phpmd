@@ -175,7 +175,7 @@ class PHPMD
     ) {
 
         // Merge parsed excludes
-        $this->ignorePatterns = array_merge($this->ignorePatterns, $ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->setIgnorePattern($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
 

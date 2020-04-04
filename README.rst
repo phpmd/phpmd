@@ -123,7 +123,7 @@ Command line options
     extensions, e.g. php,phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
-    directories.
+    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
