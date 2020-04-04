@@ -351,7 +351,8 @@ class RuleSetFactoryTest extends AbstractTest
         $excludes = $factory->getIgnorePattern('exclude-pattern');
 
         $expected = array(
-            'some/excluded/files'
+            '*sourceExcluded/*.php',
+            '*sourceExcluded\*.php',
         );
 
         $this->assertEquals($expected, $excludes);
@@ -694,7 +695,10 @@ class RuleSetFactoryTest extends AbstractTest
         foreach ($this->getPathsForFileAccessTest() as $path) {
             try {
                 $this->assertEquals(
-                    array('some/excluded/files'),
+                    array(
+                        '*sourceExcluded/*.php',
+                        '*sourceExcluded\*.php',
+                    ),
                     $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
                 );
             } catch (RuleSetNotFoundException $e) {

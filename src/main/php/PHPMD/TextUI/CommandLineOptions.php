@@ -27,7 +27,7 @@ use PHPMD\Rule;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
- * 
+ *
  * @SuppressWarnings(PHPMD.LongVariable)
  */
 class CommandLineOptions
@@ -102,6 +102,7 @@ class CommandLineOptions
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
+     * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
      *
      * @var string
      */
@@ -501,7 +502,8 @@ class CommandLineOptions
             '--suffixes: comma-separated string of valid source code ' .
             'filename extensions, e.g. php,phtml' . \PHP_EOL .
             '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories' . \PHP_EOL .
+            'ignore directories. Use asterisks to exclude by pattern. '.
+            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
