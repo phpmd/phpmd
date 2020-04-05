@@ -102,6 +102,7 @@ class CommandLineOptions
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
+     *
      * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
      *
      * @var string
