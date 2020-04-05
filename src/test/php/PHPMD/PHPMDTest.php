@@ -171,6 +171,7 @@ class PHPMDTest extends AbstractTest
 
         $phpmd = new PHPMD();
 
+        // Process without exclusions, should result in violations.
         $phpmd->processFiles(
             self::createFileUri('sourceExcluded/'),
             'pmd-refset1',
@@ -180,6 +181,7 @@ class PHPMDTest extends AbstractTest
 
         $this->assertTrue($phpmd->hasViolations());
 
+        // Process with exclusions, should result in no violations.
         $phpmd->processFiles(
             self::createFileUri('sourceExcluded/'),
             'exclude-pattern',
