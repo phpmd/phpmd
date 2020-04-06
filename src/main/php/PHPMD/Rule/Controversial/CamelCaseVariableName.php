@@ -59,7 +59,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             $image = $variable->getImage();
 
-            if (in_array($image, $this->exceptions)) {
+            if (in_array($image, $this->exceptions, true)) {
                 continue;
             }
 
@@ -70,8 +70,26 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
             if ($variable->getParent()->isInstanceOf('PropertyPostfix')) {
                 continue;
             }
+            $exceptions = $this->getExceptionsList();
+            if (in_array(substr($image, 1), $exceptions, true)) {
+                continue;
+            }
 
             $this->addViolation($node, array($image));
+        }
+    }
+    
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    private function getExceptionsList()
+    {
+        try {
+            return $this->getStringProperty('exceptions');
+        } catch (\OutOfBoundsException $e) {
+            return [];
         }
     }
 }
