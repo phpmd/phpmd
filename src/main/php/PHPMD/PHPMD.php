@@ -25,7 +25,7 @@ class PHPMD
     /**
      * The current PHPMD version.
      */
-    const VERSION = '@project.version@';
+    const VERSION = '@package_version@';
 
     /**
      * List of valid file extensions for analyzed files.
