@@ -19,16 +19,14 @@ from PHPMD or to suppress special rules for some software artifacts. ::
 
 Or you can suppress one rule with an annotation like this: ::
 
+
   /**
+   * This will suppress UnusedLocalVariable
+   * warnings in this method
    *
+   * @SuppressWarnings(PHPMD.UnusedLocalVariable)
    */
   class Bar {
-      /**
-       * This will suppress UnusedLocalVariable
-       * warnings in this method
-       *
-       * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-       */
       public function foo() {
           $baz = 42;
       }
