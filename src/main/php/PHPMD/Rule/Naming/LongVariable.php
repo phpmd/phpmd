@@ -97,7 +97,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= strlen($node->getImage()) - 1) {
+        if ($threshold >= $this->getStringLength($node->getImage(), $this->getSubtractSuffixList()) - 1) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
@@ -116,6 +116,26 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'MemberPrimaryPrefix');
+    }
+
+    /**
+     * Returns the length of the variable name, excluding at most one suffix.
+     *
+     * @param string $variableName
+     * @param array $subtractSuffixes
+     * @return int
+     */
+    private function getStringLength($variableName, array $subtractSuffixes)
+    {
+        foreach ($subtractSuffixes as $suffix) {
+            $length = strlen($suffix);
+            if ($length > 0 && substr($variableName, -$length) === $suffix) {
+                $variableName = substr($variableName, 0, strlen($variableName) - $length);
+                break;
+            }
+        }
+
+        return strlen($variableName);
     }
 
     /**
@@ -168,5 +188,27 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    private function getSubtractSuffixList()
+    {
+        try {
+            $suffixes = $this->getStringProperty('subtract-suffixes');
+        } catch (\OutOfBoundsException $e) {
+            return array();
+        }
+
+        return array_map(
+            'trim',
+            explode(
+                ',',
+                $suffixes
+            )
+        );
     }
 }
