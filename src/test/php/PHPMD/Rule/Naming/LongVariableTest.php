@@ -307,7 +307,7 @@ class LongVariableTest extends AbstractTest
     public function testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract()
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 11);
+        $rule->addProperty('maximum', 10);
         $rule->addProperty('subtract-suffixes', 'Repository');
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getClass());
