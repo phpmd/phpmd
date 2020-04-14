@@ -30,6 +30,13 @@ use PHPMD\Rule\MethodAware;
 class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
 {
     /**
+     * Temporary cache of configured suffixes to subtract
+     *
+     * @var string[]|null
+     */
+    private $subtractSuffixes;
+
+    /**
      * Temporary map holding variables that were already processed in the
      * current context.
      *
@@ -197,18 +204,16 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     private function getSubtractSuffixList()
     {
+        if ($this->subtractSuffixes !== null) {
+            return $this->subtractSuffixes;
+        }
+
         try {
             $suffixes = $this->getStringProperty('subtract-suffixes');
         } catch (\OutOfBoundsException $e) {
-            return array();
+            return $this->subtractSuffixes = array();
         }
 
-        return array_map(
-            'trim',
-            explode(
-                ',',
-                $suffixes
-            )
-        );
+        return $this->subtractSuffixes = array_map('trim', explode(',', $suffixes));
     }
 }

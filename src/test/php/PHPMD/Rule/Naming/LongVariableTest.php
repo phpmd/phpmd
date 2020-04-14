@@ -298,4 +298,46 @@ class LongVariableTest extends AbstractTest
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 11);
+        $rule->addProperty('subtract-suffixes', 'Repository');
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtract()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 9);
+        $rule->addProperty('subtract-suffixes', 'Repository');
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 19);
+        $rule->addProperty('subtract-suffixes', 'Repository,Factory');
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
 }
