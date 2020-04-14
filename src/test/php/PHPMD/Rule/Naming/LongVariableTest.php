@@ -300,7 +300,7 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     * testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract
      *
      * @return void
      */
@@ -314,7 +314,7 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtract
      *
      * @return void
      */
@@ -328,7 +328,7 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     * testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined
      *
      * @return void
      */
@@ -342,7 +342,7 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesForVariableNameLowerThanThresholdWithSuffix
+     * testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix
      *
      * @return void
      */
