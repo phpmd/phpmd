@@ -36,6 +36,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -51,6 +52,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -65,6 +67,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -79,6 +82,23 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does apply for a valid variable name
+     * with an underscore at the beginning when it is allowed.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed()
+    {
+        $report = $this->getReportMock(0);
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'true');
         $rule->apply($this->getClass());
     }
 }
