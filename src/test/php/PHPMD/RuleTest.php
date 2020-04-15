@@ -20,7 +20,7 @@ namespace PHPMD;
 /**
  * Test case for the {@link \PHPMD\AbstractRule} class.
  *
- * @covers \PHPMD\AbstractRule
+ * @coversDefaultClass \PHPMD\AbstractRule
  */
 class RuleTest extends AbstractTest
 {
@@ -28,6 +28,7 @@ class RuleTest extends AbstractTest
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
      * @return void
+     * @covers ::getIntProperty
      */
     public function testGetIntPropertyReturnsValueOfTypeInteger()
     {
@@ -42,6 +43,7 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
      * @return void
+     * @covers ::getBooleanProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1()
     {
@@ -56,6 +58,7 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
      * @return void
+     * @covers ::getBooleanProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn()
     {
@@ -70,6 +73,7 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
      * @return void
+     * @covers ::getBooleanProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue()
     {
@@ -84,6 +88,7 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
      * @return void
+     * @covers ::getBooleanProperty
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue()
     {
@@ -99,6 +104,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @expectedException \OutOfBoundsException
+     * @covers ::getIntProperty
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -112,6 +118,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @expectedException \OutOfBoundsException
+     * @covers ::getBooleanProperty
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -121,10 +128,11 @@ class RuleTest extends AbstractTest
     }
 
     /**
-     * testStringPropertyThrowsExceptionWhenNoPropertyForNameExists
+     * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
      * @expectedException \OutOfBoundsException
+     * @covers ::getStringProperty
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -137,6 +145,7 @@ class RuleTest extends AbstractTest
      * testGetStringPropertyReturnsStringValue
      *
      * @return void
+     * @covers ::getStringProperty
      */
     public function testGetStringPropertyReturnsString()
     {
