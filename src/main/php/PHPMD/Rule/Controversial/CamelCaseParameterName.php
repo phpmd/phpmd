@@ -40,7 +40,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     public function apply(AbstractNode $node)
     {
         foreach ($node->getParameters() as $parameter) {
-            if (!preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameter->getName())) {
+            if (!$this->isValid($parameter->getName())) {
                 $this->addViolation(
                     $node,
                     array(
@@ -49,5 +49,14 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
                 );
             }
         }
+    }
+
+    private function isValid($parameterName)
+    {
+        if ($this->getBooleanProperty('allow-underscore')) {
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName);
+        }
+
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName);
     }
 }
