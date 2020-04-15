@@ -354,4 +354,18 @@ class LongVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(1));
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleAppliesToVariableNameWithEmptySubtractSuffixes
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 20);
+        $rule->addProperty('subtract-suffixes', ',');
+        $rule->setReport($this->getReportMock(1));
+        $rule->apply($this->getClass());
+    }
 }

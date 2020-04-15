@@ -136,7 +136,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     {
         foreach ($subtractSuffixes as $suffix) {
             $suffixLength = strlen($suffix);
-            if ($suffixLength > 0 && substr($variableName, -$suffixLength) === $suffix) {
+            if (substr($variableName, -$suffixLength) === $suffix) {
                 $variableName = substr($variableName, 0, strlen($variableName) - $suffixLength);
                 break;
             }
@@ -214,6 +214,14 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
             return $this->subtractSuffixes = array();
         }
 
-        return $this->subtractSuffixes = array_map('trim', explode(',', $suffixes));
+        return $this->subtractSuffixes = array_filter(
+            array_map(
+                'trim',
+                explode(',', $suffixes)
+            ),
+            function ($value) {
+                return $value !== '';
+            }
+        );
     }
 }
