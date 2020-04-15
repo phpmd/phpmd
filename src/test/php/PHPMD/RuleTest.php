@@ -138,7 +138,7 @@ class RuleTest extends AbstractTest
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
 
-        $this->assertSame('123', $rule->getIntProperty(__FUNCTION__, '123'));
+        $this->assertSame(123, $rule->getIntProperty(__FUNCTION__, '123'));
     }
 
     /**
