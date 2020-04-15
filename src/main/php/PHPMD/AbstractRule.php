@@ -312,7 +312,7 @@ abstract class AbstractRule implements Rule
     public function getBooleanProperty($name, $default = null)
     {
         if (isset($this->properties[$name])) {
-            return in_array($this->properties[$name], array('true', 'on', 1));
+            return in_array($this->properties[$name], array('true', 'on', 1), false);
         }
         if ($default !== null) {
             return $default;
