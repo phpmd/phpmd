@@ -128,9 +128,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Returns the length of the variable name, excluding at most one suffix.
      *
-     * @param string $variableName
-     * @param array $subtractSuffixes
-     * @return int
+     * @param string $variableName Variable name to calculate the length for.
+     * @param array $subtractSuffixes Optional list of suffixes to exclude from the calculated length.
+     * @return int The length of the string, without suffix, if applicable.
      */
     private function getStringLength($variableName, array $subtractSuffixes)
     {
