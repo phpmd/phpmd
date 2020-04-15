@@ -92,10 +92,10 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
     {
+        $this->expectException('\InvalidArgumentException');
         $args = array(__FILE__, 'text', 'design');
         new CommandLineOptions($args);
     }
@@ -153,10 +153,10 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
+        $this->expectException('\InvalidArgumentException');
         $args = array('foo.php', 'text', 'design', '--inputfile', 'inputfail.txt');
         new CommandLineOptions($args);
     }
@@ -375,28 +375,33 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
-     * @param string $reportFormat
+     * Tests the createRenderer method when an empty format was given
+     *
      * @return void
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp (^Can\'t )
-     * @dataProvider dataProviderCreateRendererThrowsException
      */
-    public function testCreateRendererThrowsException($reportFormat)
+    public function testCreateRendererEmptyFormatThrowsException()
     {
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage("Can't create report with empty format.");
+        $reportFormat = '';
         $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
         $opts = new CommandLineOptions($args);
         $opts->createRenderer();
     }
 
     /**
-     * @return array
+     * Tests the createRenderer method when an empty format was given
+     *
+     * @return void
      */
-    public function dataProviderCreateRendererThrowsException()
+    public function testCreateRendererNonExistingRendererThrowsException()
     {
-        return array(
-            array(''),
-            array('PHPMD\\Test\\Renderer\\NotExistsRenderer')
-        );
+        $this->expectException('\InvalidArgumentException');
+        $this->expectExceptionMessage("Can't find the custom report class: PHPMD\Test\Renderer\NotExistsRenderer");
+        $reportFormat = 'PHPMD\\Test\\Renderer\\NotExistsRenderer';
+        $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
+        $opts = new CommandLineOptions($args);
+        $opts->createRenderer();
     }
 
     /**

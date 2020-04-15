@@ -616,10 +616,11 @@ class RuleSetFactoryTest extends AbstractTest
      *
      * @return void
      * @covers \PHPMD\RuleClassNotFoundException
-     * @expectedException \RuntimeException
+     *
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
+        $this->expectException('\RuntimeException');
         $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
 
         $factory = new RuleSetFactory();

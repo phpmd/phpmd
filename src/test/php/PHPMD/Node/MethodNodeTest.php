@@ -51,10 +51,10 @@ class MethodNodeTest extends AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @expectedException \BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
+        $this->expectException('\BadMethodCallException');
         $node = new MethodNode(new ASTMethod(null));
         $node->getFooBar();
     }
