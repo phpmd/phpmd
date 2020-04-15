@@ -304,8 +304,8 @@ abstract class AbstractRule implements Rule
      * and no default value to fall back was given.
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
-     * @param string|null $default An optional default value to fall back instead of throwing an exception.
-     * @return boolean The value of a configured property as a boolean.
+     * @param bool $default An optional default value to fall back instead of throwing an exception.
+     * @return bool The value of a configured property as a boolean.
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
@@ -315,7 +315,7 @@ abstract class AbstractRule implements Rule
             return in_array($this->properties[$name], array('true', 'on', 1), false);
         }
         if ($default !== null) {
-            return $default;
+            return (bool)$default;
         }
 
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
