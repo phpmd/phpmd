@@ -330,18 +330,26 @@ abstract class AbstractRule implements Rule
     }
 
     /**
-     * Returns the raw string value of a configured property or throws an
-     * exception when no property with <b>$name</b> exists.
+     * Returns the raw string value of a configured property
      *
-     * @param string $name
-     * @return string
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "exceptions".
+     * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return string The raw string value of a configured property.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
      */
-    public function getStringProperty($name)
+    public function getStringProperty($name, $default = null)
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
+        if ($default !== null) {
+            return $default;
+        }
+
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 

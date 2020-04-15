@@ -155,4 +155,18 @@ class RuleTest extends AbstractTest
 
         $this->assertSame('Fourty Two', $rule->getStringProperty(__FUNCTION__));
     }
+
+    /**
+     * Tests the getStringProperty method with a fallback value
+     *
+     * @return void
+     * @covers ::getStringProperty
+     */
+    public function testGetStringPropertyReturnsFallbackString()
+    {
+        /** @var AbstractRule $rule */
+        $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+
+        $this->assertSame('fallback', $rule->getStringProperty(__FUNCTION__, 'fallback'));
+    }
 }
