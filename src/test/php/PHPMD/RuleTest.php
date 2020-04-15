@@ -85,6 +85,20 @@ class RuleTest extends AbstractTest
     }
 
     /**
+     * Tests the getBooleanProperty method with a fallback value
+     *
+     * @return void
+     * @covers ::getBooleanProperty
+     */
+    public function testGetBooleanPropertyReturnsFallbackString()
+    {
+        /** @var AbstractRule $rule */
+        $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+
+        $this->assertTrue($rule->getBooleanProperty(__FUNCTION__, true));
+    }
+
+    /**
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
      * @return void

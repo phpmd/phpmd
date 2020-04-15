@@ -298,18 +298,26 @@ abstract class AbstractRule implements Rule
     }
 
     /**
-     * Returns the value of a configured property as a boolean or throws an
-     * exception when no property with <b>$name</b> exists.
+     * Returns the value of a configured property as a boolean
      *
-     * @param string $name
-     * @return boolean
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return boolean The value of a configured property as a boolean.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
      */
-    public function getBooleanProperty($name)
+    public function getBooleanProperty($name, $default = null)
     {
         if (isset($this->properties[$name])) {
             return in_array($this->properties[$name], array('true', 'on', 1));
         }
+        if ($default !== null) {
+            return $default;
+        }
+
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
