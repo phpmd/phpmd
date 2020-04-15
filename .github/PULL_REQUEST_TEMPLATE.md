@@ -20,7 +20,7 @@ Please check this points before submitting your PR.
 - Cover cases for the new rule in the rule test, e.g. ``src/test/php/PHPMD/Rule/Naming/LongVariableTest.php``
 -- Cover the case when the new rule *should* apply
 -- Cover the case when the new rule *should not* apply
--- Cover edge cases of th new rule
+-- Cover edge cases of the new rule
 
 ## Adding a New Rule Property
 
@@ -32,5 +32,5 @@ Please check this points before submitting your PR.
 -- Cover the case when the new property is not set and the rule *should* apply
 -- Cover case when the new property is set and the rule *should not* apply
 -- Cover case when the new property is set and the rule *should* apply
--- Cover edge cases of th new property, if any
+-- Cover edge cases of the new property, if any
 -->
