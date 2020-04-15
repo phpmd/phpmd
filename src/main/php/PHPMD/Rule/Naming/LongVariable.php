@@ -135,9 +135,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     private function getStringLength($variableName, array $subtractSuffixes)
     {
         foreach ($subtractSuffixes as $suffix) {
-            $length = strlen($suffix);
-            if ($length > 0 && substr($variableName, -$length) === $suffix) {
-                $variableName = substr($variableName, 0, strlen($variableName) - $length);
+            $suffixLength = strlen($suffix);
+            if ($suffixLength > 0 && substr($variableName, -$suffixLength) === $suffix) {
+                $variableName = substr($variableName, 0, strlen($variableName) - $suffixLength);
                 break;
             }
         }
