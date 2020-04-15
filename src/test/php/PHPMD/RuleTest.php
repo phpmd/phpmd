@@ -114,6 +114,20 @@ class RuleTest extends AbstractTest
     }
 
     /**
+     * Tests the getIntProperty method with a fallback value
+     *
+     * @return void
+     * @covers ::getIntProperty
+     */
+    public function testGetIntPropertyReturnsFallbackString()
+    {
+        /** @var AbstractRule $rule */
+        $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+
+        $this->assertSame('123', $rule->getIntProperty(__FUNCTION__, '123'));
+    }
+
+    /**
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
