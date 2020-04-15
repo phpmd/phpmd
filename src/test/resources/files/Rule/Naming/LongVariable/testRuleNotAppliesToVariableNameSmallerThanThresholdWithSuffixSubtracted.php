@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract
+class testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted
 {
     private $permissionRepository;
 }

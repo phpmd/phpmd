@@ -300,11 +300,11 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract
+     * testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted
      *
      * @return void
      */
-    public function testRuleAppliesToVariableNameSmallerThanThresholdWithSuffixSubtract()
+    public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted()
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 10);
@@ -314,11 +314,11 @@ class LongVariableTest extends AbstractTest
     }
 
     /**
-     * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtract
+     * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted
      *
      * @return void
      */
-    public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtract()
+    public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted()
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 9);
