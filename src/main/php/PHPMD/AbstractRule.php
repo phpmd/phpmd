@@ -328,18 +328,18 @@ abstract class AbstractRule implements Rule
      * and no default value to fall back was given.
      *
      * @param string $name The name of the property, e.g. "minimum".
-     * @param string|null $default An optional default value to fall back instead of throwing an exception.
-     * @return integer The value of a configured property as an integer.
+     * @param int $default An optional default value to fall back instead of throwing an exception.
+     * @return int The value of a configured property as an integer.
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
     public function getIntProperty($name, $default = null)
     {
         if (isset($this->properties[$name])) {
-            return (int) $this->properties[$name];
+            return (int)$this->properties[$name];
         }
         if ($default !== null) {
-            return $default;
+            return (int)$default;
         }
 
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
