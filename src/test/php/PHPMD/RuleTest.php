@@ -25,21 +25,6 @@ namespace PHPMD;
 class RuleTest extends AbstractTest
 {
     /**
-     * testGetIntPropertyReturnsValueOfTypeInteger
-     *
-     * @return void
-     * @covers ::getIntProperty
-     */
-    public function testGetIntPropertyReturnsValueOfTypeInteger()
-    {
-        /** @var AbstractRule $rule */
-        $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
-        $rule->addProperty(__FUNCTION__, '42.3');
-
-        $this->assertSame(42, $rule->getIntProperty(__FUNCTION__));
-    }
-
-    /**
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
      * @return void
@@ -97,6 +82,21 @@ class RuleTest extends AbstractTest
         $rule->addProperty(__FUNCTION__, 'True');
 
         $this->assertFalse($rule->getBooleanProperty(__FUNCTION__));
+    }
+
+    /**
+     * testGetIntPropertyReturnsValueOfTypeInteger
+     *
+     * @return void
+     * @covers ::getIntProperty
+     */
+    public function testGetIntPropertyReturnsValueOfTypeInteger()
+    {
+        /** @var AbstractRule $rule */
+        $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+        $rule->addProperty(__FUNCTION__, '42.3');
+
+        $this->assertSame(42, $rule->getIntProperty(__FUNCTION__));
     }
 
     /**
