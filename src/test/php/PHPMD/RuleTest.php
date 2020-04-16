@@ -29,6 +29,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1()
     {
@@ -44,6 +45,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn()
     {
@@ -59,6 +61,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue()
     {
@@ -74,6 +77,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue()
     {
@@ -89,6 +93,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsFallbackString()
     {
@@ -103,6 +108,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getIntProperty
+     * @covers ::getProperty
      */
     public function testGetIntPropertyReturnsValueOfTypeInteger()
     {
@@ -119,6 +125,7 @@ class RuleTest extends AbstractTest
      * @return void
      * @expectedException \OutOfBoundsException
      * @covers ::getIntProperty
+     * @covers ::getProperty
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -132,6 +139,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getIntProperty
+     * @covers ::getProperty
      */
     public function testGetIntPropertyReturnsFallbackString()
     {
@@ -147,6 +155,7 @@ class RuleTest extends AbstractTest
      * @return void
      * @expectedException \OutOfBoundsException
      * @covers ::getBooleanProperty
+     * @covers ::getProperty
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -161,6 +170,7 @@ class RuleTest extends AbstractTest
      * @return void
      * @expectedException \OutOfBoundsException
      * @covers ::getStringProperty
+     * @covers ::getProperty
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -174,6 +184,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getStringProperty
+     * @covers ::getProperty
      */
     public function testGetStringPropertyReturnsString()
     {
@@ -189,6 +200,7 @@ class RuleTest extends AbstractTest
      *
      * @return void
      * @covers ::getStringProperty
+     * @covers ::getProperty
      */
     public function testGetStringPropertyReturnsFallbackString()
     {
