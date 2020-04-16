@@ -335,7 +335,7 @@ abstract class AbstractRule implements Rule
      */
     public function getBooleanProperty($name, $default = null)
     {
-        return in_array($this->getgetProperty($name, $default), array('true', 'on', 1), false);
+        return in_array($this->getProperty($name, $default), array('true', 'on', 1), false);
     }
 
     /**
@@ -352,7 +352,7 @@ abstract class AbstractRule implements Rule
      */
     public function getIntProperty($name, $default = null)
     {
-        return (int) $this->getgetProperty($name, $default);
+        return (int)$this->getProperty($name, $default);
     }
 
     /**
@@ -369,7 +369,7 @@ abstract class AbstractRule implements Rule
      */
     public function getStringProperty($name, $default = null)
     {
-        return (string) $this->getgetProperty($name, $default);
+        return (string)$this->getProperty($name, $default);
     }
 
     /**
