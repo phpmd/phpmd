@@ -298,6 +298,30 @@ abstract class AbstractRule implements Rule
     }
 
     /**
+     * Returns the value of a configured property
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param mixed $default An optional default value to fall back instead of throwing an exception.
+     * @return mixed The value of a configured property.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
+     */
+    protected function getProperty($name, $default = null)
+    {
+        if (isset($this->properties[$name])) {
+            return $this->properties[$name];
+        }
+        if ($default !== null) {
+            return $default;
+        }
+
+        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+    }
+
+    /**
      * Returns the value of a configured property as a boolean
      *
      * Throws an exception when no property with <b>$name</b> exists
@@ -311,14 +335,7 @@ abstract class AbstractRule implements Rule
      */
     public function getBooleanProperty($name, $default = null)
     {
-        if (isset($this->properties[$name])) {
-            return in_array($this->properties[$name], array('true', 'on', 1), false);
-        }
-        if ($default !== null) {
-            return (bool)$default;
-        }
-
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+        return in_array($this->getgetProperty($name, $default), array('true', 'on', 1), false);
     }
 
     /**
@@ -335,14 +352,7 @@ abstract class AbstractRule implements Rule
      */
     public function getIntProperty($name, $default = null)
     {
-        if (isset($this->properties[$name])) {
-            return (int)$this->properties[$name];
-        }
-        if ($default !== null) {
-            return (int)$default;
-        }
-
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+        return (int) $this->getgetProperty($name, $default);
     }
 
     /**
@@ -359,14 +369,7 @@ abstract class AbstractRule implements Rule
      */
     public function getStringProperty($name, $default = null)
     {
-        if (isset($this->properties[$name])) {
-            return $this->properties[$name];
-        }
-        if ($default !== null) {
-            return $default;
-        }
-
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+        return (string) $this->getgetProperty($name, $default);
     }
 
     /**
