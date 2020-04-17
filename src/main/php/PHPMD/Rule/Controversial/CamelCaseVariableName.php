@@ -57,21 +57,39 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     public function apply(AbstractNode $node)
     {
         foreach ($node->findChildrenOfType('Variable') as $variable) {
-            $image = $variable->getImage();
-
-            if (in_array($image, $this->exceptions)) {
-                continue;
+            if (!$this->isValid($variable)) {
+                $this->addViolation(
+                    $node,
+                    array(
+                        $variable->getImage(),
+                    )
+                );
             }
-
-            if (preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $image)) {
-                continue;
-            }
-
-            if ($variable->getParent()->isInstanceOf('PropertyPostfix')) {
-                continue;
-            }
-
-            $this->addViolation($node, array($image));
         }
+    }
+
+    private function isValid($variable)
+    {
+        $image = $variable->getImage();
+
+        if (in_array($image, $this->exceptions)) {
+            return true;
+        }
+
+        if ($this->getBooleanProperty('allow-underscore')) {
+            if (preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $image)) {
+                return true;
+            }
+        }
+
+        if (preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $image)) {
+            return true;
+        }
+
+        if ($variable->getParent()->isInstanceOf('PropertyPostfix')) {
+            return true;
+        }
+
+        return false;
     }
 }
