@@ -193,7 +193,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
 
         return sprintf(
             '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
+            __DIR__,
             $testPath,
             $localPath
         );
