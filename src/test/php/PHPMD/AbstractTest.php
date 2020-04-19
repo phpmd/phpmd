@@ -204,7 +204,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Return URI for a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
-     * @param string $suffix  optional suffix to trim ("Test" by default).
      * @return string
      */
     protected function createResourceUriForCalledClass($pattern)
@@ -216,7 +215,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Return list of files matching a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
-     * @param string $suffix  optional suffix to trim ("Test" by default).
      * @return string
      */
     protected function getFilesForCalledClass($pattern = '*')
