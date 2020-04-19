@@ -12,10 +12,8 @@
     <rule ref="PSR2"/>
 
     <!-- Sniffs from Slevomat standard -->
-    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
-	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
-	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
+    <!-- Functional - improving the safety and behaviour of code -->
     <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
     <rule ref="SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants"/>
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
@@ -26,5 +24,11 @@
     <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>
     <rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators"/>
     <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>
+
+    <!-- Cleaning - detecting dead code -->
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
+
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 
 </ruleset>
