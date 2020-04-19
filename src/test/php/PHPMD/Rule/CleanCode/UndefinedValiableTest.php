@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\SimpleRuleTestCase;
 
 /**
  * Test case for the undefined variable rule.
@@ -25,77 +25,10 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Rule\CleanCode\UndefinedVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
  */
-class UndefinedVariableTest extends AbstractTest
+class UndefinedVariableTest extends SimpleRuleTestCase
 {
-    /**
-     * testRuleAppliesToUndefinedVariable
-     *
-     * @return void
-     */
-    public function testRuleAppliesToUndefinedVariable()
+    public function getRule()
     {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableWithDefinedVariable
-     *
-     * @return void
-     */
-    public function testRuleAppliesToUndefinedVariableWithDefinedVariable()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableOnArray
-     *
-     * @return void
-     */
-    public function testRuleAppliesToUndefinedVariableOnArray()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableOnArrayWithKeys
-     *
-     * @return void
-     */
-    public function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableOnArrayWithKeys
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToSuperGlobals()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToUsedProperties
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToUsedProperties()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
+        return new UndefinedVariable();
     }
 }

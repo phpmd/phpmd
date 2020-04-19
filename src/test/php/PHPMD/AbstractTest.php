@@ -155,6 +155,26 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first method as a MethodNode for a given test file.
+     *
+     * @param string $file
+     * @return MethodNode
+     * @since 2.8.3
+     */
+    protected function getMethodNodeForTestFile($file)
+    {
+        return new MethodNode(
+            $this->getNodeByName(
+                $this->parseSource($file)
+                    ->getTypes()
+                    ->current()
+                    ->getMethods(),
+                pathinfo($file, PATHINFO_FILENAME)
+            )
+        );
+    }
+
+    /**
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
@@ -177,20 +197,59 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $frame = self::getCallingTestCase();
 
+        return self::getResourceFilePathFromClassName($frame['class'], $localPath);
+    }
+
+    /**
+     * Return URI for a given pattern with directory based on the current called class name.
+     *
+     * @param string $pattern
+     * @param string $suffix  optional suffix to trim ("Test" by default).
+     * @return string
+     */
+    protected function createResourceUriForCalledClass($pattern)
+    {
+        return $this->getResourceFilePathFromClassName(get_class($this), $pattern);
+    }
+
+    /**
+     * Return list of files matching a given pattern with directory based on the current called class name.
+     *
+     * @param string $pattern
+     * @param string $suffix  optional suffix to trim ("Test" by default).
+     * @return string
+     */
+    protected function getFilesForCalledClass($pattern = '*')
+    {
+        return glob($this->createResourceUriForCalledClass($pattern));
+    }
+
+    private static function getTestPathFromClassName($className)
+    {
         $regexp = '([a-z]([0-9]+)Test$)i';
-        if (preg_match($regexp, $frame['class'], $match)) {
-            $parts = explode('\\', $frame['class']);
-            $testPath = $parts[count($parts) - 2] . '/' . $match[1];
-        } else {
-            $testPath = strtr(substr($frame['class'], 6, -4), '\\', '/');
+
+        if (preg_match($regexp, $className, $match)) {
+            $parts = explode('\\', $className);
+
+            return $parts[count($parts) - 2] . '/' . $match[1];
         }
 
+        return strtr(substr($className, 6, -4), '\\', '/');
+    }
+
+    private static function getResourceFilePath($directory, $file)
+    {
         return sprintf(
             '%s/../../resources/files/%s/%s',
             dirname(__FILE__),
-            $testPath,
-            $localPath
+            $directory,
+            $file
         );
+    }
+
+    private static function getResourceFilePathFromClassName($className, $localPath)
+    {
+        return self::getResourceFilePath(self::getTestPathFromClassName($className), $localPath);
     }
 
     /**
@@ -221,6 +280,23 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the PHP_Depend node having the given name.
+     *
+     * @param \Iterator $nodes
+     * @return PHP_Depend_Code_AbstractItem
+     * @throws \ErrorException
+     */
+    private function getNodeByName(\Iterator $nodes, $name)
+    {
+        foreach ($nodes as $node) {
+            if ($node->getName() === $name) {
+                return $node;
+            }
+        }
+        throw new \ErrorException("Cannot locate node named $name.");
+    }
+
+    /**
      * Returns the PHP_Depend node for the calling test case.
      *
      * @param \Iterator $nodes
@@ -230,12 +306,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     private function getNodeForCallingTestCase(\Iterator $nodes)
     {
         $frame = $this->getCallingTestCase();
-        foreach ($nodes as $node) {
-            if ($node->getName() === $frame['function']) {
-                return $node;
-            }
-        }
-        throw new \ErrorException('Cannot locate node for test case.');
+
+        return $this->getNodeByName($nodes, $frame['function']);
     }
 
     /**
