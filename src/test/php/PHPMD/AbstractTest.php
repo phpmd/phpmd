@@ -38,6 +38,15 @@ use PHPUnit_Framework_MockObject_MockBuilder;
  */
 abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var int At least one violation is expected */
+    const AL_LEAST_ONE_VIOLATION = -1;
+
+    /** @var int No violation is expected */
+    const NO_VIOLATION = 0;
+
+    /** @var int One violation is expected */
+    const ONE_VIOLATION = 1;
+
     /**
      * Directory with test files.
      *
@@ -358,11 +367,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getReportMock($expectedInvokes = -1)
     {
-        if ($expectedInvokes < 0) {
+        if ($expectedInvokes === self::AL_LEAST_ONE_VIOLATION) {
             $expects = $this->atLeastOnce();
-        } elseif ($expectedInvokes === 0) {
+        } elseif ($expectedInvokes === self::NO_VIOLATION) {
             $expects = $this->never();
-        } elseif ($expectedInvokes === 1) {
+        } elseif ($expectedInvokes === self::ONE_VIOLATION) {
             $expects = $this->once();
         } else {
             $expects = $this->exactly($expectedInvokes);
@@ -382,7 +391,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function getReportWithOneViolation()
     {
-        return $this->getReportMock(1);
+        return $this->getReportMock(self::ONE_VIOLATION);
     }
 
     /**
@@ -392,7 +401,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function getReportWithNoViolation()
     {
-        return $this->getReportMock(0);
+        return $this->getReportMock(self::NO_VIOLATION);
     }
 
     /**
@@ -402,7 +411,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     public function getReportWithAtLeastOneViolation()
     {
-        return $this->getReportMock(-1);
+        return $this->getReportMock(self::AL_LEAST_ONE_VIOLATION);
     }
 
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
