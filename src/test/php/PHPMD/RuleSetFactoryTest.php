@@ -734,6 +734,7 @@ class RuleSetFactoryTest extends AbstractTest
      * @param string $file At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     private function createRuleSetsFromFiles($file)
     {
