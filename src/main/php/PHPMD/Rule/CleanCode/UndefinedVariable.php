@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
@@ -138,6 +139,12 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             foreach ($foreachStatement->getChildren() as $children) {
                 if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
+                } elseif ($children instanceof ASTUnaryExpression) {
+                    foreach ($children->getChildren() as $refChildren) {
+                        if ($refChildren instanceof ASTVariable) {
+                            $this->addVariableDefinition($refChildren);
+                        }
+                    }
                 }
             }
         }
