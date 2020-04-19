@@ -96,7 +96,7 @@ class TooManyMethodsTest extends AbstractTest
         $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
     }
 
-   /**
+    /**
      * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
      *
      * @return void
@@ -163,8 +163,8 @@ class TooManyMethodsTest extends AbstractTest
     /**
      * Creates a prepared class node mock
      *
-     * @param integer $numberOfMethods
-     * @param array$methodNames
+     * @param integer  $numberOfMethods
+     * @param string[] $methodNames
      * @return \PHPMD\Node\ClassNode
      */
     private function createClassMock($numberOfMethods, array $methodNames = null)

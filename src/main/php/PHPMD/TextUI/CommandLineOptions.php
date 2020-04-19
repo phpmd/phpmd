@@ -141,8 +141,8 @@ class CommandLineOptions
     /**
      * Constructs a new command line options instance.
      *
-     * @param array $args
-     * @param array $availableRuleSets
+     * @param string[] $args
+     * @param string[] $availableRuleSets
      * @throws \InvalidArgumentException
      */
     public function __construct(array $args, array $availableRuleSets = array())
