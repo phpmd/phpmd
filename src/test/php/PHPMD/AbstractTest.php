@@ -115,7 +115,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return InterfaceNode
+     * @return TraitNode
      */
     protected function getTrait()
     {
@@ -394,7 +394,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Creates a mocked {@link \PHPMD\AbstractRule} instance.
      *
-     * @return AbstractRule
+     * @return AbstractRule|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleMock()
     {
