@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\SimpleRuleTestCase;
+use PHPMD\AbstractTest;
 
 /**
  * Test case for the undefined variable rule.
@@ -25,10 +25,29 @@ use PHPMD\SimpleRuleTestCase;
  * @covers \PHPMD\Rule\CleanCode\UndefinedVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
  */
-class UndefinedVariableTest extends SimpleRuleTestCase
+class UndefinedVariableTest extends AbstractTest
 {
+    /**
+     * @return UndefinedVariable
+     */
     public function getRule()
     {
         return new UndefinedVariable();
+    }
+
+    /**
+     * @dataProvider getSuccessCases
+     */
+    public function testRuleAppliesToSuccessFiles($file)
+    {
+        $this->expectRuleInvokesForFile($this->getRule(), 1, $file);
+    }
+
+    /**
+     * @dataProvider getFailureCases
+     */
+    public function testRuleDoesNotApplyToFailureFiles($file)
+    {
+        $this->expectRuleInvokesForFile($this->getRule(), 0, $file);
     }
 }

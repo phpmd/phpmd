@@ -85,16 +85,16 @@ class RuleSetTest extends AbstractTest
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
      *
-     * @return \PHPMD\AbstractRule
+     * @return RuleSet
      */
     private function createRuleSetFixture()
     {
         $ruleSet = new RuleSet();
-        for ($i = 0; $i < func_num_args(); ++$i) {
-            $rule = new RuleStub(func_get_arg($i));
 
-            $ruleSet->addRule($rule);
+        for ($i = 0; $i < func_num_args(); ++$i) {
+            $ruleSet->addRule(new RuleStub(func_get_arg($i)));
         }
+
         return $ruleSet;
     }
 }

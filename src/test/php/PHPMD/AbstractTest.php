@@ -40,6 +40,36 @@ use PHPUnit_Framework_MockObject_MockBuilder;
 abstract class AbstractTest extends AbstractStaticTest
 {
     /**
+     * @return string[]
+     */
+    public function getSuccessFiles()
+    {
+        return $this->getFilesForCalledClass('testRuleAppliesTo*');
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFailureFiles()
+    {
+        return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
+    }
+
+    public function getSuccessCases()
+    {
+        return array_map(function ($file) {
+            return array($file);
+        }, $this->getSuccessFiles());
+    }
+
+    public function getFailureCases()
+    {
+        return array_map(function ($file) {
+            return array($file);
+        }, $this->getFailureFiles());
+    }
+
+    /**
      * Resets a changed working directory.
      *
      * @return void
@@ -202,7 +232,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Return list of files matching a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
-     * @return string
+     * @return string[]
      */
     protected function getFilesForCalledClass($pattern = '*')
     {
