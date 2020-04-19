@@ -464,22 +464,22 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
             $description = 'Test description';
         }
 
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getRule')
             ->willReturn($rule);
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getFileName')
             ->willReturn($fileName);
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getBeginLine')
             ->willReturn($beginLine);
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getEndLine')
             ->willReturn($endLine);
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getNamespaceName')
             ->willReturn('TestStubPackage');
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getDescription')
             ->willReturn($description);
 
@@ -504,10 +504,10 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
                 ->setMethods(array('getFile', 'getMessage'))
         );
 
-        $processingError->expects($this->any())
+        $processingError
             ->method('getFile')
             ->willReturn($file);
-        $processingError->expects($this->any())
+        $processingError
             ->method('getMessage')
             ->willReturn($message);
 
