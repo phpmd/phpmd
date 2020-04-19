@@ -57,16 +57,12 @@ abstract class AbstractTest extends AbstractStaticTest
 
     public function getSuccessCases()
     {
-        return array_map(function ($file) {
-            return array($file);
-        }, $this->getSuccessFiles());
+        return static::getValuesAsArrays($this->getSuccessFiles());
     }
 
     public function getFailureCases()
     {
-        return array_map(function ($file) {
-            return array($file);
-        }, $this->getFailureFiles());
+        return static::getValuesAsArrays($this->getFailureFiles());
     }
 
     /**

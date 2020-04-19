@@ -85,6 +85,19 @@ abstract class AbstractStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Convert [1, 'a', $any] into [[1], ['a'], [$any]].
+     *
+     * @param mixed $values list of values.
+     * @return mixed[]
+     */
+    protected static function getValuesAsArrays($values)
+    {
+        return array_map(function ($value) {
+            return array($value);
+        }, $values);
+    }
+
+    /**
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
