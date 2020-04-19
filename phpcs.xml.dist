@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="PHPMD">
+    <description>The coding standard for PHPMD.</description>
+
+    <arg name="extensions" value="php"/>
+
+    <!-- PSR-2 base standard -->
+    <rule ref="PSR2"/>
+
+</ruleset>
