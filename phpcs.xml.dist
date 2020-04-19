@@ -17,5 +17,7 @@
 	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
     <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
+    <rule ref="SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants"/>
+
 
 </ruleset>
