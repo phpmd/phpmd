@@ -13,6 +13,7 @@
 
     <!-- Sniffs from Slevomat standard -->
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
+	<rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
 </ruleset>
