@@ -188,7 +188,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
             $parts = explode('\\', $frame['class']);
             $testPath = $parts[count($parts) - 2] . '/' . $match[1];
         } else {
-            $testPath = strtr(substr($frame['class'], 6, -4), '\\', '/');
+            $testPath = str_replace('\\', '/', substr($frame['class'], 6, -4));
         }
 
         return sprintf(
