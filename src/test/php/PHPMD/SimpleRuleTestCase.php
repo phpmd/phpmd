@@ -59,9 +59,7 @@ abstract class SimpleRuleTestCase extends AbstractTest
      */
     public function testRuleAppliesToSuccessFiles($file)
     {
-        $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(1));
-        $rule->apply($this->getMethodNodeForTestFile($file));
+        $this->expectCurrentRuleInvokesForFile(1, $file);
     }
 
     /**
@@ -69,8 +67,17 @@ abstract class SimpleRuleTestCase extends AbstractTest
      */
     public function testRuleDoesNotApplyToFailureFiles($file)
     {
-        $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethodNodeForTestFile($file));
+        $this->expectCurrentRuleInvokesForFile(0, $file);
+    }
+
+    /**
+     * Test that a given file trigger N times the current rule.
+     *
+     * @param int    $expectedInvokes Count of expected invocations.
+     * @param string $file            Test file containing a method with the same name to be tested.
+     */
+    protected function expectCurrentRuleInvokesForFile($expectedInvokes, $file)
+    {
+        $this->expectRuleInvokesForFile($this->getRule(), $expectedInvokes, $file);
     }
 }

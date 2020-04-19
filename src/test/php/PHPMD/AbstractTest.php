@@ -175,6 +175,19 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that a given file trigger N times the given rule.
+     *
+     * @param Rule   $rule            Rule to test.
+     * @param int    $expectedInvokes Count of expected invocations.
+     * @param string $file            Test file containing a method with the same name to be tested.
+     */
+    protected function expectRuleInvokesForFile(Rule $rule, $expectedInvokes, $file)
+    {
+        $rule->setReport($this->getReportMock($expectedInvokes));
+        $rule->apply($this->getMethodNodeForTestFile($file));
+    }
+
+    /**
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
