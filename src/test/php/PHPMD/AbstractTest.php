@@ -203,7 +203,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      * Parses the source code for the calling test method and returns the first
      * package node found in the parsed file.
      *
-     * @return PHP_Depend_Code_Package
+     * @return ASTNamespace
      */
     private function parseTestCaseSource()
     {
@@ -338,7 +338,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     /**
      * Initializes the getMetric() method of the given function or method node.
      *
-     * @param FunctionNode|MethodNode $mock
+     * @param FunctionNode|MethodNode||PHPUnit_Framework_MockObject_MockObject $mock
      * @param string $metric
      * @param mixed $value
      * @return FunctionNode|MethodNode
