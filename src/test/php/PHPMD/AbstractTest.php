@@ -414,9 +414,13 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             return $ruleSet->expects($this->never())->method('apply');
         }
 
-        $ruleSet->expects(
-            $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
-        )
+        if ($count === '*') {
+            $count = $this->atLeastOnce();
+        } else {
+            $count = $this->exactly($count);
+        }
+
+        $ruleSet->expects($count)
             ->method('apply')
             ->with($this->isInstanceOf($expectedClass));
 
