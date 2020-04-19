@@ -34,7 +34,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(23));
@@ -48,7 +48,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42));
@@ -62,7 +62,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maxmethods', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
@@ -76,7 +76,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresGetterMethodsInTest()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'getClass')));
@@ -90,7 +90,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresSetterMethodsInTest()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
@@ -104,7 +104,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'injectClass')));
@@ -118,7 +118,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresGetterAndSetterMethodsInTest()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(3, array('invoke', 'getClass', 'setClass')));
@@ -130,7 +130,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresHassers()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'hasClass')));
@@ -142,7 +142,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresIssers()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'isClass')));
@@ -154,7 +154,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleIgnoresWithers()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'withClass')));

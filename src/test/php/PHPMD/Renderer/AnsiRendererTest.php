@@ -46,7 +46,7 @@ class AnsiRendererTest extends AbstractTest
             $this->getErrorMock(),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
@@ -100,7 +100,7 @@ class AnsiRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator(array())));

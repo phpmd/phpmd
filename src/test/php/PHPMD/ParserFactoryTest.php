@@ -47,7 +47,7 @@ class ParserFactoryTest extends AbstractTest
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
-        $parser->parse($this->getReportMock(0));
+        $parser->parse($this->getReportWithNoViolation());
     }
 
     /**
@@ -73,7 +73,7 @@ class ParserFactoryTest extends AbstractTest
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
-        $parser->parse($this->getReportMock(0));
+        $parser->parse($this->getReportWithNoViolation());
     }
 
     /**
@@ -100,7 +100,7 @@ class ParserFactoryTest extends AbstractTest
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
-        $parser->parse($this->getReportMock(0));
+        $parser->parse($this->getReportWithNoViolation());
     }
 
     /**
@@ -124,7 +124,7 @@ class ParserFactoryTest extends AbstractTest
 
         $parser = $factory->create($phpmd);
         $parser->addRuleSet($ruleSet);
-        $parser->parse($this->getReportMock(0));
+        $parser->parse($this->getReportWithNoViolation());
     }
 
     /**

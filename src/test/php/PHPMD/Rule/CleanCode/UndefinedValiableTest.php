@@ -22,8 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the undefined variable rule.
  *
- * @covers \PHPMD\Rule\CleanCode\UndefinedVariable
- * @covers \PHPMD\Rule\AbstractLocalVariable
+ * @coversDefaultClass \PHPMD\Rule\CleanCode\UndefinedVariable
  */
 class UndefinedVariableTest extends AbstractTest
 {
@@ -40,7 +39,7 @@ class UndefinedVariableTest extends AbstractTest
      */
     public function testRuleAppliesToSuccessFiles($file)
     {
-        $this->expectRuleInvokesForFile($this->getRule(), 1, $file);
+        $this->expectRuleInvokesForFile($this->getRule(), static::ONE_VIOLATION, $file);
     }
 
     /**
@@ -48,6 +47,6 @@ class UndefinedVariableTest extends AbstractTest
      */
     public function testRuleDoesNotApplyToFailureFiles($file)
     {
-        $this->expectRuleInvokesForFile($this->getRule(), 0, $file);
+        $this->expectRuleInvokesForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
 }

@@ -39,6 +39,15 @@ use PHPUnit_Framework_MockObject_MockBuilder;
  */
 abstract class AbstractTest extends AbstractStaticTest
 {
+    /** @var int At least one violation is expected */
+    const AL_LEAST_ONE_VIOLATION = -1;
+
+    /** @var int No violation is expected */
+    const NO_VIOLATION = 0;
+
+    /** @var int One violation is expected */
+    const ONE_VIOLATION = 1;
+
     /**
      * @return string[]
      */
@@ -313,11 +322,11 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     protected function getReportMock($expectedInvokes = -1)
     {
-        if ($expectedInvokes < 0) {
+        if ($expectedInvokes === self::AL_LEAST_ONE_VIOLATION) {
             $expects = $this->atLeastOnce();
-        } elseif ($expectedInvokes === 0) {
+        } elseif ($expectedInvokes === self::NO_VIOLATION) {
             $expects = $this->never();
-        } elseif ($expectedInvokes === 1) {
+        } elseif ($expectedInvokes === self::ONE_VIOLATION) {
             $expects = $this->once();
         } else {
             $expects = $this->exactly($expectedInvokes);
@@ -328,6 +337,36 @@ abstract class AbstractTest extends AbstractStaticTest
             ->method('addRuleViolation');
 
         return $report;
+    }
+
+    /**
+     * Get a mocked report with one violation
+     *
+     * @return Report
+     */
+    public function getReportWithOneViolation()
+    {
+        return $this->getReportMock(self::ONE_VIOLATION);
+    }
+
+    /**
+     * Get a mocked report with no violation
+     *
+     * @return Report
+     */
+    public function getReportWithNoViolation()
+    {
+        return $this->getReportMock(self::NO_VIOLATION);
+    }
+
+    /**
+     * Get a mocked report with at least one violation
+     *
+     * @return Report
+     */
+    public function getReportWithAtLeastOneViolation()
+    {
+        return $this->getReportMock(self::AL_LEAST_ONE_VIOLATION);
     }
 
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)

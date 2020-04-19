@@ -35,7 +35,7 @@ class CyclomaticComplexityTest extends AbstractTest
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
         $method = $this->getMethodMock('ccn2', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
@@ -52,7 +52,7 @@ class CyclomaticComplexityTest extends AbstractTest
     public function testRuleAppliesForValueEqualToThreshold()
     {
         $method = $this->getMethodMock('ccn2', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
@@ -69,7 +69,7 @@ class CyclomaticComplexityTest extends AbstractTest
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {
         $method = $this->getMethodMock('ccn2', 22);
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
