@@ -36,7 +36,7 @@ class WeightedMethodCountTest extends AbstractTest
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
         $class  = $this->getClassMock('wmc', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new WeightedMethodCount();
         $rule->setReport($report);
@@ -52,7 +52,7 @@ class WeightedMethodCountTest extends AbstractTest
     public function testRuleAppliesForValueEqualToThreshold()
     {
         $class  = $this->getClassMock('wmc', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new WeightedMethodCount();
         $rule->setReport($report);
@@ -68,7 +68,7 @@ class WeightedMethodCountTest extends AbstractTest
     public function testRuleNotAppliesForValueLowerThanThreshold()
     {
         $class  = $this->getClassMock('wmc', 42);
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new WeightedMethodCount();
         $rule->setReport($report);

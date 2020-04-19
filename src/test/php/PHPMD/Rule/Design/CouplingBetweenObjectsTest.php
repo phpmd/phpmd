@@ -35,7 +35,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     public function testRuleNotAppliesToClassWithCboLessThanThreshold()
     {
         $rule = new CouplingBetweenObjects();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cbo', 41));
     }
@@ -48,7 +48,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     public function testRuleAppliesToClassWithCboEqualToThreshold()
     {
         $rule = new CouplingBetweenObjects();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cbo', 42));
     }
@@ -61,7 +61,7 @@ class CouplingBetweenObjectsTest extends AbstractTest
     public function testRuleAppliesToClassWithCboGreaterThanThreshold()
     {
         $rule = new CouplingBetweenObjects();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maximum', '41');
         $rule->apply($this->getClassMock('cbo', 42));
     }

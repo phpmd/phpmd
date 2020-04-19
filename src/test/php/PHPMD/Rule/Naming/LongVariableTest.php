@@ -35,7 +35,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -48,7 +48,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -61,7 +61,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -74,7 +74,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -87,7 +87,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -100,7 +100,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
 
         $class = $this->getClass();
         $rule->apply($class);
@@ -119,7 +119,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -132,7 +132,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -145,7 +145,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 3);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
 
         $class = $this->getClass();
         $rule->apply($class);
@@ -164,7 +164,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -177,7 +177,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -190,7 +190,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -203,7 +203,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 8);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -235,7 +235,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 3);
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -280,7 +280,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -294,7 +294,7 @@ class LongVariableTest extends AbstractTest
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 }

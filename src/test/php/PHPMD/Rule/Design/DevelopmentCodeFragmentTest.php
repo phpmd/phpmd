@@ -37,7 +37,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -49,7 +49,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToMethodWithSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -73,7 +73,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -85,7 +85,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToFunctionWithSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -110,7 +110,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     {
         $rule = $this->getRule();
         $rule->addProperty('ignore-namespaces', 'true');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -122,7 +122,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
