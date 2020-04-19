@@ -520,7 +520,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
-        $message = 'Error in file "/foo/baz.php"') {
+        $message = 'Error in file "/foo/baz.php"'
+    ) {
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
