@@ -163,6 +163,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected static function createCodeResourceUriForTest()
     {
         $frame = self::getCallingTestCase();
+
         return self::createResourceUriForTest($frame['function'] . '.php');
     }
 
@@ -255,7 +256,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $builder =  new PHPBuilder();
+        $builder = new PHPBuilder();
 
         $parser = new PHPParserGeneric(
             $tokenizer,
@@ -287,6 +288,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->with($this->equalTo($metric))
                 ->will($this->returnValue($value));
         }
+
         return $class;
     }
 
@@ -313,7 +315,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a mocked function node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed  $value  The expected metric return value.
+     * @param mixed $value The expected metric return value.
      * @return \PHPMD\Node\FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
@@ -417,6 +419,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->method('apply')
                 ->with($this->isInstanceOf($expectedClass));
         }
+
         return $ruleSet;
     }
 
@@ -475,13 +478,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Creates a mocked rul violation instance.
      *
-     * @param string  $file
-     * @param string  $message
+     * @param string $file
+     * @param string $message
      * @return \PHPMD\ProcessingError
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
-        $message = 'Error in file "/foo/baz.php"') {
+        $message = 'Error in file "/foo/baz.php"'
+    ) {
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
@@ -502,7 +506,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Asserts the actual xml output matches against the expected file.
      *
-     * @param string $actualOutput     Generated xml output.
+     * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
      * @return void
      */
@@ -534,7 +538,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Asserts the actual JSON output matches against the expected file.
      *
-     * @param string $actualOutput     Generated JSON output.
+     * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
      *
      * @return void
