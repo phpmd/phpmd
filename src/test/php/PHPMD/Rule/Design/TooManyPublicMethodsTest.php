@@ -183,6 +183,9 @@ class TooManyPublicMethodsTest extends AbstractTest
         return $class;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
+     */
     private function createPublicMethod($methodName)
     {
         $astMethod = new ASTMethod($methodName);
@@ -190,6 +193,9 @@ class TooManyPublicMethodsTest extends AbstractTest
         return new MethodNode($astMethod);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
+     */
     private function createPrivateMethod($methodName)
     {
         $astMethod = new ASTMethod($methodName);
