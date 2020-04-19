@@ -291,7 +291,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
             $class->expects($this->atLeastOnce())
                 ->method('getMetric')
                 ->with($this->equalTo($metric))
-                ->will($this->returnValue($value));
+                ->willReturn($value);
         }
 
         return $class;
@@ -352,7 +352,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
         $mock->expects($this->atLeastOnce())
             ->method('getMetric')
             ->with($this->equalTo($metric))
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         return $mock;
     }
@@ -466,22 +466,22 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
 
         $ruleViolation->expects($this->any())
             ->method('getRule')
-            ->will($this->returnValue($rule));
+            ->willReturn($rule);
         $ruleViolation->expects($this->any())
             ->method('getFileName')
-            ->will($this->returnValue($fileName));
+            ->willReturn($fileName);
         $ruleViolation->expects($this->any())
             ->method('getBeginLine')
-            ->will($this->returnValue($beginLine));
+            ->willReturn($beginLine);
         $ruleViolation->expects($this->any())
             ->method('getEndLine')
-            ->will($this->returnValue($endLine));
+            ->willReturn($endLine);
         $ruleViolation->expects($this->any())
             ->method('getNamespaceName')
-            ->will($this->returnValue('TestStubPackage'));
+            ->willReturn('TestStubPackage');
         $ruleViolation->expects($this->any())
             ->method('getDescription')
-            ->will($this->returnValue($description));
+            ->willReturn($description);
 
         return $ruleViolation;
     }
@@ -506,10 +506,10 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
 
         $processingError->expects($this->any())
             ->method('getFile')
-            ->will($this->returnValue($file));
+            ->willReturn($file);
         $processingError->expects($this->any())
             ->method('getMessage')
-            ->will($this->returnValue($message));
+            ->willReturn($message);
 
         return $processingError;
     }
