@@ -230,7 +230,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      * Returns the PHP_Depend node for the calling test case.
      *
      * @param Iterator $nodes
-     * @return PHP_Depend_Code_AbstractItem
+     * @return mixed
      * @throws ErrorException
      */
     private function getNodeForCallingTestCase(Iterator $nodes)
