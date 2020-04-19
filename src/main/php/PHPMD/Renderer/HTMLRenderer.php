@@ -62,7 +62,8 @@ class HTMLRenderer extends AbstractRenderer
         $writer = $this->getWriter();
         foreach ($report->getRuleViolations() as $violation) {
             $writer->write('<tr');
-            if (++$index % 2 === 1) {
+            ++$index;
+            if ($index % 2 === 1) {
                 $writer->write(' bgcolor="lightgrey"');
             }
             $writer->write('>');
@@ -142,7 +143,8 @@ class HTMLRenderer extends AbstractRenderer
         $index = 0;
         foreach ($report->getErrors() as $error) {
             $writer->write('<tr');
-            if (++$index % 2 === 1) {
+            ++$index;
+            if ($index % 2 === 1) {
                 $writer->write(' bgcolor="lightgrey"');
             }
             $writer->write('>');
