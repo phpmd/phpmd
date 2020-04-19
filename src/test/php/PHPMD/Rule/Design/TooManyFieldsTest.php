@@ -60,7 +60,7 @@ class TooManyFieldsTest extends AbstractTest
     public function testRuleAppliesToClassesWithMoreFieldsThanThreshold()
     {
         $rule = new TooManyFields();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maxfields', '23');
         $rule->apply($this->getClassMock('vars', 42));
     }

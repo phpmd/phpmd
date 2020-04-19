@@ -67,7 +67,7 @@ class CamelCasePropertyNameTest extends AbstractTest
     public function testRuleDoesApplyForPropertyNameWithUnderscores()
     {
         // Test property name with underscores
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);
@@ -83,7 +83,7 @@ class CamelCasePropertyNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);

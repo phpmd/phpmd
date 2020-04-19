@@ -35,7 +35,7 @@ class LongClassTest extends AbstractTest
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
         $class  = $this->getClassMock('loc', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new LongClass();
         $rule->setReport($report);
@@ -53,7 +53,7 @@ class LongClassTest extends AbstractTest
     public function testRuleAppliesForValueEqualToThreshold()
     {
         $class  = $this->getClassMock('loc', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new LongClass();
         $rule->setReport($report);

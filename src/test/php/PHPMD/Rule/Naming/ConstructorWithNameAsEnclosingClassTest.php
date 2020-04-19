@@ -34,7 +34,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -46,7 +46,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

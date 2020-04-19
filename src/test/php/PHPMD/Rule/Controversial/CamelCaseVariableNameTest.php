@@ -32,7 +32,7 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForInvariableNameWithUnderscore()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
@@ -48,7 +48,7 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForVariableNameWithCapital()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);

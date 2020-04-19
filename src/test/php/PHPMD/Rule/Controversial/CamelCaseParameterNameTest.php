@@ -32,7 +32,7 @@ class CamelCaseParameterNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForInparameterNameWithUnderscore()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         foreach ($this->getClass()->getMethods() as $method) {
             $rule = new CamelCaseParameterName();
@@ -50,7 +50,7 @@ class CamelCaseParameterNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForParameterNameWithCapital()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         foreach ($this->getClass()->getMethods() as $method) {
             $rule = new CamelCaseParameterName();

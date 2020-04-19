@@ -35,7 +35,7 @@ class BooleanGetMethodNameTest extends AbstractTest
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -48,7 +48,7 @@ class BooleanGetMethodNameTest extends AbstractTest
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -61,7 +61,7 @@ class BooleanGetMethodNameTest extends AbstractTest
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -74,7 +74,7 @@ class BooleanGetMethodNameTest extends AbstractTest
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

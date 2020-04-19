@@ -62,7 +62,7 @@ class TooManyMethodsTest extends AbstractTest
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
     {
         $rule = new TooManyMethods();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maxmethods', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));

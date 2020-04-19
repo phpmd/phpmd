@@ -48,7 +48,7 @@ class GotoStatementTest extends AbstractTest
     public function testRuleAppliesToMethodWithGotoStatement()
     {
         $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -72,7 +72,7 @@ class GotoStatementTest extends AbstractTest
     public function testRuleAppliesToFunctionWithGotoStatement()
     {
         $rule = new GotoStatement();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 }

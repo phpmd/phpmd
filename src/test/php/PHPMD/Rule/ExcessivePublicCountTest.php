@@ -47,7 +47,7 @@ class ExcessivePublicCountTest extends AbstractTest
     public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold()
     {
         $rule = new ExcessivePublicCount();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('cis', 42));
     }
@@ -60,7 +60,7 @@ class ExcessivePublicCountTest extends AbstractTest
     public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold()
     {
         $rule = new ExcessivePublicCount();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '23');
         $rule->apply($this->getClassMock('cis', 42));
     }

@@ -53,7 +53,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     {
         // Test method name with capital at the beginning
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -72,7 +72,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     {
         // Test method name with underscores
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -90,7 +90,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleDoesApplyForValidMethodNameWithUnderscoreWhenNotAllowed()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -147,7 +147,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleDoesApplyForTestMethodWithUnderscoreWhenNotAllowed()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -183,7 +183,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -201,7 +201,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleAppliesToTestMethodWithUnderscoreFollowedByCapital()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);

@@ -83,7 +83,7 @@ class EmptyCatchBlockTest extends AbstractTest
     public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions()
     {
         $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 }

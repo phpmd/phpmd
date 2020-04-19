@@ -118,7 +118,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleAppliesToFunctionWithNotImportedDependencies()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 }

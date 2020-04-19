@@ -22,8 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the undefined variable rule.
  *
- * @covers \PHPMD\Rule\CleanCode\UndefinedVariable
- * @covers \PHPMD\Rule\AbstractLocalVariable
+ * @coversDefaultClass  \PHPMD\Rule\CleanCode\UndefinedVariable
  */
 class UndefinedVariableTest extends AbstractTest
 {
@@ -35,7 +34,7 @@ class UndefinedVariableTest extends AbstractTest
     public function testRuleAppliesToUndefinedVariable()
     {
         $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -47,7 +46,7 @@ class UndefinedVariableTest extends AbstractTest
     public function testRuleAppliesToUndefinedVariableWithDefinedVariable()
     {
         $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -59,7 +58,7 @@ class UndefinedVariableTest extends AbstractTest
     public function testRuleAppliesToUndefinedVariableOnArray()
     {
         $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -71,7 +70,7 @@ class UndefinedVariableTest extends AbstractTest
     public function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
     {
         $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

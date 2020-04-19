@@ -35,7 +35,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToFunctionUnusedFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -59,7 +59,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToMethodUnusedFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -92,7 +92,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

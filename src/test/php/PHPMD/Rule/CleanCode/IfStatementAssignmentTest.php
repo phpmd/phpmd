@@ -66,14 +66,14 @@ class IfStatementAssignmentTest extends AbstractTest
     public function testRuleAppliesToFunctions()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
     public function testRuleAppliesMultipleIfConditions()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
