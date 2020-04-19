@@ -49,9 +49,9 @@ abstract class AbstractTest extends AbstractStaticTest
     const ONE_VIOLATION = 1;
 
     /**
-     * Get a list of files that should trigger a rule violation
+     * Get a list of files that should trigger a rule violation.
      *
-     * By default, files named like "testRuleAppliesTo*", but it can be overridden in a sub-class.
+     * By default, files named like "testRuleAppliesTo*", but it can be overridden in sub-class.
      *
      * @return string[]
      */
@@ -61,9 +61,9 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Get a list of files that should not trigger a rule violation
+     * Get a list of files that should not trigger a rule violation.
      *
-     * By default, files named like "testRuleDoesNotApplyTo*", but it can be overridden in a sub-class.
+     * By default, files named like "testRuleDoesNotApplyTo*", but it can be overridden in sub-class.
      *
      * @return string[]
      */
