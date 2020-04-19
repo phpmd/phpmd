@@ -46,6 +46,8 @@
     "mikey179/vfsstream": "^1.6.4",
     "gregwar/rst": "^1.0",
     "easy-doc/easy-doc": "0.0.0 || ^1.3.2",
+    "slevomat/coding-standard": "^6.2",
+    "easy-doc/easy-doc": "0.0.0 || ^1.3.2",
     "ext-simplexml": "*",
     "ext-json": "*"
   },
