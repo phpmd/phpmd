@@ -405,7 +405,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $expectedClass Optional class name for apply() expected at least once.
      * @param mixed $count How often should apply() be called?
-     * @return \PHPMD\RuleSet
+     * @return RuleSet|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
