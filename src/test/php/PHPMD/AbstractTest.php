@@ -125,7 +125,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethod()
     {
@@ -143,7 +143,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first function found in a source files related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\FunctionNode
+     * @return FunctionNode
      */
     protected function getFunction()
     {
@@ -235,121 +235,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return glob($this->createResourceUriForCalledClass($pattern));
     }
 
-    private static function getTestPathFromClassName($className)
-    {
-        $regexp = '([a-z]([0-9]+)Test$)i';
-
-        if (preg_match($regexp, $className, $match)) {
-            $parts = explode('\\', $className);
-
-            return $parts[count($parts) - 2] . '/' . $match[1];
-        }
-
-        return strtr(substr($className, 6, -4), '\\', '/');
-    }
-
-    private static function getResourceFilePath($directory, $file)
-    {
-        return sprintf(
-            '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
-            $directory,
-            $file
-        );
-    }
-
-    private static function getResourceFilePathFromClassName($className, $localPath)
-    {
-        return self::getResourceFilePath(self::getTestPathFromClassName($className), $localPath);
-    }
-
-    /**
-     * Parses the source code for the calling test method and returns the first
-     * package node found in the parsed file.
-     *
-     * @return PHP_Depend_Code_Package
-     */
-    private function parseTestCaseSource()
-    {
-        return $this->parseSource($this->createCodeResourceUriForTest());
-    }
-
-    /**
-     * Returns the trace frame of the calling test case.
-     *
-     * @return array
-     * @throws \ErrorException
-     */
-    private static function getCallingTestCase()
-    {
-        foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
-                return $frame;
-            }
-        }
-        throw new \ErrorException('Cannot locate calling test case.');
-    }
-
-    /**
-     * Returns the PHP_Depend node having the given name.
-     *
-     * @param \Iterator $nodes
-     * @return PHP_Depend_Code_AbstractItem
-     * @throws \ErrorException
-     */
-    private function getNodeByName(\Iterator $nodes, $name)
-    {
-        foreach ($nodes as $node) {
-            if ($node->getName() === $name) {
-                return $node;
-            }
-        }
-        throw new \ErrorException("Cannot locate node named $name.");
-    }
-
-    /**
-     * Returns the PHP_Depend node for the calling test case.
-     *
-     * @param \Iterator $nodes
-     * @return PHP_Depend_Code_AbstractItem
-     * @throws \ErrorException
-     */
-    private function getNodeForCallingTestCase(\Iterator $nodes)
-    {
-        $frame = $this->getCallingTestCase();
-
-        return $this->getNodeByName($nodes, $frame['function']);
-    }
-
-    /**
-     * Parses the source of the given file and returns the first package found
-     * in that file.
-     *
-     * @param string $sourceFile
-     * @return \PDepend\Source\AST\ASTNamespace
-     * @throws \ErrorException
-     */
-    private function parseSource($sourceFile)
-    {
-        if (file_exists($sourceFile) === false) {
-            throw new \ErrorException('Cannot locate source file: ' . $sourceFile);
-        }
-
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile($sourceFile);
-
-        $builder =  new PHPBuilder();
-
-        $parser = new PHPParserGeneric(
-            $tokenizer,
-            $builder,
-            new MemoryCacheDriver()
-        );
-        $parser->parse();
-
-        return $builder->getNamespaces()->current();
-    }
-
     /**
      * Creates a mocked class node instance.
      *
@@ -370,6 +255,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->with($this->equalTo($metric))
                 ->will($this->returnValue($value));
         }
+
         return $class;
     }
 
@@ -378,18 +264,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $metric
      * @param mixed $value
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
     {
-        return $this->initFunctionOrMethod(
-            $this->getMockFromBuilder(
-                $this->getMockBuilder('PHPMD\\Node\\MethodNode')
-                    ->setConstructorArgs(array(new ASTMethod('fooBar')))
-            ),
-            $metric,
-            $value
-        );
+        return $this->createFunctionOrMethodMock(new ASTMethod('fooBar'), $metric, $value);
     }
 
     /**
@@ -397,27 +276,20 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $metric The metric acronym used by PHP_Depend.
      * @param mixed  $value  The expected metric return value.
-     * @return \PHPMD\Node\FunctionNode
+     * @return FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
-        return $this->initFunctionOrMethod(
-            $this->getMockFromBuilder(
-                $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
-                    ->setConstructorArgs(array(new ASTFunction('fooBar')))
-            ),
-            $metric,
-            $value
-        );
+        return $this->createFunctionOrMethodMock(new ASTFunction('fooBar'), $metric, $value);
     }
 
     /**
      * Initializes the getMetric() method of the given function or method node.
      *
-     * @param \PHPMD\Node\FunctionNode|\PHPMD\Node\MethodNode $mock
+     * @param FunctionNode|MethodNode $mock
      * @param string $metric
      * @param mixed $value
-     * @return \PHPMD\Node\FunctionNode|\PHPMD\Node\MethodNode
+     * @return FunctionNode|MethodNode
      */
     protected function initFunctionOrMethod($mock, $metric, $value)
     {
@@ -709,5 +581,138 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected static function createTempFileUri()
     {
         return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
+    }
+
+    private static function getTestPathFromClassName($className)
+    {
+        $regexp = '([a-z]([0-9]+)Test$)i';
+
+        if (preg_match($regexp, $className, $match)) {
+            $parts = explode('\\', $className);
+
+            return $parts[count($parts) - 2] . '/' . $match[1];
+        }
+
+        return strtr(substr($className, 6, -4), '\\', '/');
+    }
+
+    private static function getResourceFilePath($directory, $file)
+    {
+        return sprintf(
+            '%s/../../resources/files/%s/%s',
+            dirname(__FILE__),
+            $directory,
+            $file
+        );
+    }
+
+    private static function getResourceFilePathFromClassName($className, $localPath)
+    {
+        return self::getResourceFilePath(self::getTestPathFromClassName($className), $localPath);
+    }
+
+    /**
+     * Returns the trace frame of the calling test case.
+     *
+     * @return array
+     * @throws \ErrorException
+     */
+    private static function getCallingTestCase()
+    {
+        foreach (debug_backtrace() as $frame) {
+            if (strpos($frame['function'], 'test') === 0) {
+                return $frame;
+            }
+        }
+        throw new \ErrorException('Cannot locate calling test case.');
+    }
+
+    /**
+     * Parses the source code for the calling test method and returns the first
+     * package node found in the parsed file.
+     *
+     * @return PHP_Depend_Code_Package
+     */
+    private function parseTestCaseSource()
+    {
+        return $this->parseSource($this->createCodeResourceUriForTest());
+    }
+
+    /**
+     * @param ASTFunction|ASTMethod $mock
+     * @param string                $metric The metric acronym used by PHP_Depend.
+     * @param mixed                 $value  The expected metric return value.
+     * @return FunctionNode|MethodNode
+     */
+    private function createFunctionOrMethodMock($mock, $metric = null, $value = null)
+    {
+        return $this->initFunctionOrMethod(
+            $this->getMockFromBuilder(
+                $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                    ->setConstructorArgs(array($mock))
+            ),
+            $metric,
+            $value
+        );
+    }
+
+    /**
+     * Returns the PHP_Depend node having the given name.
+     *
+     * @param \Iterator $nodes
+     * @return PHP_Depend_Code_AbstractItem
+     * @throws \ErrorException
+     */
+    private function getNodeByName(\Iterator $nodes, $name)
+    {
+        foreach ($nodes as $node) {
+            if ($node->getName() === $name) {
+                return $node;
+            }
+        }
+        throw new \ErrorException("Cannot locate node named $name.");
+    }
+
+    /**
+     * Returns the PHP_Depend node for the calling test case.
+     *
+     * @param \Iterator $nodes
+     * @return PHP_Depend_Code_AbstractItem
+     * @throws \ErrorException
+     */
+    private function getNodeForCallingTestCase(\Iterator $nodes)
+    {
+        $frame = $this->getCallingTestCase();
+
+        return $this->getNodeByName($nodes, $frame['function']);
+    }
+
+    /**
+     * Parses the source of the given file and returns the first package found
+     * in that file.
+     *
+     * @param string $sourceFile
+     * @return \PDepend\Source\AST\ASTNamespace
+     * @throws \ErrorException
+     */
+    private function parseSource($sourceFile)
+    {
+        if (file_exists($sourceFile) === false) {
+            throw new \ErrorException('Cannot locate source file: ' . $sourceFile);
+        }
+
+        $tokenizer = new PHPTokenizerInternal();
+        $tokenizer->setSourceFile($sourceFile);
+
+        $builder =  new PHPBuilder();
+
+        $parser = new PHPParserGeneric(
+            $tokenizer,
+            $builder,
+            new MemoryCacheDriver()
+        );
+        $parser->parse();
+
+        return $builder->getNamespaces()->current();
     }
 }
