@@ -384,7 +384,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
 
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $builder->getMock();
         }
 
@@ -398,7 +398,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function getRuleMock()
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         }
 
