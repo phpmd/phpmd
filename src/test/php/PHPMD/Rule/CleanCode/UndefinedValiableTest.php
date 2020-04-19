@@ -98,4 +98,40 @@ class UndefinedVariableTest extends AbstractTest
         $rule->setReport($this->getReportMock(0));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleDoesNotApplyToReferences
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToReferences()
+    {
+        $rule = new UndefinedVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToKeyValuePair
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToKeyValuePair()
+    {
+        $rule = new UndefinedVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToKeyReferencePair
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToKeyReferencePair()
+    {
+        $rule = new UndefinedVariable();
+        $rule->setReport($this->getReportMock(0));
+        $rule->apply($this->getMethod());
+    }
 }
