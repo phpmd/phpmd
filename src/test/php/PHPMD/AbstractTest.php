@@ -278,7 +278,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $metric
      * @param mixed $value
-     * @return ClassNode
+     * @return ClassNode|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getClassMock($metric = null, $value = null)
     {
@@ -361,7 +361,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a mocked report instance.
      *
      * @param integer $expectedInvokes Number of expected invokes.
-     * @return Report
+     * @return Report|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getReportMock($expectedInvokes = -1)
     {
@@ -491,7 +491,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @param string $file
      * @param string $message
-     * @return ProcessingError
+     * @return ProcessingError|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
