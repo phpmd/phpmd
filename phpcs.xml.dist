@@ -12,6 +12,7 @@
     <rule ref="PSR2"/>
 
     <!-- Sniffs from Slevomat standard -->
+    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
 	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
 </ruleset>
