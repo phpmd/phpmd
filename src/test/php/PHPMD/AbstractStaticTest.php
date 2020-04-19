@@ -88,7 +88,7 @@ abstract class AbstractStaticTest extends \PHPUnit_Framework_TestCase
      * Convert [1, 'a', $any] into [[1], ['a'], [$any]].
      *
      * @param mixed $values list of values.
-     * @return mixed[]
+     * @return array
      */
     protected static function getValuesAsArrays($values)
     {

@@ -27,6 +27,8 @@ use PHPMD\AbstractTest;
 class UndefinedVariableTest extends AbstractTest
 {
     /**
+     * Get the rule under test.
+     *
      * @return UndefinedVariable
      */
     public function getRule()
@@ -35,18 +37,26 @@ class UndefinedVariableTest extends AbstractTest
     }
 
     /**
-     * @dataProvider getSuccessCases
+     * Tests the rule for cases where it should apply.
+     *
+     * @param string $file The test file to test against.
+     * @return void
+     * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesToSuccessFiles($file)
+    public function testRuleAppliesTo($file)
     {
-        $this->expectRuleInvokesForFile($this->getRule(), static::ONE_VIOLATION, $file);
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::ONE_VIOLATION, $file);
     }
 
     /**
-     * @dataProvider getFailureCases
+     * Tests the rule for cases where it should not apply.
+     *
+     * @param string $file The test file to test against.
+     * @return void
+     * @dataProvider getNotApplyingCases
      */
-    public function testRuleDoesNotApplyToFailureFiles($file)
+    public function testRuleDoesNotApplyTo($file)
     {
-        $this->expectRuleInvokesForFile($this->getRule(), static::NO_VIOLATION, $file);
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
 }

@@ -51,27 +51,39 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * @return string[]
      */
-    public function getSuccessFiles()
+    public function getApplyingFiles()
     {
         return $this->getFilesForCalledClass('testRuleAppliesTo*');
     }
 
     /**
+     * that are named like "testRuleDoesNotApplyTo*".
+     *
      * @return string[]
      */
-    public function getFailureFiles()
+    public function getNotApplyingFiles()
     {
         return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
     }
 
-    public function getSuccessCases()
+    /**
+     * Get a list of test files specified by getApplyingFiles() as an array of 1-length arguments lists.
+     *
+     * @return string[][]
+     */
+    public function getApplyingCases()
     {
-        return static::getValuesAsArrays($this->getSuccessFiles());
+        return static::getValuesAsArrays($this->getApplyingFiles());
     }
 
-    public function getFailureCases()
+    /**
+     * Get a list of test files specified by getNotApplyingFiles() as an array of 1-length arguments lists.
+     *
+     * @return string[][]
+     */
+    public function getNotApplyingCases()
     {
-        return static::getValuesAsArrays($this->getFailureFiles());
+        return static::getValuesAsArrays($this->getNotApplyingFiles());
     }
 
     /**
@@ -189,7 +201,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param int    $expectedInvokes Count of expected invocations.
      * @param string $file            Test file containing a method with the same name to be tested.
      */
-    protected function expectRuleInvokesForFile(Rule $rule, $expectedInvokes, $file)
+    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
         $rule->setReport($this->getReportMock($expectedInvokes));
         $rule->apply($this->getMethodNodeForTestFile($file));
@@ -395,8 +407,8 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string  $expectedClass Optional class name for apply() expected at least once.
-     * @param integer $count How often should apply() be called?
+     * @param string     $expectedClass Optional class name for apply() expected at least once.
+     * @param int|string $count         How often should apply() be called?
      * @return RuleSet
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
