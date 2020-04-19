@@ -2,9 +2,16 @@
 <ruleset name="PHPMD">
     <description>The coding standard for PHPMD.</description>
 
+    <!-- Include Slevomat standard -->
+
+    <config name="installed_paths" value="../../slevomat/coding-standard,../../../slevomat/coding-standard,../vendor/slevomat/coding-standard"/>
+
     <arg name="extensions" value="php"/>
 
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
+
+    <!-- Sniffs from Slevomat standard -->
+	<rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
 </ruleset>
