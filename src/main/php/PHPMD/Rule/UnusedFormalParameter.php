@@ -174,7 +174,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
 
     /**
-     * Removes all the regular variables from a given node 
+     * Removes all the regular variables from a given node
      *
      * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
      * @return void
@@ -191,7 +191,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
     
     /**
-     * Removes all the compound variables from a given node 
+     * Removes all the compound variables from a given node
      *
      * Such as
      *
