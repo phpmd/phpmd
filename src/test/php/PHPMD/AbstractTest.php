@@ -20,6 +20,7 @@ namespace PHPMD;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -55,7 +56,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Returns the first class found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\ClassNode
+     * @return ClassNode
      */
     protected function getClass()
     {
@@ -70,7 +71,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Returns the first interface found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\InterfaceNode
+     * @return InterfaceNode
      */
     protected function getInterface()
     {
@@ -82,7 +83,7 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * @return \PHPMD\Node\InterfaceNode
+     * @return TraitNode
      */
     protected function getTrait()
     {
@@ -211,9 +212,9 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked class node instance.
      *
-     * @param string $metric
-     * @param mixed $value
-     * @return \PHPMD\Node\ClassNode
+     * @param string  $metric
+     * @param integer $value
+     * @return ClassNode
      */
     protected function getClassMock($metric = null, $value = null)
     {
@@ -235,8 +236,8 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked method node instance.
      *
-     * @param string $metric
-     * @param mixed $value
+     * @param string  $metric
+     * @param integer $value
      * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
@@ -329,9 +330,9 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string $expectedClass Optional class name for apply() expected at least once.
-     * @param mixed $count How often should apply() be called?
-     * @return \PHPMD\RuleSet
+     * @param string  $expectedClass Optional class name for apply() expected at least once.
+     * @param integer $count How often should apply() be called?
+     * @return RuleSet
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
@@ -431,7 +432,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Parses the source code for the calling test method and returns the first
      * package node found in the parsed file.
      *
-     * @return PHP_Depend_Code_Package
+     * @return ASTNamespace
      */
     private function parseTestCaseSource()
     {
@@ -493,7 +494,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * in that file.
      *
      * @param string $sourceFile
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      * @throws \ErrorException
      */
     private function parseSource($sourceFile)
