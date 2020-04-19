@@ -48,14 +48,14 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      *
      * @var string $_filesDirectory
      */
-    private static $filesDirectory = null;
+    private static $filesDirectory;
 
     /**
      * Original directory is used to reset a changed working directory.
      *
      * @return void
      */
-    private static $originalWorkingDirectory = null;
+    private static $originalWorkingDirectory;
 
     /**
      * Temporary files created by a test.
