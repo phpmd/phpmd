@@ -207,7 +207,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     private function parseTestCaseSource()
     {
-        return $this->parseSource($this->createCodeResourceUriForTest());
+        return $this->parseSource(self::createCodeResourceUriForTest());
     }
 
     /**
@@ -235,7 +235,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     private function getNodeForCallingTestCase(Iterator $nodes)
     {
-        $frame = $this->getCallingTestCase();
+        $frame = self::getCallingTestCase();
         foreach ($nodes as $node) {
             if ($node->getName() === $frame['function']) {
                 return $node;
