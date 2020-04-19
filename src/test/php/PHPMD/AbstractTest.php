@@ -375,6 +375,36 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         return $report;
     }
 
+    /**
+     * Get a mocked report with one violation
+     *
+     * @return Report
+     */
+    public function getReportWithOneViolation()
+    {
+        return $this->getReportMock(1);
+    }
+
+    /**
+     * Get a mocked report with no violation
+     *
+     * @return Report
+     */
+    public function getReportWithNoViolation()
+    {
+        return $this->getReportMock(0);
+    }
+
+    /**
+     * Get a mocked report with at least one violation
+     *
+     * @return Report
+     */
+    public function getReportWithAtLeastOneViolation()
+    {
+        return $this->getReportMock(-1);
+    }
+
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
     {
         if (version_compare(phpversion(), '7.4.0-dev', '<')) {
