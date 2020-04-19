@@ -36,29 +36,8 @@ use PHPUnit_Framework_MockObject_MockBuilder;
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends AbstractStaticTest
 {
-    /**
-     * Directory with test files.
-     *
-     * @var string $_filesDirectory
-     */
-    private static $filesDirectory = null;
-
-    /**
-     * Original directory is used to reset a changed working directory.
-     *
-     * @return void
-     */
-    private static $originalWorkingDirectory = null;
-
-    /**
-     * Temporary files created by a test.
-     *
-     * @var array(string)
-     */
-    private static $tempFiles = array();
-
     /**
      * Resets a changed working directory.
      *
@@ -66,15 +45,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if (self::$originalWorkingDirectory !== null) {
-            chdir(self::$originalWorkingDirectory);
-        }
-        self::$originalWorkingDirectory = null;
-
-        foreach (self::$tempFiles as $tempFile) {
-            unlink($tempFile);
-        }
-        self::$tempFiles = array();
+        static::returnToOriginalWorkingDirectory();
+        static::cleanupTempFiles();
 
         parent::tearDown();
     }
@@ -195,7 +167,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function createCodeResourceUriForTest()
     {
-        $frame = self::getCallingTestCase();
+        $frame = static::getCallingTestCase();
+
         return self::createResourceUriForTest($frame['function'] . '.php');
     }
 
@@ -208,9 +181,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected static function createResourceUriForTest($localPath)
     {
-        $frame = self::getCallingTestCase();
+        $frame = static::getCallingTestCase();
 
-        return self::getResourceFilePathFromClassName($frame['class'], $localPath);
+        return static::getResourceFilePathFromClassName($frame['class'], $localPath);
     }
 
     /**
@@ -268,7 +241,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMethodMock($metric = null, $value = null)
     {
-        return $this->createFunctionOrMethodMock(new ASTMethod('fooBar'), $metric, $value);
+        return $this->createFunctionOrMethodMock('PHPMD\\Node\\MethodNode', new ASTMethod('fooBar'), $metric, $value);
     }
 
     /**
@@ -280,7 +253,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
-        return $this->createFunctionOrMethodMock(new ASTFunction('fooBar'), $metric, $value);
+        return $this->createFunctionOrMethodMock('PHPMD\\Node\\FunctionNode', new ASTFunction('fooBar'), $metric, $value);
     }
 
     /**
@@ -455,179 +428,6 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Asserts the actual xml output matches against the expected file.
-     *
-     * @param string $actualOutput     Generated xml output.
-     * @param string $expectedFileName File with expected xml result.
-     * @return void
-     */
-    public static function assertXmlEquals($actualOutput, $expectedFileName)
-    {
-        $actual = simplexml_load_string($actualOutput);
-        // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
-        }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
-        }
-
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
-        );
-
-        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
-
-        self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
-    }
-
-    /**
-     * Asserts the actual JSON output matches against the expected file.
-     *
-     * @param string $actualOutput     Generated JSON output.
-     * @param string $expectedFileName File with expected JSON result.
-     *
-     * @return void
-     */
-    public static function assertJsonEquals($actualOutput, $expectedFileName)
-    {
-        $actual = json_decode($actualOutput, true);
-        // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
-        }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
-        }
-
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
-        );
-
-        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
-
-        self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
-    }
-
-    /**
-     * This method initializes the test environment, it configures the files
-     * directory and sets the include_path for svn versions.
-     *
-     * @return void
-     */
-    public static function setUpBeforeClass()
-    {
-        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
-
-        if (false === strpos(get_include_path(), self::$filesDirectory)) {
-            set_include_path(
-                sprintf(
-                    '%s%s%s%s%s',
-                    get_include_path(),
-                    PATH_SEPARATOR,
-                    self::$filesDirectory,
-                    PATH_SEPARATOR,
-                    realpath(__DIR__ . '/../')
-                )
-            );
-        }
-
-        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
-        date_default_timezone_set('UTC');
-    }
-
-    /**
-     * Changes the working directory for a single test.
-     *
-     * @param string $localPath The temporary working directory.
-     * @return void
-     */
-    protected static function changeWorkingDirectory($localPath = '')
-    {
-        self::$originalWorkingDirectory = getcwd();
-
-        if (0 === preg_match('(^([A-Z]:|/))', $localPath)) {
-            $localPath = self::createFileUri($localPath);
-        }
-        chdir($localPath);
-    }
-
-    /**
-     * Creates a full filename for a test content in the <em>_files</b> directory.
-     *
-     * @param string $localPath
-     * @return string
-     */
-    protected static function createFileUri($localPath = '')
-    {
-        return self::$filesDirectory . '/' . $localPath;
-    }
-
-    /**
-     * Creates a file uri for a temporary test file.
-     *
-     * @return string
-     */
-    protected static function createTempFileUri()
-    {
-        return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
-    }
-
-    private static function getTestPathFromClassName($className)
-    {
-        $regexp = '([a-z]([0-9]+)Test$)i';
-
-        if (preg_match($regexp, $className, $match)) {
-            $parts = explode('\\', $className);
-
-            return $parts[count($parts) - 2] . '/' . $match[1];
-        }
-
-        return strtr(substr($className, 6, -4), '\\', '/');
-    }
-
-    private static function getResourceFilePath($directory, $file)
-    {
-        return sprintf(
-            '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
-            $directory,
-            $file
-        );
-    }
-
-    private static function getResourceFilePathFromClassName($className, $localPath)
-    {
-        return self::getResourceFilePath(self::getTestPathFromClassName($className), $localPath);
-    }
-
-    /**
-     * Returns the trace frame of the calling test case.
-     *
-     * @return array
-     * @throws \ErrorException
-     */
-    private static function getCallingTestCase()
-    {
-        foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
-                return $frame;
-            }
-        }
-        throw new \ErrorException('Cannot locate calling test case.');
-    }
-
-    /**
      * Parses the source code for the calling test method and returns the first
      * package node found in the parsed file.
      *
@@ -639,16 +439,17 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string                $mockBuilder
      * @param ASTFunction|ASTMethod $mock
      * @param string                $metric The metric acronym used by PHP_Depend.
      * @param mixed                 $value  The expected metric return value.
      * @return FunctionNode|MethodNode
      */
-    private function createFunctionOrMethodMock($mock, $metric = null, $value = null)
+    private function createFunctionOrMethodMock($mockBuilder, $mock, $metric = null, $value = null)
     {
         return $this->initFunctionOrMethod(
             $this->getMockFromBuilder(
-                $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
+                $this->getMockBuilder($mockBuilder)
                     ->setConstructorArgs(array($mock))
             ),
             $metric,
