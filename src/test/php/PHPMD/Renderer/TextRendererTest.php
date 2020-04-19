@@ -44,7 +44,7 @@ class TextRendererTest extends AbstractTest
             $this->getRuleViolationMock('/foo.php', 3),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
@@ -83,7 +83,7 @@ class TextRendererTest extends AbstractTest
             new ProcessingError('Failed for file "/tmp/baz.php".'),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator(array())));

@@ -33,7 +33,7 @@ class CamelCasePropertyNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidPropertyName()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);
@@ -50,7 +50,7 @@ class CamelCasePropertyNameTest extends AbstractTest
     public function testRuleDoesNotApplyForPropertyNameWithCapital()
     {
         // Test property name with capital at the beginning
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);
@@ -99,7 +99,7 @@ class CamelCasePropertyNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);
@@ -115,7 +115,7 @@ class CamelCasePropertyNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);

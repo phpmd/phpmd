@@ -58,7 +58,7 @@ class RuleSetTest extends AbstractTest
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
-        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->setReport($this->getReportWithNoViolation());
         $ruleSet->apply($this->getClass());
 
         $this->assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
@@ -72,7 +72,7 @@ class RuleSetTest extends AbstractTest
     public function testApplyInvokesRuleWhenStrictModeIsSet()
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
-        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->setReport($this->getReportWithNoViolation());
         $ruleSet->setStrict();
 
         $class = $this->getClass();

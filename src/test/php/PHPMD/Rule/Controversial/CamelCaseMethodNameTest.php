@@ -34,7 +34,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleDoesNotApplyForValidMethodName()
     {
         //$method = $this->getMethod();
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -108,7 +108,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleDoesNotApplyForValidMethodNameWithUnderscoreWhenAllowed()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
@@ -165,7 +165,7 @@ class CamelCaseMethodNameTest extends AbstractTest
     public function testRuleDoesNotApplyForTestMethodWithUnderscoreWhenAllowed()
     {
         $method = $this->getMethod();
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);

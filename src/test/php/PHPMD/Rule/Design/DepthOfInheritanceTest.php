@@ -34,7 +34,7 @@ class DepthOfInheritanceTest extends AbstractTest
     public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold()
     {
         $rule = new DepthOfInheritance();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('dit', 41));
     }

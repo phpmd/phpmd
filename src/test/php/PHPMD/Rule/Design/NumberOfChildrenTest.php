@@ -34,7 +34,7 @@ class NumberOfChildrenTest extends AbstractTest
     public function testRuleNotAppliesToClassWithChildrenLessThanThreshold()
     {
         $rule = new NumberOfChildren();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('nocc', 41));
     }

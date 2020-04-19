@@ -34,7 +34,7 @@ class ExitExpressionTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutExitExpression()
     {
         $rule = new ExitExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -70,7 +70,7 @@ class ExitExpressionTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutExitExpression()
     {
         $rule = new ExitExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 

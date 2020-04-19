@@ -37,7 +37,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -73,7 +73,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -122,7 +122,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 

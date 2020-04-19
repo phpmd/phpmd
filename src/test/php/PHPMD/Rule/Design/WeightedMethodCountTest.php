@@ -68,7 +68,7 @@ class WeightedMethodCountTest extends AbstractTest
     public function testRuleNotAppliesForValueLowerThanThreshold()
     {
         $class  = $this->getClassMock('wmc', 42);
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new WeightedMethodCount();
         $rule->setReport($report);

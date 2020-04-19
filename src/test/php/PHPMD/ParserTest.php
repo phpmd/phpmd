@@ -44,7 +44,7 @@ class ParserTest extends AbstractTest
 
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\ClassNode'));
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitClass($mock);
     }
 
@@ -63,7 +63,7 @@ class ParserTest extends AbstractTest
 
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitClass($mock);
     }
 
@@ -76,7 +76,7 @@ class ParserTest extends AbstractTest
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\MethodNode'));
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitMethod($this->getPHPDependMethodMock());
     }
 
@@ -90,7 +90,7 @@ class ParserTest extends AbstractTest
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitMethod($this->getPHPDependMethodMock(null));
     }
 
@@ -103,7 +103,7 @@ class ParserTest extends AbstractTest
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\FunctionNode'));
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitFunction($this->getPHPDependFunctionMock());
     }
 
@@ -117,7 +117,7 @@ class ParserTest extends AbstractTest
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
-        $adapter->setReport($this->getReportMock(0));
+        $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitFunction($this->getPHPDependFunctionMock(null));
     }
 
@@ -129,7 +129,7 @@ class ParserTest extends AbstractTest
      */
     public function testParserStoreParsingExceptionsInReport()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('addError');
 

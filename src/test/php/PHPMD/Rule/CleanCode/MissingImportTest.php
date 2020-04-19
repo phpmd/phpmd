@@ -35,7 +35,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleNotAppliesToClassWithoutAnyDependencies()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -49,7 +49,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -77,7 +77,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -90,7 +90,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutAnyDependencies()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -104,7 +104,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithOnlyImportedDependencies()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 

@@ -24,35 +24,35 @@ class IfStatementAssignmentTest extends AbstractTest
     public function testRuleNotAppliesInsideClosure()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesInsideClosureCallbacks()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToIfsWithoutAssignment()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToIfsWithConditionsOnly()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToLogicalOperators()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 

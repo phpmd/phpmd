@@ -63,7 +63,7 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidVariableName()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
@@ -78,7 +78,7 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForStaticVariableAccess()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
@@ -94,7 +94,7 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);

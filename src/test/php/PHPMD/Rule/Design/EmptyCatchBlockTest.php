@@ -35,7 +35,7 @@ class EmptyCatchBlockTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutTryCatchBlock()
     {
         $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -59,7 +59,7 @@ class EmptyCatchBlockTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock()
     {
         $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -71,7 +71,7 @@ class EmptyCatchBlockTest extends AbstractTest
     public function testRuleNotAppliesToCatchBlockWithComments()
     {
         $rule = new EmptyCatchBlock();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 

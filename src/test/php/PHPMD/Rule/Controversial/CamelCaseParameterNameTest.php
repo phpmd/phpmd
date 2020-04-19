@@ -67,7 +67,7 @@ class CamelCaseParameterNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidParameterName()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         foreach ($this->getClass()->getMethods() as $method) {
             $rule = new CamelCaseParameterName();
@@ -85,7 +85,7 @@ class CamelCaseParameterNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidParameterNameWithUnderscoreWhenAllowed()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         foreach ($this->getClass()->getMethods() as $method) {
             $rule = new CamelCaseParameterName();

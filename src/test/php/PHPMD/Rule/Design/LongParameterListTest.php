@@ -34,7 +34,7 @@ class LongParameterListTest extends AbstractTest
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum()
     {
         $rule = new LongParameterList();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createMethod(3));
     }
@@ -73,7 +73,7 @@ class LongParameterListTest extends AbstractTest
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum()
     {
         $rule = new LongParameterList();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createFunction(3));
     }

@@ -39,7 +39,7 @@ class UnusedParameterArgvTicket14990109Test extends AbstractTest
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());
-        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->setReport($this->getReportWithNoViolation());
 
         $ruleSet->apply($this->getFunction());
     }
@@ -53,7 +53,7 @@ class UnusedParameterArgvTicket14990109Test extends AbstractTest
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());
-        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->setReport($this->getReportWithNoViolation());
 
         $ruleSet->apply($this->getMethod());
     }

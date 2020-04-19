@@ -35,7 +35,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -47,7 +47,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -59,7 +59,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -119,7 +119,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -131,7 +131,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -143,7 +143,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 

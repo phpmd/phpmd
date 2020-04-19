@@ -51,7 +51,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 2);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -65,7 +65,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -93,7 +93,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -127,7 +127,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -141,7 +141,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 2);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -175,7 +175,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 2);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -203,7 +203,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -217,7 +217,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 2);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -251,7 +251,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -265,7 +265,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -279,7 +279,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -293,7 +293,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', '');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -341,7 +341,7 @@ class ShortVariableTest extends AbstractTest
         $rule = new ShortVariable();
         $rule->addProperty('minimum', 3);
         $rule->addProperty('exceptions', 'id');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
 
         $rule->apply($this->getClass());
     }
