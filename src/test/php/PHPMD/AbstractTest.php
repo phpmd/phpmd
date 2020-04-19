@@ -411,14 +411,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $ruleSet = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\RuleSet'));
         if ($expectedClass === null) {
-            $ruleSet->expects($this->never())->method('apply');
-        } else {
-            $ruleSet->expects(
-                $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
-            )
-                ->method('apply')
-                ->with($this->isInstanceOf($expectedClass));
+            return $ruleSet->expects($this->never())->method('apply');
         }
+
+        $ruleSet->expects(
+            $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
+        )
+            ->method('apply')
+            ->with($this->isInstanceOf($expectedClass));
 
         return $ruleSet;
     }
