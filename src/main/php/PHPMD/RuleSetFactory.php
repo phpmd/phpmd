@@ -187,6 +187,7 @@ class RuleSetFactory
      *
      * @param string $fileName
      * @return \PHPMD\RuleSet
+     * @throws \RuntimeException When loading the XML file fails.
      */
     private function parseRuleSetNode($fileName)
     {
@@ -508,7 +509,6 @@ class RuleSetFactory
      * @param string $fileName The filename of a rule-set definition.
      * @return array|null
      * @throws \RuntimeException Thrown if file is not proper xml
-     * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     public function getIgnorePattern($fileName)
     {
