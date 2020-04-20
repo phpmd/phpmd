@@ -63,7 +63,7 @@ class CommandTest extends AbstractTest
                     '--reportfile',
                     self::createTempFileUri(),
                 ),
-                (array) $options
+                (array)$options
             )
         );
 
