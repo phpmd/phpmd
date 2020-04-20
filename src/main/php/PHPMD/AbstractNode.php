@@ -191,7 +191,7 @@ abstract class AbstractNode
      */
     public function getFileName()
     {
-        return (string) $this->node->getCompilationUnit()->getFileName();
+        return (string)$this->node->getCompilationUnit()->getFileName();
     }
 
     /**
