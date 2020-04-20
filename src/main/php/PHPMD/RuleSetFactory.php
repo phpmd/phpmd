@@ -548,10 +548,7 @@ class RuleSetFactory
      */
     private function isReadableFile($filePath)
     {
-        if (is_readable($filePath) && is_file($filePath)) {
-            return true;
-        }
-        return false;
+        return is_readable($filePath) && is_file($filePath);
     }
 
     /**
