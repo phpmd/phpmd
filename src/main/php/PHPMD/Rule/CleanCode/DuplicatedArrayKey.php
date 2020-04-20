@@ -18,7 +18,6 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTNode;
-use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;

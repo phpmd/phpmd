@@ -3,7 +3,6 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
-use PHPMD\ProcessingError;
 use PHPMD\Report;
 use PHPMD\RuleViolation;
 
