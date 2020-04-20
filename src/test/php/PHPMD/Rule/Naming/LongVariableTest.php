@@ -270,6 +270,7 @@ class LongVariableTest extends AbstractTest
             $rule->apply($method);
         }
     }
+
     /**
      * testRuleAppliesForLongPrivateProperty
      *

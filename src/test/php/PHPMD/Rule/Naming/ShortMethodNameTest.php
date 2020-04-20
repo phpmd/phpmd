@@ -67,6 +67,7 @@ class ShortMethodNameTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
+
     /**
      * testRuleAppliesToFunctionWithNameShorterThanThreshold
      *

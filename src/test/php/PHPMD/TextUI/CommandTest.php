@@ -166,9 +166,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -190,9 +187,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');

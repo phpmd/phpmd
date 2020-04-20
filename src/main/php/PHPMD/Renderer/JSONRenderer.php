@@ -39,6 +39,7 @@ class JSONRenderer extends AbstractRenderer
         $writer = $this->getWriter();
         $writer->write($jsonData . PHP_EOL);
     }
+
     /**
      * Create report data and add renderer meta properties
      *
