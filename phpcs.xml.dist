@@ -9,6 +9,7 @@
     <arg name="extensions" value="php"/>
 
     <!-- General sniffs -->
+    <rule ref="Generic.Files.LineLength"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
