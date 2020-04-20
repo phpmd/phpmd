@@ -24,8 +24,8 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class detects properties not named in camelCase.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class CamelCasePropertyName extends AbstractRule implements ClassAware
 {

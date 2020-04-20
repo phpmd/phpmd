@@ -247,7 +247,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Checks if a short name is acceptable in the current context.
      *
      * @param \PHPMD\Node\AbstractCallableNode $node
-     * @param \PHPMD\Node\ASTNode              $variable
+     * @param \PHPMD\Node\ASTNode $variable
      *
      * @return boolean
      */

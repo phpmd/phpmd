@@ -408,7 +408,7 @@ class RuleSetFactory
         $ruleSetFactory = new RuleSetFactory();
 
         $ruleSetRef = $ruleSetFactory->createSingleRuleSet($fileName);
-        $rule       = $ruleSetRef->getRuleByName($ruleName);
+        $rule = $ruleSetRef->getRuleByName($ruleName);
 
         if (trim($ruleNode['name']) !== '') {
             $rule->setName((string)$ruleNode['name']);
@@ -475,7 +475,7 @@ class RuleSetFactory
      */
     private function addProperty(Rule $rule, \SimpleXMLElement $node)
     {
-        $name  = trim($node['name']);
+        $name = trim($node['name']);
         $value = trim($this->getPropertyValue($node));
         if ($name !== '' && $value !== '') {
             $rule->addProperty($name, $value);

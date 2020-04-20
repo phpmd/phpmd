@@ -25,8 +25,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects empty catch blocks
  *
- * @author    Grégoire Paris <postmaster@greg0ire.fr>
- * @author    Kamil Szymanski <kamilszymanski@gmail.com>
+ * @author Grégoire Paris <postmaster@greg0ire.fr>
+ * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
 class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
 {

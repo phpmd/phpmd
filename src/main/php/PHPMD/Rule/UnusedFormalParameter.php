@@ -195,13 +195,13 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Such as
      *
      * <code>
-     * //   ------
+     * // ------
      * Foo::${BAR}();
-     * //   ------
+     * // ------
      *
-     * //    ------
+     * // ------
      * Foo::$${BAR}();
-     * //    ------
+     * // ------
      * </code>
      *
      * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.

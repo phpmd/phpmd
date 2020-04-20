@@ -20,7 +20,7 @@ namespace PHPMD;
 /**
  * Test case for the processing error class.
  *
- * @since     1.2.1
+ * @since 1.2.1
  *
  * @covers \PHPMD\ProcessingError
  */

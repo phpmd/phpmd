@@ -24,7 +24,7 @@ use PHPMD\Node\ASTNode;
 /**
  * Base class for rules that rely on local variables.
  *
- * @since     0.2.6
+ * @since 0.2.6
  */
 abstract class AbstractLocalVariable extends AbstractRule
 {
@@ -88,7 +88,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isRegularVariable(ASTNode $variable)
     {
-        $node   = $this->stripWrappedIndexExpression($variable);
+        $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
         if ($parent->isInstanceOf('PropertyPostfix')) {

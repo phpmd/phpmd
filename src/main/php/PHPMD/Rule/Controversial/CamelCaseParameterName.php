@@ -25,8 +25,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects parameters not named in camelCase.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class CamelCaseParameterName extends AbstractRule implements MethodAware, FunctionAware
 {

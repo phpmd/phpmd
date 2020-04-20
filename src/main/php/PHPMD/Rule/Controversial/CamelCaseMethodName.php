@@ -24,8 +24,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects methods not named in camelCase.
  *
- * @author    Francis Besset <francis.besset@gmail.com>
- * @since     1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
