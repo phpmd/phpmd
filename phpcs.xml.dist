@@ -63,6 +63,7 @@
     <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
 
 
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
