@@ -70,12 +70,10 @@
     <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>
     <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>
 
-
+    <!-- Formatting - rules for consistent code looks -->
+    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
     <rule ref="SlevomatCodingStandard.ControlStructures.UselessTernaryOperator"/>
-
-    <!-- Some more -->
     <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>
-    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
 
 </ruleset>
