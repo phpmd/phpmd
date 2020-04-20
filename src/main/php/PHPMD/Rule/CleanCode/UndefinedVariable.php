@@ -124,7 +124,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
     }
 
-
     /**
      * Stores the given literal node in an internal foreach of found variables.
      *
