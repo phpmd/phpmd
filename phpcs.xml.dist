@@ -8,6 +8,9 @@
 
     <arg name="extensions" value="php"/>
 
+    <!-- General sniffs -->
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
 
