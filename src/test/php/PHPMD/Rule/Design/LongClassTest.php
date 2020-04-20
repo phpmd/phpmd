@@ -34,7 +34,7 @@ class LongClassTest extends AbstractTest
      */
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
-        $class  = $this->getClassMock('loc', 42);
+        $class = $this->getClassMock('loc', 42);
         $report = $this->getReportWithOneViolation();
 
         $rule = new LongClass();
@@ -52,7 +52,7 @@ class LongClassTest extends AbstractTest
      */
     public function testRuleAppliesForValueEqualToThreshold()
     {
-        $class  = $this->getClassMock('loc', 42);
+        $class = $this->getClassMock('loc', 42);
         $report = $this->getReportWithOneViolation();
 
         $rule = new LongClass();
@@ -70,7 +70,7 @@ class LongClassTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {
-        $class  = $this->getClassMock('loc', 22);
+        $class = $this->getClassMock('loc', 22);
         $report = $this->getReportWithNoViolation();
 
         $rule = new LongClass();
@@ -87,7 +87,7 @@ class LongClassTest extends AbstractTest
      */
     public function testRuleUsesElocWhenIgnoreWhitespaceSet()
     {
-        $class  = $this->getClassMock('eloc', 22);
+        $class = $this->getClassMock('eloc', 22);
         $report = $this->getReportWithNoViolation();
 
         $rule = new LongClass();

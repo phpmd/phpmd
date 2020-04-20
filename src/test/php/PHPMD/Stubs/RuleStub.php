@@ -31,7 +31,7 @@ class RuleStub extends AbstractRule implements ClassAware
     /**
      * Constructs a new rule stub instance.
      *
-     * @param string $ruleName    The rule name.
+     * @param string $ruleName The rule name.
      * @param string $ruleSetName The rule-set name.
      */
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')

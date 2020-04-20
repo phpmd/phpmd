@@ -22,8 +22,8 @@ use PHPMD\AbstractTest;
 /**
  * Empty Catch Block Test
  *
- * @author    Grégoire Paris <postmaster@greg0ire.fr>
- * @author    Kamil Szymanski <kamilszymanski@gmail.com>
+ * @author Grégoire Paris <postmaster@greg0ire.fr>
+ * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
 class EmptyCatchBlockTest extends AbstractTest
 {

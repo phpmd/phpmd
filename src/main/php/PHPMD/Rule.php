@@ -20,7 +20,7 @@ namespace PHPMD;
 /**
  * Base interface for a PHPMD rule.
  *
- * @since     1.1.0
+ * @since 1.1.0
  */
 interface Rule
 {

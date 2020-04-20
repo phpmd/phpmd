@@ -24,7 +24,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class detects violations of Coupling Between Objects metric.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {

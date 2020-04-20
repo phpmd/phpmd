@@ -29,7 +29,7 @@ class Command
     /**
      * Exit codes used by the phpmd command line tool.
      */
-    const EXIT_SUCCESS   = 0,
+    const EXIT_SUCCESS = 0,
           EXIT_EXCEPTION = 1,
           EXIT_VIOLATION = 2;
 

@@ -150,7 +150,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     /**
      * Safely add node to $this->images.
      *
-     * @param string $imageName         the name to store the node as
+     * @param string $imageName the name to store the node as
      * @param \PHPMD\Node\ASTNode $node the node being stored
      * @return void
      */

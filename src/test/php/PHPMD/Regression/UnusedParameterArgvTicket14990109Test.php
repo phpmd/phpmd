@@ -23,8 +23,8 @@ use PHPMD\RuleSet;
 /**
  * Regression test for issue 14990109.
  *
- * @link       https://www.pivotaltracker.com/story/show/14990109
- * @since      1.1.0
+ * @link https://www.pivotaltracker.com/story/show/14990109
+ * @since 1.1.0
  *
  * @covers \stdClass
  */

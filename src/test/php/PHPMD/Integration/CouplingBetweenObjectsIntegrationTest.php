@@ -23,7 +23,7 @@ use PHPMD\TextUI\Command;
 /**
  * Integration tests for the coupling between objects rule class.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class CouplingBetweenObjectsIntegrationTest extends AbstractTest
 {

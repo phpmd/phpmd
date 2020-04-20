@@ -182,7 +182,7 @@ class PHPMD
         $report = new Report();
 
         $factory = new ParserFactory();
-        $parser  = $factory->create($this);
+        $parser = $factory->create($this);
 
         foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
             $parser->addRuleSet($ruleSet);
