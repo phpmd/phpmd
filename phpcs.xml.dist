@@ -12,6 +12,12 @@
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Squiz.PHP.Eval"/>
     <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
+    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
+    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+    <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
 
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
