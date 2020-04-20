@@ -10,6 +10,7 @@
 
     <!-- General sniffs -->
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Squiz.PHP.Eval"/>
 
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
