@@ -17,9 +17,12 @@
 
 namespace PHPMD;
 
+use ErrorException;
+use Iterator;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -32,11 +35,13 @@ use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 use PHPUnit_Framework_MockObject_MockBuilder;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractTest extends PHPUnit_Framework_TestCase
 {
     /** @var int At least one violation is expected */
     const AL_LEAST_ONE_VIOLATION = -1;
@@ -52,14 +57,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @var string $_filesDirectory
      */
-    private static $filesDirectory = null;
+    private static $filesDirectory;
 
     /**
      * Original directory is used to reset a changed working directory.
      *
      * @return void
      */
-    private static $originalWorkingDirectory = null;
+    private static $originalWorkingDirectory;
 
     /**
      * Temporary files created by a test.
@@ -92,7 +97,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first class found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\ClassNode
+     * @return ClassNode
      */
     protected function getClass()
     {
@@ -107,7 +112,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first interface found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\InterfaceNode
+     * @return InterfaceNode
      */
     protected function getInterface()
     {
@@ -119,7 +124,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPMD\Node\InterfaceNode
+     * @return TraitNode
      */
     protected function getTrait()
     {
@@ -134,7 +139,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethod()
     {
@@ -152,7 +157,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Returns the first function found in a source files related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\FunctionNode
+     * @return FunctionNode
      */
     protected function getFunction()
     {
@@ -172,6 +177,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     protected static function createCodeResourceUriForTest()
     {
         $frame = self::getCallingTestCase();
+
         return self::createResourceUriForTest($frame['function'] . '.php');
     }
 
@@ -191,12 +197,12 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $parts = explode('\\', $frame['class']);
             $testPath = $parts[count($parts) - 2] . '/' . $match[1];
         } else {
-            $testPath = strtr(substr($frame['class'], 6, -4), '\\', '/');
+            $testPath = str_replace('\\', '/', substr($frame['class'], 6, -4));
         }
 
         return sprintf(
             '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
+            __DIR__,
             $testPath,
             $localPath
         );
@@ -206,18 +212,18 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Parses the source code for the calling test method and returns the first
      * package node found in the parsed file.
      *
-     * @return PHP_Depend_Code_Package
+     * @return ASTNamespace
      */
     private function parseTestCaseSource()
     {
-        return $this->parseSource($this->createCodeResourceUriForTest());
+        return $this->parseSource(self::createCodeResourceUriForTest());
     }
 
     /**
      * Returns the trace frame of the calling test case.
      *
      * @return array
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     private static function getCallingTestCase()
     {
@@ -226,25 +232,25 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 return $frame;
             }
         }
-        throw new \ErrorException('Cannot locate calling test case.');
+        throw new ErrorException('Cannot locate calling test case.');
     }
 
     /**
      * Returns the PHP_Depend node for the calling test case.
      *
-     * @param \Iterator $nodes
-     * @return PHP_Depend_Code_AbstractItem
-     * @throws \ErrorException
+     * @param Iterator $nodes
+     * @return mixed
+     * @throws ErrorException
      */
-    private function getNodeForCallingTestCase(\Iterator $nodes)
+    private function getNodeForCallingTestCase(Iterator $nodes)
     {
-        $frame = $this->getCallingTestCase();
+        $frame = self::getCallingTestCase();
         foreach ($nodes as $node) {
             if ($node->getName() === $frame['function']) {
                 return $node;
             }
         }
-        throw new \ErrorException('Cannot locate node for test case.');
+        throw new ErrorException('Cannot locate node for test case.');
     }
 
     /**
@@ -252,19 +258,19 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * in that file.
      *
      * @param string $sourceFile
-     * @return \PDepend\Source\AST\ASTNamespace
-     * @throws \ErrorException
+     * @return ASTNamespace
+     * @throws ErrorException
      */
     private function parseSource($sourceFile)
     {
         if (file_exists($sourceFile) === false) {
-            throw new \ErrorException('Cannot locate source file: ' . $sourceFile);
+            throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $builder =  new PHPBuilder();
+        $builder = new PHPBuilder();
 
         $parser = new PHPParserGeneric(
             $tokenizer,
@@ -281,7 +287,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $metric
      * @param mixed $value
-     * @return \PHPMD\Node\ClassNode
+     * @return ClassNode|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getClassMock($metric = null, $value = null)
     {
@@ -294,8 +300,9 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $class->expects($this->atLeastOnce())
                 ->method('getMetric')
                 ->with($this->equalTo($metric))
-                ->will($this->returnValue($value));
+                ->willReturn($value);
         }
+
         return $class;
     }
 
@@ -304,7 +311,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $metric
      * @param mixed $value
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
     {
@@ -322,8 +329,8 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a mocked function node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed  $value  The expected metric return value.
-     * @return \PHPMD\Node\FunctionNode
+     * @param mixed $value The expected metric return value.
+     * @return FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
@@ -340,10 +347,10 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Initializes the getMetric() method of the given function or method node.
      *
-     * @param \PHPMD\Node\FunctionNode|\PHPMD\Node\MethodNode $mock
+     * @param FunctionNode|MethodNode|PHPUnit_Framework_MockObject_MockObject $mock
      * @param string $metric
      * @param mixed $value
-     * @return \PHPMD\Node\FunctionNode|\PHPMD\Node\MethodNode
+     * @return FunctionNode|MethodNode
      */
     protected function initFunctionOrMethod($mock, $metric, $value)
     {
@@ -354,7 +361,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
         $mock->expects($this->atLeastOnce())
             ->method('getMetric')
             ->with($this->equalTo($metric))
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         return $mock;
     }
@@ -363,7 +370,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * Creates a mocked report instance.
      *
      * @param integer $expectedInvokes Number of expected invokes.
-     * @return \PHPMD\Report
+     * @return Report|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getReportMock($expectedInvokes = -1)
     {
@@ -416,7 +423,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
 
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $builder->getMock();
         }
 
@@ -426,11 +433,11 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Creates a mocked {@link \PHPMD\AbstractRule} instance.
      *
-     * @return \PHPMD\AbstractRule
+     * @return AbstractRule|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleMock()
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         }
 
@@ -442,20 +449,27 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $expectedClass Optional class name for apply() expected at least once.
      * @param mixed $count How often should apply() be called?
-     * @return \PHPMD\RuleSet
+     * @return RuleSet|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
         $ruleSet = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\RuleSet'));
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
-        } else {
-            $ruleSet->expects(
-                $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
-            )
-                ->method('apply')
-                ->with($this->isInstanceOf($expectedClass));
+
+            return $ruleSet;
         }
+
+        if ($count === '*') {
+            $count = $this->atLeastOnce();
+        } else {
+            $count = $this->exactly($count);
+        }
+
+        $ruleSet->expects($count)
+            ->method('apply')
+            ->with($this->isInstanceOf($expectedClass));
+
         return $ruleSet;
     }
 
@@ -467,7 +481,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
      * @param integer $endLine The end of violation line number to use.
      * @param null|object $rule The rule object to use.
      * @param null|string $description The violation description to use.
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleViolationMock(
         $fileName = '/foo/bar.php',
@@ -489,24 +503,24 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             $description = 'Test description';
         }
 
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getRule')
-            ->will($this->returnValue($rule));
-        $ruleViolation->expects($this->any())
+            ->willReturn($rule);
+        $ruleViolation
             ->method('getFileName')
-            ->will($this->returnValue($fileName));
-        $ruleViolation->expects($this->any())
+            ->willReturn($fileName);
+        $ruleViolation
             ->method('getBeginLine')
-            ->will($this->returnValue($beginLine));
-        $ruleViolation->expects($this->any())
+            ->willReturn($beginLine);
+        $ruleViolation
             ->method('getEndLine')
-            ->will($this->returnValue($endLine));
-        $ruleViolation->expects($this->any())
+            ->willReturn($endLine);
+        $ruleViolation
             ->method('getNamespaceName')
-            ->will($this->returnValue('TestStubPackage'));
-        $ruleViolation->expects($this->any())
+            ->willReturn('TestStubPackage');
+        $ruleViolation
             ->method('getDescription')
-            ->will($this->returnValue($description));
+            ->willReturn($description);
 
         return $ruleViolation;
     }
@@ -514,13 +528,14 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Creates a mocked rul violation instance.
      *
-     * @param string  $file
-     * @param string  $message
-     * @return \PHPMD\ProcessingError
+     * @param string $file
+     * @param string $message
+     * @return ProcessingError|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
-        $message = 'Error in file "/foo/baz.php"') {
+        $message = 'Error in file "/foo/baz.php"'
+    ) {
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
@@ -528,12 +543,12 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
                 ->setMethods(array('getFile', 'getMessage'))
         );
 
-        $processingError->expects($this->any())
+        $processingError
             ->method('getFile')
-            ->will($this->returnValue($file));
-        $processingError->expects($this->any())
+            ->willReturn($file);
+        $processingError
             ->method('getMessage')
-            ->will($this->returnValue($message));
+            ->willReturn($message);
 
         return $processingError;
     }
@@ -541,7 +556,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Asserts the actual xml output matches against the expected file.
      *
-     * @param string $actualOutput     Generated xml output.
+     * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
      * @return void
      */
@@ -573,7 +588,7 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
     /**
      * Asserts the actual JSON output matches against the expected file.
      *
-     * @param string $actualOutput     Generated JSON output.
+     * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
      *
      * @return void
