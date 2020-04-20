@@ -17,8 +17,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Report;
-
 /**
  * Base interface for a PHPMD rule.
  *
