@@ -18,7 +18,6 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
