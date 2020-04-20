@@ -19,6 +19,7 @@
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
 
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>

@@ -97,10 +97,10 @@ class TooManyMethodsTest extends AbstractTest
     }
 
    /**
-     * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-     *
-     * @return void
-     */
+    * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
+    *
+    * @return void
+    */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
     {
         $rule = new TooManyMethods();
