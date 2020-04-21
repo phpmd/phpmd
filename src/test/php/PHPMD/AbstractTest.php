@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use ErrorException;
+use Iterator;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
@@ -33,6 +35,7 @@ use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 use PHPUnit_Framework_MockObject_MockBuilder;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -203,9 +206,9 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Test that a given file trigger N times the given rule.
      *
-     * @param Rule   $rule            Rule to test.
-     * @param int    $expectedInvokes Count of expected invocations.
-     * @param string $file            Test file containing a method with the same name to be tested.
+     * @param Rule $rule Rule to test.
+     * @param int $expectedInvokes Count of expected invocations.
+     * @param string $file Test file containing a method with the same name to be tested.
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
@@ -265,7 +268,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked class node instance.
      *
-     * @param string  $metric
+     * @param string $metric
      * @param integer $value
      * @return ClassNode
      */
@@ -280,7 +283,7 @@ abstract class AbstractTest extends AbstractStaticTest
             $class->expects($this->atLeastOnce())
                 ->method('getMetric')
                 ->with($this->equalTo($metric))
-                ->will($this->returnValue($value));
+                ->willReturn($value);
         }
 
         return $class;
@@ -289,7 +292,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked method node instance.
      *
-     * @param string  $metric
+     * @param string $metric
      * @param integer $value
      * @return MethodNode
      */
@@ -302,7 +305,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Creates a mocked function node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed  $value  The expected metric return value.
+     * @param mixed $value The expected metric return value.
      * @return FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
@@ -313,7 +316,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Initializes the getMetric() method of the given function or method node.
      *
-     * @param FunctionNode|MethodNode $mock
+     * @param FunctionNode|MethodNode|PHPUnit_Framework_MockObject_MockObject $mock
      * @param string $metric
      * @param mixed $value
      * @return FunctionNode|MethodNode
@@ -327,7 +330,7 @@ abstract class AbstractTest extends AbstractStaticTest
         $mock->expects($this->atLeastOnce())
             ->method('getMetric')
             ->with($this->equalTo($metric))
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         return $mock;
     }
@@ -336,7 +339,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * Creates a mocked report instance.
      *
      * @param integer $expectedInvokes Number of expected invokes.
-     * @return \PHPMD\Report
+     * @return Report|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getReportMock($expectedInvokes = -1)
     {
@@ -389,7 +392,7 @@ abstract class AbstractTest extends AbstractStaticTest
 
     protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $builder->getMock();
         }
 
@@ -399,11 +402,11 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked {@link \PHPMD\AbstractRule} instance.
      *
-     * @return \PHPMD\AbstractRule
+     * @return AbstractRule|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleMock()
     {
-        if (version_compare(phpversion(), '7.4.0-dev', '<')) {
+        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
             return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         }
 
@@ -413,22 +416,29 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string     $expectedClass Optional class name for apply() expected at least once.
-     * @param int|string $count         How often should apply() be called?
-     * @return RuleSet
+     * @param string $expectedClass Optional class name for apply() expected at least once.
+     * @param int|string $count How often should apply() be called?
+     * @return RuleSet|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
         $ruleSet = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\RuleSet'));
         if ($expectedClass === null) {
             $ruleSet->expects($this->never())->method('apply');
-        } else {
-            $ruleSet->expects(
-                $count === '*' ? $this->atLeastOnce() : $this->exactly($count)
-            )
-                ->method('apply')
-                ->with($this->isInstanceOf($expectedClass));
+
+            return $ruleSet;
         }
+
+        if ($count === '*') {
+            $count = $this->atLeastOnce();
+        } else {
+            $count = $this->exactly($count);
+        }
+
+        $ruleSet->expects($count)
+            ->method('apply')
+            ->with($this->isInstanceOf($expectedClass));
+
         return $ruleSet;
     }
 
@@ -440,7 +450,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param integer $endLine The end of violation line number to use.
      * @param null|object $rule The rule object to use.
      * @param null|string $description The violation description to use.
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleViolationMock(
         $fileName = '/foo/bar.php',
@@ -462,24 +472,24 @@ abstract class AbstractTest extends AbstractStaticTest
             $description = 'Test description';
         }
 
-        $ruleViolation->expects($this->any())
+        $ruleViolation
             ->method('getRule')
-            ->will($this->returnValue($rule));
-        $ruleViolation->expects($this->any())
+            ->willReturn($rule);
+        $ruleViolation
             ->method('getFileName')
-            ->will($this->returnValue($fileName));
-        $ruleViolation->expects($this->any())
+            ->willReturn($fileName);
+        $ruleViolation
             ->method('getBeginLine')
-            ->will($this->returnValue($beginLine));
-        $ruleViolation->expects($this->any())
+            ->willReturn($beginLine);
+        $ruleViolation
             ->method('getEndLine')
-            ->will($this->returnValue($endLine));
-        $ruleViolation->expects($this->any())
+            ->willReturn($endLine);
+        $ruleViolation
             ->method('getNamespaceName')
-            ->will($this->returnValue('TestStubPackage'));
-        $ruleViolation->expects($this->any())
+            ->willReturn('TestStubPackage');
+        $ruleViolation
             ->method('getDescription')
-            ->will($this->returnValue($description));
+            ->willReturn($description);
 
         return $ruleViolation;
     }
@@ -487,13 +497,14 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Creates a mocked rul violation instance.
      *
-     * @param string  $file
-     * @param string  $message
-     * @return \PHPMD\ProcessingError
+     * @param string $file
+     * @param string $message
+     * @return ProcessingError|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
-        $message = 'Error in file "/foo/baz.php"') {
+        $message = 'Error in file "/foo/baz.php"'
+    ) {
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
@@ -501,12 +512,12 @@ abstract class AbstractTest extends AbstractStaticTest
                 ->setMethods(array('getFile', 'getMessage'))
         );
 
-        $processingError->expects($this->any())
+        $processingError
             ->method('getFile')
-            ->will($this->returnValue($file));
-        $processingError->expects($this->any())
+            ->willReturn($file);
+        $processingError
             ->method('getMessage')
-            ->will($this->returnValue($message));
+            ->willReturn($message);
 
         return $processingError;
     }
@@ -523,10 +534,10 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * @param string                $mockBuilder
+     * @param string $mockBuilder
      * @param ASTFunction|ASTMethod $mock
-     * @param string                $metric The metric acronym used by PHP_Depend.
-     * @param mixed                 $value  The expected metric return value.
+     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param mixed $value The expected metric return value.
      * @return FunctionNode|MethodNode
      */
     private function createFunctionOrMethodMock($mockBuilder, $mock, $metric = null, $value = null)
