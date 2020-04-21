@@ -51,7 +51,6 @@ class ASTNode extends \PHPMD\AbstractNode
      * @param \PHPMD\Rule $rule
      * @return boolean
      * @SuppressWarnings("PMD.UnusedFormalParameter")
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {
