@@ -318,8 +318,8 @@ class RuleSetFactory
      * @param \PHPMD\RuleSet $ruleSet
      * @param \SimpleXMLElement $ruleNode
      * @return void
-     * @throws \PHPMD\RuleClassFileNotFoundException
-     * @throws \PHPMD\RuleClassNotFoundException
+     * @throws RuleClassFileNotFoundException
+     * @throws RuleClassNotFoundException
      */
     private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
     {
