@@ -17,15 +17,17 @@
 
 namespace PHPMD;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractStaticTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Directory with test files.
      *
-     * @var string $_filesDirectory
+     * @var string $filesDirectory
      */
     private static $filesDirectory = null;
 

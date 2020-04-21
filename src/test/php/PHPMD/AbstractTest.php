@@ -54,7 +54,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Get a list of files that should trigger a rule violation.
      *
-     * By default, files named like "testRuleAppliesTo*", but it can be overridden in sub-class.
+     * By default, files named like "testRuleAppliesTo*", but it can be overridden in sub-classes.
      *
      * @return string[]
      */
@@ -66,7 +66,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Get a list of files that should not trigger a rule violation.
      *
-     * By default, files named like "testRuleDoesNotApplyTo*", but it can be overridden in sub-class.
+     * By default, files named like "testRuleDoesNotApplyTo*", but it can be overridden in sub-classes.
      *
      * @return string[]
      */
@@ -555,28 +555,28 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Returns the PHP_Depend node having the given name.
      *
-     * @param \Iterator $nodes
+     * @param Iterator $nodes
      * @return PHP_Depend_Code_AbstractItem
-     * @throws \ErrorException
+     * @throws ErrorException
      */
-    private function getNodeByName(\Iterator $nodes, $name)
+    private function getNodeByName(Iterator $nodes, $name)
     {
         foreach ($nodes as $node) {
             if ($node->getName() === $name) {
                 return $node;
             }
         }
-        throw new \ErrorException("Cannot locate node named $name.");
+        throw new ErrorException("Cannot locate node named $name.");
     }
 
     /**
      * Returns the PHP_Depend node for the calling test case.
      *
-     * @param \Iterator $nodes
+     * @param Iterator $nodes
      * @return PHP_Depend_Code_AbstractItem
-     * @throws \ErrorException
+     * @throws ErrorException
      */
-    private function getNodeForCallingTestCase(\Iterator $nodes)
+    private function getNodeForCallingTestCase(Iterator $nodes)
     {
         $frame = $this->getCallingTestCase();
 
@@ -589,12 +589,12 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @param string $sourceFile
      * @return ASTNamespace
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     private function parseSource($sourceFile)
     {
         if (file_exists($sourceFile) === false) {
-            throw new \ErrorException('Cannot locate source file: ' . $sourceFile);
+            throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
         $tokenizer = new PHPTokenizerInternal();
