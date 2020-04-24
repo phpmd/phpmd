@@ -90,7 +90,8 @@ class RuleSetTest extends AbstractTest
     private function createRuleSetFixture()
     {
         $ruleSet = new RuleSet();
-        for ($i = 0; $i < func_num_args(); ++$i) {
+        $argumentCount = func_num_args();
+        for ($i = 0; $i < $argumentCount; ++$i) {
             $rule = new RuleStub(func_get_arg($i));
 
             $ruleSet->addRule($rule);

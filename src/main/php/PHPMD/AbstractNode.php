@@ -76,7 +76,8 @@ abstract class AbstractNode
      */
     public function getParent()
     {
-        if (($node = $this->node->getParent()) === null) {
+        $node = $this->node->getParent();
+        if ($node === null) {
             return null;
         }
         return new ASTNode($node, $this->getFileName());
@@ -190,7 +191,7 @@ abstract class AbstractNode
      */
     public function getFileName()
     {
-        return (string) $this->node->getCompilationUnit()->getFileName();
+        return (string)$this->node->getCompilationUnit()->getFileName();
     }
 
     /**

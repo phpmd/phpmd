@@ -20,7 +20,6 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\RuleViolation;
 
 /**
  * This class will render a JSON report.
@@ -40,6 +39,7 @@ class JSONRenderer extends AbstractRenderer
         $writer = $this->getWriter();
         $writer->write($jsonData . PHP_EOL);
     }
+
     /**
      * Create report data and add renderer meta properties
      *

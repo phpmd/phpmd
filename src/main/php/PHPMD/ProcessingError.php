@@ -19,7 +19,7 @@ namespace PHPMD;
 
 /**
  * Simple data class that we use to keep parsing errors for the report renderer.
- * @since     1.2.1
+ * @since 1.2.1
  */
 class ProcessingError
 {
@@ -45,7 +45,7 @@ class ProcessingError
     public function __construct($message)
     {
         $this->message = $message;
-        $this->file    = $this->extractFile($message);
+        $this->file = $this->extractFile($message);
     }
 
     /**

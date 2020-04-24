@@ -39,7 +39,7 @@ class ParserFactory
      * @var array
      */
     private $phpmd2pdepend = array(
-        'coverage'  =>  'coverage-report'
+        'coverage' => 'coverage-report'
     );
 
     /**

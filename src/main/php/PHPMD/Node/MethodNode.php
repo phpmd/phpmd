@@ -147,7 +147,8 @@ class MethodNode extends AbstractCallableNode
             }
         }
 
-        if (is_object($parentType = $parentNode->getParentClass())) {
+        $parentType = $parentNode->getParentClass();
+        if (is_object($parentType)) {
             $methods = $parentType->getAllMethods();
             if (isset($methods[$methodName])) {
                 return false;

@@ -18,7 +18,6 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -174,7 +173,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
 
     /**
-     * Removes all the regular variables from a given node 
+     * Removes all the regular variables from a given node
      *
      * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
      * @return void
@@ -191,18 +190,18 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
     
     /**
-     * Removes all the compound variables from a given node 
+     * Removes all the compound variables from a given node
      *
      * Such as
      *
      * <code>
-     * //   ------
+     * // ------
      * Foo::${BAR}();
-     * //   ------
+     * // ------
      *
-     * //    ------
+     * // ------
      * Foo::$${BAR}();
-     * //    ------
+     * // ------
      * </code>
      *
      * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.
