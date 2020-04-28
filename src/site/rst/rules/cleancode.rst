@@ -105,6 +105,20 @@ Example: ::
       ];
   }
 
+ErrorControlOperator
+====================
+
+Since: PHPMD 2.9.0
+
+Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it slows down execution of your code by average of 1.75x. Consider changing error_reporting() level and/or setting up your own error handler.
+
+Example: ::
+
+  function foo($filePath) {
+      $file = @fopen($filPath); // hides exceptions
+      $key = @$array[$notExistingKey]; // assigns null to $key
+  }
+
 MissingImport
 =============
 
