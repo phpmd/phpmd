@@ -550,7 +550,7 @@ class HTMLRenderer extends AbstractRenderer
         }
 
         $header = "<thead><tr><th>Count</th><th>%</th><th>$itemsTitle</th></tr></thead>";
-        $html = "<section><table><caption>$title</caption>{$header}{$rows}</table><section>";
+        $html = "<section><table><caption>$title</caption>{$header}{$rows}</table></section>";
         $writer->write(self::reduceWhitespace($html));
     }
 
