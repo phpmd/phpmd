@@ -58,11 +58,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===============================================
- Name                                Default Value   Description                                   
-=================================== =============== ===============================================
- exceptions                                          Comma-separated class name list of exceptions 
-=================================== =============== ===============================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| exceptions                        |               | Comma-separated class name list of exceptions              |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 IfStatementAssignment
 =====================
@@ -86,8 +86,8 @@ Example: ::
       }
   }
 
-DuplicateArrayKey
-=================
+DuplicatedArrayKey
+==================
 
 Since: PHPMD 2.7.0
 
@@ -104,6 +104,33 @@ Example: ::
           "foo" => 'baz', // applied
       ];
   }
+
+MissingImport
+=============
+
+Since: PHPMD 2.7.0
+
+Importing all external classes in a file through use statements makes them clearly visible.
+
+Example: ::
+
+  function make() {
+      return new \stdClass();
+  }
+
+UndefinedVariable
+=================
+
+Since: PHPMD 2.8.0
+
+Detects when a variable that is used has not been defined before.
+
+Example: ::
+
+  function printX() {
+      echo $x;
+  }
+
 
 Remark
 ======

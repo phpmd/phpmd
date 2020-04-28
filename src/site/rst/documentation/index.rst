@@ -50,10 +50,10 @@ Command line options
     instead of the default output target ``STDOUT``.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
-    extensions, e.g. php,phtml.
+    extensions, e.g. php, phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
-    directories.
+    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
@@ -82,11 +82,9 @@ tool: ::
 
   ~ $ phpmd /path/to/source text codesize,unusedcode,naming
 
-You can also mix custom `rule set files`__ with build-in rule sets: ::
+You can also mix custom `rule set files </documentation/creating-a-ruleset.html>`_ with build-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
-
-__ /documentation/creating-a-ruleset.html
 
 That's it. With this behavior you can specify you own combination of rule sets
 that will check the source code.
@@ -110,8 +108,9 @@ PHPMD's command line tool currently defines three different exit codes.
 Renderers
 =========
 
-At the moment PHPMD comes with the following three renderers:
+At the moment PHPMD comes with the following four renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *json*, formats JSON report.

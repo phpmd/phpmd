@@ -58,11 +58,11 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Whether the given scope is an else clause
      *
-     * @param $scope
+     * @param AbstractNode $scope
      * @param ASTNode $parent
      * @return bool
      */
-    private function isElseScope($scope, ASTNode $parent)
+    private function isElseScope(AbstractNode $scope, ASTNode $parent)
     {
         return (
             count($parent->getChildren()) === 3 &&

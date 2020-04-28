@@ -31,7 +31,15 @@ https://phpmd.org
 
 .. image:: https://badges.gitter.im/phpmd/community.svg
    :target: https://gitter.im/phpmd/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-   :alt: Chat to us on Gitter
+   :alt: Chat with us on Gitter
+
+.. image:: https://poser.pugx.org/phpmd/phpmd/d/monthly
+   :target: https://packagist.org/packages/phpmd/phpmd
+   :alt: Monthly downloads
+
+.. image:: https://poser.pugx.org/phpmd/phpmd/downloads
+   :target: https://packagist.org/packages/phpmd/phpmd
+   :alt: Total downloads
 
 Installation
 ------------
@@ -43,21 +51,42 @@ Command line usage
 
 Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
-  mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
+  mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
-While the ``rulesets/codesize.xml`` ruleset file could look like this::
+While the ``rulesets.xml`` ruleset file could look like this::
+
+  <?xml version="1.0"?>
+  <ruleset name="My first PHPMD rule set"
+           xmlns="http://pmd.sf.net/ruleset/1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                         http://pmd.sf.net/ruleset_xml_schema.xsd"
+           xsi:noNamespaceSchemaLocation="
+                         http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+      My custom rule set that checks my code...
+    </description>
+
+    <rule ref="rulesets/codesize.xml" />
+    <rule ref="rulesets/cleancode.xml" />
+    <rule ref="rulesets/controversial.xml" />
+    <rule ref="rulesets/design.xml" />
+    <rule ref="rulesets/naming.xml" />
+    <rule ref="rulesets/unusedcode.xml" />
+  </ruleset>
+
+The xml report would like like this::
 
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
     <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-      <violation beginline="67"
-                 endline="224"
-                 rule="TooManyMethods"
-                 ruleset="Code Size Rules"
-                 package="PHP_Depend\DbusUI"
-                 class="PHP_Depend_DbusUI_ResultPrinter"
+      <violation beginline="81"
+                 endline="81"
+                 rule="UnusedFormalParameter"
+                 ruleset="Unused Code Rules"
+                 externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedformalparameter"
                  priority="3">
-        This class has too many methods, consider refactoring it.
+        Avoid unused parameters such as '$builder'.
       </violation>
     </file>
   </pmd>
@@ -94,7 +123,7 @@ Command line options
     extensions, e.g. php,phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
-    directories.
+    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
@@ -157,8 +186,19 @@ PHPMD's command line tool currently defines three different exit codes.
 Renderers
 ---------
 
-At the moment PHPMD comes with the following three renderers:
+At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *html*, single HTML file with possible problems.
+- *json*, formats JSON report.
+- *ansi*, a command line friendly format.
+
+PHPMD for enterprise
+--------------------
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of ``PHPMD`` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. `Learn more.`__
+
+__ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=enterprise&utm_term=repo

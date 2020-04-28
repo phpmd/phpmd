@@ -17,7 +17,9 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\HTMLRenderer;
+use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -25,6 +27,8 @@ use PHPMD\Rule;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
+ *
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class CommandLineOptions
 {
@@ -98,6 +102,8 @@ class CommandLineOptions
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
+     *
+     * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
      *
      * @var string
      */
@@ -202,7 +208,8 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(xml|html|text)$)', $arg, $match);
+                case '--reportfile-json':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -315,7 +322,7 @@ class CommandLineOptions
     }
 
     /**
-     * Returns  string of comma-separated pattern that is used to exclude
+     * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
      *
      * @return string
@@ -365,6 +372,7 @@ class CommandLineOptions
      *   <li>xml</li>
      *   <li>html</li>
      *   <li>text</li>
+     *   <li>json</li>
      * </ul>
      *
      * @param string $reportFormat
@@ -382,6 +390,10 @@ class CommandLineOptions
                 return $this->createHtmlRenderer();
             case 'text':
                 return $this->createTextRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
+            case 'ansi':
+                return $this->createAnsiRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -404,11 +416,27 @@ class CommandLineOptions
     }
 
     /**
+     * @return \PHPMD\Renderer\AnsiRenderer
+     */
+    protected function createAnsiRenderer()
+    {
+        return new AnsiRenderer();
+    }
+
+    /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer()
     {
         return new HTMLRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createJsonRenderer()
+    {
+        return new JSONRenderer();
     }
 
     /**
@@ -475,7 +503,8 @@ class CommandLineOptions
             '--suffixes: comma-separated string of valid source code ' .
             'filename extensions, e.g. php,phtml' . \PHP_EOL .
             '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories' . \PHP_EOL .
+            'ignore directories. Use asterisks to exclude by pattern. '.
+            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
@@ -494,7 +523,7 @@ class CommandLineOptions
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
-                $renderers[] =  strtolower($rendererName[1]);
+                $renderers[] = strtolower($rendererName[1]);
             }
         }
 

@@ -25,7 +25,7 @@ class PHPMD
     /**
      * The current PHPMD version.
      */
-    const VERSION = '@project.version@';
+    const VERSION = '@package_version@';
 
     /**
      * List of valid file extensions for analyzed files.
@@ -101,7 +101,7 @@ class PHPMD
     /**
      * Sets a list of filename extensions for valid php source code files.
      *
-     * @param array(string) $fileExtensions Extensions without leading dot.
+     * @param array<string> $fileExtensions Extensions without leading dot.
      * @return void
      */
     public function setFileExtensions(array $fileExtensions)
@@ -124,7 +124,7 @@ class PHPMD
      * Sets a list of ignore patterns that is used to exclude directories from
      * the source analysis.
      *
-     * @param array(string) $ignorePatterns List of ignore patterns.
+     * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
      */
     public function setIgnorePattern(array $ignorePatterns)
@@ -175,14 +175,14 @@ class PHPMD
     ) {
 
         // Merge parsed excludes
-        $this->ignorePatterns = array_merge($this->ignorePatterns, $ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->setIgnorePattern($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
 
         $report = new Report();
 
         $factory = new ParserFactory();
-        $parser  = $factory->create($this);
+        $parser = $factory->create($this);
 
         foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
             $parser->addRuleSet($ruleSet);

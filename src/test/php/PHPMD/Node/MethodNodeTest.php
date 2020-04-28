@@ -37,7 +37,10 @@ class MethodNodeTest extends AbstractTest
      */
     public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
-        $method = $this->getMock('PDepend\\Source\\AST\\ASTMethod', array(), array(null));
+        $method = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\\Source\\AST\\ASTMethod')
+            ->setConstructorArgs(array(null))
+        );
         $method->expects($this->once())
             ->method('getStartLine');
 

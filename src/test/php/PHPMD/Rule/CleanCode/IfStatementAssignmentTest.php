@@ -21,24 +21,38 @@ use PHPMD\AbstractTest;
 
 class IfStatementAssignmentTest extends AbstractTest
 {
+    public function testRuleNotAppliesInsideClosure()
+    {
+        $rule = new IfStatementAssignment();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleNotAppliesInsideClosureCallbacks()
+    {
+        $rule = new IfStatementAssignment();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
     public function testRuleNotAppliesToIfsWithoutAssignment()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToIfsWithConditionsOnly()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToLogicalOperators()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -52,14 +66,14 @@ class IfStatementAssignmentTest extends AbstractTest
     public function testRuleAppliesToFunctions()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
     public function testRuleAppliesMultipleIfConditions()
     {
         $rule = new IfStatementAssignment();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 

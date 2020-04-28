@@ -44,7 +44,7 @@ class HTMLRendererTest extends AbstractTest
             $this->getRuleViolationMock('/foo.php', 3),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));

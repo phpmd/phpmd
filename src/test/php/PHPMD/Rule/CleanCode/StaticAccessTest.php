@@ -24,28 +24,28 @@ class StaticAccessTest extends AbstractTest
     public function testRuleNotAppliesToParentStaticCall()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToSelfStaticCall()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToDynamicMethodCall()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToStaticMethodAccessWhenExcluded()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('exceptions', 'Excluded1,Excluded2');
         $rule->apply($this->getMethod());
     }
@@ -53,14 +53,14 @@ class StaticAccessTest extends AbstractTest
     public function testRuleAppliesToStaticMethodAccess()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('exceptions', 'Excluded');
         $rule->apply($this->getMethod());
     }
@@ -68,7 +68,7 @@ class StaticAccessTest extends AbstractTest
     public function testRuleNotAppliesToConstantAccess()
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 }

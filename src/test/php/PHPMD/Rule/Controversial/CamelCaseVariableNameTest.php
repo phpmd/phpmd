@@ -32,10 +32,11 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForInvariableNameWithUnderscore()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -47,10 +48,11 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesApplyForVariableNameWithCapital()
     {
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -61,10 +63,11 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForValidVariableName()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
 
@@ -75,10 +78,27 @@ class CamelCaseVariableNameTest extends AbstractTest
      */
     public function testRuleDoesNotApplyForStaticVariableAccess()
     {
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does apply for a valid variable name
+     * with an underscore at the beginning when it is allowed.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'true');
         $rule->apply($this->getClass());
     }
 }

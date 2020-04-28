@@ -63,7 +63,7 @@ class CommandTest extends AbstractTest
                     '--reportfile',
                     self::createTempFileUri(),
                 ),
-                (array) $options
+                (array)$options
             )
         );
 
@@ -120,6 +120,8 @@ class CommandTest extends AbstractTest
             $html = self::createTempFileUri(),
             '--reportfile-text',
             $text = self::createTempFileUri(),
+            '--reportfile-json',
+            $json = self::createTempFileUri(),
         );
 
         Command::main($args);
@@ -127,6 +129,7 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($xml);
         $this->assertFileExists($html);
         $this->assertFileExists($text);
+        $this->assertFileExists($json);
     }
 
     /**
@@ -163,9 +166,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -187,9 +187,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');

@@ -35,7 +35,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(23));
@@ -47,7 +47,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42));
@@ -59,7 +59,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('maxmethods', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
@@ -71,7 +71,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresGetterMethodsInTest()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'getClass')));
@@ -83,7 +83,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresSetterMethodsInTest()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
@@ -95,7 +95,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'injectClass')));
@@ -107,7 +107,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresGetterAndSetterMethodsInTest()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(3, array('foo', 'bar'), array('baz', 'bah')));
@@ -119,7 +119,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresPrivateMethods()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'getClass', 'setClass')));
@@ -131,7 +131,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresHassers()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'hasClass')));
@@ -143,7 +143,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresIssers()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'isClass')));
@@ -155,7 +155,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     public function testRuleIgnoresWithers()
     {
         $rule = new TooManyPublicMethods();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'withClass')));
@@ -183,6 +183,9 @@ class TooManyPublicMethodsTest extends AbstractTest
         return $class;
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
+     */
     private function createPublicMethod($methodName)
     {
         $astMethod = new ASTMethod($methodName);
@@ -190,6 +193,9 @@ class TooManyPublicMethodsTest extends AbstractTest
         return new MethodNode($astMethod);
     }
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
+     */
     private function createPrivateMethod($methodName)
     {
         $astMethod = new ASTMethod($methodName);

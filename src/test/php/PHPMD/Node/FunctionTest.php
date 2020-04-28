@@ -26,7 +26,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\FunctionNode
  * @covers \PHPMD\Node\AbstractCallableNode
  */
-class FunctionNodeTest extends AbstractTest
+class FunctionTest extends AbstractTest
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependFunction
@@ -35,7 +35,10 @@ class FunctionNodeTest extends AbstractTest
      */
     public function testMagicCallDelegatesToWrappedPHPDependFunction()
     {
-        $function = $this->getMock('PDepend\\Source\\AST\\ASTFunction', array(), array(null));
+        $function = $this->getMockFromBuilder(
+            $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
+                ->setConstructorArgs(array(null))
+        );
         $function->expects($this->once())
             ->method('getStartLine');
 

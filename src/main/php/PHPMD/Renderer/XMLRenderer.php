@@ -91,7 +91,7 @@ class XMLRenderer extends AbstractRenderer
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);
-            $writer->write('      ' . $violation->getDescription() . PHP_EOL);
+            $writer->write('      ' . htmlspecialchars($violation->getDescription()) . PHP_EOL);
             $writer->write('    </violation>' . PHP_EOL);
         }
 
@@ -115,7 +115,7 @@ class XMLRenderer extends AbstractRenderer
      * This method will write a xml attribute named <b>$attr</b> to the output
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *
-     * @param string $attr  The xml attribute name.
+     * @param string $attr The xml attribute name.
      * @param string $value The attribute value.
      * @return void
      */

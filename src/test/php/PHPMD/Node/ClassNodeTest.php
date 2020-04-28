@@ -55,7 +55,7 @@ class ClassNodeTest extends AbstractTest
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
 
-        $rule = $this->getMock('PHPMD\\AbstractRule');
+        $rule = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\\AbstractRule'));
 
         $node = new ClassNode($class);
 

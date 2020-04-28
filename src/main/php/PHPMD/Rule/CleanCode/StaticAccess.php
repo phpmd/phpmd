@@ -51,12 +51,17 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $className = $methodCall->getChild(0)->getNode()->getImage();
-            if (in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions)) {
+            if ($this->isExcludedFromAnalysis($className, $exceptions)) {
                 continue;
             }
 
             $this->addViolation($methodCall, array($className, $node->getName()));
         }
+    }
+    
+    protected function isExcludedFromAnalysis($className, $exceptions)
+    {
+        return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
     }
 
     private function isStaticMethodCall(AbstractNode $methodCall)
