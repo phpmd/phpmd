@@ -110,7 +110,7 @@ ErrorControlOperator
 
 Since: PHPMD 2.9.0
 
-Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it slows down execution of your code by average of 1.75x. Consider changing error_reporting() level and/or setting up your own error handler.
+Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.
 
 Example: ::
 
@@ -152,4 +152,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        
+

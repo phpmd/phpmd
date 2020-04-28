@@ -21,7 +21,7 @@ Clean Code Rules
 - `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 - `MissingImport <cleancode.html#missingimport>`_: Importing all external classes in a file through use statements makes them clearly visible.
 - `UndefinedVariable <cleancode.html#undefinedvariable>`_: Detects when a variable is used that has not been defined before.
-- `ErrorControlOperator <cleancode.html#errorcontroloperator>`_: Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it slows down execution of your code by average of 1.75x. Consider changing error_reporting() level and/or setting up your own error handler.
+- `ErrorControlOperator <cleancode.html#errorcontroloperator>`_: Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.
 
 Code Size Rules
 ===============
