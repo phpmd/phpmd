@@ -21,6 +21,8 @@ use PHPMD\AbstractTest;
 
 /**
  * Error Control Operator Test
+ *
+ * @coversDefaultClass \PHPMD\Rule\CleanCode\ErrorControlOperator
  */
 class ErrorControlOperatorTest extends AbstractTest
 {
@@ -28,6 +30,7 @@ class ErrorControlOperatorTest extends AbstractTest
      * testAppliedToFunctions
      *
      * @return void
+     * @covers ::apply
      */
     public function testDoesNotApplyToOtherUnaryOperatorsInFunction()
     {
@@ -40,6 +43,7 @@ class ErrorControlOperatorTest extends AbstractTest
      * testAppliedToFunctions
      *
      * @return void
+     * @covers ::apply
      */
     public function testAppliesToErrorControlOperatorInFunction()
     {
@@ -52,6 +56,7 @@ class ErrorControlOperatorTest extends AbstractTest
      * testAppliedToClassesAndMethods
      *
      * @return void
+     * @covers ::apply
      */
     public function testAppliedToClassesAndMethods()
     {
