@@ -27,7 +27,7 @@ use PHPMD\AbstractTest;
 class ErrorControlOperatorTest extends AbstractTest
 {
     /**
-     * testAppliedToFunctions
+     * Tests that the rule does not apply to unary operators in functions
      *
      * @return void
      * @covers ::apply
@@ -40,7 +40,7 @@ class ErrorControlOperatorTest extends AbstractTest
     }
 
     /**
-     * testAppliedToFunctions
+     * Tests that the rule applies error control operators to functions
      *
      * @return void
      * @covers ::apply
@@ -53,7 +53,7 @@ class ErrorControlOperatorTest extends AbstractTest
     }
 
     /**
-     * testAppliedToClassesAndMethods
+     * Tests that the rule applies error control operators to classes and methods
      *
      * @return void
      * @covers ::apply
