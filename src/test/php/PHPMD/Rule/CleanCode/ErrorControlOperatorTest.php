@@ -32,7 +32,7 @@ class ErrorControlOperatorTest extends AbstractTest
     public function testDoesNotApplyToOtherUnaryOperatorsInFunction()
     {
         $rule = new ErrorControlOperator();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
