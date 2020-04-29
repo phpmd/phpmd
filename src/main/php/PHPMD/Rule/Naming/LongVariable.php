@@ -30,6 +30,13 @@ use PHPMD\Rule\MethodAware;
 class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
 {
     /**
+     * Temporary cache of configured suffixes to subtract
+     *
+     * @var string[]|null
+     */
+    private $subtractSuffixes;
+
+    /**
      * Temporary map holding variables that were already processed in the
      * current context.
      *
@@ -58,6 +65,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
                 }
             }
             $this->resetProcessed();
+
             return;
         }
         $declarators = $node->findChildrenOfType('VariableDeclarator');
@@ -97,7 +105,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= strlen($node->getImage()) - 1) {
+        if ($threshold >= $this->getStringLength($node->getImage(), $this->getSubtractSuffixList()) - 1) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
@@ -119,6 +127,29 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     }
 
     /**
+     * Returns the length of the variable name, excluding at most one suffix.
+     *
+     * @param string $variableName Variable name to calculate the length for.
+     * @param array $subtractSuffixes Optional list of suffixes to exclude from the calculated length.
+     * @return int The length of the string, without suffix, if applicable.
+     */
+    private function getStringLength($variableName, array $subtractSuffixes)
+    {
+        $variableNameLength = strlen($variableName);
+
+        foreach ($subtractSuffixes as $suffix) {
+            $suffixLength = strlen($suffix);
+            if (substr($variableName, -$suffixLength) === $suffix) {
+                $variableName = substr($variableName, 0, $variableNameLength - $suffixLength);
+
+                return strlen($variableName);
+            }
+        }
+
+        return $variableNameLength;
+    }
+
+    /**
      * Checks if the given node is a direct or indirect child of a node with
      * the given type.
      *
@@ -135,6 +166,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
             }
             $parent = $parent->getParent();
         }
+
         return false;
     }
 
@@ -168,5 +200,33 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    private function getSubtractSuffixList()
+    {
+        if ($this->subtractSuffixes !== null) {
+            return $this->subtractSuffixes;
+        }
+
+        try {
+            $suffixes = $this->getStringProperty('subtract-suffixes');
+        } catch (\OutOfBoundsException $e) {
+            return $this->subtractSuffixes = array();
+        }
+
+        return $this->subtractSuffixes = array_filter(
+            array_map(
+                'trim',
+                explode(',', $suffixes)
+            ),
+            function ($value) {
+                return $value !== '';
+            }
+        );
     }
 }

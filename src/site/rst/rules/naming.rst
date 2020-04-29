@@ -60,6 +60,11 @@ This rule has the following properties:
 +===================================+===============+===========================================+
 | maximum                           | 20            | The variable length reporting threshold   |
 +-----------------------------------+---------------+-------------------------------------------+
+| subtract-suffixes                 |               | Comma-separated list of suffixes that will|
+|                                   |               | not count in the length of the variable   |
+|                                   |               | name. Only the first matching suffix will |
+|                                   |               | be subtracted.                            |
++-----------------------------------+---------------+-------------------------------------------+
 
 ShortMethodName
 ===============
