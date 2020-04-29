@@ -65,6 +65,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
                 }
             }
             $this->resetProcessed();
+
             return;
         }
         $declarators = $node->findChildrenOfType('VariableDeclarator');
@@ -165,6 +166,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
             }
             $parent = $parent->getParent();
         }
+
         return false;
     }
 
