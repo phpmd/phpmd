@@ -309,7 +309,7 @@ class LongVariableTest extends AbstractTest
         $rule = new LongVariable();
         $rule->addProperty('maximum', 10);
         $rule->addProperty('subtract-suffixes', 'Repository');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -323,7 +323,7 @@ class LongVariableTest extends AbstractTest
         $rule = new LongVariable();
         $rule->addProperty('maximum', 9);
         $rule->addProperty('subtract-suffixes', 'Repository');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -337,7 +337,7 @@ class LongVariableTest extends AbstractTest
         $rule = new LongVariable();
         $rule->addProperty('maximum', 19);
         $rule->addProperty('subtract-suffixes', 'Repository,Factory');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -351,7 +351,7 @@ class LongVariableTest extends AbstractTest
         $rule = new LongVariable();
         $rule->addProperty('maximum', 24);
         $rule->addProperty('subtract-suffixes', 'Factory');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -365,7 +365,7 @@ class LongVariableTest extends AbstractTest
         $rule = new LongVariable();
         $rule->addProperty('maximum', 20);
         $rule->addProperty('subtract-suffixes', ',');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 }
