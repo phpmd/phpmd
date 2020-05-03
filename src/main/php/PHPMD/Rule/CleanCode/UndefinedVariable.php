@@ -71,6 +71,11 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
     }
 
+    /**
+     * Collect variables defined inside a PHPMD entry node (such as MethodNode).
+     *
+     * @param AbstractNode $node
+     */
     private function collect(AbstractNode $node) {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
