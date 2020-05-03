@@ -26,7 +26,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\FunctionNode
  * @covers \PHPMD\Node\AbstractCallableNode
  */
-class FunctionNodeTest extends AbstractTest
+class FunctionTest extends AbstractTest
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependFunction

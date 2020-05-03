@@ -24,6 +24,9 @@ class StreamFilter extends \php_user_filter
 {
     public static $streamHandle;
 
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
+     */
     public function filter($in, $out, &$consumed, $closing)
     {
         self::$streamHandle = '';

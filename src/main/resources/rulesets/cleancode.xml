@@ -158,6 +158,28 @@ function createArray() {
         </example>
     </rule>
 
+    <rule name="ErrorControlOperator"
+          message="Remove error control operator '@' on line {0}."
+          class="PHPMD\Rule\CleanCode\ErrorControlOperator"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#errorcontroloperator">
+        <description>
+            <![CDATA[
+Error suppression should be avoided if possible as it doesn't just suppress the error, that
+you are trying to stop, but will also suppress errors that you didn't predict would ever occur.
+Consider changing error_reporting() level and/or setting up your own error handler.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <example>
+            <![CDATA[
+function foo($filePath) {
+    $file = @fopen($filPath); // hides exceptions
+    $key = @$array[$notExistingKey]; // assigns null to $key
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="MissingImport"
           since="2.7.0"
           message="Missing class import via use statement (line '{0}', column '{1}')."

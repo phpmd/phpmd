@@ -322,7 +322,7 @@ class CommandLineOptions
     }
 
     /**
-     * Returns  string of comma-separated pattern that is used to exclude
+     * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
      *
      * @return string
@@ -523,7 +523,7 @@ class CommandLineOptions
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
-                $renderers[] =  strtolower($rendererName[1]);
+                $renderers[] = strtolower($rendererName[1]);
             }
         }
 

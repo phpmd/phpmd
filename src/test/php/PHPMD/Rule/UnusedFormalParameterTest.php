@@ -348,7 +348,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMagicMethod()
     {
         $methods = array_filter($this->getClass()->getMethods(), function ($method) {
-            return $method->getName() == '__call';
+            return $method->getName() === '__call';
         });
 
         $rule = new UnusedFormalParameter();

@@ -5,6 +5,7 @@
 .buildpath
 .settings
 *.phar
+/*.xml
 composer.lock
 vendor
 dist

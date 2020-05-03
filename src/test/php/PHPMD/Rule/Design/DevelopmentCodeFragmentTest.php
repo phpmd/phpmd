@@ -128,12 +128,15 @@ class DevelopmentCodeFragmentTest extends AbstractTest
 
     /**
      * Get a configured DevelopmentCodeFragment rule
+     *
      * @return DevelopmentCodeFragment
      */
-    private function getRule() {
+    private function getRule()
+    {
         $rule = new DevelopmentCodeFragment();
         $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->addProperty('ignore-namespaces', 'false');
+
         return $rule;
     }
 }

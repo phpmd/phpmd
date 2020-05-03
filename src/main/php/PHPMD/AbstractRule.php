@@ -386,10 +386,10 @@ abstract class AbstractRule implements Rule
         array $args = array(),
         $metric = null
     ) {
-        $search  = array();
+        $search = array();
         $replace = array();
         foreach ($args as $index => $value) {
-            $search[]  = '{' . $index . '}';
+            $search[] = '{' . $index . '}';
             $replace[] = $value;
         }
 

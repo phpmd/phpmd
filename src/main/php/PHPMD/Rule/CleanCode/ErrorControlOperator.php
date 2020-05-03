@@ -15,34 +15,35 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Rule\Design;
+namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
- * This rule class detects empty catch blocks
+ * Error Control Operators Rule
  *
- * @author Grégoire Paris <postmaster@greg0ire.fr>
- * @author Kamil Szymanski <kamilszymanski@gmail.com>
+ * This rule detects usage of error control operator (@).
+ *
+ * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
+ * @link http://php.net/manual/en/language.operators.errorcontrol.php
  */
-class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
+class ErrorControlOperator extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * This method checks if a given function or method contains an empty catch block
-     * and emits a rule violation when it exists.
+     * Loops trough all class or function nodes and looks for '@' sign.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param AbstractNode $node
      * @return void
      */
     public function apply(AbstractNode $node)
     {
-        foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
-            $scope = $catchBlock->getFirstChildOfType('ScopeStatement');
-            if (count($scope->getChildren()) === 0) {
-                $this->addViolation($catchBlock, array($node->getName()));
+        foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
+            if ($unaryExpression->getImage() === '@') {
+                $this->addViolation($node, array($unaryExpression->getBeginLine()));
             }
         }
     }

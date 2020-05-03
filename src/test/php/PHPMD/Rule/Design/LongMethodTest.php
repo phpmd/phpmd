@@ -87,7 +87,7 @@ class LongMethodTest extends AbstractTest
      */
     public function testRuleUsesElocWhenIgnoreWhitespaceSet()
     {
-        $class  = $this->getClassMock('eloc', 22);
+        $class = $this->getClassMock('eloc', 22);
         $report = $this->getReportWithNoViolation();
 
         $rule = new LongMethod();
