@@ -34,6 +34,32 @@ interface AReallyLongInterfaceName {
         </example>
     </rule>
 
+    <rule name="ShortClassName"
+          since="2.9"
+          message="Avoid classes with short names like {0}. Configured minimum length is {1}."
+          class="PHPMD\Rule\Naming\ShortClassName"
+          externalInfoUrl="https://phpmd.org/rules/naming.html#shortclassname">
+        <description>
+            Detects when classes or interfaces have a very short name.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The class name length reporting threshold" value="2"/>
+            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+class Id {
+
+}
+
+interface Id {
+
+}
+]]>
+        </example>
+    </rule>
+
     <rule name="ShortVariable"
           since="0.2"
           message="Avoid variables with short names like {0}. Configured minimum length is {1}."

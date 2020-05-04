@@ -113,6 +113,7 @@ class_alias('PHPMD\\Rule\\Naming\\BooleanGetMethodName', 'PHP_PMD_Rule_Naming_Bo
 class_alias('PHPMD\\Rule\\Naming\\ConstantNamingConventions', 'PHP_PMD_Rule_Naming_ConstantNamingConventions');
 class_alias('PHPMD\\Rule\\Naming\\ConstructorWithNameAsEnclosingClass', 'PHP_PMD_Rule_Naming_ConstructorWithNameAsEnclosingClass');
 class_alias('PHPMD\\Rule\\Naming\\LongClassName', 'PHP_PMD_Rule_Naming_LongClassName');
+class_alias('PHPMD\\Rule\\Naming\\ShortClassName', 'PHP_PMD_Rule_Naming_ShortClassName');
 class_alias('PHPMD\\Rule\\Naming\\LongVariable', 'PHP_PMD_Rule_Naming_LongVariable');
 class_alias('PHPMD\\Rule\\Naming\\ShortMethodName', 'PHP_PMD_Rule_Naming_ShortMethodName');
 class_alias('PHPMD\\Rule\\Naming\\ShortVariable', 'PHP_PMD_Rule_Naming_ShortVariable');
