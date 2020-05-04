@@ -57,7 +57,7 @@ class Strings
     public static function split($separator, $string)
     {
         if ($separator === '') {
-            throw new InvalidArgumentException('Separator can\'t me empty string');
+            throw new InvalidArgumentException('Separator can\'t be empty string');
         }
 
         return array_filter(
