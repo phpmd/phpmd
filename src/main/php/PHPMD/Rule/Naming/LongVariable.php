@@ -22,6 +22,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Support\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
@@ -105,7 +106,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= $this->getStringLength($node->getImage(), $this->getSubtractSuffixList()) - 1) {
+        if ($threshold >= Strings::length($node->getImage(), $this->getSubtractSuffixList()) - 1) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
@@ -124,29 +125,6 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'MemberPrimaryPrefix');
-    }
-
-    /**
-     * Returns the length of the variable name, excluding at most one suffix.
-     *
-     * @param string $variableName Variable name to calculate the length for.
-     * @param array $subtractSuffixes Optional list of suffixes to exclude from the calculated length.
-     * @return int The length of the string, without suffix, if applicable.
-     */
-    private function getStringLength($variableName, array $subtractSuffixes)
-    {
-        $variableNameLength = strlen($variableName);
-
-        foreach ($subtractSuffixes as $suffix) {
-            $suffixLength = strlen($suffix);
-            if (substr($variableName, -$suffixLength) === $suffix) {
-                $variableName = substr($variableName, 0, $variableNameLength - $suffixLength);
-
-                return strlen($variableName);
-            }
-        }
-
-        return $variableNameLength;
     }
 
     /**
@@ -209,24 +187,10 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     private function getSubtractSuffixList()
     {
-        if ($this->subtractSuffixes !== null) {
-            return $this->subtractSuffixes;
+        if ($this->subtractSuffixes === null) {
+            $this->subtractSuffixes = Strings::split(',', $this->getStringProperty('subtract-suffixes', ''));
         }
 
-        try {
-            $suffixes = $this->getStringProperty('subtract-suffixes');
-        } catch (\OutOfBoundsException $e) {
-            return $this->subtractSuffixes = array();
-        }
-
-        return $this->subtractSuffixes = array_filter(
-            array_map(
-                'trim',
-                explode(',', $suffixes)
-            ),
-            function ($value) {
-                return $value !== '';
-            }
-        );
+        return $this->subtractSuffixes;
     }
 }
