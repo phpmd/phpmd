@@ -64,6 +64,7 @@ many bugs, especially when the loop manipulates an array, as count happens on ea
 Naming Rules
 ============
 
+- `LongClassName <naming.html#longclassname>`_: Detects when classes or interfaces are declared with excessively long names.
 - `ShortVariable <naming.html#shortvariable>`_: Detects when a field, local, or parameter has a very short name.
 - `LongVariable <naming.html#longvariable>`_: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName <naming.html#shortmethodname>`_: Detects when very short method names are used.
