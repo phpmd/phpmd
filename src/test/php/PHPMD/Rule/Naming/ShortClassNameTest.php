@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for ShortClassName rule
  *
- * @covers PHPMD\Rule\Naming\ShortClassName
+ * @coversDefaultClass \PHPMD\Rule\Naming\ShortClassName
  */
 class ShortClassNameTest extends AbstractTest
 {
