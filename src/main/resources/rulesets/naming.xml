@@ -45,7 +45,7 @@ interface AReallyLongInterfaceName {
         <priority>3</priority>
         <properties>
             <property name="minimum" description="The class name length reporting threshold" value="2"/>
-            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
+            <property name="exceptions" description="Comma-separated list of exceptions. Example: Log,URL,FTP" value=""/>
         </properties>
         <example>
             <![CDATA[
