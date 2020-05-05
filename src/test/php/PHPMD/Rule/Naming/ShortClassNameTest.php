@@ -20,7 +20,7 @@ namespace PHPMD\Rule\Naming;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for short class names.
+ * Test case for ShortClassName rule
  *
  * @covers PHPMD\Rule\Naming\ShortClassName
  */
