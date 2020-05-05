@@ -32,12 +32,11 @@ class RuleSetFactory
     private $strict = false;
 
     /**
-     * The data directory set by PEAR or a dynamic property set within the class
-     * constructor.
+     * The data directory set within the class constructor.
      *
      * @var string
      */
-    private $location = '@data_dir@';
+    private $location;
 
     /**
      * The minimum priority for rules to load.
@@ -58,12 +57,7 @@ class RuleSetFactory
      */
     public function __construct()
     {
-        // PEAR installer workaround
-        if (strpos($this->location, '@data_dir') === 0) {
-            $this->location = __DIR__ . '/../../resources';
-            return;
-        }
-        $this->location .= '/PHPMD/resources';
+        $this->location = __DIR__ . '/../../resources';
     }
 
     /**
