@@ -46,7 +46,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
     {
         $threshold = $this->getIntProperty('minimum');
 
-        if ($threshold <= strlen($node->getName()) - 1) {
+        if ($threshold <= strlen($node->getName())) {
             return;
         }
 

@@ -28,7 +28,7 @@ class LongClassNameTest extends AbstractTest
 {
     /**
      * Class name length: 43
-     * Threshold: 44
+     * Threshold: 43
      *
      * @return void
      */
@@ -42,42 +42,42 @@ class LongClassNameTest extends AbstractTest
 
     /**
      * Class name length: 40
-     * Threshold: 40
+     * Threshold: 39
      *
      * @return void
      */
     public function testRuleAppliesToClassNameAboveThreshold()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 40);
+        $rule->addProperty('maximum', 39);
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
     /**
      * Interface name length: 47
-     * Threshold: 48
+     * Threshold: 47
      *
      * @return void
      */
     public function testRuleNotAppliesToInterfaceNameBelowThreshold()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 48);
+        $rule->addProperty('maximum', 47);
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getInterface());
     }
 
     /**
      * Interface name length: 44
-     * Threshold: 44
+     * Threshold: 43
      *
      * @return void
      */
     public function testRuleAppliesToInterfaceNameAboveThreshold()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 44);
+        $rule->addProperty('maximum', 43);
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getInterface());
     }
@@ -85,14 +85,14 @@ class LongClassNameTest extends AbstractTest
     /**
      * Class name length: 69
      * Suffix length: 9
-     * Threshold: 61
+     * Threshold: 60
      *
      * @return void
      */
     public function testRuleNotAppliesToClassNameLengthWithSuffixSubtractedBelowThreshold()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 61);
+        $rule->addProperty('maximum', 60);
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
@@ -101,14 +101,14 @@ class LongClassNameTest extends AbstractTest
     /**
      * Class name length: 66
      * Suffix length: 9
-     * Threshold: 57
+     * Threshold: 56
      *
      * @return void
      */
     public function testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 57);
+        $rule->addProperty('maximum', 56);
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -117,14 +117,14 @@ class LongClassNameTest extends AbstractTest
     /**
      * Class name length: 55
      * Suffix length: 9
-     * Threshold: 55
+     * Threshold: 54
      *
      * @return void
      */
     public function testRuleAppliesToClassNameLengthWithoutSuffixSubtracted()
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 55);
+        $rule->addProperty('maximum', 54);
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
