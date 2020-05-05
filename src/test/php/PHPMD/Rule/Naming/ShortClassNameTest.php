@@ -27,8 +27,7 @@ use PHPMD\AbstractTest;
 class ShortClassNameTest extends AbstractTest
 {
     /**
-     * Class name length: 43
-     * Threshold: 43
+     * Tests that rule does not apply to class name length (43) above threshold (43)
      *
      * @return void
      */
@@ -41,8 +40,7 @@ class ShortClassNameTest extends AbstractTest
     }
 
     /**
-     * Class name length: 40
-     * Threshold: 41
+     * Tests that rule applies to class name length (40) below threshold (41)
      *
      * @return void
      */
@@ -55,8 +53,7 @@ class ShortClassNameTest extends AbstractTest
     }
 
     /**
-     * Interface name length: 47
-     * Threshold: 47
+     * Tests that rule does not apply to interface name length (47) above threshold (47)
      *
      * @return void
      */
@@ -69,8 +66,7 @@ class ShortClassNameTest extends AbstractTest
     }
 
     /**
-     * Interface name length: 44
-     * Threshold: 45
+     * Tests that rule applies for interface name length (44) below threshold (45)
      *
      * @return void
      */
@@ -83,8 +79,7 @@ class ShortClassNameTest extends AbstractTest
     }
 
     /**
-     * Class name length: 55
-     * Threshold: 61
+     * Tests that rule does not apply for class name length (55) below threshold (61) when set in exceptions
      *
      * @return void
      */
@@ -98,8 +93,7 @@ class ShortClassNameTest extends AbstractTest
     }
 
     /**
-     * Class name length: 55
-     * Threshold: 56
+     * Tests that rule applies to class name length (55) below threshold (56) when not set in exceptions
      *
      * @return void
      */
