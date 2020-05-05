@@ -97,7 +97,7 @@ class ShortClassNameTest extends AbstractTest
      *
      * @return void
      */
-    public function testRuleAppliesToClassNameAboveThresholdNotInExceptions()
+    public function testRuleAppliesToClassNameBelowThresholdNotInExceptions()
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 56);
