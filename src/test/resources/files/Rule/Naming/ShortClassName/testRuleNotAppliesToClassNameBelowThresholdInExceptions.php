@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleNotAppliesToClassNameAboveThresholdInExceptions
+class testRuleNotAppliesToClassNameBelowThresholdInExceptions
 {
 
 }
