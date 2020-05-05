@@ -25,25 +25,25 @@ use InvalidArgumentException;
 class Strings
 {
     /**
-     * Returns the length of the variable name, excluding at most one suffix.
+     * Returns the length of the given string, excluding at most one suffix.
      *
-     * @param string $variableName Variable name to calculate the length for.
-     * @param array $subtractSuffixes Optional list of suffixes to exclude from the calculated length.
+     * @param string $stringName String to calculate the length for.
+     * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.
      */
-    public static function length($variableName, array $subtractSuffixes = array())
+    public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes)
     {
-        $variableNameLength = strlen($variableName);
+        $stringLength = strlen($stringName);
 
         foreach ($subtractSuffixes as $suffix) {
             $suffixLength = strlen($suffix);
-            if (substr($variableName, -$suffixLength) === $suffix) {
-                $variableNameLength -= $suffixLength;
+            if (substr($stringName, -$suffixLength) === $suffix) {
+                $stringLength -= $suffixLength;
                 break;
             }
         }
 
-        return $variableNameLength;
+        return $stringLength;
     }
 
     /**

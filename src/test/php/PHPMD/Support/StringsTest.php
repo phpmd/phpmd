@@ -31,7 +31,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthEmptyString()
     {
-        static::assertSame(0, Strings::length(''));
+        static::assertSame(0, Strings::lengthWithoutSuffixes('', array()));
     }
 
     /**
@@ -39,7 +39,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthEmptyStringWithConfiguredSubtractSuffix()
     {
-        static::assertSame(0, Strings::length('', array('Foo', 'Bar')));
+        static::assertSame(0, Strings::lengthWithoutSuffixes('', array('Foo', 'Bar')));
     }
 
     /**
@@ -47,7 +47,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthStringWithoutSubtractSuffixMatch()
     {
-        static::assertSame(8, Strings::length('UnitTest', array('Foo', 'Bar')));
+        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', array('Foo', 'Bar')));
     }
 
     /**
@@ -55,7 +55,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthStringWithSubtractSuffixMatch()
     {
-        static::assertSame(4, Strings::length('UnitBar', array('Foo', 'Bar')));
+        static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', array('Foo', 'Bar')));
     }
 
     /**
@@ -63,7 +63,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthStringWithDoubleSuffixMatchSubtractOnce()
     {
-        static::assertSame(7, Strings::length('UnitFooBar', array('Foo', 'Bar')));
+        static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', array('Foo', 'Bar')));
     }
 
     /**
@@ -71,7 +71,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthStringWithPrefixMatchShouldNotSubtract()
     {
-        static::assertSame(11, Strings::length('FooUnitTest', array('Foo', 'Bar')));
+        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
     }
 
     /**
