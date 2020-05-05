@@ -75,11 +75,12 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     *
      * @return void
      */
     public function testSplitEmptySeparatorThrowsException()
     {
-        $this->expectException('\InvalidArgumentException');
         Strings::split('', 'UnitTest');
     }
 
