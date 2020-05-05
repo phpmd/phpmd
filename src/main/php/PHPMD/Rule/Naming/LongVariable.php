@@ -106,7 +106,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= Strings::length($node->getImage(), $this->getSubtractSuffixList()) - 1) {
+        if (Strings::length($node->getImage(), $this->getSubtractSuffixList()) - 1 <= $threshold) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
