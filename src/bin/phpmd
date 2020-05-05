@@ -24,17 +24,6 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     require_once __DIR__ . '/../../../../autoload.php';
 } else {
     require_once __DIR__ . '/../../vendor/autoload.php';
-
-    // PEAR installation workaround
-    if (strpos('@package_version@', '@package_version') === 0) {
-        set_include_path(
-            dirname(__FILE__) . '/../main/php' .
-            PATH_SEPARATOR .
-            dirname(__FILE__) . '/../../vendor/pdepend/pdepend/src/main/php' .
-            PATH_SEPARATOR .
-            '.'
-        );
-    }
 }
 
 // Restart if xdebug is loading, unless the environment variable PHPMD_ALLOW_XDEBUG is set.
