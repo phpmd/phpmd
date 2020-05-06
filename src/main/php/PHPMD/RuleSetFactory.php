@@ -452,14 +452,13 @@ class RuleSetFactory
      * @param \SimpleXMLElement $ruleNode
      * @return void
      */
-    private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode) {
+    private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
+    {
         $attributes = $ruleNode->attributes();
-
         $ruleName = (string) $attributes['name'];
 
         try {
             $rule = $this->findRuleInRulesetByName($ruleSet, $ruleName);
-
             $this->parsePropertiesNode($rule, $ruleNode->properties);
         } catch(\RuntimeException $exception) {
             return;
@@ -474,16 +473,16 @@ class RuleSetFactory
      * @return AbstractRule
      * @throws \RuntimeException if no matching rule was found
      */
-    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName) {
-        /** @var \Iterator $it */
+    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName)
+    {
         $it = $ruleSet->getRules();
 
-        // find existing rule
+        // Find existing rule
         while ($it->valid()) {
             /** @var AbstractRule $rule */
             $rule = $it->current();
 
-            // rule found, modify properties
+            // Rule found, modify properties
             if ($rule->getName() === $ruleName) {
                 return $rule;
             }
