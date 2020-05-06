@@ -224,8 +224,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             $variable = $assignment->getChild(0);
 
             if ($variable->getNode() instanceof ASTArray) {
-                foreach ($variable->findChildrenOfType('Variable') as $deconstructedVariable) {
-                    $this->addVariableDefinition($deconstructedVariable);
+                foreach ($variable->findChildrenOfType('Variable') as $unpackedVariable) {
+                    $this->addVariableDefinition($unpackedVariable);
                 }
 
                 continue;
