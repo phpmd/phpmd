@@ -102,6 +102,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     protected function checkMaximumLength(AbstractNode $node)
     {
