@@ -475,18 +475,18 @@ class RuleSetFactory
      */
     private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName)
     {
-        $it = $ruleSet->getRules();
+        $rules = $ruleSet->getRules();
 
         // Find existing rule
-        while ($it->valid()) {
+        while ($rules->valid()) {
             /** @var AbstractRule $rule */
-            $rule = $it->current();
+            $rule = $rules->current();
 
             // Rule found, modify properties
             if ($rule->getName() === $ruleName) {
                 return $rule;
             }
-            $it->next();
+            $rules->next();
         }
 
         throw new \RuntimeException(
