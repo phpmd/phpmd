@@ -20,7 +20,7 @@ namespace PHPMD\Rule\Naming;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for long class names.
+ * Test cases for LongClassName.
  *
  * @coversDefaultClass  \PHPMD\Rule\Naming\LongClassName
  */
