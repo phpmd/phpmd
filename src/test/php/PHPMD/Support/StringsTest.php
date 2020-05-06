@@ -27,6 +27,8 @@ use PHPMD\AbstractTest;
 class StringsTest extends AbstractTest
 {
     /**
+     * Tests the lengthWithoutSuffixes() method with an empty string
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesEmptyString()
@@ -35,6 +37,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method with an empty string with list of suffixes
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix()
@@ -43,6 +47,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method with a string not in the list of suffixes
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch()
@@ -51,6 +57,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method with a string in the list of suffixes
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch()
@@ -59,6 +67,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method with a string that should match only once for two potential matches
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce()
@@ -67,6 +77,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method that a Prefix should not be matched
+     *
      * @return void
      */
     public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract()
@@ -75,6 +87,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method with an empty separator
+     *
      * @expectedException \InvalidArgumentException
      *
      * @return void
@@ -85,6 +99,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method with an empty string
+     *
      * @return void
      */
     public function testSplitToListEmptyString()
@@ -93,6 +109,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method with a non-matching separator
+     *
      * @return void
      */
     public function testSplitToListStringWithoutMatchingSeparator()
@@ -101,6 +119,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method with a matching separator
+     *
      * @return void
      */
     public function testSplitToListStringWithMatchingSeparator()
@@ -109,6 +129,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method with trailing whitespace
+     *
      * @return void
      */
     public function testSplitToListStringTrimsLeadingAndTrailingWhitespace()
@@ -117,6 +139,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method that it removes empty strings from list
+     *
      * @return void
      */
     public function testSplitToListStringRemoveEmptyStringValues()
@@ -125,6 +149,8 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the splitToList() method that it does not remove zero values from list
+     *
      * @return void
      */
     public function testSplitToListStringShouldNotRemoveAZeroValue()
