@@ -20,7 +20,7 @@ namespace PHPMD\Support;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for the Strings utility class.
+ * Test cases for the Strings utility class.
  *
  * @coversDefaultClass  \PHPMD\Support\Strings
  */
