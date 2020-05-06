@@ -448,9 +448,8 @@ class RuleSetFactory
      * This method modifies properties of a given rule in an existing rule-set by calling
      * the parsePropertiesNode method
      *
-     * @param RuleSet           $ruleSet
+     * @param RuleSet $ruleSet
      * @param \SimpleXMLElement $ruleNode
-     *
      * @return void
      */
     private function modifyExistingRuleset(RuleSet $ruleSet, \SimpleXMLElement $ruleNode) {
@@ -471,10 +470,8 @@ class RuleSetFactory
      * Search Rule in given Ruleset by name
      *
      * @param RuleSet $ruleSet
-     * @param string  $ruleName
-     *
+     * @param string $ruleName
      * @return AbstractRule
-     *
      * @throws \RuntimeException if no matching rule was found
      */
     private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName) {
