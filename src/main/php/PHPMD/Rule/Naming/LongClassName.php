@@ -44,10 +44,11 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
     public function apply(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if (Strings::lengthWithoutSuffixes($node->getName(), $this->getSubtractSuffixList()) <= $threshold) {
+        $classOrInterfaceName = $node->getName();
+        if (Strings::lengthWithoutSuffixes($classOrInterfaceName, $this->getSubtractSuffixList()) <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($node->getName(), $threshold));
+        $this->addViolation($node, array($classOrInterfaceName, $threshold));
     }
 
     /**
