@@ -23,11 +23,11 @@ The Naming Ruleset contains a collection of rules about names - too long, too sh
         </properties>
         <example>
             <![CDATA[
-class ATooLongLongClassNameThatHintsAtADesignProblem {
+class ATooLongClassNameThatHintsAtADesignProblem {
 
 }
 
-interface ATooLongLongInterfaceNameThatHintsAtADesignProblem {
+interface ATooLongInterfaceNameThatHintsAtADesignProblem {
 
 }
 ]]>
