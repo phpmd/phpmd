@@ -49,11 +49,11 @@ interface ATooLongLongInterfaceNameThatHintsAtADesignProblem {
         </properties>
         <example>
             <![CDATA[
-class Id {
+class Fo {
 
 }
 
-interface Id {
+interface Fo {
 
 }
 ]]>
