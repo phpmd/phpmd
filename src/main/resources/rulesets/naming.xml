@@ -18,16 +18,16 @@ The Naming Ruleset contains a collection of rules about names - too long, too sh
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maximum" description="The class name length reporting threshold" value="20"/>
+            <property name="maximum" description="The class name length reporting threshold" value="40"/>
             <property name="subtract-suffixes" description="Comma-separated list of suffixes that will not count in the length of the class name. Only the first matching suffix will be subtracted." value=""/>
         </properties>
         <example>
             <![CDATA[
-class AReallyLongClassName {
+class ATooLongLongClassNameThatHintsAtADesignProblem {
 
 }
 
-interface AReallyLongInterfaceName {
+interface ATooLongLongInterfaceNameThatHintsAtADesignProblem {
 
 }
 ]]>
