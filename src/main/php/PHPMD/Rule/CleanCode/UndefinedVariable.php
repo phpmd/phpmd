@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
@@ -53,14 +54,13 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     {
         $this->images = array();
 
-        $this->collectPropertyPostfix($node);
-        $this->collectClosureParameters($node);
-        $this->collectForeachStatements($node);
-        $this->collectListExpressions($node);
-        $this->collectAssignments($node);
-        $this->collectParameters($node);
-        $this->collectExceptionCatches($node);
-        $this->collectGlobalStatements($node);
+        $this->collect($node);
+
+        foreach ($node->findChildrenOfType('Class') as $class) {
+            foreach ($class->getMethods() as $method) {
+                $this->collect(new MethodNode($method));
+            }
+        }
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
             if (! $this->isNotSuperGlobal($variable)) {
@@ -70,6 +70,22 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
                 $this->addViolation($variable, array($variable->getImage()));
             }
         }
+    }
+
+    /**
+     * Collect variables defined inside a PHPMD entry node (such as MethodNode).
+     *
+     * @param AbstractNode $node
+     */
+    private function collect(AbstractNode $node) {
+        $this->collectPropertyPostfix($node);
+        $this->collectClosureParameters($node);
+        $this->collectForeachStatements($node);
+        $this->collectListExpressions($node);
+        $this->collectAssignments($node);
+        $this->collectParameters($node);
+        $this->collectExceptionCatches($node);
+        $this->collectGlobalStatements($node);
     }
 
     /**
