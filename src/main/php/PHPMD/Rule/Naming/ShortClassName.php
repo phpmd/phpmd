@@ -24,7 +24,7 @@ use PHPMD\Rule\InterfaceAware;
 use PHPMD\Utility\Strings;
 
 /**
- * This rule class will detect classes and interfaces with short names.
+ * This rule will detect classes and interfaces with names that are too short.
  */
 class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
 {
