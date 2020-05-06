@@ -22,7 +22,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use PHPMD\Support\Strings;
+use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really

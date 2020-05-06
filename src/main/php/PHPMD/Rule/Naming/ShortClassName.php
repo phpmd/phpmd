@@ -21,7 +21,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\InterfaceAware;
-use PHPMD\Support\Strings;
+use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect classes and interfaces with short names.

@@ -21,7 +21,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\InterfaceAware;
-use PHPMD\Support\Strings;
+use PHPMD\Utility\Strings;
 
 /**
  * This rule class will check if a class name doesn't exceed the configured length excluding

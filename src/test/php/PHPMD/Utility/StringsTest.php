@@ -15,14 +15,15 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Support;
+namespace PHPMD\Utility;
 
 use PHPMD\AbstractTest;
+use PHPMD\Utility\Strings;
 
 /**
  * Test cases for the Strings utility class.
  *
- * @coversDefaultClass  \PHPMD\Support\Strings
+ * @coversDefaultClass  \PHPMD\Utility\Strings
  */
 class StringsTest extends AbstractTest
 {

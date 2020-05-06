@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Support;
+namespace PHPMD\Utility;
 
 use InvalidArgumentException;
 
