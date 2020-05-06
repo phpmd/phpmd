@@ -24,8 +24,7 @@ use PHPMD\Rule\InterfaceAware;
 use PHPMD\Utility\Strings;
 
 /**
- * This rule class will check if a class name doesn't exceed the configured length excluding
- * certain configured suffixes.
+ * This rule checks if an interface or class name exceeds the configured length excluding certain configured suffixes
  */
 class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
 {
