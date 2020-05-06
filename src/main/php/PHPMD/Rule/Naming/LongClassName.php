@@ -37,8 +37,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
     private $subtractSuffixes;
 
     /**
-     * This method checks if a class name exceeds the configured maximum length
-     * and emits a rule violation.
+     * Check if a class name exceeds the configured maximum length and emit a rule violation
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
