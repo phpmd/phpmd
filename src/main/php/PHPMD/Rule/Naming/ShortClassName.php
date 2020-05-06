@@ -44,16 +44,17 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
     public function apply(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
-        if (strlen($node->getName()) >= $threshold) {
+        $classOrInterfaceName = $node->getName();
+        if (strlen($classOrInterfaceName) >= $threshold) {
             return;
         }
 
         $exceptions = $this->getExceptionsList();
-        if (isset($exceptions[$node->getName()])) {
+        if (isset($exceptions[$classOrInterfaceName])) {
             return;
         }
 
-        $this->addViolation($node, array($node->getName(), $threshold));
+        $this->addViolation($node, array($classOrInterfaceName, $threshold));
     }
 
     /**
