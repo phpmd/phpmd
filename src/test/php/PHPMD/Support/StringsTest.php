@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the Strings utility class.
  *
- * @covers \PHPMD\Support\Strings
+ * @coversDefaultClass  \PHPMD\Support\Strings
  */
 class StringsTest extends AbstractTest
 {
