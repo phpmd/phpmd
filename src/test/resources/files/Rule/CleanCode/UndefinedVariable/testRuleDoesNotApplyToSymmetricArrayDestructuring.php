@@ -15,9 +15,9 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToDeconstruct
+class testRuleDoesNotApplyToSymmetricArrayDestructuring
 {
-    function testRuleDoesNotApplyToDeconstruct()
+    function testRuleDoesNotApplyToSymmetricArrayDestructuring()
     {
         [$key, $value] = explode('=', 'key=value');
 
