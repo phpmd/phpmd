@@ -65,7 +65,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
     private function getExceptionsList()
     {
         if ($this->exceptions === null) {
-            $this->exceptions = array_flip(Strings::split(',', $this->getStringProperty('exceptions', '')));
+            $this->exceptions = array_flip(Strings::splitToList($this->getStringProperty('exceptions', ''), ','));
         }
 
         return $this->exceptions;

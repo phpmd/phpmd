@@ -188,7 +188,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
-            $this->subtractSuffixes = Strings::split(',', $this->getStringProperty('subtract-suffixes', ''));
+            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
         }
 
         return $this->subtractSuffixes;

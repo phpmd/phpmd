@@ -25,7 +25,7 @@ use InvalidArgumentException;
 class Strings
 {
     /**
-     * Returns the length of the given string, excluding at most one suffix.
+     * Returns the length of the given string, excluding at most one suffix
      *
      * @param string $stringName String to calculate the length for.
      * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
@@ -49,19 +49,19 @@ class Strings
     /**
      * Split a string with the given separator, trim whitespaces around the parts and remove any empty strings
      *
-     * @param string $separator The separator to split the string with, similar to explode
-     * @param string $string The string to split
-     * @return array The trimmed and filtered parts of the string
-     * @throws InvalidArgumentException When the separator is an empty string
+     * @param string $listAsString The string to split.
+     * @param string $separator The separator to split the string with, similar to explode.
+     * @return array The list of trimmed and filtered parts of the string.
+     * @throws InvalidArgumentException When the separator is an empty string.
      */
-    public static function split($separator, $string)
+    public static function splitToList($listAsString, $separator)
     {
         if ($separator === '') {
             throw new InvalidArgumentException("Separator can't be empty string");
         }
 
         return array_filter(
-            array_map('trim', explode($separator, $string)),
+            array_map('trim', explode($separator, $listAsString)),
             function ($value) {
                 return $value !== '';
             }

@@ -60,7 +60,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
     private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
-            $this->subtractSuffixes = Strings::split(',', $this->getStringProperty('subtract-suffixes', ''));
+            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
         }
 
         return $this->subtractSuffixes;

@@ -81,7 +81,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitEmptySeparatorThrowsException()
     {
-        Strings::split('', 'UnitTest');
+        Strings::splitToList('UnitTest', '');
     }
 
     /**
@@ -89,7 +89,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitEmptyString()
     {
-        static::assertSame(array(), Strings::split(',', ''));
+        static::assertSame(array(), Strings::splitToList('', ','));
     }
 
     /**
@@ -97,7 +97,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitStringWithoutMatchingSeparator()
     {
-        static::assertSame(array('UnitTest'), Strings::split(',', 'UnitTest'));
+        static::assertSame(array('UnitTest'), Strings::splitToList('UnitTest', ','));
     }
 
     /**
@@ -105,7 +105,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitStringWithMatchingSeparator()
     {
-        static::assertSame(array('Unit', 'Test'), Strings::split(',', 'Unit,Test'));
+        static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit,Test', ','));
     }
 
     /**
@@ -113,7 +113,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitStringTrimsLeadingAndTrailingWhitespace()
     {
-        static::assertSame(array('Unit', 'Test'), Strings::split(',', 'Unit , Test'));
+        static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit , Test', ','));
     }
 
     /**
@@ -121,7 +121,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitStringRemoveEmptyStringValues()
     {
-        static::assertSame(array('Foo'), Strings::split(',', 'Foo,,,'));
+        static::assertSame(array('Foo'), Strings::splitToList('Foo,,,', ','));
     }
 
     /**
@@ -129,6 +129,6 @@ class StringsTest extends AbstractTest
      */
     public function testSplitStringShouldNotRemoveAZeroValue()
     {
-        static::assertSame(array('0', '1', '2'), Strings::split(',', '0,1,2'));
+        static::assertSame(array('0', '1', '2'), Strings::splitToList('0,1,2', ','));
     }
 }
