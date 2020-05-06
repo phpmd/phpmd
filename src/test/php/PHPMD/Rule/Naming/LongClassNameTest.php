@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for long class names.
  *
- * @covers PHPMD\Rule\Naming\LongClassName
+ * @coversDefaultClass  \PHPMD\Rule\Naming\LongClassName
  */
 class LongClassNameTest extends AbstractTest
 {
