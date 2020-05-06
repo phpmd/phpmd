@@ -36,8 +36,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
     private $exceptions;
 
     /**
-     * This method checks if a class or interface name is below the minimum configured length
-     * and emits a rule violation.
+     * Check if a class or interface name is below the minimum configured length and emit a rule violation
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
