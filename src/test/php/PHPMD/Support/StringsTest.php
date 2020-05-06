@@ -29,7 +29,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthEmptyString()
+    public function testLengthWithoutSuffixesEmptyString()
     {
         static::assertSame(0, Strings::lengthWithoutSuffixes('', array()));
     }
@@ -37,7 +37,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthEmptyStringWithConfiguredSubtractSuffix()
+    public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix()
     {
         static::assertSame(0, Strings::lengthWithoutSuffixes('', array('Foo', 'Bar')));
     }
@@ -45,7 +45,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthStringWithoutSubtractSuffixMatch()
+    public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch()
     {
         static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', array('Foo', 'Bar')));
     }
@@ -53,7 +53,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthStringWithSubtractSuffixMatch()
+    public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch()
     {
         static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', array('Foo', 'Bar')));
     }
@@ -61,7 +61,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthStringWithDoubleSuffixMatchSubtractOnce()
+    public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce()
     {
         static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', array('Foo', 'Bar')));
     }
@@ -69,7 +69,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testLengthStringWithPrefixMatchShouldNotSubtract()
+    public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract()
     {
         static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
     }
@@ -79,7 +79,7 @@ class StringsTest extends AbstractTest
      *
      * @return void
      */
-    public function testSplitEmptySeparatorThrowsException()
+    public function testSplitToListEmptySeparatorThrowsException()
     {
         Strings::splitToList('UnitTest', '');
     }
@@ -87,7 +87,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitEmptyString()
+    public function testSplitToListEmptyString()
     {
         static::assertSame(array(), Strings::splitToList('', ','));
     }
@@ -95,7 +95,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitStringWithoutMatchingSeparator()
+    public function testSplitToListStringWithoutMatchingSeparator()
     {
         static::assertSame(array('UnitTest'), Strings::splitToList('UnitTest', ','));
     }
@@ -103,7 +103,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitStringWithMatchingSeparator()
+    public function testSplitToListStringWithMatchingSeparator()
     {
         static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit,Test', ','));
     }
@@ -111,7 +111,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitStringTrimsLeadingAndTrailingWhitespace()
+    public function testSplitToListStringTrimsLeadingAndTrailingWhitespace()
     {
         static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit , Test', ','));
     }
@@ -119,7 +119,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitStringRemoveEmptyStringValues()
+    public function testSplitToListStringRemoveEmptyStringValues()
     {
         static::assertSame(array('Foo'), Strings::splitToList('Foo,,,', ','));
     }
@@ -127,7 +127,7 @@ class StringsTest extends AbstractTest
     /**
      * @return void
      */
-    public function testSplitStringShouldNotRemoveAZeroValue()
+    public function testSplitToListStringShouldNotRemoveAZeroValue()
     {
         static::assertSame(array('0', '1', '2'), Strings::splitToList('0,1,2', ','));
     }
