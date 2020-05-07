@@ -102,14 +102,16 @@ abstract class AbstractNode
      * has no child of the given type.
      *
      * @param string $type The searched child type.
-     * @return \PHPMD\AbstractNode
+     * @return ASTNode|null
      */
     public function getFirstChildOfType($type)
     {
         $node = $this->node->getFirstChildOfType('PDepend\Source\AST\AST' . $type);
+
         if ($node === null) {
             return null;
         }
+
         return new ASTNode($node, $this->getFileName());
     }
 
@@ -118,16 +120,18 @@ abstract class AbstractNode
      * type.
      *
      * @param string $type The searched child type.
-     * @return \PHPMD\AbstractNode[]
+     * @return ASTNode[]
      */
     public function findChildrenOfType($type)
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
         $nodes = array();
+
         foreach ($children as $child) {
             $nodes[] = new ASTNode($child, $this->getFileName());
         }
+
         return $nodes;
     }
 

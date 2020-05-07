@@ -132,7 +132,7 @@ class Command
      * The main method that can be used by a calling shell script, the return
      * value can be used as exit code.
      *
-     * @param array $args The raw command line arguments array.
+     * @param string[] $args The raw command line arguments array.
      * @return integer
      */
     public static function main(array $args)
@@ -147,6 +147,7 @@ class Command
             fwrite(STDERR, $e->getMessage() . PHP_EOL);
             $exitCode = self::EXIT_EXCEPTION;
         }
+
         return $exitCode;
     }
 }
