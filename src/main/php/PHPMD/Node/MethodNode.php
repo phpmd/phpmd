@@ -27,7 +27,7 @@ use PHPMD\Rule;
  *
  * Methods available on $node via PHPMD\AbstractNode::__call
  *
- * @method bool isPrivate() Returns true if this node is marked as private .
+ * @method bool isPrivate() Returns true if this node is marked as private.
  */
 class MethodNode extends AbstractCallableNode
 {
