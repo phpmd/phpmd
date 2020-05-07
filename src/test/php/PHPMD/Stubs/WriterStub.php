@@ -50,7 +50,7 @@ class WriterStub extends AbstractWriter
      */
     public function getData()
     {
-        return join('', $this->chunks);
+        return implode('', $this->chunks);
     }
 
     /**
