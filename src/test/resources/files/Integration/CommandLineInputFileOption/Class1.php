@@ -15,7 +15,8 @@
  * @link http://phpmd.org/
  */
 
-class Class1 {
+class Class1
+{
     function foo()
     {
         $foo = 42;

@@ -33,6 +33,6 @@ function testRuleAppliesCorrectlyWithNestedArrays()
         array(
             'foo' => 47,
             'foo' => 49,
-        )
+        ),
     );
 }

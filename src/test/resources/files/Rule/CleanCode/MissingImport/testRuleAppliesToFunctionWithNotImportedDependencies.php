@@ -17,6 +17,7 @@
 
 namespace PHPMDTest;
 
-function testRuleAppliesToFunctionWithNotImportedDependencies(){
+function testRuleAppliesToFunctionWithNotImportedDependencies()
+{
     $a = new \stdClass();
 }

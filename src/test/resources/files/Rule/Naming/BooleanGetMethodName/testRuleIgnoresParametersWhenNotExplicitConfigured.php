@@ -20,5 +20,7 @@ class testRuleIgnoresParametersWhenNotExplicitConfigured
     /**
      * @return boolean
      */
-    function getBaz($foo) {}
+    function getBaz($foo)
+    {
+    }
 }

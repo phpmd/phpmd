@@ -20,5 +20,7 @@ class testRuleNotAppliesToMethodStartingWithHas
     /**
      * @return boolean
      */
-    function hasX() {}
+    function hasX()
+    {
+    }
 }

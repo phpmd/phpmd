@@ -116,7 +116,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     /**
      * Asserts the actual xml output matches against the expected file.
      *
-     * @param string $actualOutput     Generated xml output.
+     * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
      * @return void
      */
@@ -148,7 +148,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     /**
      * Asserts the actual JSON output matches against the expected file.
      *
-     * @param string $actualOutput     Generated JSON output.
+     * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
      *
      * @return void

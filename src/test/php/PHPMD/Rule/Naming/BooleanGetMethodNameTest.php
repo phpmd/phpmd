@@ -143,6 +143,7 @@ class BooleanGetMethodNameTest extends AbstractTest
     protected function getMethod()
     {
         $methods = $this->getClass()->getMethods();
+
         return reset($methods);
     }
 }
