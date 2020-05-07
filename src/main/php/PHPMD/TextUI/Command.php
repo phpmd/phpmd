@@ -30,8 +30,8 @@ class Command
      * Exit codes used by the phpmd command line tool.
      */
     const EXIT_SUCCESS = 0,
-          EXIT_EXCEPTION = 1,
-          EXIT_VIOLATION = 2;
+        EXIT_EXCEPTION = 1,
+        EXIT_VIOLATION = 2;
 
     /**
      * This method creates a PHPMD instance and configures this object based
@@ -53,6 +53,7 @@ class Command
     {
         if ($opts->hasVersion()) {
             fwrite(STDOUT, sprintf('PHPMD %s', $this->getVersion()) . PHP_EOL);
+
             return self::EXIT_SUCCESS;
         }
 
@@ -83,7 +84,7 @@ class Command
         $phpmd->setOptions(
             array_filter(
                 array(
-                    'coverage' => $opts->getCoverageReport()
+                    'coverage' => $opts->getCoverageReport(),
                 )
             )
         );
@@ -108,6 +109,7 @@ class Command
         if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
             return self::EXIT_VIOLATION;
         }
+
         return self::EXIT_SUCCESS;
     }
 
@@ -125,6 +127,7 @@ class Command
             $data = @parse_ini_file($build);
             $version = $data['project.version'];
         }
+
         return $version;
     }
 

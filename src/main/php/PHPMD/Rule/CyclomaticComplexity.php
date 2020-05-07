@@ -47,7 +47,7 @@ class CyclomaticComplexity extends AbstractRule implements FunctionAware, Method
                 $node->getType(),
                 $node->getName(),
                 $ccn,
-                $threshold
+                $threshold,
             )
         );
     }

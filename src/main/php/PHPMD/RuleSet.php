@@ -190,6 +190,7 @@ class RuleSet implements \IteratorAggregate
                 return $rule;
             }
         }
+
         return null;
     }
 

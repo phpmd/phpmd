@@ -66,6 +66,7 @@ class Annotation
         if (lcfirst($this->name) === self::SUPPRESS_ANNOTATION) {
             return $this->isSuppressed($rule);
         }
+
         return false;
     }
 
@@ -82,6 +83,7 @@ class Annotation
         } elseif (preg_match('/^(PH)?PMD\.' . $rule->getName() . '/', $this->value)) {
             return true;
         }
+
         return (stripos($rule->getName(), $this->value) !== false);
     }
 }

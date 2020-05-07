@@ -62,10 +62,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
-            if (! $this->isNotSuperGlobal($variable)) {
+            if (!$this->isNotSuperGlobal($variable)) {
                 $this->addVariableDefinition($variable);
             }
-            if (! $this->checkVariableDefined($variable, $node)) {
+            if (!$this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, array($variable->getImage()));
             }
         }
@@ -254,7 +254,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function addVariableDefinition($variable)
     {
-        if (! isset($this->images[$variable->getImage()])) {
+        if (!isset($this->images[$variable->getImage()])) {
             $this->images[$variable->getImage()] = $variable;
         }
     }

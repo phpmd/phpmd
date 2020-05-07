@@ -41,6 +41,7 @@ class StreamWriter extends AbstractWriter
     {
         if (is_resource($streamResourceOrUri) === true) {
             $this->stream = $streamResourceOrUri;
+
             return;
         }
         $dirName = dirname($streamResourceOrUri);
