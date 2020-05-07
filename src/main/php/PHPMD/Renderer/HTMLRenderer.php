@@ -463,7 +463,6 @@ class HTMLRenderer extends AbstractRenderer
             });
 
             self::$compiledHighlightRegex = "#(" . implode('|', $prepared) . ")#";
-
         }
 
         $rules = self::$descHighlightRules;
@@ -525,7 +524,6 @@ class HTMLRenderer extends AbstractRenderer
                 <td class='t-pct'>$pct %</td>
                 <th class='t-n'>{$name}{$bar}</th>
             </tr>";
-
         }
 
         $header = "<thead><tr><th>Count</th><th>%</th><th>$itemsTitle</th></tr></thead>";
@@ -568,7 +566,6 @@ class HTMLRenderer extends AbstractRenderer
 
             $ref = &$result[self::CATEGORY_RULE][$rule->getName()];
             $ref = isset($ref) ? $ref + 1 : 1;
-
         }
 
         // Sort numbers in each category from high to low.
