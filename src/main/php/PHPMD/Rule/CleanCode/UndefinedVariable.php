@@ -76,7 +76,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @param AbstractNode $node
      */
-    private function collect(AbstractNode $node) {
+    private function collect(AbstractNode $node)
+    {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
         $this->collectForeachStatements($node);
