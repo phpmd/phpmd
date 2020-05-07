@@ -20,7 +20,7 @@ class Foo
     function testRuleNotAppliesToMethodWithoutElseExpression()
     {
         if (true) {
-        } else if (true) {
+        } elseif (true) {
         }
     }
 }
