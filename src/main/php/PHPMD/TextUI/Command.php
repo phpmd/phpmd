@@ -95,7 +95,7 @@ class Command
 
         $ignore = $opts->getIgnore();
         if ($ignore !== null) {
-            $phpmd->setIgnorePattern(explode(',', $ignore));
+            $phpmd->addIgnorePatterns(explode(',', $ignore));
         }
 
         $phpmd->processFiles(

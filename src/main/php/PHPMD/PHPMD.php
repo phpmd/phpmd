@@ -114,8 +114,23 @@ class PHPMD
      *
      * @return string[]
      * @since 0.2.0
+     *
+     * @deprecated
+     * @see getIgnorePatterns
      */
     public function getIgnorePattern()
+    {
+        return $this->getIgnorePatterns();
+    }
+
+
+    /**
+     * Returns an array with string patterns that mark a file path as invalid.
+     *
+     * @return string[]
+     * @since 0.2.0
+     */
+    public function getIgnorePatterns()
     {
         return $this->ignorePatterns;
     }
@@ -126,8 +141,24 @@ class PHPMD
      *
      * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
+     *
+     * @deprecated
+     * @see addIgnorePatterns
      */
     public function setIgnorePattern(array $ignorePatterns)
+    {
+        $this->addIgnorePatterns($ignorePatterns);
+    }
+
+
+    /**
+     * Add a list of ignore patterns that is used to exclude directories from
+     * the source analysis.
+     *
+     * @param array<string> $ignorePatterns List of ignore patterns.
+     * @return void
+     */
+    public function addIgnorePatterns(array $ignorePatterns)
     {
         $this->ignorePatterns = array_merge(
             $this->ignorePatterns,
@@ -175,7 +206,7 @@ class PHPMD
     ) {
 
         // Merge parsed excludes
-        $this->setIgnorePattern($ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
 
