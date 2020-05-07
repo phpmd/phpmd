@@ -91,7 +91,8 @@ class RuleSetTest extends AbstractTest
     {
         $ruleSet = new RuleSet();
 
-        for ($i = 0; $i < func_num_args(); ++$i) {
+        $funcNumArgs = func_num_args();
+        for ($i = 0; $i < $funcNumArgs; ++$i) {
             $ruleSet->addRule(new RuleStub(func_get_arg($i)));
         }
 
