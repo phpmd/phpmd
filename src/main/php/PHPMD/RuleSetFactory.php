@@ -17,10 +17,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Exception\RuleClassFileNotFoundException;
-use PHPMD\Exception\RuleClassNotFoundException;
-use PHPMD\Exception\RuleSetNotFoundException;
-
 /**
  * This factory class is used to create the {@link \PHPMD\RuleSet} instance
  * that PHPMD will use to analyze the source code.
