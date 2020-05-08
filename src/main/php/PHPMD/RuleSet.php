@@ -178,10 +178,11 @@ class RuleSet implements \IteratorAggregate
     }
 
     /**
-     * This method returns a rule by its name or <b>null</b> if it doesn't exist.
+     * This method returns a rule by its name or throws an exception
      *
-     * @param string $name
+     * @param string $name The name of the rule to get.
      * @return \PHPMD\Rule
+     * @throws RuleByNameNotFoundException When the rule could not be found.
      */
     public function getRuleByName($name)
     {
@@ -190,7 +191,8 @@ class RuleSet implements \IteratorAggregate
                 return $rule;
             }
         }
-        return null;
+
+        throw new RuleByNameNotFoundException($name);
     }
 
     /**
