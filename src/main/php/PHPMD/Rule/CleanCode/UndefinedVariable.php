@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
@@ -222,6 +223,14 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     {
         foreach ($node->findChildrenOfType('AssignmentExpression') as $assignment) {
             $variable = $assignment->getChild(0);
+
+            if ($variable->getNode() instanceof ASTArray) {
+                foreach ($variable->findChildrenOfType('Variable') as $unpackedVariable) {
+                    $this->addVariableDefinition($unpackedVariable);
+                }
+
+                continue;
+            }
 
             $this->addVariableDefinition($variable);
         }
