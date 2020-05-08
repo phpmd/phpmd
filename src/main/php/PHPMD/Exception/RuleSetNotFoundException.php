@@ -15,20 +15,20 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
+namespace PHPMD\Exception;
 
 /**
- * When a configured rule class does not exist.
+ * This type of exception is thrown when a not existing rule-set was specified.
  */
-class RuleClassNotFoundException extends \RuntimeException
+class RuleSetNotFoundException extends \RuntimeException
 {
     /**
-     * Constructs a new class not found exception.
+     * Constructs a new exception for the given rule-set identifier or file name.
      *
-     * @param string $className The configured but not found ruke class name.
+     * @param string $ruleSet The rule-set identifier or file name.
      */
-    public function __construct($className)
+    public function __construct($ruleSet)
     {
-        parent::__construct('Cannot find rule class: ' . $className);
+        parent::__construct('Cannot find specified rule-set "' . $ruleSet . '".');
     }
 }

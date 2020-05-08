@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
+namespace PHPMD\Exception;
 
 /**
  * This type of exception is thrown when the class file for a configured rule
