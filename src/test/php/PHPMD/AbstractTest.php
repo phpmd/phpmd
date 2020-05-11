@@ -310,7 +310,12 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
-        return $this->createFunctionOrMethodMock('PHPMD\\Node\\FunctionNode', new ASTFunction('fooBar'), $metric, $value);
+        return $this->createFunctionOrMethodMock(
+            'PHPMD\\Node\\FunctionNode',
+            new ASTFunction('fooBar'),
+            $metric,
+            $value
+        );
     }
 
     /**
@@ -600,7 +605,7 @@ abstract class AbstractTest extends AbstractStaticTest
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($sourceFile);
 
-        $builder =  new PHPBuilder();
+        $builder = new PHPBuilder();
 
         $parser = new PHPParserGeneric(
             $tokenizer,

@@ -503,7 +503,7 @@ class CommandLineOptions
             '--suffixes: comma-separated string of valid source code ' .
             'filename extensions, e.g. php,phtml' . \PHP_EOL .
             '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories. Use asterisks to exclude by pattern. '.
+            'ignore directories. Use asterisks to exclude by pattern. ' .
             'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
@@ -518,7 +518,7 @@ class CommandLineOptions
      */
     protected function getListOfAvailableRenderers()
     {
-        $renderersDirPathName=__DIR__.'/../Renderer';
+        $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {

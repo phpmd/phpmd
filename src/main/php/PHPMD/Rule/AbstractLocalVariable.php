@@ -96,10 +96,12 @@ abstract class AbstractLocalVariable extends AbstractRule
             if ($primaryPrefix->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
                 return !$primaryPrefix->getParent()->isStatic();
             }
+
             return ($parent->getChild(0)->getNode() !== $node->getNode()
                 || !$primaryPrefix->isStatic()
             );
         }
+
         return true;
     }
 
@@ -120,6 +122,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         if ($parent->getChild(0)->getNode() === $node->getNode()) {
             return $this->stripWrappedIndexExpression($parent);
         }
+
         return $node;
     }
 

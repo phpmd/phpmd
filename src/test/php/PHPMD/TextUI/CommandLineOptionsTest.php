@@ -336,7 +336,7 @@ class CommandLineOptionsTest extends AbstractTest
                 'text',
                 'codesize',
                 '--coverage',
-                __METHOD__
+                __METHOD__,
             )
         );
 
@@ -395,7 +395,7 @@ class CommandLineOptionsTest extends AbstractTest
     {
         return array(
             array(''),
-            array('PHPMD\\Test\\Renderer\\NotExistsRenderer')
+            array('PHPMD\\Test\\Renderer\\NotExistsRenderer'),
         );
     }
 
@@ -430,7 +430,7 @@ class CommandLineOptionsTest extends AbstractTest
     {
         return array(
             array('extensions', 'suffixes'),
-            array('ignore', 'exclude')
+            array('ignore', 'exclude'),
         );
     }
 
@@ -453,15 +453,15 @@ class CommandLineOptionsTest extends AbstractTest
         return array(
             array(
                 array('--reportfile-xml', __FILE__),
-                array('xml' => __FILE__)
+                array('xml' => __FILE__),
             ),
             array(
                 array('--reportfile-html', __FILE__),
-                array('html' => __FILE__)
+                array('html' => __FILE__),
             ),
             array(
                 array('--reportfile-text', __FILE__),
-                array('text' => __FILE__)
+                array('text' => __FILE__),
             ),
             array(
                 array(
@@ -472,7 +472,7 @@ class CommandLineOptionsTest extends AbstractTest
                     '--reportfile-html',
                     __FILE__,
                 ),
-                array('text' => __FILE__, 'xml' => __FILE__, 'html' => __FILE__)
+                array('text' => __FILE__, 'xml' => __FILE__, 'html' => __FILE__),
             ),
         );
     }

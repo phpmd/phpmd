@@ -18,18 +18,28 @@
 /**
  * Simple test class
  */
-class NPathClass {
+class NPathClass
+{
     function doSomething()
     {
-        if (true) {}
-        if (true) {}
-        if (true) {}
-        if (true) {}
-        if (true && true && true && true) {}
-        if (true && true && true && true) {}
-        if (true && true && true && true) {}
-        if (true && true && true && true) {}
-        if (true && true && true && true) {}
+        if (true) {
+        }
+        if (true) {
+        }
+        if (true) {
+        }
+        if (true) {
+        }
+        if (true && true && true && true) {
+        }
+        if (true && true && true && true) {
+        }
+        if (true && true && true && true) {
+        }
+        if (true && true && true && true) {
+        }
+        if (true && true && true && true) {
+        }
     }
 }
 

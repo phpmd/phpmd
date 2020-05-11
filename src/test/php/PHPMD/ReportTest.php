@@ -68,9 +68,11 @@ class ReportTest extends AbstractTest
 
         $actual = array();
         foreach ($report->getRuleViolations() as $violation) {
-            $actual[] = array($violation->getFileName(),
-                              $violation->getBeginLine(),
-                              $violation->getEndLine());
+            $actual[] = array(
+                $violation->getFileName(),
+                $violation->getBeginLine(),
+                $violation->getEndLine(),
+            );
         }
 
         $expected = array(

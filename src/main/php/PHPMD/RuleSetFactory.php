@@ -109,6 +109,7 @@ class RuleSetFactory
 
             $ruleSetFileName = strtok(',');
         }
+
         return $ruleSets;
     }
 
@@ -121,6 +122,7 @@ class RuleSetFactory
     public function createSingleRuleSet($ruleSetOrFileName)
     {
         $fileName = $this->createRuleSetFileName($ruleSetOrFileName);
+
         return $this->parseRuleSetNode($fileName);
     }
 
@@ -173,6 +175,7 @@ class RuleSetFactory
                 }
             }
         }
+
         return $ruleSets;
     }
 
@@ -242,10 +245,12 @@ class RuleSetFactory
     {
         if (substr($node['ref'], -3, 3) === 'xml') {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
+
             return;
         }
         if ('' === (string)$node['ref']) {
             $this->parseSingleRuleNode($ruleSet, $node);
+
             return;
         }
         $this->parseRuleReferenceNode($ruleSet, $node);
@@ -301,6 +306,7 @@ class RuleSetFactory
                 return false;
             }
         }
+
         return true;
     }
 
@@ -488,6 +494,7 @@ class RuleSetFactory
         if (isset($propertyNode->value)) {
             return (string)$propertyNode->value;
         }
+
         return (string)$propertyNode['value'];
     }
 
@@ -525,6 +532,7 @@ class RuleSetFactory
 
             return $excludes;
         }
+
         return null;
     }
 

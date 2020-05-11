@@ -67,6 +67,7 @@ class Annotations
                 return true;
             }
         }
+
         return false;
     }
 }

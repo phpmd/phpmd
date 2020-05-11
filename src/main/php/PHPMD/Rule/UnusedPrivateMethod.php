@@ -113,6 +113,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
                 unset($methods[strtolower($postfix->getImage())]);
             }
         }
+
         return $methods;
     }
 

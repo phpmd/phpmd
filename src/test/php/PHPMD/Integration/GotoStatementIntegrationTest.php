@@ -44,7 +44,7 @@ class GotoStatementIntegrationTest extends AbstractTest
                 'text',
                 'design',
                 '--reportfile',
-                $file
+                $file,
             )
         );
 
