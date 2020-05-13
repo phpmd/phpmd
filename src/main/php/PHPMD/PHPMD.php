@@ -150,7 +150,7 @@ class PHPMD
      * the source analysis.
      *
      * @param array<string> $ignorePatterns List of ignore patterns.
-     * @return self
+     * @return $this
      * @since 2.9.0
      */
     public function addIgnorePatterns(array $ignorePatterns)
@@ -159,6 +159,7 @@ class PHPMD
             $this->ignorePatterns,
             $ignorePatterns
         );
+
         return $this;
     }
 
