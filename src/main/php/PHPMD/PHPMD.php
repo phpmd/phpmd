@@ -121,7 +121,6 @@ class PHPMD
         return $this->getIgnorePatterns();
     }
 
-
     /**
      * Returns an array with string patterns that mark a file path invalid.
      *
@@ -145,7 +144,6 @@ class PHPMD
     {
         $this->addIgnorePatterns($ignorePatterns);
     }
-
 
     /**
      * Add a list of ignore patterns which is used to exclude directories from
