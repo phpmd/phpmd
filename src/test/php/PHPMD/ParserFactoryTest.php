@@ -140,10 +140,10 @@ class ParserFactoryTest extends AbstractTest
 
         $phpmd = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\PHPMD')
-                ->setMethods(array('getIgnorePattern', 'getInput'))
+                ->setMethods(array('getIgnorePatterns', 'getInput'))
         );
         $phpmd->expects($this->exactly(2))
-            ->method('getIgnorePattern')
+            ->method('getIgnorePatterns')
             ->will($this->returnValue(array('Test')));
         $phpmd->expects($this->once())
             ->method('getInput')
