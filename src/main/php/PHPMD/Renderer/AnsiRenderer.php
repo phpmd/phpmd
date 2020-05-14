@@ -58,6 +58,7 @@ class AnsiRenderer extends AbstractRenderer
                 $maxLength = strlen($violation->getBeginLine());
             }
         }
+
         return $maxLength;
     }
 

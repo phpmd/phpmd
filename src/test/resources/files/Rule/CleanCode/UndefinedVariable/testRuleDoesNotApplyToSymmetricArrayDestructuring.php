@@ -15,10 +15,12 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToPrivateCloneMethod
+class testRuleDoesNotApplyToSymmetricArrayDestructuring
 {
-    private function __clone()
+    function testRuleDoesNotApplyToSymmetricArrayDestructuring()
     {
+        [$key, $value] = explode('=', 'key=value');
 
+        return [$key, $value];
     }
 }

@@ -741,7 +741,8 @@ class RuleSetFactoryTest extends AbstractTest
         $args = func_get_args();
 
         $factory = new RuleSetFactory();
-        return $factory->createRuleSets(join(',', $args));
+      
+        return $factory->createRuleSets(implode(',', $args));
     }
 
     /**

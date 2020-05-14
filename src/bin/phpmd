@@ -53,7 +53,7 @@ if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) 
 if (!isset($_SERVER['argv']) && !isset($argv)) {
     fwrite(STDERR, 'Please enable the "register_argc_argv" directive in your php.ini', PHP_EOL);
     exit(1);
-} else if (!isset($argv)) {
+} elseif (!isset($argv)) {
     $argv = $_SERVER['argv'];
 }
 

@@ -58,7 +58,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             $this->addViolation($methodCall, array($className, $node->getName()));
         }
     }
-    
+
     protected function isExcludedFromAnalysis($className, $exceptions)
     {
         return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
@@ -67,9 +67,9 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     private function isStaticMethodCall(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
-               $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
-               !$this->isCallingParent($methodCall) &&
-               !$this->isCallingSelf($methodCall);
+            $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
+            !$this->isCallingParent($methodCall) &&
+            !$this->isCallingSelf($methodCall);
     }
 
     private function isCallingParent(AbstractNode $methodCall)

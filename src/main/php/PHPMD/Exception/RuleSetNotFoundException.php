@@ -15,10 +15,20 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToPrivateCloneMethod
-{
-    private function __clone()
-    {
+namespace PHPMD\Exception;
 
+/**
+ * This type of exception is thrown when a not existing rule-set was specified.
+ */
+class RuleSetNotFoundException extends \RuntimeException
+{
+    /**
+     * Constructs a new exception for the given rule-set identifier or file name.
+     *
+     * @param string $ruleSet The rule-set identifier or file name.
+     */
+    public function __construct($ruleSet)
+    {
+        parent::__construct('Cannot find specified rule-set "' . $ruleSet . '".');
     }
 }

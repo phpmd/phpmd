@@ -17,5 +17,7 @@
 
 class testRuleAppliesToMethodParameterWithNameShorterThanThreshold
 {
-    public function testRuleAppliesToMethodParameterWithNameShorterThanThreshold($fo) {}
+    public function testRuleAppliesToMethodParameterWithNameShorterThanThreshold($fo)
+    {
+    }
 }

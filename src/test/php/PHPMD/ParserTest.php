@@ -137,7 +137,7 @@ class ParserTest extends AbstractTest
         $pdepend->expects($this->once())
             ->method('getExceptions')
             ->will($this->returnValue(array(
-                new InvalidStateException(42, __FILE__, 'foo')
+                new InvalidStateException(42, __FILE__, 'foo'),
             )));
 
         $parser = new Parser($pdepend);

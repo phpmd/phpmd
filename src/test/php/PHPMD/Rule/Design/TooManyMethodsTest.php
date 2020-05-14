@@ -163,7 +163,7 @@ class TooManyMethodsTest extends AbstractTest
     /**
      * Creates a prepared class node mock
      *
-     * @param integer  $numberOfMethods
+     * @param integer $numberOfMethods
      * @param string[] $methodNames
      * @return \PHPMD\Node\ClassNode
      */
@@ -176,6 +176,7 @@ class TooManyMethodsTest extends AbstractTest
                 ->method('getMethodNames')
                 ->will($this->returnValue($methodNames));
         }
+
         return $class;
     }
 }

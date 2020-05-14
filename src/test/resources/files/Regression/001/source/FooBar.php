@@ -18,4 +18,6 @@
 /**
  * @package ticket001
  */
-class FooBarTicket001 {}
+class FooBarTicket001
+{
+}

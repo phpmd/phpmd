@@ -190,6 +190,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     {
         $astMethod = new ASTMethod($methodName);
         $astMethod->setModifiers(State::IS_PUBLIC);
+
         return new MethodNode($astMethod);
     }
 
@@ -199,6 +200,7 @@ class TooManyPublicMethodsTest extends AbstractTest
     private function createPrivateMethod($methodName)
     {
         $astMethod = new ASTMethod($methodName);
+
         return new MethodNode($astMethod);
     }
 }

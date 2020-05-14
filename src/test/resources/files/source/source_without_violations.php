@@ -25,6 +25,7 @@ class SourceWithoutViolations
         if (time() % 42 === 0) {
             return 'foo';
         }
+
         return 'bar';
     }
 }

@@ -28,6 +28,7 @@ class CamelCaseParameterNameTest extends AbstractTest
 {
     /**
      * Tests that the rule does apply for an invalid parameter name
+     *
      * @return void
      */
     public function testRuleDoesApplyForInparameterNameWithUnderscore()

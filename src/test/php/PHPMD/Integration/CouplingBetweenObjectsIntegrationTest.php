@@ -44,7 +44,7 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTest
                 'text',
                 'design',
                 '--reportfile',
-                $file
+                $file,
             )
         );
 

@@ -40,6 +40,7 @@ abstract class AbstractTest extends \PHPMD\AbstractTest
         if ($localPath === '') {
             $localPath = $trace[1]['function'] . '.php';
         }
+
         return parent::createFileUri('Regression/' . $ticket . '/' . $localPath);
     }
 }

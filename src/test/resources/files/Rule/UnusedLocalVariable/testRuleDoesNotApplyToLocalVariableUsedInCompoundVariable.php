@@ -22,6 +22,7 @@ class testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable
     public function testRuleDoesNotApplyToLocalVariableUsedInCompoundVariable()
     {
         $bar = 'foo';
+
         return self::${$bar};
     }
 }

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
@@ -62,10 +63,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
-            if (! $this->isNotSuperGlobal($variable)) {
+            if (!$this->isNotSuperGlobal($variable)) {
                 $this->addVariableDefinition($variable);
             }
-            if (! $this->checkVariableDefined($variable, $node)) {
+            if (!$this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, array($variable->getImage()));
             }
         }
@@ -76,7 +77,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @param AbstractNode $node
      */
-    private function collect(AbstractNode $node) {
+    private function collect(AbstractNode $node)
+    {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
         $this->collectForeachStatements($node);
@@ -222,6 +224,14 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         foreach ($node->findChildrenOfType('AssignmentExpression') as $assignment) {
             $variable = $assignment->getChild(0);
 
+            if ($variable->getNode() instanceof ASTArray) {
+                foreach ($variable->findChildrenOfType('Variable') as $unpackedVariable) {
+                    $this->addVariableDefinition($unpackedVariable);
+                }
+
+                continue;
+            }
+
             $this->addVariableDefinition($variable);
         }
     }
@@ -253,7 +263,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function addVariableDefinition($variable)
     {
-        if (! isset($this->images[$variable->getImage()])) {
+        if (!isset($this->images[$variable->getImage()])) {
             $this->images[$variable->getImage()] = $variable;
         }
     }

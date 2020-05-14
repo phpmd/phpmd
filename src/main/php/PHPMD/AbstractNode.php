@@ -65,6 +65,7 @@ abstract class AbstractNode
                 sprintf('Invalid method %s() called.', $name)
             );
         }
+
         return call_user_func_array(array($node, $name), $args);
     }
 
@@ -80,6 +81,7 @@ abstract class AbstractNode
         if ($node === null) {
             return null;
         }
+
         return new ASTNode($node, $this->getFileName());
     }
 
@@ -144,6 +146,7 @@ abstract class AbstractNode
     public function isInstanceOf($type)
     {
         $class = 'PDepend\Source\AST\AST' . $type;
+
         return ($this->node instanceof $class);
     }
 
@@ -216,6 +219,7 @@ abstract class AbstractNode
     public function getType()
     {
         $type = explode('\\', get_class($this));
+
         return preg_replace('(node$)', '', strtolower(array_pop($type)));
     }
 
@@ -231,6 +235,7 @@ abstract class AbstractNode
         if (isset($this->metrics[$name])) {
             return $this->metrics[$name];
         }
+
         return null;
     }
 

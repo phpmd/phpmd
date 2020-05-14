@@ -19,5 +19,6 @@ function testRuleNotAppliesToShortVariableNameInCatchStatement()
 {
     try {
         foo();
-    } catch (Exception $e) {}
+    } catch (Exception $e) {
+    }
 }

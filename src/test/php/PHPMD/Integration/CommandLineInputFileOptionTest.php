@@ -75,9 +75,10 @@ class CommandLineInputFileOptionTest extends AbstractTest
                 '--reportfile',
                 $reportfile,
                 '--inputfile',
-                $inputfile
+                $inputfile,
             )
         );
+
         return file_get_contents($reportfile);
     }
 }

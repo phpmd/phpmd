@@ -15,10 +15,20 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToPrivateCloneMethod
-{
-    private function __clone()
-    {
+namespace PHPMD\Exception;
 
+/**
+ * When a configured rule class does not exist.
+ */
+class RuleClassNotFoundException extends \RuntimeException
+{
+    /**
+     * Constructs a new class not found exception.
+     *
+     * @param string $className The configured but not found ruke class name.
+     */
+    public function __construct($className)
+    {
+        parent::__construct('Cannot find rule class: ' . $className);
     }
 }
