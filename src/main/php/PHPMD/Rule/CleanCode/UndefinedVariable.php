@@ -18,9 +18,12 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTArray;
-use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
@@ -36,6 +39,11 @@ use PHPMD\Rule\MethodAware;
  */
 class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
+    /**
+     * @var array Self reference class names.
+     */
+    protected $selfReferences = array('self', 'static');
+
     /**
      * Found variable images within a single method or function.
      *
@@ -67,7 +75,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
                 $this->addVariableDefinition($variable);
             }
             if (!$this->checkVariableDefined($variable, $node)) {
-                $this->addViolation($variable, array($variable->getImage()));
+                $this->addViolation($variable, array($this->getVariableImage($variable)));
             }
         }
     }
@@ -191,7 +199,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
     {
-        return isset($this->images[$variable->getImage()]) || $this->isNameAllowedInContext($parentNode, $variable);
+        $image = $this->getVariableImage($variable);
+
+        return isset($this->images[$image]) || $this->isNameAllowedInContext($parentNode, $variable);
     }
 
     /**
@@ -244,9 +254,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function collectPropertyPostfix(AbstractNode $node)
     {
-        $propertyes = $node->findChildrenOfType('PropertyPostfix');
+        $properties = $node->findChildrenOfType('PropertyPostfix');
 
-        foreach ($propertyes as $property) {
+        foreach ($properties as $property) {
             foreach ($property->getChildren() as $children) {
                 if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
@@ -256,16 +266,74 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     }
 
     /**
-     * Add the variable to images
+     * Add the variable to images.
      *
-     * @param mixed $variable
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
      * @return void
      */
     private function addVariableDefinition($variable)
     {
-        if (!isset($this->images[$variable->getImage()])) {
-            $this->images[$variable->getImage()] = $variable;
+        $image = $this->getVariableImage($variable);
+
+        if (!isset($this->images[$image])) {
+            $this->images[$image] = $variable;
         }
+    }
+
+    /**
+     * Return the PDepend node of ASTNode PHPMD node.
+     *
+     * Or return the input as is if it's not an ASTNode PHPMD node.
+     *
+     * @param mixed $node
+     *
+     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     */
+    private function getNode($node)
+    {
+        if ($node instanceof ASTNode) {
+            return $node->getNode();
+        }
+
+        return $node;
+    }
+
+    /**
+     * Get the image of the given variable node.
+     *
+     * Prefix self:: and static:: properties with "::".
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     *
+     * @return string
+     */
+    private function getVariableImage($variable)
+    {
+        $image = $variable->getImage();
+
+        if ($image === '::') {
+            return $image.$variable->getChild(1)->getImage();
+        }
+
+        $base = $variable;
+        $parent = $this->getNode($variable->getParent());
+
+        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base->getNode()) {
+            $base = $parent;
+            $parent = $this->getNode($base->getParent());
+        }
+
+        if ($parent && $parent instanceof ASTPropertyPostfix) {
+            $parent = $parent->getParent();
+
+            if ($parent instanceof ASTMemberPrimaryPrefix &&
+                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
+            ) {
+                return "::$image";
+            }
+        }
+
+        return $image;
     }
 
     /**
