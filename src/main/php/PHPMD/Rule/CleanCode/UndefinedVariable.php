@@ -18,8 +18,6 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTArray;
-use PDepend\Source\AST\ASTArrayIndexExpression;
-use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
@@ -278,62 +276,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         if (!isset($this->images[$image])) {
             $this->images[$image] = $variable;
         }
-    }
-
-    /**
-     * Return the PDepend node of ASTNode PHPMD node.
-     *
-     * Or return the input as is if it's not an ASTNode PHPMD node.
-     *
-     * @param mixed $node
-     *
-     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
-     */
-    private function getNode($node)
-    {
-        if ($node instanceof ASTNode) {
-            return $node->getNode();
-        }
-
-        return $node;
-    }
-
-    /**
-     * Get the image of the given variable node.
-     *
-     * Prefix self:: and static:: properties with "::".
-     *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
-     *
-     * @return string
-     */
-    private function getVariableImage($variable)
-    {
-        $image = $variable->getImage();
-
-        if ($image === '::') {
-            return $image.$variable->getChild(1)->getImage();
-        }
-
-        $base = $variable;
-        $parent = $this->getNode($variable->getParent());
-
-        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base->getNode()) {
-            $base = $parent;
-            $parent = $this->getNode($base->getParent());
-        }
-
-        if ($parent && $parent instanceof ASTPropertyPostfix) {
-            $parent = $parent->getParent();
-
-            if ($parent instanceof ASTMemberPrimaryPrefix &&
-                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
-            ) {
-                return "::$image";
-            }
-        }
-
-        return $image;
     }
 
     /**
