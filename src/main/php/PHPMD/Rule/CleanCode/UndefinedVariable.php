@@ -38,11 +38,6 @@ use PHPMD\Rule\MethodAware;
 class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**
-     * @var array Self reference class names.
-     */
-    protected $selfReferences = array('self', 'static');
-
-    /**
      * Found variable images within a single method or function.
      *
      * @var array(string)

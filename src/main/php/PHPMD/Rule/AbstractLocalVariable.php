@@ -34,6 +34,11 @@ use PHPMD\Node\ASTNode;
 abstract class AbstractLocalVariable extends AbstractRule
 {
     /**
+     * @var array Self reference class names.
+     */
+    protected $selfReferences = array('self', 'static');
+
+    /**
      * PHP super globals that are available in all php scopes, so that they
      * can never be unused local variables.
      *
