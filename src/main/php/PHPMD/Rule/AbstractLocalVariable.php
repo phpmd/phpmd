@@ -224,7 +224,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
      */
-    private function getNode($node)
+    protected function getNode($node)
     {
         if ($node instanceof ASTNode) {
             return $node->getNode();

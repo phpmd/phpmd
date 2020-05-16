@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
@@ -55,9 +56,17 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     {
         $this->images = array();
 
+        if ($node instanceof MethodNode) {
+            $this->collectProperties($this->getNode($node->getNode()->getParent()));
+        }
+
         $this->collect($node);
 
         foreach ($node->findChildrenOfType('Class') as $class) {
+            /** @var ASTClass $class */
+
+            $this->collectProperties($class);
+
             foreach ($class->getMethods() as $method) {
                 $this->collect(new MethodNode($method));
             }
@@ -67,6 +76,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             if (!$this->isNotSuperGlobal($variable)) {
                 $this->addVariableDefinition($variable);
             }
+
             if (!$this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, array($this->getVariableImage($variable)));
             }
@@ -88,6 +98,19 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         $this->collectParameters($node);
         $this->collectExceptionCatches($node);
         $this->collectGlobalStatements($node);
+    }
+
+    private function collectProperties($node)
+    {
+        if (!($node instanceof ASTClass)) {
+            return;
+        }
+
+        foreach ($node->getProperties() as $property) {
+            if ($property->isStatic()) {
+                $this->images['::'.$property->getName()] = $property;
+            }
+        }
     }
 
     /**
