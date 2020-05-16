@@ -27,30 +27,37 @@ use PHPMD\AbstractTest;
 class MissingImportTest extends AbstractTest
 {
     /**
-     * Tests that it does not apply to a class without any class dependencies
+     * Get the rule under test.
      *
-     * @return void
-     * @covers ::apply
+     * @return MissingImport
      */
-    public function testRuleNotAppliesToClassWithoutAnyDependencies()
+    public function getRule()
     {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        return new MissingImport();
     }
 
     /**
-     * Tests that it does not apply to a class with only imported classes
+     * Tests the rule for cases where it should apply.
      *
+     * @param string $file The test file to test against.
      * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
+     * @dataProvider getApplyingCases
      */
-    public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
+    public function testRuleAppliesTo($file)
     {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::ONE_VIOLATION, $file);
+    }
+
+    /**
+     * Tests the rule for cases where it should not apply.
+     *
+     * @param string $file The test file to test against.
+     * @return void
+     * @dataProvider getNotApplyingCases
+     */
+    public function testRuleDoesNotApplyTo($file)
+    {
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
 
     /**
@@ -60,79 +67,10 @@ class MissingImportTest extends AbstractTest
      * @covers ::apply
      * @covers ::isSelfReference
      */
-    public function testRuleAppliesToClassWithNotImportedDependencies()
+    public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
         $rule = new MissingImport();
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
-    }
-
-    /**
-     * Tests that it does not apply to a class that uses self references
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleNotAppliesToDynamicClassName()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * Tests that it does not apply to a class that uses self references
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * Tests that it does not apply to a function without any class dependencies
-     *
-     * @return void
-     * @covers ::apply
-     */
-    public function testRuleNotAppliesToFunctionWithoutAnyDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getFunction());
-    }
-
-    /**
-     * Tests that it does not apply to a function with only imported classes
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleNotAppliesToFunctionWithOnlyImportedDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getFunction());
-    }
-
-    /**
-     * Tests that it applies to a function that has fully qualified class names
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleAppliesToFunctionWithNotImportedDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getFunction());
     }
 }

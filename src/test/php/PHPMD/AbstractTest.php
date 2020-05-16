@@ -187,20 +187,29 @@ abstract class AbstractTest extends AbstractStaticTest
      * Returns the first method as a MethodNode for a given test file.
      *
      * @param string $file
-     * @return MethodNode
+     * @return MethodNode|FunctionNode
      * @since 2.8.3
      */
     protected function getMethodNodeForTestFile($file)
     {
-        return new MethodNode(
-            $this->getNodeByName(
-                $this->parseSource($file)
-                    ->getTypes()
-                    ->current()
-                    ->getMethods(),
-                pathinfo($file, PATHINFO_FILENAME)
+        $source = $this->parseSource($file);
+        $class = $source
+            ->getTypes()
+            ->current();
+
+        return $class
+            ? new MethodNode(
+                $this->getNodeByName(
+                    $class->getMethods(),
+                    pathinfo($file, PATHINFO_FILENAME)
+                )
             )
-        );
+            : new FunctionNode(
+                $this->getNodeByName(
+                    $source->getFunctions(),
+                    pathinfo($file, PATHINFO_FILENAME)
+                )
+            );
     }
 
     /**

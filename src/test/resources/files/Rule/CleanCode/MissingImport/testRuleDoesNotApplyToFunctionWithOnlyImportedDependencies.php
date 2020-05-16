@@ -19,7 +19,7 @@ namespace PHPMDTest;
 
 use stdClass;
 
-function testRuleNotAppliesToFunctionWithOnlyImportedDependencies()
+function testRuleDoesNotApplyToFunctionWithOnlyImportedDependencies()
 {
     $a = new stdClass();
 }

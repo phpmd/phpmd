@@ -19,8 +19,9 @@ namespace PHPMDTest;
 
 class Foo
 {
-    public function testRuleNotAppliesToClassWithoutAnyDependencies()
+    public function testRuleDoesNotApplyToClassWithSelfAndStaticCalls()
     {
-
+        $self = new self();
+        new static();
     }
 }

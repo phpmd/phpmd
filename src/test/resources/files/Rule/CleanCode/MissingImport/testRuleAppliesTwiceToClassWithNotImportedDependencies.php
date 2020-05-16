@@ -17,12 +17,11 @@
 
 namespace PHPMDTest;
 
-class testRuleNotAppliesToDynamicClassName
+class Foo
 {
-    public function testRuleNotAppliesToDynamicClassName()
+    public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
-        $className = 'DateTime';
-
-        return (new $className)->format('Y');
+        $object = new \stdClass();
+        new \DateTime('2019-02-02 00:00:00');
     }
 }
