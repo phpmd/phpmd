@@ -55,8 +55,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $classNameLength = $classNode->getEndColumn() - $classNode->getStartColumn() + 1;
-            $fqcnLength = strlen($classNode->getImage());
-            if ($classNameLength === $fqcnLength) {
+            $className = $classNode->getImage();
+            $fqcnLength = strlen($className);
+
+            if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
                 $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
             }
         }

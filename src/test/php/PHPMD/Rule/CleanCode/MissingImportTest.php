@@ -74,6 +74,20 @@ class MissingImportTest extends AbstractTest
      * @covers ::apply
      * @covers ::isSelfReference
      */
+    public function testRuleNotAppliesToDynamicClassName()
+    {
+        $rule = new MissingImport();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * Tests that it does not apply to a class that uses self references
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isSelfReference
+     */
     public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
     {
         $rule = new MissingImport();
