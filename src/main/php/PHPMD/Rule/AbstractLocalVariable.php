@@ -87,9 +87,21 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param \PHPMD\AbstractNode $variable
      * @return boolean
      */
+    protected function isSuperGlobal(AbstractNode $variable)
+    {
+        return isset(self::$superGlobals[$variable->getImage()]);
+    }
+
+    /**
+     * Tests if the given variable does not represent one of the PHP super globals
+     * that are available in scopes.
+     *
+     * @param \PHPMD\AbstractNode $variable
+     * @return boolean
+     */
     protected function isNotSuperGlobal(AbstractNode $variable)
     {
-        return !isset(self::$superGlobals[$variable->getImage()]);
+        return !$this->isSuperGlobal($variable);
     }
 
     /**

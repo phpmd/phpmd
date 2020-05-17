@@ -73,24 +73,13 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
 
         foreach ($node->findChildrenOfType('Variable') as $variable) {
-            if (!$this->isNotSuperGlobal($variable)) {
+            /** @var ASTVariable $variable */
+
+            if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable)) {
                 $this->addVariableDefinition($variable);
+            } elseif (!$this->checkVariableDefined($variable, $node)) {
+                $this->addViolation($variable, array($this->getVariableImage($variable)));
             }
-
-            $this->doCheckVariable($variable, $node);
-        }
-    }
-
-    private function doCheckVariable($variable, $node)
-    {
-        if (!$this->checkVariableDefined($variable, $node)) {
-            if ($this->isPassedByReference($variable)) {
-                $this->addVariableDefinition($variable);
-
-                return;
-            }
-
-            $this->addViolation($variable, array($this->getVariableImage($variable)));
         }
     }
 
