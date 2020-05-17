@@ -17,6 +17,11 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -28,6 +33,11 @@ use PHPMD\Node\ASTNode;
  */
 abstract class AbstractLocalVariable extends AbstractRule
 {
+    /**
+     * @var array Self reference class names.
+     */
+    protected $selfReferences = array('self', 'static');
+
     /**
      * PHP super globals that are available in all php scopes, so that they
      * can never be unused local variables.
@@ -165,5 +175,61 @@ abstract class AbstractLocalVariable extends AbstractRule
         $parts = explode('\\', trim($node->getImage(), '\\'));
 
         return (0 === strcasecmp(array_pop($parts), $name));
+    }
+
+    /**
+     * Get the image of the given variable node.
+     *
+     * Prefix self:: and static:: properties with "::".
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     *
+     * @return string
+     */
+    protected function getVariableImage($variable)
+    {
+        $image = $variable->getImage();
+
+        if ($image === '::') {
+            return $image.$variable->getChild(1)->getImage();
+        }
+
+        $base = $variable;
+        $parent = $this->getNode($variable->getParent());
+
+        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base->getNode()) {
+            $base = $parent;
+            $parent = $this->getNode($base->getParent());
+        }
+
+        if ($parent && $parent instanceof ASTPropertyPostfix) {
+            $parent = $parent->getParent();
+
+            if ($parent instanceof ASTMemberPrimaryPrefix &&
+                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
+            ) {
+                return "::$image";
+            }
+        }
+
+        return $image;
+    }
+
+    /**
+     * Return the PDepend node of ASTNode PHPMD node.
+     *
+     * Or return the input as is if it's not an ASTNode PHPMD node.
+     *
+     * @param mixed $node
+     *
+     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     */
+    private function getNode($node)
+    {
+        if ($node instanceof ASTNode) {
+            return $node->getNode();
+        }
+
+        return $node;
     }
 }
