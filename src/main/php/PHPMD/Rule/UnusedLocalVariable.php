@@ -73,7 +73,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
         foreach ($declarators as $declarator) {
-            unset($this->images[$declarator->getImage()]);
+            unset($this->images[$this->getVariableImage($declarator)]);
         }
     }
 
@@ -127,7 +127,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             $variablePrefix = $node->getImage();
 
             foreach ($node->findChildrenOfType('Expression') as $child) {
-                $variableName = $child->getImage();
+                $variableName = $this->getVariableImage($child);
                 $variableImage = $variablePrefix . $variableName;
 
                 $this->storeImage($variableImage, $node);
@@ -143,8 +143,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     private function collectVariable(ASTNode $node)
     {
-        $imageName = $node->getImage();
-        $this->storeImage($imageName, $node);
+        $this->storeImage($this->getVariableImage($node), $node);
     }
 
     /**
@@ -159,6 +158,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if (!isset($this->images[$imageName])) {
             $this->images[$imageName] = array();
         }
+
         $this->images[$imageName][] = $node;
     }
 
@@ -171,9 +171,11 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function collectLiteral(ASTNode $node)
     {
         $variable = '$' . trim($node->getImage(), '\'');
+
         if (!isset($this->images[$variable])) {
             $this->images[$variable] = array();
         }
+
         $this->images[$variable][] = $node;
     }
 
@@ -185,17 +187,18 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function doCheckNodeImage(ASTNode $node)
     {
-        if ($this->isNameAllowedInContext($node)) {
+        if ($this->isNameAllowedInContext($node) || $this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
-        if ($this->isUnusedForeachVariableAllowed($node)) {
-            return;
-        }
+
         $exceptions = $this->getExceptionsList();
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+        $image = $this->getVariableImage($node);
+
+        if (substr($image, 0, 2) === '::' || in_array(substr($image, 1), $exceptions)) {
             return;
         }
-        $this->addViolation($node, array($node->getImage()));
+
+        $this->addViolation($node, array($image));
     }
 
     /**

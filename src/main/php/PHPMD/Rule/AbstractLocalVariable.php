@@ -18,6 +18,7 @@
 namespace PHPMD\Rule;
 
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTVariable;
@@ -189,6 +190,10 @@ abstract class AbstractLocalVariable extends AbstractRule
     protected function getVariableImage($variable)
     {
         $image = $variable->getImage();
+
+        if (substr($image, 0, 1) === '$' && $this->getNode($variable->getParent()) instanceof ASTFieldDeclaration) {
+            $image = "::$image";
+        }
 
         if ($image === '::') {
             return $image.$variable->getChild(1)->getImage();
