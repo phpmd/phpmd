@@ -18,6 +18,7 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
+use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -42,20 +43,12 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     public function apply(AbstractNode $node)
     {
-        if ($this->isAbstractMethod($node)) {
-            return;
-        }
-
-        // Magic methods should be ignored as invalid declarations are picked up by PHP.
-        if ($this->isMagicMethod($node)) {
-            return;
-        }
-
-        if ($this->isInheritedSignature($node)) {
-            return;
-        }
-
-        if ($this->isNotDeclaration($node)) {
+        if ($this->isAbstractMethod($node) ||
+            // Magic methods should be ignored as invalid declarations are picked up by PHP.
+            $this->isMagicMethod($node) ||
+            $this->isInheritedSignature($node) ||
+            $this->isNotDeclaration($node)
+        ) {
             return;
         }
 
@@ -94,7 +87,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function isInheritedSignature(AbstractNode $node)
     {
         if ($node instanceof MethodNode) {
-            return preg_match('/\@inheritdoc/i', $node->getDocComment());
+            return preg_match('/@inheritdoc/i', $node->getDocComment()) === 1;
         }
 
         return false;
@@ -108,18 +101,22 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     private function isMagicMethod(AbstractNode $node)
     {
-        static $names = array(
-            'call',
-            'callStatic',
-            'get',
-            'set',
-            'isset',
-            'unset',
-            'set_state',
-        );
-
         if ($node instanceof MethodNode) {
-            return preg_match('/\__(?:' . implode("|", $names) . ')/i', $node->getName());
+            static $magicMethodRegExp = null;
+
+            if ($magicMethodRegExp === null) {
+                $magicMethodRegExp = '/__(?:' . implode("|", array(
+                    'call',
+                    'callStatic',
+                    'get',
+                    'set',
+                    'isset',
+                    'unset',
+                    'set_state',
+                )) . ')/i';
+            }
+
+            return preg_match($magicMethodRegExp, $node->getName()) === 1;
         }
 
         return false;
@@ -186,6 +183,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function removeRegularVariables(AbstractNode $node)
     {
         $variables = $node->findChildrenOfType('Variable');
+
         foreach ($variables as $variable) {
             /** @var $variable ASTNode */
             if ($this->isRegularVariable($variable)) {
@@ -215,6 +213,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function removeCompoundVariables(AbstractNode $node)
     {
         $compoundVariables = $node->findChildrenOfType('CompoundVariable');
+
         foreach ($compoundVariables as $compoundVariable) {
             $variablePrefix = $compoundVariable->getImage();
 
@@ -239,6 +238,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     private function removeVariablesUsedByFuncGetArgs(AbstractNode $node)
     {
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
+
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
                 $this->nodes = array();
