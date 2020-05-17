@@ -184,7 +184,6 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Prefix self:: and static:: properties with "::".
      *
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
-     *
      * @return string
      */
     protected function getVariableImage($variable)
@@ -199,6 +198,35 @@ abstract class AbstractLocalVariable extends AbstractRule
             return $image.$variable->getChild(1)->getImage();
         }
 
+        return $this->prependMemberPrimaryPrefix($image, $variable);
+    }
+
+    /**
+     * Return the PDepend node of ASTNode PHPMD node.
+     *
+     * Or return the input as is if it's not an ASTNode PHPMD node.
+     *
+     * @param mixed $node
+     *
+     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     */
+    private function getNode($node)
+    {
+        if ($node instanceof ASTNode) {
+            return $node->getNode();
+        }
+
+        return $node;
+    }
+
+    /**
+     * Prepend "::" if the variable has a ASTMemberPrimaryPrefix.
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return string
+     */
+    private function prependMemberPrimaryPrefix($image, $variable)
+    {
         $base = $variable;
         $parent = $this->getNode($variable->getParent());
 
@@ -218,23 +246,5 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return $image;
-    }
-
-    /**
-     * Return the PDepend node of ASTNode PHPMD node.
-     *
-     * Or return the input as is if it's not an ASTNode PHPMD node.
-     *
-     * @param mixed $node
-     *
-     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
-     */
-    private function getNode($node)
-    {
-        if ($node instanceof ASTNode) {
-            return $node->getNode();
-        }
-
-        return $node;
     }
 }
