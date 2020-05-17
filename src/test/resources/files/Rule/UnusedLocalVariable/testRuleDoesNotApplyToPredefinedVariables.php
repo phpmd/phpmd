@@ -15,11 +15,20 @@
  * @link http://phpmd.org/
  */
 
-function testInnerFunctionParametersDoNotHideUnusedVariables()
-{
-    $x = 42;
-    function z_testInnerFunctionParametersDoNotHideUnusedVariables($x)
-    {
+namespace PHPMDTest;
 
+class testRuleDoesNotApplyToPredefinedVariables
+{
+    public function testRuleDoesNotApplyToPredefinedVariables()
+    {
+        $headers = array();
+        foreach ($http_response_header as $header) {
+            $headers[] = $header;
+            if (null !== $php_errormsg) {
+                continue;
+            }
+        }
+
+        return $headers;
     }
 }

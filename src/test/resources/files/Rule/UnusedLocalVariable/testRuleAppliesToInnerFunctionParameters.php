@@ -15,21 +15,11 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class testRuleNotAppliesToPredefinedVariables
+function testRuleAppliesToInnerFunctionParameters()
 {
-    public function testRuleNotAppliesToPredefinedVariables()
+    $x = 42;
+    function z_testRuleAppliesToInnerFunctionParameters($x)
     {
-        $foo = 'bar';
-        $headers = array();
-        foreach ($http_response_header as $header) {
-            $headers[] = $header;
-            if (null !== $php_errormsg) {
-                continue;
-            }
-        }
 
-        return $headers;
     }
 }

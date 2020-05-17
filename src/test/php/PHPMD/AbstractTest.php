@@ -34,6 +34,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -60,7 +61,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleAppliesTo*');
+        return $this->getFilesForCalledClass('testRuleApplies*');
     }
 
     /**
@@ -72,7 +73,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getNotApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
+        return $this->getFilesForCalledClass('testRuleDoesNotApply*');
     }
 
     /**
@@ -187,20 +188,47 @@ abstract class AbstractTest extends AbstractStaticTest
      * Returns the first method as a MethodNode for a given test file.
      *
      * @param string $file
-     * @return MethodNode
+     * @return ClassNode
      * @since 2.8.3
      */
-    protected function getMethodNodeForTestFile($file)
+    protected function getClassNodeForTestFile($file)
     {
-        return new MethodNode(
-            $this->getNodeByName(
-                $this->parseSource($file)
-                    ->getTypes()
-                    ->current()
-                    ->getMethods(),
-                pathinfo($file, PATHINFO_FILENAME)
-            )
+        return new ClassNode(
+            $this->parseSource($file)
+                ->getTypes()
+                ->current()
         );
+    }
+
+    /**
+     * Get the node for a given test file.
+     *
+     * This method can be overridden to select the node to test with the rule.
+     *
+     * @param string $file
+     *
+     * @return AbstractNode
+     */
+    protected function getNodeForTestFile($file)
+    {
+        $source = $this->parseSource($file);
+        $class = $source
+            ->getTypes()
+            ->current();
+
+        return $class
+            ? new MethodNode(
+                $this->getNodeByName(
+                    $class->getMethods(),
+                    pathinfo($file, PATHINFO_FILENAME)
+                )
+            )
+            : new FunctionNode(
+                $this->getNodeByName(
+                    $source->getFunctions(),
+                    pathinfo($file, PATHINFO_FILENAME)
+                )
+            );
     }
 
     /**
@@ -213,7 +241,17 @@ abstract class AbstractTest extends AbstractStaticTest
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
         $rule->setReport($this->getReportMock($expectedInvokes));
-        $rule->apply($this->getMethodNodeForTestFile($file));
+
+        try {
+            $rule->apply($this->getNodeForTestFile($file));
+        } catch (PHPUnit_Framework_ExpectationFailedException $failedException) {
+            throw new PHPUnit_Framework_ExpectationFailedException(
+                basename($file)."\n".
+                $failedException->getMessage(),
+                $failedException->getComparisonFailure(),
+                $failedException->getPrevious()
+            );
+        }
     }
 
     /**
