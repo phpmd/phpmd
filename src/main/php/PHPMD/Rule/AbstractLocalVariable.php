@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTPropertyPostfix;
@@ -25,6 +26,8 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
+use ReflectionException;
+use ReflectionFunction;
 
 /**
  * Base class for rules that rely on local variables.
@@ -229,5 +232,36 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return $node;
+    }
+
+    /**
+     * Return true if the given variable is passed by reference in a native PHP function.
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return bool
+     */
+    protected function isPassedByReference($variable)
+    {
+        $parent = $this->getNode($variable->getParent());
+
+        if ($parent && $parent instanceof ASTArguments) {
+            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+            $function = $this->getNode($parent->getParent());
+            $functionName = $function->getImage();
+
+            try {
+                $reflectionFunction = new ReflectionFunction($functionName);
+                $parameters = $reflectionFunction->getParameters();
+
+                if ($parameters[$argumentPosition]->isPassedByReference()) {
+                    return true;
+                }
+            } catch (ReflectionException $exception) {
+                // @TODO: Find a way to handle user-land functions
+                // @TODO: Find a way to handle methods
+            }
+        }
+
+        return false;
     }
 }

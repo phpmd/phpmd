@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTPropertyPostfix;
@@ -32,8 +31,6 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Rule\AbstractLocalVariable;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use ReflectionException;
-use ReflectionFunction;
 
 /**
  * This rule collects all undefined variables within a given function or method
@@ -87,26 +84,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     private function doCheckVariable($variable, $node)
     {
         if (!$this->checkVariableDefined($variable, $node)) {
-            $parent = $this->getNode($variable->getParent());
+            if ($this->isPassedByReference($variable)) {
+                $this->addVariableDefinition($variable);
 
-            if ($parent && $parent instanceof ASTArguments) {
-                $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-                $function = $this->getNode($parent->getParent());
-                $functionName = $function->getImage();
-
-                try {
-                    $reflectionFunction = new ReflectionFunction($functionName);
-                    $parameters = $reflectionFunction->getParameters();
-
-                    if ($parameters[$argumentPosition]->isPassedByReference()) {
-                        $this->addVariableDefinition($variable);
-
-                        return;
-                    }
-                } catch (ReflectionException $exception) {
-                    // @TODO: Find a way to handle user-land functions
-                    // @TODO: Find a way to handle methods
-                }
+                return;
             }
 
             $this->addViolation($variable, array($this->getVariableImage($variable)));
