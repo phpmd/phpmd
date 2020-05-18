@@ -227,10 +227,10 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function prependMemberPrimaryPrefix($image, $variable)
     {
-        $base = $variable;
-        $parent = $this->getNode($variable->getParent());
+        $base = $this->getNode($variable);
+        $parent = $this->getNode($base->getParent());
 
-        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base->getNode()) {
+        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base) {
             $base = $parent;
             $parent = $this->getNode($base->getParent());
         }
