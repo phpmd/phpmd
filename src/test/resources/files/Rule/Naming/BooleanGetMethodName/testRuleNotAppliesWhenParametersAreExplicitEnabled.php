@@ -20,5 +20,7 @@ class testRuleNotAppliesWhenParametersAreExplicitEnabled
     /**
      * @return boolean
      */
-    public function getBaz($foo) {}
+    public function getBaz($foo)
+    {
+    }
 }

@@ -17,7 +17,12 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
@@ -51,6 +56,40 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     {
         $this->images = array();
 
+        if ($node instanceof MethodNode) {
+            $this->collectProperties($this->getNode($node->getNode()->getParent()));
+        }
+
+        $this->collect($node);
+
+        foreach ($node->findChildrenOfType('Class') as $class) {
+            /** @var ASTClass $class */
+
+            $this->collectProperties($class);
+
+            foreach ($class->getMethods() as $method) {
+                $this->collect(new MethodNode($method));
+            }
+        }
+
+        foreach ($node->findChildrenOfType('Variable') as $variable) {
+            if (!$this->isNotSuperGlobal($variable)) {
+                $this->addVariableDefinition($variable);
+            }
+
+            if (!$this->checkVariableDefined($variable, $node)) {
+                $this->addViolation($variable, array($this->getVariableImage($variable)));
+            }
+        }
+    }
+
+    /**
+     * Collect variables defined inside a PHPMD entry node (such as MethodNode).
+     *
+     * @param AbstractNode $node
+     */
+    private function collect(AbstractNode $node)
+    {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
         $this->collectForeachStatements($node);
@@ -59,13 +98,17 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         $this->collectParameters($node);
         $this->collectExceptionCatches($node);
         $this->collectGlobalStatements($node);
+    }
 
-        foreach ($node->findChildrenOfType('Variable') as $variable) {
-            if (! $this->isNotSuperGlobal($variable)) {
-                $this->addVariableDefinition($variable);
-            }
-            if (! $this->checkVariableDefined($variable, $node)) {
-                $this->addViolation($variable, array($variable->getImage()));
+    private function collectProperties($node)
+    {
+        if (!($node instanceof ASTClass)) {
+            return;
+        }
+
+        foreach ($node->getProperties() as $property) {
+            if ($property->isStatic()) {
+                $this->images['::'.$property->getName()] = $property;
             }
         }
     }
@@ -123,7 +166,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
     }
 
-
     /**
      * Stores the given literal node in an internal foreach of found variables.
      *
@@ -138,6 +180,12 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             foreach ($foreachStatement->getChildren() as $children) {
                 if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
+                } elseif ($children instanceof ASTUnaryExpression) {
+                    foreach ($children->getChildren() as $refChildren) {
+                        if ($refChildren instanceof ASTVariable) {
+                            $this->addVariableDefinition($refChildren);
+                        }
+                    }
                 }
             }
         }
@@ -167,7 +215,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
     {
-        return isset($this->images[$variable->getImage()]) || $this->isNameAllowedInContext($parentNode, $variable);
+        $image = $this->getVariableImage($variable);
+
+        return isset($this->images[$image]) || $this->isNameAllowedInContext($parentNode, $variable);
     }
 
     /**
@@ -200,6 +250,14 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         foreach ($node->findChildrenOfType('AssignmentExpression') as $assignment) {
             $variable = $assignment->getChild(0);
 
+            if ($variable->getNode() instanceof ASTArray) {
+                foreach ($variable->findChildrenOfType('Variable') as $unpackedVariable) {
+                    $this->addVariableDefinition($unpackedVariable);
+                }
+
+                continue;
+            }
+
             $this->addVariableDefinition($variable);
         }
     }
@@ -212,9 +270,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     private function collectPropertyPostfix(AbstractNode $node)
     {
-        $propertyes = $node->findChildrenOfType('PropertyPostfix');
+        $properties = $node->findChildrenOfType('PropertyPostfix');
 
-        foreach ($propertyes as $property) {
+        foreach ($properties as $property) {
             foreach ($property->getChildren() as $children) {
                 if ($children instanceof ASTVariable) {
                     $this->addVariableDefinition($children);
@@ -224,15 +282,17 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     }
 
     /**
-     * Add the variable to images
+     * Add the variable to images.
      *
-     * @param mixed $variable
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
      * @return void
      */
     private function addVariableDefinition($variable)
     {
-        if (! isset($this->images[$variable->getImage()])) {
-            $this->images[$variable->getImage()] = $variable;
+        $image = $this->getVariableImage($variable);
+
+        if (!isset($this->images[$image])) {
+            $this->images[$image] = $variable;
         }
     }
 
@@ -240,7 +300,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Checks if a short name is acceptable in the current context.
      *
      * @param \PHPMD\Node\AbstractCallableNode $node
-     * @param \PHPMD\Node\ASTNode              $variable
+     * @param \PHPMD\Node\ASTNode $variable
      *
      * @return boolean
      */

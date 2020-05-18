@@ -24,14 +24,14 @@ class ElseExpressionTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutElseExpression()
     {
         $rule = new ElseExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleAppliesToMethodWithElseExpression()
     {
         $rule = new ElseExpression();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

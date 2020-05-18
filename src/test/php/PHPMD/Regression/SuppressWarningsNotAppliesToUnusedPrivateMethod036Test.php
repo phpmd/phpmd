@@ -36,7 +36,7 @@ class SuppressWarningsNotAppliesToUnusedPrivateMethod036Test extends AbstractTes
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedPrivateMethod());
-        $ruleSet->setReport($this->getReportMock(0));
+        $ruleSet->setReport($this->getReportWithNoViolation());
 
         $ruleSet->apply($this->getClass());
     }

@@ -23,6 +23,7 @@ use PHPMD\AbstractTest;
 
 /**
  * Test case for the interface node implementation.
+ *
  * @covers \PHPMD\Node\InterfaceNode
  * @covers \PHPMD\Node\AbstractTypeNode
  */

@@ -37,7 +37,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -49,7 +49,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToMethodWithSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -73,7 +73,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -85,7 +85,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleAppliesToFunctionWithSuspectFunctionCall()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -110,7 +110,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     {
         $rule = $this->getRule();
         $rule->addProperty('ignore-namespaces', 'true');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -122,18 +122,21 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
     {
         $rule = $this->getRule();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
     /**
      * Get a configured DevelopmentCodeFragment rule
+     *
      * @return DevelopmentCodeFragment
      */
-    private function getRule() {
+    private function getRule()
+    {
         $rule = new DevelopmentCodeFragment();
         $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
         $rule->addProperty('ignore-namespaces', 'false');
+
         return $rule;
     }
 }

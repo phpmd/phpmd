@@ -63,7 +63,7 @@ class CommandTest extends AbstractTest
                     '--reportfile',
                     self::createTempFileUri(),
                 ),
-                (array) $options
+                (array)$options
             )
         );
 
@@ -79,25 +79,25 @@ class CommandTest extends AbstractTest
         return array(
             array(
                 'source/source_without_violations.php',
-                Command::EXIT_SUCCESS
+                Command::EXIT_SUCCESS,
             ),
             array(
                 'source/source_with_npath_violation.php',
-                Command::EXIT_VIOLATION
+                Command::EXIT_VIOLATION,
             ),
             array(
                 'source/source_with_npath_violation.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-violations-on-exit')
+                array('--ignore-violations-on-exit'),
             ),
             array(
                 'source/ccn_suppress_function.php',
                 Command::EXIT_VIOLATION,
-                array('--strict')
+                array('--strict'),
             ),
             array(
                 'source/ccn_suppress_function.php',
-                Command::EXIT_SUCCESS
+                Command::EXIT_SUCCESS,
             ),
         );
     }
@@ -166,9 +166,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -180,7 +177,7 @@ class CommandTest extends AbstractTest
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
-                'naming'
+                'naming',
             )
         );
 
@@ -190,9 +187,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -202,7 +196,7 @@ class CommandTest extends AbstractTest
         Command::main(
             array(
                 __FILE__,
-                '--version'
+                '--version',
             )
         );
 

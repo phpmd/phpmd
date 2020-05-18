@@ -29,9 +29,9 @@ class Command
     /**
      * Exit codes used by the phpmd command line tool.
      */
-    const EXIT_SUCCESS   = 0,
-          EXIT_EXCEPTION = 1,
-          EXIT_VIOLATION = 2;
+    const EXIT_SUCCESS = 0,
+        EXIT_EXCEPTION = 1,
+        EXIT_VIOLATION = 2;
 
     /**
      * This method creates a PHPMD instance and configures this object based
@@ -53,6 +53,7 @@ class Command
     {
         if ($opts->hasVersion()) {
             fwrite(STDOUT, sprintf('PHPMD %s', $this->getVersion()) . PHP_EOL);
+
             return self::EXIT_SUCCESS;
         }
 
@@ -83,7 +84,7 @@ class Command
         $phpmd->setOptions(
             array_filter(
                 array(
-                    'coverage' => $opts->getCoverageReport()
+                    'coverage' => $opts->getCoverageReport(),
                 )
             )
         );
@@ -108,6 +109,7 @@ class Command
         if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
             return self::EXIT_VIOLATION;
         }
+
         return self::EXIT_SUCCESS;
     }
 
@@ -125,6 +127,7 @@ class Command
             $data = @parse_ini_file($build);
             $version = $data['project.version'];
         }
+
         return $version;
     }
 
@@ -132,7 +135,7 @@ class Command
      * The main method that can be used by a calling shell script, the return
      * value can be used as exit code.
      *
-     * @param array $args The raw command line arguments array.
+     * @param string[] $args The raw command line arguments array.
      * @return integer
      */
     public static function main(array $args)
@@ -147,6 +150,7 @@ class Command
             fwrite(STDERR, $e->getMessage() . PHP_EOL);
             $exitCode = self::EXIT_EXCEPTION;
         }
+
         return $exitCode;
     }
 }

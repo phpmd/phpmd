@@ -159,4 +159,36 @@ class PHPMDTest extends AbstractTest
 
         $this->assertTrue($phpmd->hasViolations());
     }
+
+    /**
+     * testIgnorePattern
+     *
+     * @return void
+     */
+    public function testIgnorePattern()
+    {
+        self::changeWorkingDirectory();
+
+        $phpmd = new PHPMD();
+
+        // Process without exclusions, should result in violations.
+        $phpmd->processFiles(
+            self::createFileUri('sourceExcluded/'),
+            'pmd-refset1',
+            array(),
+            new RuleSetFactory()
+        );
+
+        $this->assertTrue($phpmd->hasViolations());
+
+        // Process with exclusions, should result in no violations.
+        $phpmd->processFiles(
+            self::createFileUri('sourceExcluded/'),
+            'exclude-pattern',
+            array(),
+            new RuleSetFactory()
+        );
+
+        $this->assertFalse($phpmd->hasViolations());
+    }
 }

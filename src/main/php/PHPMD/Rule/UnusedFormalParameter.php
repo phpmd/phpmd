@@ -18,7 +18,6 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -81,6 +80,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         if ($node instanceof MethodNode) {
             return $node->isAbstract();
         }
+
         return false;
     }
 
@@ -96,29 +96,32 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         if ($node instanceof MethodNode) {
             return preg_match('/\@inheritdoc/i', $node->getDocComment());
         }
+
         return false;
     }
 
     /**
      * Returns <b>true</b> when the given node is a magic method signature
+     *
      * @param AbstractNode $node
      * @return boolean
      */
     private function isMagicMethod(AbstractNode $node)
     {
         static $names = array(
-                'call',
-                'callStatic',
-                'get',
-                'set',
-                'isset',
-                'unset',
-                'set_state'
+            'call',
+            'callStatic',
+            'get',
+            'set',
+            'isset',
+            'unset',
+            'set_state',
         );
 
         if ($node instanceof MethodNode) {
             return preg_match('/\__(?:' . implode("|", $names) . ')/i', $node->getName());
         }
+
         return false;
     }
 
@@ -135,6 +138,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         if ($node instanceof MethodNode) {
             return !$node->isDeclaration();
         }
+
         return false;
     }
 
@@ -174,7 +178,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
 
     /**
-     * Removes all the regular variables from a given node 
+     * Removes all the regular variables from a given node
      *
      * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
      * @return void
@@ -189,20 +193,20 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             }
         }
     }
-    
+
     /**
-     * Removes all the compound variables from a given node 
+     * Removes all the compound variables from a given node
      *
      * Such as
      *
      * <code>
-     * //   ------
+     * // ------
      * Foo::${BAR}();
-     * //   ------
+     * // ------
      *
-     * //    ------
+     * // ------
      * Foo::$${BAR}();
-     * //    ------
+     * // ------
      * </code>
      *
      * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.

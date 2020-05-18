@@ -1,3 +1,33 @@
+phpmd-2.8.2 (2020/02/24)
+========================
+
+- Fixed #732: Added __serialize and __unserialize to list of ignored methods for camelCase rule.
+
+phpmd-2.8.1 (2019/12/27)
+========================
+
+- Fixed PHP 7.4 unit tests compatibility
+- Improved documentation
+- Automated website generation and PHAR publishing
+
+phpmd-2.8.0 (2019/12/18)
+========================
+
+- Required at least pdepend/pdepend 2.6:
+  - Added PHP 7.1 to 7.3 syntax support
+  - Added Symfony 5 support
+  See full changes list: https://github.com/pdepend/pdepend/releases/tag/2.6.0
+- Added #497: Undefined variable rule
+- Improved performances by disabling XDebug if in use
+- Added #571: ignore-namespaces property to DevelopmentCodeFragment rule
+- Added #595: Renderer which writes an ansi report string
+- Fixed #657: IfStatementAssignment violation message
+- Optimized Composer autoloader when building Phar
+- Fixed #661: IfStatementAssignment thrown incorrectly
+- Fixed #676: Handle @SuppressWarnings on each method for CountInLoop
+- Fixed #659: PHP 7.4 compatibility for implode() usage
+
+
 phpmd-2.7.0 (2019/07/30)
 ========================
 

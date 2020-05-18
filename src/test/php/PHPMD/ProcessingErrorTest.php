@@ -20,7 +20,7 @@ namespace PHPMD;
 /**
  * Test case for the processing error class.
  *
- * @since     1.2.1
+ * @since 1.2.1
  *
  * @covers \PHPMD\ProcessingError
  */
@@ -62,17 +62,17 @@ class ProcessingErrorTest extends AbstractTest
         return array(
             array(
                 'The parser has reached an invalid state near line "42" in file ' .
-                '"/tmp/foo.php". Please check the following conditions: message'
+                '"/tmp/foo.php". Please check the following conditions: message',
             ),
             array(
-                'Unexpected token: >, line: 42, col: 23, file: /tmp/foo.php.'
+                'Unexpected token: >, line: 42, col: 23, file: /tmp/foo.php.',
             ),
             array(
-                'Unexpected end of token stream in file: /tmp/foo.php.'
+                'Unexpected end of token stream in file: /tmp/foo.php.',
             ),
             array(
-                'Missing default value on line: 42, col: 23, file: /tmp/foo.php.'
-            )
+                'Missing default value on line: 42, col: 23, file: /tmp/foo.php.',
+            ),
         );
     }
 }

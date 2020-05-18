@@ -40,8 +40,7 @@ Bugfixes
 Download
 --------
 
-You can download release 1.1.0 through PHPMD's `PEAR Channel Server`__ or you
-can download the release as a `Phar archive`__
+You can download release 1.1.0 as a `Phar archive`__
 
 __ http://pdepend.org/documentation/software-metrics/coupling-between-objects.html
 __ https://www.pivotaltracker.com/story/show/10474873
@@ -52,5 +51,4 @@ __ https://www.pivotaltracker.com/story/show/11012465
 __ https://github.com/phpmd/phpmd/commit/4adb88d
 __ https://www.pivotaltracker.com/story/show/10096717
 __ https://github.com/phpmd/phpmd/commit/f063bc9
-__ http://pear.phpmd.org
 __ http://static.phpmd.org/php/1.1.0/phpmd.phar

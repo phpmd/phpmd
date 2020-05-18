@@ -160,9 +160,10 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
             }
             $parent = $parent->getParent();
             if (is_null($parent)) {
-                   return false;
+                return false;
             }
         }
+
         return true;
     }
 

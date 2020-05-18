@@ -17,5 +17,7 @@
 
 class testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold
 {
-    function testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold($foo) {}
+    function testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold($foo)
+    {
+    }
 }

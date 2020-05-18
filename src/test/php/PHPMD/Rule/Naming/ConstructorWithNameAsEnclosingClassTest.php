@@ -34,7 +34,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -46,7 +46,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -58,21 +58,21 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
     public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToMethodNamedAsEnclosingInterface()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
     public function testRuleNotAppliesToMethodInNamespaces()
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 }

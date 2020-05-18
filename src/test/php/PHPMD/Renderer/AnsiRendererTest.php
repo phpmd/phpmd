@@ -46,7 +46,7 @@ class AnsiRendererTest extends AbstractTest
             $this->getErrorMock(),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
@@ -82,7 +82,7 @@ class AnsiRendererTest extends AbstractTest
             PHP_EOL . "Found 3 violations and 1 error in 200ms" . PHP_EOL,
         );
 
-        foreach($writer->getChunks() as $i => $chunk) {
+        foreach ($writer->getChunks() as $i => $chunk) {
             $this->assertEquals(
                 $expectedChunks[$i],
                 $chunk,
@@ -100,7 +100,7 @@ class AnsiRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator(array())));
@@ -129,7 +129,7 @@ class AnsiRendererTest extends AbstractTest
             PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL,
         );
 
-        foreach($writer->getChunks() as $i => $chunk) {
+        foreach ($writer->getChunks() as $i => $chunk) {
             $this->assertEquals(
                 $expectedChunks[$i],
                 $chunk,

@@ -20,5 +20,7 @@ class testRuleAppliesToMethodStartingWithGetAndReturningBool
     /**
      * @return Bool
      */
-    public function getBaz() {}
+    public function getBaz()
+    {
+    }
 }

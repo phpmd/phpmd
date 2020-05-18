@@ -64,10 +64,10 @@ class RuleSet implements \IteratorAggregate
      * @var array(string=>string)
      */
     private $applyTo = array(
-        'PHPMD\\Rule\\ClassAware'     => 'PHPMD\\Node\\ClassNode',
-        'PHPMD\\Rule\\FunctionAware'  => 'PHPMD\\Node\\FunctionNode',
+        'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
+        'PHPMD\\Rule\\FunctionAware' => 'PHPMD\\Node\\FunctionNode',
         'PHPMD\\Rule\\InterfaceAware' => 'PHPMD\\Node\\InterfaceNode',
-        'PHPMD\\Rule\\MethodAware'    => 'PHPMD\\Node\\MethodNode',
+        'PHPMD\\Rule\\MethodAware' => 'PHPMD\\Node\\MethodNode',
     );
 
     /**
@@ -76,10 +76,10 @@ class RuleSet implements \IteratorAggregate
      * @var array(string=>array)
      */
     private $rules = array(
-        'PHPMD\\Node\\ClassNode'     =>  array(),
-        'PHPMD\\Node\\FunctionNode'  =>  array(),
-        'PHPMD\\Node\\InterfaceNode' =>  array(),
-        'PHPMD\\Node\\MethodNode'    =>  array(),
+        'PHPMD\\Node\\ClassNode' => array(),
+        'PHPMD\\Node\\FunctionNode' => array(),
+        'PHPMD\\Node\\InterfaceNode' => array(),
+        'PHPMD\\Node\\MethodNode' => array(),
     );
 
     /**
@@ -190,6 +190,7 @@ class RuleSet implements \IteratorAggregate
                 return $rule;
             }
         }
+
         return null;
     }
 

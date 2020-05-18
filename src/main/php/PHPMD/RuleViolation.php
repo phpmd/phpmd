@@ -88,15 +88,15 @@ class RuleViolation
      */
     public function __construct(Rule $rule, AbstractNode $node, $violationMessage, $metric = null)
     {
-        $this->rule        = $rule;
-        $this->node        = $node;
-        $this->metric      = $metric;
+        $this->rule = $rule;
+        $this->node = $node;
+        $this->metric = $metric;
         $this->description = $violationMessage;
 
         if ($node instanceof AbstractTypeNode) {
             $this->className = $node->getName();
         } elseif ($node instanceof MethodNode) {
-            $this->className  = $node->getParentName();
+            $this->className = $node->getParentName();
             $this->methodName = $node->getName();
         } elseif ($node instanceof FunctionNode) {
             $this->functionName = $node->getName();

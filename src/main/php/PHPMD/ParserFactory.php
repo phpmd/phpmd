@@ -27,13 +27,19 @@ use PDepend\Input\ExtensionFilter;
  */
 class ParserFactory
 {
+    /** @var string The default config file name */
+    const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';
+
+    /** @var string The distribution config file name */
+    const PDEPEND_CONFIG_FILE_NAME_DIST = '/pdepend.xml.dist';
+
     /**
      * Mapping between phpmd option names and those used by pdepend.
      *
      * @var array
      */
     private $phpmd2pdepend = array(
-        'coverage'  =>  'coverage-report'
+        'coverage' => 'coverage-report',
     );
 
     /**
@@ -59,10 +65,11 @@ class ParserFactory
     {
         $application = new Application();
 
-        if (file_exists(getcwd() . '/pdepend.xml')) {
-            $application->setConfigurationFile(getcwd() . '/pdepend.xml');
-        } elseif (file_exists(getcwd() . '/pdepend.xml.dist')) {
-            $application->setConfigurationFile(getcwd() . '/pdepend.xml.dist');
+        $currentWorkingDirectory = getcwd();
+        if (file_exists($currentWorkingDirectory . self::PDEPEND_CONFIG_FILE_NAME)) {
+            $application->setConfigurationFile($currentWorkingDirectory . self::PDEPEND_CONFIG_FILE_NAME);
+        } elseif (file_exists($currentWorkingDirectory . self::PDEPEND_CONFIG_FILE_NAME_DIST)) {
+            $application->setConfigurationFile($currentWorkingDirectory . self::PDEPEND_CONFIG_FILE_NAME_DIST);
         }
 
         return $application->getEngine();

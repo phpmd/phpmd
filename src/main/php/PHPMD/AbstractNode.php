@@ -65,6 +65,7 @@ abstract class AbstractNode
                 sprintf('Invalid method %s() called.', $name)
             );
         }
+
         return call_user_func_array(array($node, $name), $args);
     }
 
@@ -76,9 +77,11 @@ abstract class AbstractNode
      */
     public function getParent()
     {
-        if (($node = $this->node->getParent()) === null) {
+        $node = $this->node->getParent();
+        if ($node === null) {
             return null;
         }
+
         return new ASTNode($node, $this->getFileName());
     }
 
@@ -101,14 +104,16 @@ abstract class AbstractNode
      * has no child of the given type.
      *
      * @param string $type The searched child type.
-     * @return \PHPMD\AbstractNode
+     * @return ASTNode|null
      */
     public function getFirstChildOfType($type)
     {
         $node = $this->node->getFirstChildOfType('PDepend\Source\AST\AST' . $type);
+
         if ($node === null) {
             return null;
         }
+
         return new ASTNode($node, $this->getFileName());
     }
 
@@ -117,16 +122,18 @@ abstract class AbstractNode
      * type.
      *
      * @param string $type The searched child type.
-     * @return \PHPMD\AbstractNode[]
+     * @return ASTNode[]
      */
     public function findChildrenOfType($type)
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
         $nodes = array();
+
         foreach ($children as $child) {
             $nodes[] = new ASTNode($child, $this->getFileName());
         }
+
         return $nodes;
     }
 
@@ -139,6 +146,7 @@ abstract class AbstractNode
     public function isInstanceOf($type)
     {
         $class = 'PDepend\Source\AST\AST' . $type;
+
         return ($this->node instanceof $class);
     }
 
@@ -190,7 +198,7 @@ abstract class AbstractNode
      */
     public function getFileName()
     {
-        return (string) $this->node->getCompilationUnit()->getFileName();
+        return (string)$this->node->getCompilationUnit()->getFileName();
     }
 
     /**
@@ -211,6 +219,7 @@ abstract class AbstractNode
     public function getType()
     {
         $type = explode('\\', get_class($this));
+
         return preg_replace('(node$)', '', strtolower(array_pop($type)));
     }
 
@@ -226,6 +235,7 @@ abstract class AbstractNode
         if (isset($this->metrics[$name])) {
             return $this->metrics[$name];
         }
+
         return null;
     }
 

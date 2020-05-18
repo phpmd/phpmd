@@ -35,6 +35,7 @@ matrix:
     # Could be enabled when we'll upgrade PHPUnit
     # - php: 7.3
     #   env: DEPENDENCIES=low
+    - php: 7.4
     - php: 5.4
       dist: trusty
       env: BUILD_PHAR=true
@@ -55,12 +56,9 @@ before_script:
   - if [[ ! $DEPENDENCIES ]]; then composer install; fi
 
 script:
-  - if [[ $WEBSITE  = 'true' ]]; then php bin/build-website.php; fi
-  - |
-    if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' ]]; then
-      if [ "$COVERAGE" != "true" ]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
-      if [ "$COVERAGE" = "true" ]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text; fi
-    fi
+  - if [[ $WEBSITE  = 'true' ]]; then cp src/site/rst/* src/site/resources/web/ -r && composer build-website; fi
+  - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE != 'true' ]]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
+  - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE = 'true' ]]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text --coverage-clover=coverage.xml; fi
   - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi
 
 notifications:

@@ -34,7 +34,7 @@ class NumberOfChildrenTest extends AbstractTest
     public function testRuleNotAppliesToClassWithChildrenLessThanThreshold()
     {
         $rule = new NumberOfChildren();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('nocc', 41));
     }
@@ -47,7 +47,7 @@ class NumberOfChildrenTest extends AbstractTest
     public function testRuleAppliesToClassWithChildrenIdenticalToThreshold()
     {
         $rule = new NumberOfChildren();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('nocc', 42));
     }
@@ -60,7 +60,7 @@ class NumberOfChildrenTest extends AbstractTest
     public function testRuleAppliesToClassWithChildrenGreaterThanThreshold()
     {
         $rule = new NumberOfChildren();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '42');
         $rule->apply($this->getClassMock('nocc', 43));
     }

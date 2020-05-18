@@ -20,5 +20,7 @@ class testRuleNotAppliesToMethodStartingWithIs
     /**
      * @return boolean
      */
-    function isBaz() {}
+    function isBaz()
+    {
+    }
 }

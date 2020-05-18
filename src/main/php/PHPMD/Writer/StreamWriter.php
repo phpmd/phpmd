@@ -35,11 +35,13 @@ class StreamWriter extends AbstractWriter
      * Constructs a new stream writer instance.
      *
      * @param resource|string $streamResourceOrUri
+     * @throws \RuntimeException If the output directory cannot be found.
      */
     public function __construct($streamResourceOrUri)
     {
         if (is_resource($streamResourceOrUri) === true) {
             $this->stream = $streamResourceOrUri;
+
             return;
         }
         $dirName = dirname($streamResourceOrUri);

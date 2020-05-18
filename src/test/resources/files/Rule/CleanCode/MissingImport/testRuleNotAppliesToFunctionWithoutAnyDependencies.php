@@ -17,6 +17,7 @@
 
 namespace PHPMDTest;
 
-function testRuleNotAppliesToFunctionWithoutAnyDependencies(){
+function testRuleNotAppliesToFunctionWithoutAnyDependencies()
+{
     $a = null;
 }

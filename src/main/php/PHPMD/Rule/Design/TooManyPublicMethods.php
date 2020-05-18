@@ -60,7 +60,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
                 $node->getType(),
                 $node->getName(),
                 $nom,
-                $threshold
+                $threshold,
             )
         );
     }
@@ -79,6 +79,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
                 ++$count;
             }
         }
+
         return $count;
     }
 }

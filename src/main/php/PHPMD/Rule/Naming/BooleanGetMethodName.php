@@ -54,8 +54,8 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     private function isBooleanGetMethod(MethodNode $node)
     {
         return $this->isGetterMethodName($node)
-                && $this->isReturnTypeBoolean($node)
-                && $this->isParameterizedOrIgnored($node);
+            && $this->isReturnTypeBoolean($node)
+            && $this->isParameterizedOrIgnored($node);
     }
 
     /**
@@ -78,6 +78,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     private function isReturnTypeBoolean(MethodNode $node)
     {
         $comment = $node->getDocComment();
+
         return (preg_match('(\*\s*@return\s+bool(ean)?\s)i', $comment) > 0);
     }
 
@@ -93,6 +94,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
         if ($this->getBooleanProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;
         }
+
         return true;
     }
 }
