@@ -322,19 +322,27 @@ class RuleSetFactory
      */
     private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
     {
-        $fileName = "";
+        $className = (string)$ruleNode['class'];
+
+        if ($className === '') {
+            $this->modifyExistingRuleset($ruleSet, $ruleNode);
+
+            return;
+        }
+
+        $fileName = '';
 
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
         if (isset($ruleNode['file'])) {
-            if (is_readable((string)$ruleNode['file'])) {
-                $fileName = (string)$ruleNode['file'];
-            } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . (string)$ruleNode['file'])) {
-                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . (string)$ruleNode['file'];
+            $ruleFile = (string)$ruleNode['file'];
+
+            if (is_readable($ruleFile)) {
+                $fileName = $ruleFile;
+            } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleFile)) {
+                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleFile;
             }
         }
-
-        $className = (string)$ruleNode['class'];
 
         if (!is_readable($fileName)) {
             $fileName = strtr($className, '\\', '/') . '.php';
@@ -344,17 +352,13 @@ class RuleSetFactory
             $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
         }
 
-        if ($className === '') {
-            $this->modifyExistingRuleset($ruleSet, $ruleNode);
-
-            return;
-        }
-
         if (class_exists($className) === false) {
             $handle = @fopen($fileName, 'r', true);
+
             if ($handle === false) {
                 throw new RuleClassFileNotFoundException($className);
             }
+
             fclose($handle);
 
             include_once $fileName;
