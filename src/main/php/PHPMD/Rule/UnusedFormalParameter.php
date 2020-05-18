@@ -43,12 +43,20 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     public function apply(AbstractNode $node)
     {
-        if ($this->isAbstractMethod($node) ||
-            // Magic methods should be ignored as invalid declarations are picked up by PHP.
-            $this->isMagicMethod($node) ||
-            $this->isInheritedSignature($node) ||
-            $this->isNotDeclaration($node)
-        ) {
+        if ($this->isAbstractMethod($node)) {
+            return;
+        }
+
+        // Magic methods should be ignored as invalid declarations are picked up by PHP.
+        if ($this->isMagicMethod($node)) {
+            return;
+        }
+
+        if ($this->isInheritedSignature($node)) {
+            return;
+        }
+
+        if ($this->isNotDeclaration($node)) {
             return;
         }
 
