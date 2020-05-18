@@ -72,7 +72,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             }
         }
 
-        foreach ($node->findChildrenOfType('Variable') as $variable) {
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isNotSuperGlobal($variable)) {
                 $this->addVariableDefinition($variable);
             }
@@ -251,7 +251,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             $variable = $assignment->getChild(0);
 
             if ($variable->getNode() instanceof ASTArray) {
-                foreach ($variable->findChildrenOfType('Variable') as $unpackedVariable) {
+                foreach ($variable->findChildrenOfTypeVariable() as $unpackedVariable) {
                     $this->addVariableDefinition($unpackedVariable);
                 }
 
