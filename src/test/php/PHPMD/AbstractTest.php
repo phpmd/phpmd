@@ -206,7 +206,6 @@ abstract class AbstractTest extends AbstractStaticTest
      * This method can be overridden to select the node to test with the rule.
      *
      * @param string $file
-     *
      * @return AbstractNode
      */
     protected function getNodeForTestFile($file)
