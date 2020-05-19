@@ -198,7 +198,7 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Returns the first method or function as a MethodNode for a given test file.
+     * Returns the first method or function node for a given test file.
      *
      * @param string $file
      * @return MethodNode|FunctionNode
