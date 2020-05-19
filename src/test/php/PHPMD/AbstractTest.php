@@ -186,7 +186,7 @@ abstract class AbstractTest extends AbstractStaticTest
     /**
      * Returns the first class found for a given test file.
      *
-     * @return FunctionNode
+     * @return ClassNode
      */
     protected function getClassNodeForTestFile($file)
     {
