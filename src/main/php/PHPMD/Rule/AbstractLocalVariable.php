@@ -207,7 +207,6 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Or return the input as is if it's not an ASTNode PHPMD node.
      *
      * @param mixed $node
-     *
      * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
      */
     protected function getNode($node)
