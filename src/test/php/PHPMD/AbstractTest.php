@@ -184,27 +184,54 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Returns the first method as a MethodNode for a given test file.
+     * Returns the first class found for a given test file.
+     *
+     * @return ClassNode
+     */
+    protected function getClassNodeForTestFile($file)
+    {
+        return new ClassNode(
+            $this->parseSource($file)
+                ->getTypes()
+                ->current()
+        );
+    }
+
+    /**
+     * Returns the first method or function node for a given test file.
      *
      * @param string $file
-     * @return MethodNode
+     * @return MethodNode|FunctionNode
      * @since 2.8.3
      */
-    protected function getMethodNodeForTestFile($file)
+    protected function getNodeForTestFile($file)
     {
-        return new MethodNode(
+        $source = $this->parseSource($file);
+        $class = $source
+            ->getTypes()
+            ->current();
+        $nodeClassName = 'PHPMD\\Node\\FunctionNode';
+        $getter = 'getFunctions';
+
+        if ($class) {
+            $source = $class;
+            $nodeClassName = 'PHPMD\\Node\\MethodNode';
+            $getter = 'getMethods';
+        }
+
+        return new $nodeClassName(
             $this->getNodeByName(
-                $this->parseSource($file)
-                    ->getTypes()
-                    ->current()
-                    ->getMethods(),
+                $source->$getter(),
                 pathinfo($file, PATHINFO_FILENAME)
             )
         );
     }
 
     /**
-     * Test that a given file trigger N times the given rule.
+     * Assert that a given file trigger N times the given rule.
+     *
+     * Rethrows the PHPUnit ExpectationFailedException with the base name
+     * of the file for better readability.
      *
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
@@ -213,7 +240,17 @@ abstract class AbstractTest extends AbstractStaticTest
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
         $rule->setReport($this->getReportMock($expectedInvokes));
-        $rule->apply($this->getMethodNodeForTestFile($file));
+
+        try {
+            $rule->apply($this->getNodeForTestFile($file));
+        } catch (PHPUnit_Framework_ExpectationFailedException $failedException) {
+            throw new PHPUnit_Framework_ExpectationFailedException(
+                basename($file)."\n".
+                $failedException->getMessage(),
+                $failedException->getComparisonFailure(),
+                $failedException->getPrevious()
+            );
+        }
     }
 
     /**
