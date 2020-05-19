@@ -228,7 +228,10 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Test that a given file trigger N times the given rule.
+     * Assert that a given file trigger N times the given rule.
+     *
+     * Rethrows the PHPUnit ExpectationFailedException with the base name
+     * of the file for better readability.
      *
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
