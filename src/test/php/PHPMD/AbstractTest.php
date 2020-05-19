@@ -184,13 +184,27 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
+     * Returns the first class found for a given test file.
+     *
+     * @return FunctionNode
+     */
+    protected function getClassNodeForTestFile($file)
+    {
+        return new ClassNode(
+            $this->parseSource($file)
+                ->getTypes()
+                ->current()
+        );
+    }
+
+    /**
      * Returns the first method as a MethodNode for a given test file.
      *
      * @param string $file
      * @return MethodNode|FunctionNode
      * @since 2.8.3
      */
-    protected function getMethodNodeForTestFile($file)
+    protected function getNodeForTestFile($file)
     {
         $source = $this->parseSource($file);
         $class = $source
@@ -223,7 +237,7 @@ abstract class AbstractTest extends AbstractStaticTest
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
         $rule->setReport($this->getReportMock($expectedInvokes));
-        $rule->apply($this->getMethodNodeForTestFile($file));
+        $rule->apply($this->getNodeForTestFile($file));
     }
 
     /**
