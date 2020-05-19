@@ -237,7 +237,17 @@ abstract class AbstractTest extends AbstractStaticTest
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
         $rule->setReport($this->getReportMock($expectedInvokes));
-        $rule->apply($this->getNodeForTestFile($file));
+
+        try {
+            $rule->apply($this->getNodeForTestFile($file));
+        } catch (PHPUnit_Framework_ExpectationFailedException $failedException) {
+            throw new PHPUnit_Framework_ExpectationFailedException(
+                basename($file)."\n".
+                $failedException->getMessage(),
+                $failedException->getComparisonFailure(),
+                $failedException->getPrevious()
+            );
+        }
     }
 
     /**
