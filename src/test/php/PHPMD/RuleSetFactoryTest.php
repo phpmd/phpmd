@@ -753,6 +753,7 @@ class RuleSetFactoryTest extends AbstractTest
     /**
      * Check if properties are changed, but no additional properties are added to rules
      *
+     * @expectedException \OutOfBoundsException
      * @return void
      */
     public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties()
@@ -762,17 +763,8 @@ class RuleSetFactoryTest extends AbstractTest
         $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset5');
 
-        /** @var \ArrayIterator $rules */
-        for ($rules = $ruleSets[0]->getRules(); $rules->valid(); $rules->next()) {
-            $rule = $rules->current();
-            $success = true;
-            try {
-                $this->assertEquals('something', $rule->getStringProperty('test'));
-            } catch (\Exception $exception) {
-                $success = false;
-            }
-
-            $this->assertFalse($success);
+        foreach ($ruleSets[0]->getRules() as $rule) {
+            $this->assertSame('NA', $rule->getStringProperty('test'));
         }
     }
 
@@ -806,7 +798,7 @@ class RuleSetFactoryTest extends AbstractTest
         $args = func_get_args();
 
         $factory = new RuleSetFactory();
-      
+
         return $factory->createRuleSets(implode(',', $args));
     }
 
