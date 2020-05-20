@@ -34,6 +34,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -239,10 +240,12 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
-        $rule->setReport($this->getReportMock($expectedInvokes));
+        $reportMock = $this->getReportMock($expectedInvokes);
+        $rule->setReport($reportMock);
 
         try {
             $rule->apply($this->getNodeForTestFile($file));
+            $reportMock->__phpunit_verify();
         } catch (PHPUnit_Framework_ExpectationFailedException $failedException) {
             throw new PHPUnit_Framework_ExpectationFailedException(
                 basename($file)."\n".
