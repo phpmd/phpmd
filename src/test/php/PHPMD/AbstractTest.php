@@ -37,6 +37,7 @@ use PHPMD\Stubs\RuleStub;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
+use ReflectionProperty;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -240,20 +241,41 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
-        $reportMock = $this->getReportMock($expectedInvokes);
-        $rule->setReport($reportMock);
+        $report = new Report();
+        $rule->setReport($report);
+        $rule->apply($this->getNodeForTestFile($file));
+        $violations = $report->getRuleViolations();
+        $actualInvokes = count($violations);
+        $assertion = $expectedInvokes === self::AL_LEAST_ONE_VIOLATION
+            ? $actualInvokes > 0
+            : $actualInvokes === $expectedInvokes;
 
-        try {
-            $rule->apply($this->getNodeForTestFile($file));
-            $reportMock->__phpunit_verify();
-        } catch (PHPUnit_Framework_ExpectationFailedException $failedException) {
+        if (!$assertion) {
             throw new PHPUnit_Framework_ExpectationFailedException(
-                basename($file)."\n".
-                $failedException->getMessage(),
-                $failedException->getComparisonFailure(),
-                $failedException->getPrevious()
+                basename($file)." failed:\n".
+                "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
+                "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
+                ($actualInvokes > 0
+                    ? ":\n".implode("\n", array_map(function (RuleViolation $violation) {
+                        $nodeExtractor = new ReflectionProperty('PHPMD\\RuleViolation', 'node');
+                        $nodeExtractor->setAccessible(true);
+                        $node = $nodeExtractor->getValue($violation);
+                        $node = $node ? $node->getNode() : null;
+                        $message = '  - line '.$violation->getBeginLine();
+
+                        if ($node) {
+                            $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
+                            $message .= ' on '.$type.' '.$node->getImage();
+                        }
+
+                        return $message;
+                    }, iterator_to_array($violations)))
+                    : '.'
+                )
             );
         }
+
+        $this->assertTrue($assertion);
     }
 
     /**
