@@ -210,7 +210,6 @@ abstract class AbstractTest extends AbstractStaticTest
         $class = $source
             ->getTypes()
             ->current();
-
         $nodeClassName = 'PHPMD\\Node\\FunctionNode';
         $getter = 'getFunctions';
 
