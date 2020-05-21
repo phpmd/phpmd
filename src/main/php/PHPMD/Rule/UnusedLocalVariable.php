@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
@@ -102,6 +103,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
             $this->collectVariable($variable);
         }
+
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
             if ($this->isFunctionNameEndingWith($func, 'compact')) {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
@@ -188,13 +190,20 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+
         if ($this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
-        $exceptions = $this->getExceptionsList();
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+
+        if (in_array(substr($node->getImage(), 1), $this->getExceptionsList())) {
             return;
         }
+
+        // ASTFormalParameter should be handled by the UnusedFormalParameter rule
+        if ($this->getNode($node->getParent()) instanceof ASTFormalParameter) {
+            return;
+        }
+
         $this->addViolation($node, array($node->getImage()));
     }
 
