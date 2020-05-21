@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
@@ -26,6 +27,8 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
+use ReflectionException;
+use ReflectionFunction;
 
 /**
  * Base class for rules that rely on local variables.
@@ -85,9 +88,21 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param \PHPMD\AbstractNode $variable
      * @return boolean
      */
+    protected function isSuperGlobal(AbstractNode $variable)
+    {
+        return isset(self::$superGlobals[$variable->getImage()]);
+    }
+
+    /**
+     * Tests if the given variable does not represent one of the PHP super globals
+     * that are available in scopes.
+     *
+     * @param \PHPMD\AbstractNode $variable
+     * @return boolean
+     */
     protected function isNotSuperGlobal(AbstractNode $variable)
     {
-        return !isset(self::$superGlobals[$variable->getImage()]);
+        return !$this->isSuperGlobal($variable);
     }
 
     /**
@@ -245,5 +260,53 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return $image;
+    }
+
+    /**
+     * Return the PDepend node of ASTNode PHPMD node.
+     *
+     * Or return the input as is if it's not an ASTNode PHPMD node.
+     *
+     * @param mixed $node
+     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     */
+    protected function getNode($node)
+    {
+        if ($node instanceof ASTNode) {
+            return $node->getNode();
+        }
+
+        return $node;
+    }
+
+    /**
+     * Return true if the given variable is passed by reference in a native PHP function.
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return bool
+     */
+    protected function isPassedByReference($variable)
+    {
+        $parent = $this->getNode($variable->getParent());
+
+        if ($parent && $parent instanceof ASTArguments) {
+            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+            $function = $this->getNode($parent->getParent());
+            $functionName = $function->getImage();
+
+            try {
+                $reflectionFunction = new ReflectionFunction($functionName);
+                $parameters = $reflectionFunction->getParameters();
+
+                if ($parameters[$argumentPosition]->isPassedByReference()) {
+                    return true;
+                }
+            } catch (ReflectionException $exception) {
+                // @TODO: Find a way to handle user-land functions
+                // @TODO: Find a way to handle methods
+            }
+        }
+
+        return false;
     }
 }

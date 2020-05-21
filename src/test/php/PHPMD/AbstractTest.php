@@ -185,11 +185,9 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Returns the first method as a MethodNode for a given test file.
+     * Returns the first class found for a given test file.
      *
-     * @param string $file
      * @return ClassNode
-     * @since 2.8.3
      */
     protected function getClassNodeForTestFile($file)
     {
@@ -201,12 +199,11 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Get the node for a given test file.
-     *
-     * This method can be overridden to select the node to test with the rule.
+     * Returns the first method or function node for a given test file.
      *
      * @param string $file
-     * @return AbstractNode
+     * @return MethodNode|FunctionNode
+     * @since 2.8.3
      */
     protected function getNodeForTestFile($file)
     {
@@ -214,24 +211,27 @@ abstract class AbstractTest extends AbstractStaticTest
         $class = $source
             ->getTypes()
             ->current();
+        $nodeClassName = 'PHPMD\\Node\\FunctionNode';
+        $getter = 'getFunctions';
 
-        return $class
-            ? new MethodNode(
-                $this->getNodeByName(
-                    $class->getMethods(),
-                    pathinfo($file, PATHINFO_FILENAME)
-                )
-            )
-            : new FunctionNode(
-                $this->getNodeByName(
-                    $source->getFunctions(),
-                    pathinfo($file, PATHINFO_FILENAME)
-                )
+        if ($class) {
+            $source = $class;
+            $nodeClassName = 'PHPMD\\Node\\MethodNode';
+            $getter = 'getMethods';
+        }
+
+        return new $nodeClassName(
+            $this->getNodeByName(
+                $source->$getter(),
+                pathinfo($file, PATHINFO_FILENAME)
             );
     }
 
     /**
-     * Test that a given file trigger N times the given rule.
+     * Assert that a given file trigger N times the given rule.
+     *
+     * Rethrows the PHPUnit ExpectationFailedException with the base name
+     * of the file for better readability.
      *
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
