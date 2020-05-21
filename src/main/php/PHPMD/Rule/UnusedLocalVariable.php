@@ -187,7 +187,11 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function doCheckNodeImage(ASTNode $node)
     {
-        if ($this->isNameAllowedInContext($node) || $this->isUnusedForeachVariableAllowed($node)) {
+        if ($this->isNameAllowedInContext($node)) {
+            return;
+        }
+
+        if ($this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
 
