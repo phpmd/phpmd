@@ -224,7 +224,8 @@ abstract class AbstractTest extends AbstractStaticTest
             $this->getNodeByName(
                 $source->$getter(),
                 pathinfo($file, PATHINFO_FILENAME)
-            );
+            )
+        );
     }
 
     /**
