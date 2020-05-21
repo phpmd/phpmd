@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule;
 
-use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
@@ -199,8 +198,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             return;
         }
 
+        $parent = $node->getParent();
+
         // ASTFormalParameter should be handled by the UnusedFormalParameter rule
-        if ($this->getNode($node->getParent()) instanceof ASTFormalParameter) {
+        if ($parent && $parent->isInstanceOf('FormalParameter')) {
             return;
         }
 
