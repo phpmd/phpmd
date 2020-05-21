@@ -36,11 +36,16 @@ class UnusedLocalVariableTest extends AbstractTest
     public function getRule($file)
     {
         $rule = new UnusedLocalVariable();
+
+        // In this test suite, we'll set allow-unused-foreach-variables to true when the test
+        // file name mention Foreach*WhenIgnored.
         $rule->addProperty(
             'allow-unused-foreach-variables',
             preg_match('/Foreach.*WhenIgnored/', $file) ? 'true' : 'false'
         );
 
+        // In the file names of this test suite, $_ is called "Whitelisted", so we add it
+        // to exceptions when it's in the name.
         if (preg_match('/Whitelisted/', $file)) {
             $rule->addProperty('exceptions', '_');
         }
