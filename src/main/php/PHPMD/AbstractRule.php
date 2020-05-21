@@ -314,6 +314,7 @@ abstract class AbstractRule implements Rule
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
+
         if ($default !== null) {
             return $default;
         }

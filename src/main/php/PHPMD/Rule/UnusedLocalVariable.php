@@ -50,10 +50,31 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $this->removeParameters($node);
 
         foreach ($this->images as $nodes) {
-            if (count($nodes) === 1) {
+            if (!$this->containsUsages($nodes)) {
                 $this->doCheckNodeImage($nodes[0]);
             }
         }
+    }
+
+    private function containsUsages(array $nodes)
+    {
+        if (count($nodes) === 1) {
+            return false;
+        }
+
+        foreach ($nodes as $node) {
+            $parent = $node->getParent();
+
+            if (!$parent->isInstanceOf('AssignmentExpression')) {
+                return true;
+            }
+
+            if (in_array($this->getNode($node), array_slice($parent->getChildren(), 1))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -159,6 +180,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if (!isset($this->images[$imageName])) {
             $this->images[$imageName] = array();
         }
+
         $this->images[$imageName][] = $node;
     }
 
@@ -171,9 +193,11 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function collectLiteral(ASTNode $node)
     {
         $variable = '$' . trim($node->getImage(), '\'');
+
         if (!isset($this->images[$variable])) {
             $this->images[$variable] = array();
         }
+
         $this->images[$variable][] = $node;
     }
 
@@ -222,6 +246,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     private function isUnusedForeachVariableAllowed(ASTNode $variable)
     {
         $isForeachVariable = $this->isChildOf($variable, 'ForeachStatement');
+
         if (!$isForeachVariable) {
             return false;
         }
@@ -251,12 +276,6 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     private function getExceptionsList()
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
-        }
-
-        return explode(',', $exceptions);
+        return explode(',', $this->getStringProperty('exceptions', ''));
     }
 }
