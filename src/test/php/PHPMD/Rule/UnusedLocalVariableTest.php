@@ -298,6 +298,19 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToClosureParameter
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToClosureParameter()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleDoesNotApplyToEnvSuperGlobal
      *
      * @return void
