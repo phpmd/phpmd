@@ -15,12 +15,23 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyToCompoundVariableInString
+class testRuleDoesNotApplyToVariableUsedInAnonymousClass
 {
-    public function testRuleDoesApplyToCompoundVariableInString()
+    function testRuleDoesNotApplyToVariableUsedInAnonymousClass()
     {
-        $bar = 'foo';
+        return new class($var)
+        {
+            private $prop;
 
-        return "${bar}_me";
+            public function __construct($var)
+            {
+                $this->prop = $var;
+            }
+
+            public function getProp()
+            {
+                return $this->prop;
+            }
+        };
     }
 }

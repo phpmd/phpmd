@@ -34,6 +34,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -60,7 +61,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleAppliesTo*');
+        return $this->getFilesForCalledClass('testRuleApplies*');
     }
 
     /**
@@ -72,7 +73,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getNotApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
+        return $this->getFilesForCalledClass('testRuleDoesNotApply*');
     }
 
     /**

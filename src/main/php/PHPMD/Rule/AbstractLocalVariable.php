@@ -19,6 +19,7 @@ namespace PHPMD\Rule;
 
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTVariable;
@@ -204,29 +205,15 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $image = $variable->getImage();
 
+        if (substr($image, 0, 1) === '$' && $this->getNode($variable->getParent()) instanceof ASTFieldDeclaration) {
+            $image = "::$image";
+        }
+
         if ($image === '::') {
             return $image.$variable->getChild(1)->getImage();
         }
 
-        $base = $variable;
-        $parent = $this->getNode($variable->getParent());
-
-        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base->getNode()) {
-            $base = $parent;
-            $parent = $this->getNode($base->getParent());
-        }
-
-        if ($parent && $parent instanceof ASTPropertyPostfix) {
-            $parent = $parent->getParent();
-
-            if ($parent instanceof ASTMemberPrimaryPrefix &&
-                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
-            ) {
-                return "::$image";
-            }
-        }
-
-        return $image;
+        return $this->prependMemberPrimaryPrefix($image, $variable);
     }
 
     /**
@@ -275,5 +262,34 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return false;
+    }
+
+    /**
+     * Prepend "::" if the variable has a ASTMemberPrimaryPrefix.
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return string
+     */
+    private function prependMemberPrimaryPrefix($image, $variable)
+    {
+        $base = $this->getNode($variable);
+        $parent = $this->getNode($base->getParent());
+
+        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base) {
+            $base = $parent;
+            $parent = $this->getNode($base->getParent());
+        }
+
+        if ($parent && $parent instanceof ASTPropertyPostfix) {
+            $parent = $parent->getParent();
+
+            if ($parent instanceof ASTMemberPrimaryPrefix &&
+                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
+            ) {
+                return "::$image";
+            }
+        }
+
+        return $image;
     }
 }

@@ -15,11 +15,9 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class testNamespacedCompactFunctionRuleWorksCaseInsensitive
+class testRuleDoesNotApplyUsingCompactFunction
 {
-    public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()
+    public function testRuleDoesNotApplyUsingCompactFunction()
     {
         $foo = 1;
         $bar = 2;
