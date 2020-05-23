@@ -721,19 +721,21 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory = new RuleSetFactory();
-        $ruleSets = $factory->createRuleSets('refset5');
-
         $expected = array(
-            'RuleOneInFifthRuleSet' => array(
+            'RuleOneInThirdRuleSet' => array(
                 'test1' => '42',
             ),
-            'RuleTwoInFifthRuleSet' => array(
+            'RuleTwoInThirdRuleSet' => array(
                 'test1' => 'g',
                 'test2' => 'NA',
             ),
-            'RuleThreeInThirdRuleSet' => array(),
+            'RuleThreeInThirdRuleSet' => array(
+                'test' => 'NA',
+            ),
         );
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset5');
 
         $actual = array();
 

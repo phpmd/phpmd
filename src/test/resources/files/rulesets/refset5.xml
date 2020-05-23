@@ -10,17 +10,19 @@
 
     <rule ref="rulesets/set3.xml"/>
 
-    <rule name="RuleOneInFifthRuleSet">
+    <rule name="RuleOneInThirdRuleSet">
         <properties>
             <property name="test1" value="42" />
         </properties>
     </rule>
-    <rule name="RuleTwoInFifthRuleSet">
+
+    <rule name="RuleTwoInThirdRuleSet">
         <properties>
             <property name="test2" value="NA" />
         </properties>
     </rule>
-    <rule name="RuleThreeInFifthRuleSet">
+
+    <rule name="RuleThreeInThirdRuleSet">
         <properties>
             <property name="test" value="NA" />
         </properties>

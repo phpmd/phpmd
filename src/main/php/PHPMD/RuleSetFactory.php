@@ -107,11 +107,8 @@ class RuleSetFactory
     {
         $ruleSets = array();
 
-        $ruleSetFileName = strtok($ruleSetFileNames, ',');
-        while ($ruleSetFileName !== false) {
-            $ruleSets[] = $this->createSingleRuleSet($ruleSetFileName);
-
-            $ruleSetFileName = strtok(',');
+        for ($fileName = strtok($ruleSetFileNames, ','); $fileName !== false; $fileName = strtok(',')) {
+            $ruleSets[] = $this->createSingleRuleSet($fileName);
         }
 
         return $ruleSets;
