@@ -264,13 +264,13 @@ abstract class AbstractTest extends AbstractStaticTest
      * Return a human-friendly failure message for a given list of violations and the actual/expected counts.
      *
      * @param string $file
-     * @param int $actualInvokes
      * @param int $expectedInvokes
+     * @param int $actualInvokes
      * @param array|iterable|Traversable $violations
      *
      * @return string
      */
-    protected function getViolationFailureMessage($file, $actualInvokes, $expectedInvokes, $violations)
+    protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
     {
         return basename($file)." failed:\n".
             "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
