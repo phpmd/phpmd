@@ -477,9 +477,9 @@ class RuleSetFactory
      * @param RuleSet $ruleSet
      * @param string $ruleName
      * @return AbstractRule
-     * @throws \RuntimeException if no matching rule was found
+     * @throws RuntimeException if no matching rule was found
      */
-    private function findRuleInRulesetByName(RuleSet $ruleSet, string $ruleName)
+    private function findRuleInRulesetByName(RuleSet $ruleSet, $ruleName)
     {
         // Find existing rule
         foreach ($ruleSet as $rule) {
