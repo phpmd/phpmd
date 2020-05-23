@@ -752,19 +752,27 @@ class RuleSetFactoryTest extends AbstractTest
     /**
      * Check if properties are changed, but no additional properties are added to rules
      *
-     * @expectedException \OutOfBoundsException
      * @return void
      */
     public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties()
     {
         self::changeWorkingDirectory();
 
+        $expectedRules = array(
+            '--default--',
+            '--default--',
+            'NA',
+        );
+
         $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset5');
+        $actualRules = array();
 
-        foreach ($ruleSets[0]->getRules() as $rule) {
-            $this->assertSame('NA', $rule->getStringProperty('test'));
+        foreach ($ruleSets[0] as $rule) {
+            $actualRules[] = $rule->getStringProperty('test', '--default--');
         }
+
+        $this->assertSame($expectedRules, $actualRules);
     }
 
     /**
