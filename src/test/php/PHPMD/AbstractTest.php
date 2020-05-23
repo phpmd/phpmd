@@ -38,6 +38,7 @@ use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionProperty;
+use Traversable;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -252,30 +253,60 @@ abstract class AbstractTest extends AbstractStaticTest
 
         if (!$assertion) {
             throw new PHPUnit_Framework_ExpectationFailedException(
-                basename($file)." failed:\n".
-                "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
-                "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
-                ($actualInvokes > 0
-                    ? ":\n".implode("\n", array_map(function (RuleViolation $violation) {
-                        $nodeExtractor = new ReflectionProperty('PHPMD\\RuleViolation', 'node');
-                        $nodeExtractor->setAccessible(true);
-                        $node = $nodeExtractor->getValue($violation);
-                        $node = $node ? $node->getNode() : null;
-                        $message = '  - line '.$violation->getBeginLine();
-
-                        if ($node) {
-                            $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
-                            $message .= ' on '.$type.' '.$node->getImage();
-                        }
-
-                        return $message;
-                    }, iterator_to_array($violations)))
-                    : '.'
-                )
+                $this->getViolationFailureMessage($file, $actualInvokes, $expectedInvokes, $violations)
             );
         }
 
         $this->assertTrue($assertion);
+    }
+
+    /**
+     * Return a human-friendly failure message for a given list of violations and the actual/expected counts.
+     *
+     * @param string $file
+     * @param int $actualInvokes
+     * @param int $expectedInvokes
+     * @param array|iterable|Traversable $violations
+     *
+     * @return string
+     */
+    protected function getViolationFailureMessage($file, $actualInvokes, $expectedInvokes, $violations)
+    {
+        return basename($file)." failed:\n".
+            "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
+            "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
+            ($actualInvokes > 0
+                ? ":\n".$this->getViolationsSummary($violations)
+                : '.'
+            );
+    }
+
+    /**
+     * Return a human-friendly summary for a list of violations.
+     *
+     * @param array|iterable|Traversable $violations
+     * @return string
+     */
+    protected function getViolationsSummary($violations)
+    {
+        if (!is_array($violations)) {
+            $violations = iterator_to_array($violations);
+        }
+
+        return implode("\n", array_map(function (RuleViolation $violation) {
+            $nodeExtractor = new ReflectionProperty('PHPMD\\RuleViolation', 'node');
+            $nodeExtractor->setAccessible(true);
+            $node = $nodeExtractor->getValue($violation);
+            $node = $node ? $node->getNode() : null;
+            $message = '  - line '.$violation->getBeginLine();
+
+            if ($node) {
+                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
+                $message .= ' on '.$type.' '.$node->getImage();
+            }
+
+            return $message;
+        }, $violations));
     }
 
     /**
