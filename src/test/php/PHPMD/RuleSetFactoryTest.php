@@ -725,12 +725,12 @@ class RuleSetFactoryTest extends AbstractTest
 
         $expected = array(
             'RuleOneInFifthRuleSet' => array(
-                'test1' => '42'
+                'test1' => '42',
             ),
             'RuleTwoInFifthRuleSet' => array(
                 'test1' => 'g',
-                'test2' => 'NA'
-            )
+                'test2' => 'NA',
+            ),
         );
 
         /** @var \ArrayIterator $rules */
