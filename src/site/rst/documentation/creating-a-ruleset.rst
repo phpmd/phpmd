@@ -208,20 +208,23 @@ __ /rules/codesize.html
           Import the entire codesize ruleset and
           customize the configuration for some rules.
       -->
-      <rule ref="rulesets/codesize.xml"/>
+      <rule ref="rulesets/codesize.xml" />
+
       <rule name="ExcessiveParameterList">
           <properties>
-              <property name="minimum" value="15"/>
+              <property name="minimum" value="15" />
           </properties>
       </rule>
+
       <rule name="TooManyFields">
           <properties>
-              <property name="maxfields" value="35"/>
+              <property name="maxfields" value="35" />
           </properties>
       </rule>
+
       <rule name="TooManyMethods">
           <properties>
-              <property name="maxmethods" value="35"/>
+              <property name="maxmethods" value="35" />
           </properties>
       </rule>
   </ruleset>
