@@ -6,11 +6,11 @@ phpmd-2.9.0 (2020/05/25)
 - Added #749: Add allow-underscore option for CamelCaseParameterName & CamelCaseVariableName 
 - Added #747: Long variable subtract suffix
 - Fixed #743: Output for version
-- Fixed #754: Fix #720 undefined variable in foreach when passed by reference
-- Fixed #764: Fix #718 Handle anonymous class in "undefined variable" rule
-- Fixed #770: Fix #769 Handle deconstruction assignation for undefined variable
-- Fixed #781: Fix #714 static:: and self:: properties access
-- Fixed #784: Fix #672 Handle passing-by-reference in native PHP functions
+- Fixed #754: Fixed #720 undefined variable in foreach when passed by reference
+- Fixed #764: Fixed #718 Handle anonymous class in "undefined variable" rule
+- Fixed #770: Fixed #769 Handle deconstruction assignation for undefined variable
+- Fixed #781: Fixed #714 static:: and self:: properties access
+- Fixed #784: Fixed #672 Handle passing-by-reference in native PHP functions
 - Updated different parts of the documentation. #717 #736 #748 
 - Changed: #529 : Replaced HTML renderer with new "pretty HTML" renderer 
 - Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787
