@@ -733,11 +733,7 @@ class RuleSetFactoryTest extends AbstractTest
             ),
         );
 
-        /** @var \ArrayIterator $rules */
-        for ($rules = $ruleSets[0]->getRules(); $rules->valid(); $rules->next()) {
-            /** @var Rule $rule */
-            $rule = $rules->current();
-
+        foreach ($ruleSets[0] as $rule) {
             $name = $rule->getName();
 
             if (array_key_exists($name, $expected)) {
