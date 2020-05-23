@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use ReflectionProperty;
 
 /**
  * Test case for the rule set factory class.
@@ -731,19 +732,19 @@ class RuleSetFactoryTest extends AbstractTest
                 'test1' => 'g',
                 'test2' => 'NA',
             ),
+            'RuleThreeInThirdRuleSet' => array(),
         );
+
+        $actual = array();
 
         foreach ($ruleSets[0] as $rule) {
             $name = $rule->getName();
-
-            if (array_key_exists($name, $expected)) {
-                $props = $expected[$name];
-
-                foreach ($props as $name => $value) {
-                    $this->assertEquals($value, $rule->getStringProperty($name));
-                }
-            }
+            $reflection = new ReflectionProperty('PHPMD\\AbstractRule', 'properties');
+            $reflection->setAccessible(true);
+            $actual[$name] = $reflection->getValue($rule);
         }
+
+        $this->assertSame($expected, $actual);
     }
 
     /**
