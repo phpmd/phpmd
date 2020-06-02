@@ -34,6 +34,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -236,6 +237,8 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
+     *
+     * @throws PHPUnit_Framework_ExpectationFailedException
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
