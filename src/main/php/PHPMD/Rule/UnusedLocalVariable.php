@@ -56,6 +56,13 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         }
     }
 
+    /**
+     * Return true if one of the passed nodes contains variables usages.
+     *
+     * @param array $nodes
+     *
+     * @return bool
+     */
     private function containsUsages(array $nodes)
     {
         if (count($nodes) === 1) {
