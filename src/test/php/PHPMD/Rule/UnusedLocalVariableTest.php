@@ -41,6 +41,18 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToUnusedLocalVariable
+     *
+     * @return void
+     */
+    public function testRuleAppliesToUnusedLocalVariableDeclaredTwice()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testInnerFunctionParametersDoNotHideUnusedVariables
      *
      * @return void
