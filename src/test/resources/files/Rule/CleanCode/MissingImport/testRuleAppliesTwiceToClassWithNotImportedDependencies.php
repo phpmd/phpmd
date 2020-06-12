@@ -17,12 +17,11 @@
 
 namespace PHPMDTest;
 
-use stdClass;
-
 class Foo
 {
-    public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
+    public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
-        $object = new stdClass();
+        $object = new \stdClass();
+        new \DateTime('2019-02-02 00:00:00');
     }
 }
