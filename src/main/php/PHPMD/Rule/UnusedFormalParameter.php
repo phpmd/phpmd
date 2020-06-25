@@ -156,14 +156,14 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     private function collectParameters(AbstractNode $node)
     {
-        // First collect the formal parameters container
-        $parameters = $node->getFirstChildOfType('FormalParameters');
+        // First collect the formal parameters containers
+        foreach ($node->findChildrenOfType('FormalParameters') as $parameters) {
+            // Now get all declarators in the formal parameters container
+            $declarators = $parameters->findChildrenOfType('VariableDeclarator');
 
-        // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType('VariableDeclarator');
-
-        foreach ($declarators as $declarator) {
-            $this->nodes[$declarator->getImage()] = $declarator;
+            foreach ($declarators as $declarator) {
+                $this->nodes[$declarator->getImage()] = $declarator;
+            }
         }
     }
 

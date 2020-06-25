@@ -130,6 +130,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
             $this->collectVariable($variable);
         }
+
         foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
             if ($this->isFunctionNameEndingWith($func, 'compact')) {
                 foreach ($func->findChildrenOfType('Literal') as $literal) {
@@ -219,13 +220,22 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+
         if ($this->isUnusedForeachVariableAllowed($node)) {
             return;
         }
-        $exceptions = $this->getExceptionsList();
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+
+        if (in_array(substr($node->getImage(), 1), $this->getExceptionsList())) {
             return;
         }
+
+        $parent = $node->getParent();
+
+        // ASTFormalParameter should be handled by the UnusedFormalParameter rule
+        if ($parent && $parent->isInstanceOf('FormalParameter')) {
+            return;
+        }
+
         $this->addViolation($node, array($node->getImage()));
     }
 
