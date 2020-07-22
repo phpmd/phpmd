@@ -63,7 +63,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      *
      * @return array
      */
-    private function getExceptionsList()
+    protected function getExceptionsList()
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');

@@ -33,7 +33,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
      *
      * @var array<string, int>|null
      */
-    private $exceptions;
+    protected $exceptions;
 
     /**
      * Check if a class or interface name is below the minimum configured length and emit a rule violation
@@ -62,7 +62,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
      *
      * @return array<string, int>
      */
-    private function getExceptionsList()
+    protected function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = array_flip(
