@@ -48,7 +48,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array(string=>boolean)
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    private static $superGlobals = array(
+    protected static $superGlobals = array(
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
