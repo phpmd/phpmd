@@ -32,7 +32,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      *
      * @var \PHPMD\Node\ASTNode[]
      */
-    protected $nodes = [];
+    protected $nodes = array();
 
     /**
      * This method checks that all parameters of a given function or method are
@@ -60,7 +60,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             return;
         }
 
-        $this->nodes = [];
+        $this->nodes = array();
 
         $this->collectParameters($node);
         $this->removeUsedParameters($node);
@@ -249,7 +249,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
-                $this->nodes = [];
+                $this->nodes = array();
             }
 
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
