@@ -1,10 +1,11 @@
-phpmd-2.9.0 (2020/05/25)
+phpmd-2.9.0 (2020/07/23)
 ========================
 
-- Added #496: Add rule for PHP's @ operator
-- Added #737: Allowing custom exclusion for StaticAccess by extending the class
-- Added #749: Add allow-underscore option for CamelCaseParameterName & CamelCaseVariableName 
+- Added #496: Added rule for PHP's @ operator
+- Added #737: Allowed custom exclusion for StaticAccess by extending the class
+- Added #749: Added allow-underscore option for CamelCaseParameterName & CamelCaseVariableName 
 - Added #747: Long variable subtract suffix
+- Added #763 via #765: Added rules LongClassName and ShortClassName
 - Fixed #743: Output for version
 - Fixed #754: Fixed #720 undefined variable in foreach when passed by reference
 - Fixed #764: Fixed #718 Handle anonymous class in "undefined variable" rule
