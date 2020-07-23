@@ -345,4 +345,26 @@ class ShortVariableTest extends AbstractTest
 
         $rule->apply($this->getClass());
     }
+
+
+
+    /**
+     * testRuleAppliesToVariablesWithinForeach
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariablesWithinForeach()
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportMock(2));
+
+        $class = $this->getClass();
+        $rule->apply($class);
+
+        foreach ($class->getMethods() as $method) {
+            $rule->apply($method);
+        }
+    }
 }
