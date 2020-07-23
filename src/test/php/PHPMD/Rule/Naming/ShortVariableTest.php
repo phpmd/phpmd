@@ -346,8 +346,6 @@ class ShortVariableTest extends AbstractTest
         $rule->apply($this->getClass());
     }
 
-
-
     /**
      * testRuleAppliesToVariablesWithinForeach
      *
