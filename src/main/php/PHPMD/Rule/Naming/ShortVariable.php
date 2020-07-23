@@ -171,10 +171,57 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     private function isNameAllowedInContext(AbstractNode $node)
     {
+        if ($this->isChildOf($node, 'ForeachStatement')) {
+            return $this->isInitializedInLoop($node);
+        }
+
         return $this->isChildOf($node, 'CatchStatement')
             || $this->isChildOf($node, 'ForInit')
-            || $this->isChildOf($node, 'ForeachStatement')
             || $this->isChildOf($node, 'MemberPrimaryPrefix');
+    }
+
+    /**
+     * Checks if a short name is initialized within a foreach loop statement
+     *
+     * @param \PHPMD\AbstractNode $node
+     * @return boolean
+     */
+    protected function isInitializedInLoop(AbstractNode $node)
+    {
+        $exceptionVariables = [];
+
+        $parentForeaches = $this->getParentsOfType($node, 'ForeachStatement');
+        foreach ($parentForeaches as $foreach) {
+            foreach ($foreach->getChildren() as $foreachChild) {
+                $exceptionVariables[] = $foreachChild->getImage();
+            }
+        }
+
+        $exceptionVariables = array_filter(array_unique($exceptionVariables));
+
+        return in_array($node->getImage(), $exceptionVariables, true);
+    }
+
+    /**
+     * Returns an array of parent nodes of the specified type
+     *
+     * @param \PHPMD\AbstractNode $node
+     * @return boolean
+     */
+    protected function getParentsOfType(AbstractNode $node, $type)
+    {
+        $parents = [];
+
+        $parent = $node->getParent();
+
+        while (is_object($parent)) {
+            if ($parent->isInstanceOf($type)) {
+                $parents[] = $parent;
+            }
+            $parent = $parent->getParent();
+        }
+
+        return $parents;
     }
 
     /**
