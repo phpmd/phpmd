@@ -206,7 +206,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Returns an array of parent nodes of the specified type
      *
      * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return array
      */
     protected function getParentsOfType(AbstractNode $node, $type)
     {
