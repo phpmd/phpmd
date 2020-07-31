@@ -370,9 +370,9 @@ class ShortVariableTest extends AbstractTest
 
     public function provideClassWithShortForeachVariables()
     {
-        return [
-            [true, 2],
-            [false, 5],
-        ];
+        return array(
+            array(true, 2),
+            array(false, 5),
+        );
     }
 }
