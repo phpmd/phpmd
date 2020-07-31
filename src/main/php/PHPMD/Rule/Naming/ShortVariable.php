@@ -188,6 +188,10 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function isInitializedInLoop(AbstractNode $node)
     {
+        if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
+            return false;
+        }
+
         $exceptionVariables = array();
 
         $parentForeaches = $this->getParentsOfType($node, 'ForeachStatement');
