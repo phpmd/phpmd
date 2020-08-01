@@ -44,13 +44,13 @@ class WriterStub extends AbstractWriter
     }
 
     /**
-     * Returns a concated string of all data chunks.
+     * Returns a concatenated string of all data chunks.
      *
      * @return string
      */
     public function getData()
     {
-        return join('', $this->chunks);
+        return implode('', $this->chunks);
     }
 
     /**

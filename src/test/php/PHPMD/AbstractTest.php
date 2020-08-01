@@ -34,14 +34,16 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
+use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
-use PHPUnit_Framework_TestCase;
+use ReflectionProperty;
+use Traversable;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends PHPUnit_Framework_TestCase
+abstract class AbstractTest extends AbstractStaticTest
 {
     /** @var int At least one violation is expected */
     const AL_LEAST_ONE_VIOLATION = -1;
@@ -53,25 +55,48 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     const ONE_VIOLATION = 1;
 
     /**
-     * Directory with test files.
+     * Get a list of files that should trigger a rule violation.
      *
-     * @var string $_filesDirectory
+     * By default, files named like "testRuleAppliesTo*", but it can be overridden in sub-classes.
+     *
+     * @return string[]
      */
-    private static $filesDirectory;
+    public function getApplyingFiles()
+    {
+        return $this->getFilesForCalledClass('testRuleAppliesTo*');
+    }
 
     /**
-     * Original directory is used to reset a changed working directory.
+     * Get a list of files that should not trigger a rule violation.
      *
-     * @return void
+     * By default, files named like "testRuleDoesNotApplyTo*", but it can be overridden in sub-classes.
+     *
+     * @return string[]
      */
-    private static $originalWorkingDirectory;
+    public function getNotApplyingFiles()
+    {
+        return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
+    }
 
     /**
-     * Temporary files created by a test.
+     * Get a list of test files specified by getApplyingFiles() as an array of 1-length arguments lists.
      *
-     * @var array(string)
+     * @return string[][]
      */
-    private static $tempFiles = array();
+    public function getApplyingCases()
+    {
+        return static::getValuesAsArrays($this->getApplyingFiles());
+    }
+
+    /**
+     * Get a list of test files specified by getNotApplyingFiles() as an array of 1-length arguments lists.
+     *
+     * @return string[][]
+     */
+    public function getNotApplyingCases()
+    {
+        return static::getValuesAsArrays($this->getNotApplyingFiles());
+    }
 
     /**
      * Resets a changed working directory.
@@ -80,15 +105,8 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        if (self::$originalWorkingDirectory !== null) {
-            chdir(self::$originalWorkingDirectory);
-        }
-        self::$originalWorkingDirectory = null;
-
-        foreach (self::$tempFiles as $tempFile) {
-            unlink($tempFile);
-        }
-        self::$tempFiles = array();
+        static::returnToOriginalWorkingDirectory();
+        static::cleanupTempFiles();
 
         parent::tearDown();
     }
@@ -169,6 +187,129 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Returns the first class found for a given test file.
+     *
+     * @return ClassNode
+     */
+    protected function getClassNodeForTestFile($file)
+    {
+        return new ClassNode(
+            $this->parseSource($file)
+                ->getTypes()
+                ->current()
+        );
+    }
+
+    /**
+     * Returns the first method or function node for a given test file.
+     *
+     * @param string $file
+     * @return MethodNode|FunctionNode
+     * @since 2.8.3
+     */
+    protected function getNodeForTestFile($file)
+    {
+        $source = $this->parseSource($file);
+        $class = $source
+            ->getTypes()
+            ->current();
+        $nodeClassName = 'PHPMD\\Node\\FunctionNode';
+        $getter = 'getFunctions';
+
+        if ($class) {
+            $source = $class;
+            $nodeClassName = 'PHPMD\\Node\\MethodNode';
+            $getter = 'getMethods';
+        }
+
+        return new $nodeClassName(
+            $this->getNodeByName(
+                $source->$getter(),
+                pathinfo($file, PATHINFO_FILENAME)
+            )
+        );
+    }
+
+    /**
+     * Assert that a given file trigger N times the given rule.
+     *
+     * Rethrows the PHPUnit ExpectationFailedException with the base name
+     * of the file for better readability.
+     *
+     * @param Rule $rule Rule to test.
+     * @param int $expectedInvokes Count of expected invocations.
+     * @param string $file Test file containing a method with the same name to be tested.
+     */
+    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
+    {
+        $report = new Report();
+        $rule->setReport($report);
+        $rule->apply($this->getNodeForTestFile($file));
+        $violations = $report->getRuleViolations();
+        $actualInvokes = count($violations);
+        $assertion = $expectedInvokes === self::AL_LEAST_ONE_VIOLATION
+            ? $actualInvokes > 0
+            : $actualInvokes === $expectedInvokes;
+
+        if (!$assertion) {
+            throw new PHPUnit_Framework_ExpectationFailedException(
+                $this->getViolationFailureMessage($file, $actualInvokes, $expectedInvokes, $violations)
+            );
+        }
+
+        $this->assertTrue($assertion);
+    }
+
+    /**
+     * Return a human-friendly failure message for a given list of violations and the actual/expected counts.
+     *
+     * @param string $file
+     * @param int $expectedInvokes
+     * @param int $actualInvokes
+     * @param array|iterable|Traversable $violations
+     *
+     * @return string
+     */
+    protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
+    {
+        return basename($file)." failed:\n".
+            "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
+            "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
+            ($actualInvokes > 0
+                ? ":\n".$this->getViolationsSummary($violations)
+                : '.'
+            );
+    }
+
+    /**
+     * Return a human-friendly summary for a list of violations.
+     *
+     * @param array|iterable|Traversable $violations
+     * @return string
+     */
+    protected function getViolationsSummary($violations)
+    {
+        if (!is_array($violations)) {
+            $violations = iterator_to_array($violations);
+        }
+
+        return implode("\n", array_map(function (RuleViolation $violation) {
+            $nodeExtractor = new ReflectionProperty('PHPMD\\RuleViolation', 'node');
+            $nodeExtractor->setAccessible(true);
+            $node = $nodeExtractor->getValue($violation);
+            $node = $node ? $node->getNode() : null;
+            $message = '  - line '.$violation->getBeginLine();
+
+            if ($node) {
+                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
+                $message .= ' on '.$type.' '.$node->getImage();
+            }
+
+            return $message;
+        }, $violations));
+    }
+
+    /**
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
@@ -176,7 +317,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function createCodeResourceUriForTest()
     {
-        $frame = self::getCallingTestCase();
+        $frame = static::getCallingTestCase();
 
         return self::createResourceUriForTest($frame['function'] . '.php');
     }
@@ -190,104 +331,39 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected static function createResourceUriForTest($localPath)
     {
-        $frame = self::getCallingTestCase();
+        $frame = static::getCallingTestCase();
 
-        $regexp = '([a-z]([0-9]+)Test$)i';
-        if (preg_match($regexp, $frame['class'], $match)) {
-            $parts = explode('\\', $frame['class']);
-            $testPath = $parts[count($parts) - 2] . '/' . $match[1];
-        } else {
-            $testPath = str_replace('\\', '/', substr($frame['class'], 6, -4));
-        }
-
-        return sprintf(
-            '%s/../../resources/files/%s/%s',
-            __DIR__,
-            $testPath,
-            $localPath
-        );
+        return static::getResourceFilePathFromClassName($frame['class'], $localPath);
     }
 
     /**
-     * Parses the source code for the calling test method and returns the first
-     * package node found in the parsed file.
+     * Return URI for a given pattern with directory based on the current called class name.
      *
-     * @return ASTNamespace
+     * @param string $pattern
+     * @return string
      */
-    private function parseTestCaseSource()
+    protected function createResourceUriForCalledClass($pattern)
     {
-        return $this->parseSource(self::createCodeResourceUriForTest());
+        return $this->getResourceFilePathFromClassName(get_class($this), $pattern);
     }
 
     /**
-     * Returns the trace frame of the calling test case.
+     * Return list of files matching a given pattern with directory based on the current called class name.
      *
-     * @return array
-     * @throws ErrorException
+     * @param string $pattern
+     * @return string[]
      */
-    private static function getCallingTestCase()
+    protected function getFilesForCalledClass($pattern = '*')
     {
-        foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
-                return $frame;
-            }
-        }
-        throw new ErrorException('Cannot locate calling test case.');
-    }
-
-    /**
-     * Returns the PHP_Depend node for the calling test case.
-     *
-     * @param Iterator $nodes
-     * @return mixed
-     * @throws ErrorException
-     */
-    private function getNodeForCallingTestCase(Iterator $nodes)
-    {
-        $frame = self::getCallingTestCase();
-        foreach ($nodes as $node) {
-            if ($node->getName() === $frame['function']) {
-                return $node;
-            }
-        }
-        throw new ErrorException('Cannot locate node for test case.');
-    }
-
-    /**
-     * Parses the source of the given file and returns the first package found
-     * in that file.
-     *
-     * @param string $sourceFile
-     * @return ASTNamespace
-     * @throws ErrorException
-     */
-    private function parseSource($sourceFile)
-    {
-        if (file_exists($sourceFile) === false) {
-            throw new ErrorException('Cannot locate source file: ' . $sourceFile);
-        }
-
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile($sourceFile);
-
-        $builder = new PHPBuilder();
-
-        $parser = new PHPParserGeneric(
-            $tokenizer,
-            $builder,
-            new MemoryCacheDriver()
-        );
-        $parser->parse();
-
-        return $builder->getNamespaces()->current();
+        return glob($this->createResourceUriForCalledClass($pattern));
     }
 
     /**
      * Creates a mocked class node instance.
      *
      * @param string $metric
-     * @param mixed $value
-     * @return ClassNode|PHPUnit_Framework_MockObject_MockObject
+     * @param integer $value
+     * @return ClassNode
      */
     protected function getClassMock($metric = null, $value = null)
     {
@@ -310,19 +386,12 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a mocked method node instance.
      *
      * @param string $metric
-     * @param mixed $value
+     * @param integer $value
      * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
     {
-        return $this->initFunctionOrMethod(
-            $this->getMockFromBuilder(
-                $this->getMockBuilder('PHPMD\\Node\\MethodNode')
-                    ->setConstructorArgs(array(new ASTMethod('fooBar')))
-            ),
-            $metric,
-            $value
-        );
+        return $this->createFunctionOrMethodMock('PHPMD\\Node\\MethodNode', new ASTMethod('fooBar'), $metric, $value);
     }
 
     /**
@@ -334,11 +403,9 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      */
     protected function createFunctionMock($metric = null, $value = null)
     {
-        return $this->initFunctionOrMethod(
-            $this->getMockFromBuilder(
-                $this->getMockBuilder('PHPMD\\Node\\FunctionNode')
-                    ->setConstructorArgs(array(new ASTFunction('fooBar')))
-            ),
+        return $this->createFunctionOrMethodMock(
+            'PHPMD\\Node\\FunctionNode',
+            new ASTFunction('fooBar'),
             $metric,
             $value
         );
@@ -448,7 +515,7 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
      * Creates a mocked rule-set instance.
      *
      * @param string $expectedClass Optional class name for apply() expected at least once.
-     * @param mixed $count How often should apply() be called?
+     * @param int|string $count How often should apply() be called?
      * @return RuleSet|PHPUnit_Framework_MockObject_MockObject
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
@@ -554,131 +621,92 @@ abstract class AbstractTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Asserts the actual xml output matches against the expected file.
+     * Parses the source code for the calling test method and returns the first
+     * package node found in the parsed file.
      *
-     * @param string $actualOutput Generated xml output.
-     * @param string $expectedFileName File with expected xml result.
-     * @return void
+     * @return ASTNamespace
      */
-    public static function assertXmlEquals($actualOutput, $expectedFileName)
+    private function parseTestCaseSource()
     {
-        $actual = simplexml_load_string($actualOutput);
-        // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
-        }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
-        }
+        return $this->parseSource($this->createCodeResourceUriForTest());
+    }
 
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
+    /**
+     * @param string $mockBuilder
+     * @param ASTFunction|ASTMethod $mock
+     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param mixed $value The expected metric return value.
+     * @return FunctionNode|MethodNode
+     */
+    private function createFunctionOrMethodMock($mockBuilder, $mock, $metric = null, $value = null)
+    {
+        return $this->initFunctionOrMethod(
+            $this->getMockFromBuilder(
+                $this->getMockBuilder($mockBuilder)
+                    ->setConstructorArgs(array($mock))
+            ),
+            $metric,
+            $value
         );
-
-        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
-
-        self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }
 
     /**
-     * Asserts the actual JSON output matches against the expected file.
+     * Returns the PHP_Depend node having the given name.
      *
-     * @param string $actualOutput Generated JSON output.
-     * @param string $expectedFileName File with expected JSON result.
-     *
-     * @return void
+     * @param Iterator $nodes
+     * @return PHP_Depend_Code_AbstractItem
+     * @throws ErrorException
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName)
+    private function getNodeByName(Iterator $nodes, $name)
     {
-        $actual = json_decode($actualOutput, true);
-        // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
+        foreach ($nodes as $node) {
+            if ($node->getName() === $name) {
+                return $node;
+            }
         }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
+        throw new ErrorException("Cannot locate node named $name.");
+    }
+
+    /**
+     * Returns the PHP_Depend node for the calling test case.
+     *
+     * @param Iterator $nodes
+     * @return PHP_Depend_Code_AbstractItem
+     * @throws ErrorException
+     */
+    private function getNodeForCallingTestCase(Iterator $nodes)
+    {
+        $frame = $this->getCallingTestCase();
+
+        return $this->getNodeByName($nodes, $frame['function']);
+    }
+
+    /**
+     * Parses the source of the given file and returns the first package found
+     * in that file.
+     *
+     * @param string $sourceFile
+     * @return ASTNamespace
+     * @throws ErrorException
+     */
+    private function parseSource($sourceFile)
+    {
+        if (file_exists($sourceFile) === false) {
+            throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
+        $tokenizer = new PHPTokenizerInternal();
+        $tokenizer->setSourceFile($sourceFile);
+
+        $builder = new PHPBuilder();
+
+        $parser = new PHPParserGeneric(
+            $tokenizer,
+            $builder,
+            new MemoryCacheDriver()
         );
+        $parser->parse();
 
-        $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
-
-        self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
-    }
-
-    /**
-     * This method initializes the test environment, it configures the files
-     * directory and sets the include_path for svn versions.
-     *
-     * @return void
-     */
-    public static function setUpBeforeClass()
-    {
-        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
-
-        if (false === strpos(get_include_path(), self::$filesDirectory)) {
-            set_include_path(
-                sprintf(
-                    '%s%s%s%s%s',
-                    get_include_path(),
-                    PATH_SEPARATOR,
-                    self::$filesDirectory,
-                    PATH_SEPARATOR,
-                    realpath(__DIR__ . '/../')
-                )
-            );
-        }
-
-        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
-        date_default_timezone_set('UTC');
-    }
-
-    /**
-     * Changes the working directory for a single test.
-     *
-     * @param string $localPath The temporary working directory.
-     * @return void
-     */
-    protected static function changeWorkingDirectory($localPath = '')
-    {
-        self::$originalWorkingDirectory = getcwd();
-
-        if (0 === preg_match('(^([A-Z]:|/))', $localPath)) {
-            $localPath = self::createFileUri($localPath);
-        }
-        chdir($localPath);
-    }
-
-    /**
-     * Creates a full filename for a test content in the <em>_files</b> directory.
-     *
-     * @param string $localPath
-     * @return string
-     */
-    protected static function createFileUri($localPath = '')
-    {
-        return self::$filesDirectory . '/' . $localPath;
-    }
-
-    /**
-     * Creates a file uri for a temporary test file.
-     *
-     * @return string
-     */
-    protected static function createTempFileUri()
-    {
-        return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
+        return $builder->getNamespaces()->current();
     }
 }

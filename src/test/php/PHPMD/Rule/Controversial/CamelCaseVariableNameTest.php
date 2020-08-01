@@ -28,6 +28,7 @@ class CamelCaseVariableNameTest extends AbstractTest
 {
     /**
      * Tests that the rule does apply for an invalid variable name
+     *
      * @return void
      */
     public function testRuleDoesApplyForInvariableNameWithUnderscore()

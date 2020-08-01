@@ -15,10 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
+class testRuleNotAppliesToClassNameAboveThreshold
+{
 
-use stdClass;
-
-function testRuleNotAppliesToFunctionWithOnlyImportedDependencies(){
-    $a = new stdClass();
 }

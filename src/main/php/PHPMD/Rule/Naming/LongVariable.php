@@ -22,6 +22,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
@@ -101,17 +102,20 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= $this->getStringLength($node->getImage(), $this->getSubtractSuffixList()) - 1) {
+        $variableName = $node->getImage();
+        $lengthWithoutDollarSign = Strings::lengthWithoutSuffixes($variableName, $this->getSubtractSuffixList()) - 1;
+        if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($node->getImage(), $threshold));
+        $this->addViolation($node, array($variableName, $threshold));
     }
 
     /**
@@ -124,29 +128,6 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'MemberPrimaryPrefix');
-    }
-
-    /**
-     * Returns the length of the variable name, excluding at most one suffix.
-     *
-     * @param string $variableName Variable name to calculate the length for.
-     * @param array $subtractSuffixes Optional list of suffixes to exclude from the calculated length.
-     * @return int The length of the string, without suffix, if applicable.
-     */
-    private function getStringLength($variableName, array $subtractSuffixes)
-    {
-        $variableNameLength = strlen($variableName);
-
-        foreach ($subtractSuffixes as $suffix) {
-            $suffixLength = strlen($suffix);
-            if (substr($variableName, -$suffixLength) === $suffix) {
-                $variableName = substr($variableName, 0, $variableNameLength - $suffixLength);
-
-                return strlen($variableName);
-            }
-        }
-
-        return $variableNameLength;
     }
 
     /**
@@ -209,24 +190,10 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     private function getSubtractSuffixList()
     {
-        if ($this->subtractSuffixes !== null) {
-            return $this->subtractSuffixes;
+        if ($this->subtractSuffixes === null) {
+            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
         }
 
-        try {
-            $suffixes = $this->getStringProperty('subtract-suffixes');
-        } catch (\OutOfBoundsException $e) {
-            return $this->subtractSuffixes = array();
-        }
-
-        return $this->subtractSuffixes = array_filter(
-            array_map(
-                'trim',
-                explode(',', $suffixes)
-            ),
-            function ($value) {
-                return $value !== '';
-            }
-        );
+        return $this->subtractSuffixes;
     }
 }

@@ -27,110 +27,36 @@ use PHPMD\AbstractTest;
 class UndefinedVariableTest extends AbstractTest
 {
     /**
-     * testRuleAppliesToUndefinedVariable
+     * Get the rule under test.
      *
-     * @return void
+     * @return UndefinedVariable
      */
-    public function testRuleAppliesToUndefinedVariable()
+    public function getRule()
     {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getMethod());
+        return new UndefinedVariable();
     }
 
     /**
-     * testRuleAppliesToUndefinedVariableWithDefinedVariable
+     * Tests the rule for cases where it should apply.
      *
+     * @param string $file The test file to test against.
      * @return void
+     * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesToUndefinedVariableWithDefinedVariable()
+    public function testRuleAppliesTo($file)
     {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getMethod());
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::ONE_VIOLATION, $file);
     }
 
     /**
-     * testRuleAppliesToUndefinedVariableOnArray
+     * Tests the rule for cases where it should not apply.
      *
+     * @param string $file The test file to test against.
      * @return void
+     * @dataProvider getNotApplyingCases
      */
-    public function testRuleAppliesToUndefinedVariableOnArray()
+    public function testRuleDoesNotApplyTo($file)
     {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableOnArrayWithKeys
-     *
-     * @return void
-     */
-    public function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleAppliesToUndefinedVariableOnArrayWithKeys
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToSuperGlobals()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToUsedProperties
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToUsedProperties()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToReferences
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToReferences()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToKeyValuePair
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToKeyValuePair()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * testRuleDoesNotApplyToKeyReferencePair
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToKeyReferencePair()
-    {
-        $rule = new UndefinedVariable();
-        $rule->setReport($this->getReportMock(0));
-        $rule->apply($this->getMethod());
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
 }

@@ -15,12 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class Foo
+/**
+ * Interface name length: 44
+ */
+interface testRuleAppliesToInterfaceNameAboveThreshold
 {
-    public function testRuleNotAppliesToClassWithoutAnyDependencies()
-    {
 
-    }
 }

@@ -15,13 +15,12 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class Foo
+class testRuleAppliesToClosureUnusedFormalParameter
 {
-    public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
+    public function testRuleAppliesToClosureUnusedFormalParameter()
     {
-        $self = new self();
-        new static();
+        return function ($blah) {
+
+        };
     }
 }

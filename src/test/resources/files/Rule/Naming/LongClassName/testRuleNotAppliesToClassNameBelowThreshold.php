@@ -15,14 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-use stdClass;
-
-class Foo
+/**
+ * Class name length: 43
+ */
+class testRuleNotAppliesToClassNameBelowThreshold
 {
-    public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
-    {
-        $object = new stdClass();
-    }
+
 }

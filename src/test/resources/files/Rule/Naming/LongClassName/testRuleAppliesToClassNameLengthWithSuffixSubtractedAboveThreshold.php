@@ -15,13 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class Foo
+/**
+ * Class name length: 66
+ */
+class testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold
 {
-    public function testRuleAppliesToClassWithNotImportedDependencies()
-    {
-        $object = new \stdClass();
-        new \DateTime('2019-02-02 00:00:00');
-    }
+
 }

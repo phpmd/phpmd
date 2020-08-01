@@ -100,9 +100,10 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         // non-associative - key name equals to its index
         if ($childCount === 0) {
             $node->setImage((string)$index);
+
             return $node;
         }
-        
+
         $node = $node->getChild(0);
         if (!($node instanceof ASTLiteral)) {
             // skip expressions, method calls, globals and constants

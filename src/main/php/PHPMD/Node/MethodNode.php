@@ -101,6 +101,7 @@ class MethodNode extends AbstractCallableNode
         if (parent::hasSuppressWarningsAnnotationFor($rule)) {
             return true;
         }
+
         return $this->getParentType()->hasSuppressWarningsAnnotationFor($rule);
     }
 

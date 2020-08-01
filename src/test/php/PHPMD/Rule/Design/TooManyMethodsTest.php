@@ -96,11 +96,11 @@ class TooManyMethodsTest extends AbstractTest
         $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
     }
 
-   /**
-    * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-    *
-    * @return void
-    */
+    /**
+     * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
+     *
+     * @return void
+     */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
     {
         $rule = new TooManyMethods();
@@ -164,7 +164,7 @@ class TooManyMethodsTest extends AbstractTest
      * Creates a prepared class node mock
      *
      * @param integer $numberOfMethods
-     * @param array$methodNames
+     * @param string[] $methodNames
      * @return \PHPMD\Node\ClassNode
      */
     private function createClassMock($numberOfMethods, array $methodNames = null)
@@ -176,6 +176,7 @@ class TooManyMethodsTest extends AbstractTest
                 ->method('getMethodNames')
                 ->will($this->returnValue($methodNames));
         }
+
         return $class;
     }
 }

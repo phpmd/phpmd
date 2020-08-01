@@ -32,12 +32,11 @@ class RuleSetFactory
     private $strict = false;
 
     /**
-     * The data directory set by PEAR or a dynamic property set within the class
-     * constructor.
+     * The data directory set within the class constructor.
      *
      * @var string
      */
-    private $location = '@data_dir@';
+    private $location;
 
     /**
      * The minimum priority for rules to load.
@@ -58,12 +57,7 @@ class RuleSetFactory
      */
     public function __construct()
     {
-        // PEAR installer workaround
-        if (strpos($this->location, '@data_dir') === 0) {
-            $this->location = __DIR__ . '/../../resources';
-            return;
-        }
-        $this->location .= '/PHPMD/resources';
+        $this->location = __DIR__ . '/../../resources';
     }
 
     /**
@@ -115,6 +109,7 @@ class RuleSetFactory
 
             $ruleSetFileName = strtok(',');
         }
+
         return $ruleSets;
     }
 
@@ -127,6 +122,7 @@ class RuleSetFactory
     public function createSingleRuleSet($ruleSetOrFileName)
     {
         $fileName = $this->createRuleSetFileName($ruleSetOrFileName);
+
         return $this->parseRuleSetNode($fileName);
     }
 
@@ -179,6 +175,7 @@ class RuleSetFactory
                 }
             }
         }
+
         return $ruleSets;
     }
 
@@ -211,7 +208,6 @@ class RuleSetFactory
         }
 
         foreach ($xml->children() as $node) {
-            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'php-includepath') {
                 $includePath = (string)$node;
 
@@ -249,10 +245,12 @@ class RuleSetFactory
     {
         if (substr($node['ref'], -3, 3) === 'xml') {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
+
             return;
         }
         if ('' === (string)$node['ref']) {
             $this->parseSingleRuleNode($ruleSet, $node);
+
             return;
         }
         $this->parseRuleReferenceNode($ruleSet, $node);
@@ -308,6 +306,7 @@ class RuleSetFactory
                 return false;
             }
         }
+
         return true;
     }
 
@@ -372,7 +371,6 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
-            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string)$node);
             } elseif ($node->getName() === 'example') {
@@ -422,7 +420,6 @@ class RuleSetFactory
         }
 
         foreach ($ruleNode->children() as $node) {
-            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'description') {
                 $rule->setDescription((string)$node);
             } elseif ($node->getName() === 'example') {
@@ -460,7 +457,6 @@ class RuleSetFactory
     private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode)
     {
         foreach ($propertiesNode->children() as $node) {
-            /** @var $node \SimpleXMLElement */
             if ($node->getName() === 'property') {
                 $this->addProperty($rule, $node);
             }
@@ -498,6 +494,7 @@ class RuleSetFactory
         if (isset($propertyNode->value)) {
             return (string)$propertyNode->value;
         }
+
         return (string)$propertyNode['value'];
     }
 
@@ -528,7 +525,6 @@ class RuleSetFactory
             }
 
             foreach ($xml->children() as $node) {
-                /** @var $node \SimpleXMLElement */
                 if ($node->getName() === 'exclude-pattern') {
                     $excludes[] = '' . $node;
                 }
@@ -536,6 +532,7 @@ class RuleSetFactory
 
             return $excludes;
         }
+
         return null;
     }
 

@@ -34,7 +34,7 @@ class LongVariableTest extends AbstractTest
     public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold()
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', 21);
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
@@ -47,7 +47,7 @@ class LongVariableTest extends AbstractTest
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold()
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', 6);
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }

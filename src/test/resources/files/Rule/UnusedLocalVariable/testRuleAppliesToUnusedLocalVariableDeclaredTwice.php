@@ -15,8 +15,11 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-function testRuleNotAppliesToFunctionWithoutAnyDependencies(){
-    $a = null;
+class testRuleAppliesToUnusedLocalVariableDeclaredTwice
+{
+    function testRuleAppliesToUnusedLocalVariableDeclaredTwice()
+    {
+        $x = 42;
+        $x = 42;
+    }
 }

@@ -52,6 +52,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
         if ($node->getType() === 'class') {
             $this->applyClass($node);
+
             return;
         }
 
@@ -171,9 +172,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'CatchStatement')
-                || $this->isChildOf($node, 'ForInit')
-                || $this->isChildOf($node, 'ForeachStatement')
-                || $this->isChildOf($node, 'MemberPrimaryPrefix');
+            || $this->isChildOf($node, 'ForInit')
+            || $this->isChildOf($node, 'ForeachStatement')
+            || $this->isChildOf($node, 'MemberPrimaryPrefix');
     }
 
     /**
@@ -193,6 +194,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             }
             $parent = $parent->getParent();
         }
+
         return false;
     }
 

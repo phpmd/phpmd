@@ -41,6 +41,18 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToUnusedLocalVariable
+     *
+     * @return void
+     */
+    public function testRuleAppliesToUnusedLocalVariableDeclaredTwice()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testInnerFunctionParametersDoNotHideUnusedVariables
      *
      * @return void
@@ -290,6 +302,19 @@ class UnusedLocalVariableTest extends AbstractTest
      * @return void
      */
     public function testRuleDoesNotApplyToCookieSuperGlobal()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToClosureParameter
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToClosureParameter()
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');

@@ -60,6 +60,5 @@ class HTMLRendererTest extends AbstractTest
             "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
             $writer->getData()
         );
-
     }
 }
