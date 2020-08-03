@@ -33,7 +33,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
      *
      * @var string[]|null
      */
-    private $subtractSuffixes;
+    protected $subtractSuffixes;
 
     /**
      * Check if a class name exceeds the configured maximum length and emit a rule violation
@@ -56,7 +56,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
      *
      * @return string[]
      */
-    private function getSubtractSuffixList()
+    protected function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList(

@@ -64,7 +64,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
         return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
     }
 
-    private function isStaticMethodCall(AbstractNode $methodCall)
+    protected function isStaticMethodCall(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -72,12 +72,12 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             !$this->isCallingSelf($methodCall);
     }
 
-    private function isCallingParent(AbstractNode $methodCall)
+    protected function isCallingParent(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
-    private function isCallingSelf(AbstractNode $methodCall)
+    protected function isCallingSelf(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
@@ -87,7 +87,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      *
      * @return array
      */
-    private function getExceptionsList()
+    protected function getExceptionsList()
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');

@@ -57,7 +57,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param ASTNode $node Array node.
      * @return void
      */
-    private function checkForDuplicatedArrayKeys(ASTNode $node)
+    protected function checkForDuplicatedArrayKeys(ASTNode $node)
     {
         $keys = array();
         /** @var ASTArrayElement $arrayElement */
@@ -90,7 +90,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param int $index Fallback in case of non-associative arrays
      * @return AbstractASTNode Key name
      */
-    private function normalizeKey(AbstractASTNode $node, $index)
+    protected function normalizeKey(AbstractASTNode $node, $index)
     {
         $childCount = count($node->getChildren());
         // Skip, if there is no array key, just an array value
@@ -120,7 +120,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param PDependASTNode $key
      * @return string
      */
-    private function castStringFromLiteral(PDependASTNode $key)
+    protected function castStringFromLiteral(PDependASTNode $key)
     {
         $value = $key->getImage();
         switch ($value) {

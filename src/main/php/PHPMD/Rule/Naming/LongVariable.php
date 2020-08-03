@@ -35,7 +35,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var string[]|null
      */
-    private $subtractSuffixes;
+    protected $subtractSuffixes;
 
     /**
      * Temporary map holding variables that were already processed in the
@@ -43,7 +43,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var array(string=>boolean)
      */
-    private $processedVariables = array();
+    protected $processedVariables = array();
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -125,7 +125,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return boolean
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    protected function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'MemberPrimaryPrefix');
     }
@@ -138,7 +138,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param string $type
      * @return boolean
      */
-    private function isChildOf(AbstractNode $node, $type)
+    protected function isChildOf(AbstractNode $node, $type)
     {
         $parent = $node->getParent();
         while (is_object($parent)) {
@@ -188,7 +188,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @return string[]
      */
-    private function getSubtractSuffixList()
+    protected function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
