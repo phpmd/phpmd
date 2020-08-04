@@ -11,9 +11,15 @@ phpmd-2.9.0 (2020/05/25)
 - Fixed #770: Fixed #769 Handle deconstruction assignation for undefined variable
 - Fixed #781: Fixed #714 static:: and self:: properties access
 - Fixed #784: Fixed #672 Handle passing-by-reference in native PHP functions
-- Updated different parts of the documentation. #717 #736 #748 
-- Changed: #529 : Replaced HTML renderer with new "pretty HTML" renderer 
-- Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787
+- Fixed #793: Fixed #580 Raise UnusedFormalParameter instead UnusedLocalVariable for unused closure parameter
+- Fixed #794: Fixed #540 Detect unused variable declared multiple times
+- Fixed #805: Fixed #802 Prevent an error with nested arrays
+- Fixed #807: Fixed #790 Fix for short variables rule inside foreach statements
+- Fixed #809: Fixed #808 Ignore rule path for supression annotation
+- Updated different parts of the documentation. #717 #736 #748 #811
+- Changed: #529 : Replaced HTML renderer with new "pretty HTML" renderer
+- Changed: #806 : Changed #44 Change private methods to protected in rules. Make rules extendable  
+- Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787 #791 #792
 - Deprecated all the PHPMD exceptions that aren't part of the PHPMD\Exceptions namespace. See #775
 
 ### A potential BC change:
