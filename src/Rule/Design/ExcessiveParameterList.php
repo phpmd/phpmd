@@ -18,6 +18,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractCallableNode;
@@ -46,8 +47,7 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
         }
 
         $exceptions = $this->getExceptionsList();
-
-        if (in_array($node->getName(), $exceptions)) {
+        if (in_array($node->getName(), $exceptions, true)) {
             return;
         }
 
@@ -65,16 +65,13 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
     /**
      * Gets array of exceptions from property
      *
-     * @return array
+     * @return array<string>
+     * @throws OutOfBoundsException
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): array
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
-        }
+        $exceptions = $this->getStringProperty('exceptions', '');
 
-        return explode(',', $exceptions);
+        return array_filter(array_map('trim', explode(',', $exceptions)));
     }
 }
