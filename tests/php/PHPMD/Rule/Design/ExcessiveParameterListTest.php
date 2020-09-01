@@ -79,6 +79,65 @@ class ExcessiveParameterListTest extends AbstractTestCase
     }
 
     /**
+     * testApplyIgnoresMethodInExceptionsList
+     */
+    public function testApplyIgnoresMethodInExceptionsList(): void
+    {
+        $method = $this->getMethodMock();
+        $method->method('getParameterCount')->willReturn(3);
+        $method->method('getName')->willReturn('fooBar');
+
+        $rule = new ExcessiveParameterList();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', 'fooBar');
+        $rule->apply($method);
+    }
+
+    /**
+     * testApplyReportsMethodNotInExceptionsList
+     */
+    public function testApplyReportsMethodNotInExceptionsList(): void
+    {
+        $method = $this->getMethodMock();
+        $method->method('getParameterCount')->willReturn(3);
+        $method->method('getName')->willReturn('fooBar');
+
+        $rule = new ExcessiveParameterList();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', 'otherMethod');
+        $rule->apply($method);
+    }
+
+    /**
+     * testApplyIgnoresFunctionInExceptionsList
+     */
+    public function testApplyIgnoresFunctionInExceptionsList(): void
+    {
+        $function = $this->createFunctionMock();
+        $function->method('getParameterCount')->willReturn(3);
+        $function->method('getName')->willReturn('fooBar');
+
+        $rule = new ExcessiveParameterList();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', 'fooBar');
+        $rule->apply($function);
+    }
+
+    /**
+     * testApplyReportsMethodWhenExceptionsPropertyNotSet
+     */
+    public function testApplyReportsMethodWhenExceptionsPropertyNotSet(): void
+    {
+        $rule = new ExcessiveParameterList();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '3');
+        $rule->apply($this->createMethod(3));
+    }
+
+    /**
      * Returns a mocked method instance.
      */
     private function createMethod(int $parameterCount): MethodNode

@@ -165,6 +165,7 @@ wrap the numerous parameters.  Basically, try to group the parameters together.
         <priority>3</priority>
         <properties>
             <property name="minimum" description="The parameter count reporting threshold" value="10"/>
+            <property name="exceptions" description="Comma-separated list of method/function names to ignore" value=""/>
         </properties>
         <example>
             <![CDATA[
