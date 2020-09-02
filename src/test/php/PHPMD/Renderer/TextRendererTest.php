@@ -40,8 +40,8 @@ class TextRendererTest extends AbstractTest
 
         $violations = array(
             $this->getRuleViolationMock('/bar.php', 1),
-            $this->getRuleViolationMock('/foo.php', 2),
-            $this->getRuleViolationMock('/foo.php', 3),
+            $this->getRuleViolationMock('/foo-biz.php', 2),
+            $this->getRuleViolationMock('/foo.php', 34),
         );
 
         $report = $this->getReportWithNoViolation();
@@ -60,9 +60,9 @@ class TextRendererTest extends AbstractTest
         $renderer->end();
 
         $this->assertEquals(
-            "/bar.php:1\tTest description" . PHP_EOL .
-            "/foo.php:2\tTest description" . PHP_EOL .
-            "/foo.php:3\tTest description" . PHP_EOL,
+            "/bar.php:1      RuleStub  Test description" . PHP_EOL .
+            "/foo-biz.php:2  RuleStub  Test description" . PHP_EOL .
+            "/foo.php:34     RuleStub  Test description" . PHP_EOL,
             $writer->getData()
         );
     }
