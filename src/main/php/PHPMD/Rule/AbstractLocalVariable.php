@@ -268,7 +268,7 @@ abstract class AbstractLocalVariable extends AbstractRule
                 $reflectionFunction = new ReflectionFunction($functionName);
                 $parameters = $reflectionFunction->getParameters();
 
-                if ($parameters[$argumentPosition]->isPassedByReference()) {
+                if (isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference()) {
                     return true;
                 }
             } catch (ReflectionException $exception) {
