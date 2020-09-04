@@ -15,11 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class testRuleDoesNotApplyToUnknownMethod
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    function testRuleDoesNotApplyToUnknownMethod(UnknownObject $object)
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+        $this->foo($object);
     }
 }

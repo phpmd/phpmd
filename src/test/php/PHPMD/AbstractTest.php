@@ -253,7 +253,7 @@ abstract class AbstractTest extends AbstractStaticTest
 
         if (!$assertion) {
             throw new PHPUnit_Framework_ExpectationFailedException(
-                $this->getViolationFailureMessage($file, $actualInvokes, $expectedInvokes, $violations)
+                $this->getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
             );
         }
 
