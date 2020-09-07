@@ -23,7 +23,7 @@ class testRuleDoesNotApplyToStaticProperties
     function testRuleDoesNotApplyToStaticProperties($key)
     {
         if (isset(static::$array[$key])) {
-            return static::$array[$key];
+            return static::$array[$key]->foo();
         }
 
         return $key;
