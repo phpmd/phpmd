@@ -15,17 +15,12 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToStaticProperties
+class testRuleDoesNotApplyToCallsWithStaticProperties
 {
-    protected $foo = [];
-    protected static $array = [];
+    protected static $test = [];
 
-    function testRuleDoesNotApplyToStaticProperties($key)
+    function testRuleDoesNotApplyToCallsWithStaticProperties()
     {
-        if (isset(static::$array[$key])) {
-            return static::$array[$key];
-        }
-
-        return $key;
+        self::$test[0]->foo();
     }
 }
