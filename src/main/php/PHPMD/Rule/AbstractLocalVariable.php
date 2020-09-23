@@ -220,16 +220,31 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         if ($parent instanceof ASTPropertyPostfix) {
-            $parent = $parent->getParent();
+            $previousChildImage = $this->getParentMemberPrimaryPrefixImage($image, $parent);
 
-            if ($parent instanceof ASTMemberPrimaryPrefix &&
-                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
-            ) {
+            if (in_array($previousChildImage, $this->selfReferences, true)) {
                 return "::$image";
             }
         }
 
         return $image;
+    }
+
+    protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
+    {
+        do {
+            $postfix = $postfix->getParent();
+        } while ($postfix && $postfix->getChild(0) && $postfix->getChild(0)->getImage() === $image);
+
+        $previousChildImage = $postfix->getChild(0)->getImage();
+
+        if ($postfix instanceof ASTMemberPrimaryPrefix &&
+            in_array($previousChildImage, $this->selfReferences)
+        ) {
+            return $previousChildImage;
+        }
+
+        return null;
     }
 
     /**
