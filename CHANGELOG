@@ -1,3 +1,9 @@
+phpmd-2.9.1 (2020/09/23)
+========================
+
+- Fixed #714: Improved static member detection
+- Fixed #816: Fixed undefined index referring 
+
 phpmd-2.9.0 (2020/09/02)
 ========================
 
