@@ -268,10 +268,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Reflect function trying as namespaced function first, then global function.
      *
      * @param string $functionName
-     *
      * @return ReflectionFunction|null
      */
-    private function getReflectionFunction($functionName)
+    private function getReflectionFunctionByName($functionName)
     {
         try {
             return new ReflectionFunction($functionName);
