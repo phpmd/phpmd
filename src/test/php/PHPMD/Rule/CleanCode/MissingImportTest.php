@@ -73,4 +73,25 @@ class MissingImportTest extends AbstractTest
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * Tests that it does not apply to a class in root namespace when configured.
+     *
+     * @return void
+     * @covers ::apply
+     * @covers ::isInNamespaceRoot
+     */
+    public function testRuleDoesNotApplyWhenSuppressed()
+    {
+        $rule = new MissingImport();
+        $rule->addProperty('importRootNamespace', false);
+        $files = $this->getFilesForCalledClass('testRuleAppliesTo*');
+        foreach ($files as $file) {
+            if (strpos($file, 'WithNotImportedDeepDependencies')) {
+                $this->expectRuleHasViolationsForFile($rule, static::ONE_VIOLATION, $file);
+                continue;
+            }
+            $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
+        }
+    }
 }
