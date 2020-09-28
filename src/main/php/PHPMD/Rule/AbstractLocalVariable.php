@@ -265,6 +265,33 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
+     * Reflect function trying as namespaced function first, then global function.
+     *
+     * @param string $functionName
+     *
+     * @return ReflectionFunction|null
+     */
+    private function getReflectionFunction($functionName)
+    {
+        try {
+            return new ReflectionFunction($functionName);
+        } catch (ReflectionException $exception) {
+            $chunks = explode('\\', $functionName);
+
+            if (count($chunks) > 1) {
+                try {
+                    return new ReflectionFunction(end($chunks));
+                } catch (ReflectionException $exception) {
+                    // @TODO: Find a way to handle user-land functions
+                    // @TODO: Find a way to handle methods
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Return true if the given variable is passed by reference in a native PHP function.
      *
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
@@ -275,20 +302,15 @@ abstract class AbstractLocalVariable extends AbstractRule
         $parent = $this->getNode($variable->getParent());
 
         if ($parent && $parent instanceof ASTArguments) {
-            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-            $function = $this->getNode($parent->getParent());
-            $functionName = $function->getImage();
+            $reflectionFunction = $this->getReflectionFunction($this->getNode($parent->getParent())->getImage());
 
-            try {
-                $reflectionFunction = new ReflectionFunction($functionName);
+            if ($reflectionFunction) {
+                $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
                 $parameters = $reflectionFunction->getParameters();
 
                 if (isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference()) {
                     return true;
                 }
-            } catch (ReflectionException $exception) {
-                // @TODO: Find a way to handle user-land functions
-                // @TODO: Find a way to handle methods
             }
         }
 
