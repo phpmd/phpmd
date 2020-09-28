@@ -18,7 +18,6 @@
 namespace PHPMD\Node;
 
 use PHPMD\Rule;
-use PHPMD\Rule\Design\LongClass;
 
 /**
  * Simple code annotation class.
