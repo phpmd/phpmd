@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use ReflectionProperty;
 
 /**
  * Test case for the rule set factory class.
@@ -712,6 +713,69 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
+     * Check if rule properties are changed by name only without having to exclude a rule first
+     *
+     * @return void
+     */
+    public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettings()
+    {
+        self::changeWorkingDirectory();
+
+        $expected = array(
+            'RuleOneInThirdRuleSet' => array(
+                'test1' => '42',
+            ),
+            'RuleTwoInThirdRuleSet' => array(
+                'test1' => 'g',
+                'test2' => 'NA',
+            ),
+            'RuleThreeInThirdRuleSet' => array(
+                'test' => 'NA',
+            ),
+        );
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset5');
+
+        $actual = array();
+
+        foreach ($ruleSets[0] as $rule) {
+            $name = $rule->getName();
+            $reflection = new ReflectionProperty('PHPMD\\AbstractRule', 'properties');
+            $reflection->setAccessible(true);
+            $actual[$name] = $reflection->getValue($rule);
+        }
+
+        $this->assertSame($expected, $actual);
+    }
+
+    /**
+     * Check if properties are changed, but no additional properties are added to rules
+     *
+     * @return void
+     */
+    public function testCreateRuleSetsWithoutRuleReferenceThatOverwritesSettingsButDoesntAddProperties()
+    {
+        self::changeWorkingDirectory();
+
+        $expectedRules = array(
+            '--default--',
+            '--default--',
+            'NA',
+        );
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->createRuleSets('refset5');
+        $actualRules = array();
+
+        foreach ($ruleSets[0] as $rule) {
+            $actualRules[] = $rule->getStringProperty('test', '--default--');
+        }
+
+        $this->assertSame($expectedRules, $actualRules);
+    }
+
+    /**
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
@@ -741,7 +805,7 @@ class RuleSetFactoryTest extends AbstractTest
         $args = func_get_args();
 
         $factory = new RuleSetFactory();
-      
+
         return $factory->createRuleSets(implode(',', $args));
     }
 

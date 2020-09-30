@@ -17,10 +17,13 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
+use IteratorAggregate;
+
 /**
  * This class is a collection of concrete source analysis rules.
  */
-class RuleSet implements \IteratorAggregate
+class RuleSet implements IteratorAggregate
 {
     /**
      * Should this rule set force the strict mode.
@@ -54,7 +57,7 @@ class RuleSet implements \IteratorAggregate
     /**
      * The violation report used by the rule-set.
      *
-     * @var \PHPMD\Report
+     * @var Report
      */
     private $report;
 
@@ -159,7 +162,7 @@ class RuleSet implements \IteratorAggregate
     /**
      * Returns the violation report used by the rule-set.
      *
-     * @return \PHPMD\Report
+     * @return Report
      */
     public function getReport()
     {
@@ -169,7 +172,7 @@ class RuleSet implements \IteratorAggregate
     /**
      * Sets the violation report used by the rule-set.
      *
-     * @param \PHPMD\Report $report
+     * @param Report $report
      * @return void
      */
     public function setReport(Report $report)
@@ -181,7 +184,7 @@ class RuleSet implements \IteratorAggregate
      * This method returns a rule by its name or <b>null</b> if it doesn't exist.
      *
      * @param string $name
-     * @return \PHPMD\Rule
+     * @return Rule
      */
     public function getRuleByName($name)
     {
@@ -198,7 +201,7 @@ class RuleSet implements \IteratorAggregate
      * This method returns an iterator will all rules that belong to this
      * rule-set.
      *
-     * @return \Iterator
+     * @return ArrayIterator|AbstractRule[]
      */
     public function getRules()
     {
@@ -211,13 +214,13 @@ class RuleSet implements \IteratorAggregate
             }
         }
 
-        return new \ArrayIterator($result);
+        return new ArrayIterator($result);
     }
 
     /**
      * Adds a new rule to this rule-set.
      *
-     * @param \PHPMD\Rule $rule
+     * @param Rule $rule
      * @return void
      */
     public function addRule(Rule $rule)
@@ -232,7 +235,7 @@ class RuleSet implements \IteratorAggregate
     /**
      * Applies all registered rules that match against the concrete node type.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param AbstractNode $node
      * @return void
      */
     public function apply(AbstractNode $node)
@@ -259,7 +262,7 @@ class RuleSet implements \IteratorAggregate
     /**
      * Returns an iterator with all rules that are part of this rule-set.
      *
-     * @return \Iterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {

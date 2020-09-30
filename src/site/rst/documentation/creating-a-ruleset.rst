@@ -181,19 +181,14 @@ __ /rules/naming.html
       </rule>
   </ruleset>
 
-Changing individual properties in a rule set
-============================================
+Changing properties in a rule set for multiple rules
+====================================================
 
-We would like to use the `clean code`__ rule set, but our code uses the
-static constructors of the PHP date and time classes. This causes rule
-violations with the ``StaticAccess`` rule. To modify the ``exceptions``
-property of that rule while still keeping the rest of the rule set, we
-need to import the whole rule set, excluding the ``StaticAccess`` rule
-and then include the ``StaticAccess`` rule individually. Instead of using
-a ``value`` attribute for the property you can also use a ``<value>`` tag
-to make it more readable.
+We want to use the basic codesize ruleset, but change parameter values for
+several rules. To avoid excluding every single (modified) rule, properties
+can be changed/overwritten without excluding the rules.
 
-__ /rules/cleancode.html
+__ /rules/codesize.html
 
 ::
 
@@ -209,39 +204,27 @@ __ /rules/cleancode.html
           My custom rule set that checks my code...
       </description>
 
-      <!-- Import the entire unused code rule set -->
-      <rule ref="rulesets/unusedcode.xml" />
-
       <!--
-          Import the entire cyclomatic complexity rule and
-          customize the rule configuration.
+          Import the entire codesize ruleset and
+          customize the configuration for some rules.
       -->
-      <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
-          <priority>1</priority>
+      <rule ref="rulesets/codesize.xml" />
+
+      <rule name="ExcessiveParameterList">
           <properties>
-              <property name="reportLevel" value="5" />
+              <property name="minimum" value="15" />
           </properties>
       </rule>
 
-      <!-- Import entire naming rule set and exclude rules -->
-      <rule ref="rulesets/naming.xml">
-          <exclude name="ShortVariable" />
-          <exclude name="LongVariable" />
+      <rule name="TooManyFields">
+          <properties>
+              <property name="maxfields" value="35" />
+          </properties>
       </rule>
 
-      <!-- Import entire clean code rule set, modify StaticAccess rule -->
-      <rule ref="rulesets/cleancode.xml">
-          <exclude name="StaticAccess" />
-      </rule>
-      <rule ref="rulesets/cleancode.xml/StaticAccess">
+      <rule name="TooManyMethods">
           <properties>
-              <property name="exceptions">
-                  <value>
-                    \DateTime,
-                    \DateInterval,
-                    \DateTimeZone
-                  </value>
-              </property>
+              <property name="maxmethods" value="35" />
           </properties>
       </rule>
   </ruleset>

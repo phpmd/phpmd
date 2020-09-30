@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Fifth Test RuleSet"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>define some rules and (try to) change properties without excluding them first</description>
+
+    <rule ref="rulesets/set3.xml"/>
+
+    <rule name="RuleOneInThirdRuleSet">
+        <properties>
+            <property name="test1" value="42" />
+        </properties>
+    </rule>
+
+    <rule name="RuleTwoInThirdRuleSet">
+        <properties>
+            <property name="test2" value="NA" />
+        </properties>
+    </rule>
+
+    <rule name="RuleThreeInThirdRuleSet">
+        <properties>
+            <property name="test" value="NA" />
+        </properties>
+    </rule>
+</ruleset>
