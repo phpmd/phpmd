@@ -720,14 +720,14 @@ class RuleSetFactoryTest extends AbstractTest
      */
     public function testDefaultRuleSetsProvideExternalInfoUrls($file)
     {
-        $rulesets = $this->createRuleSetsFromFiles($file);
-        $ruleset = $rulesets[0];
+        $ruleSets = $this->createRuleSetsFromFiles($file);
+        $ruleSet = $ruleSets[0];
         /** @var Rule $rule */
-        foreach ($ruleset->getRules() as $rule) {
+        foreach ($ruleSet->getRules() as $rule) {
             $message = sprintf(
                 '%s in rule set %s should provide an externalInfoUrl',
                 $rule->getName(),
-                $ruleset->getName()
+                $ruleSet->getName()
             );
 
             $this->assertNotEmpty($rule->getExternalInfoUrl(), $message);
