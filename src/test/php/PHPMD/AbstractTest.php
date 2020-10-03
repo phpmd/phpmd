@@ -239,6 +239,8 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
+     * @return void
+     * @throws PHPUnit_Framework_ExpectationFailedException
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
