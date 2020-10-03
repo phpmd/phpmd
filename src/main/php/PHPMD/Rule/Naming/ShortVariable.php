@@ -171,13 +171,10 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
-        if ($this->isChildOf($node, 'ForeachStatement')) {
-            return $this->isInitializedInLoop($node);
-        }
-
         return $this->isChildOf($node, 'CatchStatement')
             || $this->isChildOf($node, 'ForInit')
-            || $this->isChildOf($node, 'MemberPrimaryPrefix');
+            || $this->isChildOf($node, 'MemberPrimaryPrefix')
+            || ($this->isChildOf($node, 'ForeachStatement') && $this->isInitializedInLoop($node));
     }
 
     /**
