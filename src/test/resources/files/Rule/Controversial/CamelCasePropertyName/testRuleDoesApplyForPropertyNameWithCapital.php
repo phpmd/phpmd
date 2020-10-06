@@ -17,5 +17,5 @@
 
 class testRuleDoesApplyForPropertyNameWithCapital
 {
-    public $AlsoValidPropertyName;
+    public $NotValidPropertyName;
 }

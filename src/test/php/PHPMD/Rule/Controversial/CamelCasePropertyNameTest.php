@@ -42,7 +42,7 @@ class CamelCasePropertyNameTest extends AbstractTest
     }
 
     /**
-     * Tests that the rule does apply for an property name
+     * Tests that the rule does apply for a property name
      * starting with a capital.
      *
      * @return void
