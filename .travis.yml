@@ -46,8 +46,12 @@ matrix:
 sudo: false
 
 env:
-    global:
-        TEST_CONFIG="phpunit.xml.dist"
+  global:
+    TEST_CONFIG="phpunit.xml.dist"
+
+before_install:
+  - if [[ $BUILD_PHAR = 'true' ]]; then openssl aes-256-cbc -K $encrypted_73b85f5c6110_key -iv $encrypted_73b85f5c6110_iv
+      -in src/conf/all.gpg.enc -out all.gpg -d; fi
 
 before_script:
   - phpenv config-rm xdebug.ini || echo "XDebug is not enabled"
@@ -59,7 +63,12 @@ script:
   - if [[ $WEBSITE  = 'true' ]]; then cp src/site/rst/* src/site/resources/web/ -r && composer build-website; fi
   - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE != 'true' ]]; then vendor/bin/phpunit --configuration $TEST_CONFIG --colors; fi
   - if [[ $WEBSITE != 'true' && $BUILD_PHAR != 'true' && $COVERAGE = 'true' ]]; then phpdbg -qrr vendor/bin/phpunit --configuration $TEST_CONFIG --colors --coverage-text --coverage-clover=coverage.xml; fi
-  - if [[ $BUILD_PHAR = 'true' ]]; then git submodule update --init && ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version; fi
+  - if [[ $BUILD_PHAR = 'true' ]]; then
+      git submodule update --init &&
+      ant package -D-phar:filename=./phpmd.phar &&
+      ./phpmd.phar --version &&
+      gpg --import all.gpg &&
+      gpg -u $SIGNING_EMAIL --detach-sign --output ./phpmd.phar.asc ./phpmd.phar; fi
 
 notifications:
   webhooks:
