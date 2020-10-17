@@ -87,10 +87,12 @@ class MissingImportTest extends AbstractTest
         $rule->addProperty('importRootNamespace', false);
         $files = $this->getFilesForCalledClass('testRuleAppliesTo*');
         foreach ($files as $file) {
+            // Covers case when the new property is set and the rule *should* apply.
             if (strpos($file, 'WithNotImportedDeepDependencies')) {
                 $this->expectRuleHasViolationsForFile($rule, static::ONE_VIOLATION, $file);
                 continue;
             }
+            // Covers case when the new property is set and the rule *should not* apply.
             $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
         }
     }

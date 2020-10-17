@@ -191,6 +191,9 @@ Importing all external classes in a file through use statements makes them clear
             ]]>
         </description>
         <priority>1</priority>
+        <properties>
+            <property name="importRootNamespace" description="Should classes in root namespace be imported" value="true"/>
+        </properties>
         <example>
             <![CDATA[
 function make() {
