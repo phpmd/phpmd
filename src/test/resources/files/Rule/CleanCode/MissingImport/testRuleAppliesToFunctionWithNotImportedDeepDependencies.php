@@ -19,7 +19,7 @@ namespace PHPMDTest;
 
 function testRuleAppliesToFunctionWithNotImportedDeepDependencies()
 {
-    $bbb = new \PHPMDTest\Nested();
+    $bbb = new \PHPMDTest\Nested\MyClass();
 }
 
 namespace PHPMDTest\Nested;
