@@ -205,7 +205,7 @@ abstract class AbstractNode
 
         return $compilationUnit
             ? (string)$compilationUnit->getFileName()
-            : null; // @TODO: Find the name from some parent node
+            : null; // @TODO: Find the name from some parent node https://github.com/phpmd/phpmd/issues/837
     }
 
     /**
