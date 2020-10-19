@@ -132,6 +132,26 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($json);
     }
 
+    public function testOutput()
+    {
+        $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp = self::createTempFileUri();
+        $exitCode = Command::main(array(
+            __FILE__,
+            $uri,
+            'text',
+            'naming',
+            '--reportfile',
+            $temp,
+        ));
+
+        $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
+        $this->assertSame(
+            "$uri:8	Avoid variables with short names like \$a. Configured minimum length is 3." . PHP_EOL,
+            file_get_contents($temp)
+        );
+    }
+
     /**
      * @param string $option
      * @param string $value
