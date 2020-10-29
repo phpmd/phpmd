@@ -19,6 +19,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use SplFileObject;
 
 /**
  * This renderer output a html file with all found violations.
@@ -429,7 +430,7 @@ class HTMLRenderer extends AbstractRenderer
             return array();
         }
 
-        $file = new \SplFileObject($file);
+        $file = new SplFileObject($file);
 
         // We have to subtract 1 to extract correct lines via SplFileObject.
         $line = max($lineNumber - 1 - $extra, 0);

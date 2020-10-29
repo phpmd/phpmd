@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PHPMD\Node\ASTNode;
 
@@ -55,14 +56,14 @@ abstract class AbstractNode
      * @param string $name
      * @param array $args
      * @return mixed
-     * @throws \BadMethodCallException When the underlying PDepend node
+     * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args)
     {
         $node = $this->getNode();
         if (!method_exists($node, $name)) {
-            throw new \BadMethodCallException(
+            throw new BadMethodCallException(
                 sprintf('Invalid method %s() called.', $name)
             );
         }
