@@ -377,7 +377,8 @@ class HTMLRenderer extends AbstractRenderer
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
-            if ($url = $violation->getRule()->getExternalInfoUrl()) {
+            $url = $violation->getRule()->getExternalInfoUrl();
+            if ($url) {
                 $linkHtml = "<a class='info-lnk' href='{$url}' target='_blank'>(help)</a>";
             }
 
@@ -549,8 +550,8 @@ class HTMLRenderer extends AbstractRenderer
         foreach ($violations as $v) {
             // We use "ref" reference to make things somewhat easier to read.
             // Also, using a reference to non-existing array index doesn't throw a notice.
-
-            if ($ns = $v->getNamespaceName()) {
+            $ns = $v->getNamespaceName();
+            if ($ns) {
                 $ref = &$result[self::CATEGORY_NAMESPACE][$ns];
                 $ref = isset($ref) ? $ref + 1 : 1;
             }
