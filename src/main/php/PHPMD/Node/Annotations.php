@@ -45,6 +45,7 @@ class Annotations
      */
     public function __construct(\PHPMD\AbstractNode $node)
     {
+        $matches = array();
         preg_match_all($this->regexp, $node->getDocComment(), $matches);
         foreach (array_keys($matches[0]) as $i) {
             $name = $matches[1][$i];

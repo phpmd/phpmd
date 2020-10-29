@@ -210,6 +210,7 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                 case '--reportfile-json':
+                    $match = array();
                     preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
@@ -523,6 +524,7 @@ class CommandLineOptions
         $renderers = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            $rendererName = array();
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }
