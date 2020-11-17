@@ -712,6 +712,39 @@ class RuleSetFactoryTest extends AbstractTest
     }
 
     /**
+     * Checks the ruleset XML files provided with PHPMD all provide externalInfoUrls
+     *
+     * @param string $file The path to the ruleset xml to test
+     * @return void
+     * @dataProvider getDefaultRuleSets
+     */
+    public function testDefaultRuleSetsProvideExternalInfoUrls($file)
+    {
+        $ruleSets = $this->createRuleSetsFromFiles($file);
+        $ruleSet = $ruleSets[0];
+        /** @var Rule $rule */
+        foreach ($ruleSet->getRules() as $rule) {
+            $message = sprintf(
+                '%s in rule set %s should provide an externalInfoUrl',
+                $rule->getName(),
+                $ruleSet->getName()
+            );
+
+            $this->assertNotEmpty($rule->getExternalInfoUrl(), $message);
+        }
+    }
+
+    /**
+     * Provides an array of the file paths to rule sets provided with PHPMD
+     *
+     * @return array
+     */
+    public function getDefaultRuleSets()
+    {
+        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
+    }
+
+    /**
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
@@ -741,7 +774,7 @@ class RuleSetFactoryTest extends AbstractTest
         $args = func_get_args();
 
         $factory = new RuleSetFactory();
-      
+
         return $factory->createRuleSets(implode(',', $args));
     }
 

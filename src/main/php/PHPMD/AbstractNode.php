@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use PDepend\Source\AST\AbstractASTArtifact;
 use PHPMD\Node\ASTNode;
 
 /**
@@ -194,11 +195,17 @@ abstract class AbstractNode
     /**
      * Returns the name of the declaring source file.
      *
-     * @return string
+     * @return string|null
      */
     public function getFileName()
     {
-        return (string)$this->node->getCompilationUnit()->getFileName();
+        $compilationUnit = $this->node instanceof AbstractASTArtifact
+            ? $this->node->getCompilationUnit()
+            : null;
+
+        return $compilationUnit
+            ? (string)$compilationUnit->getFileName()
+            : null; // @TODO: Find the name from some parent node https://github.com/phpmd/phpmd/issues/837
     }
 
     /**

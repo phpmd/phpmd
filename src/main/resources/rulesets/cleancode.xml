@@ -204,7 +204,7 @@ function make() {
           since="2.8.0"
           message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
           class="PHPMD\Rule\CleanCode\UndefinedVariable"
-          externalInfoUrl="">
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#undefinedvariable">
         <description>
             Detects when a variable is used that has not been defined before.
         </description>
