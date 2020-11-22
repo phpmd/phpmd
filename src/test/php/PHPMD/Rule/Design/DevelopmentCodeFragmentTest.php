@@ -134,7 +134,7 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     private function getRule()
     {
         $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('unwanted-functions', '\var_dump,var_dump,\print_r,print_r,\debug_zval_dump,debug_zval_dump,\debug_print_backtrace,debug_print_backtrace');
         $rule->addProperty('ignore-namespaces', 'false');
 
         return $rule;
