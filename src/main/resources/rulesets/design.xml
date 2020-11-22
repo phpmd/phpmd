@@ -205,7 +205,7 @@ just forgotten.
         </description>
         <priority>2</priority>
         <properties>
-            <property name="unwanted-functions" value="\var_dump,var_dump,\print_r,print_r,\debug_zval_dump,debug_zval_dump,\debug_print_backtrace,debug_print_backtrace" description="Comma separated list of suspect function images." />
+            <property name="unwanted-functions" value="var_dump,print_r,debug_zval_dump,debug_print_backtrace" description="Comma separated list of suspect function images." />
             <property name="ignore-namespaces" value="false" description="Ignore namespaces when looking for dev. fragments" />
         </properties>
         <example>
