@@ -66,6 +66,30 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleNotAppliesToFunctionWithoutSuspectFunctionCall
      *
      * @return void
@@ -95,6 +119,30 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      * @return void
      */
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall()
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
