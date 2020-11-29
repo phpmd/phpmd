@@ -24,7 +24,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-${{ matrix.prefer }}-
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           tools: composer
