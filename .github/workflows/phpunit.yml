@@ -1,37 +1,46 @@
-name: phpunit
-on: [push, pull_request]
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
+
 jobs:
-  run-phpunit:
+  php-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
     strategy:
       matrix:
-        php-versions: [ 5.3, 5.4, 5.5, 5.6, 7.1, 7.2, 7.3, 7.4 ]
-        prefer: [ prefer-lowest, prefer-stable ]
-    name: PHP ${{ matrix.php-versions }} ${{ matrix.prefer }}
+        php: [7.2, 7.3, 7.4]
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - dependency-version: prefer-lowest
+            php: 7.2
+          - dependency-version: prefer-lowest
+            php: 7.3
+
+    name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ matrix.prefer }}-
-          restore-keys: ${{ runner.os }}-composer-${{ matrix.prefer }}-
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
-          tools: composer
-          fail-fast: true
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
 
       - name: Install dependencies
-        run: composer install --prefer-dist ${{ matrix.prefer }}
+        run: |
+          composer install --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
-      - name: Run PHPUnit
-        run: vendor/bin/phpunit --configuration phpunit.xml.dist --colors
+      - name: Execute Unit Tests
+        run: phpunit
