@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --${{ matrix.dependency-version }} --prefer-dist --no-progress
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
       - name: Execute Unit Tests
         run: phpunit
