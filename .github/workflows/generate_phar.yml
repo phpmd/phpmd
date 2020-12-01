@@ -1,0 +1,44 @@
+name: Generate phar
+
+#on: release
+# temporary test version
+on:
+  push:
+    branches:
+      - "*"
+
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    name: Release phar
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 5.4
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Git submodules
+        run: git submodule update --init
+
+      - name: Ant
+        run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
+
+      - name: Archive generated phar
+        uses: actions/upload-artifact@v2
+        with:
+          name: phar
+          path: phpmd.phar
