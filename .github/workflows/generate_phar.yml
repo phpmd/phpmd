@@ -40,5 +40,5 @@ jobs:
       - name: Archive generated phar
         uses: actions/upload-artifact@v2
         with:
-          name: phar
+          name: phpmd.phar
           path: phpmd.phar
