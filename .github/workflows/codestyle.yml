@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - "*"
+    paths:
+    - '**.php'
   pull_request:
     branches:
       - "*"
+    paths:
+    - '**.php'
 
 jobs:
   php-tests:
