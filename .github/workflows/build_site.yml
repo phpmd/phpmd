@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - "master"
-      - "*"
-# the * is temporary
 
 jobs:
   php-tests:
