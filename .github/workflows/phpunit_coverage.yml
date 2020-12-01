@@ -36,7 +36,15 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Execute Unit Tests
-        run: phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        run: phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: |
+            coverage.xml
+            coverage_html
 
 #      - name: Upload codecoverage
 #        uses: danhunsaker/clover-reporter-action@v0.2.17-clover
