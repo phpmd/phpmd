@@ -18,14 +18,14 @@ jobs:
     strategy:
       matrix:
         php: [7.2, 7.3, 7.4]
-#        dependency-version: [prefer-lowest, prefer-stable]
-#        exclude:
-#          - dependency-version: prefer-lowest
-#            php: 7.2
-#          - dependency-version: prefer-lowest
-#            php: 7.3
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          - dependency-version: prefer-lowest
+            php: 7.2
+          - dependency-version: prefer-lowest
+            php: 7.3
 
-    name: P${{ matrix.php }}
+    name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
 
     steps:
       - name: Checkout code
@@ -39,8 +39,7 @@ jobs:
           tools: composer:v2
 
       - name: Install dependencies
-        run:
-          composer instal
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
       - name: Execute Unit Tests
-        run: phpunit
+        run: vendor/bin/phpunit
