@@ -36,7 +36,7 @@ jobs:
       - name: Build website
         run: composer build-website
 
-      - name: Archive generated phar
+      - name: Archive generated website
         uses: actions/upload-artifact@v2
         with:
           name: Website
