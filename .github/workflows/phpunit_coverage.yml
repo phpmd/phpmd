@@ -18,6 +18,7 @@ jobs:
     strategy:
       matrix:
         php: [7.4]
+        dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }}
 
@@ -31,6 +32,15 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
           tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
