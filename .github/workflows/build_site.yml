@@ -1,0 +1,45 @@
+name: Build website
+
+on:
+  push:
+    branches:
+      - "master"
+      - "*"
+# the * is temporary
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    name: Build website
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Copy files
+        run: cp src/site/rst/* src/site/resources/web/ -r
+
+      - name: Build website
+        run: composer build-website
+
+      - name: Archive generated phar
+        uses: actions/upload-artifact@v2
+        with:
+          name: Website
+          path: dist/website/*
+
+# @TODO deploy website
