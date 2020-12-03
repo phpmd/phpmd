@@ -175,12 +175,30 @@ class CamelCaseMethodNameTest extends AbstractTest
     }
 
     /**
-     * Tests that the rule does apply for a test method name
-     * with multiple underscores even when one is allowed.
+     * Tests that the rule does not apply for a valid test method name
+     * with multiple underscores in different positions when an single underscore is allowed.
      *
      * @return void
      */
-    public function testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed()
+    public function testRuleDoesNotApplyForTestMethodWithMultipleUnderscoresWhenAllowed()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
+    /**
+     * Tests that the rule does apply for a test method name
+     * with multiple consecutive underscores even when underscores are allowed.
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed()
     {
         $method = $this->getMethod();
         $report = $this->getReportWithOneViolation();

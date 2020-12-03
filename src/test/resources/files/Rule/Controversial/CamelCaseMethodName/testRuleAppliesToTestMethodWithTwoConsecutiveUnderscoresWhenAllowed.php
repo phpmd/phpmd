@@ -15,9 +15,9 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed
+class testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed
 {
-    public function testGivenSomeValue_expectSome_niceResult()
+    public function testGivenSomeValue_expectSome__niceResult()
     {
 
     }
