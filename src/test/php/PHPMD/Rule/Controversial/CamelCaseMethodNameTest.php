@@ -158,7 +158,7 @@ class CamelCaseMethodNameTest extends AbstractTest
 
     /**
      * Tests that the rule does not apply for a valid test method name
-     * with an underscore when an single underscore is allowed.
+     * with an underscore when underscores are allowed.
      *
      * @return void
      */
@@ -176,7 +176,7 @@ class CamelCaseMethodNameTest extends AbstractTest
 
     /**
      * Tests that the rule does not apply for a valid test method name
-     * with multiple underscores in different positions when an single underscore is allowed.
+     * with multiple underscores in different positions when underscores are allowed.
      *
      * @return void
      */
@@ -194,7 +194,7 @@ class CamelCaseMethodNameTest extends AbstractTest
 
     /**
      * Tests that the rule does apply for a test method name
-     * with multiple consecutive underscores even when underscores are allowed.
+     * with consecutive underscores even when underscores are allowed.
      *
      * @return void
      */
