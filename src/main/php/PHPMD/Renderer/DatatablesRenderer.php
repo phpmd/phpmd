@@ -10,9 +10,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Report;
-use SplFileObject;
 
 /**
  * Class DatatablesRenderer
@@ -81,8 +79,8 @@ class DatatablesRenderer extends HTMLRenderer
         $writer->write(
             "
             <h2>PHPMD Datatables Report</h2>
-            <div class='info'>generated in <b>" . ($report->getElapsedTimeInMillis(
-                ) / 1000) . "</b> seconds.<br />A total of <b>" . count($violations) . "</b> violations have been detected.</div>
+            <div class='info'>Generated in <b>" . ($report->getElapsedTimeInMillis(
+                ) / 1000) . "</b> seconds at <b>" . date('d.m.Y H:i:s') . "</b>. A total of <b>" . count($violations) . "</b> violations have been detected.</div>
         "
         );
         
@@ -131,11 +129,7 @@ class DatatablesRenderer extends HTMLRenderer
             $index = $index + 1;
         }
         
-        $writer->write(
-            "
-        </tbody>
-    </table>" . $this->getDt() . PHP_EOL
-        );
+        $writer->write("</tbody></table>" . PHP_EOL);
     }
     
     /**
@@ -143,53 +137,13 @@ class DatatablesRenderer extends HTMLRenderer
      */
     public function end() {
         $writer = $this->getWriter();
+        $writer->write($this->getDataTablesScript());
         $writer->write("</body>" . PHP_EOL . "</html>");
     }
     
-    protected function getDt() {
-        return "<script>
-                    $(document).ready(function() {
-                        
-                        function format ( d ) {
-                          return d[6];
-                        }
-                        
-                        var table = $('#phpmdDatatable').DataTable({
-                            columnDefs: [
-                              {
-                                targets: 0,
-                                className:      'details-control',
-                                orderable:      false,
-                                data:           null,
-                                defaultContent: ''
-                              },
-                              {
-                                targets: [6],
-                                visible: false
-                              }
-                            ],
-                            pageLength: 100
-                        });
-                        
-                        $('#phpmdDatatable tbody').on('click', 'td.details-control', function () {
-                            var tr = $(this).closest('tr');
-                            var row = table.row( tr );
-                     
-                            if ( row.child.isShown() ) {
-                                // This row is already open - close it
-                                row.child.hide();
-                                tr.removeClass('shown');
-                            }
-                            else {
-                                // Open this row
-                                row.child( format(row.data()) ).show();
-                                tr.addClass('shown');
-                            }
-                        } );
-                        
-                        
-                    } );
-                    </script>";
+    protected function getDataTablesScript() {
+        $jsDatatablesRenderer = file_get_contents(__DIR__ . '/DatatablesRenderer/DatatablesRenderer.js');
+        return "<script>" . $jsDatatablesRenderer . "</script>";
     }
     
     
