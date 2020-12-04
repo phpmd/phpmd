@@ -2,7 +2,7 @@
 /**
  * Initial version created on: 03.12.2020 14:31
  *
- * This renderer uses ports of the HTMLRenderer by Premysl Karbula
+ * This renderer uses parts of the HTMLRenderer by Premysl Karbula
  *
  * @author  Tebin Ulrich <info@tebinulrich.de>
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -10,7 +10,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractRenderer;
+use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Report;
 use SplFileObject;
 
@@ -19,50 +19,8 @@ use SplFileObject;
  *
  * @package PHPMD\Renderer
  */
-class DatatablesRenderer extends AbstractRenderer
+class DatatablesRenderer extends HTMLRenderer
 {
-    /**
-     * Converts priority numbers to readable values
-     *
-     * @var array
-     */
-    protected static $priorityTitles = [
-        1 => 'Top (1)',
-        2 => 'High (2)',
-        3 => 'Moderate (3)',
-        4 => 'Low (4)',
-        5 => 'Lowest (5)',
-    ];
-    
-    /**
-     * Return array of lines from a specified file:line, optionally with extra lines around
-     * for additional cognitive context.
-     *
-     * @return array
-     */
-    protected static function getLineExcerpt($file, $lineNumber, $extra = 0) {
-        if (!is_readable($file)) {
-            return [];
-        }
-        
-        $file = new SplFileObject($file);
-        
-        // We have to subtract 1 to extract correct lines via SplFileObject.
-        $line = max($lineNumber - 1 - $extra, 0);
-        
-        $result = [];
-        
-        if (!$file->eof()) {
-            $file->seek($line);
-            for ($i = 0; $i <= ($extra * 2); $i++) {
-                $result[++$line] = trim((string) $file->current(), "\n");
-                $file->next();
-            }
-        }
-        
-        return $result;
-    }
-    
     /**
      * Writes the beginning of the report, including css and js
      */
@@ -196,7 +154,7 @@ class DatatablesRenderer extends AbstractRenderer
                           return d[6];
                         }
                         
-                        let table = $('#phpmdDatatable').DataTable({
+                        var table = $('#phpmdDatatable').DataTable({
                             columnDefs: [
                               {
                                 targets: 0,
