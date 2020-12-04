@@ -1,56 +1,52 @@
-body {
-    font-size:12px;
-    font-family: Tahoma,serif;
-}
-td.details-control {
-    background: url('https://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
-    cursor: pointer;
-}
-tr.shown td.details-control {
-    background: url('https://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
-}
-ul.code {
-    margin: 0;
-    padding: 0;
+.hlt {
+    background:#FE9!important;
 }
 
-ul.code.hidden {
-    display: none;
+.info {
+    margin-bottom:20px;
+}
+
+.shown td.details-control {
+    background:url(https://www.datatables.net/examples/resources/details_close.png) no-repeat center center;
+}
+
+body {
+    font-family:Tahoma, serif;
+    font-size:12px;
+}
+
+td.details-control {
+    background:url(https://www.datatables.net/examples/resources/details_open.png) no-repeat center center;
+    cursor:pointer;
+}
+
+ul.code {
+    margin:0;
+    padding:0;
+}
+
+ul.code .cd {
+    overflow:hidden;
+    padding-left:1ex;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+}
+
+ul.code .no {
+    border-right:1px solid #EAF2F3;
+    min-width:5em;
+    padding-right:1ex;
+    text-align:right;
+    width:5%;
 }
 
 ul.code li {
-    display: flex;
-    line-height: 1.4em;
-    font-family: monospace;
-    white-space: nowrap;
+    display:flex;
+    font-family:monospace;
+    line-height:1.4em;
+    white-space:nowrap;
 }
 
 ul.code li:nth-child(odd) {
-    background-color: rgba(47, 131, 138, 0.1)
-}
-
-/* Excerpt: Line number */
-ul.code .no {
-    width: 5%;
-    min-width: 5em;
-    text-align: right;
-    border-right: 1px solid rgba(47, 131, 138, 0.6);
-    padding-right: 1ex;
-    box-sizing: border-box;
-}
-
-/* Excerpt: Code */
-ul.code .cd {
-    padding-left: 1ex;
-    white-space: pre-wrap;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    overflow: hidden;
-}
-
-.hlt {
-    background: #ffee99 !important
-}
-#info {
-    margin-bottom: 20px;
+    background-color:#EAF2F3;
 }

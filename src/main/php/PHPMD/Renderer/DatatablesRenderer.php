@@ -81,7 +81,7 @@ class DatatablesRenderer extends HTMLRenderer
         $writer->write(
             "
             <h2>PHPMD Datatables Report</h2>
-            <div id='info'>generated in <b>" . ($report->getElapsedTimeInMillis(
+            <div class='info'>generated in <b>" . ($report->getElapsedTimeInMillis(
                 ) / 1000) . "</b> seconds.<br />A total of <b>" . count($violations) . "</b> violations have been detected.</div>
         "
         );
