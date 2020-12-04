@@ -29,7 +29,7 @@ class DatatablesRenderer extends HTMLRenderer
         
         $cssDatatables = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery.dataTables.min.css');
         $cssLocal      = file_get_contents(__DIR__ . '/DatatablesRenderer/DatatablesRenderer.css');
-        $jsjQuery      = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery-3.5.1.js');
+        $jsjQuery      = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery-3.5.1.slim.min.js');
         $jsDatatables  = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery.dataTables.min.js');
         
         $writer->write(
