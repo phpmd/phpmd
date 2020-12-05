@@ -211,7 +211,7 @@ class CommandLineOptions
                 case '--reportfile-xml':
                 case '--reportfile-json':
                 case '--reportfile-datatables':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
+                    preg_match('(^\-\-reportfile\-(xml|html|datatables|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
