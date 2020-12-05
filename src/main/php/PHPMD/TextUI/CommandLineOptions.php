@@ -78,7 +78,7 @@ class CommandLineOptions
      *
      * @var array
      */
-    protected $reportFiles = [];
+    protected $reportFiles = array();
     
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
@@ -137,7 +137,7 @@ class CommandLineOptions
      *
      * @var array(string)
      */
-    protected $availableRuleSets = [];
+    protected $availableRuleSets = array();
     
     /**
      * Constructs a new command line options instance.
@@ -147,13 +147,13 @@ class CommandLineOptions
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(array $args, array $availableRuleSets = []) {
+    public function __construct(array $args, array $availableRuleSets = array()) {
         // Remove current file name
         array_shift($args);
         
         $this->availableRuleSets = $availableRuleSets;
         
-        $arguments = [];
+        $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
                 case '--min-priority':
@@ -207,11 +207,11 @@ class CommandLineOptions
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-html':
-                case'--reportfile-datatables':
                 case '--reportfile-text':
                 case '--reportfile-xml':
                 case '--reportfile-json':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json|datatables)$)', $arg, $match);
+                case '--reportfile-datatables':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -446,13 +446,6 @@ class CommandLineOptions
     }
     
     /**
-     * @return DatatablesRenderer
-     */
-    protected function createDatatablesRenderer() {
-        return new DatatablesRenderer();
-    }
-    
-    /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer() {
@@ -464,6 +457,13 @@ class CommandLineOptions
      */
     protected function createJsonRenderer() {
         return new JSONRenderer();
+    }
+    
+    /**
+     * @return \PHPMD\Renderer\DatatablesRenderer
+     */
+    protected function createDatatablesRenderer() {
+        return new DatatablesRenderer();
     }
     
     /**
@@ -486,7 +486,6 @@ class CommandLineOptions
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
         
         $fileHandle = @fopen($fileName, 'r', true);
-        var_dump($fileName);
         if (is_resource($fileHandle) === false) {
             throw new \InvalidArgumentException(
                 sprintf(
@@ -510,7 +509,7 @@ class CommandLineOptions
      */
     protected function getListOfAvailableRenderers() {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers            = [];
+        $renderers            = array();
         
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
