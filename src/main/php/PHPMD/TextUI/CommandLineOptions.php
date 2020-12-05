@@ -37,70 +37,70 @@ class CommandLineOptions
      * Error code for invalid input
      */
     const INPUT_ERROR = 23;
-    
+
     /**
      * The minimum rule priority.
      *
      * @var integer
      */
     protected $minimumPriority = Rule::LOWEST_PRIORITY;
-    
+
     /**
      * The maximum rule priority.
      *
      * @var integer
      */
     protected $maximumPriority = Rule::HIGHEST_PRIORITY;
-    
+
     /**
      * A php source code filename or directory.
      *
      * @var string
      */
     protected $inputPath;
-    
+
     /**
      * The specified report format.
      *
      * @var string
      */
     protected $reportFormat;
-    
+
     /**
      * An optional filename for the generated report.
      *
      * @var string
      */
     protected $reportFile;
-    
+
     /**
      * Additional report files.
      *
      * @var array
      */
     protected $reportFiles = array();
-    
+
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
      */
     protected $ruleSets;
-    
+
     /**
      * File name of a PHPUnit code coverage report.
      *
      * @var string
      */
     protected $coverageReport;
-    
+
     /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
      * @var string
      */
     protected $extensions;
-    
+
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
@@ -109,14 +109,14 @@ class CommandLineOptions
      * @var string
      */
     protected $ignore;
-    
+
     /**
      * Should the shell show the current phpmd version?
      *
      * @var boolean
      */
     protected $version = false;
-    
+
     /**
      * Should PHPMD run in strict mode?
      *
@@ -124,21 +124,21 @@ class CommandLineOptions
      * @since 1.2.0
      */
     protected $strict = false;
-    
+
     /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var boolean
      */
     protected $ignoreViolationsOnExit = false;
-    
+
     /**
      * List of available rule-sets.
      *
      * @var array(string)
      */
     protected $availableRuleSets = array();
-    
+
     /**
      * Constructs a new command line options instance.
      *
@@ -150,9 +150,9 @@ class CommandLineOptions
     public function __construct(array $args, array $availableRuleSets = array()) {
         // Remove current file name
         array_shift($args);
-        
+
         $this->availableRuleSets = $availableRuleSets;
-        
+
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
@@ -195,7 +195,7 @@ class CommandLineOptions
                     break;
                 case '--version':
                     $this->version = true;
-                    
+
                     return;
                 case '--strict':
                     $this->strict = true;
@@ -219,16 +219,16 @@ class CommandLineOptions
                     break;
             }
         }
-        
+
         if (count($arguments) < 3) {
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
-        
+
         $this->inputPath    = (string) array_shift($arguments);
         $this->reportFormat = (string) array_shift($arguments);
         $this->ruleSets     = (string) array_shift($arguments);
     }
-    
+
     /**
      * Returns a php source code filename or directory.
      *
@@ -237,7 +237,7 @@ class CommandLineOptions
     public function getInputPath() {
         return $this->inputPath;
     }
-    
+
     /**
      * Returns the specified report format.
      *
@@ -246,7 +246,7 @@ class CommandLineOptions
     public function getReportFormat() {
         return $this->reportFormat;
     }
-    
+
     /**
      * Returns the output filename for a generated report or <b>null</b> when
      * the report should be displayed in STDOUT.
@@ -256,7 +256,7 @@ class CommandLineOptions
     public function getReportFile() {
         return $this->reportFile;
     }
-    
+
     /**
      * Returns a hash with report files specified for different renderers. The
      * key represents the report format and the value the report file location.
@@ -266,7 +266,7 @@ class CommandLineOptions
     public function getReportFiles() {
         return $this->reportFiles;
     }
-    
+
     /**
      * Returns a ruleset filename or a comma-separated string of ruleset
      *
@@ -275,7 +275,7 @@ class CommandLineOptions
     public function getRuleSets() {
         return $this->ruleSets;
     }
-    
+
     /**
      * Returns the minimum rule priority.
      *
@@ -284,7 +284,7 @@ class CommandLineOptions
     public function getMinimumPriority() {
         return $this->minimumPriority;
     }
-    
+
     /**
      * Returns the maximum rule priority.
      *
@@ -293,7 +293,7 @@ class CommandLineOptions
     public function getMaximumPriority() {
         return $this->maximumPriority;
     }
-    
+
     /**
      * Returns the file name of a supplied code coverage report or <b>NULL</b>
      * if the user has not supplied the --coverage option.
@@ -303,7 +303,7 @@ class CommandLineOptions
     public function getCoverageReport() {
         return $this->coverageReport;
     }
-    
+
     /**
      * Returns a string of comma-separated extensions for valid php source code
      * filenames or <b>null</b> when this argument was not set.
@@ -313,7 +313,7 @@ class CommandLineOptions
     public function getExtensions() {
         return $this->extensions;
     }
-    
+
     /**
      * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
@@ -323,7 +323,7 @@ class CommandLineOptions
     public function getIgnore() {
         return $this->ignore;
     }
-    
+
     /**
      * Was the <b>--version</b> passed to PHPMD's command line interface?
      *
@@ -332,7 +332,7 @@ class CommandLineOptions
     public function hasVersion() {
         return $this->version;
     }
-    
+
     /**
      * Was the <b>--strict</b> option passed to PHPMD's command line interface?
      *
@@ -342,7 +342,7 @@ class CommandLineOptions
     public function hasStrict() {
         return $this->strict;
     }
-    
+
     /**
      * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
      *
@@ -351,7 +351,7 @@ class CommandLineOptions
     public function ignoreViolationsOnExit() {
         return $this->ignoreViolationsOnExit;
     }
-    
+
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
@@ -371,7 +371,7 @@ class CommandLineOptions
      */
     public function createRenderer($reportFormat = null) {
         $reportFormat = $reportFormat ?: $this->reportFormat;
-        
+
         switch ($reportFormat) {
             case 'xml':
                 return $this->createXmlRenderer();
@@ -389,7 +389,7 @@ class CommandLineOptions
                 return $this->createCustomRenderer();
         }
     }
-    
+
     /**
      * Returns usage information for the PHPMD command line interface.
      *
@@ -397,7 +397,7 @@ class CommandLineOptions
      */
     public function usage() {
         $availableRenderers = $this->getListOfAvailableRenderers();
-        
+
         return 'Mandatory arguments:' . \PHP_EOL .
             '1) A php source code filename or directory. Can be a comma-' .
             'separated string' . \PHP_EOL .
@@ -423,49 +423,49 @@ class CommandLineOptions
             '--ignore-violations-on-exit: will exit with a zero code, ' .
             'even if any violations are found' . \PHP_EOL;
     }
-    
+
     /**
      * @return \PHPMD\Renderer\XMLRenderer
      */
     protected function createXmlRenderer() {
         return new XMLRenderer();
     }
-    
+
     /**
      * @return \PHPMD\Renderer\TextRenderer
      */
     protected function createTextRenderer() {
         return new TextRenderer();
     }
-    
+
     /**
      * @return \PHPMD\Renderer\AnsiRenderer
      */
     protected function createAnsiRenderer() {
         return new AnsiRenderer();
     }
-    
+
     /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer() {
         return new HTMLRenderer();
     }
-    
+
     /**
      * @return \PHPMD\Renderer\JSONRenderer
      */
     protected function createJsonRenderer() {
         return new JSONRenderer();
     }
-    
+
     /**
      * @return \PHPMD\Renderer\DatatablesRenderer
      */
     protected function createDatatablesRenderer() {
         return new DatatablesRenderer();
     }
-    
+
     /**
      * @return \PHPMD\AbstractRenderer
      * @throws \InvalidArgumentException
@@ -477,14 +477,14 @@ class CommandLineOptions
                 self::INPUT_ERROR
             );
         }
-        
+
         if (class_exists($this->reportFormat)) {
             return new $this->reportFormat();
         }
-        
+
         // Try to load a custom renderer
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
-        
+
         $fileHandle = @fopen($fileName, 'r', true);
         if (is_resource($fileHandle) === false) {
             throw new \InvalidArgumentException(
@@ -496,12 +496,12 @@ class CommandLineOptions
             );
         }
         @fclose($fileHandle);
-        
+
         include_once $fileName;
-        
+
         return new $this->reportFormat();
     }
-    
+
     /**
      * Get a list of available renderers
      *
@@ -510,22 +510,22 @@ class CommandLineOptions
     protected function getListOfAvailableRenderers() {
         $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers            = array();
-        
+
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }
         }
-        
+
         sort($renderers);
-        
+
         if (count($renderers) > 1) {
             return implode(', ', $renderers);
         }
-        
+
         return array_pop($renderers);
     }
-    
+
     /**
      * Logs a deprecated option to the current user interface.
      *
@@ -540,10 +540,10 @@ class CommandLineOptions
             $deprecatedName,
             $newName
         );
-        
+
         fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
     }
-    
+
     /**
      * This method takes the given input file, reads the newline separated paths
      * from that file and creates a comma separated string of the file paths. If

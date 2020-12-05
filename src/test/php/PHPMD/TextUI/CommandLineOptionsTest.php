@@ -236,7 +236,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: ansi, html, json, text, xml.', $opts->usage());
+        $this->assertContains('Available formats: ansi, datatables, html, json, text, xml.', $opts->usage());
     }
 
     /**
@@ -364,6 +364,7 @@ class CommandLineOptionsTest extends AbstractTest
     {
         return array(
             array('html', 'PHPMD\\Renderer\\HtmlRenderer'),
+            array('datatables', 'PHPMD\\Renderer\\DatatablesRenderer'),
             array('text', 'PHPMD\\Renderer\\TextRenderer'),
             array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
             array('ansi', 'PHPMD\\Renderer\\AnsiRenderer'),
