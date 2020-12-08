@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
+
 /**
  * The report class collects all found violations and further information about
  * a PHPMD run.
@@ -81,7 +83,7 @@ class Report
      */
     public function isEmpty()
     {
-        return (count($this->ruleViolations) === 0);
+        return count($this->ruleViolations) === 0;
     }
 
     /**
@@ -104,7 +106,7 @@ class Report
             }
         }
 
-        return new \ArrayIterator($violations);
+        return new ArrayIterator($violations);
     }
 
     /**
@@ -140,7 +142,7 @@ class Report
      */
     public function getErrors()
     {
-        return new \ArrayIterator($this->errors);
+        return new ArrayIterator($this->errors);
     }
 
     /**

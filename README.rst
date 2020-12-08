@@ -190,6 +190,7 @@ At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
+- *datatables*", collapsable and filterable lists of possible problems.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
