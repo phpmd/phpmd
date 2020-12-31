@@ -2,7 +2,6 @@
 
 namespace PHPMD\Renderer;
 
-
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
@@ -25,7 +24,7 @@ class CheckStyleRenderer extends AbstractRenderer
      * This method will be called on all renderers before the engine starts the
      * real report processing.
      */
-    public function start(): void
+    public function start()
     {
         $this->getWriter()->write('<?xml version="1.0" encoding="UTF-8" ?>');
         $this->getWriter()->write(\PHP_EOL);
@@ -37,7 +36,7 @@ class CheckStyleRenderer extends AbstractRenderer
      *
      * @param \PHPMD\Report $report
      */
-    public function renderReport(Report $report): void
+    public function renderReport(Report $report)
     {
         $writer = $this->getWriter();
         $writer->write('<checkstyle version="3.5.3">');
@@ -63,7 +62,12 @@ class CheckStyleRenderer extends AbstractRenderer
             $writer->write(' line="' . $violation->getBeginLine() . '"');
             $writer->write(' endline="' . $violation->getEndLine() . '"');
             $writer->write(\sprintf(' severity="%s"', 2 < $rule->getPriority() ? 'warning' : 'error'));
-            $writer->write(\sprintf(' message="%s (%s, %s) "', \htmlspecialchars($violation->getDescription()), $rule->getName(), $rule->getRuleSetName()));
+            $writer->write(\sprintf(
+                ' message="%s (%s, %s) "',
+                \htmlspecialchars($violation->getDescription()),
+                $rule->getName(),
+                $rule->getRuleSetName()
+            ));
 
             $this->maybeAdd('package', $violation->getNamespaceName());
             $this->maybeAdd('externalInfoUrl', $rule->getExternalInfoUrl());
@@ -98,7 +102,7 @@ class CheckStyleRenderer extends AbstractRenderer
      * @param string $attr  the xml attribute name
      * @param string $value the attribute value
      */
-    private function maybeAdd($attr, $value): void
+    private function maybeAdd($attr, $value)
     {
         if (null === $value || '' === \trim($value)) {
             return;
