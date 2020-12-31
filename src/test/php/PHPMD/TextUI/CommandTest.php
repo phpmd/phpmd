@@ -122,6 +122,8 @@ class CommandTest extends AbstractTest
             $text = self::createTempFileUri(),
             '--reportfile-json',
             $json = self::createTempFileUri(),
+            '--reportfile-checkstyle',
+            $checkstyle = self::createTempFileUri(),
         );
 
         Command::main($args);
@@ -130,6 +132,8 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($html);
         $this->assertFileExists($text);
         $this->assertFileExists($json);
+        $this->assertFileExists($checkstyle);
+        
     }
 
     public function testOutput()

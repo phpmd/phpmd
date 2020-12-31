@@ -21,6 +21,7 @@ use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
@@ -208,8 +209,9 @@ class CommandLineOptions
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
+                case '--reportfile-checkstyle':
                 case '--reportfile-json':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
+                    preg_match('(^\-\-reportfile\-(xml|checkstyle|html|text|json)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -394,6 +396,8 @@ class CommandLineOptions
                 return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'checkstyle':
+                return $this->createCheckStyleRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -437,6 +441,13 @@ class CommandLineOptions
     protected function createJsonRenderer()
     {
         return new JSONRenderer();
+    }
+       /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createCheckStyleRenderer()
+    {
+        return new CheckStyleRenderer();
     }
 
     /**
