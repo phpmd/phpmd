@@ -133,7 +133,6 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($text);
         $this->assertFileExists($json);
         $this->assertFileExists($checkstyle);
-        
     }
 
     public function testOutput()

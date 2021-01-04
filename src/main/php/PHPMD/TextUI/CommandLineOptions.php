@@ -442,7 +442,8 @@ class CommandLineOptions
     {
         return new JSONRenderer();
     }
-       /**
+
+     /**
      * @return \PHPMD\Renderer\JSONRenderer
      */
     protected function createCheckStyleRenderer()
