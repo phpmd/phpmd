@@ -4,7 +4,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\PHPMD;
 use PHPMD\Report;
-
+use PHPMD\Renderer\XMLRenderer;
 /**
  * This class will render a Java-checkstyle compatible xml-report.
  * for use with cs2pr and others
@@ -100,21 +100,5 @@ class CheckStyleRenderer extends XMLRenderer
         }
 
         $writer->write('</checkstyle>' . \PHP_EOL);
-    }
-
-    /**
-     * This method will write a xml attribute named <b>$attr</b> to the output
-     * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
-     *
-     * @param string $attr The xml attribute name.
-     * @param string $value The attribute value.
-     * @return void
-     */
-    private function maybeAdd($attr, $value)
-    {
-        if ($value === null || trim($value) === '') {
-            return;
-        }
-        $this->getWriter()->write(' ' . $attr . '="' . $value . '"');
     }
 }
