@@ -2,7 +2,6 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
 
@@ -10,7 +9,7 @@ use PHPMD\Report;
  * This class will render a Java-checkstyle compatible xml-report.
  * for use with cs2pr and others
  */
-class CheckStyleRenderer extends AbstractRenderer
+class CheckStyleRenderer extends XMLRenderer
 {
     /**
      * Temporary property that holds the name of the last rendered file, it is
@@ -21,15 +20,23 @@ class CheckStyleRenderer extends AbstractRenderer
     private $fileName;
 
     /**
-     * This method will be called on all renderers before the engine starts the
-     * real report processing.
+     * Get a violation severity level according to the priority
+     * of the rule that's being broken
+     * @see https://checkstyle.sourceforge.io/version/4.4/property_types.html#severity
+     * - priority 1 maps to error level severity
+     * - priority 2 maps to warning level severity
+     * - priority > 2 maps to info level severity
+     *
+     * @param integer $priority priority of the broken rule
+     * @return string either error, warning or info
      */
-    public function start()
+    protected function mapPriorityToSeverity(int $priority):string
     {
-        $this->getWriter()->write('<?xml version="1.0" encoding="UTF-8" ?>');
-        $this->getWriter()->write(\PHP_EOL);
+        if ($priority>2) {
+            return 'info';
+        }
+        return $priority===2? 'warning':'error';
     }
-
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
@@ -39,7 +46,7 @@ class CheckStyleRenderer extends AbstractRenderer
     public function renderReport(Report $report)
     {
         $writer = $this->getWriter();
-        $writer->write('<checkstyle version="3.5.3">');
+        $writer->write('<checkstyle>');
         $writer->write(\PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
@@ -61,7 +68,7 @@ class CheckStyleRenderer extends AbstractRenderer
             $writer->write('    <error');
             $writer->write(' line="' . $violation->getBeginLine() . '"');
             $writer->write(' endline="' . $violation->getEndLine() . '"');
-            $writer->write(\sprintf(' severity="%s"', 2 < $rule->getPriority() ? 'warning' : 'error'));
+            $writer->write(\sprintf(' severity="%s"', $this->mapPriorityToSeverity($rule->getPriority())));
             $writer->write(\sprintf(
                 ' message="%s (%s, %s) "',
                 \htmlspecialchars($violation->getDescription()),
@@ -99,12 +106,13 @@ class CheckStyleRenderer extends AbstractRenderer
      * This method will write a xml attribute named <b>$attr</b> to the output
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *
-     * @param string $attr  the xml attribute name
-     * @param string $value the attribute value
+     * @param string $attr The xml attribute name.
+     * @param string $value The attribute value.
+     * @return void
      */
     private function maybeAdd($attr, $value)
     {
-        if (null === $value || '' === \trim($value)) {
+        if ($value === null || trim($value) === '') {
             return;
         }
         $this->getWriter()->write(' ' . $attr . '="' . $value . '"');
