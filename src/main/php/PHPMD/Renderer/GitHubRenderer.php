@@ -26,7 +26,6 @@ use PHPMD\Report;
  */
 class GitHubRenderer extends AbstractRenderer
 {
-
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
