@@ -33,10 +33,11 @@ class CheckStyleRenderer extends XMLRenderer
      */
     protected function mapPriorityToSeverity($priority)
     {
-        if ($priority>2) {
+        if ($priority > 2) {
             return 'info';
         }
-        return $priority===2? 'warning':'error';
+
+        return (int) $priority === 2 ? 'warning' : 'error';
     }
     /**
      * This method will be called when the engine has finished the source analysis
