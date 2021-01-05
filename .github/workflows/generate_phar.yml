@@ -4,8 +4,13 @@ name: Generate phar
 # temporary test version
 on:
   push:
+    tags:
+      - "*"
     branches:
       - "*"
+  release:
+    types:
+      - created
 
 
 jobs:
@@ -56,3 +61,11 @@ jobs:
         with:
           name: phpmd.phar
           path: phpmd.phar
+
+      - name: Release phpmd.phar
+        if: github.event_name == 'release'
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'phpmd.phar'
