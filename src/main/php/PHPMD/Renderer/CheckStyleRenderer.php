@@ -5,6 +5,7 @@ namespace PHPMD\Renderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
 use PHPMD\Renderer\XMLRenderer;
+
 /**
  * This class will render a Java-checkstyle compatible xml-report.
  * for use with cs2pr and others
@@ -30,7 +31,7 @@ class CheckStyleRenderer extends XMLRenderer
      * @param integer $priority priority of the broken rule
      * @return string either error, warning or info
      */
-    protected function mapPriorityToSeverity(int $priority):string
+    protected function mapPriorityToSeverity($priority)
     {
         if ($priority>2) {
             return 'info';
@@ -50,7 +51,7 @@ class CheckStyleRenderer extends XMLRenderer
         $writer->write(\PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            $fileName = \str_replace(__DIR__ . \DIRECTORY_SEPARATOR, '', $violation->getFileName());
+            $fileName = $violation->getFileName();
 
             if ($this->fileName !== $fileName) {
                 // Not first file
