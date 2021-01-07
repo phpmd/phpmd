@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Renderer\AnsiRenderer;
+use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\TextRenderer;
@@ -396,6 +397,8 @@ class CommandLineOptions
                 return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'github':
+                return $this->createGitHubRenderer();
             case 'checkstyle':
                 return $this->createCheckStyleRenderer();
             default:
@@ -425,6 +428,14 @@ class CommandLineOptions
     protected function createAnsiRenderer()
     {
         return new AnsiRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\GitHubRenderer
+     */
+    protected function createGitHubRenderer()
+    {
+        return new GitHubRenderer();
     }
 
     /**
