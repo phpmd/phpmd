@@ -193,6 +193,7 @@ At the moment PHPMD comes with the following renderers:
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
+- *github*, a format that GitHub Actions understands.
 
 PHPMD for enterprise
 --------------------
