@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="releases"></a>
+<h2>Releases</h2>
+<p>The following releases of PHPMD are available for download</p>
+<a id="phpmd-2-9-1-2020-09-23-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.9.1" title="phpmd-2.9.1 release">phpmd-2.9.1</a> (2020/09/23)</h2>
+<ul><li class="dash">Fixed #714: Improved static member detection</li>
+<li class="dash">Fixed #816: Fixed undefined index referring</li>
+</ul>
+
+<a id="phpmd-2-9-0-2020-09-02-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.9.0" title="phpmd-2.9.0 release">phpmd-2.9.0</a> (2020/09/02)</h2>
+<ul><li class="dash">Added #496: Added rule for PHP's @ operator</li>
+<li class="dash">Added #737: Allowed custom exclusion for StaticAccess by extending the class</li>
+<li class="dash">Added #749: Added allow-underscore option for CamelCaseParameterName &amp; CamelCaseVariableName</li>
+<li class="dash">Added #747: Long variable subtract suffix</li>
+<li class="dash">Added #763 via #765: Added rules LongClassName and ShortClassName</li>
+<li class="dash">Fixed #743: Output for version</li>
+<li class="dash">Fixed #754: Fixed #720 undefined variable in foreach when passed by reference</li>
+<li class="dash">Fixed #764: Fixed #718 Handle anonymous class in &quot;undefined variable&quot; rule</li>
+<li class="dash">Fixed #770: Fixed #769 Handle deconstruction assignation for undefined variable</li>
+<li class="dash">Fixed #781: Fixed #714 static:: and self:: properties access</li>
+<li class="dash">Fixed #784: Fixed #672 Handle passing-by-reference in native PHP functions</li>
+<li class="dash">Fixed #793: Fixed #580 Raise UnusedFormalParameter instead UnusedLocalVariable for unused closure parameter</li>
+<li class="dash">Fixed #794: Fixed #540 Detect unused variable declared multiple times</li>
+<li class="dash">Fixed #805: Fixed #802 Prevent an error with nested arrays</li>
+<li class="dash">Fixed #807: Fixed #790 Fix for short variables rule inside foreach statements</li>
+<li class="dash">Fixed #809: Fixed #808 Ignore rule path for supression annotation</li>
+<li class="dash">Updated different parts of the documentation. #717 #736 #748 #811</li>
+<li class="dash">Changed: #529 : Replaced HTML renderer with new &quot;pretty HTML&quot; renderer</li>
+<li class="dash">Changed: #806 : Changed #44 Change private methods to protected in rules. Make rules extendable</li>
+<li class="dash">Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787 #791 #792</li>
+<li class="dash">Deprecated all the PHPMD exceptions that aren't part of the PHPMD\Exceptions namespace. See #775</li>
+</ul>
+
+<p>### A potential BC change:
+With the clean-up in #768 we have a potential BC break in an unsupported part that we want to give attention for.
+&gt; The class aliases <code>PHP_PMD_*</code> used for PHPMD 1.x backwards PEAR compatibility were removed. If you happen to still depend on these, please adjust your code like so:
+&gt;<br />&gt; From <code>PHP_PMD_[Component]_[Class]'</code> to <code>PHPMD\[Component]\[Class]</code>,
+&gt; as in <code>PHP_PMD_Renderer_HTMLRenderer'</code> to <code>PHPMD\Renderer\HTMLRenderer</code>.
+See #768</p>
+<a id="phpmd-2-8-2-2020-02-24-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.8.2" title="phpmd-2.8.2 release">phpmd-2.8.2</a> (2020/02/24)</h2>
+<ul><li class="dash">Fixed #732: Added __serialize and __unserialize to list of ignored methods for camelCase rule.</li>
+</ul>
+
+<a id="phpmd-2-8-1-2019-12-27-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.8.1" title="phpmd-2.8.1 release">phpmd-2.8.1</a> (2019/12/27)</h2>
+<ul><li class="dash">Fixed PHP 7.4 unit tests compatibility</li>
+<li class="dash">Improved documentation</li>
+<li class="dash">Automated website generation and PHAR publishing</li>
+</ul>
+
+<a id="phpmd-2-8-0-2019-12-18-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.8.0" title="phpmd-2.8.0 release">phpmd-2.8.0</a> (2019/12/18)</h2>
+<ul><li class="dash">Required at least pdepend/pdepend 2.6:</li>
+<ul><li class="dash">Added PHP 7.1 to 7.3 syntax support</li>
+<li class="dash">Added Symfony 5 support
+  See full changes list: https://github.com/pdepend/pdepend/releases/tag/2.6.0</li>
+</ul>
+<li class="dash">Added #497: Undefined variable rule</li>
+<li class="dash">Improved performances by disabling XDebug if in use</li>
+<li class="dash">Added #571: ignore-namespaces property to DevelopmentCodeFragment rule</li>
+<li class="dash">Added #595: Renderer which writes an ansi report string</li>
+<li class="dash">Fixed #657: IfStatementAssignment violation message</li>
+<li class="dash">Optimized Composer autoloader when building Phar</li>
+<li class="dash">Fixed #661: IfStatementAssignment thrown incorrectly</li>
+<li class="dash">Fixed #676: Handle @SuppressWarnings on each method for CountInLoop</li>
+<li class="dash">Fixed #659: PHP 7.4 compatibility for implode() usage</li>
+</ul>
+
+<a id="phpmd-2-7-0-2019-07-30-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.7.0" title="phpmd-2.7.0 release">phpmd-2.7.0</a> (2019/07/30)</h2>
+<p>This is the first minor release of the new PHPMD maintainer team. It<br />contains all the new features, improvements and fixes from two and a<br />half years since 2.6.0. Please take note of a backwards incompatible<br />property renaming in the CouplingBetweenObjects rule.</p>
+<ul><li class="dash">Fixed #482: Renamed minimum property to maximum in
+  CouplingBetweenObjects rule (backwards incompatible) Fixed in commit<br />  #9210116.</li>
+<li class="dash">Fixed #626: Fixed special characters escaping in violation
+  description for XML output Fixed in commit #5305f5b.</li>
+<li class="dash">Fixed #378: Fixed warning/error when trying to export to a
+  non-existing path Fixed in commit #67bd7c6.</li>
+<li class="dash">Fixed #575: Fixed UnusedFormalParameter false positive in string
+  compound variable Fixed in commit #8790cbb.</li>
+<li class="dash">Fixed #480: Fixed &quot;Start tag expected, '&lt;' not found&quot; error Fixed in
+  commit #3e2e058.</li>
+<li class="dash">Fixed #494: Fixed UnusedPrivateField false positive Fixed in commit
+  #99f3ba9.</li>
+<li class="dash">Fixed #583: Changed LongNaming rule to apply on private fields too
+  Fixed in commit #42bf8ad.</li>
+<li class="dash">Fixed #598: Fixed a bug in the renderer auto-discovery Fixed in
+  commit #cc06bfd.</li>
+<li class="dash">Fixed #572: Added support for both @SuppressWarnings and
+  @suppressWarnings annotation cases Fixed in commit #bb2cfe9.</li>
+<li class="dash">Fixed invalid &quot;array of strings&quot; type hints Fixed in commit
+  #16e4eda.</li>
+<li class="dash">Fixed #599: Fixed Composer package type Fixed in commit #0ca4eff.</li>
+<li class="dash">Fixed #604: Renamed mikey179/vfsStream to mikey179/vfsstream to
+  prevent Composer error Fixed in commit #f66247f.</li>
+<li class="dash">Fixed #632: Changed Scrutinizer CI settings to use local PHPUnit
+  Fixed in commit #dfaa509.</li>
+<li class="dash">Fixed #633: Fixed AppVeyor CI build Fixed in commit #40189f3.</li>
+<li class="dash">Fixed #609: Fixed main logo link in website build script Fixed in
+  commit #f3b68be.</li>
+<li class="dash">Fixed #631: Fixed URL to &quot;How to create a custom rule set&quot;
+  documentation page on website Fixed in commit #3c5b534.</li>
+<li class="dash">Fixed #449: Improved code style Fixed in commit #67cdab2.</li>
+<li class="dash">Fixed #447: Improved code style Fixed in commit #3ef4ba8.</li>
+<li class="dash">Fixed #450: Improved code style Fixed in commit #9525da7.</li>
+<li class="dash">Fixed #582: Fixed a typo in Clean Code Rules documentation Fixed in
+  commit #85e48ad.</li>
+<li class="dash">Fixed #567: Fixed a typo in Clean Code Rules documentation Fixed in
+  commit #175b08f.</li>
+<li class="dash">Implemented #472: Added rule for assignment within conditional
+  (IfStatementAssignment) Implemented in commit #716ecf5.</li>
+<li class="dash">Implemented #490: Added rule for count in loop (CountInLoop)
+  Implemented in commit #0e30d82.</li>
+<li class="dash">Implemented #484: Added rule for duplicated array key
+  (DuplicatedArrayKey) Implemented in commit #a295850.</li>
+<li class="dash">Implemented #476: Added rule for empty catch block (EmptyCatchBlock)
+  Implemented in commit #4bc19bd.</li>
+<li class="dash">Implemented #636: Added rule for missing import (MissingImport)
+  Implemented in commit #3a82eab.</li>
+<li class="dash">Implemented #443: Added support for compound variables in
+  UnusedLocalVariable rule Implemented in commit #c7009d5.</li>
+<li class="dash">Implemented #329: Added support to whitelist variables in the
+  UnusedLocalVariable rule Implemented in commit #55ca654.</li>
+<li class="dash">Implemented #478: Implemented renderer auto-discovery Implemented in
+  commit #91c4ca8.</li>
+<li class="dash">Implemented #405: Added JSON output format Implemented in commit
+  #7552089.</li>
+<li class="dash">Implemented #525: Added new options to CLI (min-priority,
+  minimum-priority, report-file, input-file, not-strict) Implemented<br />  in commit #71b52be.</li>
+<li class="dash">Implemented #579: Added support for setting the maximum execution
+  priority through CLI (max-priority, maximum-priority,<br />  maximumpriority) Implemented in commit #45de3be.</li>
+<li class="dash">Implemented #489: Added new predefined variables to
+  AbstractLocalVariable rule Implemented in commit #63047d9.</li>
+<li class="dash">Implemented #382: Changed TooManyMethods rule to ignore isser-,
+  hasser-, wither-methods Implemented in commit #609c6bb.</li>
+<li class="dash">Implemented #625: Fixed DuplicatedArrayKey rule to check only arrays
+  with keys Implemented in commit #43d4ed0.</li>
+<li class="dash">Implemented #528: Fixed Travis-CI build by temporarily removing PHP
+  5.3 Implemented in commit #0a69edf.</li>
+<li class="dash">Implemented #643: Fixed Travis-CI build to run PHP 5.3 and fixed 5.3
+  compatibility Implemented in commit #4a8a567.</li>
+<li class="dash">Implemented #475: Added tests that show support for chained methods
+  (fluent interfaces) for UnusedPrivateMethod rule Implemented in<br />  commit #d5c1372.</li>
+<li class="dash">Implemented #495: Added test for SuppressWarnings for
+  ExcessivePublicCount Implemented in commit #b1c15f8.</li>
+<li class="dash">Implemented #381: Added annotations to allow IDEs to reference
+  correct classes Implemented in commit #2dbae11.</li>
+<li class="dash">Implemented #639: Fixed arrays types to use standard type syntax
+  Implemented in commit #858c9fd.</li>
+<li class="dash">Implemented #640: Added type hint annotations Implemented in commit
+  #d68e511.</li>
+<li class="dash">Implemented #481: Cleaned boc block comments Implemented in commit
+  #08a38d4.</li>
+<li class="dash">Implemented #491: Cleaned whitespaces Implemented in commit
+  #dcdd61a.</li>
+<li class="dash">Implemented #477: Fixed code formatting Implemented in commit
+  #3c6b69b.</li>
+<li class="dash">Implemented #548: Updated PDepend to 2.5.2 Implemented in commit
+  #f1c145e.</li>
+<li class="dash">Implemented #474: Dropped HHVM support Implemented in commit
+  #9f7b4d2.</li>
+<li class="dash">Implemented #458: Updated PHPCS dev dependency from 2.3.4 to 2.8.1
+  Implemented in commit #f2ae09f.</li>
+<li class="dash">Implemented #458: Updated PHPCS &amp; added Composer scripts Implemented
+  in commit #24ff5a9.</li>
+<li class="dash">Implemented #469: Updated Coding Standard command Implemented in
+  commit #9962dae.</li>
+<li class="dash">Implemented #627: Removed composer.lock Implemented in commit
+  #981c78f.</li>
+<li class="dash">Implemented #623: Extended test matrix &amp; do only one job per build
+  on Travis-CI Implemented in commit #a2c64bf.</li>
+<li class="dash">Implemented #617: Replaced Travis-CI build notification from IRC to
+  the new Gitter core channel Implemented in commit #e1a4cd7.</li>
+<li class="dash">Implemented #620: Added PHPMD Gitter Community Channel notifications
+  for Travis-CI Implemented in commit #f1c05bf.</li>
+<li class="dash">Implemented #459: Integrated Stickler CI Implemented in commit
+  #d106330.</li>
+<li class="dash">Implemented #492: Adjusted Stickler-CI config for ignoring test
+  resource files Implemented in commit #9b18153.</li>
+<li class="dash">Implemented #460: Added ApiGen config file Implemented in commit
+  #4514235.</li>
+<li class="dash">Implemented #471: Modified default PHP installation directory to
+  match Chocolatey package in AppVeyor CI config Implemented in commit<br />  #2b55442.</li>
+<li class="dash">Implemented #552: Updated PHP in AppVeyor CI builds to 7.1
+  Implemented in commit #252b178.</li>
+<li class="dash">Implemented #605: Added a pure PHP build script to generate the
+  website as static files Implemented in commit #6f56a8f.</li>
+<li class="dash">Implemented #608: Updated the website build script to handle anchor
+  links and to use direct links whenever possible Implemented in<br />  commit #6cf7a2d.</li>
+<li class="dash">Implemented #483: Removed broken link to Web Content Viewer from
+  website Implemented in commit #eeea9ee.</li>
+<li class="dash">Implemented #611: Removed section about commercial support from
+  website Implemented in commit #671760a.</li>
+<li class="dash">Implemented #612: Removed IRC, add Gitter &amp; reword Support &amp; Contact
+  section from/on website Implemented in commit #3e94d6b.</li>
+<li class="dash">Implemented #479: Replaced all file header doc blocks with uniform
+  one Implemented in commit #fff046c.</li>
+<li class="dash">Implemented #470: Changed HTTP to HTTPS in some files Implemented in
+  commit #1ca30d0.</li>
+<li class="dash">Implemented #448: Switched from HTTP to HTTPS in some files
+  Implemented in commit #51eb887.</li>
+<li class="dash">Implemented #524: Switched from HTTP to HTTPS in resource file
+  Implemented in commit #409b276.</li>
+<li class="dash">Implemented #454: Switched from HTTP to HTTPS for test files
+  Implemented in commit #f1c1426.</li>
+<li class="dash">Implemented #451: Switched from HTTP to HTTPS for main files
+  Implemented in commit #9a77c48.</li>
+<li class="dash">Implemented #455: Switched from HTTP to HTTPS for resource files
+  Implemented in commit #b073ad2.</li>
+<li class="dash">Implemented #566: Added CLI usage example Implemented in commit
+  #e12e59c.</li>
+<li class="dash">Implemented #621: Updated wording about PHPMD Implemented in commit
+  #c116054.</li>
+<li class="dash">Implemented #606: Updated license according to BSD 3-clause template
+  Implemented in commit #e850660.</li>
+<li class="dash">Implemented #469: Improved contributing guide for Linux / OS X users
+  Implemented in commit #63ff5bf.</li>
+<li class="dash">Implemented #383: Improved the ElseExpression description
+  Implemented in commit #6f02406.</li>
+<li class="dash">Implemented #565: Added example for modifying properties in a rule
+  set Implemented in commit #59551fc.</li>
+<li class="dash">Implemented #614: Removed API docs that do not exist anymore
+  Implemented in commit #7c8d9bc.</li>
+<li class="dash">Implemented #615: Added Gitter badge Implemented in commit #8e1e9e8.</li>
+<li class="dash">Implemented #618: Added badges for the monthly and total downloads
+  Implemented in commit #1e86639.</li>
+</ul>
+
+<a id="phpmd-2-6-1-2019-07-06-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.6.1" title="phpmd-2.6.1 release">phpmd-2.6.1</a> (2019/07/06)</h2>
+<p>This is the first release of the new maintainer team of PHPMD. It is a<br />re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to<br />GitHub releases.</p>
+<ul><li class="dash">Implemented #616: Build the PHAR file on Travis-CI and publish it to
+  GitHub releases Implemented in commit #135327d.</li>
+</ul>
+
+<a id="phpmd-2-6-0-2017-01-20-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.6.0" title="phpmd-2.6.0 release">phpmd-2.6.0</a> (2017/01/20)</h2>
+<p>This release incorporates several pending PRs. Beside that we have<br />rebased PHPMD on PDepend 2.5 which should complete support for PHP 7<br />language features.</p>
+<ul><li class="dash">Fixed #345: Development Code Fragment feature is not working Fixed
+  in commit #1c0afd4.</li>
+<li class="dash">Fixed #384: use-statement for functions returns in:
+  UnexpectedTokenException Fixed in commit #1c0afd4.</li>
+<li class="dash">Fixed #409: Test for PHPMD or PMD on SuppressWarnings Fixed in
+  commit #147beb1.</li>
+<li class="dash">Fixed #418: Add missing link to TooManyPublicMethods rule in the
+  rules document Fixed in commit #eccacb0.</li>
+<li class="dash">Fixed #419: Fix a link to github help because the link is broken
+  Fixed in commit #3c9ef0b.</li>
+<li class="dash">Fixed #426: Enable Windows Update service on AppVeyor Fixed in
+  commit #4bd2516.</li>
+<li class="dash">Fixed #429: Added ext-xml to require in composer.json file Fixed in
+  commit #0aecd07.</li>
+<li class="dash">Fixed #433: Mistake in documentation of CCN Fixed in commit
+  #f686673.</li>
+<li class="dash">Implemented #379: Code cleaning. Implemented in commit #902da6c.</li>
+<li class="dash">Implemented #412: Add .mailmap file to fix git shortlog Implemented
+  in commit #7fe3d6b.</li>
+<li class="dash">Implemented #416: Test against lowest possible dependencies
+  Implemented in commit #d2b58b3.</li>
+</ul>
+
+<a id="phpmd-2-5-0-2016-11-23-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.5.0" title="phpmd-2.5.0 release">phpmd-2.5.0</a> (2016/11/23)</h2>
+<p>This release closes several minor/major issues in PHPMD itself and it<br />bundles a new version of PDepend that also provides fixes for several<br />bugs.</p>
+<ul><li class="dash">Fixed #386: English language fixes Fixed in commit #2a31103.</li>
+<li class="dash">Fixed #395: Fix typo in rulesets/cleancode Fixed in commit #f6aa5be.</li>
+<li class="dash">Fix copy &amp;amp; paste error Fixed in commit #c51ea72.</li>
+<li class="dash">Fixed #411: Unexpected token: list</li>
+<li class="dash">Fixed #389: Unexpected token: EMPTY</li>
+<li class="dash">Implemented #365: Remove the leading blank line from the
+  TextRenderer Implemented in commit #ca59154.</li>
+<li class="dash">Implemented #380: add --ignore-exit-violations CLI flag to allow
+  exit code 0 event if violation is found (will allow successfull<br />  build for CI) Implemented in commit #9f71d98.</li>
+<li class="dash">Bump PHP dependency to 5.3.9 Implemented in commit #540d61c.</li>
+</ul>
+
+<a id="phpmd-2-4-4-2016-11-22-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.4" title="phpmd-2.4.4 release">phpmd-2.4.4</a> (2016/11/22)</h2>
+<p>Maintenance release with new PDepend version bundled</p>
+<ul><li class="dash">Fixed #347: Fixed UnexpectedTokenException on null coalesce
+  operator. Fixed in commit #8e80aaa.</li>
+</ul>
+
+<a id="phpmd-2-4-2-2016-03-10-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.2" title="phpmd-2.4.2 release">phpmd-2.4.2</a> (2016/03/10)</h2>
+<ul><li class="dash">Fixed #261: Prove Issue 261 and added tests for
+  CamelCaseVariableName Fixed in commit #319b398.</li>
+<li class="dash">Fixed #328: Cannot create new nodes, when internal state is frozen.
+  Fixed in commit #2fd479b.</li>
+<li class="dash">Fixed #354: Replace plus by a dot as concat operator in filename
+  creation. Fixed in commit #6a121ea.</li>
+<li class="dash">Implemented #343: Trim exceptions for StaticAccess Implemented in
+  commit #3121c58.</li>
+</ul>
+
+<a id="phpmd-2-4-1-2016-03-08-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.1" title="phpmd-2.4.1 release">phpmd-2.4.1</a> (2016/03/08)</h2>
+<p>This release fixes a method naming issue, that was introduced with<br />2.4.0.</p>
+<a id="phpmd-2-4-0-2016-03-08-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.0" title="phpmd-2.4.0 release">phpmd-2.4.0</a> (2016/03/08)</h2>
+<p>This release adds a new helper method to access the full qualified<br />name of an analyzed node.</p>
+<ul><li class="dash">Fixed #335: Typo in clean code rule description fixed. Fixed in
+  commit #59a6e8a.</li>
+<li class="dash">Helper method added, so that we can access the full qualified name
+  of a class, method, interface or function. Implemented in commit<br />  #e46a099.</li>
+<li class="dash">Implemented #334: Added __debugInfo to list of ignored methods.
+  Implemented in commit #f8b017a.</li>
+</ul>
+
+<a id="phpmd-2-3-3-2016-03-08-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.3.3" title="phpmd-2.3.3 release">phpmd-2.3.3</a> (2016/03/08)</h2>
+<p>Some minor issues fixed</p>
+<a id="phpmd-2-3-2-2015-09-24-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.3.2" title="phpmd-2.3.2 release">phpmd-2.3.2</a> (2015/09/24)</h2>
+<p>With this release we make the Symfony dependency superfluous.</p>
+<ul><li class="dash">Implemented #312: No more hard Symfony dependency. Implemented in
+  commit #1da75aa.</li>
+</ul>
+
+<a id="phpmd-2-3-1-2015-09-22-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.3.1" title="phpmd-2.3.1 release">phpmd-2.3.1</a> (2015/09/22)</h2>
+<p>Bugfix release for issue #311 introduced with the 2.3.0 release.</p>
+<ul><li class="dash">Fixed #311: Property &quot;allow-underscore-test&quot; does not exist. Fixed
+  in commit #0db4a3e.</li>
+</ul>
+
+<a id="phpmd-2-3-0-2015-09-22-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.3.0" title="phpmd-2.3.0 release">phpmd-2.3.0</a> (2015/09/22)</h2>
+<p>This new release contains several contributed bugfixes and additions<br />to PHPMD. Beside that we now have better support for language<br />constructs in the upcoming PHP 7.</p>
+<ul><li class="dash">Fixed #272: Improve type hint. Fixed in commit #724bf76.</li>
+<li class="dash">Fixed #293: Declared missing method in abstract class Fixed in
+  commit #9b806f6.</li>
+<li class="dash">Fixed #297: Complete fix for timezone warning. Fixed in commit
+  #227d469.</li>
+<li class="dash">Fixed #301: Fix mixed up links in documentation. Fixed in commit
+  #4bc4eeb.</li>
+<li class="dash">Fixed #304: Fix #303, change if condition order. Fixed in commit
+  #3376c73.</li>
+<li class="dash">Implemented #232: Three new features about references, includes and
+  include-paths Implemented in commit #180848f.</li>
+<li class="dash">Implemented #241: Fix of UnusedPrivateMethod chained method calls.
+  Implemented in commit #7e02f38.</li>
+<li class="dash">Implemented #257: Add option to allow having an undercore in test
+  methods. Implemented in commit #3cbe76d.</li>
+<li class="dash">Implemented #265: Search for development code Implemented in commit
+  #dfa6872.</li>
+<li class="dash">Implemented #273: Add TooManyPublicMethods rule. Implemented in
+  commit #b862f1f.</li>
+<li class="dash">Implemented #291: Define the version constraints of deps in Composer
+  using the caret operator. Implemented in commit #586ccfc.</li>
+<li class="dash">Implemented #306: Use new Travis infrastructure. Implemented in
+  commit #cd1308e.</li>
+</ul>
+
+<a id="phpmd-2-2-3-2015-05-27-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.3" title="phpmd-2.2.3 release">phpmd-2.2.3</a> (2015/05/27)</h2>
+<p>Bugfix release that closes issues and adds some improvements to phpmd.</p>
+<ul><li class="dash">Fixed #285: Corrected HTML TR closing tag Fixed in commit #df6280f.</li>
+<li class="dash">Fixed link to rules documentation Fixed in commit #20a0142.</li>
+<li class="dash">Implemented #281: Code cleanup Implemented in commit #5e94a65.</li>
+<li class="dash">Underlying PDepend version bumped. Implemented in commit #f4ddb8a.</li>
+</ul>
+
+<a id="phpmd-2-2-2-2015-03-26-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.2" title="phpmd-2.2.2 release">phpmd-2.2.2</a> (2015/03/26)</h2>
+<p>Bugfix release that closes some issues in phpmd's core and in the<br />project documentation.</p>
+<ul><li class="dash">Fixed #271: Fix cp error in doc Fixed in commit #b73dd32.</li>
+<li class="dash">Fixed #270: Fixing namespace issue for OutOfBoundsException Fixed in
+  commit #0d4bed1.</li>
+<li class="dash">Fixed #80: Out ot the box usage in combination with composer of all
+  rules failes throws error Property $exceptions does not exist. Fixed<br />  in commit #0d4bed1.</li>
+</ul>
+
+<a id="phpmd-2-2-1-2015-03-01-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.1" title="phpmd-2.2.1 release">phpmd-2.2.1</a> (2015/03/01)</h2>
+<p>This release integration several pull requests and closes and handful<br />of issues.</p>
+<ul><li class="dash">Fixed #237: Display type correctly for constructors Fixed in commit
+  #49f19d8.</li>
+<li class="dash">Fixed #238: Fix link to rulesets Fixed in commit #829d110.</li>
+<li class="dash">Fixed #244: Fix typos in type hints Fixed in commit #b5a04ce.</li>
+<li class="dash">Fixed #245: Fix CamelCase vs camelCase issue in the docs Fixed in
+  commit #6cd03ce.</li>
+<li class="dash">Implemented #210: Added editorconfig Implemented in commit #22a73a7.</li>
+<li class="dash">Implemented #211: Added phpcs as development dependency Implemented
+  in commit #441398d.</li>
+<li class="dash">Implemented #214: Short method name exceptions Implemented in commit
+  #55b799b.</li>
+<li class="dash">Implemented #225: Refactor - remove right side whitespaces
+  Implemented in commit #c12fffa.</li>
+<li class="dash">Implemented #242: Unused &quot;use&quot; statement removed from RuleViolation
+  class Implemented in commit #966ce38.</li>
+<li class="dash">Implemented #243: Unused private property removed. Implemented in
+  commit #121d43b.</li>
+<li class="dash">Implemented #246: Improve WMC documentation Implemented in commit
+  #b1e9be9.</li>
+<li class="dash">Implemented #249: Remove redundant line Implemented in commit
+  #a9bd6cb.</li>
+</ul>
+
+<a id="phpmd-2-2-0-2015-01-25-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.0" title="phpmd-2.2.0 release">phpmd-2.2.0</a> (2015/01/25)</h2>
+<p>Closes an issue with recent symfony versions</p>
+<ul><li class="dash">Fixed #226: Fixed error message for StaticAccess Fixed in commit
+  #efa1dcd.</li>
+<li class="dash">Fixed #216: Refactor - removed right side spaces Fixed in commit
+  #422345e.</li>
+<li class="dash">Implemented #221: Ignore php4 style ctor in interfaces and
+  namespaces Implemented in commit #b248315.</li>
+<li class="dash">Implemented #220: Skip check for ConstructorWithNameAsEnclosingClass
+  when in an interface or namespace Implemented in commit #b248315.</li>
+<li class="dash">Implemented #219: Do not trigger UnusedFormalParameter with some
+  magic methods. Implemented in commit #4d3b154.</li>
+<li class="dash">Implemented #218: Allow any future minor version of Symfony2 2.5
+  components. Implemented in commit #6317043.</li>
+<li class="dash">Implemented #215: Improved composer.json Implemented in commit
+  #6da3358.</li>
+<li class="dash">Implemented #196: Composer Compatible for symfony &gt;= 2.5 and &lt;
+  master/dev. Implemented in commit #6317043.</li>
+<li class="dash">Implemented #208: Appveyor CI for Windows Implemented in commit
+  #05210b6.</li>
+<li class="dash">Implemented #207: Added a contribution guide Implemented in commit
+  #d6de6a5.</li>
+<li class="dash">Implemented #205: Removed all @version annotations Implemented in
+  commit #5b1fcef.</li>
+<li class="dash">Implemented #204: Removed all traces of &quot;PHP Version 5&quot; in the file
+  header DocBlock Implemented in commit #c36897b.</li>
+<li class="dash">Implemented #203: Some improvements to the README Implemented in
+  commit #cc354ed.</li>
+<li class="dash">Implemented #201: Added the missing cleancode section to the
+  website. Implemented in commit #ead3368.</li>
+<li class="dash">Implemented #200: StaticAccess - ability to add exceptions for
+  specific class names Implemented in commit #b428516.</li>
+<li class="dash">Implemented #199: Changed the OutOfBounds exceptions when getting a
+  property Implemented in commit #0dad28d.</li>
+<li class="dash">Implemented #198: Allow unused foreach variables Implemented in
+  commit #98bed5a.</li>
+<li class="dash">Implemented #197: Allow underscore camelcase property name
+  Implemented in commit #6eb7dcd.</li>
+<li class="dash">Implemented #152: Update DepthOfInheritance.php: Using the right
+  condition and naming of property. Implemented in commit #e59053c.</li>
+<li class="dash">Implemented #97: Fixed typo in rule ElseExpression CDATA Implemented
+  in commit #7593f17.</li>
+</ul>
+
+<a id="phpmd-2-1-3-2014-09-25-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.1.3" title="phpmd-2.1.3 release">phpmd-2.1.3</a> (2014/09/25)</h2>
+<p>Bug fix release.</p>
+<ul><li class="dash">Fixed #195: Missing version number in composer.json file replaced
+  with build.properties version number. Fixed in commit #7b8d13f.</li>
+</ul>
+
+<a id="phpmd-2-1-2-2014-09-25-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.1.2" title="phpmd-2.1.2 release">phpmd-2.1.2</a> (2014/09/25)</h2>
+<p>This release closes several minor issues and integrates some<br />outstanding pull requests.</p>
+<ul><li class="dash">Fixed #164: Fixed IRC link Fixed in commit #84f2d8a.</li>
+<li class="dash">Fixed #165: Removed lie regarding PEAR Fixed in commit #74b9f84.</li>
+<li class="dash">Fixed #85: Documentation changes, fixed typo in PHPMD's online
+  documentation. Fixed in commit #f954dcf.</li>
+<li class="dash">Fixed #190: Updating composer.json Fixed in commit #45c55d8.</li>
+<li class="dash">Fixed #191: Superglobals are not named in CamelCase Fixed in commit
+  #b18ffbb.</li>
+<li class="dash">Fixed #192: Fix a typo. These are the 'design rules' not the 'code
+  size rules Fixed in commit #1eb321d.</li>
+<li class="dash">Implemented #182: Tweak with CamelCase matching inheritDoc
+  Implemented in commit #9271fc6.</li>
+<li class="dash">Implemented #189: Missing composer install documentation Implemented
+  in commit #450f91c.</li>
+</ul>
+
+<a id="phpmd-2-1-1-2014-09-09-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.1.1" title="phpmd-2.1.1 release">phpmd-2.1.1</a> (2014/09/09)</h2>
+<ul><li class="dash">Fixed #181: 404 error on your website release area</li>
+<li class="dash">Fixed #168: --version argument doesn't return version Fixed in
+  commit #3f56c37.</li>
+<li class="dash">Implemented #183: exceptions for CamelCaseVariableName and
+  UnusedLocalVariable Implemented in commit #5f9e8a2.</li>
+</ul>
+
+<a id="phpmd-2-1-0-2014-09-08-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.1.0" title="phpmd-2.1.0 release">phpmd-2.1.0</a> (2014/09/08)</h2>
+<p>This integrates several outstanding pull requests.</p>
+<ul><li class="dash">Fixed #118: Fix [Naming]: Trait can have method same as trait's name
+  Fixed in commit #f93be40.</li>
+<li class="dash">Fixed #177: Get XML contents before parsing Fixed in commit
+  #e081088.</li>
+<li class="dash">Implemented #150: Fix for unused variables rules when handling
+  namespace compact() Implemented in commit #ffab9fc.</li>
+<li class="dash">Implemented #154: Added PHP 5.6 and HHVM to travis.yml Implemented
+  in commit #b5cdc74.</li>
+<li class="dash">Implemented #159: Allow a single underscore at the beginning
+  Implemented in commit #d0779c2.</li>
+<li class="dash">Implemented #100: Quick change to add support for exclude-pattern in
+  a ruleset Implemented in commit #6257a83.</li>
+<li class="dash">Implemented #117: --exclude not working Implemented in commit
+  #6257a83.</li>
+</ul>
+
+<a id="phpmd-2-0-0-2014-05-21-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.0.0" title="phpmd-2.0.0 release">phpmd-2.0.0</a> (2014/05/21)</h2>
+<p>This is major release of PHPMD which utilizes 2.0 engine of PDepend.</p>
+<ul><li class="dash">Fixed #111: Changelog with old releases and invalid dates removed.
+  Fixed in commit #cdfbb8f.</li>
+<li class="dash">Implemented #40: Allow multiple report files Now it is possible to
+  render multiple report files during a single PHPMD run, just add:<br />  --reportfile-xml report.xml --reportfile-html report.html<br />  --reportfile-text report.txt to the PHP command line call.<br />  Implemented in commit #e16c38c.</li>
+<li class="dash">Implemented #61: UnusedLocalVariable fix for compact handling in
+  Symfony2 Implemented in commit #a1dc403.</li>
+<li class="dash">Implemented #119: PDepend 2.0 support Implemented in commit
+  #8c3ebe1.</li>
+<li class="dash">Implemented #122: Add: New parameter 'ignore-whitespace' to
+  LongClass and LongMethod rules Implemented in commit #19c4da8.</li>
+</ul>
+
+<a id="phpmd-1-5-0-2013-07-26-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.5.0" title="phpmd-1.5.0 release">phpmd-1.5.0</a> (2013/07/26)</h2>
+<p>This release closes some PHP 5.4 related issues.</p>
+<ul><li class="dash">Fixed #87: Fix: PHP Fatal error: Call to a member function
+  isInstanceOf() on a non-object Fixed in commit #9ab3b6d.</li>
+<li class="dash">Fixed #81: Fix error when using entire ruleset &quot;Naming&quot; Fixed in
+  commit #a473345.</li>
+<li class="dash">Fixed #91: (tiny) documentation typo fix Fixed in commit #2a3d304.</li>
+<li class="dash">Implemented #66: Added support for short variable name exceptions
+  Implemented in commit #1484e22.</li>
+<li class="dash">Implemented #73: Show available formats and rulesets Implemented in
+  commit #86560ce.</li>
+</ul>
+
+<a id="phpmd-1-4-1-2012-12-14-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.4.1" title="phpmd-1.4.1 release">phpmd-1.4.1</a> (2012/12/14)</h2>
+<p>This release integrates several pull requests.</p>
+<ul><li class="dash">Fixed #56: package.xml date invalid: 2011/02/12. Fixed in commit
+  #575fe7b.</li>
+<li class="dash">Implemented #10: Fix UnusedLocalVariable to recognize compact
+  function. Implemented in commit #e478912.</li>
+<li class="dash">Implemented #58: Skip &quot;unused formal parameter&quot; checking when method
+  signature has been annotated as inherited using @inheritdoc.<br />  Implemented in commit #158e1f5.</li>
+</ul>
+
+<a id="phpmd-1-4-0-2012-09-07-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.4.0" title="phpmd-1.4.0 release">phpmd-1.4.0</a> (2012/09/07)</h2>
+<p>This release integrates some longer pending pull requests and smaller<br />bugfixes. One major addition is support for Composer as distribution<br />channel.</p>
+<ul><li class="dash">Fixed #51: Fixed handling of traits. Fixed in commit #22b523c.</li>
+<li class="dash">Implemented #11: Add getStringProperty($name) to AbstractRule.php.
+  Implemented in commit #b7d659f.</li>
+<li class="dash">Implemented #12: Update README.rst on cmd line arguments.
+  Implemented in commit #458d566.</li>
+<li class="dash">Implemented #53: Added getStringProperty and rule-setting to change
+  TooManyMethods ignore Regexp. Implemented in commit #bc795b6.</li>
+<li class="dash">Implemented #10: Provide PHPMD as composer dependency on
+  packagist.org. Implemented in commit #3622bb8.</li>
+</ul>
+
+<a id="phpmd-1-3-3-2012-02-29-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.3" title="phpmd-1.3.3 release">phpmd-1.3.3</a> (2012/02/29)</h2>
+<p>This release closes an issue introduced with the last release. It<br />closes one more regression related to PHP's memory_limit and the<br />Suhosin patch.</p>
+<ul><li class="dash">Fixed fatal error due to bug in memory_limit modification code.
+  Fixed in commit #e8b546d.</li>
+</ul>
+
+<a id="phpmd-1-3-2-2012-02-25-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.2" title="phpmd-1.3.2 release">phpmd-1.3.2</a> (2012/02/25)</h2>
+<p>This release closes a minor issue in PHP_PMD's memory handling when it<br />is run in a PHP environment that uses the Suhosin patch and the<br />suhosin.memory_limit setting.</p>
+<ul><li class="dash">Fixed #25450811: Alert disable memory_limit Fixed in commit
+  #19e4fc5.</li>
+</ul>
+
+<a id="phpmd-1-3-1-2012-02-16-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.1" title="phpmd-1.3.1 release">phpmd-1.3.1</a> (2012/02/16)</h2>
+<p>The 1.3.1 release of PHPMD closes one critical bug in PHPMD, that<br />causes a fatal error due to the xdebug max_nesting_level setting for<br />very deep self calls on methods.</p>
+<ul><li class="dash">Fixed #24975295: Fatal: Maximum function nesting level reached in
+  ASTNode.php:425 Fixed in commit #f6550df.</li>
+</ul>
+
+<a id="phpmd-1-3-0-2012-02-04-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.0" title="phpmd-1.3.0 release">phpmd-1.3.0</a> (2012/02/04)</h2>
+<p>Version 1.3.0 now depends on PHP_Depend 1.0.0 which has support for<br />all the new language constructs introduced with PHP 5.4. Additionally<br />this release contains some minor fixes for PHPMD's rule violation<br />messages.</p>
+<a id="phpmd-1-2-1-2011-10-04-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.2.1" title="phpmd-1.2.1 release">phpmd-1.2.1</a> (2011/10/04)</h2>
+<p>The 1.2.1 release of PHPMD closes several minor issues and bugs.<br />Beside that we have added a contribution by Francis Besset with<br />additions rules for PHPMD. Finally we have updated the utilized<br />PHP_Depend version to a newer release.</p>
+<ul><li class="dash">Fixed #14990109: False detection of unused variable Fixed in commit
+  #183fbd5.</li>
+<li class="dash">Fixed #23278127: PHPMD should exclude unused parameters from
+  inherited methods Fixed in commit #d162b21.</li>
+<li class="dash">Fixed #9355859: PHP_Depend exceptions are silently ignored Fixed in
+  commit #d3d553f.</li>
+<li class="dash">Implemented #11055167: Move PHPUnit annotations from method doc
+  block to class doc block Implemented in commit #7bcddde.</li>
+<li class="dash">Added Superglobals rule in Controversial Implemented in commit
+  #7176e74.</li>
+<li class="dash">Added rules to check CamelCase Implemented in commit #1c3c260.</li>
+</ul>
+
+<a id="phpmd-1-2-0-2011-09-27-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.2.0" title="phpmd-1.2.0 release">phpmd-1.2.0</a> (2011/09/27)</h2>
+<p>Version 1.2.0 is a small feature release of PHPMD that introduces the<br />new command line option --strict. This options forces PHPMD to apply<br />all rules, even if a source node contains the @SuppressWarnings<br />annotation.</p>
+<ul><li class="dash">Controverial PHPMD rule that checks if the project under test does
+  not utilize PHP's super globals. Implemented in commit #0e60fb9.</li>
+<li class="dash">Implemented #18462127: PHPMD needs a <em>strict</em> mode. Implemented in
+  commit #b066b44.</li>
+</ul>
+
+<a id="phpmd-1-1-1-2011-06-30-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.1.1" title="phpmd-1.1.1 release">phpmd-1.1.1</a> (2011/06/30)</h2>
+<p>Version 1.1.1 of PHPMD is a pure Bugfix release that fixes an issue in<br />PHPMD's package manifest. This bug prevents Pyrus the PEAR2 installer<br />from installing PHPMD.</p>
+<ul><li class="dash">Fixed #10096717: Bug in PHPMD's package manifest file. Fixed in
+  commit #f063bc9.</li>
+</ul>
+
+<a id="phpmd-1-1-0-2011-03-20-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.1.0" title="phpmd-1.1.0 release">phpmd-1.1.0</a> (2011/03/20)</h2>
+<p>Version 1.1.0 of PHPMD was released on March the 20th 2011. The key<br />features for this release were two new rules. The first one utilizes<br />the Coupling Between Objects (CBO) metric to detect strongly coupled<br />classes. The second one detects the usage of PHP's questionable 'goto'<br />statement. Beside that we have closed a minor bug in the LongVariable<br />rule, where also private properties with descriptive names were<br />reported. And finally we have replaced deprecated PHPUnit features in<br />the PHPMD's test suite, so that PHPMD's tests should now work with<br />PHPUnit 3.4.x and 3.5.x without deprecated warnings.</p>
+<ul><li class="dash">Fixed #10096717: LongVariable rule should not apply on private
+  properties. Fixed in commit #f063bc9.</li>
+<li class="dash">Implemented #10474873: Add rule for PHP's goto statement.
+  Implemented in commit #2745a20.</li>
+<li class="dash">Implemented #10474987: Implement rule for CBO metric. Implemented in
+  commit #14277b4.</li>
+<li class="dash">Implemented #11012465: Replace deprecated PHPUnit features in test
+  suite. Implemented in commit #4adb88d.</li>
+</ul>
+
+<a id="phpmd-1-0-1-2011-02-12-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.0.1" title="phpmd-1.0.1 release">phpmd-1.0.1</a> (2011/02/12)</h2>
+<ul><li class="dash">Fixed #9930643: The include_path does not match with PHP_Depend's
+  new directory layout. Fixed in commit #531be78.</li>
+<li class="dash">Fixed #9626017: Clear temporary resources after a test has finished.
+  Fixed in commit #b385f15.</li>
+</ul>
+
+<a id="phpmd-1-0-0-2011-02-05-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.0.0" title="phpmd-1.0.0 release">phpmd-1.0.0</a> (2011/02/05)</h2>
+<ul><li class="dash">Fixed #9626017: Clear temporary resources after a test has finished.
+  Fixed in commit #b385f15.</li>
+<li class="dash">New source layout that follows maven's conventions for the directory
+  structure of a product.</li>
+<li class="dash">Switched to PHPUnit 3.5.x as testing framework</li>
+</ul>
+
+<a id="phpmd-0-2-8-2010-11-25-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.8" title="phpmd-0.2.8 release">phpmd-0.2.8</a> (2010/11/25)</h2>
+<ul><li class="dash">Improved help text for the PHPMD command line. Thanks to Volker
+  Dusch for this contribution. https://github.com/edorian/phpmd</li>
+<li class="dash">PHPMD is now compatible with next PHP_Depend release 0.10.0</li>
+</ul>
+
+<a id="phpmd-0-2-7-2010-09-01-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.7" title="phpmd-0.2.7 release">phpmd-0.2.7</a> (2010/09/01)</h2>
+<ul><li class="dash">Fixed #36: @SupressWarnings annotation does not work for
+  UnusedPrivateMethod rule. Fixed in commit #284.</li>
+<li class="dash">Fixed #35: Stream Writer closes STDOUT. Fixed in commit #286.</li>
+<li class="dash">Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
+  phpmd.bat. Fixed in commit #264.</li>
+</ul>
+
+<a id="phpmd-0-2-6-2010-07-03-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.6" title="phpmd-0.2.6 release">phpmd-0.2.6</a> (2010/07/03)</h2>
+<ul><li class="dash">Fixed #28: Unused local variable and unused parameter rule produces
+  false positives. Fixed in commit #245.</li>
+<li class="dash">Implemented #24: Implement Depth Of Inheritance Rule. Implemented in
+  commit #253.</li>
+<li class="dash">Implemented #25: Implement Number of Children Rule. Implemented in
+  commit #252.</li>
+<li class="dash">Implemented #26: Implement Rule that detects the usage of PHP's
+  eval() function. Implemented in commit #251.</li>
+<li class="dash">Implemented #27: Implement Rule that detects the usage of PHP's
+  exit() expression. Implemented in commit #250.</li>
+<li class="dash">Implemented #30: New option --version added to PHPMD's command line
+  interface. Implemented in commit #246.</li>
+<li class="dash">Names of several command line options unified with PHPUnit and
+  PHPCPD. The --ignore option is now --exclude and --extensions is now<br />  --suffixes.</li>
+</ul>
+
+<a id="phpmd-0-2-5-2010-04-03-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.5" title="phpmd-0.2.5 release">phpmd-0.2.5</a> (2010/04/03)</h2>
+<ul><li class="dash">Fixed #17: Do not return success exit code when PHPMD detects rule
+  violations in analyzed source code. Fixed in commit #226.</li>
+<li class="dash">Fixed #19: Super globals were detected as unused variables. Fixed in
+  commit #218.</li>
+<li class="dash">Fixed #20: Local static variables were treated as unused variables.
+  Fixed in commit #219.</li>
+<li class="dash">Implemented #12: Add rule for the Weighted Methods Per Class Metric.
+  Implemented in commit #228.</li>
+<li class="dash">Implemented #16: Alternative syntax for properties in rule set files
+  implemented. Implemented in commit #220.</li>
+</ul>
+
+<a id="phpmd-0-2-4-2010-03-08-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.4" title="phpmd-0.2.4 release">phpmd-0.2.4</a> (2010/03/08)</h2>
+<ul><li class="dash">E_NOTICE bug fix in naming rule.</li>
+</ul>
+
+<a id="phpmd-0-2-3-2010-03-04-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.3" title="phpmd-0.2.3 release">phpmd-0.2.3</a> (2010/03/04)</h2>
+<ul><li class="dash">Fixed #6: PHP Tokenizer required but no error when installing.</li>
+<li class="dash">Fixed #7: UnusedLocalVariable ruleset incorrectly flags variables as
+  unused when used inside double quoted string. Fixed in commit #187.</li>
+<li class="dash">Fixed #14: ExcessivePublicCount rule should utilize PHP_Depend's cis
+  metric. Fixed in commit #203.</li>
+<li class="dash">Fixed #15: ExcessivePublicCount rule is never used. Fixed in commit
+  #202.</li>
+<li class="dash">Implemented #9: Add support for &quot;Suppress warnings&quot; annotations.
+  Implemented in commit #200.</li>
+<li class="dash">Implemented #10: Support for exclude element in rule-set files
+  added. Implemented in commit #189.</li>
+<li class="dash">Implemented #13: Implement naming rules, e.g. short variables,
+  parameter etc.</li>
+</ul>
+
+<a id="phpmd-0-2-2-2010-01-20-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.2" title="phpmd-0.2.2 release">phpmd-0.2.2</a> (2010/01/20)</h2>
+<ul><li class="dash">Small change to the command line interface, which did not return an
+  exit code != 0 when an exception occured.</li>
+</ul>
+
+<a id="phpmd-0-2-1-2010-01-05-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.1" title="phpmd-0.2.1 release">phpmd-0.2.1</a> (2010/01/05)</h2>
+<ul><li class="dash">Implemented #5: Allow multiple input files/directories. Implemented
+  in commit #158.</li>
+<li class="dash">Additional unit tests for multiple components added.</li>
+</ul>
+
+<a id="phpmd-0-2-0-2009-12-30-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.0" title="phpmd-0.2.0 release">phpmd-0.2.0</a> (2009/12/30)</h2>
+<ul><li class="dash">Implemented #2: Support for unused code fules completed. Implemented
+  in commit #134.</li>
+<li class="dash">Implemented #3: Text renderer implemented.</li>
+<li class="dash">Implemented #4: Implement a html renderer. Implemented in commit
+  #139.</li>
+<li class="dash">Several performance improvements.</li>
+</ul>
+
+<a id="phpmd-0-1-0-2009-12-20-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.1.0" title="phpmd-0.1.0 release">phpmd-0.1.0</a> (2009/12/20)</h2>
+<p>Initial release</p>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation">Documentation</a></li><li><a href="/rules/index.html" title="Rules">Rules</a></li><li><a href="/download/index.html" title="Download"><strong>Download</strong></a><ul><li><a href="/download/releases/index.html" title="Releases"><strong>Releases</strong></a></ul></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/download/releases/index.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/download/releases/index.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+<div style="height: 50px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/377/funder.js" async="async"></script></body>
+</html>

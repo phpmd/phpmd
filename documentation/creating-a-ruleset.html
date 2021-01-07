@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="how-to-create-a-custom-rule-set"></a>
+<h2>How to create a custom rule set</h2>
+<p>If you would like to only pick some of the rules that come with PHPMD and
+you want to customize some of the predefined thresholds, you can do this
+by creating your own rule set file that references a custom collection of
+rules with an individual configuration.</p>
+<a id="starting-with-an-empty-ruleset-xml-file"></a>
+<h2>Starting with an empty ruleset.xml file</h2>
+<p>The simplest way to start with a new rule set is to copy one of the
+existing files and remove all the rule-tags from the document body.
+Otherwise you can use the following example as a template for your own
+rule set file. You should change the content of the <code>@name</code> attribute
+and <code>&lt;description /&gt;</code> element to something that describes the purpose
+of this set. :</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<a id="adding-rule-references-to-the-new-ruleset-xml-file"></a>
+<h2>Adding rule references to the new ruleset.xml file</h2>
+<p>The first thing we would like to do is to add all <a href="/rules/unusedcode.html">unused code</a> rules
+to the new rule set file. This can simply be done with a <code>&lt;rule /&gt;</code>
+element that references the entire <a href="/rules/unusedcode.html">unused code</a> rule set that comes
+with PHPMD.</p>
+
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+
+    &lt;!-- Import the entire unused code rule set --&gt;
+    &lt;rule ref=&quot;rulesets/unusedcode.xml&quot; /&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>That's it. Now the custom rule set applies all <a href="/rules/unusedcode.html">unused code</a> rules
+against the analyzed source code.</p>
+<p>We would also like to use the <a href="/rules/codesize.html#cyclomaticcomplexity">cyclomatic complexity</a> rule from the
+existing <a href="/rules/codesize.html">codesize</a> set in our custom rule set. To achieve this we can
+reuse the same syntax with a <code>&lt;rule /&gt;</code> element and a <code>@ref</code> attribute.</p>
+
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+
+    &lt;!-- Import the entire unused code rule set --&gt;
+    &lt;rule ref=&quot;rulesets/unusedcode.xml&quot; /&gt;
+
+    &lt;!-- Import the entire cyclomatic complexity rule --&gt;
+    &lt;rule ref=&quot;rulesets/codesize.xml/CyclomaticComplexity&quot; /&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>Now that the new rule set uses the <a href="/rules/codesize.html#cyclomaticcomplexity">cyclomatic complexity</a> rule we would
+also like to customize some of the rule's properties. First we will
+increase the rule's priority to the highest possible priority value <code>1</code>
+and we also decrease the threshold when the rule reports a violation. This
+customization can be done with same xml elements that are used to configure
+the original rule, so that you can take a look at one of the original rule
+set file.</p>
+
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+
+    &lt;!-- Import the entire unused code rule set --&gt;
+    &lt;rule ref=&quot;rulesets/unusedcode.xml&quot; /&gt;
+
+    &lt;!--
+        Import the entire cyclomatic complexity rule and
+        customize the rule configuration.
+    --&gt;
+    &lt;rule ref=&quot;rulesets/codesize.xml/CyclomaticComplexity&quot;&gt;
+        &lt;priority&gt;1&lt;/priority&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;reportLevel&quot; value=&quot;5&quot; /&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>You should know that PHPMD handles all custom settings additive. This
+means that PHPMD keeps the original configuration for every setting that
+isn't customized in a rule reference.</p>
+<a id="excluding-rules-from-a-rule-set"></a>
+<h2>Excluding rules from a rule set</h2>
+<p>We would like to reuse the <a href="/rules/naming.html">naming</a> rule set of PHPMD. But we don't like
+the two variable naming rules, so that we must exclude them from out rule
+set file. This exclusion can be achieved by declaring an <code>&lt;exclude /&gt;</code>
+element within the rule reference. This element has an attribute <code>@name</code>
+which specifies the name of the excluded rule.</p>
+
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+
+    &lt;!-- Import the entire unused code rule set --&gt;
+    &lt;rule ref=&quot;rulesets/unusedcode.xml&quot; /&gt;
+
+    &lt;!--
+        Import the entire cyclomatic complexity rule and
+        customize the rule configuration.
+    --&gt;
+    &lt;rule ref=&quot;rulesets/codesize.xml/CyclomaticComplexity&quot;&gt;
+        &lt;priority&gt;1&lt;/priority&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;reportLevel&quot; value=&quot;5&quot; /&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+
+    &lt;!-- Import entire naming rule set and exclude rules --&gt;
+    &lt;rule ref=&quot;rulesets/naming.xml&quot;&gt;
+        &lt;exclude name=&quot;ShortVariable&quot; /&gt;
+        &lt;exclude name=&quot;LongVariable&quot; /&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<a id="changing-individual-properties-in-a-rule-set"></a>
+<h2>Changing individual properties in a rule set</h2>
+<p>We would like to use the <a href="/rules/cleancode.html">clean code</a> rule set, but our code uses the
+static constructors of the PHP date and time classes. This causes rule
+violations with the <code>StaticAccess</code> rule. To modify the <code>exceptions</code>
+property of that rule while still keeping the rest of the rule set, we
+need to import the whole rule set, excluding the <code>StaticAccess</code> rule
+and then include the <code>StaticAccess</code> rule individually. Instead of using
+a <code>value</code> attribute for the property you can also use a <code>&lt;value&gt;</code> tag
+to make it more readable.</p>
+
+<pre><code class="">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;ruleset name=&quot;My first PHPMD rule set&quot;
+         xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+         xsi:noNamespaceSchemaLocation=&quot;
+                     http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+    &lt;description&gt;
+        My custom rule set that checks my code...
+    &lt;/description&gt;
+
+    &lt;!-- Import the entire unused code rule set --&gt;
+    &lt;rule ref=&quot;rulesets/unusedcode.xml&quot; /&gt;
+
+    &lt;!--
+        Import the entire cyclomatic complexity rule and
+        customize the rule configuration.
+    --&gt;
+    &lt;rule ref=&quot;rulesets/codesize.xml/CyclomaticComplexity&quot;&gt;
+        &lt;priority&gt;1&lt;/priority&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;reportLevel&quot; value=&quot;5&quot; /&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+
+    &lt;!-- Import entire naming rule set and exclude rules --&gt;
+    &lt;rule ref=&quot;rulesets/naming.xml&quot;&gt;
+        &lt;exclude name=&quot;ShortVariable&quot; /&gt;
+        &lt;exclude name=&quot;LongVariable&quot; /&gt;
+    &lt;/rule&gt;
+
+    &lt;!-- Import entire clean code rule set, modify StaticAccess rule --&gt;
+    &lt;rule ref=&quot;rulesets/cleancode.xml&quot;&gt;
+        &lt;exclude name=&quot;StaticAccess&quot; /&gt;
+    &lt;/rule&gt;
+    &lt;rule ref=&quot;rulesets/cleancode.xml/StaticAccess&quot;&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;exceptions&quot;&gt;
+                &lt;value&gt;
+                  \DateTime,
+                  \DateInterval,
+                  \DateTimeZone
+                &lt;/value&gt;
+            &lt;/property&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<a id="conclusion"></a>
+<h2>Conclusion</h2>
+<p>With PHPMD's rule set syntax it is possible to customize all aspects of
+rules for your own needs and you can reuse every existing rule set xml file
+in your own set. You should take a look at PHPMD's rule <a href="/rules/index.html">documentation</a>
+if it happens that you don't know what rules exist or you don't know
+exactly, which settings are available for one rule, while you create your
+own set of rules. Another good source of information are the rule set
+<a href="https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets">files</a> that are shipped with PHPMD.</p>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation"><strong>Documentation</strong></a><ul><li><a href="/documentation/suppress-warnings.html" title="Suppress warnings">Suppress warnings</a><li><a href="/documentation/writing-a-phpmd-rule.html" title="Writing a PHPMD Rule">Writing a PHPMD Rule</a><li><a href="/documentation/creating-a-ruleset.html" title="Creating a rule set"><strong>Creating a rule set</strong></a><li><a href="/documentation/ant-task.html" title="Ant task usage">Ant task usage</a></ul></li><li><a href="/rules/index.html" title="Rules">Rules</a></li><li><a href="/download/index.html" title="Download">Download</a></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/creating-a-ruleset.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/creating-a-ruleset.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+<div style="height: 50px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/377/funder.js" async="async"></script></body>
+</html>

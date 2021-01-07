@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="how-to-write-a-rule-for-phpmd"></a>
+<h2>How to write a Rule for PHPMD</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This article describes the how to develop custom rule classes
+               for PHPMD (PHP Mess Detector). You will learn how to develop
+               different rule types and how to configure them in a custom rule
+               set file, so that PHPMD can use those rules for its analysis
+               runs. Additionally you will learn several other aspects about
+               PHPMD, like the violation message template engine and how to
+               write customizable rule classes.
+:Keywords:     NPM, Number of Public Methods, Software Metrics, PHPMD, PMD, rule set, rule, xml, violation, AST, Abstract Syntax Tree</p>
+<p>This article describes how you can extend PHPMD with custom rule classes that
+can be used to detect design issues or errors in the analyzed source code.</p>
+<p>Let us start with some architecture basics behind PHPMD. All rules in PHPMD
+must at least implement the <a href="">\\PHPMD\\Rule</a> interface. You can also extend
+the abstract rule base class <a href="">\\PHPMD\\AbstractRule</a> which already provides
+an implementation of all required infrastructure methods and application logic,
+so that the only task which is left to you is the implementation of the
+concrete validation code of your rule. To implement this validation-code the
+PHPMD rule interface declares the <code>apply()</code> method which will be invoked by
+the application during the source analysis phase. :</p>
+<pre><code class="">require_once 'PHPMD/AbstractRule.php';
+
+class Com_Example_Rule_NoFunctions extends \PHPMD\AbstractRule
+{
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        // Check constraints against the given node instance
+    }
+}
+</code></pre>
+<p>The <code>apply()</code> method gets an instance of <a href="">\\PHPMD\\AbstractNode</a> as
+argument. This node instance represents the different high level code artifacts
+found in the analyzed source code. In this context high level artifact means
+<em>interfaces</em>, <em>classes</em>, <em>methods</em> and <em>functions</em>. But how do we tell PHPMD
+which of these artifacts are interesting for our rule, because we do not want
+duplicate implementations of the decision code in every rule? To solve this
+problem PHPMD uses so-called marker interfaces. The only purpose of these
+interfaces is to label a rule class, which says: Hey I'm interested in nodes
+of type class and interface, or I am interested in function artifacts. The
+following list shows the available marker interfaces:</p>
+<ul><li class="dash"><a href="">\\PHPMD\\Rule\\ClassAware</a></li>
+<li class="dash"><a href="">\\PHPMD\\Rule\\FunctionAware</a></li>
+<li class="dash"><a href="">\\PHPMD\\Rule\\InterfaceAware</a></li>
+<li class="dash"><a href="">\\PHPMD\\Rule\\MethodAware</a></li>
+</ul>
+
+<p>With this marker interfaces we can now extend the previous example, so that
+the rule will be called for functions found in the analyzed source code. :</p>
+<pre><code class="">class Com_Example_Rule_NoFunctions
+       extends \PHPMD\AbstractRule
+    implements \PHPMD\Rule\FunctionAware
+{
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        // Check constraints against the given node instance
+    }
+}
+</code></pre>
+<p>And because our coding guideline forbids functions every call to the <code>apply()</code>
+method will result in a rule violation. Such a violation can be reported to
+PHPMD through the <code>addViolation()</code> method. The rule inherits this helper
+method from it's parent class <a href="">\\PHPMD\\AbstractRule</a>. :</p>
+<pre><code class="">class Com_Example_Rule_NoFunctions // ...
+{
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        $this-&gt;addViolation($node);
+    }
+}
+</code></pre>
+<p>That's it. The only thing left to do is adding a configuration entry for this
+rule to a rule set file. This ruleset file is an XML document where all settings
+of one or more rules can be configured, so that everyone can customize an
+existing rule without any changes the rule's source. The syntax of the rule set
+file is completely adapted from PHPMD's inspiring example <a href="https://pmd.github.io">PMD</a>. To get
+started with a custom rule set you should take a look at one of the existing
+<a href="">XML files</a> and then adapt one of the rule configurations for a newly created
+rule. The most important elements of a rule configuration are:</p>
+<ul><li class="dash"><em>@name</em>: Human readable name for the rule.</li>
+<li class="dash"><em>@message</em>: The error/violation message that will shown in the report.</li>
+<li class="dash"><em>@class</em>: The full qualified class name of the rule.</li>
+<li class="dash"><em>priority</em>: The priority for the rule. This can be a value in the range 1-5,
+  where 1 is the highest priority and 5 the lowest priority.</li>
+</ul>
+
+
+<pre><code class="">&lt;ruleset name=&quot;example.com rules&quot;
+       xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+       xsi:noNamespaceSchemaLocation=&quot;http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+
+    &lt;rule name=&quot;FunctionRule&quot;
+          message = &quot;Please do not use functions.&quot;
+          class=&quot;Com_Example_Rule_NoFunctions&quot;
+          externalInfoUrl=&quot;http://example.com/phpmd/rules.html#functionrule&quot;&gt;
+
+        &lt;priority&gt;1&lt;/priority&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>The previous listing shows a basic rule set file that configures all required
+settings for the created example rule. For more details on PHPMD's rule set
+file format you should take a look a the <a href="">Create a custom rule set</a> tutorial.</p>
+<p>Finally the real world test. Let's assume we have saved the rule class in a
+file <code>Com/Example/Rule/NoFunction.php</code> that is somewhere in the PHP
+<code>include_path</code> and we have saved the rule set in a file named
+<code>example-rule.xml</code>. No we can test the rule from the command line with the
+following command: :</p>
+<pre><code class="">~ $ phpmd /my/source/example.com text /my/rules/example-rule.xml
+
+/my/source/example.com/functions.php:2    Please do not use functions.
+</code></pre>
+<p>That's it. Now we have a first custom rule class that can be used with PHPMD.</p>
+<a id="writing-a-rule-based-on-an-existing-software-metric"></a>
+<h2>Writing a rule based on an existing Software Metric</h2>
+<p>Since the root goal for the development of PHPMD was the implementation of a
+simple and user friendly interface for PHP_Depend, we will show you in this
+section how to develop a rule class, that uses a software metric measured by
+<a href="">PDepend</a> as input data.</p>
+<p>In this section you will learn how to access software metrics for a given
+<a href="">\\PHPMD\\AbstractNode</a> instance. And you will learn how to use PHPMD's
+configuration backend in such a way, that thresholds and other settings can
+be customized without changing any PHP code. Additionally you will see how
+the information content of an error message can be improved.</p>
+<p>The first thing we need now is a software metric that we want to use as basis
+for the new rule. A complete and up2date list of available software metrics
+can be found PHP_Depend's <a href="">metric catalog</a>. For this article we choose the
+<a href="">Number of Public Methods (npm)</a> metric and we define an upper and a lower
+threshold for our rule. The upper threshold is <code>10</code>, because we think a class
+with more public methods exposes to much of its privates and should be
+refactored into two or more classes. For the lower threshold we choose <code>1</code>,
+because a class without any public method does not expose any service to
+surrounding application.</p>
+<p>The following code listing shows the entire rule class skeleton. As you can
+see, this class implements the <a href="">\\PHPMD\\Rule\\ClassAware</a> interface, so that
+PHPMD knows that this rule will only be called for classes. :</p>
+<pre><code class="">class Com_Example_Rule_NumberOfPublicMethods
+       extends \PHPMD\AbstractRule
+    implements \PHPMD\Rule\ClassAware
+{
+    const MINIMUM = 1,
+          MAXIMUM = 10;
+
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        // Check constraints against the given node instance
+    }
+}
+</code></pre>
+<p>Now that we have the rule skeleton we must access the <code>npm</code> metric which
+is associated with the given node instance. All software metrics calculated for
+a node object can directly be accessed through the <code>getMetric()</code> method of the
+node instance. This method takes a single parameter, the abbreviation/acronym
+of the metric as documented in PHP_Depends <a href="">metric catalog</a>. :</p>
+<pre><code class="">class Com_Example_Rule_NumberOfPublicMethods
+       extends \PHPMD\AbstractRule
+    implements \PHPMD\Rule\ClassAware
+{
+    const MINIMUM = 1,
+          MAXIMUM = 10;
+
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        $npm = $node-&gt;getMetric('npm');
+        if ($npm &lt; self::MINIMUM || $npm &gt; self::MAXIMUM) {
+            $this-&gt;addViolation($node);
+        }
+    }
+}
+</code></pre>
+<p>That's the coding part for the metric based rule. Now we must add this class
+to a rule set file.</p>
+
+<pre><code class="">&lt;ruleset name=&quot;example.com rules&quot;
+       xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+       xsi:noNamespaceSchemaLocation=&quot;http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;rule name=&quot;NumberOfPublics&quot;
+          message = &quot;The context class violates the NPM metric.&quot;
+          class=&quot;Com_Example_Rule_NumberOfPublicMethods&quot;
+          externalInfoUrl=&quot;http://example.com/phpmd/rules.html#numberofpublics&quot;&gt;
+
+        &lt;priority&gt;3&lt;/priority&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>Now we can run PHPMD with this rule set file and it will report us all classes
+that do not fulfill our requirement for the NPM metric. But as promised, we
+will make this rule more customizable, so that it can be adjusted for different
+project requirements. Therefore we will replace the two constants <code>MINIMUM</code>
+and <code>MAXIMUM</code> with properties that can be configured in the rule set file.
+So let us start with the modified rule set file. :</p>
+<pre><code class="">&lt;ruleset name=&quot;example.com rules&quot;
+       xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+       xsi:noNamespaceSchemaLocation=&quot;http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;rule name=&quot;NumberOfPublics&quot;
+          message = &quot;The context class violates the NPM metric.&quot;
+          class=&quot;Com_Example_Rule_NumberOfPublicMethods&quot;
+          externalInfoUrl=&quot;http://example.com/phpmd/rules.html#numberofpublics&quot;&gt;
+
+        &lt;priority&gt;3&lt;/priority&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;minimum&quot;
+                      value=&quot;1&quot;
+                      description=&quot;Minimum number of public methods.&quot; /&gt;
+            &lt;property name=&quot;maximum&quot;
+                      value=&quot;10&quot;
+                      description=&quot;Maximum number of public methods.&quot; /&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>In PMD rule set files you can define as many properties for a rule as you like.
+All of them will be injected into a rule instance by PHPMD's runtime
+environment and then can be accessed through the <code>get&lt;type&gt;Property()</code>
+methods. Currently PHPMD supports the following getter methods.</p>
+<ul><li class="dash"><code>getBooleanProperty()</code></li>
+<li class="dash"><code>getIntProperty()</code></li>
+</ul>
+
+<p>So now let's modify the rule class and replace the hard coded constants with
+the configurable properties. :</p>
+<pre><code class="">class Com_Example_Rule_NumberOfPublicMethods
+       extends \PHPMD\AbstractRule
+    implements \PHPMD\Rule\ClassAware
+{
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        $npm = $node-&gt;getMetric('npm');
+        if ($npm &lt; $this-&gt;getIntProperty('minimum') ||
+            $npm &gt; $this-&gt;getIntProperty('maximum')
+        ) {
+            $this-&gt;addViolation($node);
+        }
+    }
+}
+</code></pre>
+<p>Now we are nearly done, but one issue is still left out. When we execute this
+rule, the user will get the message <em>&quot;The context class violates the NPM
+metric.&quot;</em> which isn't really informative, because he must manually check if the
+upper or lower threshold was exceeded and what the actual thresholds are. To
+provide more information about a rule violation you can use PHPMD's minimalistic
+template/placeholder engine for violation messages. With this engine you can
+define violation messages with placeholders, that will be replaced with actual
+values. The format for such placeholders is <code>'{' + \d+ '}'</code>. :</p>
+<pre><code class="">&lt;ruleset name=&quot;example.com rules&quot;
+       xmlns=&quot;http://pmd.sf.net/ruleset/1.0.0&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd&quot;
+       xsi:noNamespaceSchemaLocation=&quot;http://pmd.sf.net/ruleset_xml_schema.xsd&quot;&gt;
+
+    &lt;!-- ... --&gt;
+
+    &lt;rule name=&quot;NumberOfPublics&quot;
+          message = &quot;The class {0} has {1} public method, the threshold is {2}.&quot;
+          class=&quot;Com_Example_Rule_NumberOfPublicMethods&quot;
+          externalInfoUrl=&quot;http://example.com/phpmd/rules.html#numberofpublics&quot;&gt;
+
+        &lt;priority&gt;3&lt;/priority&gt;
+        &lt;properties&gt;
+            &lt;property name=&quot;minimum&quot;
+                      value=&quot;1&quot;
+                      description=&quot;Minimum number of public methods.&quot; /&gt;
+            &lt;property name=&quot;maximum&quot;
+                      value=&quot;10&quot;
+                      description=&quot;Maximum number of public methods.&quot; /&gt;
+        &lt;/properties&gt;
+    &lt;/rule&gt;
+&lt;/ruleset&gt;
+</code></pre>
+<p>Now we can adjust the rule class in such a manner, that it will set the correct
+values for the placeholders <code>{0}</code>, <code>{1}</code> and <code>{2}</code> :</p>
+<pre><code class="">class Com_Example_Rule_NumberOfPublicMethods
+       extends \PHPMD\AbstractRule
+    implements \PHPMD\Rule\ClassAware
+{
+    public function apply(\PHPMD\AbstractNode $node)
+    {
+        $min = $this-&gt;getIntProperty('minimum');
+        $max = $this-&gt;getIntProperty('maximum');
+        $npm = $node-&gt;getMetric('npm');
+
+        if ($npm &lt; $min) {
+            $this-&gt;addViolation($node, array(get_class($node), $npm, $min));
+        } else if ($npm &gt; $max) {
+            $this-&gt;addViolation($node, array(get_class($node), $npm, $max));
+        }
+    }
+}
+</code></pre>
+<p>If we run this version of the rule we will get an error message like the one
+shown in the following figure. :</p>
+<pre><code class="">The class FooBar has 42 public method, the threshold is 10.
+</code></pre>
+<a id="writing-a-rule-based-on-the-abstract-syntax-tree"></a>
+<h2>Writing a rule based on the Abstract Syntax Tree</h2>
+<p>Now we will learn how to develop a PHPMD rule that utilizes PHP_Depend's
+abstract syntax tree to detect violations or possible error in the analyzed
+source code. The ability to access PHP_Depend's abstract syntax tree gives you
+the most powerful way to write rules for PHPMD, because you can analyze nearly
+all aspects of the software under test. The syntax tree can be accessed through
+the <code>getFirstChildOfType()</code> and <code>findChildrenOfType()</code> methods of the
+<a href="">\\PHPMD\\AbstractNode</a> class.</p>
+<p>In this example we will implement a rule that detects the usage of the new and
+controversial PHP feature <code>goto</code>. Because we all know and agree that <code>goto</code>
+was already bad in Basic, we would like to prevent our developers from using
+the bad feature. Therefore we implement a PHPMD rule, that searches through
+PHP_Depend's for the <code>goto</code> language construct.</p>
+<p>Because the <code>goto</code> statement cannot be found in classes and interfaces, but
+in methods and functions, the new rule class must implement the two marker
+interfaces <a href="">\\PHPMD\\Rule\\FunctionAware</a> and <a href="">\\PHPMD\\Rule\\MethodAware</a>.</p>
+
+<pre><code class="">namespace PHPMD\Rule\Design;
+
+use PHPMD\AbstractNode;
+use PHPMD\AbstractRule;
+use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\FunctionAware;
+
+class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
+{
+    public function apply(AbstractNode $node)
+    {
+        foreach ($node-&gt;findChildrenOfType('GotoStatement') as $goto) {
+            $this-&gt;addViolation($goto, array($node-&gt;getType(), $node-&gt;getName()));
+        }
+    }
+}
+</code></pre>
+<p>As you can see, we are searching for the string <code>GotoStatement</code> in the
+previous example. This is a shortcut notation used by PHPMD to address concrete
+PHP_Depend syntax tree nodes. All abstract syntax tree classes in PDepend
+have the following format: :</p>
+<pre><code class="">\PDepend\Source\AST\ASTGotoStatement
+</code></pre>
+<p>where :</p>
+<pre><code class="">\PDepend\Source\AST\AST
+</code></pre>
+<p>is fixed and everything else depends on the node type. And this fixed part of
+the class name can be omitted in PHPMD when searching for an abstract syntax
+tree node. To implement additional rules you should take a look at PHP_Depend's
+<a href="">Code package</a> where you can find all currently supported code nodes.</p>
+<a id="conclusion"></a>
+<h2>Conclusion</h2>
+<p>In this article we have shown you several ways to implement custom rules for
+PHPMD. If you think one of your rules could be reusable for other projects and
+user, don't hesitate to propose your custom rules on the project's issue tracker
+at <a href="https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule.php">GitHub</a> or open a pull request.</p>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation"><strong>Documentation</strong></a><ul><li><a href="/documentation/suppress-warnings.html" title="Suppress warnings">Suppress warnings</a><li><a href="/documentation/writing-a-phpmd-rule.html" title="Writing a PHPMD Rule"><strong>Writing a PHPMD Rule</strong></a><li><a href="/documentation/creating-a-ruleset.html" title="Creating a rule set">Creating a rule set</a><li><a href="/documentation/ant-task.html" title="Ant task usage">Ant task usage</a></ul></li><li><a href="/rules/index.html" title="Rules">Rules</a></li><li><a href="/download/index.html" title="Download">Download</a></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/writing-a-phpmd-rule.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/writing-a-phpmd-rule.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+<div style="height: 50px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/377/funder.js" async="async"></script></body>
+</html>

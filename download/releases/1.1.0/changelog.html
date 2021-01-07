@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="release-1-1-0"></a>
+<h2>Release 1.1.0</h2>
+<p>:Author:       Manuel Pichler
+:Copyright:    All rights reserved
+:Description:  This document describes the news features and bugfixes of the
+               next feature release 1.1.0 of PHPMD. This version provides two
+               new rules, one that utilizes the CBO metric to detect strong
+               coupled classes and a second on that detects the usage of PHP's
+               goto statement. Additionally this release closes a minor bug
+               in the LongVariable rule.
+:Keywords:     Release, Version, Features, Bugfixes, Coupling Between Objects, CBO, Goto Statement, PHPUnit</p>
+<p>Version 1.1.0 of PHPMD was released on March the 20th 2011. The key features
+for this release were two new rules. The first one utilizes the <a href="">Coupling
+Between Objects (CBO)</a> metric to detect strongly coupled classes. The second
+one detects the usage of PHP's questionable <code>goto</code> statement. Beside that
+we have closed a minor bug in the LongVariable rule, where also private
+properties with descriptive names were reported. And finally we have replaced
+deprecated PHPUnit features in the PHPMD's test suite, so that PHPMD's tests
+should now work with PHPUnit 3.4.x and 3.5.x without deprecated warnings.</p>
+<a id="features"></a>
+<h3>Features</h3>
+<ul><li class="dash">Implemented <a href="">#10474873</a>: Add rule for PHP's goto statement. Implemented
+  with commit <a href="">#2745a20</a>.</li>
+<li class="dash">Implemented <a href="">#10474987</a>: Implement rule for CBO metric. Implemented with
+  commit <a href="">#14277b4</a>.</li>
+<li class="dash">Implemented <a href="">#11012465</a>: Replace deprecated PHPUnit features in test suite.
+  Implemented with commit <a href="">#4adb88d</a>.</li>
+</ul>
+
+<a id="bugfixes"></a>
+<h3>Bugfixes</h3>
+<ul><li class="dash">Fixed <a href="">#10096717</a>: LongVariable rule should not apply on private
+  properties. Fixed with commit <a href="">#f063bc9</a>.</li>
+</ul>
+
+<a id="download"></a>
+<h3>Download</h3>
+<p>You can download release 1.1.0 as a <a href="http://pdepend.org/documentation/software-metrics/coupling-between-objects.html">Phar archive</a></p>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation">Documentation</a></li><li><a href="/rules/index.html" title="Rules">Rules</a></li><li><a href="/download/index.html" title="Download"><strong>Download</strong></a><ul><li><a href="/download/releases/index.html" title="Releases"><strong>Releases</strong></a></ul></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/download/releases/1.1.0/changelog.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/download/releases/1.1.0/changelog.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+<div style="height: 50px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/377/funder.js" async="async"></script></body>
+</html>

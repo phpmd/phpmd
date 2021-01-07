@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Thu, 07 Jan 2021 10:26:33 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="controversial-rules"></a>
+<h2>Controversial Rules</h2>
+<p>This ruleset contains a collection of controversial rules.</p>
+<a id="superglobals"></a>
+<h2>Superglobals</h2>
+<p>Since: PHPMD 0.2</p>
+<p>Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.</p>
+<p>Example: :</p>
+<pre><code class="">class Foo {
+    public function bar() {
+        $name = $_POST['foo'];
+    }
+}
+</code></pre>
+<a id="camelcaseclassname"></a>
+<h2>CamelCaseClassName</h2>
+<p>Since: PHPMD 0.2</p>
+<p>It is considered best practice to use the CamelCase notation to name classes.</p>
+<p>Example: :</p>
+<pre><code class="">class class_name {
+}
+</code></pre>
+<a id="camelcasepropertyname"></a>
+<h2>CamelCasePropertyName</h2>
+<p>Since: PHPMD 0.2</p>
+<p>It is considered best practice to use the camelCase notation to name attributes.</p>
+<p>Example: :</p>
+<pre><code class="">class ClassName {
+    protected $property_name;
+}
+</code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>allow-underscore</td><td>false</td><td>Allow an optional, single underscore at the beginning.</td></tr><tr><td>allow-underscore-test</td><td>false</td><td>Is it allowed to have underscores in test method names.</td></tr></table>
+<a id="camelcasemethodname"></a>
+<h2>CamelCaseMethodName</h2>
+<p>Since: PHPMD 0.2</p>
+<p>It is considered best practice to use the camelCase notation to name methods.</p>
+<p>Example: :</p>
+<pre><code class="">class ClassName {
+    public function get_name() {
+    }
+}
+</code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>allow-underscore</td><td>false</td><td>Allow an optional, single underscore at the beginning.</td></tr><tr><td>allow-underscore-test</td><td>false</td><td>Is it allowed to have underscores in test method names.</td></tr></table>
+<a id="camelcaseparametername"></a>
+<h2>CamelCaseParameterName</h2>
+<p>Since: PHPMD 0.2</p>
+<p>It is considered best practice to use the camelCase notation to name parameters.</p>
+<p>Example: :</p>
+<pre><code class="">class ClassName {
+    public function doSomething($user_name) {
+    }
+}
+</code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>allow-underscore</td><td>false</td><td>Allow an optional, single underscore at the beginning.</td></tr></table>
+<a id="camelcasevariablename"></a>
+<h2>CamelCaseVariableName</h2>
+<p>Since: PHPMD 0.2</p>
+<p>It is considered best practice to use the camelCase notation to name variables.</p>
+<p>Example: :</p>
+<pre><code class="">class ClassName {
+    public function doSomething() {
+        $data_module = new DataModule();
+    }
+}
+</code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>allow-underscore</td><td>false</td><td>Allow an optional, single underscore at the beginning.</td></tr></table>
+<a id="remark"></a>
+<h2>Remark</h2>
+<blockquote><p>This document is based on a ruleset xml-file, that was taken from the original source of the <a href="http://pmd.sourceforge.net/">PMD</a> project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.</p>
+</blockquote>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation">Documentation</a></li><li><a href="/rules/index.html" title="Rules"><strong>Rules</strong></a><ul><li><a href="/rules/cleancode.html" title="Clean Code Rules">Clean Code Rules</a><li><a href="/rules/codesize.html" title="Code Size Rules">Code Size Rules</a><li><a href="/rules/controversial.html" title="Controversial Rules"><strong>Controversial Rules</strong></a><li><a href="/rules/design.html" title="Design Rules">Design Rules</a><li><a href="/rules/naming.html" title="Naming Rules">Naming Rules</a><li><a href="/rules/unusedcode.html" title="Unused Code Rules">Unused Code Rules</a></ul></li><li><a href="/download/index.html" title="Download">Download</a></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/rules/controversial.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/rules/controversial.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+<div style="height: 50px;"></div><div id="codefund"></div><script src="https://app.codefund.io/properties/377/funder.js" async="async"></script></body>
+</html>
