@@ -8,6 +8,10 @@
         <path>suppress-warnings.rst</path>
     </site>
     <site display="true">
+        <name>CI Integration</name>
+        <path>ci-integration.rst</path>
+    </site>
+    <site display="true">
         <name>Writing a PHPMD Rule</name>
         <path>writing-a-phpmd-rule.rst</path>
     </site>
