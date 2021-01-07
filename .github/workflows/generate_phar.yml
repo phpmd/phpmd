@@ -1,0 +1,71 @@
+name: Generate phar
+
+#on: release
+# temporary test version
+on:
+  push:
+    tags:
+      - "*"
+    branches:
+      - "*"
+  release:
+    types:
+      - created
+
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [5.4]
+        dependency-version: [prefer-stable]
+
+    name: Release phar
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Git submodules
+        run: git submodule update --init
+
+      - name: Ant
+        run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
+
+      - name: Archive generated phar
+        uses: actions/upload-artifact@v2
+        with:
+          name: phpmd.phar
+          path: phpmd.phar
+
+      - name: Release phpmd.phar
+        if: github.event_name == 'release'
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'phpmd.phar'
