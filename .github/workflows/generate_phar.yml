@@ -1,7 +1,5 @@
 name: Generate phar
 
-#on: release
-# temporary test version
 on:
   push:
     tags:
@@ -11,7 +9,6 @@ on:
   release:
     types:
       - created
-
 
 jobs:
   php-tests:
