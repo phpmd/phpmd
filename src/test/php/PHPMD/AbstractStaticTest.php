@@ -180,6 +180,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
             file_get_contents(self::createFileUri($expectedFileName))
         );
 
+        $expected = str_replace('#{workingDirectory}', getcwd(), $expected);
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
         self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
