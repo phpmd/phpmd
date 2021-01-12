@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use Closure;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -150,21 +151,27 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
+     * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
+     *                                          if set to a closure, the closure is applied on the actual output array.
      *
      * @return void
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName)
+    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true)
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
-        }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
+        if ($removeDynamicValues === true) {
+            if (isset($actual['timestamp'])) {
+                $actual['timestamp'] = '';
+            }
+            if (isset($actual['duration'])) {
+                $actual['duration'] = '';
+            }
+            if (isset($actual['version'])) {
+                $actual['version'] = '@package_version@';
+            }
+        } elseif ($removeDynamicValues instanceof Closure) {
+            $actual = $removeDynamicValues($actual);
         }
 
         $expected = str_replace(
