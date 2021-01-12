@@ -21,6 +21,7 @@ use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -210,7 +211,8 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                 case '--reportfile-json':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
+                case '--reportfile-sarif':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json|sarif)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -397,6 +399,8 @@ class CommandLineOptions
                 return $this->createAnsiRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
+            case 'sarif':
+                return $this->createSarifRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -448,6 +452,14 @@ class CommandLineOptions
     protected function createJsonRenderer()
     {
         return new JSONRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\SARIFRenderer
+     */
+    protected function createSarifRenderer()
+    {
+        return new SARIFRenderer();
     }
 
     /**

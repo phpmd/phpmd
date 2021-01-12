@@ -194,6 +194,7 @@ At the moment PHPMD comes with the following renderers:
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
+- *sarif*, the Static Analysis Results Interchange Format.
 
 PHPMD for enterprise
 --------------------
