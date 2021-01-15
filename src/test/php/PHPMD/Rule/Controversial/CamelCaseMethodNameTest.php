@@ -228,6 +228,18 @@ class CamelCaseMethodNameTest extends AbstractTest
         $rule->apply($method);
     }
 
+    public function testRuleDoesNotApplyToTestMethodWithUnderscoreFollowedByNumber()
+    {
+        $method = $this->getMethod();
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'true');
+        $rule->apply($method);
+    }
+
     /**
      * Returns the first method found in a source file related to the calling
      * test method.
