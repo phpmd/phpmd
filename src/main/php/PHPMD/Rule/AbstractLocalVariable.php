@@ -310,6 +310,7 @@ abstract class AbstractLocalVariable extends AbstractRule
                 // @TODO: Find a way to handle methods
                 return false;
             }
+
             $reflectionFunction = $this->getReflectionFunctionByName($functionName);
 
             if ($reflectionFunction) {
