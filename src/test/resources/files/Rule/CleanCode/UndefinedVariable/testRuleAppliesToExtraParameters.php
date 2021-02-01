@@ -15,11 +15,17 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class testRuleAppliesToExtraParameters
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    function testRuleAppliesToExtraParameters()
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+        $x = 42;
+
+        $this->foo($x, $y);
+    }
+
+    function foo(&$a)
+    {
+        $a++;
     }
 }

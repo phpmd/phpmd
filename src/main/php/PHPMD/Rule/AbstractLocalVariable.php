@@ -277,7 +277,13 @@ abstract class AbstractLocalVariable extends AbstractRule
         if ($parent && $parent instanceof ASTArguments) {
             $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
             $function = $this->getNode($parent->getParent());
+            $functionParent = $this->getNode($function->getParent());
             $functionName = $function->getImage();
+
+            if ($functionParent instanceof ASTMemberPrimaryPrefix) {
+                // @TODO: Find a way to handle methods
+                return false;
+            }
 
             try {
                 $reflectionFunction = new ReflectionFunction($functionName);
@@ -288,7 +294,6 @@ abstract class AbstractLocalVariable extends AbstractRule
                 }
             } catch (ReflectionException $exception) {
                 // @TODO: Find a way to handle user-land functions
-                // @TODO: Find a way to handle methods
             }
         }
 
