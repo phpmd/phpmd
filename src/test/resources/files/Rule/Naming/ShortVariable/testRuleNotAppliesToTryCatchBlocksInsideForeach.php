@@ -15,11 +15,13 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+function testRuleNotAppliesToTryCatchBlocksInsideForeach()
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
-    {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+    foreach ([1, 2] as $number) {
+        try {
+            echo $number;
+        } catch (InvalidArgumentException $e) {
+            var_dump($e);
+        }
     }
 }

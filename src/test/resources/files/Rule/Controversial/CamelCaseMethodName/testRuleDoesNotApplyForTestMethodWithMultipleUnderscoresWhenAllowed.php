@@ -15,11 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class testRuleDoesNotApplyForTestMethodWithMultipleUnderscoresWhenAllowed
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    public function testGivenSomeValue_expect_some_result()
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+
     }
 }

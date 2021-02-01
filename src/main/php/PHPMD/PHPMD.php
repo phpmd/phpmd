@@ -114,8 +114,20 @@ class PHPMD
      *
      * @return string[]
      * @since 0.2.0
+     * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
      */
     public function getIgnorePattern()
+    {
+        return $this->getIgnorePatterns();
+    }
+
+    /**
+     * Returns an array with string patterns that mark a file path invalid.
+     *
+     * @return string[]
+     * @since 2.9.0
+     */
+    public function getIgnorePatterns()
     {
         return $this->ignorePatterns;
     }
@@ -126,13 +138,29 @@ class PHPMD
      *
      * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
+     * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
      */
     public function setIgnorePattern(array $ignorePatterns)
+    {
+        $this->addIgnorePatterns($ignorePatterns);
+    }
+
+    /**
+     * Add a list of ignore patterns which is used to exclude directories from
+     * the source analysis.
+     *
+     * @param array<string> $ignorePatterns List of ignore patterns.
+     * @return $this
+     * @since 2.9.0
+     */
+    public function addIgnorePatterns(array $ignorePatterns)
     {
         $this->ignorePatterns = array_merge(
             $this->ignorePatterns,
             $ignorePatterns
         );
+
+        return $this;
     }
 
     /**
@@ -175,7 +203,7 @@ class PHPMD
     ) {
 
         // Merge parsed excludes
-        $this->setIgnorePattern($ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
 

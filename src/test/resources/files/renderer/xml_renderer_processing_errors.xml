@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="@package_version@" timestamp="">
+<pmd version="@package_version@" tool="phpmd" timestamp="">
   <error filename="/tmp/foo.php" msg="Failed for file &quot;/tmp/foo.php&quot;." />
   <error filename="/tmp/bar.php" msg="Failed for file &quot;/tmp/bar.php&quot;." />
   <error filename="/tmp/baz.php" msg="Failed for file &quot;/tmp/baz.php&quot;." />

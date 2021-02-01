@@ -136,7 +136,7 @@ class RuleViolation
     /**
      * Returns the file name where this rule violation was detected.
      *
-     * @return string
+     * @return string|null
      */
     public function getFileName()
     {

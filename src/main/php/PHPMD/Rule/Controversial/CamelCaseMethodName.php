@@ -74,11 +74,11 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     protected function isValid($methodName)
     {
         if ($this->getBooleanProperty('allow-underscore-test') && strpos($methodName, 'test') === 0) {
-            return preg_match('/^test[a-zA-Z0-9]*([_][a-z][a-zA-Z0-9]*)?$/', $methodName);
+            return preg_match('/^test[a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/', $methodName);
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {
-            return preg_match('/^[_]?[a-z][a-zA-Z0-9]*$/', $methodName);
+            return preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $methodName);
         }
 
         return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName);

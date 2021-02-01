@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToUsedProperties extends AbstractTest
+class testRuleDoesNotApplyToUsedProperties
 {
     protected $x = 'abc';
 

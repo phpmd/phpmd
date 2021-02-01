@@ -15,11 +15,12 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class class_testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall()
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+        \var_dump(__FUNCTION__);
+        \print_r(__METHOD__);
+        \debug_zval_dump($this);
     }
 }

@@ -15,11 +15,15 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class testRuleAppliesToMethodMatchingFunctionName
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    public function testRuleAppliesToMethodMatchingFunctionName()
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+        $this->preg_match('a', 'b', $undefined);
+    }
+
+    public function preg_match($a, $b, $c)
+    {
+        // noop
     }
 }

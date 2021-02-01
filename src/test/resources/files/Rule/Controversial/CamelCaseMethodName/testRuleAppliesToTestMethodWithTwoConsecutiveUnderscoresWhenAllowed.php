@@ -15,11 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+class testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
+    public function testGivenSomeValue_expectSome__niceResult()
     {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
+
     }
 }

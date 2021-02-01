@@ -15,11 +15,9 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray
+function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall()
 {
-    function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
-    {
-        $x = ['a' => 42, 'b' => $y];
-        echo $x;
-    }
+    \var_dump(__FUNCTION__);
+    \debug_print_backtrace();
+    \debug_zval_dump($GLOBALS);
 }
