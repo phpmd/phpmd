@@ -47,6 +47,9 @@ jobs:
 
       - name: Build website
         run: composer build-website
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CNAME: phpmd.org
 
       - name: Archive generated website
         uses: actions/upload-artifact@v2
