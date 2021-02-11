@@ -34,7 +34,7 @@ class MissingImportTest extends AbstractTest
     public function getRule()
     {
         $rule = new MissingImport();
-        $rule->addProperty('ignore-global', FALSE);
+        $rule->addProperty('ignore-global', false);
         return $rule;
     }
 
