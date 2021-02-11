@@ -33,7 +33,9 @@ class MissingImportTest extends AbstractTest
      */
     public function getRule()
     {
-        return new MissingImport();
+        $rule = new MissingImport();
+        $rule->addProperty('ignore-global', FALSE);
+        return $rule;
     }
 
     /**
@@ -69,7 +71,7 @@ class MissingImportTest extends AbstractTest
      */
     public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
-        $rule = new MissingImport();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
