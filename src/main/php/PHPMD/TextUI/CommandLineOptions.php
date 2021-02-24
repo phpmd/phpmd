@@ -126,6 +126,14 @@ class CommandLineOptions
     protected $strict = false;
 
     /**
+     * Should PHPMD exit without error code even if error is found?
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    protected $ignoreErrorsOnExit = false;
+
+    /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var boolean
@@ -202,6 +210,9 @@ class CommandLineOptions
                     break;
                 case '--not-strict':
                     $this->strict = false;
+                    break;
+                case '--ignore-errors-on-exit':
+                    $this->ignoreErrorsOnExit = true;
                     break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
@@ -352,6 +363,17 @@ class CommandLineOptions
     public function hasStrict()
     {
         return $this->strict;
+    }
+
+    /**
+     * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function ignoreErrorsOnExit()
+    {
+        return $this->ignoreErrorsOnExit;
     }
 
     /**
@@ -518,6 +540,8 @@ class CommandLineOptions
             'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
+            '--ignore-errors-on-exit: will exit with a zero code, ' .
+            'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
             'even if any violations are found' . \PHP_EOL;
     }

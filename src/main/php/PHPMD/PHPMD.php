@@ -28,6 +28,15 @@ class PHPMD
     const VERSION = '@package_version@';
 
     /**
+     * This property will be set to <b>true</b> when an error
+     * was found in the processed source code.
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    private $errors = false;
+
+    /**
      * List of valid file extensions for analyzed files.
      *
      * @var array(string)
@@ -49,7 +58,7 @@ class PHPMD
     private $input;
 
     /**
-     * This property will be set to <b>true</b> when an error or a violation
+     * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
      * @var boolean
@@ -64,6 +73,18 @@ class PHPMD
      * @since 1.2.0
      */
     private $options = array();
+
+    /**
+     * This method will return <b>true</b> when the processed source code
+     * contains errors.
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function hasErrors()
+    {
+        return $this->errors;
+    }
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -232,6 +253,7 @@ class PHPMD
             $renderer->end();
         }
 
+        $this->errors = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }
