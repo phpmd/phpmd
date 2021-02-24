@@ -140,6 +140,13 @@ class CommandLineOptions
     protected $availableRuleSets = array();
 
     /**
+     * List of custom options for custom renderer
+     *
+     * @var array
+     */
+    protected $customOptions = array();
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -214,7 +221,12 @@ class CommandLineOptions
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
-                    $arguments[] = $arg;
+                    $customPrefix = '--custom-';
+                    if (strpos($arg, $customPrefix) !== false) {
+                        $this->customOptions[substr($arg, strlen($customPrefix))] = array_shift($args);
+                    } else {
+                        $arguments[] = $arg;
+                    }
                     break;
             }
         }
@@ -464,7 +476,7 @@ class CommandLineOptions
         }
 
         if (class_exists($this->reportFormat)) {
-            return new $this->reportFormat();
+            return new $this->reportFormat($this->customOptions);
         }
 
         // Try to load a custom renderer
@@ -484,7 +496,7 @@ class CommandLineOptions
 
         include_once $fileName;
 
-        return new $this->reportFormat();
+        return new $this->reportFormat($this->customOptions);
     }
 
     /**
