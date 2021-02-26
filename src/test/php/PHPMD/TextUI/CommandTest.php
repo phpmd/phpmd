@@ -91,6 +91,44 @@ class CommandTest extends AbstractTest
                 array('--ignore-violations-on-exit'),
             ),
             array(
+                'source/source_with_npath_violation.php',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit', '--ignore-violations-on-exit'),
+            ),
+            array(
                 'source/ccn_suppress_function.php',
                 Command::EXIT_VIOLATION,
                 array('--strict'),
@@ -182,7 +220,7 @@ class CommandTest extends AbstractTest
     {
         return array(
             array('--suffixes', '.class.php'),
-            array('--exclude', 'ccn_,npath_'),
+            array('--exclude', 'ccn_,npath_,parse_error'),
         );
     }
 

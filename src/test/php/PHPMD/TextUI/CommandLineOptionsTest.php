@@ -188,6 +188,45 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * Tests if ignoreErrorsOnExit returns false by default
+     *
+     * @return void
+     */
+    public function testIgnoreErrorsOnExitReturnsFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $opts = new CommandLineOptions($args);
+
+        self::assertFalse($opts->ignoreErrorsOnExit());
+    }
+
+    /**
+     * Tests if CLI options accepts ignoreErrorsOnExit argument
+     *
+     * @return void
+     */
+    public function testCliOptionsAcceptsIgnoreErrorsOnExitArgument()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-errors-on-exit');
+        $opts = new CommandLineOptions($args);
+
+        self::assertTrue($opts->ignoreErrorsOnExit());
+    }
+
+    /**
+     * Tests if CLI usage contains ignoreErrorsOnExit option
+     *
+     * @return void
+     */
+    public function testCliUsageContainsIgnoreErrorsOnExitOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertContains('--ignore-errors-on-exit:', $opts->usage());
+    }
+
+    /**
      * Tests if ignoreViolationsOnExit returns false by default
      *
      * @return void

@@ -127,6 +127,8 @@ Command line options
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
+  - ``--ignore-errors-on-exit`` - will exit with a zero code, even on error.
+
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
@@ -170,18 +172,21 @@ to create one output for certain parts of your code ::
 Exit codes
 ----------
 
-PHPMD's command line tool currently defines three different exit codes.
+PHPMD's command line tool currently defines four different exit codes.
 
 - *0*, This exit code indicates that everything worked as expected. This means
   there was no error/exception and PHPMD hasn't detected any rule violation
   in the code under test.
-- *1*, This exit code indicates that an error/exception occured which has
+- *1*, This exit code indicates that an exception occurred which has
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
-  without the occurence of an error/exception, but it has detected rule
+  without the occurrence of an error/exception, but it has detected rule
   violations in the analyzed source code. You can also prevent this behaviour
   with the ``--ignore-violations-on-exit`` flag, which will result to a *0*
   even if any violations are found.
+- *3*, This exit code means that one or multiple files under test could not
+   be processed because of an error. There may also be violations in other
+   files that could be processed correctly.
 
 Renderers
 ---------

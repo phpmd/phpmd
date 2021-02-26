@@ -104,6 +104,17 @@ class PHPMDTest extends AbstractTest
     }
 
     /**
+     * testHasErrorsReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testHasErrorsReturnsFalseByDefault()
+    {
+        $phpmd = new PHPMD();
+        $this->assertFalse($phpmd->hasErrors());
+    }
+
+    /**
      * testHasViolationsReturnsFalseByDefault
      *
      * @return void
@@ -134,6 +145,7 @@ class PHPMDTest extends AbstractTest
             new RuleSetFactory()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertFalse($phpmd->hasViolations());
     }
 
@@ -157,7 +169,32 @@ class PHPMDTest extends AbstractTest
             new RuleSetFactory()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertTrue($phpmd->hasViolations());
+    }
+
+    /**
+     * testHasErrorsReturnsTrueForSourceWithError
+     *
+     * @return void
+     */
+    public function testHasErrorsReturnsTrueForSourceWithError()
+    {
+        self::changeWorkingDirectory();
+
+        $renderer = new XMLRenderer();
+        $renderer->setWriter(new WriterStub());
+
+        $phpmd = new PHPMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_parse_error.php'),
+            'pmd-refset1',
+            array($renderer),
+            new RuleSetFactory()
+        );
+
+        $this->assertTrue($phpmd->hasErrors());
+        $this->assertFalse($phpmd->hasViolations());
     }
 
     /**
@@ -179,6 +216,7 @@ class PHPMDTest extends AbstractTest
             new RuleSetFactory()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertTrue($phpmd->hasViolations());
 
         // Process with exclusions, should result in no violations.
@@ -189,6 +227,7 @@ class PHPMDTest extends AbstractTest
             new RuleSetFactory()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertFalse($phpmd->hasViolations());
     }
 }

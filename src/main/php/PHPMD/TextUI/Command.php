@@ -31,7 +31,8 @@ class Command
      */
     const EXIT_SUCCESS = 0,
         EXIT_EXCEPTION = 1,
-        EXIT_VIOLATION = 2;
+        EXIT_VIOLATION = 2,
+        EXIT_ERROR = 3;
 
     /**
      * This method creates a PHPMD instance and configures this object based
@@ -40,10 +41,11 @@ class Command
      * The return value of this method can be used as an exit code. A value
      * equal to <b>EXIT_SUCCESS</b> means that no violations or errors were
      * found in the analyzed code. Otherwise this method will return a value
-     * equal to <b>EXIT_VIOLATION</b>.
+     * equal to <b>EXIT_VIOLATION</b> or <b>EXIT_ERROR</b> respectively.
      *
-     * The use of flag <b>--ignore-violations-on-exit</b> will result to a
-     * <b>EXIT_SUCCESS</b> even if any violation is found.
+     * The use of the flags <b>--ignore-violations-on-exit</b> and
+     * <b>--ignore-errors-on-exit</b> will result to a <b>EXIT_SUCCESS</b>
+     * even if any violation or error is found.
      *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
@@ -105,6 +107,10 @@ class Command
             $renderers,
             $ruleSetFactory
         );
+
+        if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
+            return self::EXIT_ERROR;
+        }
 
         if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
             return self::EXIT_VIOLATION;
