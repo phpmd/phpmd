@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Mon, 01 Feb 2021 10:20:59 +0000" />
+    <meta name="date" content="Fri, 26 Feb 2021 09:06:37 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Mon, 01 Feb 2021 10:20:59 +0000" />
+    <meta name="DC.date" content="Fri, 26 Feb 2021 09:06:37 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -76,6 +76,7 @@ like a filesystem reference.</p>
     directories. Use asterisks to exclude by pattern. For example <code>*src/foo/*.php</code> or <code>*src/foo/*</code></li>
 <li class="dash"><code>--strict</code> - Also report those nodes with a @SuppressWarnings annotation.</li>
 <li class="dash"><code>--not-strict</code> - Does not report those nodes with a @SuppressWarnings annotation.</li>
+<li class="dash"><code>--ignore-errors-on-exit</code> - will exit with a zero code, even on error.</li>
 <li class="dash"><code>--ignore-violations-on-exit</code> - will exit with a zero code, even if any
     violations are found.
   An example command line: ::
@@ -103,17 +104,20 @@ tool: :</p>
 that will check the source code.</p>
 <a id="exit-codes"></a>
 <h2>Exit codes</h2>
-<p>PHPMD's command line tool currently defines three different exit codes.</p>
+<p>PHPMD's command line tool currently defines four different exit codes.</p>
 <ul><li class="dash"><em>0</em>, This exit code indicates that everything worked as expected. This means
   there was no error/exception and PHPMD hasn't detected any rule violation
   in the code under test.</li>
-<li class="dash"><em>1</em>, This exit code indicates that an error/exception occurred which has
+<li class="dash"><em>1</em>, This exit code indicates that an exception occurred which has
   interrupted PHPMD during execution.</li>
 <li class="dash"><em>2</em>, This exit code means that PHPMD has processed the code under test
   without the occurrence of an error/exception, but it has detected rule
   violations in the analyzed source code. You can also prevent this behaviour
   with the <code>--ignore-violations-on-exit</code> flag, which will result to a <em>0</em>
   even if any violations are found.</li>
+<li class="dash"><em>3</em>, This exit code means that one or multiple files under test could not
+   be processed because of an error. There may also be violations in other
+   files that could be processed correctly.</li>
 </ul>
 
 <a id="renderers"></a>
