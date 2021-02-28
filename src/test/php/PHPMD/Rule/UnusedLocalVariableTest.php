@@ -638,6 +638,28 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToCompactWithDoubleQuotesFunction
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         $key = "ok";
+     *         return compact("key");
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToCompactWithDoubleQuotesFunction()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * @test
      * @return void
      * @since 2.0.0

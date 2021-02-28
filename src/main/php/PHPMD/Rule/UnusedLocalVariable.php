@@ -200,7 +200,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function collectLiteral(ASTNode $node)
     {
-        $variable = '$' . trim($node->getImage(), '\'');
+        $variable = '$' . trim($node->getImage(), '\'\"');
 
         if (!isset($this->images[$variable])) {
             $this->images[$variable] = array();
