@@ -137,7 +137,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+------------------------------------------------------------+
 | Name                              | Default Value | Description                                                |
 +===================================+===============+============================================================+
-| ignore-global                     |               | Ignore classes and interfaces in the global namespace      |
+| ignore-global                     |               | Ignore classes, interfaces and traits in the global namespace      |
 +-----------------------------------+---------------+------------------------------------------------------------+
 
 UndefinedVariable
