@@ -43,6 +43,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node)
     {
+        $ignoreGlobal = $this->getBooleanProperty('ignore-global');
         foreach ($node->findChildrenOfType('AllocationExpression') as $allocationNode) {
             if (!$allocationNode) {
                 continue;
@@ -51,6 +52,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             $classNode = $allocationNode->getChild(0);
 
             if ($this->isSelfReference($classNode)) {
+                continue;
+            }
+
+            if ($ignoreGlobal && $this->isGlobalNamespace($classNode)) {
                 continue;
             }
 
@@ -73,5 +78,16 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     protected function isSelfReference(ASTNode $classNode)
     {
         return in_array($classNode->getImage(), $this->selfReferences, true);
+    }
+
+    /**
+     * Check whether a given class node is in the global namespace
+     *
+     * @param ASTNode $classNode A class node to check.
+     * @return bool Whether the given class node is in the global namespace.
+     */
+    protected function isGlobalNamespace(ASTNode $classNode)
+    {
+        return !strpos($classNode->getImage(), '\\', 1);
     }
 }
