@@ -120,3 +120,4 @@ At the moment PHPMD comes with the following five renderers:
 - *ansi*, colorful, formated text for the command line.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
+- *github*, a format that GitHub Actions understands (see `CI Integration </documentation/ci-integration.html#github-actions>`_).
