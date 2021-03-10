@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en"
+    lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
+    <meta name="author" content="Manuel Pichler" />
+    <meta name="language" content="en" />
+    <meta name="date" content="Wed, 10 Mar 2021 20:18:39 +0000" />
+    <meta name="robots" content="all" />
+
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <meta name="DC.title" content="About" />
+    <meta name="DC.creator" content="Manuel Pichler" />
+    <meta name="DC.date" content="Wed, 10 Mar 2021 20:18:39 +0000" />
+    <meta name="DC.rights" content="BSD 3-Clause" />
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <link rel="Stylesheet" type="text/css" href="/css/screen.css" media="screen" />
+    <link rel="Stylesheet" type="text/css" href="/css/print.css" media="print" />
+
+    <title>PHPMD - PHP Mess Detector</title>
+</head>
+<body>
+<h1>
+    <a href="/">PHPMD - PHP Mess Detector</a>
+</h1>
+<div id="content">
+    <hr />
+<a id="ci-integration"></a>
+<h2>CI Integration</h2>
+<p>PHPMD can be integrated into continuous integration (CI) pipelines to verify that each code change conforms to the configured rules.</p>
+<a id="github-actions"></a>
+<h2>GitHub Actions</h2>
+<p>GitHub Actions is supported out of the box with its own PHPMD renderer called <code>github</code>. This renderer will add annotations directly to your commits and pull requests right in the code.</p>
+<p>A simple GitHub Actions workflow could look like this: :</p>
+<pre><code class="">name: CI
+
+on: push
+
+jobs:
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          tools: phpmd
+
+      - name: Run PHPMD
+        run: phpmd . github phpmd.ruleset.xml --exclude 'tests/*,vendor/*'
+</code></pre>
+<p>This assumes that you have a <a href="/documentation/creating-a-ruleset.html">custom rule set</a> in the file <code>phpmd.ruleset.xml</code>. Alternatively, you can of course list the rule sets manually.</p>
+</div>
+
+<div id="navigation">
+    <h2>Overview</h2>
+    <ul>
+        <li><a href="/about.html" title="About">About</a></li><li><a href="/documentation/index.html" title="Documentation"><strong>Documentation</strong></a><ul><li><a href="/documentation/suppress-warnings.html" title="Suppress warnings">Suppress warnings</a><li><a href="/documentation/ci-integration.html" title="CI Integration"><strong>CI Integration</strong></a><li><a href="/documentation/writing-a-phpmd-rule.html" title="Writing a PHPMD Rule">Writing a PHPMD Rule</a><li><a href="/documentation/creating-a-ruleset.html" title="Creating a rule set">Creating a rule set</a><li><a href="/documentation/ant-task.html" title="Ant task usage">Ant task usage</a></ul></li><li><a href="/rules/index.html" title="Rules">Rules</a></li><li><a href="/download/index.html" title="Download">Download</a></li><li><a href="/people-behind.html" title="People behind">People behind</a></li><li><a href="/support/index.html" title="Support &amp; Contact">Support &amp; Contact</a></li><li><a href="/for-enterprise.html" title="For Enterprise">For Enterprise</a></li>    </ul>
+</div>
+
+<div id="footer">
+    By <strong>Manuel Pichler</strong>
+    licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+</div>
+
+<div id="formats">
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/ci-integration.rst">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/ci-integration.rst">Edit</a>
+</div>
+
+<script>
+    [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
+        code.className += ' block';
+    });
+</script>
+</body>
+</html>
