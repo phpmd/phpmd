@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\PHPMD;
+use PHPMD\Renderer\BaselineRenderer;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 
@@ -73,6 +74,13 @@ class Command
             $reportRenderer->setWriter(new StreamWriter($reportFile));
 
             $renderers[] = $reportRenderer;
+        }
+
+        // overwrite renderers when generate-baseline is requested
+        if ($opts->generateBaseline() !== null) {
+            $renderer = new BaselineRenderer($opts->baselineBasedir());
+            $renderer->setWriter(new StreamWriter($opts->generateBaseline()));
+            $renderers = array($renderer);
         }
 
         // Configure a rule set factory

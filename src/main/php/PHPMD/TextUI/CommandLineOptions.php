@@ -9,10 +9,10 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -148,6 +148,20 @@ class CommandLineOptions
     protected $availableRuleSets = array();
 
     /**
+     * Should PHPMD baseline the existing violations. Either contains the filepath to write the baseline to
+     * or null if no baseline should be generated
+     *
+     * @var string|null
+     */
+    protected $generateBaseline;
+
+    /**
+     * The directory to base the baseline filepath on
+     * @var string|null
+     */
+    protected $baselineBasedir;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -211,6 +225,16 @@ class CommandLineOptions
                 case '--not-strict':
                     $this->strict = false;
                     break;
+                case '--generate-baseline':
+                    if (isset($args[0]) && strpos($args[0], '--') !== 0) {
+                        $this->generateBaseline = array_shift($args);
+                    } else {
+                        $this->generateBaseline = getcwd() . '/phpmd.baseline.xml';
+                    }
+                    break;
+                case '--baseline-basedir':
+                    $this->baselineBasedir = array_shift($args);
+                    break;
                 case '--ignore-errors-on-exit':
                     $this->ignoreErrorsOnExit = true;
                     break;
@@ -234,9 +258,9 @@ class CommandLineOptions
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath = (string)array_shift($arguments);
+        $this->inputPath    = (string)array_shift($arguments);
         $this->reportFormat = (string)array_shift($arguments);
-        $this->ruleSets = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_shift($arguments);
     }
 
     /**
@@ -363,6 +387,31 @@ class CommandLineOptions
     public function hasStrict()
     {
         return $this->strict;
+    }
+
+    /**
+     * Should the current violations be baselined
+     *
+     * @return string|null
+     */
+    public function generateBaseline()
+    {
+        return $this->generateBaseline;
+    }
+
+    /**
+     * Get the baseline base directory to which the absolute filepaths will be set relative to.
+     *
+     * @return string|null
+     */
+    public function baselineBasedir()
+    {
+        if ($this->baselineBasedir === null) {
+            $baselineFilepath = $this->generateBaseline();
+            return $baselineFilepath === null ? null : dirname($baselineFilepath);
+        }
+
+        return $this->baselineBasedir;
     }
 
     /**
@@ -554,7 +603,7 @@ class CommandLineOptions
     protected function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers = array();
+        $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
