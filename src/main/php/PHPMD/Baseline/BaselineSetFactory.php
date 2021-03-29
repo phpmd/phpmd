@@ -9,6 +9,7 @@ class BaselineSetFactory
     /**
      * @param string $filename
      * @return BaselineSet
+     * @throws RuntimeException
      */
     public function fromFile($filename)
     {
