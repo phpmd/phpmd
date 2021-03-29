@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineSet;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\BaselineRenderer;
 use PHPMD\RuleSetFactory;
@@ -113,7 +114,8 @@ class Command
             $opts->getInputPath(),
             $opts->getRuleSets(),
             $renderers,
-            $ruleSetFactory
+            $ruleSetFactory,
+            new BaselineSet()
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {

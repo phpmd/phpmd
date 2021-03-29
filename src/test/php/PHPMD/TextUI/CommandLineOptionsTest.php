@@ -275,7 +275,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: ansi, github, html, json, text, xml.', $opts->usage());
+        $this->assertContains('Available formats: ansi, baseline, github, html, json, text, xml.', $opts->usage());
     }
 
     /**
