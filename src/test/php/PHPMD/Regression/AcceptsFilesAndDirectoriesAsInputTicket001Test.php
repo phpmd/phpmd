@@ -17,6 +17,7 @@
 
 namespace PHPMD\Regression;
 
+use PHPMD\Baseline\BaselineSet;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\RuleSetFactory;
@@ -46,7 +47,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             self::createFileUri('source'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new BaselineSet()
         );
     }
 
@@ -67,7 +69,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             self::createFileUri('source/FooBar.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new BaselineSet()
         );
     }
 }

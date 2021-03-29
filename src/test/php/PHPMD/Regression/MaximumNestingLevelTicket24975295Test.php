@@ -17,6 +17,7 @@
 
 namespace PHPMD\Regression;
 
+use PHPMD\Baseline\BaselineSet;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\RuleSetFactory;
@@ -49,6 +50,6 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
         $factory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
-        $phpmd->processFiles($inputs, $rules, $renderes, $factory);
+        $phpmd->processFiles($inputs, $rules, $renderes, $factory, new BaselineSet());
     }
 }

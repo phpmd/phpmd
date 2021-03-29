@@ -8,16 +8,16 @@ class ViolationBaseline
     private $ruleName;
 
     /** @var string */
-    private $filename;
+    private $fileName;
 
     /**
      * @param string $ruleName
-     * @param string $filename
+     * @param string $fileName
      */
-    public function __construct($ruleName, $filename)
+    public function __construct($ruleName, $fileName)
     {
         $this->ruleName = $ruleName;
-        $this->filename = $filename;
+        $this->fileName = $fileName;
     }
 
     /**
@@ -31,8 +31,8 @@ class ViolationBaseline
     /**
      * @return string
      */
-    public function getFilename()
+    public function getFileName()
     {
-        return $this->filename;
+        return $this->fileName;
     }
 }

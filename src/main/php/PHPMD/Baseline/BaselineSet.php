@@ -14,17 +14,17 @@ class BaselineSet
 
     /**
      * @param string $ruleName
-     * @param string $filename
+     * @param string $fileName
      * @return bool
      */
-    public function contains($ruleName, $filename)
+    public function contains($ruleName, $fileName)
     {
         if (isset($this->violations[$ruleName]) === false) {
             return false;
         }
 
         foreach ($this->violations[$ruleName] as $baseline) {
-            if ($baseline->getFilename() === $filename) {
+            if ($baseline->getFileName() === $fileName) {
                 return true;
             }
         }

@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineSet;
+
 /**
  * This is the main facade of the PHP PMD application
  */
@@ -214,13 +216,15 @@ class PHPMD
      * @param string $ruleSets
      * @param \PHPMD\AbstractRenderer[] $renderers
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
+     * @param \PHPMD\Baseline\BaselineSet $baseline
      * @return void
      */
     public function processFiles(
         $inputPath,
         $ruleSets,
         array $renderers,
-        RuleSetFactory $ruleSetFactory
+        RuleSetFactory $ruleSetFactory,
+        BaselineSet $baseline
     ) {
 
         // Merge parsed excludes
@@ -228,7 +232,7 @@ class PHPMD
 
         $this->input = $inputPath;
 
-        $report = new Report();
+        $report = new Report($baseline);
 
         $factory = new ParserFactory();
         $parser = $factory->create($this);
