@@ -216,7 +216,7 @@ class PHPMD
      * @param string $ruleSets
      * @param \PHPMD\AbstractRenderer[] $renderers
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
-     * @param \PHPMD\Baseline\BaselineSet $baseline
+     * @param \PHPMD\Baseline\BaselineSet|null $baseline
      * @return void
      */
     public function processFiles(
@@ -224,7 +224,7 @@ class PHPMD
         $ruleSets,
         array $renderers,
         RuleSetFactory $ruleSetFactory,
-        BaselineSet $baseline
+        BaselineSet $baseline = null
     ) {
 
         // Merge parsed excludes

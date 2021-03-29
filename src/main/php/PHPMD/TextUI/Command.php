@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\BaselineRenderer;
 use PHPMD\RuleSetFactory;
@@ -77,11 +78,17 @@ class Command
             $renderers[] = $reportRenderer;
         }
 
-        // overwrite renderers when generate-baseline is requested
+        // Configure baseline violations
+        $baseline = null;
         if ($opts->generateBaseline() !== null) {
+            // overwrite renderers when generate-baseline is requested
             $renderer = new BaselineRenderer($opts->baselineBasedir());
             $renderer->setWriter(new StreamWriter($opts->generateBaseline()));
             $renderers = array($renderer);
+        } else {
+            // try to read baseline
+            $baselineFactory = new BaselineSetFactory();
+            $baseline        = $baselineFactory->fromFile(getcwd(), getcwd() . '/phpmd.baseline.xml');
         }
 
         // Configure a rule set factory
@@ -115,7 +122,7 @@ class Command
             $opts->getRuleSets(),
             $renderers,
             $ruleSetFactory,
-            new BaselineSet()
+            $baseline
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {

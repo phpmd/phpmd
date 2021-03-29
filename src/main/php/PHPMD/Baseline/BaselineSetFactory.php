@@ -2,24 +2,26 @@
 
 namespace PHPMD\Baseline;
 
+use PHPMD\Utility\Paths;
 use RuntimeException;
 
 class BaselineSetFactory
 {
     /**
-     * @param string $filename
+     * @param string $baseDir
+     * @param string $fileName
      * @return BaselineSet
      * @throws RuntimeException
      */
-    public function fromFile($filename)
+    public function fromFile($baseDir, $fileName)
     {
-        if (file_exists($filename) === false) {
-            throw new RuntimeException('Unknown file: ' . $filename);
+        if (file_exists($fileName) === false) {
+            throw new RuntimeException('Unknown file: ' . $fileName);
         }
 
-        $xml = @simplexml_load_string(file_get_contents($filename));
+        $xml = @simplexml_load_string(file_get_contents($fileName));
         if ($xml === false) {
-            throw new RuntimeException('Unable to read xml from: ' . $filename);
+            throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
         $baselineSet = new BaselineSet();
@@ -30,14 +32,15 @@ class BaselineSetFactory
             }
 
             if (isset($node['rule']) === false) {
-                throw new RuntimeException('Missing `rule` attribute in `violation` in ' . $filename);
+                throw new RuntimeException('Missing `rule` attribute in `violation` in ' . $fileName);
             }
 
             if (isset($node['file']) === false) {
-                throw new RuntimeException('Missing `file` attribute in `violation` in ' . $filename);
+                throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
-            $baselineSet->addEntry(new ViolationBaseline((string)$node['rule'], (string)$node['file']));
+            $violation = new ViolationBaseline((string)$node['rule'], Paths::concat($baseDir, (string)$node['file']));
+            $baselineSet->addEntry($violation);
         }
 
         return $baselineSet;

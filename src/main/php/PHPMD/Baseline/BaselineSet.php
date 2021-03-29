@@ -23,6 +23,8 @@ class BaselineSet
             return false;
         }
 
+        $fileName = str_replace('\\', '/', $fileName);
+
         foreach ($this->violations[$ruleName] as $baseline) {
             if ($baseline->getFileName() === $fileName) {
                 return true;
