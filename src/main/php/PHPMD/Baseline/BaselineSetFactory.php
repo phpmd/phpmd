@@ -12,11 +12,13 @@ class BaselineSetFactory
      */
     public function fromFile($filename)
     {
-        $libxml = libxml_use_internal_errors(true);
-        $xml    = simplexml_load_string(file_get_contents($filename));
+        if (file_exists($filename) === false) {
+            throw new RuntimeException('Unknown file: ' . $filename);
+        }
+
+        $xml = @simplexml_load_string(file_get_contents($filename));
         if ($xml === false) {
-            libxml_use_internal_errors($libxml);
-            throw new RuntimeException(trim(libxml_get_last_error()->message));
+            throw new RuntimeException('Unable to read xml from: ' . $filename);
         }
 
         $baselineSet = new BaselineSet();
@@ -25,7 +27,16 @@ class BaselineSetFactory
             if ($node->getName() !== 'violation') {
                 continue;
             }
-            $baselineSet->addEntry(new ViolationBaseline((string)$node->rule, (string)$node->filename));
+
+            if (isset($node['rule']) === false) {
+                throw new RuntimeException('Missing `rule` attribute in `violation` in ' . $filename);
+            }
+
+            if (isset($node['file']) === false) {
+                throw new RuntimeException('Missing `file` attribute in `violation` in ' . $filename);
+            }
+
+            $baselineSet->addEntry(new ViolationBaseline((string)$node['rule'], (string)$node['file']));
         }
 
         return $baselineSet;
