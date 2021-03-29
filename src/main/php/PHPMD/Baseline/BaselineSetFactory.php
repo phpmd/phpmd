@@ -16,7 +16,7 @@ class BaselineSetFactory
     public function fromFile($baseDir, $fileName)
     {
         if (file_exists($fileName) === false) {
-            throw new RuntimeException('Unknown file: ' . $fileName);
+            throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);
         }
 
         $xml = @simplexml_load_string(file_get_contents($fileName));

@@ -17,12 +17,14 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\BaselineRenderer;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
+use RuntimeException;
 
 /**
  * This class provides a command line interface for PHPMD
@@ -80,15 +82,36 @@ class Command
 
         // Configure baseline violations
         $baseline = null;
-        if ($opts->generateBaseline() !== null) {
+        $finder = new BaselineFileFinder($opts);
+        if ($opts->generateBaseline()) {
             // overwrite renderers when generate-baseline is requested
-            $renderer = new BaselineRenderer($opts->baselineBasedir());
-            $renderer->setWriter(new StreamWriter($opts->generateBaseline()));
+            $baselineFile = $finder->find(false);
+            if ($baselineFile === null) {
+                $message = 'Unable to determine the location of the baseline file. ';
+                $message .= ' Specify the path via --baseline-file';
+                throw new RuntimeException($message);
+            }
+
+            $baseDir = $opts->baselineBasedir();
+            if ($baseDir === null) {
+                $baseDir = dirname($baselineFile);
+            }
+
+            $renderer = new BaselineRenderer($baseDir);
+            $renderer->setWriter(new StreamWriter($baselineFile));
             $renderers = array($renderer);
         } else {
             // try to read baseline
-            $baselineFactory = new BaselineSetFactory();
-            $baseline        = $baselineFactory->fromFile(getcwd(), getcwd() . '/phpmd.baseline.xml');
+            $baselineFile = $finder->find(true);
+            if ($baselineFile !== null) {
+                $baseDir = $opts->baselineBasedir();
+                if ($baseDir === null) {
+                    $baseDir = dirname($baselineFile);
+                }
+
+                $baselineFactory = new BaselineSetFactory();
+                $baseline        = $baselineFactory->fromFile($baseDir, $baselineFile);
+            }
         }
 
         // Configure a rule set factory

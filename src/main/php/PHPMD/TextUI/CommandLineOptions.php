@@ -148,18 +148,23 @@ class CommandLineOptions
     protected $availableRuleSets = array();
 
     /**
-     * Should PHPMD baseline the existing violations. Either contains the filepath to write the baseline to
-     * or null if no baseline should be generated
-     *
-     * @var string|null
+     * Should PHPMD baseline the existing violations and write them to the baseline xml file
+     * @var bool
      */
-    protected $generateBaseline;
+    protected $generateBaseline = false;
 
     /**
-     * The directory to base the baseline filepath on
+     * The relative directory of the baseline files. Defaults to the (first) ruleset file
      * @var string|null
      */
     protected $baselineBasedir;
+
+    /**
+     * The baseline source file to read the baseline violations from.
+     * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
+     * @var string|null
+     */
+    protected $baselineFile;
 
     /**
      * Constructs a new command line options instance.
@@ -226,11 +231,10 @@ class CommandLineOptions
                     $this->strict = false;
                     break;
                 case '--generate-baseline':
-                    if (isset($args[0]) && strpos($args[0], '--') !== 0) {
-                        $this->generateBaseline = array_shift($args);
-                    } else {
-                        $this->generateBaseline = getcwd() . '/phpmd.baseline.xml';
-                    }
+                    $this->generateBaseline = true;
+                    break;
+                case '--baseline-file':
+                    $this->baselineFile = array_shift($args);
                     break;
                 case '--baseline-basedir':
                     $this->baselineBasedir = array_shift($args);
@@ -392,7 +396,7 @@ class CommandLineOptions
     /**
      * Should the current violations be baselined
      *
-     * @return string|null
+     * @return bool
      */
     public function generateBaseline()
     {
@@ -406,12 +410,17 @@ class CommandLineOptions
      */
     public function baselineBasedir()
     {
-        if ($this->baselineBasedir === null) {
-            $baselineFilepath = $this->generateBaseline();
-            return $baselineFilepath === null ? null : dirname($baselineFilepath);
-        }
-
         return $this->baselineBasedir;
+    }
+
+    /**
+     * The filepath of the baseline violations xml
+     *
+     * @return string|null
+     */
+    public function baselineFile()
+    {
+        return $this->baselineFile;
     }
 
     /**
