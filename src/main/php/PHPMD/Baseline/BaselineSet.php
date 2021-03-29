@@ -23,6 +23,7 @@ class BaselineSet
             return false;
         }
 
+        // normalize slashes in file name
         $fileName = str_replace('\\', '/', $fileName);
 
         foreach ($this->violations[$ruleName] as $baseline) {
