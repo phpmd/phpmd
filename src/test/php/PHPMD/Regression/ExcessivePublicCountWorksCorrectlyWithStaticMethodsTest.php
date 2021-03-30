@@ -17,7 +17,6 @@
 
 namespace PHPMD\Regression;
 
-use PHPMD\Baseline\BaselineSet;
 use PHPMD\PHPMD;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
@@ -88,8 +87,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
             'codesize',
             array($this->renderer),
-            new RuleSetFactory(),
-            new BaselineSet()
+            new RuleSetFactory()
         );
     }
 
@@ -129,8 +127,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
             'codesize',
             array($this->renderer),
-            new RuleSetFactory(),
-            new BaselineSet()
+            new RuleSetFactory()
         );
     }
 }
