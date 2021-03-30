@@ -193,7 +193,7 @@ class ReportTest extends AbstractTest
     /**
      * @covers ::addRuleViolation
      */
-    public function testShouldIgnoreBaselineViolation()
+    public function testReportShouldIgnoreBaselineViolation()
     {
         /** @var RuleViolation|PHPUnit_Framework_MockObject_MockObject $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
