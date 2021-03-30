@@ -60,8 +60,17 @@ class PathsTest extends AbstractTest
     /**
      * @covers ::getAbsolutePath
      */
-    public function testGetAbsolutePath()
+    public function testGetAbsolutePathShouldReturnNullForIrregularStream()
     {
+        static::assertNull(Paths::getAbsolutePath(STDOUT));
+    }
 
+    /**
+     * @covers ::getAbsolutePath
+     */
+    public function testGetAbsolutePathShouldReturnPath()
+    {
+        $path = static::createResourceUriForTest('resource.txt');
+        static::assertSame(realpath($path), Paths::getAbsolutePath(fopen($path, 'rb')));
     }
 }

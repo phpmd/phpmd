@@ -46,11 +46,7 @@ class Paths
      */
     public static function getAbsolutePath($resource)
     {
-        $metaData = stream_get_meta_data($resource);
-        if (isset($metaData['uri']) === false) {
-            return null;
-        }
-
+        $metaData     = stream_get_meta_data($resource);
         $absolutePath = realpath($metaData['uri']);
         if ($absolutePath === false) {
             return null;
