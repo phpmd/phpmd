@@ -132,6 +132,12 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
+  - ``--generate-baseline`` - will generate a phpmd.baseline.xml for existing violations
+    next to the ruleset definition file.
+
+  - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
+    of all baselined files must be relative to this file location.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
@@ -199,6 +205,23 @@ At the moment PHPMD comes with the following renderers:
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
+
+Baseline
+--------
+
+For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
+
+To create generate ``phpmd.baseline.xml`` next to ``phpmd.xml``:
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
+
+To specify a custom baseline filepath for export:
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
+
+By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour:
+
+  ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
 
 PHPMD for enterprise
 --------------------
