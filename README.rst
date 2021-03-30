@@ -211,15 +211,15 @@ Baseline
 
 For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
 
-To create generate ``phpmd.baseline.xml`` next to ``phpmd.xml``:
+To create generate ``phpmd.baseline.xml`` next to ``phpmd.xml``::
 
   ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
 
-To specify a custom baseline filepath for export:
+To specify a custom baseline filepath for export::
 
   ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
 
-By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour:
+By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
 
   ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
 
