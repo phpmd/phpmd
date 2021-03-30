@@ -104,13 +104,8 @@ class Command
             // try to read baseline
             $baselineFile = $finder->find(true);
             if ($baselineFile !== null) {
-                $baseDir = $opts->baselineBasedir();
-                if ($baseDir === null) {
-                    $baseDir = dirname($baselineFile);
-                }
-
                 $baselineFactory = new BaselineSetFactory();
-                $baseline        = $baselineFactory->fromFile($baseDir, $baselineFile);
+                $baseline        = $baselineFactory->fromFile(dirname($baselineFile), $baselineFile);
             }
         }
 

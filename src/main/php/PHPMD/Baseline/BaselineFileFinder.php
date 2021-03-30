@@ -29,7 +29,11 @@ class BaselineFileFinder
         // read baseline file from cli arguments
         $file = $this->options->baselineFile();
         if ($file !== null) {
-            return $file;
+            $absoluteFilePath = realpath($file);
+            if ($absoluteFilePath === false) {
+                throw new RuntimeException('Unknown baseline file at: ' . $file);
+            }
+            return $absoluteFilePath;
         }
 
         // find baseline file next to the (first) ruleset
@@ -39,6 +43,7 @@ class BaselineFileFinder
             return null;
         }
 
+        // create file path and check for existence
         $baselinePath = dirname($rulePath) . '/' . self::DEFAULT_FILENAME;
         if ($shouldExist === true && file_exists($baselinePath) === false) {
             return null;

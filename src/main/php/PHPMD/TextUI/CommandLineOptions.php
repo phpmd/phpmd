@@ -148,16 +148,10 @@ class CommandLineOptions
     protected $availableRuleSets = array();
 
     /**
-     * Should PHPMD baseline the existing violations and write them to the baseline xml file
+     * Should PHPMD baseline the existing violations and write them to the $baselineFile
      * @var bool
      */
     protected $generateBaseline = false;
-
-    /**
-     * The relative directory of the baseline files. Defaults to the (first) ruleset file
-     * @var string|null
-     */
-    protected $baselineBasedir;
 
     /**
      * The baseline source file to read the baseline violations from.
@@ -235,9 +229,6 @@ class CommandLineOptions
                     break;
                 case '--baseline-file':
                     $this->baselineFile = array_shift($args);
-                    break;
-                case '--baseline-basedir':
-                    $this->baselineBasedir = array_shift($args);
                     break;
                 case '--ignore-errors-on-exit':
                     $this->ignoreErrorsOnExit = true;
@@ -401,16 +392,6 @@ class CommandLineOptions
     public function generateBaseline()
     {
         return $this->generateBaseline;
-    }
-
-    /**
-     * Get the baseline base directory to which the absolute filepaths will be set relative to.
-     *
-     * @return string|null
-     */
-    public function baselineBasedir()
-    {
-        return $this->baselineBasedir;
     }
 
     /**
@@ -601,7 +582,10 @@ class CommandLineOptions
             '--ignore-errors-on-exit: will exit with a zero code, ' .
             'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL;
+            'even if any violations are found' . \PHP_EOL .
+            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
+            'to the first ruleset file location' . \PHP_EOL .
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
