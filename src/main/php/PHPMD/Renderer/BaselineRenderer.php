@@ -5,18 +5,24 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Utility\Paths;
+use PHPMD\Writer\StreamWriter;
+use RuntimeException;
 
 class BaselineRenderer extends AbstractRenderer
 {
     /** @var string */
-    private $baseDir;
+    private $basePath;
 
-    /**
-     * @param string $baseDir
-     */
-    public function __construct($baseDir)
+    public function __construct(StreamWriter $writer)
     {
-        $this->baseDir = $baseDir;
+        $this->setWriter($writer);
+
+        // determine basedir based on output filepath
+        $absolutePath = Paths::getAbsolutePath($writer->getStream());
+        if ($absolutePath === null) {
+            throw new RuntimeException('Failed to determine absolute path for baseline file');
+        }
+        $this->basePath = dirname($absolutePath);
     }
 
     public function renderReport(Report $report)
@@ -32,7 +38,7 @@ class BaselineRenderer extends AbstractRenderer
             $xmlTag = sprintf(
                 '  <violation rule="%s" file="%s"/>' . PHP_EOL,
                 get_class($rule),
-                Paths::getRelativePath($this->baseDir, $filepath)
+                Paths::getRelativePath($this->basePath, $filepath)
             );
             $writer->write($xmlTag);
         }

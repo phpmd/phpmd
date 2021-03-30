@@ -38,4 +38,24 @@ class Paths
 
         return $filePath;
     }
+
+    /**
+     * Derive the absolute path from the given resource
+     * @param resource $resource
+     * @return string
+     */
+    public static function getAbsolutePath($resource)
+    {
+        $metaData = stream_get_meta_data($resource);
+        if (isset($metaData['uri']) === false) {
+            return null;
+        }
+
+        $absolutePath = realpath($metaData['uri']);
+        if ($absolutePath === false) {
+            return null;
+        }
+
+        return $absolutePath;
+    }
 }

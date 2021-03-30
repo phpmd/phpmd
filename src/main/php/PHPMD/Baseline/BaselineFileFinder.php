@@ -12,28 +12,65 @@ class BaselineFileFinder
     /** @var CommandLineOptions */
     private $options;
 
+    /** @var bool */
+    private $existingFile = false;
+
+    /** @var bool */
+    private $notNull = false;
+
     public function __construct(CommandLineOptions $options)
     {
         $this->options = $options;
     }
 
     /**
-     * Try to find the violation baseline file
+     * The baseline filepath should point to an existing file (or null)
+     * @return $this
+     */
+    public function existingFile()
+    {
+        $this->existingFile = true;
+        return $this;
+    }
+
+    /**
+     * if true, the finder `must` find a file path, but doesn't necessarily exist
+     * @return $this
+     */
+    public function notNull()
+    {
+        $this->notNull = true;
+        return $this;
+    }
+
+    /**
+     * Find the violation baseline file
      *
-     * @param bool $shouldExist if true, the baseline filepath should point to an existing file
      * @return string|null
      * @throws RuntimeException
      */
-    public function find($shouldExist)
+    public function find()
+    {
+        $file = $this->tryFind();
+        if ($file === null && $this->notNull === true) {
+            throw new RuntimeException('Unable to find the baseline file. Use --baseline-file to specify the filepath');
+        }
+
+        return $file;
+    }
+
+    /**
+     * Try to find the violation baseline file
+     *
+     * @return string|null
+     * @throws RuntimeException
+     */
+    private function tryFind()
     {
         // read baseline file from cli arguments
         $file = $this->options->baselineFile();
         if ($file !== null) {
-            $absoluteFilePath = realpath($file);
-            if ($absoluteFilePath === false) {
-                throw new RuntimeException('Unknown baseline file at: ' . $file);
-            }
-            return $absoluteFilePath;
+            return $file;
         }
 
         // find baseline file next to the (first) ruleset
@@ -45,7 +82,7 @@ class BaselineFileFinder
 
         // create file path and check for existence
         $baselinePath = dirname($rulePath) . '/' . self::DEFAULT_FILENAME;
-        if ($shouldExist === true && file_exists($baselinePath) === false) {
+        if ($this->existingFile === true && file_exists($baselinePath) === false) {
             return null;
         }
 

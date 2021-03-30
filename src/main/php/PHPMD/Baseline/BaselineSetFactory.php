@@ -13,7 +13,7 @@ class BaselineSetFactory
      * @return BaselineSet
      * @throws RuntimeException
      */
-    public function fromFile($baseDir, $fileName)
+    public static function fromFile($baseDir, $fileName)
     {
         if (file_exists($fileName) === false) {
             throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);

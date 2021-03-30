@@ -82,30 +82,15 @@ class Command
 
         // Configure baseline violations
         $baseline = null;
-        $finder = new BaselineFileFinder($opts);
+        $finder   = new BaselineFileFinder($opts);
         if ($opts->generateBaseline()) {
-            // overwrite renderers when generate-baseline is requested
-            $baselineFile = $finder->find(false);
-            if ($baselineFile === null) {
-                $message = 'Unable to determine the location of the baseline file. ';
-                $message .= ' Specify the path via --baseline-file';
-                throw new RuntimeException($message);
-            }
-
-            $baseDir = $opts->baselineBasedir();
-            if ($baseDir === null) {
-                $baseDir = dirname($baselineFile);
-            }
-
-            $renderer = new BaselineRenderer($baseDir);
-            $renderer->setWriter(new StreamWriter($baselineFile));
-            $renderers = array($renderer);
+            // overwrite any renderer with the baseline renderer
+            $renderers = array(new BaselineRenderer(new StreamWriter($finder->notNull()->find())));
         } else {
-            // try to read baseline
-            $baselineFile = $finder->find(true);
+            // try to locate a baseline file and read it
+            $baselineFile = $finder->existingFile()->find();
             if ($baselineFile !== null) {
-                $baselineFactory = new BaselineSetFactory();
-                $baseline        = $baselineFactory->fromFile(dirname($baselineFile), $baselineFile);
+                $baseline = BaselineSetFactory::fromFile(dirname($baselineFile), $baselineFile);
             }
         }
 
