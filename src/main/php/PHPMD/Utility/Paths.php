@@ -2,6 +2,8 @@
 
 namespace PHPMD\Utility;
 
+use RuntimeException;
+
 class Paths
 {
     /**
@@ -43,13 +45,25 @@ class Paths
      * Derive the absolute path from the given resource
      * @param resource $resource
      * @return string
+     * @throws RuntimeException
      */
     public static function getAbsolutePath($resource)
     {
-        $metaData     = stream_get_meta_data($resource);
-        $absolutePath = realpath($metaData['uri']);
+        $metaData = stream_get_meta_data($resource);
+        return self::getRealPath($metaData['uri']);
+    }
+
+    /**
+     * Get the realpath of the given path or exception on failure
+     * @param string $path
+     * @return string
+     * @throws RuntimeException
+     */
+    public static function getRealPath($path)
+    {
+        $absolutePath = realpath($path);
         if ($absolutePath === false) {
-            return null;
+            throw new RuntimeException('Unable to determine the realpath for: ' . $path);
         }
 
         return $absolutePath;

@@ -3,6 +3,7 @@
 namespace PHPMD\Utility;
 
 use PHPMD\AbstractTest;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Utility\Paths
@@ -59,10 +60,11 @@ class PathsTest extends AbstractTest
 
     /**
      * @covers ::getAbsolutePath
+     * @expectedException RuntimeException
      */
     public function testGetAbsolutePathShouldReturnNullForIrregularStream()
     {
-        static::assertNull(Paths::getAbsolutePath(STDOUT));
+        Paths::getAbsolutePath(STDOUT);
     }
 
     /**
@@ -72,5 +74,23 @@ class PathsTest extends AbstractTest
     {
         $path = static::createResourceUriForTest('resource.txt');
         static::assertSame(realpath($path), Paths::getAbsolutePath(fopen($path, 'rb')));
+    }
+
+    /**
+     * @covers ::getRealPath
+     */
+    public function testGetRealPathShouldReturnTheRealPath()
+    {
+        $path = static::createResourceUriForTest('resource.txt');
+        static::assertSame(realpath($path), Paths::getRealPath($path));
+    }
+
+    /**
+     * @covers ::getRealPath
+     * @expectedException RuntimeException
+     */
+    public function testGetRealPathShouldThrowExceptionOnFailure()
+    {
+        Paths::getRealPath('unknown/path');
     }
 }

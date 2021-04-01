@@ -16,10 +16,7 @@ class RendererFactory
     {
         // determine basedir based on output filepath
         $absolutePath = Paths::getAbsolutePath($writer->getStream());
-        if ($absolutePath === null) {
-            throw new RuntimeException('Failed to determine absolute path for baseline file');
-        }
-        $renderer = new BaselineRenderer(dirname($absolutePath));
+        $renderer     = new BaselineRenderer(dirname($absolutePath));
         $renderer->setWriter($writer);
 
         return $renderer;
