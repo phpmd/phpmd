@@ -133,7 +133,7 @@ Baseline
 
 For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
 
-To create generate ``phpmd.baseline.xml`` next to ``phpmd.xml``::
+The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the phpmd.baseline.xml next to it::
 
   ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
 
