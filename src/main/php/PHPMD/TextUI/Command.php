@@ -130,7 +130,7 @@ class Command
             return self::EXIT_ERROR;
         }
 
-        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
+        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit() && !$opts->generateBaseline()) {
             return self::EXIT_VIOLATION;
         }
 

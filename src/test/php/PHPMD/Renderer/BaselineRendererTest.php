@@ -43,6 +43,59 @@ class BaselineRendererTest extends AbstractTest
     /**
      * @covers ::renderReport
      */
+    public function testRenderReportShouldWriteMethodName()
+    {
+        $writer        = new WriterStub();
+        $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
+        $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator(array($violationMock)));
+
+        $renderer = new BaselineRenderer('/src');
+        $renderer->setWriter($writer);
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertXmlEquals(
+            $writer->getData(),
+            'renderer/baseline_renderer_expected2.xml'
+        );
+    }
+
+    /**
+     * @covers ::renderReport
+     */
+    public function testRenderReportShouldDeduplicateSimilarViolations()
+    {
+        $writer        = new WriterStub();
+        $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
+        $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
+
+        // add the same violation twice
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator(array($violationMock, $violationMock)));
+
+        $renderer = new BaselineRenderer('/src');
+        $renderer->setWriter($writer);
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertXmlEquals(
+            $writer->getData(),
+            'renderer/baseline_renderer_expected2.xml'
+        );
+    }
+
+    /**
+     * @covers ::renderReport
+     */
     public function testRenderEmptyReport()
     {
         $writer = new WriterStub();
@@ -59,7 +112,7 @@ class BaselineRendererTest extends AbstractTest
 
         static::assertXmlEquals(
             $writer->getData(),
-            'renderer/baseline_renderer_expected2.xml'
+            'renderer/baseline_renderer_expected3.xml'
         );
     }
 }

@@ -21,20 +21,32 @@ class BaselineRenderer extends AbstractRenderer
 
     public function renderReport(Report $report)
     {
+        // keep track of which violations already have been written
+        $registered = array();
+
         $writer = $this->getWriter();
         $writer->write('<?xml version="1.0"?>' . PHP_EOL);
         $writer->write('<phpmd-baseline>' . PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            $rule     = $violation->getRule();
-            $filepath = $violation->getFileName();
+            $ruleName   = get_class($violation->getRule());
+            $filePath   = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $methodName = $violation->getMethodName();
+
+            // deduplicate similar violations
+            $key = $ruleName . $filePath . $methodName;
+            if (isset($registered[$key])) {
+                continue;
+            }
 
             $xmlTag = sprintf(
-                '  <violation rule="%s" file="%s"/>' . PHP_EOL,
-                get_class($rule),
-                Paths::getRelativePath($this->basePath, $filepath)
+                '  <violation rule="%s" file="%s"%s/>' . PHP_EOL,
+                $ruleName,
+                $filePath,
+                $methodName === null ? '' : ' method="' . $methodName . '"'
             );
             $writer->write($xmlTag);
+            $registered[$key] = true;
         }
 
         $writer->write('</phpmd-baseline>' . PHP_EOL);
