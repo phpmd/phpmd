@@ -13,11 +13,12 @@ class BaselineSet
     }
 
     /**
-     * @param string $ruleName
-     * @param string $fileName
+     * @param string      $ruleName
+     * @param string      $fileName
+     * @param string|null $methodName
      * @return bool
      */
-    public function contains($ruleName, $fileName)
+    public function contains($ruleName, $fileName, $methodName)
     {
         if (isset($this->violations[$ruleName]) === false) {
             return false;
@@ -27,7 +28,7 @@ class BaselineSet
         $fileName = str_replace('\\', '/', $fileName);
 
         foreach ($this->violations[$ruleName] as $baseline) {
-            if ($baseline->getFileName() === $fileName) {
+            if ($baseline->getFileName() === $fileName && $baseline->getMethodName() === $methodName) {
                 return true;
             }
         }

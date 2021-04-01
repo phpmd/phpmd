@@ -72,7 +72,7 @@ class Report
     {
         $fileName = $violation->getFileName();
         $ruleName = get_class($violation->getRule());
-        if ($this->baseline !== null && $this->baseline->contains($ruleName, $fileName)) {
+        if ($this->baseline !== null && $this->baseline->contains($ruleName, $fileName, $violation->getMethodName())) {
             return;
         }
 

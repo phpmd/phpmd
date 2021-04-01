@@ -8,6 +8,9 @@ use RuntimeException;
 class BaselineSetFactory
 {
     /**
+     * Read the baseline violations from the given filename path. Append the baseDir to all the filepaths within
+     * the baseline file.
+     *
      * @param string $baseDir
      * @param string $fileName
      * @return BaselineSet
@@ -39,7 +42,13 @@ class BaselineSetFactory
                 throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
-            $violation = new ViolationBaseline((string)$node['rule'], Paths::concat($baseDir, (string)$node['file']));
+            $filePath   = Paths::concat($baseDir, (string)$node['file']);
+            $methodName = null;
+            if (isset($node['method']) === true && ((string)$node['method']) !== '') {
+                $methodName = (string)($node['method']);
+            }
+
+            $violation = new ViolationBaseline((string)$node['rule'], $filePath, $methodName);
             $baselineSet->addEntry($violation);
         }
 
