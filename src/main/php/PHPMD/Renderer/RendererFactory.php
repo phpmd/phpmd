@@ -10,6 +10,7 @@ class RendererFactory
 {
     /**
      * @return BaselineRenderer
+     * @throws RuntimeException
      */
     public static function createBaselineRenderer(StreamWriter $writer)
     {
