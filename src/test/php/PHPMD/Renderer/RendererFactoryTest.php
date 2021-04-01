@@ -4,6 +4,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractTest;
 use PHPMD\Writer\StreamWriter;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\RendererFactory
@@ -23,7 +24,7 @@ class RendererFactoryTest extends AbstractTest
 
     /**
      * @covers ::createBaselineRenderer
-     * @expectedException \RuntimeException
+     * @expectedException RuntimeException
      * @expectedExceptionMessage Failed to determine absolute path for baseline file
      */
     public function testCreateBaselineRendererThrowsExceptionForInvalidStream()
