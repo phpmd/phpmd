@@ -17,8 +17,8 @@ class BaselineSetFactoryTest extends AbstractTest
         $filename = static::createResourceUriForTest('baseline.xml');
         $set      = BaselineSetFactory::fromFile('/home', $filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src/foo/bar'));
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src/foo/bar'));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src/foo/bar', null));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src/foo/bar', 'myMethod'));
     }
 
     /**
@@ -29,8 +29,8 @@ class BaselineSetFactoryTest extends AbstractTest
         $filename = static::createResourceUriForTest('baseline.xml');
         $set      = BaselineSetFactory::fromFile('/home\\', $filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src\\foo/bar'));
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src\\foo/bar'));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src\\foo/bar', null));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src\\foo/bar', 'myMethod'));
     }
 
     /**

@@ -2,5 +2,5 @@
 <phpmd-baseline>
     <skip/>
     <violation rule="PHPMD\Rule\CleanCode\MissingImport" file="src/foo/bar"/>
-    <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="src/foo/bar"/>
+    <violation rule="PHPMD\Rule\CleanCode\UndefinedVariable" file="src/foo/bar" method="myMethod"/>
 </phpmd-baseline>
