@@ -11,12 +11,11 @@ class BaselineSetFactory
      * Read the baseline violations from the given filename path. Append the baseDir to all the filepaths within
      * the baseline file.
      *
-     * @param string $baseDir
      * @param string $fileName
      * @return BaselineSet
      * @throws RuntimeException
      */
-    public static function fromFile($baseDir, $fileName)
+    public static function fromFile($fileName)
     {
         if (file_exists($fileName) === false) {
             throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);
@@ -27,6 +26,7 @@ class BaselineSetFactory
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
+        $baseDir     = dirname($fileName);
         $baselineSet = new BaselineSet();
 
         foreach ($xml->children() as $node) {

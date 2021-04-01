@@ -15,10 +15,13 @@ class BaselineSetFactoryTest extends AbstractTest
     public function testFromFileShouldSucceed()
     {
         $filename = static::createResourceUriForTest('baseline.xml');
-        $set      = BaselineSetFactory::fromFile('/home', $filename);
+        $baseDir  = dirname($filename);
+        $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src/foo/bar', null));
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src/foo/bar', 'myMethod'));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', $baseDir . '/src/foo/bar', null));
+        static::assertTrue(
+            $set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', $baseDir . '/src/foo/bar', 'myMethod')
+        );
     }
 
     /**
@@ -27,10 +30,13 @@ class BaselineSetFactoryTest extends AbstractTest
     public function testFromFileShouldSucceedWithBackAndForwardSlashes()
     {
         $filename = static::createResourceUriForTest('baseline.xml');
-        $set      = BaselineSetFactory::fromFile('/home\\', $filename);
+        $baseDir  = dirname($filename);
+        $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', '/home/src\\foo/bar', null));
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', '/home/src\\foo/bar', 'myMethod'));
+        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', $baseDir . '/src\\foo/bar', null));
+        static::assertTrue(
+            $set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', $baseDir . '/src\\foo/bar', 'myMethod')
+        );
     }
 
     /**
@@ -40,7 +46,7 @@ class BaselineSetFactoryTest extends AbstractTest
      */
     public function testFromFileShouldThrowExceptionForMissingFile()
     {
-        BaselineSetFactory::fromFile('foo', 'foobar.xml');
+        BaselineSetFactory::fromFile('foobar.xml');
     }
 
     /**
@@ -50,7 +56,7 @@ class BaselineSetFactoryTest extends AbstractTest
      */
     public function testFromFileShouldThrowExceptionForOnInvalidXML()
     {
-        BaselineSetFactory::fromFile('foo', static::createResourceUriForTest('invalid-baseline.xml'));
+        BaselineSetFactory::fromFile(static::createResourceUriForTest('invalid-baseline.xml'));
     }
 
     /**
@@ -60,7 +66,7 @@ class BaselineSetFactoryTest extends AbstractTest
      */
     public function testFromFileViolationMissingRuleShouldThrowException()
     {
-        BaselineSetFactory::fromFile('foo', static::createResourceUriForTest('missing-rule-baseline.xml'));
+        BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-rule-baseline.xml'));
     }
 
     /**
@@ -70,6 +76,6 @@ class BaselineSetFactoryTest extends AbstractTest
      */
     public function testFromFileViolationMissingFileShouldThrowException()
     {
-        BaselineSetFactory::fromFile('foo', static::createResourceUriForTest('missing-file-baseline.xml'));
+        BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-file-baseline.xml'));
     }
 }

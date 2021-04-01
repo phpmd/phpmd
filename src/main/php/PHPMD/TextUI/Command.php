@@ -9,10 +9,10 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -22,6 +22,7 @@ use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\RuleSetFactory;
+use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
 
 /**
@@ -51,7 +52,7 @@ class Command
      * even if any violation or error is found.
      *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
-     * @param \PHPMD\RuleSetFactory $ruleSetFactory
+     * @param \PHPMD\RuleSetFactory            $ruleSetFactory
      * @return integer
      */
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
@@ -88,7 +89,7 @@ class Command
             // try to locate a baseline file and read it
             $baselineFile = $finder->existingFile()->find();
             if ($baselineFile !== null) {
-                $baseline = BaselineSetFactory::fromFile(dirname($baselineFile), $baselineFile);
+                $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
             }
         }
 
@@ -148,7 +149,7 @@ class Command
 
         $version = '@package_version@';
         if (file_exists($build)) {
-            $data = @parse_ini_file($build);
+            $data    = @parse_ini_file($build);
             $version = $data['project.version'];
         }
 
@@ -166,8 +167,8 @@ class Command
     {
         try {
             $ruleSetFactory = new RuleSetFactory();
-            $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $command = new Command();
+            $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+            $command        = new Command();
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {
