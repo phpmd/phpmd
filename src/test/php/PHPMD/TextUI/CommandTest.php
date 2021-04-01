@@ -224,6 +224,24 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testMainGenerateBaseline()
+    {
+        $baselineFile = self::createTempFileUri();
+        $args         = array(
+            __FILE__,
+            self::createFileUri('source/source_with_npath_violation.php'),
+            'xml',
+            'design',
+            '--generate-baseline',
+            '--baseline-file',
+            $baselineFile
+        );
+
+        $exitCode = Command::main($args);
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertFileExists($baselineFile);
+    }
+
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
