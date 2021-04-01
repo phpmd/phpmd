@@ -18,13 +18,11 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Baseline\BaselineFileFinder;
-use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
-use PHPMD\Renderer\BaselineRenderer;
+use PHPMD\Renderer\RendererFactory;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
-use RuntimeException;
 
 /**
  * This class provides a command line interface for PHPMD
@@ -85,7 +83,7 @@ class Command
         $finder   = new BaselineFileFinder($opts);
         if ($opts->generateBaseline()) {
             // overwrite any renderer with the baseline renderer
-            $renderers = array(new BaselineRenderer(new StreamWriter($finder->notNull()->find())));
+            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
         } else {
             // try to locate a baseline file and read it
             $baselineFile = $finder->existingFile()->find();

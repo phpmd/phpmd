@@ -5,24 +5,18 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Utility\Paths;
-use PHPMD\Writer\StreamWriter;
-use RuntimeException;
 
 class BaselineRenderer extends AbstractRenderer
 {
     /** @var string */
     private $basePath;
 
-    public function __construct(StreamWriter $writer)
+    /**
+     * @param string $basePath
+     */
+    public function __construct($basePath)
     {
-        $this->setWriter($writer);
-
-        // determine basedir based on output filepath
-        $absolutePath = Paths::getAbsolutePath($writer->getStream());
-        if ($absolutePath === null) {
-            throw new RuntimeException('Failed to determine absolute path for baseline file');
-        }
-        $this->basePath = dirname($absolutePath);
+        $this->basePath = $basePath;
     }
 
     public function renderReport(Report $report)

@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+    <violation file="php/bar.php" rule="PHPMD\Stubs\RuleStub"/>
+    <violation file="php/foo.php" rule="PHPMD\Stubs\RuleStub"/>
+</phpmd-baseline>

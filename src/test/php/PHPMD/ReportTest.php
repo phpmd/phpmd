@@ -191,7 +191,7 @@ class ReportTest extends AbstractTest
     }
 
     /**
-     * @covers ::addRuleViolation
+     * @return void
      */
     public function testReportShouldIgnoreBaselineViolation()
     {

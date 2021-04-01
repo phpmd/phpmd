@@ -1,0 +1,65 @@
+<?php
+
+namespace PHPMD\Renderer;
+
+use ArrayIterator;
+use PHPMD\AbstractTest;
+use PHPMD\Stubs\WriterStub;
+
+/**
+ * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
+ * @covers ::__construct
+ */
+class BaselineRendererTest extends AbstractTest
+{
+    /**
+     * @covers ::renderReport
+     */
+    public function testRenderReport()
+    {
+        $writer     = new WriterStub();
+        $violations = array(
+            $this->getRuleViolationMock('/src/php/bar.php'),
+            $this->getRuleViolationMock('/src/php/foo.php'),
+        );
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator($violations));
+
+        $renderer = new BaselineRenderer('/src');
+        $renderer->setWriter($writer);
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertXmlEquals(
+            $writer->getData(),
+            'renderer/baseline_renderer_expected1.xml'
+        );
+    }
+
+    /**
+     * @covers ::renderReport
+     */
+    public function testRenderEmptyReport()
+    {
+        $writer = new WriterStub();
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator(array()));
+
+        $renderer = new BaselineRenderer('/src');
+        $renderer->setWriter($writer);
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertXmlEquals(
+            $writer->getData(),
+            'renderer/baseline_renderer_expected2.xml'
+        );
+    }
+}
