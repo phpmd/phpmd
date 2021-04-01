@@ -25,7 +25,7 @@ class RendererFactoryTest extends AbstractTest
     /**
      * @covers ::createBaselineRenderer
      * @expectedException RuntimeException
-     * @expectedExceptionMessage Failed to determine absolute path for baseline file
+     * @expectedExceptionMessage Unable to determine the realpath for
      */
     public function testCreateBaselineRendererThrowsExceptionForInvalidStream()
     {
