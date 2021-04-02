@@ -174,6 +174,31 @@ class PHPMDTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testHasViolationsReturnsFalseWhenViolationIsBaselined()
+    {
+        self::changeWorkingDirectory();
+
+        $baselineSet = $this->createMock('\PHPMD\Baseline\BaselineSet');
+        $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
+
+        $renderer = new XMLRenderer();
+        $renderer->setWriter(new WriterStub());
+
+        $phpmd = new PHPMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_npath_violation.php'),
+            'pmd-refset1',
+            array($renderer),
+            new RuleSetFactory(),
+            $baselineSet
+        );
+
+        static::assertFalse($phpmd->hasViolations());
+    }
+
+    /**
      * testHasErrorsReturnsTrueForSourceWithError
      *
      * @return void
