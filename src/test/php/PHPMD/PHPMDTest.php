@@ -180,7 +180,9 @@ class PHPMDTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $baselineSet = $this->createMock('\PHPMD\Baseline\BaselineSet');
+        $baselineSet = $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')
+            ->disableOriginalConstructor()
+            ->getMock();
         $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 
         $renderer = new XMLRenderer();
