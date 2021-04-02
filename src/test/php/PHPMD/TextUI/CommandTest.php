@@ -228,7 +228,7 @@ class CommandTest extends AbstractTest
     {
         $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
         $temp     = self::createTempFileUri();
-        $exitCode     = Command::main(array(
+        $exitCode = Command::main(array(
             __FILE__,
             $uri,
             'text',
@@ -241,6 +241,22 @@ class CommandTest extends AbstractTest
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
         static::assertContains($uri, file_get_contents($temp));
+    }
+
+    public function testMainBaselineViolationShouldBeIgnored()
+    {
+        $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
+        $exitCode     = Command::main(array(
+            __FILE__,
+            $sourceFile,
+            'text',
+            'naming',
+            '--baseline-file',
+            $baselineFile,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
     }
 
     public function testMainWritesExceptionMessageToStderr()
