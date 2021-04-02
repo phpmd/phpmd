@@ -14,7 +14,7 @@ class RendererFactory
      */
     public static function createBaselineRenderer(StreamWriter $writer)
     {
-        // determine basedir based on output filepath
+        // determine basedir based on stream output filepath
         $absolutePath = Paths::getAbsolutePath($writer->getStream());
         $renderer     = new BaselineRenderer(dirname($absolutePath));
         $renderer->setWriter($writer);

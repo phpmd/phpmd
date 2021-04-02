@@ -26,7 +26,7 @@ class BaselineSetFactory
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
-        $baseDir     = dirname($fileName);
+        $basePath    = dirname($fileName);
         $baselineSet = new BaselineSet();
 
         foreach ($xml->children() as $node) {
@@ -42,14 +42,14 @@ class BaselineSetFactory
                 throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
-            $filePath   = Paths::concat($baseDir, (string)$node['file']);
+            $ruleName   = (string)$node['rule'];
+            $filePath   = Paths::concat($basePath, (string)$node['file']);
             $methodName = null;
             if (isset($node['method']) === true && ((string)$node['method']) !== '') {
                 $methodName = (string)($node['method']);
             }
 
-            $violation = new ViolationBaseline((string)$node['rule'], $filePath, $methodName);
-            $baselineSet->addEntry($violation);
+            $baselineSet->addEntry(new ViolationBaseline($ruleName, $filePath, $methodName));
         }
 
         return $baselineSet;

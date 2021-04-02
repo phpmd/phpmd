@@ -21,7 +21,7 @@ class Paths
     }
 
     /**
-     * Transform the given absolute path to the relative path within based on the base path.
+     * Transform the given absolute path to the relative path based on the given base path.
      *
      * @param string $basePath
      * @param string $filePath

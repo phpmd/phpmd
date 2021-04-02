@@ -21,7 +21,7 @@ class BaselineRenderer extends AbstractRenderer
 
     public function renderReport(Report $report)
     {
-        // keep track of which violations already have been written
+        // keep track of which violations have been written, to avoid duplicates in the baseline
         $registered = array();
 
         $writer = $this->getWriter();
