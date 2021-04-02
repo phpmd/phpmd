@@ -4,7 +4,9 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTest;
+use PHPMD\Report;
 use PHPMD\Stubs\WriterStub;
+use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
@@ -23,6 +25,7 @@ class BaselineRendererTest extends AbstractTest
             $this->getRuleViolationMock('/src/php/foo.php'),
         );
 
+        /** @var Report|MockObject $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -49,6 +52,7 @@ class BaselineRendererTest extends AbstractTest
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
 
+        /** @var Report|MockObject $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -76,6 +80,7 @@ class BaselineRendererTest extends AbstractTest
         $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
 
         // add the same violation twice
+        /** @var Report|MockObject $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -104,6 +109,7 @@ class BaselineRendererTest extends AbstractTest
             ->method('getRuleViolations')
             ->willReturn(new ArrayIterator(array()));
 
+        /** @var Report|MockObject $report */
         $renderer = new BaselineRenderer('/src');
         $renderer->setWriter($writer);
         $renderer->start();

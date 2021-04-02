@@ -19,7 +19,6 @@ namespace PHPMD;
 
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\ViolationBaseline;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test case for the report class.
