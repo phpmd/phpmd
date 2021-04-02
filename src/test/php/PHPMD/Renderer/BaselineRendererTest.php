@@ -24,8 +24,7 @@ class BaselineRendererTest extends AbstractTest
         );
 
         $report = $this->getReportWithNoViolation();
-        $report->expects(static::once())
-            ->method('getRuleViolations')
+        $report->method('getRuleViolations')
             ->willReturn(new ArrayIterator($violations));
 
         $renderer = new BaselineRenderer('/src');
@@ -47,7 +46,7 @@ class BaselineRendererTest extends AbstractTest
     {
         $writer        = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
-        $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
+        $violationMock->method('getMethodName')->willReturn('foo');
 
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
@@ -77,8 +76,7 @@ class BaselineRendererTest extends AbstractTest
 
         // add the same violation twice
         $report = $this->getReportWithNoViolation();
-        $report->expects(static::once())
-            ->method('getRuleViolations')
+        $report->method('getRuleViolations')
             ->willReturn(new ArrayIterator(array($violationMock, $violationMock)));
 
         $renderer = new BaselineRenderer('/src');
@@ -100,8 +98,7 @@ class BaselineRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
         $report = $this->getReportWithNoViolation();
-        $report->expects(static::once())
-            ->method('getRuleViolations')
+        $report->method('getRuleViolations')
             ->willReturn(new ArrayIterator(array()));
 
         $renderer = new BaselineRenderer('/src');
