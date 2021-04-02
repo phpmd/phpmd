@@ -64,7 +64,7 @@ class PathsTest extends AbstractTest
      */
     public function testGetAbsolutePathShouldReturnNullForIrregularStream()
     {
-        Paths::getAbsolutePath(STDOUT);
+        Paths::getAbsolutePath(fopen('php://stdout', 'wb'));
     }
 
     /**
