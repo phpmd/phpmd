@@ -183,7 +183,7 @@ class PHPMDTest extends AbstractTest
         $baselineSet = $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')
             ->disableOriginalConstructor()
             ->getMock();
-        $baselineSet->method('contains')->willReturn(true);
+        $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 
         $renderer = new XMLRenderer();
         $renderer->setWriter(new WriterStub());
