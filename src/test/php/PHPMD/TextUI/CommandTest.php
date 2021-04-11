@@ -9,10 +9,10 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -45,8 +45,8 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * @param $sourceFile
-     * @param $expectedExitCode
+     * @param            $sourceFile
+     * @param            $expectedExitCode
      * @param array|null $options
      * @return void
      * @dataProvider dataProviderTestMainWithOption
@@ -172,8 +172,8 @@ class CommandTest extends AbstractTest
 
     public function testOutput()
     {
-        $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
-        $temp = self::createTempFileUri();
+        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp     = self::createTempFileUri();
         $exitCode = Command::main(array(
             __FILE__,
             $uri,
@@ -224,6 +224,41 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testMainGenerateBaseline()
+    {
+        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp     = self::createTempFileUri();
+        $exitCode = Command::main(array(
+            __FILE__,
+            $uri,
+            'text',
+            'naming',
+            '--generate-baseline',
+            '--baseline-file',
+            $temp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertFileExists($temp);
+        static::assertContains($uri, file_get_contents($temp));
+    }
+
+    public function testMainBaselineViolationShouldBeIgnored()
+    {
+        $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
+        $exitCode     = Command::main(array(
+            __FILE__,
+            $sourceFile,
+            'text',
+            'naming',
+            '--baseline-file',
+            $baselineFile,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+    }
+
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -258,7 +293,7 @@ class CommandTest extends AbstractTest
             )
         );
 
-        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
         $version = $data['project.version'];
 
         $this->assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));

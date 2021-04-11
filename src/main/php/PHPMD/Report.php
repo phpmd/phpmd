@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineSet;
+
 /**
  * The report class collects all found violations and further information about
  * a PHPMD run.
@@ -52,6 +54,14 @@ class Report
      */
     private $errors = array();
 
+    /** @var BaselineSet|null */
+    private $baseline;
+
+    public function __construct(BaselineSet $baseline = null)
+    {
+        $this->baseline = $baseline;
+    }
+
     /**
      * Adds a rule violation to this report.
      *
@@ -61,6 +71,11 @@ class Report
     public function addRuleViolation(RuleViolation $violation)
     {
         $fileName = $violation->getFileName();
+        $ruleName = get_class($violation->getRule());
+        if ($this->baseline !== null && $this->baseline->contains($ruleName, $fileName, $violation->getMethodName())) {
+            return;
+        }
+
         if (!isset($this->ruleViolations[$fileName])) {
             $this->ruleViolations[$fileName] = array();
         }

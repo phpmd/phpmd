@@ -9,13 +9,16 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
+
+use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\ViolationBaseline;
 
 /**
  * Test case for the report class.
@@ -184,5 +187,31 @@ class ReportTest extends AbstractTest
         $report->addError(new ProcessingError('Failing file "/foo.php".'));
 
         $this->assertSame(1, iterator_count($report->getErrors()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testReportShouldIgnoreBaselineViolation()
+    {
+        /** @var RuleViolation $ruleA */
+        $ruleA = $this->getRuleViolationMock('foo.txt');
+        /** @var RuleViolation $ruleB */
+        $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
+
+        // setup baseline
+        $violation = new ViolationBaseline(get_class($ruleA->getRule()), 'foo.txt', null);
+        $baseline  = new BaselineSet();
+        $baseline->addEntry($violation);
+
+        // setup report
+        $report = new Report($baseline);
+        $report->addRuleViolation($ruleA);
+        $report->addRuleViolation($ruleB);
+
+        // only expect ruleB
+        $violations = $report->getRuleViolations();
+        static::assertCount(1, $violations);
+        static::assertSame($ruleB, $violations[0]);
     }
 }

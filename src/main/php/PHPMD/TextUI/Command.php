@@ -9,16 +9,20 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineFileFinder;
+use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
+use PHPMD\Renderer\RendererFactory;
 use PHPMD\RuleSetFactory;
+use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
 
 /**
@@ -48,7 +52,7 @@ class Command
      * even if any violation or error is found.
      *
      * @param \PHPMD\TextUI\CommandLineOptions $opts
-     * @param \PHPMD\RuleSetFactory $ruleSetFactory
+     * @param \PHPMD\RuleSetFactory            $ruleSetFactory
      * @return integer
      */
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
@@ -73,6 +77,20 @@ class Command
             $reportRenderer->setWriter(new StreamWriter($reportFile));
 
             $renderers[] = $reportRenderer;
+        }
+
+        // Configure baseline violations
+        $baseline = null;
+        $finder   = new BaselineFileFinder($opts);
+        if ($opts->generateBaseline()) {
+            // overwrite any renderer with the baseline renderer
+            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+        } else {
+            // try to locate a baseline file and read it
+            $baselineFile = $finder->existingFile()->find();
+            if ($baselineFile !== null) {
+                $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
+            }
         }
 
         // Configure a rule set factory
@@ -105,14 +123,15 @@ class Command
             $opts->getInputPath(),
             $opts->getRuleSets(),
             $renderers,
-            $ruleSetFactory
+            $ruleSetFactory,
+            $baseline
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
             return self::EXIT_ERROR;
         }
 
-        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit()) {
+        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit() && !$opts->generateBaseline()) {
             return self::EXIT_VIOLATION;
         }
 
@@ -130,7 +149,7 @@ class Command
 
         $version = '@package_version@';
         if (file_exists($build)) {
-            $data = @parse_ini_file($build);
+            $data    = @parse_ini_file($build);
             $version = $data['project.version'];
         }
 
@@ -148,8 +167,8 @@ class Command
     {
         try {
             $ruleSetFactory = new RuleSetFactory();
-            $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $command = new Command();
+            $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+            $command        = new Command();
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {

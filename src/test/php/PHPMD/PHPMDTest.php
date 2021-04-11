@@ -9,16 +9,18 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineSet;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test case for the main PHPMD class.
@@ -171,6 +173,34 @@ class PHPMDTest extends AbstractTest
 
         $this->assertFalse($phpmd->hasErrors());
         $this->assertTrue($phpmd->hasViolations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasViolationsReturnsFalseWhenViolationIsBaselined()
+    {
+        self::changeWorkingDirectory();
+
+        /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject $baselineSet */
+        $baselineSet = $this->getMockFromBuilder(
+            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+        );
+        $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
+
+        $renderer = new XMLRenderer();
+        $renderer->setWriter(new WriterStub());
+
+        $phpmd = new PHPMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_npath_violation.php'),
+            'pmd-refset1',
+            array($renderer),
+            new RuleSetFactory(),
+            $baselineSet
+        );
+
+        static::assertFalse($phpmd->hasViolations());
     }
 
     /**
