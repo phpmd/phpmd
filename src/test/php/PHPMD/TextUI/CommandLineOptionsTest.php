@@ -275,7 +275,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: ansi, github, html, json, text, xml.', $opts->usage());
+        $this->assertContains('Available formats: ansi, baseline, github, html, json, text, xml.', $opts->usage());
     }
 
     /**
@@ -339,6 +339,46 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         $this->assertEquals(42, $opts->getMaximumPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionGenerateBaselineFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertFalse($opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionGenerateBaselineShouldBeSet()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline');
+        $opts = new CommandLineOptions($args);
+        static::assertTrue($opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionBaselineFileShouldBeNullByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertNull($opts->baselineFile());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionBaselineFileShouldBeWithFilename()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--baseline-file', 'foobar.txt');
+        $opts = new CommandLineOptions($args);
+        static::assertSame('foobar.txt', $opts->baselineFile());
     }
 
     /**
