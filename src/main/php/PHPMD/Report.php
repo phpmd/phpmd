@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\BaselineValidator;
 
 /**
  * The report class collects all found violations and further information about
@@ -54,12 +55,12 @@ class Report
      */
     private $errors = array();
 
-    /** @var BaselineSet|null */
-    private $baseline;
+    /** @var BaselineValidator|null */
+    private $baselineValidator;
 
-    public function __construct(BaselineSet $baseline = null)
+    public function __construct(BaselineValidator $baselineValidator = null)
     {
-        $this->baseline = $baseline;
+        $this->baselineValidator = $baselineValidator;
     }
 
     /**
@@ -70,12 +71,11 @@ class Report
      */
     public function addRuleViolation(RuleViolation $violation)
     {
-        $fileName = $violation->getFileName();
-        $ruleName = get_class($violation->getRule());
-        if ($this->baseline !== null && $this->baseline->contains($ruleName, $fileName, $violation->getMethodName())) {
+        if ($this->baselineValidator !== null && $this->baselineValidator->isBaselined($violation)) {
             return;
         }
 
+        $fileName = $violation->getFileName();
         if (!isset($this->ruleViolations[$fileName])) {
             $this->ruleViolations[$fileName] = array();
         }
