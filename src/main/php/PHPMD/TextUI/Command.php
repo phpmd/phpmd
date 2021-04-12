@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Baseline\BaselineFileFinder;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
@@ -82,7 +83,7 @@ class Command
         // Configure baseline violations
         $baseline = null;
         $finder   = new BaselineFileFinder($opts);
-        if ($opts->generateBaseline()) {
+        if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
             $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
         } else {
