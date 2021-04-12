@@ -243,6 +243,31 @@ class CommandTest extends AbstractTest
         static::assertContains($uri, file_get_contents($temp));
     }
 
+    public function testMainUpdateBaseline()
+    {
+        $sourceFile   = realpath(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'));
+        $baselineFile = realpath(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'));
+
+        $temp     = self::createTempFileUri();
+        copy($baselineFile, $temp);
+
+        $exitCode = Command::main(array(
+            __FILE__,
+            str_replace("\\", "/", $sourceFile),
+            'text',
+            'naming',
+            '--update-baseline',
+            '--baseline-file',
+            $baselineFile,
+        ));
+
+        $output = file_get_contents($temp);
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertFileExists($temp);
+        //static::assertContains($uri, file_get_contents($temp));
+    }
+
     public function testMainBaselineViolationShouldBeIgnored()
     {
         $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
