@@ -31,10 +31,12 @@ class BaselineFileFinderTest extends AbstractTest
     {
         $args   = array('script', 'source', 'xml', static::createResourceUriForTest('testA/phpmd.xml'));
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
-        static::assertSame(
-            realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')),
-            $finder->existingFile()->find()
-        );
+
+        // ensure consistent slashes
+        $expected = str_replace("\\", "/", realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')));
+        $actual   = str_replace("\\", "/", $finder->existingFile()->find());
+
+        static::assertSame($expected, $actual);
     }
 
     /**
