@@ -8,6 +8,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
+ * @covers ::__construct
  */
 class BaselineValidatorTest extends TestCase
 {
