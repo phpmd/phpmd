@@ -2,15 +2,15 @@
 
 namespace PHPMD\Baseline;
 
+use PHPMD\AbstractTest;
 use PHPMD\RuleViolation;
-use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
  * @covers ::__construct
  */
-class BaselineValidatorTest extends TestCase
+class BaselineValidatorTest extends AbstractTest
 {
     /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject */
     private $baselineSet;
@@ -21,18 +21,18 @@ class BaselineValidatorTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $rule            = $this->getMockBuilder('\PHPMD\Rule')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->violation = $this->getMockBuilder('\PHPMD\RuleViolation')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $rule            = $this->getMockFromBuilder(
+            $this->getMockBuilder('\PHPMD\Rule')->disableOriginalConstructor()
+        );
+        $this->violation = $this->getMockFromBuilder(
+            $this->getMockBuilder('\PHPMD\RuleViolation')->disableOriginalConstructor()
+        );
         $this->violation
             ->method('getRule')
             ->willReturn($rule);
-        $this->baselineSet = $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->baselineSet = $this->getMockFromBuilder(
+            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+        );
     }
 
     /**
