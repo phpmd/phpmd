@@ -6,6 +6,9 @@ use PHPMD\RuleViolation;
 use PHPUnit\Framework\TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
+/**
+ * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
+ */
 class BaselineValidatorTest extends TestCase
 {
     /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject */
