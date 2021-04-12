@@ -17,8 +17,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Baseline\BaselineSet;
-
 /**
  * This is the main facade of the PHP PMD application
  */

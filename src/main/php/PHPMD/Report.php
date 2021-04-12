@@ -17,7 +17,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
