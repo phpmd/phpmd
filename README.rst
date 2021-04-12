@@ -135,7 +135,7 @@ Command line options
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file.
 
-  - ``--update-baseline`` - will remove all violations from an existing phpmd.baseline.xml
+  - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
     that no longer exist. New violations will _not_ be added.
 
   - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
