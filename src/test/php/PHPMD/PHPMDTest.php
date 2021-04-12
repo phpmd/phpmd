@@ -17,7 +17,9 @@
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -202,7 +204,7 @@ class PHPMDTest extends AbstractTest
             'pmd-refset1',
             array($renderer),
             new RuleSetFactory(),
-            new Report($baselineSet)
+            new Report(new BaselineValidator($baselineSet, BaselineMode::NONE))
         );
 
         static::assertFalse($phpmd->hasViolations());

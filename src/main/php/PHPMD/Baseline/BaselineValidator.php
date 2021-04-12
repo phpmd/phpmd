@@ -27,8 +27,8 @@ class BaselineValidator
     public function isBaselined(RuleViolation $violation)
     {
         $contains = $this->baselineSet->contains(
-            $violation->getFileName(),
             get_class($violation->getRule()),
+            $violation->getFileName(),
             $violation->getMethodName()
         );
 
