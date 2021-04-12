@@ -216,7 +216,7 @@ class PHPMD
      * @param string $ruleSets
      * @param \PHPMD\AbstractRenderer[] $renderers
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
-     * @param \PHPMD\Baseline\BaselineSet|null $baseline
+     * @param \PHPMD\Report $report
      * @return void
      */
     public function processFiles(
@@ -224,15 +224,12 @@ class PHPMD
         $ruleSets,
         array $renderers,
         RuleSetFactory $ruleSetFactory,
-        BaselineSet $baseline = null
+        Report $report
     ) {
-
         // Merge parsed excludes
         $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
-
-        $report = new Report($baseline);
 
         $factory = new ParserFactory();
         $parser = $factory->create($this);

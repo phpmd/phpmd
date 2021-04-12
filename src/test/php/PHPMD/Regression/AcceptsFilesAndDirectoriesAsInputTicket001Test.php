@@ -19,6 +19,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
 use PHPMD\Renderer\XMLRenderer;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Stubs\WriterStub;
 
@@ -46,7 +47,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             self::createFileUri('source'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
     }
 
@@ -67,7 +69,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
             self::createFileUri('source/FooBar.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
     }
 }

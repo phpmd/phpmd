@@ -22,6 +22,7 @@ use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
@@ -125,14 +126,16 @@ class Command
             $opts->getRuleSets(),
             $renderers,
             $ruleSetFactory,
-            $baseline
+            new Report($baseline)
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
             return self::EXIT_ERROR;
         }
 
-        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit() && !$opts->generateBaseline()) {
+        if ($phpmd->hasViolations()
+            && !$opts->ignoreViolationsOnExit()
+            && $opts->generateBaseline() === BaselineMode::NONE) {
             return self::EXIT_VIOLATION;
         }
 
