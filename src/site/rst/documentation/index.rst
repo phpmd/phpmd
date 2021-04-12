@@ -149,4 +149,5 @@ By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To 
   ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
 
 To clean up an existing baseline file and *only remove* no longer existing violations::
+
   ~ $ phpmd /path/to/source text phpmd.xml --update-baseline
