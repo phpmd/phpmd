@@ -66,6 +66,8 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      */
     protected static function cleanupTempFiles()
     {
+        // cleanup any open resources on temp files
+        gc_collect_cycles();
         foreach (self::$tempFiles as $tempFile) {
             unlink($tempFile);
         }
