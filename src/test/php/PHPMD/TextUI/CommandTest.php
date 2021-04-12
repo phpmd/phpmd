@@ -243,29 +243,37 @@ class CommandTest extends AbstractTest
         static::assertContains($uri, file_get_contents($temp));
     }
 
+    /**
+     * Testcase:
+     * - Class has existing ShortVariable and new BooleanGetMethodName violations
+     * - Baseline has ShortVariable and LongClassName baseline violations
+     * Expect in baseline:
+     * - LongClassName violation should be removed
+     * - ShortVariable violation should still exist
+     * - BooleanGetMethodName shouldn't be added
+     */
     public function testMainUpdateBaseline()
     {
-        $sourceFile   = realpath(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'));
-        $baselineFile = realpath(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'));
-
-        $temp     = self::createTempFileUri();
-        copy($baselineFile, $temp);
+        $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
+        $baselineTemp = self::createTempFileUri();
+        copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
+        copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 
         $exitCode = Command::main(array(
             __FILE__,
-            str_replace("\\", "/", $sourceFile),
+            $sourceTemp,
             'text',
             'naming',
             '--update-baseline',
             '--baseline-file',
-            $baselineFile,
+            $baselineTemp,
         ));
 
-        $output = file_get_contents($temp);
-
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
-        static::assertFileExists($temp);
-        //static::assertContains($uri, file_get_contents($temp));
+        static::assertXmlStringEqualsXmlString(
+            file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
+            file_get_contents($baselineTemp)
+        );
     }
 
     public function testMainBaselineViolationShouldBeIgnored()
