@@ -18,9 +18,12 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\Baseline\BaselineFileFinder;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
+use PHPMD\Baseline\BaselineValidator;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
@@ -80,16 +83,22 @@ class Command
         }
 
         // Configure baseline violations
-        $baseline = null;
+        $report   = null;
         $finder   = new BaselineFileFinder($opts);
-        if ($opts->generateBaseline()) {
+        if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
             $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+        } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
+            $baselineFile = $finder->notNull()->existingFile()->find();
+            $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
+            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile)));
+            $report       = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
         } else {
             // try to locate a baseline file and read it
             $baselineFile = $finder->existingFile()->find();
             if ($baselineFile !== null) {
                 $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
+                $report   = new Report(new BaselineValidator($baseline, BaselineMode::NONE));
             }
         }
 
@@ -124,14 +133,16 @@ class Command
             $opts->getRuleSets(),
             $renderers,
             $ruleSetFactory,
-            $baseline
+            $report !== null ? $report : new Report()
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
             return self::EXIT_ERROR;
         }
 
-        if ($phpmd->hasViolations() && !$opts->ignoreViolationsOnExit() && !$opts->generateBaseline()) {
+        if ($phpmd->hasViolations()
+            && !$opts->ignoreViolationsOnExit()
+            && $opts->generateBaseline() === BaselineMode::NONE) {
             return self::EXIT_VIOLATION;
         }
 

@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Rule;
 
 /**
@@ -348,7 +349,7 @@ class CommandLineOptionsTest extends AbstractTest
     {
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
-        static::assertFalse($opts->generateBaseline());
+        static::assertSame(BaselineMode::NONE, $opts->generateBaseline());
     }
 
     /**
@@ -358,7 +359,17 @@ class CommandLineOptionsTest extends AbstractTest
     {
         $args = array(__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline');
         $opts = new CommandLineOptions($args);
-        static::assertTrue($opts->generateBaseline());
+        static::assertSame(BaselineMode::GENERATE, $opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionUpdateBaselineShouldBeSet()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--update-baseline');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(BaselineMode::UPDATE, $opts->generateBaseline());
     }
 
     /**

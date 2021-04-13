@@ -66,6 +66,8 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      */
     protected static function cleanupTempFiles()
     {
+        // cleanup any open resources on temp files
+        gc_collect_cycles();
         foreach (self::$tempFiles as $tempFile) {
             unlink($tempFile);
         }
@@ -235,11 +237,17 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     /**
      * Creates a file uri for a temporary test file.
      *
+     * @param string|null $fileName
      * @return string
      */
-    protected static function createTempFileUri()
+    protected static function createTempFileUri($fileName = null)
     {
-        return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
+        if ($fileName !== null) {
+            $filePath = sys_get_temp_dir() . '/' . $fileName;
+        } else {
+            $filePath = tempnam(sys_get_temp_dir(), 'phpmd.');
+        }
+        return (self::$tempFiles[] = $filePath);
     }
 
     /**

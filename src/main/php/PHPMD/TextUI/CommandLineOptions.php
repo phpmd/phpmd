@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
@@ -149,9 +150,9 @@ class CommandLineOptions
 
     /**
      * Should PHPMD baseline the existing violations and write them to the $baselineFile
-     * @var bool
+     * @var string allowed modes: NONE, GENERATE or UPDATE
      */
-    protected $generateBaseline = false;
+    protected $generateBaseline = BaselineMode::NONE;
 
     /**
      * The baseline source file to read the baseline violations from.
@@ -225,7 +226,10 @@ class CommandLineOptions
                     $this->strict = false;
                     break;
                 case '--generate-baseline':
-                    $this->generateBaseline = true;
+                    $this->generateBaseline = BaselineMode::GENERATE;
+                    break;
+                case '--update-baseline':
+                    $this->generateBaseline = BaselineMode::UPDATE;
                     break;
                 case '--baseline-file':
                     $this->baselineFile = array_shift($args);
@@ -387,7 +391,7 @@ class CommandLineOptions
     /**
      * Should the current violations be baselined
      *
-     * @return bool
+     * @return string
      */
     public function generateBaseline()
     {
@@ -585,6 +589,7 @@ class CommandLineOptions
             'even if any violations are found' . \PHP_EOL .
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 

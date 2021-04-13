@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+  <violation rule="PHPMD\Rule\Naming\LongClassName" file="ClassWithMultipleViolations.php"/>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="ClassWithMultipleViolations.php"/>
+</phpmd-baseline>
