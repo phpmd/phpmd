@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Mon, 12 Apr 2021 08:23:38 +0000" />
+    <meta name="date" content="Tue, 13 Apr 2021 19:49:19 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Mon, 12 Apr 2021 08:23:38 +0000" />
+    <meta name="DC.date" content="Tue, 13 Apr 2021 19:49:19 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -79,8 +79,10 @@ like a filesystem reference.</p>
 <li class="dash"><code>--ignore-errors-on-exit</code> - will exit with a zero code, even on error.</li>
 <li class="dash"><code>--ignore-violations-on-exit</code> - will exit with a zero code, even if any
     violations are found.</li>
-<li class="dash"><code>--generate-baseline</code> - will generate a phpmd.baseline.xml for existing violations
+<li class="dash"><code>--generate-baseline</code> - will generate a <code>phpmd.baseline.xml</code> for existing violations
     next to the ruleset definition file.</li>
+<li class="dash"><code>--update-baseline</code> - will remove all violations from an existing <code>phpmd.baseline.xml</code>
+    that no longer exist. New violations will _<a href="">not</a> be added.</li>
 <li class="dash"><code>--baseline-file</code> - the filepath to a custom baseline xml file. The filepath
     of all baselined files must be relative to this file location.
   An example command line: ::
@@ -129,7 +131,7 @@ that will check the source code.</p>
 <p>At the moment PHPMD comes with the following five renderers:</p>
 <ul><li class="dash"><em>xml</em>, which formats the report as XML.</li>
 <li class="dash"><em>text</em>, simple textual format.</li>
-<li class="dash"><em>ansi</em>, colorful, formated text for the command line.</li>
+<li class="dash"><em>ansi</em>, colorful, formatted text for the command line.</li>
 <li class="dash"><em>html</em>, single HTML file with possible problems.</li>
 <li class="dash"><em>json</em>, formats JSON report.</li>
 <li class="dash"><em>github</em>, a format that GitHub Actions understands (see <a href="/documentation/ci-integration.html#github-actions">CI Integration</a>).</li>
@@ -146,6 +148,9 @@ that will check the source code.</p>
 </code></pre>
 <p>By default PHPMD will look next to <code>phpmd.xml</code> for <code>phpmd.baseline.xml</code>. To overwrite this behaviour:</p>
 <pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+</code></pre>
+<p>To clean up an existing baseline file and <em>only remove</em> no longer existing violations:</p>
+<pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --update-baseline
 </code></pre>
 </div>
 
