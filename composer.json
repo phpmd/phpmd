@@ -41,7 +41,7 @@
     "composer/xdebug-handler": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8.36 || ^5.7.27",
+    "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^8.5.12",
     "squizlabs/php_codesniffer": "^2.0",
     "mikey179/vfsstream": "^1.6.4",
     "gregwar/rst": "^1.0",
