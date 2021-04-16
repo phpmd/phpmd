@@ -9,10 +9,10 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -45,8 +45,8 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * @param $sourceFile
-     * @param $expectedExitCode
+     * @param            $sourceFile
+     * @param            $expectedExitCode
      * @param array|null $options
      * @return void
      * @dataProvider dataProviderTestMainWithOption
@@ -89,6 +89,44 @@ class CommandTest extends AbstractTest
                 'source/source_with_npath_violation.php',
                 Command::EXIT_SUCCESS,
                 array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source/source_with_npath_violation.php',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit', '--ignore-violations-on-exit'),
             ),
             array(
                 'source/ccn_suppress_function.php',
@@ -137,8 +175,8 @@ class CommandTest extends AbstractTest
 
     public function testOutput()
     {
-        $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
-        $temp = self::createTempFileUri();
+        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp     = self::createTempFileUri();
         $exitCode = Command::main(array(
             __FILE__,
             $uri,
@@ -185,8 +223,76 @@ class CommandTest extends AbstractTest
     {
         return array(
             array('--suffixes', '.class.php'),
-            array('--exclude', 'ccn_,npath_'),
+            array('--exclude', 'ccn_,npath_,parse_error'),
         );
+    }
+
+    public function testMainGenerateBaseline()
+    {
+        $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
+        $temp     = self::createTempFileUri();
+        $exitCode = Command::main(array(
+            __FILE__,
+            $uri,
+            'text',
+            'naming',
+            '--generate-baseline',
+            '--baseline-file',
+            $temp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertFileExists($temp);
+        static::assertContains($uri, file_get_contents($temp));
+    }
+
+    /**
+     * Testcase:
+     * - Class has existing ShortVariable and new BooleanGetMethodName violations
+     * - Baseline has ShortVariable and LongClassName baseline violations
+     * Expect in baseline:
+     * - LongClassName violation should be removed
+     * - ShortVariable violation should still exist
+     * - BooleanGetMethodName shouldn't be added
+     */
+    public function testMainUpdateBaseline()
+    {
+        $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
+        $baselineTemp = self::createTempFileUri();
+        copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
+        copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
+
+        $exitCode = Command::main(array(
+            __FILE__,
+            $sourceTemp,
+            'text',
+            'naming',
+            '--update-baseline',
+            '--baseline-file',
+            $baselineTemp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertXmlStringEqualsXmlString(
+            file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
+            file_get_contents($baselineTemp)
+        );
+    }
+
+    public function testMainBaselineViolationShouldBeIgnored()
+    {
+        $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
+        $exitCode     = Command::main(array(
+            __FILE__,
+            $sourceFile,
+            'text',
+            'naming',
+            '--baseline-file',
+            $baselineFile,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
     }
 
     public function testMainWritesExceptionMessageToStderr()
@@ -223,7 +329,7 @@ class CommandTest extends AbstractTest
             )
         );
 
-        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
         $version = $data['project.version'];
 
         $this->assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));

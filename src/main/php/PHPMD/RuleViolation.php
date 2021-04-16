@@ -74,7 +74,7 @@ class RuleViolation
      * The name of a method or <b>null</b> when this violation has no method
      * context.
      *
-     * @var string
+     * @var string|null
      */
     private $methodName = null;
 
@@ -220,7 +220,7 @@ class RuleViolation
      * Returns the name of a method or <b>null</b> when this violation has no
      * method context.
      *
-     * @return string
+     * @return string|null
      */
     public function getMethodName()
     {

@@ -9,14 +9,15 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
@@ -127,6 +128,14 @@ class CommandLineOptions
     protected $strict = false;
 
     /**
+     * Should PHPMD exit without error code even if error is found?
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    protected $ignoreErrorsOnExit = false;
+
+    /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var boolean
@@ -139,6 +148,19 @@ class CommandLineOptions
      * @var array(string)
      */
     protected $availableRuleSets = array();
+
+    /**
+     * Should PHPMD baseline the existing violations and write them to the $baselineFile
+     * @var string allowed modes: NONE, GENERATE or UPDATE
+     */
+    protected $generateBaseline = BaselineMode::NONE;
+
+    /**
+     * The baseline source file to read the baseline violations from.
+     * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
+     * @var string|null
+     */
+    protected $baselineFile;
 
     /**
      * Constructs a new command line options instance.
@@ -204,6 +226,18 @@ class CommandLineOptions
                 case '--not-strict':
                     $this->strict = false;
                     break;
+                case '--generate-baseline':
+                    $this->generateBaseline = BaselineMode::GENERATE;
+                    break;
+                case '--update-baseline':
+                    $this->generateBaseline = BaselineMode::UPDATE;
+                    break;
+                case '--baseline-file':
+                    $this->baselineFile = array_shift($args);
+                    break;
+                case '--ignore-errors-on-exit':
+                    $this->ignoreErrorsOnExit = true;
+                    break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
@@ -225,9 +259,9 @@ class CommandLineOptions
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath = (string)array_shift($arguments);
+        $this->inputPath    = (string)array_shift($arguments);
         $this->reportFormat = (string)array_shift($arguments);
-        $this->ruleSets = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_shift($arguments);
     }
 
     /**
@@ -354,6 +388,37 @@ class CommandLineOptions
     public function hasStrict()
     {
         return $this->strict;
+    }
+
+    /**
+     * Should the current violations be baselined
+     *
+     * @return string
+     */
+    public function generateBaseline()
+    {
+        return $this->generateBaseline;
+    }
+
+    /**
+     * The filepath of the baseline violations xml
+     *
+     * @return string|null
+     */
+    public function baselineFile()
+    {
+        return $this->baselineFile;
+    }
+
+    /**
+     * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function ignoreErrorsOnExit()
+    {
+        return $this->ignoreErrorsOnExit;
     }
 
     /**
@@ -530,8 +595,14 @@ class CommandLineOptions
             'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
+            '--ignore-errors-on-exit: will exit with a zero code, ' .
+            'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL;
+            'even if any violations are found' . \PHP_EOL .
+            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
+            'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
@@ -542,7 +613,7 @@ class CommandLineOptions
     protected function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers = array();
+        $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {

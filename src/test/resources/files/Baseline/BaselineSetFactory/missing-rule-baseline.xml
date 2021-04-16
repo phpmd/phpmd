@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+    <violation file="src/foo/bar"/>
+</phpmd-baseline>

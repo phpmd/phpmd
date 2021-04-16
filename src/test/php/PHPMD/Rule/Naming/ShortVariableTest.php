@@ -42,6 +42,20 @@ class ShortVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToTryCatchBlocks
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToTryCatchBlocksInsideForeach()
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getFunction());
+    }
+
+    /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
      *
      * @return void
