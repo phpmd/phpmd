@@ -78,4 +78,12 @@ class StreamWriter extends AbstractWriter
     {
         fwrite($this->stream, $data);
     }
+
+    /**
+     * @return resource
+     */
+    public function getStream()
+    {
+        return $this->stream;
+    }
 }

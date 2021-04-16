@@ -18,4 +18,5 @@
       The method doSomething() has an NPath complexity of 50000. The configured NPath complexity threshold is 50.
     </violation>
   </file>
+  <error filename="#{rootDirectory}_DS_source_DS_source_with_parse_error.php" msg="Unexpected end of token stream in file: #{rootDirectory}_DS_source_DS_source_with_parse_error.php."/>
 </pmd>

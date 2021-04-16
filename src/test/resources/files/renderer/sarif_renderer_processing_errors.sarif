@@ -1,0 +1,84 @@
+{
+    "version": "2.1.0",
+    "$schema": "https:\/\/raw.githubusercontent.com\/oasis-tcs\/sarif-spec\/master\/Schemata\/sarif-schema-2.1.0.json",
+    "runs": [
+        {
+            "tool": {
+                "driver": {
+                    "name": "PHPMD",
+                    "informationUri": "https:\/\/phpmd.org",
+                    "version": "@package_version@",
+                    "rules": []
+                }
+            },
+            "originalUriBaseIds": {
+                "WORKINGDIR": {
+                    "uri": "file:\/\/#{workingDirectory}\/"
+                }
+            },
+            "results": [
+                {
+                    "level": "error",
+                    "message": {
+                        "text": "Failed for file \u0022\/tmp\/foo.php\u0022."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:\/\/\/tmp\/foo.php"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "level": "error",
+                    "message": {
+                        "text": "Failed for file \u0022\/tmp\/bar.php\u0022."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:\/\/\/tmp\/bar.php"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "level": "error",
+                    "message": {
+                        "text": "Failed for file \u0022#{rootDirectory}\/foobar.php\u0022."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "src\/test\/resources\/files\/foobar.php",
+                                    "uriBaseId": "WORKINGDIR"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "level": "error",
+                    "message": {
+                        "text": "Cannot read file \u0022\/tmp\/foo.php\u0022. Permission denied."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:\/\/\/tmp\/foo.php"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
