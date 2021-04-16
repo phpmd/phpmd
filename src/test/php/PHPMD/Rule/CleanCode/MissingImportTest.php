@@ -33,7 +33,9 @@ class MissingImportTest extends AbstractTest
      */
     public function getRule()
     {
-        return new MissingImport();
+        $rule = new MissingImport();
+        $rule->addProperty('ignore-global', false);
+        return $rule;
     }
 
     /**
@@ -69,8 +71,22 @@ class MissingImportTest extends AbstractTest
      */
     public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
-        $rule = new MissingImport();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
+    }
+
+    /**
+     * Tests the rule ignores classes in global namespace with `ignore-global`.
+     *
+     * @param string $file The test file to test against.
+     * @return void
+     * @dataProvider getApplyingCases
+     */
+    public function testRuleDoesNotApplyWithIgnoreGlobalProperty($file)
+    {
+        $rule = $this->getRule();
+        $rule->addProperty('ignore-global', true);
+        $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
     }
 }

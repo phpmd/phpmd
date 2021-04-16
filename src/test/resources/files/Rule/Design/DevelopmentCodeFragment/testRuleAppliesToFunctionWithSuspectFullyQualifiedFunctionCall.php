@@ -15,10 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed
+function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall()
 {
-    public function testGivenSomeValue_expectSome_niceResult()
-    {
-
-    }
+    \print_r(__FUNCTION__);
 }

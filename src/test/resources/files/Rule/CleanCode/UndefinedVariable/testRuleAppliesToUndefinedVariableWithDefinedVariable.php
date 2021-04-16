@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableWithDefinedVariable extends AbstractTest
+class testRuleAppliesToUndefinedVariableWithDefinedVariable
 {
     function testRuleAppliesToUndefinedVariableWithDefinedVariable()
     {
