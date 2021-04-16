@@ -21,6 +21,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractTest;
 use PHPMD\Node\MethodNode;
+use PHPMD\Report;
 
 /**
  * Test case for the too many public methods rule.
@@ -159,6 +160,22 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, array('invoke', 'withClass')));
+    }
+
+    public function testRuleApplyToBasicClass()
+    {
+        $class = $this->getClass();
+        $rule = new TooManyPublicMethods();
+        $report = new Report();
+        $rule->setReport($report);
+        $rule->addProperty('maxmethods', '5');
+        $rule->addProperty('ignorepattern', '');
+        $rule->apply($class);
+        $violations = $report->getRuleViolations();
+
+        $this->assertCount(1, $violations);
+
+        $this->assertSame(6, $violations[0]->getBeginLine());
     }
 
     /**

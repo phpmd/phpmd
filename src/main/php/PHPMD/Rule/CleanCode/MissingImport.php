@@ -43,6 +43,8 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node)
     {
+        $ignoreGlobal = $this->getBooleanProperty('ignore-global');
+
         foreach ($node->findChildrenOfType('AllocationExpression') as $allocationNode) {
             if (!$allocationNode) {
                 continue;
@@ -54,13 +56,15 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
                 continue;
             }
 
-            if (!$this->getBooleanProperty('importRootNamespace', true) && $this->isInNamespaceRoot($classNode)) {
+            if ($ignoreGlobal && $this->isGlobalNamespace($classNode)) {
                 continue;
             }
 
             $classNameLength = $classNode->getEndColumn() - $classNode->getStartColumn() + 1;
-            $fqcnLength = strlen($classNode->getImage());
-            if ($classNameLength === $fqcnLength) {
+            $className = $classNode->getImage();
+            $fqcnLength = strlen($className);
+
+            if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
                 $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
             }
         }
@@ -78,14 +82,13 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     }
 
     /**
-     * Check whether a given class node is in namespace root.
+     * Check whether a given class node is in the global namespace
      *
      * @param ASTNode $classNode A class node to check.
-     * @return bool Whether the given class node is in namespace root.
+     * @return bool Whether the given class node is in the global namespace.
      */
-    protected function isInNamespaceRoot(ASTNode $classNode)
+    protected function isGlobalNamespace(ASTNode $classNode)
     {
-        $name = $classNode->getName();
-        return strpos($name, '\\') === 0 && strpos($name, '\\', 1) === false;
+        return !strpos($classNode->getImage(), '\\', 1);
     }
 }
