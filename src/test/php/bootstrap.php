@@ -21,8 +21,10 @@ $replacements = array(
      */
     __DIR__ . '/../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
         array(
-            "if (version_compare(PHP_VERSION, '7.1', '>=') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
-            "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && \$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+            "if (version_compare(PHP_VERSION, '7.1', '>=') && " .
+                "\$parameter->allowsNull() && !\$parameter->isVariadic()) {",
+            "if (version_compare(PHP_VERSION, '7.1', '>=') && version_compare(PHP_VERSION, '8.0', '<') && " .
+                "\$parameter->allowsNull() && !\$parameter->isVariadic()) {",
         ),
     ),
     /**
