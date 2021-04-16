@@ -41,6 +41,7 @@ class RuleStub extends AbstractRule implements ClassAware
         $this->setRuleSetName($ruleSetName);
         $this->setSince('42.23');
         $this->setDescription('Simple rule stub');
+        $this->setMessage('Test description');
     }
 
     /**

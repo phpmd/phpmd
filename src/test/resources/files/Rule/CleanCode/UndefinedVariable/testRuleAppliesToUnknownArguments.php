@@ -15,10 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToTestMethodWithTwoUnderscoresEvenWhenOneIsAllowed
+class testRuleAppliesToUnknownArguments
 {
-    public function testGivenSomeValue_expectSome_niceResult()
+    function testRuleAppliesToUnknownArguments(UnknownObject $object)
     {
-
+        $object->foo($a);
     }
 }

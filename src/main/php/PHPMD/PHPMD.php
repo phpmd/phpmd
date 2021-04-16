@@ -28,6 +28,15 @@ class PHPMD
     const VERSION = '@package_version@';
 
     /**
+     * This property will be set to <b>true</b> when an error
+     * was found in the processed source code.
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    private $errors = false;
+
+    /**
      * List of valid file extensions for analyzed files.
      *
      * @var array(string)
@@ -49,7 +58,7 @@ class PHPMD
     private $input;
 
     /**
-     * This property will be set to <b>true</b> when an error or a violation
+     * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
      * @var boolean
@@ -64,6 +73,18 @@ class PHPMD
      * @since 1.2.0
      */
     private $options = array();
+
+    /**
+     * This method will return <b>true</b> when the processed source code
+     * contains errors.
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function hasErrors()
+    {
+        return $this->errors;
+    }
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -114,8 +135,20 @@ class PHPMD
      *
      * @return string[]
      * @since 0.2.0
+     * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
      */
     public function getIgnorePattern()
+    {
+        return $this->getIgnorePatterns();
+    }
+
+    /**
+     * Returns an array with string patterns that mark a file path invalid.
+     *
+     * @return string[]
+     * @since 2.9.0
+     */
+    public function getIgnorePatterns()
     {
         return $this->ignorePatterns;
     }
@@ -126,13 +159,29 @@ class PHPMD
      *
      * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
+     * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
      */
     public function setIgnorePattern(array $ignorePatterns)
+    {
+        $this->addIgnorePatterns($ignorePatterns);
+    }
+
+    /**
+     * Add a list of ignore patterns which is used to exclude directories from
+     * the source analysis.
+     *
+     * @param array<string> $ignorePatterns List of ignore patterns.
+     * @return $this
+     * @since 2.9.0
+     */
+    public function addIgnorePatterns(array $ignorePatterns)
     {
         $this->ignorePatterns = array_merge(
             $this->ignorePatterns,
             $ignorePatterns
         );
+
+        return $this;
     }
 
     /**
@@ -165,21 +214,20 @@ class PHPMD
      * @param string $ruleSets
      * @param \PHPMD\AbstractRenderer[] $renderers
      * @param \PHPMD\RuleSetFactory $ruleSetFactory
+     * @param \PHPMD\Report $report
      * @return void
      */
     public function processFiles(
         $inputPath,
         $ruleSets,
         array $renderers,
-        RuleSetFactory $ruleSetFactory
+        RuleSetFactory $ruleSetFactory,
+        Report $report
     ) {
-
         // Merge parsed excludes
-        $this->setIgnorePattern($ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
-
-        $report = new Report();
 
         $factory = new ParserFactory();
         $parser = $factory->create($this);
@@ -204,6 +252,7 @@ class PHPMD
             $renderer->end();
         }
 
+        $this->errors = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

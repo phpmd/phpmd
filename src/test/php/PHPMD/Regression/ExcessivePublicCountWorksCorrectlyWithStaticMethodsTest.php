@@ -87,7 +87,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
             'codesize',
             array($this->renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
     }
 
@@ -127,7 +128,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
             'codesize',
             array($this->renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
     }
 }
