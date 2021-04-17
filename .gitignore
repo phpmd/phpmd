@@ -1,6 +1,7 @@
 .abc
 .idea
 .sonar
+.phpunit.result.cache
 .project
 .buildpath
 .settings
