@@ -742,4 +742,15 @@ abstract class AbstractTest extends AbstractStaticTest
 
         $this->assertContains($needle, $haystack, $message);
     }
+
+    public function assertNotContainsBackwards($needle, $haystack, $message = '')
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->assertStringNotContainsString($needle, $haystack, $message);
+
+            return;
+        }
+
+        $this->assertNotContains($needle, $haystack, $message);
+    }
 }
