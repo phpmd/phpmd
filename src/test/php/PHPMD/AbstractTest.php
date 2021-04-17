@@ -765,4 +765,11 @@ abstract class AbstractTest extends AbstractStaticTest
 
         $this->assertInternalType($expected, $actual, $message);
     }
+
+    public function expectNotToPerformAssertionsBackwards()
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->expectNotToPerformAssertions();
+        }
+    }
 }
