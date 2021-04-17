@@ -209,6 +209,7 @@ At the moment PHPMD comes with the following renderers:
 - *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
 - *sarif*, the Static Analysis Results Interchange Format.
+- *checkstyle*, language and tool agnostic XML format
 
 Baseline
 --------

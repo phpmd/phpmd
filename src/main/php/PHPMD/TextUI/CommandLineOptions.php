@@ -24,6 +24,7 @@ use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
@@ -241,12 +242,13 @@ class CommandLineOptions
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
+                case '--reportfile-checkstyle':
                 case '--reportfile-html':
-                case '--reportfile-text':
-                case '--reportfile-xml':
                 case '--reportfile-json':
                 case '--reportfile-sarif':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json|sarif)$)', $arg, $match);
+                case '--reportfile-text':
+                case '--reportfile-xml':
+                    preg_match('(^\-\-reportfile\-(checkstyle|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -452,20 +454,22 @@ class CommandLineOptions
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
-            case 'xml':
-                return $this->createXmlRenderer();
-            case 'html':
-                return $this->createHtmlRenderer();
-            case 'text':
-                return $this->createTextRenderer();
-            case 'json':
-                return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'checkstyle':
+                return $this->createCheckStyleRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
+            case 'html':
+                return $this->createHtmlRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
             case 'sarif':
                 return $this->createSarifRenderer();
+            case 'text':
+                return $this->createTextRenderer();
+            case 'xml':
+                return $this->createXmlRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -517,6 +521,14 @@ class CommandLineOptions
     protected function createJsonRenderer()
     {
         return new JSONRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createCheckStyleRenderer()
+    {
+        return new CheckStyleRenderer();
     }
 
     /**
