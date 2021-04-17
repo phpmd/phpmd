@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\Node\ASTNode;
 
 /**
@@ -136,6 +137,17 @@ abstract class AbstractNode
         }
 
         return $nodes;
+    }
+
+    /**
+     * Searches recursive for all children of this node that are of variable.
+     *
+     * @return ASTVariable[]
+     * @todo Cover by a test.
+     */
+    public function findChildrenOfTypeVariable()
+    {
+        return $this->findChildrenOfType('Variable');
     }
 
     /**

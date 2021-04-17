@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Rule;
 
 /**
@@ -188,6 +189,45 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * Tests if ignoreErrorsOnExit returns false by default
+     *
+     * @return void
+     */
+    public function testIgnoreErrorsOnExitReturnsFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $opts = new CommandLineOptions($args);
+
+        self::assertFalse($opts->ignoreErrorsOnExit());
+    }
+
+    /**
+     * Tests if CLI options accepts ignoreErrorsOnExit argument
+     *
+     * @return void
+     */
+    public function testCliOptionsAcceptsIgnoreErrorsOnExitArgument()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-errors-on-exit');
+        $opts = new CommandLineOptions($args);
+
+        self::assertTrue($opts->ignoreErrorsOnExit());
+    }
+
+    /**
+     * Tests if CLI usage contains ignoreErrorsOnExit option
+     *
+     * @return void
+     */
+    public function testCliUsageContainsIgnoreErrorsOnExitOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertContains('--ignore-errors-on-exit:', $opts->usage());
+    }
+
+    /**
      * Tests if ignoreViolationsOnExit returns false by default
      *
      * @return void
@@ -236,7 +276,10 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('Available formats: ansi, datatables, html, json, text, xml.', $opts->usage());
+        $this->assertContains(
+            'Available formats: ansi, baseline, datatables, github, html, json, sarif, text, xml.',
+            $opts->usage()
+        );
     }
 
     /**
@@ -300,6 +343,56 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         $this->assertEquals(42, $opts->getMaximumPriority());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionGenerateBaselineFalseByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(BaselineMode::NONE, $opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionGenerateBaselineShouldBeSet()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(BaselineMode::GENERATE, $opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionUpdateBaselineShouldBeSet()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--update-baseline');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(BaselineMode::UPDATE, $opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionBaselineFileShouldBeNullByDefault()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertNull($opts->baselineFile());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionBaselineFileShouldBeWithFilename()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--baseline-file', 'foobar.txt');
+        $opts = new CommandLineOptions($args);
+        static::assertSame('foobar.txt', $opts->baselineFile());
     }
 
     /**

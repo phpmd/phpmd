@@ -7,7 +7,7 @@ The PHPMD project welcomes your contribution. There are several ways to help out
 if you have found a bug or have an idea for a feature
 * Write test cases for open bug issues
 * Write patches for open bug/feature issues
-* Participate on the PHPMD IRC Channel
+* Participate on the PHPMD Gitter Channel
 
 There are a few guidelines that we need contributors to follow, so that we have a
 chance of keeping on top of things.
@@ -22,6 +22,7 @@ Issues
   * Make sure it does not already exist.
   * Clearly describe the issue including steps to reproduce, when it is a bug.
   * Make sure you note the PHPMD version you use.
+  * Use one of the issue templates.
 
 Coding Standard
 ---------------
@@ -44,4 +45,4 @@ Additional Resources
 * [Existing issues](https://github.com/phpmd/phpmd/issues/)
 * [General GitHub documentation](https://help.github.com/)
 * [GitHub pull request documentation](https://help.github.com/articles/creating-a-pull-request/)
-* [PHPMD IRC Channel on freenode.org](http://webchat.freenode.net/?channels=phpmd)
+* [PHPMD Gitter Channel](https://gitter.im/phpmd/community)

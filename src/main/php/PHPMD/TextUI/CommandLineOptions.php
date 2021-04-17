@@ -17,10 +17,13 @@
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\DatatablesRenderer;
+use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
@@ -126,6 +129,14 @@ class CommandLineOptions
     protected $strict = false;
 
     /**
+     * Should PHPMD exit without error code even if error is found?
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    protected $ignoreErrorsOnExit = false;
+
+    /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var boolean
@@ -138,6 +149,19 @@ class CommandLineOptions
      * @var array(string)
      */
     protected $availableRuleSets = array();
+
+    /**
+     * Should PHPMD baseline the existing violations and write them to the $baselineFile
+     * @var string allowed modes: NONE, GENERATE or UPDATE
+     */
+    protected $generateBaseline = BaselineMode::NONE;
+
+    /**
+     * The baseline source file to read the baseline violations from.
+     * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
+     * @var string|null
+     */
+    protected $baselineFile;
 
     /**
      * Constructs a new command line options instance.
@@ -203,15 +227,28 @@ class CommandLineOptions
                 case '--not-strict':
                     $this->strict = false;
                     break;
+                case '--generate-baseline':
+                    $this->generateBaseline = BaselineMode::GENERATE;
+                    break;
+                case '--update-baseline':
+                    $this->generateBaseline = BaselineMode::UPDATE;
+                    break;
+                case '--baseline-file':
+                    $this->baselineFile = array_shift($args);
+                    break;
+                case '--ignore-errors-on-exit':
+                    $this->ignoreErrorsOnExit = true;
+                    break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
+                case '--reportfile-datatables':
                 case '--reportfile-html':
                 case '--reportfile-text':
                 case '--reportfile-xml':
                 case '--reportfile-json':
-                case '--reportfile-datatables':
-                    preg_match('(^\-\-reportfile\-(xml|html|datatables|text|json)$)', $arg, $match);
+                case '--reportfile-sarif':
+                    preg_match('(^\-\-reportfile\-(datatables|xml|html|text|json|sarif)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -224,9 +261,9 @@ class CommandLineOptions
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath    = (string) array_shift($arguments);
-        $this->reportFormat = (string) array_shift($arguments);
-        $this->ruleSets     = (string) array_shift($arguments);
+        $this->inputPath    = (string)array_shift($arguments);
+        $this->reportFormat = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_shift($arguments);
     }
 
     /**
@@ -344,6 +381,37 @@ class CommandLineOptions
     }
 
     /**
+     * Should the current violations be baselined
+     *
+     * @return string
+     */
+    public function generateBaseline()
+    {
+        return $this->generateBaseline;
+    }
+
+    /**
+     * The filepath of the baseline violations xml
+     *
+     * @return string|null
+     */
+    public function baselineFile()
+    {
+        return $this->baselineFile;
+    }
+
+    /**
+     * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function ignoreErrorsOnExit()
+    {
+        return $this->ignoreErrorsOnExit;
+    }
+
+    /**
      * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
      *
      * @return boolean
@@ -373,6 +441,8 @@ class CommandLineOptions
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
+            case 'datatables':
+                return $this->createDatatablesRenderer();
             case 'xml':
                 return $this->createXmlRenderer();
             case 'html':
@@ -383,8 +453,10 @@ class CommandLineOptions
                 return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
-            case 'datatables':
-                return $this->createDatatablesRenderer();
+            case 'github':
+                return $this->createGitHubRenderer();
+            case 'sarif':
+                return $this->createSarifRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -446,6 +518,14 @@ class CommandLineOptions
     }
 
     /**
+     * @return \PHPMD\Renderer\GitHubRenderer
+     */
+    protected function createGitHubRenderer()
+    {
+        return new GitHubRenderer();
+    }
+
+    /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer() {
@@ -464,6 +544,13 @@ class CommandLineOptions
      */
     protected function createDatatablesRenderer() {
         return new DatatablesRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\SARIFRenderer
+     */
+    protected function createSarifRenderer() {
+        return new SARIFRenderer();
     }
 
     /**
@@ -500,6 +587,47 @@ class CommandLineOptions
         include_once $fileName;
 
         return new $this->reportFormat();
+    }
+
+    /**
+     * Returns usage information for the PHPMD command line interface.
+     *
+     * @return string
+     */
+    public function usage()
+    {
+        $availableRenderers = $this->getListOfAvailableRenderers();
+
+        return 'Mandatory arguments:' . \PHP_EOL .
+            '1) A php source code filename or directory. Can be a comma-' .
+            'separated string' . \PHP_EOL .
+            '2) A report format' . \PHP_EOL .
+            '3) A ruleset filename or a comma-separated string of ruleset' .
+            'filenames' . \PHP_EOL . \PHP_EOL .
+            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
+            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
+            'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
+            'Optional arguments that may be put after the mandatory arguments:' .
+            \PHP_EOL .
+            '--minimumpriority: rule priority threshold; rules with lower ' .
+            'priority than this will not be used' . \PHP_EOL .
+            '--reportfile: send report output to a file; default to STDOUT' .
+            \PHP_EOL .
+            '--suffixes: comma-separated string of valid source code ' .
+            'filename extensions, e.g. php,phtml' . \PHP_EOL .
+            '--exclude: comma-separated string of patterns that are used to ' .
+            'ignore directories. Use asterisks to exclude by pattern. ' .
+            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
+            '--strict: also report those nodes with a @SuppressWarnings ' .
+            'annotation' . \PHP_EOL .
+            '--ignore-errors-on-exit: will exit with a zero code, ' .
+            'even on error' . \PHP_EOL .
+            '--ignore-violations-on-exit: will exit with a zero code, ' .
+            'even if any violations are found' . \PHP_EOL .
+            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
+            'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
