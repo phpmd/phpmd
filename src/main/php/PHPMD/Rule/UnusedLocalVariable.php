@@ -116,8 +116,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function collectVariables(AbstractCallableNode $node)
     {
-        foreach ($node->findChildrenOfType('Variable') as $variable) {
-            /** @var $variable ASTNode */
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isLocal($variable)) {
                 $this->collectVariable($variable);
             }

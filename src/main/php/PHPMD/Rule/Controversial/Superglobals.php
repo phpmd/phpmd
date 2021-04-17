@@ -58,7 +58,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node)
     {
-        foreach ($node->findChildrenOfType('Variable') as $variable) {
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (in_array($variable->getImage(), $this->superglobals)) {
                 $this->addViolation(
                     $node,

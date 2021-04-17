@@ -190,7 +190,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     protected function removeRegularVariables(AbstractNode $node)
     {
-        $variables = $node->findChildrenOfType('Variable');
+        $variables = $node->findChildrenOfTypeVariable();
 
         foreach ($variables as $variable) {
             /** @var $variable ASTNode */
