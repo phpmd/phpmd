@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\DatatablesRenderer;
@@ -25,6 +26,7 @@ use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
@@ -168,10 +170,10 @@ class CommandLineOptions
      *
      * @param string[] $args
      * @param string[] $availableRuleSets
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function __construct(array $args, array $availableRuleSets = array()) {
+    public function __construct(array $args, array $availableRuleSets = array())
+    {
         // Remove current file name
         array_shift($args);
 
@@ -243,12 +245,13 @@ class CommandLineOptions
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-datatables':
+                case '--reportfile-checkstyle':
                 case '--reportfile-html':
-                case '--reportfile-text':
-                case '--reportfile-xml':
                 case '--reportfile-json':
                 case '--reportfile-sarif':
-                    preg_match('(^\-\-reportfile\-(datatables|xml|html|text|json|sarif)$)', $arg, $match);
+                case '--reportfile-text':
+                case '--reportfile-xml':
+                    preg_match('(^\-\-reportfile\-(checkstyle|datatables|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -258,7 +261,7 @@ class CommandLineOptions
         }
 
         if (count($arguments) < 3) {
-            throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
         $this->inputPath    = (string)array_shift($arguments);
@@ -271,7 +274,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getInputPath() {
+    public function getInputPath()
+    {
         return $this->inputPath;
     }
 
@@ -280,7 +284,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getReportFormat() {
+    public function getReportFormat()
+    {
         return $this->reportFormat;
     }
 
@@ -290,7 +295,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getReportFile() {
+    public function getReportFile()
+    {
         return $this->reportFile;
     }
 
@@ -300,7 +306,8 @@ class CommandLineOptions
      *
      * @return array
      */
-    public function getReportFiles() {
+    public function getReportFiles()
+    {
         return $this->reportFiles;
     }
 
@@ -309,7 +316,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getRuleSets() {
+    public function getRuleSets()
+    {
         return $this->ruleSets;
     }
 
@@ -318,7 +326,8 @@ class CommandLineOptions
      *
      * @return integer
      */
-    public function getMinimumPriority() {
+    public function getMinimumPriority()
+    {
         return $this->minimumPriority;
     }
 
@@ -327,7 +336,8 @@ class CommandLineOptions
      *
      * @return integer
      */
-    public function getMaximumPriority() {
+    public function getMaximumPriority()
+    {
         return $this->maximumPriority;
     }
 
@@ -337,7 +347,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getCoverageReport() {
+    public function getCoverageReport()
+    {
         return $this->coverageReport;
     }
 
@@ -347,7 +358,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getExtensions() {
+    public function getExtensions()
+    {
         return $this->extensions;
     }
 
@@ -357,7 +369,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function getIgnore() {
+    public function getIgnore()
+    {
         return $this->ignore;
     }
 
@@ -366,7 +379,8 @@ class CommandLineOptions
      *
      * @return boolean
      */
-    public function hasVersion() {
+    public function hasVersion()
+    {
         return $this->version;
     }
 
@@ -376,7 +390,8 @@ class CommandLineOptions
      * @return boolean
      * @since 1.2.0
      */
-    public function hasStrict() {
+    public function hasStrict()
+    {
         return $this->strict;
     }
 
@@ -416,7 +431,8 @@ class CommandLineOptions
      *
      * @return boolean
      */
-    public function ignoreViolationsOnExit() {
+    public function ignoreViolationsOnExit()
+    {
         return $this->ignoreViolationsOnExit;
     }
 
@@ -435,28 +451,31 @@ class CommandLineOptions
      * @param string $reportFormat
      *
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException When the specified renderer does not exist.
+     * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer($reportFormat = null) {
+    public function createRenderer($reportFormat = null)
+    {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
-            case 'datatables':
-                return $this->createDatatablesRenderer();
-            case 'xml':
-                return $this->createXmlRenderer();
-            case 'html':
-                return $this->createHtmlRenderer();
-            case 'text':
-                return $this->createTextRenderer();
-            case 'json':
-                return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'checkstyle':
+                return $this->createCheckStyleRenderer();
+            case 'datatables':
+                return $this->createDatatablesRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
+            case 'html':
+                return $this->createHtmlRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
             case 'sarif':
                 return $this->createSarifRenderer();
+            case 'text':
+                return $this->createTextRenderer();
+            case 'xml':
+                return $this->createXmlRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -467,7 +486,8 @@ class CommandLineOptions
      *
      * @return string
      */
-    public function usage() {
+    public function usage()
+    {
         $availableRenderers = $this->getListOfAvailableRenderers();
 
         return 'Mandatory arguments:' . \PHP_EOL .
@@ -499,21 +519,24 @@ class CommandLineOptions
     /**
      * @return \PHPMD\Renderer\XMLRenderer
      */
-    protected function createXmlRenderer() {
+    protected function createXmlRenderer()
+    {
         return new XMLRenderer();
     }
 
     /**
      * @return \PHPMD\Renderer\TextRenderer
      */
-    protected function createTextRenderer() {
+    protected function createTextRenderer()
+    {
         return new TextRenderer();
     }
 
     /**
      * @return \PHPMD\Renderer\AnsiRenderer
      */
-    protected function createAnsiRenderer() {
+    protected function createAnsiRenderer()
+    {
         return new AnsiRenderer();
     }
 
@@ -528,38 +551,51 @@ class CommandLineOptions
     /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
-    protected function createHtmlRenderer() {
+    protected function createHtmlRenderer()
+    {
         return new HTMLRenderer();
     }
 
     /**
      * @return \PHPMD\Renderer\JSONRenderer
      */
-    protected function createJsonRenderer() {
+    protected function createJsonRenderer()
+    {
         return new JSONRenderer();
     }
 
     /**
      * @return \PHPMD\Renderer\DatatablesRenderer
      */
-    protected function createDatatablesRenderer() {
+    protected function createDatatablesRenderer()
+    {
         return new DatatablesRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createCheckStyleRenderer()
+    {
+        return new CheckStyleRenderer();
     }
 
     /**
      * @return \PHPMD\Renderer\SARIFRenderer
      */
-    protected function createSarifRenderer() {
+    protected function createSarifRenderer()
+    {
         return new SARIFRenderer();
     }
 
     /**
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    protected function createCustomRenderer() {
+    protected function createCustomRenderer()
+    {
         if ('' === $this->reportFormat) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
                 self::INPUT_ERROR
             );
@@ -574,7 +610,7 @@ class CommandLineOptions
 
         $fileHandle = @fopen($fileName, 'r', true);
         if (is_resource($fileHandle) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
                     $this->reportFormat
@@ -635,11 +671,13 @@ class CommandLineOptions
      *
      * @return string The list of renderers found.
      */
-    protected function getListOfAvailableRenderers() {
+    protected function getListOfAvailableRenderers()
+    {
         $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            $rendererName = array();
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }
@@ -662,7 +700,8 @@ class CommandLineOptions
      *
      * @return void
      */
-    protected function logDeprecated($deprecatedName, $newName) {
+    protected function logDeprecated($deprecatedName, $newName)
+    {
         $message = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
             $deprecatedName,
@@ -681,13 +720,14 @@ class CommandLineOptions
      * @param string $inputFile Specified input file name.
      *
      * @return string
-     * @throws \InvalidArgumentException If the specified input file does not exist.
+     * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    protected function readInputFile($inputFile) {
+    protected function readInputFile($inputFile)
+    {
         if (file_exists($inputFile)) {
             return implode(',', array_map('trim', file($inputFile)));
         }
-        throw new \InvalidArgumentException("Input file '{$inputFile}' not exists.");
+        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }

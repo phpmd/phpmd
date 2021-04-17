@@ -19,6 +19,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use SplFileObject;
 
 /**
  * This renderer output a html file with all found violations.
@@ -376,7 +377,8 @@ class HTMLRenderer extends AbstractRenderer
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
-            if ($url = $violation->getRule()->getExternalInfoUrl()) {
+            $url = $violation->getRule()->getExternalInfoUrl();
+            if ($url) {
                 $linkHtml = "<a class='info-lnk' href='{$url}' target='_blank'>(help)</a>";
             }
 
@@ -429,7 +431,7 @@ class HTMLRenderer extends AbstractRenderer
             return array();
         }
 
-        $file = new \SplFileObject($file);
+        $file = new SplFileObject($file);
 
         // We have to subtract 1 to extract correct lines via SplFileObject.
         $line = max($lineNumber - 1 - $extra, 0);
@@ -548,8 +550,8 @@ class HTMLRenderer extends AbstractRenderer
         foreach ($violations as $v) {
             // We use "ref" reference to make things somewhat easier to read.
             // Also, using a reference to non-existing array index doesn't throw a notice.
-
-            if ($namespaceName = $v->getNamespaceName()) {
+            $namespaceName = $v->getNamespaceName();
+            if ($namespaceName) {
                 $ref = &$result[self::CATEGORY_NAMESPACE][$namespaceName];
                 $ref = isset($ref) ? $ref + 1 : 1;
             }

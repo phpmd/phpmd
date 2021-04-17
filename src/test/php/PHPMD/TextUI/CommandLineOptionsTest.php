@@ -277,7 +277,7 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         $this->assertContains(
-            'Available formats: ansi, baseline, datatables, github, html, json, sarif, text, xml.',
+            'Available formats: ansi, baseline, checkstyle, datatables, github, html, json, sarif, text, xml.',
             $opts->usage()
         );
     }
