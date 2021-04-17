@@ -449,7 +449,6 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
-     *
      * @return \PHPMD\AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
@@ -662,7 +661,6 @@ class CommandLineOptions
      *
      * @param string $deprecatedName
      * @param string $newName
-     *
      * @return void
      */
     protected function logDeprecated($deprecatedName, $newName)
@@ -683,7 +681,6 @@ class CommandLineOptions
      * exception.
      *
      * @param string $inputFile Specified input file name.
-     *
      * @return string
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
@@ -693,6 +690,7 @@ class CommandLineOptions
         if (file_exists($inputFile)) {
             return implode(',', array_map('trim', file($inputFile)));
         }
+
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }
