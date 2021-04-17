@@ -18,7 +18,7 @@ class BaselineValidatorTest extends AbstractTest
     /** @var RuleViolation|PHPUnit_Framework_MockObject_MockObject */
     private $violation;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $rule            = $this->getMockFromBuilder(

@@ -50,10 +50,11 @@ class FunctionTest extends AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @expectedException BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
+        $this->setExpectedExceptionBackwards('BadMethodCallException');
+
         $node = new FunctionNode(new ASTFunction(null));
         $node->getFooBar();
     }

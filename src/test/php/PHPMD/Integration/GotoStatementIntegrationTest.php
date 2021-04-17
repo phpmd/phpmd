@@ -48,6 +48,6 @@ class GotoStatementIntegrationTest extends AbstractTest
             )
         );
 
-        self::assertContains('utilizes a goto statement.', file_get_contents($file));
+        $this->assertContainsBackwards('utilizes a goto statement.', file_get_contents($file));
     }
 }

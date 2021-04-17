@@ -37,6 +37,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
      */
     public function testCliAcceptsDirectoryAsInput()
     {
+        $this->expectNotToPerformAssertionsBackwards();
+
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
@@ -59,6 +61,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
      */
     public function testCliAcceptsSingleFileAsInput()
     {
+        $this->expectNotToPerformAssertionsBackwards();
+
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();

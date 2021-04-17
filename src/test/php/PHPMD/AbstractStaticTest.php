@@ -194,7 +194,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 

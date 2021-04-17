@@ -36,7 +36,7 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (is_resource($this->stderrStreamFilter)) {
             stream_filter_remove($this->stderrStreamFilter);
@@ -93,10 +93,11 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array(__FILE__, 'text', 'design');
         new CommandLineOptions($args);
     }
@@ -154,10 +155,11 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array('foo.php', 'text', 'design', '--inputfile', 'inputfail.txt');
         new CommandLineOptions($args);
     }
@@ -224,7 +226,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--ignore-errors-on-exit:', $opts->usage());
+        $this->assertContainsBackwards('--ignore-errors-on-exit:', $opts->usage());
     }
 
     /**
@@ -263,7 +265,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--ignore-violations-on-exit:', $opts->usage());
+        $this->assertContainsBackwards('--ignore-violations-on-exit:', $opts->usage());
     }
 
     /**
@@ -276,7 +278,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains(
+        $this->assertContainsBackwards(
             'Available formats: ansi, baseline, github, html, json, sarif, text, xml.',
             $opts->usage()
         );
@@ -292,7 +294,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--strict:', $opts->usage());
+        $this->assertContainsBackwards('--strict:', $opts->usage());
     }
 
     /**
@@ -470,12 +472,13 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @param string $reportFormat
      * @return void
-     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp (^Can\'t )
      * @dataProvider dataProviderCreateRendererThrowsException
      */
     public function testCreateRendererThrowsException($reportFormat)
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
         $opts = new CommandLineOptions($args);
         $opts->createRenderer();
@@ -506,7 +509,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
         new CommandLineOptions($args);
 
-        $this->assertContains(
+        $this->assertContainsBackwards(
             sprintf(
                 'The --%s option is deprecated, please use --%s instead.',
                 $deprecatedName,

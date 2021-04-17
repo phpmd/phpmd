@@ -90,12 +90,12 @@ class StringsTest extends AbstractTest
     /**
      * Tests the splitToList() method with an empty separator
      *
-     * @expectedException \InvalidArgumentException
-     *
      * @return void
      */
     public function testSplitToListEmptySeparatorThrowsException()
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         Strings::splitToList('UnitTest', '');
     }
 

@@ -41,41 +41,53 @@ class BaselineSetFactoryTest extends AbstractTest
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to locate the baseline file at
      */
     public function testFromFileShouldThrowExceptionForMissingFile()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Unable to locate the baseline file at'
+        );
+
         BaselineSetFactory::fromFile('foobar.xml');
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to read xml from
      */
     public function testFromFileShouldThrowExceptionForOnInvalidXML()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Unable to read xml from'
+        );
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('invalid-baseline.xml'));
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Missing `rule` attribute in `violation`
      */
     public function testFromFileViolationMissingRuleShouldThrowException()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Missing `rule` attribute in `violation`'
+        );
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-rule-baseline.xml'));
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Missing `file` attribute in `violation` in
      */
     public function testFromFileViolationMissingFileShouldThrowException()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Missing `file` attribute in `violation` in'
+        );
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-file-baseline.xml'));
     }
 }

@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use ReflectionProperty;
 
 /**
  * Test case for the rule set factory class.
@@ -43,7 +44,7 @@ class RuleSetFactoryTest extends AbstractTest
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        $this->assertContains('The Code Size Ruleset', $ruleSet->getDescription());
+        $this->assertContainsBackwards('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     /**
@@ -69,7 +70,7 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsReturnsArray()
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertInternalTypeBackwards('array', $ruleSets);
     }
 
     /**
@@ -185,7 +186,7 @@ class RuleSetFactoryTest extends AbstractTest
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertInternalTypeBackwards('array', $ruleSets);
     }
 
     /**
@@ -563,7 +564,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleSetNotFoundException',
             'Cannot find specified rule-set "foo-bar-ruleset-23".'
         );
@@ -583,7 +584,7 @@ class RuleSetFactoryTest extends AbstractTest
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleClassFileNotFoundException',
             'Cannot load source file for class: PHPMD\\Stubs\\ClassFileNotFoundRule'
         );
@@ -603,7 +604,7 @@ class RuleSetFactoryTest extends AbstractTest
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleClassNotFoundException',
             'Cannot find rule class: PHPMD\\Stubs\\ClassNotFoundRule'
         );
@@ -617,10 +618,11 @@ class RuleSetFactoryTest extends AbstractTest
      *
      * @return void
      * @covers \PHPMD\RuleClassNotFoundException
-     * @expectedException \RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
+        $this->setExpectedExceptionBackwards('RuntimeException');
+
         $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
 
         $factory = new RuleSetFactory();
@@ -641,7 +643,9 @@ class RuleSetFactoryTest extends AbstractTest
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
+        $property = new ReflectionProperty($ruleSets[0], 'strict');
+        $property->setAccessible(true);
+        $this->assertTrue($property->getValue($ruleSets[0]));
     }
 
     /**

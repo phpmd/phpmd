@@ -60,10 +60,11 @@ class PathsTest extends AbstractTest
 
     /**
      * @covers ::getAbsolutePath
-     * @expectedException RuntimeException
      */
     public function testGetAbsolutePathShouldReturnNullForIrregularStream()
     {
+        $this->setExpectedExceptionBackwards('RuntimeException');
+
         Paths::getAbsolutePath(fopen('php://stdout', 'wb'));
     }
 
@@ -87,10 +88,11 @@ class PathsTest extends AbstractTest
 
     /**
      * @covers ::getRealPath
-     * @expectedException RuntimeException
      */
     public function testGetRealPathShouldThrowExceptionOnFailure()
     {
+        $this->setExpectedExceptionBackwards('RuntimeException');
+
         Paths::getRealPath('unknown/path');
     }
 }

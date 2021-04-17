@@ -35,7 +35,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
      */
     public function testReportContainsExpectedRuleViolationWarning()
     {
-        self::assertContains(
+        $this->assertContainsBackwards(
             "Avoid unused local variables such as '\$foo'.",
             self::runCommandLine()
         );
@@ -49,7 +49,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
      */
     public function testReportNotContainsRuleViolationWarningForFileNotInList()
     {
-        self::assertNotContains(
+        $this->assertNotContainsBackwards(
             "Avoid unused local variables such as '\$bar'.",
             self::runCommandLine()
         );

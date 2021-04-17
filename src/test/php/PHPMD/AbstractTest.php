@@ -37,6 +37,7 @@ use PHPMD\Stubs\RuleStub;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Runner_Version as Version;
 use ReflectionProperty;
 use Traversable;
 
@@ -103,7 +104,7 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         static::returnToOriginalWorkingDirectory();
         static::cleanupTempFiles();
@@ -710,5 +711,65 @@ abstract class AbstractTest extends AbstractStaticTest
         $parser->parse();
 
         return $builder->getNamespaces()->current();
+    }
+
+    public function setExpectedExceptionBackwards($exception, $message = null, $code = null)
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->expectException($exception);
+
+            if ($message) {
+                $this->expectExceptionMessage($message);
+            }
+
+            if ($code) {
+                $this->expectExceptionCode($code);
+            }
+
+            return;
+        }
+
+        $this->setExpectedException($exception, $message, $code);
+    }
+
+    public function assertContainsBackwards($needle, $haystack, $message = '')
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->assertStringContainsString($needle, $haystack, $message);
+
+            return;
+        }
+
+        $this->assertContains($needle, $haystack, $message);
+    }
+
+    public function assertNotContainsBackwards($needle, $haystack, $message = '')
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->assertStringNotContainsString($needle, $haystack, $message);
+
+            return;
+        }
+
+        $this->assertNotContains($needle, $haystack, $message);
+    }
+
+    public function assertInternalTypeBackwards($expected, $actual, $message = '')
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $method = 'assertIs' . ucfirst($expected);
+            $this->$method($actual, $message);
+
+            return;
+        }
+
+        $this->assertInternalType($expected, $actual, $message);
+    }
+
+    public function expectNotToPerformAssertionsBackwards()
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->expectNotToPerformAssertions();
+        }
     }
 }
