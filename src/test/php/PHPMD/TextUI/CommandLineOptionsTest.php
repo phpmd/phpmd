@@ -226,7 +226,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--ignore-errors-on-exit:', $opts->usage());
+        $this->assertContainsBackwards('--ignore-errors-on-exit:', $opts->usage());
     }
 
     /**
@@ -265,7 +265,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--ignore-violations-on-exit:', $opts->usage());
+        $this->assertContainsBackwards('--ignore-violations-on-exit:', $opts->usage());
     }
 
     /**
@@ -278,7 +278,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains(
+        $this->assertContainsBackwards(
             'Available formats: ansi, baseline, github, html, json, sarif, text, xml.',
             $opts->usage()
         );
@@ -294,7 +294,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        $this->assertContains('--strict:', $opts->usage());
+        $this->assertContainsBackwards('--strict:', $opts->usage());
     }
 
     /**
@@ -509,7 +509,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
         new CommandLineOptions($args);
 
-        $this->assertContains(
+        $this->assertContainsBackwards(
             sprintf(
                 'The --%s option is deprecated, please use --%s instead.',
                 $deprecatedName,

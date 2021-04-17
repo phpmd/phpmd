@@ -243,7 +243,7 @@ class CommandTest extends AbstractTest
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
-        static::assertContains($uri, file_get_contents($temp));
+        $this->assertContainsBackwards($uri, file_get_contents($temp));
     }
 
     /**
@@ -310,7 +310,7 @@ class CommandTest extends AbstractTest
             )
         );
 
-        $this->assertContains(
+        $this->assertContainsBackwards(
             'Can\'t find the custom report class: ',
             StreamFilter::$streamHandle
         );

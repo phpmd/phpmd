@@ -43,7 +43,7 @@ class RuleSetFactoryTest extends AbstractTest
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        $this->assertContains('The Code Size Ruleset', $ruleSet->getDescription());
+        $this->assertContainsBackwards('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     /**
