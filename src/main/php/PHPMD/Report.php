@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
@@ -118,7 +119,7 @@ class Report
             }
         }
 
-        return new \ArrayIterator($violations);
+        return new ArrayIterator($violations);
     }
 
     /**
@@ -154,7 +155,7 @@ class Report
      */
     public function getErrors()
     {
-        return new \ArrayIterator($this->errors);
+        return new ArrayIterator($this->errors);
     }
 
     /**

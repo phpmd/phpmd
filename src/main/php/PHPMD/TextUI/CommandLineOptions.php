@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
@@ -168,7 +169,7 @@ class CommandLineOptions
      *
      * @param string[] $args
      * @param string[] $availableRuleSets
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(array $args, array $availableRuleSets = array())
     {
@@ -258,7 +259,7 @@ class CommandLineOptions
         }
 
         if (count($arguments) < 3) {
-            throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
         $this->inputPath    = (string)array_shift($arguments);
@@ -447,7 +448,7 @@ class CommandLineOptions
      *
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException When the specified renderer does not exist.
+     * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
     {
@@ -541,12 +542,12 @@ class CommandLineOptions
 
     /**
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function createCustomRenderer()
     {
         if ('' === $this->reportFormat) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
                 self::INPUT_ERROR
             );
@@ -561,7 +562,7 @@ class CommandLineOptions
 
         $fileHandle = @fopen($fileName, 'r', true);
         if (is_resource($fileHandle) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
                     $this->reportFormat
@@ -628,6 +629,7 @@ class CommandLineOptions
         $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            $rendererName = array();
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }
@@ -668,7 +670,7 @@ class CommandLineOptions
      *
      * @param string $inputFile Specified input file name.
      * @return string
-     * @throws \InvalidArgumentException If the specified input file does not exist.
+     * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
     protected function readInputFile($inputFile)
@@ -676,6 +678,6 @@ class CommandLineOptions
         if (file_exists($inputFile)) {
             return implode(',', array_map('trim', file($inputFile)));
         }
-        throw new \InvalidArgumentException("Input file '{$inputFile}' not exists.");
+        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }
