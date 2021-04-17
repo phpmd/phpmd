@@ -69,7 +69,7 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsReturnsArray()
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertInternalTypeBackwards('array', $ruleSets);
     }
 
     /**
@@ -185,7 +185,7 @@ class RuleSetFactoryTest extends AbstractTest
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertInternalTypeBackwards('array', $ruleSets);
     }
 
     /**

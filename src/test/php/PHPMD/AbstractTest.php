@@ -753,4 +753,16 @@ abstract class AbstractTest extends AbstractStaticTest
 
         $this->assertNotContains($needle, $haystack, $message);
     }
+
+    public function assertInternalTypeBackwards($expected, $actual, $message = '')
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $method = 'assertIs' . ucfirst($expected);
+            $this->$method($actual, $message);
+
+            return;
+        }
+
+        $this->assertInternalType($expected, $actual, $message);
+    }
 }
