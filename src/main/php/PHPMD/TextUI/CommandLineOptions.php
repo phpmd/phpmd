@@ -185,12 +185,12 @@ class CommandLineOptions
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
-                    $this->minimumPriority = (int) array_shift($args);
+                    $this->minimumPriority = (int)array_shift($args);
                     break;
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
-                    $this->maximumPriority = (int) array_shift($args);
+                    $this->maximumPriority = (int)array_shift($args);
                     break;
                 case '--report-file':
                 case '--reportfile':
@@ -512,8 +512,14 @@ class CommandLineOptions
             'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
+            '--ignore-errors-on-exit: will exit with a zero code, ' .
+            'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL;
+            'even if any violations are found' . \PHP_EOL .
+            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
+            'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
@@ -623,47 +629,6 @@ class CommandLineOptions
         include_once $fileName;
 
         return new $this->reportFormat();
-    }
-
-    /**
-     * Returns usage information for the PHPMD command line interface.
-     *
-     * @return string
-     */
-    public function usage()
-    {
-        $availableRenderers = $this->getListOfAvailableRenderers();
-
-        return 'Mandatory arguments:' . \PHP_EOL .
-            '1) A php source code filename or directory. Can be a comma-' .
-            'separated string' . \PHP_EOL .
-            '2) A report format' . \PHP_EOL .
-            '3) A ruleset filename or a comma-separated string of ruleset' .
-            'filenames' . \PHP_EOL . \PHP_EOL .
-            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
-            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
-            'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
-            'Optional arguments that may be put after the mandatory arguments:' .
-            \PHP_EOL .
-            '--minimumpriority: rule priority threshold; rules with lower ' .
-            'priority than this will not be used' . \PHP_EOL .
-            '--reportfile: send report output to a file; default to STDOUT' .
-            \PHP_EOL .
-            '--suffixes: comma-separated string of valid source code ' .
-            'filename extensions, e.g. php,phtml' . \PHP_EOL .
-            '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories. Use asterisks to exclude by pattern. ' .
-            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
-            '--strict: also report those nodes with a @SuppressWarnings ' .
-            'annotation' . \PHP_EOL .
-            '--ignore-errors-on-exit: will exit with a zero code, ' .
-            'even on error' . \PHP_EOL .
-            '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL .
-            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
-            'to the first ruleset file location' . \PHP_EOL .
-            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
-            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
