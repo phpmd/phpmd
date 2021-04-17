@@ -133,7 +133,7 @@ At the moment PHPMD comes with the following five renderers:
 
 Some more formats can be obtained by conversion such as:
 
-*junit* can be obtained using `xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS.::
+*junit* can be obtained using `xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file <https://phpmd.org/junit.xslt>`_::
 
   ~ $ phpmd src xml cleancode | xsltproc junit.xslt -
 
