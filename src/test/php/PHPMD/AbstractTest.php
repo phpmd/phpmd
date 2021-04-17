@@ -37,6 +37,7 @@ use PHPMD\Stubs\RuleStub;
 use PHPUnit_Framework_ExpectationFailedException;
 use PHPUnit_Framework_MockObject_MockBuilder;
 use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Runner_Version as Version;
 use ReflectionProperty;
 use Traversable;
 
@@ -710,5 +711,24 @@ abstract class AbstractTest extends AbstractStaticTest
         $parser->parse();
 
         return $builder->getNamespaces()->current();
+    }
+
+    public function setExpectedException($exception, $message = '', $code = null)
+    {
+        if (version_compare(Version::id(), '8.0.0', '>=')) {
+            $this->expectException($exception);
+
+            if ($message) {
+                $this->expectExceptionMessage($message);
+            }
+
+            if ($code) {
+                $this->expectExceptionCode($code);
+            }
+
+            return;
+        }
+
+        parent::setExpectedException($exception, $message, $code);
     }
 }
