@@ -64,6 +64,18 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToClosureUnusedFormalParameter
+     *
+     * @return void
+     */
+    public function testRuleAppliesToClosureUnusedFormalParameter()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleAppliesToMultipleMethodUnusedFormalParameter
      *
      * @return void

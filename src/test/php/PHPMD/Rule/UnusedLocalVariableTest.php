@@ -41,6 +41,18 @@ class UnusedLocalVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToUnusedLocalVariable
+     *
+     * @return void
+     */
+    public function testRuleAppliesToUnusedLocalVariableDeclaredTwice()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testInnerFunctionParametersDoNotHideUnusedVariables
      *
      * @return void
@@ -290,6 +302,19 @@ class UnusedLocalVariableTest extends AbstractTest
      * @return void
      */
     public function testRuleDoesNotApplyToCookieSuperGlobal()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToClosureParameter
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToClosureParameter()
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
@@ -605,6 +630,28 @@ class UnusedLocalVariableTest extends AbstractTest
      * @return void
      */
     public function testRuleDoesNotApplyToCompactFunction()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToCompactWithDoubleQuotesFunction
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         $key = "ok";
+     *         return compact("key");
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToCompactWithDoubleQuotesFunction()
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');

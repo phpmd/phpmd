@@ -1,0 +1,59 @@
+name: Codestyle
+
+on:
+  push:
+    branches:
+      - "*"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/codestyle.yml'
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpcs.xml.dist'
+      - '.github/workflows/codestyle.yml'
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [7.4]
+        dependency-version: [prefer-stable]
+
+    name: Codestyle check
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPCS for the codestyle
+        run: vendor/bin/phpcs

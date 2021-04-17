@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+  <violation rule="PHPMD\Rule\Naming\ShortVariable" file="ClassWithShortVariable.php"/>
+</phpmd-baseline>
