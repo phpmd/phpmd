@@ -8,6 +8,58 @@
 The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
     </description>
 
+    <rule name="LongClassName"
+          since="2.9"
+          message="Avoid excessively long class names like {0}. Keep class name length under {1}."
+          class="PHPMD\Rule\Naming\LongClassName"
+          externalInfoUrl="https://phpmd.org/rules/naming.html#longclassname">
+        <description>
+            Detects when classes or interfaces are declared with excessively long names.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The class name length reporting threshold" value="40"/>
+            <property name="subtract-suffixes" description="Comma-separated list of suffixes that will not count in the length of the class name. Only the first matching suffix will be subtracted." value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+class ATooLongClassNameThatHintsAtADesignProblem {
+
+}
+
+interface ATooLongInterfaceNameThatHintsAtADesignProblem {
+
+}
+]]>
+        </example>
+    </rule>
+
+    <rule name="ShortClassName"
+          since="2.9"
+          message="Avoid classes with short names like {0}. Configured minimum length is {1}."
+          class="PHPMD\Rule\Naming\ShortClassName"
+          externalInfoUrl="https://phpmd.org/rules/naming.html#shortclassname">
+        <description>
+            Detects when classes or interfaces have a very short name.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="minimum" description="The class name length reporting threshold" value="3"/>
+            <property name="exceptions" description="Comma-separated list of exceptions. Example: Log,URL,FTP" value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+class Fo {
+
+}
+
+interface Fo {
+
+}
+]]>
+        </example>
+    </rule>
+
     <rule name="ShortVariable"
           since="0.2"
           message="Avoid variables with short names like {0}. Configured minimum length is {1}."
@@ -47,6 +99,7 @@ Detects when a field, formal or local variable is declared with a long name.
         <priority>3</priority>
         <properties>
             <property name="maximum" description="The variable length reporting threshold" value="20"/>
+            <property name="subtract-suffixes" description="Comma-separated list of suffixes that will not count in the length of the variable name. Only the first matching suffix will be subtracted." value=""/>
         </properties>
         <example>
             <![CDATA[

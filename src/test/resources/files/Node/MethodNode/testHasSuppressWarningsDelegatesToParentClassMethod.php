@@ -20,7 +20,9 @@
  */
 class testHasSuppressWarningsDelegatesToParentClassMethodClass
 {
-    public function testHasSuppressWarningsDelegatesToParentClassMethod() {}
+    public function testHasSuppressWarningsDelegatesToParentClassMethod()
+    {
+    }
 }
 
 /**
@@ -28,5 +30,7 @@ class testHasSuppressWarningsDelegatesToParentClassMethodClass
  */
 class testHasSuppressWarningsDelegatesToParentClassMethodClass
 {
-    public function testHasSuppressWarningsDelegatesToParentClassMethod() {}
+    public function testHasSuppressWarningsDelegatesToParentClassMethod()
+    {
+    }
 }

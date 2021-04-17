@@ -53,10 +53,24 @@
     By <strong>Manuel Pichler</strong>
     licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
 </div>
+
+<div id="formats">
+    <?php
+
+    $uri = $uri ?? '';
+    $sourceUri = ltrim(substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
+
+    ?>
+    <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/<?php echo $sourceUri; ?>">Source</a>
+    |
+    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/<?php echo $sourceUri; ?>">Edit</a>
+</div>
+
 <script>
     [].forEach.call(document.querySelectorAll('pre > code'), function (code) {
         code.className += ' block';
     });
 </script>
+<?php echo getenv('FOOTER_HOOK') ?: ''; ?>
 </body>
 </html>

@@ -15,7 +15,8 @@
  * @link http://phpmd.org/
  */
 
-class Class3 {
+class Class3
+{
     public function bar()
     {
         $bar = 23;

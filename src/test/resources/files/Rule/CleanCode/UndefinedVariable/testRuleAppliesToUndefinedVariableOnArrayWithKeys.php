@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUndefinedVariableOnArray extends AbstractTest
+class testRuleAppliesToUndefinedVariableOnArray
 {
     function testRuleAppliesToUndefinedVariableOnArrayWithKeys()
     {

@@ -18,7 +18,7 @@
 function testRuleAppliesToFunctionWithGotoStatement()
 {
     LABEL:
-        echo 'FOOBAR';
+    echo 'FOOBAR';
 
     if (time() % 23 === 42) {
         goto LABEL;

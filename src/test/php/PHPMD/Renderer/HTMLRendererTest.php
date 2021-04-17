@@ -44,13 +44,10 @@ class HTMLRendererTest extends AbstractTest
             $this->getRuleViolationMock('/foo.php', 3),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
-        $report->expects($this->once())
-            ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
 
         $renderer = new HTMLRenderer();
         $renderer->setWriter($writer);
@@ -59,53 +56,8 @@ class HTMLRendererTest extends AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertContains(
-            '<tr>' . PHP_EOL .
-            '<td align="center">2</td>' . PHP_EOL .
-            '<td>/foo.php</td>' . PHP_EOL .
-            '<td align="center" width="5%">2</td>' . PHP_EOL .
-            '<td><a href="https://phpmd.org/rules/index.html">Test description</a></td>' . PHP_EOL .
-            '</tr>',
-            $writer->getData()
-        );
-    }
-
-    /**
-     * testRendererAddsProcessingErrorsToHtmlReport
-     *
-     * @return void
-     */
-    public function testRendererAddsProcessingErrorsToHtmlReport()
-    {
-        // Create a writer instance.
-        $writer = new WriterStub();
-
-        $errors = array(
-            new ProcessingError('Failed for file "/tmp/foo.php".'),
-            new ProcessingError('Failed for file "/tmp/bar.php".'),
-            new ProcessingError('Failed for file "/tmp/baz.php".'),
-        );
-
-        $report = $this->getReportMock(0);
-        $report->expects($this->once())
-            ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
-        $report->expects($this->once())
-            ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($errors)));
-
-        $renderer = new HTMLRenderer();
-        $renderer->setWriter($writer);
-
-        $renderer->start();
-        $renderer->renderReport($report);
-        $renderer->end();
-
-        $this->assertContains(
-            '<tr>' .
-            '<td>/tmp/bar.php</td>' .
-            '<td>Failed for file &quot;/tmp/bar.php&quot;.</td>' .
-            '</tr>',
+        $this->assertRegExp(
+            "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
             $writer->getData()
         );
     }

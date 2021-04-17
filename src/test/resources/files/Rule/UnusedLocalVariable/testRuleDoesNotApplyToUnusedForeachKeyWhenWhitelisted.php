@@ -1,4 +1,5 @@
 <?php
+
 class testRuleDoesNotApplyToUnusedForeachKeyWhenWhitelisted
 {
     public function testRuleDoesNotApplyToUnusedForeachKeyWhenWhitelisted()

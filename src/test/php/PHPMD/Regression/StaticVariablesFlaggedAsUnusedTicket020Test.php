@@ -34,7 +34,7 @@ class StaticVariablesFlaggedAsUnusedTicket020Test extends AbstractTest
     public function testRuleDoesNotApplyToAnyStaticLocalVariable()
     {
         $rule = new UnusedLocalVariable();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 }

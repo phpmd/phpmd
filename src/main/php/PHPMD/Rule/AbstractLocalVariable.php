@@ -17,17 +17,30 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
+use ReflectionException;
+use ReflectionFunction;
 
 /**
  * Base class for rules that rely on local variables.
  *
- * @since     0.2.6
+ * @since 0.2.6
  */
 abstract class AbstractLocalVariable extends AbstractRule
 {
+    /**
+     * @var array Self reference class names.
+     */
+    protected $selfReferences = array('self', 'static');
+
     /**
      * PHP super globals that are available in all php scopes, so that they
      * can never be unused local variables.
@@ -35,7 +48,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array(string=>boolean)
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    private static $superGlobals = array(
+    protected static $superGlobals = array(
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
@@ -74,9 +87,21 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param \PHPMD\AbstractNode $variable
      * @return boolean
      */
+    protected function isSuperGlobal(AbstractNode $variable)
+    {
+        return isset(self::$superGlobals[$variable->getImage()]);
+    }
+
+    /**
+     * Tests if the given variable does not represent one of the PHP super globals
+     * that are available in scopes.
+     *
+     * @param \PHPMD\AbstractNode $variable
+     * @return boolean
+     */
     protected function isNotSuperGlobal(AbstractNode $variable)
     {
-        return !isset(self::$superGlobals[$variable->getImage()]);
+        return !$this->isSuperGlobal($variable);
     }
 
     /**
@@ -88,7 +113,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isRegularVariable(ASTNode $variable)
     {
-        $node   = $this->stripWrappedIndexExpression($variable);
+        $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
         if ($parent->isInstanceOf('PropertyPostfix')) {
@@ -96,10 +121,12 @@ abstract class AbstractLocalVariable extends AbstractRule
             if ($primaryPrefix->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
                 return !$primaryPrefix->getParent()->isStatic();
             }
+
             return ($parent->getChild(0)->getNode() !== $node->getNode()
                 || !$primaryPrefix->isStatic()
             );
         }
+
         return true;
     }
 
@@ -120,6 +147,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         if ($parent->getChild(0)->getNode() === $node->getNode()) {
             return $this->stripWrappedIndexExpression($parent);
         }
+
         return $node;
     }
 
@@ -162,5 +190,113 @@ abstract class AbstractLocalVariable extends AbstractRule
         $parts = explode('\\', trim($node->getImage(), '\\'));
 
         return (0 === strcasecmp(array_pop($parts), $name));
+    }
+
+    /**
+     * Get the image of the given variable node.
+     *
+     * Prefix self:: and static:: properties with "::".
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return string
+     */
+    protected function getVariableImage($variable)
+    {
+        $image = $variable->getImage();
+
+        if ($image === '::') {
+            return $image.$variable->getChild(1)->getImage();
+        }
+
+        $base = $variable;
+        $parent = $this->getNode($variable->getParent());
+
+        while ($parent instanceof ASTArrayIndexExpression &&
+            $base instanceof ASTNode &&
+            $parent->getChild(0) === $base->getNode()
+        ) {
+            $base = $parent;
+            $parent = $this->getNode($base->getParent());
+        }
+
+        if ($parent instanceof ASTPropertyPostfix) {
+            $previousChildImage = $this->getParentMemberPrimaryPrefixImage($image, $parent);
+
+            if (in_array($previousChildImage, $this->selfReferences, true)) {
+                return "::$image";
+            }
+        }
+
+        return $image;
+    }
+
+    protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
+    {
+        do {
+            $postfix = $postfix->getParent();
+        } while ($postfix && $postfix->getChild(0) && $postfix->getChild(0)->getImage() === $image);
+
+        $previousChildImage = $postfix->getChild(0)->getImage();
+
+        if ($postfix instanceof ASTMemberPrimaryPrefix &&
+            in_array($previousChildImage, $this->selfReferences)
+        ) {
+            return $previousChildImage;
+        }
+
+        return null;
+    }
+
+    /**
+     * Return the PDepend node of ASTNode PHPMD node.
+     *
+     * Or return the input as is if it's not an ASTNode PHPMD node.
+     *
+     * @param mixed $node
+     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     */
+    protected function getNode($node)
+    {
+        if ($node instanceof ASTNode) {
+            return $node->getNode();
+        }
+
+        return $node;
+    }
+
+    /**
+     * Return true if the given variable is passed by reference in a native PHP function.
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @return bool
+     */
+    protected function isPassedByReference($variable)
+    {
+        $parent = $this->getNode($variable->getParent());
+
+        if ($parent && $parent instanceof ASTArguments) {
+            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+            $function = $this->getNode($parent->getParent());
+            $functionParent = $this->getNode($function->getParent());
+            $functionName = $function->getImage();
+
+            if ($functionParent instanceof ASTMemberPrimaryPrefix) {
+                // @TODO: Find a way to handle methods
+                return false;
+            }
+
+            try {
+                $reflectionFunction = new ReflectionFunction($functionName);
+                $parameters = $reflectionFunction->getParameters();
+
+                if (isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference()) {
+                    return true;
+                }
+            } catch (ReflectionException $exception) {
+                // @TODO: Find a way to handle user-land functions
+            }
+        }
+
+        return false;
     }
 }

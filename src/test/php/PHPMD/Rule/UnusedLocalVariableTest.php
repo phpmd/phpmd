@@ -36,7 +36,19 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToUnusedLocalVariable
+     *
+     * @return void
+     */
+    public function testRuleAppliesToUnusedLocalVariableDeclaredTwice()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -49,7 +61,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -72,7 +84,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -95,7 +107,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -117,7 +129,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -141,7 +153,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -154,7 +166,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -167,7 +179,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -180,7 +192,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -202,7 +214,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -215,7 +227,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -228,7 +240,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -241,7 +253,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -254,7 +266,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -267,7 +279,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -280,7 +292,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -293,7 +305,20 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToClosureParameter
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToClosureParameter()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -306,7 +331,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -319,7 +344,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -332,7 +357,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -345,7 +370,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -358,7 +383,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -371,7 +396,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -384,7 +409,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -397,7 +422,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -410,7 +435,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -423,7 +448,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -446,7 +471,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -459,7 +484,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -472,7 +497,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -485,7 +510,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'true');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -499,7 +524,7 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
         $rule->addProperty('exceptions', '_');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -513,7 +538,7 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
         $rule->addProperty('exceptions', '_');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -527,7 +552,7 @@ class UnusedLocalVariableTest extends AbstractTest
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
         $rule->addProperty('exceptions', '_');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -540,7 +565,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'true');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -563,7 +588,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -586,7 +611,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -608,7 +633,29 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToCompactWithDoubleQuotesFunction
+     *
+     * <code>
+     * class Foo {
+     *     public function bar() {
+     *         $key = "ok";
+     *         return compact("key");
+     *     }
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToCompactWithDoubleQuotesFunction()
+    {
+        $rule = new UnusedLocalVariable();
+        $rule->addProperty('allow-unused-foreach-variables', 'false');
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -621,7 +668,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -645,7 +692,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -658,7 +705,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -671,7 +718,7 @@ class UnusedLocalVariableTest extends AbstractTest
     {
         $rule = new UnusedLocalVariable();
         $rule->addProperty('allow-unused-foreach-variables', 'false');
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 }

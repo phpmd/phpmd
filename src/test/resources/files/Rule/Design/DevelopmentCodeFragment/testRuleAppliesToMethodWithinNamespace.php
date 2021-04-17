@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Namespace;
+namespace Test\namespace;
 
 /**
  * This file is part of PHP Mess Detector.
@@ -17,9 +17,10 @@ namespace Test\Namespace;
  * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link http://phpmd.org/
  */
-
-class testRuleAppliesToMethodWithinNamespace {
-    public function __construct($test = 'Test') {
+class testRuleAppliesToMethodWithinNamespace
+{
+    public function __construct($test = 'Test')
+    {
         var_dump($test);
     }
 }

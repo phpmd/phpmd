@@ -20,6 +20,8 @@ Clean Code Rules
 - `IfStatementAssignment <cleancode.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
 - `MissingImport <cleancode.html#missingimport>`_: Importing all external classes in a file through use statements makes them clearly visible.
+- `UndefinedVariable <cleancode.html#undefinedvariable>`_: Detects when a variable is used that has not been defined before.
+- `ErrorControlOperator <cleancode.html#errorcontroloperator>`_: Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.
 
 Code Size Rules
 ===============
@@ -62,6 +64,8 @@ many bugs, especially when the loop manipulates an array, as count happens on ea
 Naming Rules
 ============
 
+- `LongClassName <naming.html#longclassname>`_: Detects when classes or interfaces are declared with excessively long names.
+- `ShortClassName <naming.html#shortclassname>`_: Detects when classes or interfaces have a very short name.
 - `ShortVariable <naming.html#shortvariable>`_: Detects when a field, local, or parameter has a very short name.
 - `LongVariable <naming.html#longvariable>`_: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName <naming.html#shortmethodname>`_: Detects when very short method names are used.

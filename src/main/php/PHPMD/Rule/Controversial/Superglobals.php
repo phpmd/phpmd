@@ -25,21 +25,28 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of superglobals.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class Superglobals extends AbstractRule implements MethodAware, FunctionAware
 {
     protected $superglobals = array(
         '$GLOBALS',
-        '$_SERVER',  '$HTTP_SERVER_VARS',
-        '$_GET',     '$HTTP_GET_VARS',
-        '$_POST',    '$HTTP_POST_VARS',
-        '$_FILES',   '$HTTP_POST_FILES',
-        '$_COOKIE',  '$HTTP_COOKIE_VARS',
-        '$_SESSION', '$HTTP_SESSION_VARS',
+        '$_SERVER',
+        '$HTTP_SERVER_VARS',
+        '$_GET',
+        '$HTTP_GET_VARS',
+        '$_POST',
+        '$HTTP_POST_VARS',
+        '$_FILES',
+        '$HTTP_POST_FILES',
+        '$_COOKIE',
+        '$HTTP_COOKIE_VARS',
+        '$_SESSION',
+        '$HTTP_SESSION_VARS',
         '$_REQUEST',
-        '$_ENV',     '$HTTP_ENV_VARS',
+        '$_ENV',
+        '$HTTP_ENV_VARS',
     );
 
     /**
@@ -57,7 +64,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
                     $node,
                     array(
                         $node->getName(),
-                        $variable->getImage()
+                        $variable->getImage(),
                     )
                 );
             }

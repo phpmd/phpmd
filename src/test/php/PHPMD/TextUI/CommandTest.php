@@ -9,10 +9,10 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
@@ -45,8 +45,8 @@ class CommandTest extends AbstractTest
     }
 
     /**
-     * @param $sourceFile
-     * @param $expectedExitCode
+     * @param            $sourceFile
+     * @param            $expectedExitCode
      * @param array|null $options
      * @return void
      * @dataProvider dataProviderTestMainWithOption
@@ -63,7 +63,7 @@ class CommandTest extends AbstractTest
                     '--reportfile',
                     self::createTempFileUri(),
                 ),
-                (array) $options
+                (array)$options
             )
         );
 
@@ -79,25 +79,63 @@ class CommandTest extends AbstractTest
         return array(
             array(
                 'source/source_without_violations.php',
-                Command::EXIT_SUCCESS
+                Command::EXIT_SUCCESS,
             ),
             array(
                 'source/source_with_npath_violation.php',
-                Command::EXIT_VIOLATION
+                Command::EXIT_VIOLATION,
             ),
             array(
                 'source/source_with_npath_violation.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-violations-on-exit')
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source/source_with_npath_violation.php',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source/source_with_parse_error.php',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+            ),
+            array(
+                'source',
+                Command::EXIT_ERROR,
+                array('--ignore-violations-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_VIOLATION,
+                array('--ignore-errors-on-exit'),
+            ),
+            array(
+                'source',
+                Command::EXIT_SUCCESS,
+                array('--ignore-errors-on-exit', '--ignore-violations-on-exit'),
             ),
             array(
                 'source/ccn_suppress_function.php',
                 Command::EXIT_VIOLATION,
-                array('--strict')
+                array('--strict'),
             ),
             array(
                 'source/ccn_suppress_function.php',
-                Command::EXIT_SUCCESS
+                Command::EXIT_SUCCESS,
             ),
         );
     }
@@ -122,6 +160,8 @@ class CommandTest extends AbstractTest
             $text = self::createTempFileUri(),
             '--reportfile-json',
             $json = self::createTempFileUri(),
+            '--reportfile-sarif',
+            $sarif = self::createTempFileUri(),
         );
 
         Command::main($args);
@@ -130,6 +170,27 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($html);
         $this->assertFileExists($text);
         $this->assertFileExists($json);
+        $this->assertFileExists($sarif);
+    }
+
+    public function testOutput()
+    {
+        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp     = self::createTempFileUri();
+        $exitCode = Command::main(array(
+            __FILE__,
+            $uri,
+            'text',
+            'naming',
+            '--reportfile',
+            $temp,
+        ));
+
+        $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
+        $this->assertSame(
+            "$uri:8	Avoid variables with short names like \$a. Configured minimum length is 3." . PHP_EOL,
+            file_get_contents($temp)
+        );
     }
 
     /**
@@ -162,13 +223,78 @@ class CommandTest extends AbstractTest
     {
         return array(
             array('--suffixes', '.class.php'),
-            array('--exclude', 'ccn_,npath_'),
+            array('--exclude', 'ccn_,npath_,parse_error'),
         );
     }
 
-    /*
-     * @return void
+    public function testMainGenerateBaseline()
+    {
+        $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
+        $temp     = self::createTempFileUri();
+        $exitCode = Command::main(array(
+            __FILE__,
+            $uri,
+            'text',
+            'naming',
+            '--generate-baseline',
+            '--baseline-file',
+            $temp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertFileExists($temp);
+        static::assertContains($uri, file_get_contents($temp));
+    }
+
+    /**
+     * Testcase:
+     * - Class has existing ShortVariable and new BooleanGetMethodName violations
+     * - Baseline has ShortVariable and LongClassName baseline violations
+     * Expect in baseline:
+     * - LongClassName violation should be removed
+     * - ShortVariable violation should still exist
+     * - BooleanGetMethodName shouldn't be added
      */
+    public function testMainUpdateBaseline()
+    {
+        $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
+        $baselineTemp = self::createTempFileUri();
+        copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
+        copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
+
+        $exitCode = Command::main(array(
+            __FILE__,
+            $sourceTemp,
+            'text',
+            'naming',
+            '--update-baseline',
+            '--baseline-file',
+            $baselineTemp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertXmlStringEqualsXmlString(
+            file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
+            file_get_contents($baselineTemp)
+        );
+    }
+
+    public function testMainBaselineViolationShouldBeIgnored()
+    {
+        $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
+        $exitCode     = Command::main(array(
+            __FILE__,
+            $sourceFile,
+            'text',
+            'naming',
+            '--baseline-file',
+            $baselineFile,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+    }
+
     public function testMainWritesExceptionMessageToStderr()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -180,7 +306,7 @@ class CommandTest extends AbstractTest
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
-                'naming'
+                'naming',
             )
         );
 
@@ -190,9 +316,6 @@ class CommandTest extends AbstractTest
         );
     }
 
-    /*
-     * @return void
-     */
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
@@ -202,11 +325,11 @@ class CommandTest extends AbstractTest
         Command::main(
             array(
                 __FILE__,
-                '--version'
+                '--version',
             )
         );
 
-        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
         $version = $data['project.version'];
 
         $this->assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));

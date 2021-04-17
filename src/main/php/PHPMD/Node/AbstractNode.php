@@ -43,6 +43,7 @@ abstract class AbstractNode extends \PHPMD\AbstractNode
         if ($this->annotations === null) {
             $this->annotations = new Annotations($this);
         }
+
         return $this->annotations->suppresses($rule);
     }
 }

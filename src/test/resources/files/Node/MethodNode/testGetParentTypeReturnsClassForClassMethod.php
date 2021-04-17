@@ -22,6 +22,7 @@ class testGetParentTypeReturnsClassForClassMethodClass
 
     }
 }
+
 class testGetParentTypeReturnsClassForClassMethodClass
 {
     public function testGetParentTypeReturnsClassForClassMethod()

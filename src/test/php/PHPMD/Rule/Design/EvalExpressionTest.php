@@ -34,7 +34,7 @@ class EvalExpressionTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutEvalExpression()
     {
         $rule = new EvalExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -46,7 +46,7 @@ class EvalExpressionTest extends AbstractTest
     public function testRuleAppliesToMethodWithEvalExpression()
     {
         $rule = new EvalExpression();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -70,7 +70,7 @@ class EvalExpressionTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutEvalExpression()
     {
         $rule = new EvalExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -82,7 +82,7 @@ class EvalExpressionTest extends AbstractTest
     public function testRuleAppliesToFunctionWithEvalExpression()
     {
         $rule = new EvalExpression();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 

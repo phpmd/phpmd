@@ -25,8 +25,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects empty catch blocks
  *
- * @author    Grégoire Paris <postmaster@greg0ire.fr>
- * @author    Kamil Szymanski <kamilszymanski@gmail.com>
+ * @author Grégoire Paris <postmaster@greg0ire.fr>
+ * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
 class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
 {
@@ -41,7 +41,7 @@ class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
     {
         foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
             $scope = $catchBlock->getFirstChildOfType('ScopeStatement');
-            if (count($scope->getChildren()) == 0) {
+            if (count($scope->getChildren()) === 0) {
                 $this->addViolation($catchBlock, array($node->getName()));
             }
         }

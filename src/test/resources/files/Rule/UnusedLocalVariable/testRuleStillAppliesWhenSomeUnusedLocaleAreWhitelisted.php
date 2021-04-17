@@ -1,4 +1,5 @@
 <?php
+
 class testRuleStillAppliesWhenSomeUnusedLocaleAreWhitelisted
 {
     function testRuleStillAppliesWhenSomeUnusedLocaleAreWhitelisted()

@@ -25,7 +25,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of PHP's goto statement.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
 {

@@ -105,6 +105,20 @@ Example: ::
       ];
   }
 
+ErrorControlOperator
+====================
+
+Since: PHPMD 2.9.0
+
+Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.
+
+Example: ::
+
+  function foo($filePath) {
+      $file = @fopen($filPath); // hides exceptions
+      $key = @$array[$notExistingKey]; // assigns null to $key
+  }
+
 MissingImport
 =============
 
@@ -118,10 +132,31 @@ Example: ::
       return new \stdClass();
   }
 
+This rule has the following properties:
+
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| ignore-global                     |               | Ignore classes, interfaces and traits in the global namespace      |
++-----------------------------------+---------------+------------------------------------------------------------+
+
+UndefinedVariable
+=================
+
+Since: PHPMD 2.8.0
+
+Detects when a variable that is used has not been defined before.
+
+Example: ::
+
+  function printX() {
+      echo $x;
+  }
+
+
 Remark
 ======
 
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        

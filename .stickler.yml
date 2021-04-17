@@ -1,6 +1,6 @@
 linters:
   phpcs:
-    standard: 'PSR2'
+    standard: './phpcs.xml.dist'
     extensions: '.php'
     tab_width: 4
     ignore: 'src/test/resources/*'

@@ -36,14 +36,14 @@ class JSONRendererTest extends AbstractTest
     public function testRendererCreatesExpectedNumberOfJsonElements()
     {
         $writer = new WriterStub();
-        
+
         $violations = array(
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
             $this->getRuleViolationMock('/bar.php'), // TODO Set with description "foo <?php bar".
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
@@ -80,7 +80,7 @@ class JSONRendererTest extends AbstractTest
             new ProcessingError('Cannot read file "/tmp/foo.php". Permission denied.'),
         );
 
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator(array())));

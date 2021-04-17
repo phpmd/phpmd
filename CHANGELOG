@@ -1,3 +1,72 @@
+phpmd-2.9.1 (2020/09/23)
+========================
+
+- Fixed #714: Improved static member detection
+- Fixed #816: Fixed undefined index referring 
+
+phpmd-2.9.0 (2020/09/02)
+========================
+
+- Added #496: Added rule for PHP's @ operator
+- Added #737: Allowed custom exclusion for StaticAccess by extending the class
+- Added #749: Added allow-underscore option for CamelCaseParameterName & CamelCaseVariableName 
+- Added #747: Long variable subtract suffix
+- Added #763 via #765: Added rules LongClassName and ShortClassName
+- Fixed #743: Output for version
+- Fixed #754: Fixed #720 undefined variable in foreach when passed by reference
+- Fixed #764: Fixed #718 Handle anonymous class in "undefined variable" rule
+- Fixed #770: Fixed #769 Handle deconstruction assignation for undefined variable
+- Fixed #781: Fixed #714 static:: and self:: properties access
+- Fixed #784: Fixed #672 Handle passing-by-reference in native PHP functions
+- Fixed #793: Fixed #580 Raise UnusedFormalParameter instead UnusedLocalVariable for unused closure parameter
+- Fixed #794: Fixed #540 Detect unused variable declared multiple times
+- Fixed #805: Fixed #802 Prevent an error with nested arrays
+- Fixed #807: Fixed #790 Fix for short variables rule inside foreach statements
+- Fixed #809: Fixed #808 Ignore rule path for supression annotation
+- Updated different parts of the documentation. #717 #736 #748 #811
+- Changed: #529 : Replaced HTML renderer with new "pretty HTML" renderer
+- Changed: #806 : Changed #44 Change private methods to protected in rules. Make rules extendable  
+- Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787 #791 #792
+- Deprecated all the PHPMD exceptions that aren't part of the PHPMD\Exceptions namespace. See #775
+
+### A potential BC change:
+With the clean-up in #768 we have a potential BC break in an unsupported part that we want to give attention for.
+> The class aliases ``PHP_PMD_*`` used for PHPMD 1.x backwards PEAR compatibility were removed. If you happen to still depend on these, please adjust your code like so:
+> 
+> From ``PHP_PMD_[Component]_[Class]'`` to ``PHPMD\[Component]\[Class]``,
+> as in ``PHP_PMD_Renderer_HTMLRenderer'`` to ``PHPMD\Renderer\HTMLRenderer``.
+See #768
+
+phpmd-2.8.2 (2020/02/24)
+========================
+
+- Fixed #732: Added __serialize and __unserialize to list of ignored methods for camelCase rule.
+
+phpmd-2.8.1 (2019/12/27)
+========================
+
+- Fixed PHP 7.4 unit tests compatibility
+- Improved documentation
+- Automated website generation and PHAR publishing
+
+phpmd-2.8.0 (2019/12/18)
+========================
+
+- Required at least pdepend/pdepend 2.6:
+  - Added PHP 7.1 to 7.3 syntax support
+  - Added Symfony 5 support
+  See full changes list: https://github.com/pdepend/pdepend/releases/tag/2.6.0
+- Added #497: Undefined variable rule
+- Improved performances by disabling XDebug if in use
+- Added #571: ignore-namespaces property to DevelopmentCodeFragment rule
+- Added #595: Renderer which writes an ansi report string
+- Fixed #657: IfStatementAssignment violation message
+- Optimized Composer autoloader when building Phar
+- Fixed #661: IfStatementAssignment thrown incorrectly
+- Fixed #676: Handle @SuppressWarnings on each method for CountInLoop
+- Fixed #659: PHP 7.4 compatibility for implode() usage
+
+
 phpmd-2.7.0 (2019/07/30)
 ========================
 

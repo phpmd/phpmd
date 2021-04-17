@@ -34,7 +34,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesToUnusedPrivateField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -46,7 +46,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -58,7 +58,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesToUnusedPrivateStaticField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -70,7 +70,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -82,7 +82,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -104,7 +104,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -126,7 +126,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotResultInFatalErrorByCallingNonObject()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
 
@@ -138,7 +138,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToUnusedPublicField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -150,7 +150,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToUnusedProtectedField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -162,7 +162,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToThisAccessedPrivateField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -174,7 +174,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToSelfAccessedPrivateField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -186,7 +186,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToStaticAccessedPrivateField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -198,7 +198,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToClassNameAccessedPrivateField()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -220,7 +220,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToPrivateFieldInChainedMethodCall()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -242,7 +242,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToPrivateArrayFieldAccess()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -264,7 +264,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToPrivateStringIndexFieldAccess()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -276,7 +276,7 @@ class UnusedPrivateFieldTest extends AbstractTest
     public function testRuleDoesNotApplyToFieldWithMethodsThatReturnArray()
     {
         $rule = new UnusedPrivateField();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 }

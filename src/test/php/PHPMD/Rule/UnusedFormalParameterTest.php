@@ -35,7 +35,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToFunctionUnusedFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -59,7 +59,19 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToMethodUnusedFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToClosureUnusedFormalParameter
+     *
+     * @return void
+     */
+    public function testRuleAppliesToClosureUnusedFormalParameter()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -92,7 +104,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -112,7 +124,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -132,7 +144,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -144,7 +156,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToAbstractMethodFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -156,7 +168,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToInterfaceMethodFormalParameter()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -168,7 +180,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToInnerFunctionDeclaration()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -189,7 +201,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -209,7 +221,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMethodArgument()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -221,7 +233,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -241,7 +253,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToParameterUsedAsArrayIndex()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -261,7 +273,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToParameterUsedAsStringIndex()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -285,7 +297,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMethodWithFuncGetArgs()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -297,7 +309,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testFuncGetArgsRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -310,7 +322,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToInheritMethod()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -323,7 +335,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToImplementedAbstractMethod()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -336,7 +348,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToImplementedInterfaceMethod()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -348,11 +360,11 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMagicMethod()
     {
         $methods = array_filter($this->getClass()->getMethods(), function ($method) {
-            return $method->getName() == '__call';
+            return $method->getName() === '__call';
         });
 
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply(reset($methods));
     }
 
@@ -362,7 +374,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -372,7 +384,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -384,7 +396,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testCompactFunctionRuleDoesNotApply()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -408,7 +420,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -420,7 +432,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testNamespacedCompactFunctionRuleDoesNotApply()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -444,7 +456,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -464,7 +476,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -488,7 +500,7 @@ class UnusedFormalParameterTest extends AbstractTest
     public function testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable()
     {
         $rule = new UnusedFormalParameter();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 }

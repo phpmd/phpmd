@@ -9,17 +9,20 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD\TextUI;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
+use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Renderer\JunitRenderer;
@@ -28,6 +31,8 @@ use PHPMD\Rule;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
+ *
+ * @SuppressWarnings(PHPMD.LongVariable)
  */
 class CommandLineOptions
 {
@@ -102,6 +107,8 @@ class CommandLineOptions
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
+     * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
+     *
      * @var string
      */
     protected $ignore;
@@ -122,6 +129,14 @@ class CommandLineOptions
     protected $strict = false;
 
     /**
+     * Should PHPMD exit without error code even if error is found?
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    protected $ignoreErrorsOnExit = false;
+
+    /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var boolean
@@ -136,10 +151,23 @@ class CommandLineOptions
     protected $availableRuleSets = array();
 
     /**
+     * Should PHPMD baseline the existing violations and write them to the $baselineFile
+     * @var string allowed modes: NONE, GENERATE or UPDATE
+     */
+    protected $generateBaseline = BaselineMode::NONE;
+
+    /**
+     * The baseline source file to read the baseline violations from.
+     * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
+     * @var string|null
+     */
+    protected $baselineFile;
+
+    /**
      * Constructs a new command line options instance.
      *
-     * @param array $args
-     * @param array $availableRuleSets
+     * @param string[] $args
+     * @param string[] $availableRuleSets
      * @throws \InvalidArgumentException
      */
     public function __construct(array $args, array $availableRuleSets = array())
@@ -199,6 +227,18 @@ class CommandLineOptions
                 case '--not-strict':
                     $this->strict = false;
                     break;
+                case '--generate-baseline':
+                    $this->generateBaseline = BaselineMode::GENERATE;
+                    break;
+                case '--update-baseline':
+                    $this->generateBaseline = BaselineMode::UPDATE;
+                    break;
+                case '--baseline-file':
+                    $this->baselineFile = array_shift($args);
+                    break;
+                case '--ignore-errors-on-exit':
+                    $this->ignoreErrorsOnExit = true;
+                    break;
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
@@ -206,7 +246,8 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                 case '--reportfile-json':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
+                case '--reportfile-sarif':
+                    preg_match('(^\-\-reportfile\-(xml|html|text|json|sarif)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -219,9 +260,9 @@ class CommandLineOptions
             throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath = (string)array_shift($arguments);
+        $this->inputPath    = (string)array_shift($arguments);
         $this->reportFormat = (string)array_shift($arguments);
-        $this->ruleSets = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_shift($arguments);
     }
 
     /**
@@ -319,7 +360,7 @@ class CommandLineOptions
     }
 
     /**
-     * Returns  string of comma-separated pattern that is used to exclude
+     * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
      *
      * @return string
@@ -348,6 +389,37 @@ class CommandLineOptions
     public function hasStrict()
     {
         return $this->strict;
+    }
+
+    /**
+     * Should the current violations be baselined
+     *
+     * @return string
+     */
+    public function generateBaseline()
+    {
+        return $this->generateBaseline;
+    }
+
+    /**
+     * The filepath of the baseline violations xml
+     *
+     * @return string|null
+     */
+    public function baselineFile()
+    {
+        return $this->baselineFile;
+    }
+
+    /**
+     * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function ignoreErrorsOnExit()
+    {
+        return $this->ignoreErrorsOnExit;
     }
 
     /**
@@ -393,6 +465,10 @@ class CommandLineOptions
                 return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'github':
+                return $this->createGitHubRenderer();
+            case 'sarif':
+                return $this->createSarifRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -431,6 +507,14 @@ class CommandLineOptions
     }
 
     /**
+     * @return \PHPMD\Renderer\GitHubRenderer
+     */
+    protected function createGitHubRenderer()
+    {
+        return new GitHubRenderer();
+    }
+
+    /**
      * @return \PHPMD\Renderer\HTMLRenderer
      */
     protected function createHtmlRenderer()
@@ -444,6 +528,14 @@ class CommandLineOptions
     protected function createJsonRenderer()
     {
         return new JSONRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\SARIFRenderer
+     */
+    protected function createSarifRenderer()
+    {
+        return new SARIFRenderer();
     }
 
     /**
@@ -510,11 +602,18 @@ class CommandLineOptions
             '--suffixes: comma-separated string of valid source code ' .
             'filename extensions, e.g. php,phtml' . \PHP_EOL .
             '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories' . \PHP_EOL .
+            'ignore directories. Use asterisks to exclude by pattern. ' .
+            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
             '--strict: also report those nodes with a @SuppressWarnings ' .
             'annotation' . \PHP_EOL .
+            '--ignore-errors-on-exit: will exit with a zero code, ' .
+            'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL;
+            'even if any violations are found' . \PHP_EOL .
+            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
+            'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
     /**
@@ -524,12 +623,12 @@ class CommandLineOptions
      */
     protected function getListOfAvailableRenderers()
     {
-        $renderersDirPathName=__DIR__.'/../Renderer';
-        $renderers = array();
+        $renderersDirPathName = __DIR__ . '/../Renderer';
+        $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
-                $renderers[] =  strtolower($rendererName[1]);
+                $renderers[] = strtolower($rendererName[1]);
             }
         }
 
@@ -574,7 +673,7 @@ class CommandLineOptions
     protected function readInputFile($inputFile)
     {
         if (file_exists($inputFile)) {
-            return join(',', array_map('trim', file($inputFile)));
+            return implode(',', array_map('trim', file($inputFile)));
         }
         throw new \InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }

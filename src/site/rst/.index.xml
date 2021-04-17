@@ -24,6 +24,10 @@
         <name>Support &amp; Contact</name>
         <path>support/</path>
     </directory>
+    <site>
+        <name>For Enterprise</name>
+        <path>for-enterprise.rst</path>
+    </site>
     <media>
         <path>robots.txt</path>
     </media>
