@@ -563,7 +563,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleSetNotFoundException',
             'Cannot find specified rule-set "foo-bar-ruleset-23".'
         );
@@ -583,7 +583,7 @@ class RuleSetFactoryTest extends AbstractTest
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleClassFileNotFoundException',
             'Cannot load source file for class: PHPMD\\Stubs\\ClassFileNotFoundRule'
         );
@@ -603,7 +603,7 @@ class RuleSetFactoryTest extends AbstractTest
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
 
-        $this->setExpectedException(
+        $this->setExpectedExceptionBackwards(
             'PHPMD\\RuleClassNotFoundException',
             'Cannot find rule class: PHPMD\\Stubs\\ClassNotFoundRule'
         );
@@ -617,10 +617,11 @@ class RuleSetFactoryTest extends AbstractTest
      *
      * @return void
      * @covers \PHPMD\RuleClassNotFoundException
-     * @expectedException \RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
+        $this->setExpectedExceptionBackwards('RuntimeException');
+
         $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
 
         $factory = new RuleSetFactory();

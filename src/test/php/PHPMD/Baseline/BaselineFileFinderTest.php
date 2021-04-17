@@ -66,11 +66,14 @@ class BaselineFileFinderTest extends AbstractTest
      * @covers ::find
      * @covers ::tryFind
      * @covers ::notNull
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to find the baseline file
      */
     public function testShouldThrowExceptionWhenFileIsNull()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Unable to find the baseline file'
+        );
+
         $args   = array('script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml'));
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertNull($finder->existingFile()->notNull()->find());

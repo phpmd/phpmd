@@ -713,7 +713,7 @@ abstract class AbstractTest extends AbstractStaticTest
         return $builder->getNamespaces()->current();
     }
 
-    public function setExpectedException($exception, $message = '', $code = null)
+    public function setExpectedExceptionBackwards($exception, $message = null, $code = null)
     {
         if (version_compare(Version::id(), '8.0.0', '>=')) {
             $this->expectException($exception);
@@ -729,6 +729,6 @@ abstract class AbstractTest extends AbstractStaticTest
             return;
         }
 
-        parent::setExpectedException($exception, $message, $code);
+        $this->setExpectedException($exception, $message, $code);
     }
 }

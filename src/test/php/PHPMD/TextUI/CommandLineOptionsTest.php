@@ -93,10 +93,11 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array(__FILE__, 'text', 'design');
         new CommandLineOptions($args);
     }
@@ -154,10 +155,11 @@ class CommandLineOptionsTest extends AbstractTest
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array('foo.php', 'text', 'design', '--inputfile', 'inputfail.txt');
         new CommandLineOptions($args);
     }
@@ -470,12 +472,13 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @param string $reportFormat
      * @return void
-     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp (^Can\'t )
      * @dataProvider dataProviderCreateRendererThrowsException
      */
     public function testCreateRendererThrowsException($reportFormat)
     {
+        $this->setExpectedExceptionBackwards('InvalidArgumentException');
+
         $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
         $opts = new CommandLineOptions($args);
         $opts->createRenderer();

@@ -123,12 +123,13 @@ class RuleTest extends AbstractTest
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->setExpectedExceptionBackwards('OutOfBoundsException');
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getIntProperty(__FUNCTION__);
@@ -153,12 +154,13 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->setExpectedExceptionBackwards('OutOfBoundsException');
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getBooleanProperty(__FUNCTION__);
@@ -168,12 +170,13 @@ class RuleTest extends AbstractTest
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getStringProperty
      * @covers ::getProperty
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        $this->setExpectedExceptionBackwards('OutOfBoundsException');
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getStringProperty(__FUNCTION__);

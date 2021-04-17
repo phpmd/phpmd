@@ -24,11 +24,14 @@ class RendererFactoryTest extends AbstractTest
 
     /**
      * @covers ::createBaselineRenderer
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage Unable to determine the realpath for
      */
     public function testCreateBaselineRendererThrowsExceptionForInvalidStream()
     {
+        $this->setExpectedExceptionBackwards(
+            'RuntimeException',
+            'Unable to determine the realpath for'
+        );
+
         $writer = new StreamWriter(STDOUT);
         RendererFactory::createBaselineRenderer($writer);
     }
