@@ -42,6 +42,10 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      - name: Patch for Backward Compatibility
+        if: matrix.php <= 7.1
+        run: patch --strip 1 < src/test/resources/files/php-7.1.patch
+
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v2

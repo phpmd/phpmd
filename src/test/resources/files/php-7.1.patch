@@ -1,0 +1,78 @@
+diff --git a/src/test/php/PHPMD/AbstractStaticTest.php b/src/test/php/PHPMD/AbstractStaticTest.php
+index 2fbb98b6..31991f54 100644
+--- a/src/test/php/PHPMD/AbstractStaticTest.php
++++ b/src/test/php/PHPMD/AbstractStaticTest.php
+@@ -194,7 +194,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
+      *
+      * @return void
+      */
+-    public static function setUpBeforeClass(): void
++    public static function setUpBeforeClass()
+     {
+         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
+ 
+diff --git a/src/test/php/PHPMD/AbstractTest.php b/src/test/php/PHPMD/AbstractTest.php
+index 2ed18f3f..3a2f7c7c 100644
+--- a/src/test/php/PHPMD/AbstractTest.php
++++ b/src/test/php/PHPMD/AbstractTest.php
+@@ -104,7 +104,7 @@ abstract class AbstractTest extends AbstractStaticTest
+      *
+      * @return void
+      */
+-    protected function tearDown(): void
++    protected function tearDown()
+     {
+         static::returnToOriginalWorkingDirectory();
+         static::cleanupTempFiles();
+diff --git a/src/test/php/PHPMD/Baseline/BaselineValidatorTest.php b/src/test/php/PHPMD/Baseline/BaselineValidatorTest.php
+index 53b0de84..12caac3b 100644
+--- a/src/test/php/PHPMD/Baseline/BaselineValidatorTest.php
++++ b/src/test/php/PHPMD/Baseline/BaselineValidatorTest.php
+@@ -18,7 +18,7 @@ class BaselineValidatorTest extends AbstractTest
+     /** @var RuleViolation|PHPUnit_Framework_MockObject_MockObject */
+     private $violation;
+ 
+-    protected function setUp(): void
++    protected function setUp()
+     {
+         parent::setUp();
+         $rule            = $this->getMockFromBuilder(
+diff --git a/src/test/php/PHPMD/Regression/ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest.php b/src/test/php/PHPMD/Regression/ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest.php
+index 53c23b18..5c2ccf14 100644
+--- a/src/test/php/PHPMD/Regression/ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest.php
++++ b/src/test/php/PHPMD/Regression/ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest.php
+@@ -41,7 +41,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
+     /**
+      * Sets up the renderer mock
+      */
+-    public function setUp(): void
++    public function setUp()
+     {
+         $this->renderer = $this->getMockFromBuilder(
+             $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
+diff --git a/src/test/php/PHPMD/TextUI/CommandLineOptionsTest.php b/src/test/php/PHPMD/TextUI/CommandLineOptionsTest.php
+index 3da8e9f4..619b18e4 100644
+--- a/src/test/php/PHPMD/TextUI/CommandLineOptionsTest.php
++++ b/src/test/php/PHPMD/TextUI/CommandLineOptionsTest.php
+@@ -36,7 +36,7 @@ class CommandLineOptionsTest extends AbstractTest
+     /**
+      * @return void
+      */
+-    protected function tearDown(): void
++    protected function tearDown()
+     {
+         if (is_resource($this->stderrStreamFilter)) {
+             stream_filter_remove($this->stderrStreamFilter);
+diff --git a/src/test/php/PHPMD/TextUI/CommandTest.php b/src/test/php/PHPMD/TextUI/CommandTest.php
+index 990b7dff..7cb4e117 100644
+--- a/src/test/php/PHPMD/TextUI/CommandTest.php
++++ b/src/test/php/PHPMD/TextUI/CommandTest.php
+@@ -34,7 +34,7 @@ class CommandTest extends AbstractTest
+     /**
+      * @return void
+      */
+-    protected function tearDown(): void
++    protected function tearDown()
+     {
+         if (is_resource($this->stderrStreamFilter)) {
+             stream_filter_remove($this->stderrStreamFilter);
