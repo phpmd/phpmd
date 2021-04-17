@@ -22,14 +22,15 @@ class DatatablesRenderer extends HTMLRenderer
     /**
      * Writes the beginning of the report, including css and js
      */
-    public function start() {
+    public function start()
+    {
         $writer = $this->getWriter();
-        
+
         $cssDatatables = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery.dataTables.min.css');
         $cssLocal      = file_get_contents(__DIR__ . '/DatatablesRenderer/DatatablesRenderer.css');
         $jsjQuery      = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery-3.5.1.slim.min.js');
         $jsDatatables  = file_get_contents(__DIR__ . '/DatatablesRenderer/jquery.dataTables.min.js');
-        
+
         $writer->write(
             "<!DOCTYPE html>
 <head>
@@ -50,12 +51,12 @@ class DatatablesRenderer extends HTMLRenderer
     
     /**
      * @param $violation
-     *
      * @return string
      */
-    public function getPreview($violation) {
+    public function getPreview($violation)
+    {
         $previewLines = self::getLineExcerpt($violation->getFileName(), $violation->getBeginLine(), 2);
-        
+
         $excerptHtml = '<ul class="code">';
         foreach ($previewLines as $line => $code) {
             $class       = $line === $violation->getBeginLine() ? " class='hlt'" : null;
@@ -63,19 +64,20 @@ class DatatablesRenderer extends HTMLRenderer
             $excerptHtml .= "<li{$class}><div class='no'>{$line}</div><div class='cd'>{$codeHtml}</div></li>";
         }
         $excerptHtml .= '</ul>';
-        
+
         return $excerptHtml;
     }
-    
+
     /**
      * Writes the report
      *
      * @param Report $report
      */
-    public function renderReport(Report $report) {
+    public function renderReport(Report $report)
+    {
         $violations = $report->getRuleViolations();
         $writer     = $this->getWriter();
-        
+
         $writer->write(
             "
             <h2>PHPMD Datatables Report</h2>
@@ -83,7 +85,7 @@ class DatatablesRenderer extends HTMLRenderer
             "</b> seconds at <b>" . date('d.m.Y H:i:s') . "</b>. A total of <b>" . count($violations) . "</b> violations have been detected.</div>
         "
         );
-        
+
         $writer->write(
             "
         <table id='phpmdDatatable' class='display' style='width:100%'>
@@ -100,18 +102,18 @@ class DatatablesRenderer extends HTMLRenderer
         </thead>
         <tbody>"
         );
-        
+
         $index = 1;
         foreach ($violations as $violation) {
             $preview = $this->getPreview($violation);
-            
+
             $ruleName = $violation->getRule()->getName();
             $ruleUrl  = $violation->getRule()->getExternalInfoUrl();
-            
+
             if ($ruleUrl !== '#') {
                 $ruleName = "<a target='_blank' href='" . $ruleUrl . "'>" . $ruleName . "</a>";
             }
-            
+
             $writer->write(
                 "
                 <tr>
@@ -125,26 +127,26 @@ class DatatablesRenderer extends HTMLRenderer
                 </tr>
                 "
             );
-            
+
             $index = $index + 1;
         }
-        
+
         $writer->write("</tbody></table>" . PHP_EOL);
     }
-    
+
     /**
      * Writes the end of the report
      */
-    public function end() {
+    public function end()
+    {
         $writer = $this->getWriter();
         $writer->write($this->getDataTablesScript());
         $writer->write("</body>" . PHP_EOL . "</html>");
     }
-    
-    protected function getDataTablesScript() {
+
+    protected function getDataTablesScript()
+    {
         $jsDatatablesRenderer = file_get_contents(__DIR__ . '/DatatablesRenderer/DatatablesRenderer.js');
         return "<script>" . $jsDatatablesRenderer . "</script>";
     }
-    
-    
 }
