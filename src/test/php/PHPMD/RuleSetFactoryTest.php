@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use ReflectionProperty;
 
 /**
  * Test case for the rule set factory class.
@@ -642,7 +643,9 @@ class RuleSetFactoryTest extends AbstractTest
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
+        $property = new ReflectionProperty($ruleSets[0], 'strict');
+        $property->setAccessible(true);
+        $this->assertTrue($property->getValue($ruleSets[0]));
     }
 
     /**
