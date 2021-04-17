@@ -104,7 +104,7 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         static::returnToOriginalWorkingDirectory();
         static::cleanupTempFiles();
