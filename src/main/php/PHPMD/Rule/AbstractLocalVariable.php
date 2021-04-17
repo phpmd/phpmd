@@ -281,9 +281,9 @@ abstract class AbstractLocalVariable extends AbstractRule
                 try {
                     return new ReflectionFunction(end($chunks));
                 } catch (ReflectionException $exception) {
-                    // @TODO: Find a way to handle user-land functions
-                    // @TODO: Find a way to handle methods
                 }
+                // @TODO: Find a way to handle user-land functions
+                // @TODO: Find a way to handle methods
             }
         }
 
@@ -300,28 +300,28 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $parent = $this->getNode($variable->getParent());
 
-        if ($parent && $parent instanceof ASTArguments) {
-            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-            $function = $this->getNode($parent->getParent());
-            $functionParent = $this->getNode($function->getParent());
-            $functionName = $function->getImage();
-
-            if ($functionParent instanceof ASTMemberPrimaryPrefix) {
-                // @TODO: Find a way to handle methods
-                return false;
-            }
-
-            $reflectionFunction = $this->getReflectionFunctionByName($functionName);
-
-            if ($reflectionFunction) {
-                $parameters = $reflectionFunction->getParameters();
-
-                if (isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference()) {
-                    return true;
-                }
-            }
+        if (!($parent && $parent instanceof ASTArguments)) {
+            return false;
         }
 
-        return false;
+        $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+        $function = $this->getNode($parent->getParent());
+        $functionParent = $this->getNode($function->getParent());
+        $functionName = $function->getImage();
+
+        if ($functionParent instanceof ASTMemberPrimaryPrefix) {
+            // @TODO: Find a way to handle methods
+            return false;
+        }
+
+        $reflectionFunction = $this->getReflectionFunctionByName($functionName);
+
+        if (!$reflectionFunction) {
+            return false;
+        }
+
+        $parameters = $reflectionFunction->getParameters();
+
+        return isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference();
     }
 }
