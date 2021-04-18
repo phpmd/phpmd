@@ -34,7 +34,7 @@ class MissingImportTest extends AbstractTest
     public function getRule()
     {
         $rule = new MissingImport();
-        $rule->addProperty('ignore-global', false);
+        $rule->addProperty('ignore-global', 'false');
         return $rule;
     }
 
@@ -86,7 +86,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleDoesNotApplyWhenSuppressed()
     {
         $rule = new MissingImport();
-        $rule->addProperty('ignore-global', true);
+        $rule->addProperty('ignore-global', 'true');
         $files = $this->getFilesForCalledClass('testRuleAppliesTo*');
         foreach ($files as $file) {
             // Covers case when the new property is set and the rule *should* apply.
@@ -109,7 +109,7 @@ class MissingImportTest extends AbstractTest
     public function testRuleDoesNotApplyWithIgnoreGlobalProperty($file)
     {
         $rule = $this->getRule();
-        $rule->addProperty('ignore-global', true);
+        $rule->addProperty('ignore-global', 'true');
         $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
     }
 }
