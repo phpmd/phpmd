@@ -81,7 +81,7 @@ class MissingImportTest extends AbstractTest
      *
      * @return void
      * @covers ::apply
-     * @covers ::isInNamespaceRoot
+     * @covers ::isGlobalNamespace
      */
     public function testRuleDoesNotApplyWhenSuppressed()
     {
