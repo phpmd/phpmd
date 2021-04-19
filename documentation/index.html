@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 18 Apr 2021 16:06:31 +0000" />
+    <meta name="date" content="Mon, 19 Apr 2021 10:34:49 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 18 Apr 2021 16:06:31 +0000" />
+    <meta name="DC.date" content="Mon, 19 Apr 2021 10:34:49 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -137,6 +137,10 @@ that will check the source code.</p>
 <li class="dash"><em>github</em>, a format that GitHub Actions understands (see <a href="/documentation/ci-integration.html#github-actions">CI Integration</a>).</li>
 </ul>
 
+<p>Some more formats can be obtained by conversion such as:</p>
+<p><em>junit</em> can be obtained using <a href="https://phpmd.org/junit.xslt">xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file</a>:</p>
+<pre><code class="">~ $ phpmd src xml cleancode | xsltproc junit.xslt -
+</code></pre>
 <a id="baseline"></a>
 <h2>Baseline</h2>
 <p>For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.</p>
