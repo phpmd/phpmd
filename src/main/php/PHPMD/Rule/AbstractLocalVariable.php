@@ -265,6 +265,32 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
+     * Reflect function trying as namespaced function first, then global function.
+     *
+     * @param string $functionName
+     * @return ReflectionFunction|null
+     */
+    private function getReflectionFunctionByName($functionName)
+    {
+        try {
+            return new ReflectionFunction($functionName);
+        } catch (ReflectionException $exception) {
+            $chunks = explode('\\', $functionName);
+
+            if (count($chunks) > 1) {
+                try {
+                    return new ReflectionFunction(end($chunks));
+                } catch (ReflectionException $exception) {
+                }
+                // @TODO: Find a way to handle user-land functions
+                // @TODO: Find a way to handle methods
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Return true if the given variable is passed by reference in a native PHP function.
      *
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
@@ -274,29 +300,28 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $parent = $this->getNode($variable->getParent());
 
-        if ($parent && $parent instanceof ASTArguments) {
-            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-            $function = $this->getNode($parent->getParent());
-            $functionParent = $this->getNode($function->getParent());
-            $functionName = $function->getImage();
-
-            if ($functionParent instanceof ASTMemberPrimaryPrefix) {
-                // @TODO: Find a way to handle methods
-                return false;
-            }
-
-            try {
-                $reflectionFunction = new ReflectionFunction($functionName);
-                $parameters = $reflectionFunction->getParameters();
-
-                if (isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference()) {
-                    return true;
-                }
-            } catch (ReflectionException $exception) {
-                // @TODO: Find a way to handle user-land functions
-            }
+        if (!($parent && $parent instanceof ASTArguments)) {
+            return false;
         }
 
-        return false;
+        $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+        $function = $this->getNode($parent->getParent());
+        $functionParent = $this->getNode($function->getParent());
+        $functionName = $function->getImage();
+
+        if ($functionParent instanceof ASTMemberPrimaryPrefix) {
+            // @TODO: Find a way to handle methods
+            return false;
+        }
+
+        $reflectionFunction = $this->getReflectionFunctionByName($functionName);
+
+        if (!$reflectionFunction) {
+            return false;
+        }
+
+        $parameters = $reflectionFunction->getParameters();
+
+        return isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference();
     }
 }
