@@ -267,6 +267,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Reflect function trying as namespaced function first, then global function.
      *
+     * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      * @param string $functionName
      * @return ReflectionFunction|null
      */
