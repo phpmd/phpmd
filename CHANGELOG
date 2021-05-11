@@ -1,3 +1,8 @@
+phpmd-2.10.1 (2021/05/11)
+========================
+
+- Implemented #885: Allowing 2.0 version of the composer/xdebug-handler
+
 phpmd-2.10.0 (2021/04/26)
 ========================
 
