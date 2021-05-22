@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForPropertyNameWithCapital
+class testRuleDoesApplyForPropertyNameWithCapital
 {
-    public $AlsoValidPropertyName;
+    public $NotValidPropertyName;
 }

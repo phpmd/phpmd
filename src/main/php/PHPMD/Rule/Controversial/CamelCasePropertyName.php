@@ -40,9 +40,9 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware
     {
         $allowUnderscore = $this->getBooleanProperty('allow-underscore');
 
-        $pattern = '/^\$[a-zA-Z][a-zA-Z0-9]*$/';
+        $pattern = '/^\$[a-z][a-zA-Z0-9]*$/';
         if ($allowUnderscore === true) {
-            $pattern = '/^\$[_]?[a-zA-Z][a-zA-Z0-9]*$/';
+            $pattern = '/^\$[_]?[a-z][a-zA-Z0-9]*$/';
         }
 
         foreach ($node->getProperties() as $property) {
