@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 11 May 2021 17:17:02 +0000" />
+    <meta name="date" content="Sat, 22 May 2021 14:51:51 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 11 May 2021 17:17:02 +0000" />
+    <meta name="DC.date" content="Sat, 22 May 2021 14:51:51 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -49,7 +49,7 @@
 <li class="dash"><a href="cleancode.html#elseexpression">ElseExpression</a>: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.</li>
 <li class="dash"><a href="cleancode.html#staticaccess">StaticAccess</a>: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.</li>
 <li class="dash"><a href="cleancode.html#ifstatementassignment">IfStatementAssignment</a>: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.</li>
-<li class="dash"><a href="cleancode.html#duplicatearraykey">DuplicateArrayKey</a>: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.</li>
+<li class="dash"><a href="cleancode.html#duplicatedarraykey">DuplicatedArrayKey</a>: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.</li>
 <li class="dash"><a href="cleancode.html#missingimport">MissingImport</a>: Importing all external classes in a file through use statements makes them clearly visible.</li>
 <li class="dash"><a href="cleancode.html#undefinedvariable">UndefinedVariable</a>: Detects when a variable is used that has not been defined before.</li>
 <li class="dash"><a href="cleancode.html#errorcontroloperator">ErrorControlOperator</a>: Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.</li>
