@@ -38,7 +38,7 @@ class AnsiRenderer extends AbstractRenderer
         $previousFile = null;
         foreach ($report->getRuleViolations() as $violation) {
             if ($violation->getFileName() !== $previousFile) {
-                echo nl2br("\n");
+                $this->writer->write('\n');
                 $this->writeViolationFileHeader($violation);
             }
 
