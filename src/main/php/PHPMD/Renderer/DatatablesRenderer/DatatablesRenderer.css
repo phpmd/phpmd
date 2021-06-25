@@ -1,0 +1,52 @@
+.hlt {
+    background:#FE9!important;
+}
+
+.info {
+    margin-bottom:20px;
+}
+
+.shown td.details-control {
+    background:url(https://www.datatables.net/examples/resources/details_close.png) no-repeat center center;
+}
+
+body {
+    font-family:Tahoma, serif;
+    font-size:12px;
+}
+
+td.details-control {
+    background:url(https://www.datatables.net/examples/resources/details_open.png) no-repeat center center;
+    cursor:pointer;
+}
+
+ul.code {
+    margin:0;
+    padding:0;
+}
+
+ul.code .cd {
+    overflow:hidden;
+    padding-left:1ex;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+}
+
+ul.code .no {
+    border-right:1px solid #EAF2F3;
+    min-width:5em;
+    padding-right:1ex;
+    text-align:right;
+    width:5%;
+}
+
+ul.code li {
+    display:flex;
+    font-family:monospace;
+    line-height:1.4em;
+    white-space:nowrap;
+}
+
+ul.code li:nth-child(odd) {
+    background-color:#EAF2F3;
+}
