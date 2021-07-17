@@ -28,7 +28,7 @@ class BaselineSet
         $fileName = str_replace('\\', '/', $fileName);
 
         foreach ($this->violations[$ruleName] as $baseline) {
-            if ($baseline->getFileName() === $fileName && $baseline->getMethodName() === $methodName) {
+            if ($baseline->matches($fileName, $methodName)) {
                 return true;
             }
         }
