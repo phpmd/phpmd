@@ -65,13 +65,14 @@ Command line options
     violations are found.
 
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
-    next to the ruleset definition file.
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.
 
   - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
-    that no longer exist. New violations will _not_ be added.
+    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
+    to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
-    of all baselined files must be relative to this file location.
+  - ``--baseline-file`` - the filepath to a custom baseline xml file.
 
   An example command line: ::
 

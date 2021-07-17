@@ -2,7 +2,6 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\Utility\Paths;
 use RuntimeException;
 
 class BaselineSetFactory
@@ -26,9 +25,7 @@ class BaselineSetFactory
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
-        $basePath    = dirname($fileName);
         $baselineSet = new BaselineSet();
-
         foreach ($xml->children() as $node) {
             if ($node->getName() !== 'violation') {
                 continue;
@@ -42,14 +39,12 @@ class BaselineSetFactory
                 throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
-            $ruleName   = (string)$node['rule'];
-            $filePath   = Paths::concat($basePath, (string)$node['file']);
             $methodName = null;
             if (isset($node['method']) === true && ((string)$node['method']) !== '') {
                 $methodName = (string)($node['method']);
             }
 
-            $baselineSet->addEntry(new ViolationBaseline($ruleName, $filePath, $methodName));
+            $baselineSet->addEntry(new ViolationBaseline((string)$node['rule'], (string)$node['file'], $methodName));
         }
 
         return $baselineSet;

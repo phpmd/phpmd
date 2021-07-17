@@ -2,7 +2,6 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
 use RuntimeException;
 
@@ -14,9 +13,8 @@ class RendererFactory
      */
     public static function createBaselineRenderer(StreamWriter $writer)
     {
-        // determine basedir based on stream output filepath
-        $absolutePath = Paths::getAbsolutePath($writer->getStream());
-        $renderer     = new BaselineRenderer(dirname($absolutePath));
+        // set base path to current working directory
+        $renderer = new BaselineRenderer(getcwd());
         $renderer->setWriter($writer);
 
         return $renderer;

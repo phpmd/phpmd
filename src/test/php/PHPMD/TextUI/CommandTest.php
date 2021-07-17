@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
+use PHPMD\Utility\Paths;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\Command} class.
@@ -246,7 +247,7 @@ class CommandTest extends AbstractTest
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
-        static::assertContains($uri, file_get_contents($temp));
+        static::assertContains(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
     }
 
     /**
@@ -262,6 +263,9 @@ class CommandTest extends AbstractTest
     {
         $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
         $baselineTemp = self::createTempFileUri();
+        // set work directory to the temp dir
+        self::changeWorkingDirectory(dirname($baselineTemp));
+
         copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
         copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 
