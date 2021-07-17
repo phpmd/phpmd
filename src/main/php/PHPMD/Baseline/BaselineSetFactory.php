@@ -2,7 +2,6 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\Utility\Paths;
 use RuntimeException;
 
 class BaselineSetFactory
