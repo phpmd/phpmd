@@ -17,7 +17,9 @@
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
 use PHPUnit_Framework_MockObject_MockObject;
@@ -49,7 +51,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
@@ -74,7 +77,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/single-directory.xml');
@@ -99,7 +103,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/single-file.xml');
@@ -144,7 +149,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/source_without_violations.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertFalse($phpmd->hasErrors());
@@ -168,7 +174,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/source_with_npath_violation.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertFalse($phpmd->hasErrors());
@@ -197,7 +204,7 @@ class PHPMDTest extends AbstractTest
             'pmd-refset1',
             array($renderer),
             new RuleSetFactory(),
-            $baselineSet
+            new Report(new BaselineValidator($baselineSet, BaselineMode::NONE))
         );
 
         static::assertFalse($phpmd->hasViolations());
@@ -220,7 +227,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/source_with_parse_error.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertTrue($phpmd->hasErrors());
@@ -243,7 +251,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('sourceExcluded/'),
             'pmd-refset1',
             array(),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertFalse($phpmd->hasErrors());
@@ -254,7 +263,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('sourceExcluded/'),
             'exclude-pattern',
             array(),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertFalse($phpmd->hasErrors());

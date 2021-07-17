@@ -17,11 +17,15 @@
 
 namespace PHPMD\TextUI;
 
+use InvalidArgumentException;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
@@ -149,9 +153,9 @@ class CommandLineOptions
 
     /**
      * Should PHPMD baseline the existing violations and write them to the $baselineFile
-     * @var bool
+     * @var string allowed modes: NONE, GENERATE or UPDATE
      */
-    protected $generateBaseline = false;
+    protected $generateBaseline = BaselineMode::NONE;
 
     /**
      * The baseline source file to read the baseline violations from.
@@ -165,7 +169,7 @@ class CommandLineOptions
      *
      * @param string[] $args
      * @param string[] $availableRuleSets
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(array $args, array $availableRuleSets = array())
     {
@@ -225,7 +229,10 @@ class CommandLineOptions
                     $this->strict = false;
                     break;
                 case '--generate-baseline':
-                    $this->generateBaseline = true;
+                    $this->generateBaseline = BaselineMode::GENERATE;
+                    break;
+                case '--update-baseline':
+                    $this->generateBaseline = BaselineMode::UPDATE;
                     break;
                 case '--baseline-file':
                     $this->baselineFile = array_shift($args);
@@ -236,11 +243,13 @@ class CommandLineOptions
                 case '--ignore-violations-on-exit':
                     $this->ignoreViolationsOnExit = true;
                     break;
+                case '--reportfile-checkstyle':
                 case '--reportfile-html':
+                case '--reportfile-json':
+                case '--reportfile-sarif':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                case '--reportfile-json':
-                    preg_match('(^\-\-reportfile\-(xml|html|text|json)$)', $arg, $match);
+                    preg_match('(^\-\-reportfile\-(checkstyle|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -250,7 +259,7 @@ class CommandLineOptions
         }
 
         if (count($arguments) < 3) {
-            throw new \InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
         $this->inputPath    = (string)array_shift($arguments);
@@ -387,7 +396,7 @@ class CommandLineOptions
     /**
      * Should the current violations be baselined
      *
-     * @return bool
+     * @return string
      */
     public function generateBaseline()
     {
@@ -439,25 +448,29 @@ class CommandLineOptions
      *
      * @param string $reportFormat
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException When the specified renderer does not exist.
+     * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
-            case 'xml':
-                return $this->createXmlRenderer();
-            case 'html':
-                return $this->createHtmlRenderer();
-            case 'text':
-                return $this->createTextRenderer();
-            case 'json':
-                return $this->createJsonRenderer();
             case 'ansi':
                 return $this->createAnsiRenderer();
+            case 'checkstyle':
+                return $this->createCheckStyleRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
+            case 'html':
+                return $this->createHtmlRenderer();
+            case 'json':
+                return $this->createJsonRenderer();
+            case 'sarif':
+                return $this->createSarifRenderer();
+            case 'text':
+                return $this->createTextRenderer();
+            case 'xml':
+                return $this->createXmlRenderer();
             default:
                 return $this->createCustomRenderer();
         }
@@ -512,13 +525,29 @@ class CommandLineOptions
     }
 
     /**
+     * @return \PHPMD\Renderer\JSONRenderer
+     */
+    protected function createCheckStyleRenderer()
+    {
+        return new CheckStyleRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\SARIFRenderer
+     */
+    protected function createSarifRenderer()
+    {
+        return new SARIFRenderer();
+    }
+
+    /**
      * @return \PHPMD\AbstractRenderer
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function createCustomRenderer()
     {
         if ('' === $this->reportFormat) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
                 self::INPUT_ERROR
             );
@@ -533,7 +562,7 @@ class CommandLineOptions
 
         $fileHandle = @fopen($fileName, 'r', true);
         if (is_resource($fileHandle) === false) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
                     $this->reportFormat
@@ -585,6 +614,7 @@ class CommandLineOptions
             'even if any violations are found' . \PHP_EOL .
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
+            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
     }
 
@@ -599,6 +629,7 @@ class CommandLineOptions
         $renderers            = array();
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
+            $rendererName = array();
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }
@@ -639,7 +670,7 @@ class CommandLineOptions
      *
      * @param string $inputFile Specified input file name.
      * @return string
-     * @throws \InvalidArgumentException If the specified input file does not exist.
+     * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
     protected function readInputFile($inputFile)
@@ -647,6 +678,6 @@ class CommandLineOptions
         if (file_exists($inputFile)) {
             return implode(',', array_map('trim', file($inputFile)));
         }
-        throw new \InvalidArgumentException("Input file '{$inputFile}' not exists.");
+        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 }

@@ -132,8 +132,11 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
-  - ``--generate-baseline`` - will generate a phpmd.baseline.xml for existing violations
+  - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file.
+
+  - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
+    that no longer exist. New violations will _not_ be added.
 
   - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
     of all baselined files must be relative to this file location.
@@ -205,13 +208,15 @@ At the moment PHPMD comes with the following renderers:
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
+- *sarif*, the Static Analysis Results Interchange Format.
+- *checkstyle*, language and tool agnostic XML format
 
 Baseline
 --------
 
 For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
 
-The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the phpmd.baseline.xml next to it::
+The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the ``phpmd.baseline.xml`` next to it::
 
   ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
 
@@ -222,6 +227,10 @@ To specify a custom baseline filepath for export::
 By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
 
   ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+
+To clean up an existing baseline file and *only remove* no longer existing violations::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --update-baseline
 
 PHPMD for enterprise
 --------------------

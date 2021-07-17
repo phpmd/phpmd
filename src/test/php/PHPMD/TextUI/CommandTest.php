@@ -160,6 +160,10 @@ class CommandTest extends AbstractTest
             $text = self::createTempFileUri(),
             '--reportfile-json',
             $json = self::createTempFileUri(),
+            '--reportfile-checkstyle',
+            $checkstyle = self::createTempFileUri(),
+            '--reportfile-sarif',
+            $sarif = self::createTempFileUri(),
         );
 
         Command::main($args);
@@ -168,6 +172,8 @@ class CommandTest extends AbstractTest
         $this->assertFileExists($html);
         $this->assertFileExists($text);
         $this->assertFileExists($json);
+        $this->assertFileExists($checkstyle);
+        $this->assertFileExists($sarif);
     }
 
     public function testOutput()
@@ -226,7 +232,7 @@ class CommandTest extends AbstractTest
 
     public function testMainGenerateBaseline()
     {
-        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
         $temp     = self::createTempFileUri();
         $exitCode = Command::main(array(
             __FILE__,
@@ -241,6 +247,39 @@ class CommandTest extends AbstractTest
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
         static::assertContains($uri, file_get_contents($temp));
+    }
+
+    /**
+     * Testcase:
+     * - Class has existing ShortVariable and new BooleanGetMethodName violations
+     * - Baseline has ShortVariable and LongClassName baseline violations
+     * Expect in baseline:
+     * - LongClassName violation should be removed
+     * - ShortVariable violation should still exist
+     * - BooleanGetMethodName shouldn't be added
+     */
+    public function testMainUpdateBaseline()
+    {
+        $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
+        $baselineTemp = self::createTempFileUri();
+        copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
+        copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
+
+        $exitCode = Command::main(array(
+            __FILE__,
+            $sourceTemp,
+            'text',
+            'naming',
+            '--update-baseline',
+            '--baseline-file',
+            $baselineTemp,
+        ));
+
+        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertXmlStringEqualsXmlString(
+            file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
+            file_get_contents($baselineTemp)
+        );
     }
 
     public function testMainBaselineViolationShouldBeIgnored()

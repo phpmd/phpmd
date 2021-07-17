@@ -64,8 +64,11 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
-  - ``--generate-baseline`` - will generate a phpmd.baseline.xml for existing violations
+  - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file.
+
+  - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
+    that no longer exist. New violations will _not_ be added.
 
   - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
     of all baselined files must be relative to this file location.
@@ -123,10 +126,16 @@ At the moment PHPMD comes with the following five renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
-- *ansi*, colorful, formated text for the command line.
+- *ansi*, colorful, formatted text for the command line.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
 - *github*, a format that GitHub Actions understands (see `CI Integration </documentation/ci-integration.html#github-actions>`_).
+
+Some more formats can be obtained by conversion such as:
+
+*junit* can be obtained using `xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file <https://phpmd.org/junit.xslt>`_::
+
+  ~ $ phpmd src xml cleancode | xsltproc junit.xslt -
 
 Baseline
 =========
@@ -144,3 +153,7 @@ To specify a custom baseline filepath for export::
 By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
 
   ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+
+To clean up an existing baseline file and *only remove* no longer existing violations::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --update-baseline

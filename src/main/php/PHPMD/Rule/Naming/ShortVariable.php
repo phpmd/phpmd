@@ -96,7 +96,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             $this->checkNodeImage($declarator);
         }
 
-        $variables = $node->findChildrenOfType('Variable');
+        $variables = $node->findChildrenOfTypeVariable();
         foreach ($variables as $variable) {
             $this->checkNodeImage($variable);
         }
