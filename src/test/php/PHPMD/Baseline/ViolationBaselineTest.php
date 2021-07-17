@@ -12,7 +12,6 @@ class ViolationBaselineTest extends TestCase
     /**
      * @covers ::__construct
      * @covers ::getRuleName
-     * @covers ::getFileName
      */
     public function testGetRuleName()
     {
