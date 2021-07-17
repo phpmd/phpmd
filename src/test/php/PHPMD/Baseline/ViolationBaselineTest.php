@@ -13,23 +13,42 @@ class ViolationBaselineTest extends TestCase
      * @covers ::__construct
      * @covers ::getRuleName
      * @covers ::getFileName
-     * @covers ::getMethodName
      */
-    public function testAccessorsWithoutMethod()
+    public function testGetRuleName()
     {
         $violation = new ViolationBaseline('rule', 'foobar', null);
         static::assertSame('rule', $violation->getRuleName());
-        static::assertSame('foobar', $violation->getFileName());
-        static::assertNull($violation->getMethodName());
     }
 
     /**
+     * Test the give file matches the baseline correctly
+     *
      * @covers ::__construct
-     * @covers ::getMethodName
+     * @covers ::matches
+     * @return void
      */
-    public function testAccessorsWithMethod()
+    public function testMatchesWithMethod()
     {
-        $violation = new ViolationBaseline('rule', 'foobar', 'method');
-        static::assertSame('method', $violation->getMethodName());
+        $violation = new ViolationBaseline('sniff', 'foobar.txt', 'method');
+        static::assertTrue($violation->matches('foobar.txt', 'method'));
+        static::assertTrue($violation->matches('/test/foobar.txt', 'method'));
+        static::assertFalse($violation->matches('foo.txt', 'method'));
+        static::assertFalse($violation->matches('foobar.txt', 'unknown'));
+    }
+
+    /**
+     * Test the give file matches the baseline correctly
+     *
+     * @covers ::__construct
+     * @covers ::matches
+     * @return void
+     */
+    public function testMatchesWithoutMethod()
+    {
+        $violation = new ViolationBaseline('sniff', 'foobar.txt', null);
+        static::assertTrue($violation->matches('foobar.txt', null));
+        static::assertTrue($violation->matches('/test/foobar.txt', null));
+        static::assertFalse($violation->matches('foobar.txt', 'method'));
+        static::assertFalse($violation->matches('/test/unknown.txt', null));
     }
 }
