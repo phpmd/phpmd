@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Thu, 24 Jun 2021 13:58:45 +0000" />
+    <meta name="date" content="Tue, 20 Jul 2021 19:47:08 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Thu, 24 Jun 2021 13:58:45 +0000" />
+    <meta name="DC.date" content="Tue, 20 Jul 2021 19:47:08 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -80,11 +80,12 @@ like a filesystem reference.</p>
 <li class="dash"><code>--ignore-violations-on-exit</code> - will exit with a zero code, even if any
     violations are found.</li>
 <li class="dash"><code>--generate-baseline</code> - will generate a <code>phpmd.baseline.xml</code> for existing violations
-    next to the ruleset definition file.</li>
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.</li>
 <li class="dash"><code>--update-baseline</code> - will remove all violations from an existing <code>phpmd.baseline.xml</code>
-    that no longer exist. New violations will _<a href="">not</a> be added.</li>
-<li class="dash"><code>--baseline-file</code> - the filepath to a custom baseline xml file. The filepath
-    of all baselined files must be relative to this file location.
+    that no longer exist. New violations will _<a href="">not</a> be added. The file path of the violations will be relative
+    to the current working directory.</li>
+<li class="dash"><code>--baseline-file</code> - the filepath to a custom baseline xml file.
   An example command line: ::
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml</li>
 </ul>
