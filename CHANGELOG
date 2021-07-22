@@ -1,3 +1,11 @@
+phpmd-2.10.1 (2021/07/22)
+========================
+
+- Added #898 in #902: Added newline for better ANSI output
+- Changed #901 in #903: Improve baseline basepath calculation
+- Fixed #894: Fixed typo in DuplicatedArrayKey title incl. link
+- Fixed Update PHP Depend to the latest version, this fixed different PHP 8 options: #889 #893 #896 
+
 phpmd-2.10.1 (2021/05/11)
 ========================
 
