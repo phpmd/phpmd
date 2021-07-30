@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-function testRuleDoesNotApplyToStaticVariableInFonction()
+function testRuleDoesNotApplyToStaticVariableInFunction()
 {
     static $test = 1;
     echo $test;
