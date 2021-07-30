@@ -258,6 +258,11 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
             $this->addVariableDefinition($variable);
         }
+
+        foreach ($node->findChildrenOfType('StaticVariableDeclaration') as $static) {
+            $variable = $static->getChild(0);
+            $this->addVariableDefinition($variable);
+        }
     }
 
     /**
