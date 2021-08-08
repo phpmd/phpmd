@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use Closure;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -66,6 +67,8 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      */
     protected static function cleanupTempFiles()
     {
+        // cleanup any open resources on temp files
+        gc_collect_cycles();
         foreach (self::$tempFiles as $tempFile) {
             unlink($tempFile);
         }
@@ -150,21 +153,27 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
+     * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
+     *                                          if set to a closure, the closure is applied on the actual output array.
      *
      * @return void
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName)
+    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true)
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
-        if (isset($actual['timestamp'])) {
-            $actual['timestamp'] = '';
-        }
-        if (isset($actual['duration'])) {
-            $actual['duration'] = '';
-        }
-        if (isset($actual['version'])) {
-            $actual['version'] = '@package_version@';
+        if ($removeDynamicValues === true) {
+            if (isset($actual['timestamp'])) {
+                $actual['timestamp'] = '';
+            }
+            if (isset($actual['duration'])) {
+                $actual['duration'] = '';
+            }
+            if (isset($actual['version'])) {
+                $actual['version'] = '@package_version@';
+            }
+        } elseif ($removeDynamicValues instanceof Closure) {
+            $actual = $removeDynamicValues($actual);
         }
 
         $expected = str_replace(
@@ -173,6 +182,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
             file_get_contents(self::createFileUri($expectedFileName))
         );
 
+        $expected = str_replace('#{workingDirectory}', getcwd(), $expected);
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
         self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
@@ -235,11 +245,17 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     /**
      * Creates a file uri for a temporary test file.
      *
+     * @param string|null $fileName
      * @return string
      */
-    protected static function createTempFileUri()
+    protected static function createTempFileUri($fileName = null)
     {
-        return (self::$tempFiles[] = tempnam(sys_get_temp_dir(), 'phpmd.'));
+        if ($fileName !== null) {
+            $filePath = sys_get_temp_dir() . '/' . $fileName;
+        } else {
+            $filePath = tempnam(sys_get_temp_dir(), 'phpmd.');
+        }
+        return (self::$tempFiles[] = $filePath);
     }
 
     /**

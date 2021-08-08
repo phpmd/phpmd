@@ -64,6 +64,18 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToClosureUnusedFormalParameter
+     *
+     * @return void
+     */
+    public function testRuleAppliesToClosureUnusedFormalParameter()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleAppliesToMultipleMethodUnusedFormalParameter
      *
      * @return void
@@ -490,5 +502,27 @@ class UnusedFormalParameterTest extends AbstractTest
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToPropertyPromotionParameters
+     *
+     * <code>
+     * class Foo {
+     *     public function __construct(private string $foo) {}
+     * }
+     * </code>
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToPropertyPromotionParameters()
+    {
+        $methods = array_filter($this->getClass()->getMethods(), function ($method) {
+            return $method->getImage() === '__construct';
+        });
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($methods[0]);
     }
 }

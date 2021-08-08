@@ -19,6 +19,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use SplFileObject;
 
 /**
  * This renderer output a html file with all found violations.
@@ -318,13 +319,13 @@ class HTMLRenderer extends AbstractRenderer
      */
     public function renderReport(Report $report)
     {
-        $w = $this->getWriter();
+        $writer = $this->getWriter();
 
         $index = 0;
         $violations = $report->getRuleViolations();
 
         $count = count($violations);
-        $w->write(sprintf('<h3>%d problems found</h3>', $count));
+        $writer->write(sprintf('<h3>%d problems found</h3>', $count));
 
         // If no problems were found, don't bother with rendering anything else.
         if (!$count) {
@@ -332,7 +333,7 @@ class HTMLRenderer extends AbstractRenderer
         }
 
         // Render summary tables.
-        $w->write("<h2>Summary</h2>");
+        $writer->write("<h2>Summary</h2>");
         $categorized = self::sumUpViolations($violations);
         $this->writeTable('By priority', 'Priority', $categorized[self::CATEGORY_PRIORITY]);
         $this->writeTable('By namespace', 'PHP Namespace', $categorized[self::CATEGORY_NAMESPACE]);
@@ -340,8 +341,8 @@ class HTMLRenderer extends AbstractRenderer
         $this->writeTable('By name', 'Rule name', $categorized[self::CATEGORY_RULE]);
 
         // Render details of each violation and place the "Details" display toggle.
-        $w->write("<h2 style='page-break-before: always'>Details</h2>");
-        $w->write("
+        $writer->write("<h2 style='page-break-before: always'>Details</h2>");
+        $writer->write("
             <a
                 id='details-link'
                 class='info-lnk blck'
@@ -350,7 +351,7 @@ class HTMLRenderer extends AbstractRenderer
             >
             Show details &#x25BC;
         </a>");
-        $w->write("<div id='details-wrapper' class='hidden'>");
+        $writer->write("<div id='details-wrapper' class='hidden'>");
 
         foreach ($violations as $violation) {
             // This is going to be used as ID in HTML (deep anchoring).
@@ -376,7 +377,8 @@ class HTMLRenderer extends AbstractRenderer
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
-            if ($url = $violation->getRule()->getExternalInfoUrl()) {
+            $url = $violation->getRule()->getExternalInfoUrl();
+            if ($url) {
                 $linkHtml = "<a class='info-lnk' href='{$url}' target='_blank'>(help)</a>";
             }
 
@@ -401,7 +403,7 @@ class HTMLRenderer extends AbstractRenderer
 
             // Remove unnecessary tab/space characters at the line beginnings.
             $html = self::reduceWhitespace($html);
-            $w->write(sprintf($html, $excerptHtml));
+            $writer->write(sprintf($html, $excerptHtml));
         }
     }
 
@@ -429,7 +431,7 @@ class HTMLRenderer extends AbstractRenderer
             return array();
         }
 
-        $file = new \SplFileObject($file);
+        $file = new SplFileObject($file);
 
         // We have to subtract 1 to extract correct lines via SplFileObject.
         $line = max($lineNumber - 1 - $extra, 0);
@@ -458,8 +460,8 @@ class HTMLRenderer extends AbstractRenderer
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
             $prepared = self::$descHighlightRules;
-            array_walk($prepared, function (&$v, $k) {
-                $v = "(?<{$k}>{$v['regex']})";
+            array_walk($prepared, function (&$value, $key) {
+                $value = "(?<{$key}>{$value['regex']})";
             });
 
             self::$compiledHighlightRegex = "#(" . implode('|', $prepared) . ")#";
@@ -467,13 +469,13 @@ class HTMLRenderer extends AbstractRenderer
 
         $rules = self::$descHighlightRules;
 
-        return preg_replace_callback(self::$compiledHighlightRegex, function ($x) use ($rules) {
+        return preg_replace_callback(self::$compiledHighlightRegex, function ($matches) use ($rules) {
             // Extract currently matched specification of highlighting (Match groups
             // are named and we can find out which is not empty.).
-            $definition = array_keys(array_intersect_key($rules, array_filter($x)));
+            $definition = array_keys(array_intersect_key($rules, array_filter($matches)));
             $definition = reset($definition);
 
-            return "<span class='hlt-info {$definition}'>{$x[0]}</span>";
+            return "<span class='hlt-info {$definition}'>{$matches[0]}</span>";
         }, $message);
     }
 
@@ -548,9 +550,9 @@ class HTMLRenderer extends AbstractRenderer
         foreach ($violations as $v) {
             // We use "ref" reference to make things somewhat easier to read.
             // Also, using a reference to non-existing array index doesn't throw a notice.
-
-            if ($ns = $v->getNamespaceName()) {
-                $ref = &$result[self::CATEGORY_NAMESPACE][$ns];
+            $namespaceName = $v->getNamespaceName();
+            if ($namespaceName) {
+                $ref = &$result[self::CATEGORY_NAMESPACE][$namespaceName];
                 $ref = isset($ref) ? $ref + 1 : 1;
             }
 

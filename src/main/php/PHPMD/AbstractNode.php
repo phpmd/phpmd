@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use BadMethodCallException;
+use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\Node\ASTNode;
 
 /**
@@ -54,14 +57,14 @@ abstract class AbstractNode
      * @param string $name
      * @param array $args
      * @return mixed
-     * @throws \BadMethodCallException When the underlying PDepend node
+     * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args)
     {
         $node = $this->getNode();
         if (!method_exists($node, $name)) {
-            throw new \BadMethodCallException(
+            throw new BadMethodCallException(
                 sprintf('Invalid method %s() called.', $name)
             );
         }
@@ -138,6 +141,17 @@ abstract class AbstractNode
     }
 
     /**
+     * Searches recursive for all children of this node that are of variable.
+     *
+     * @return ASTVariable[]
+     * @todo Cover by a test.
+     */
+    public function findChildrenOfTypeVariable()
+    {
+        return $this->findChildrenOfType('Variable');
+    }
+
+    /**
      * Tests if this node represents the the given type.
      *
      * @param string $type The expected node type.
@@ -194,11 +208,17 @@ abstract class AbstractNode
     /**
      * Returns the name of the declaring source file.
      *
-     * @return string
+     * @return string|null
      */
     public function getFileName()
     {
-        return (string)$this->node->getCompilationUnit()->getFileName();
+        $compilationUnit = $this->node instanceof AbstractASTArtifact
+            ? $this->node->getCompilationUnit()
+            : null;
+
+        return $compilationUnit
+            ? (string)$compilationUnit->getFileName()
+            : null; // @TODO: Find the name from some parent node https://github.com/phpmd/phpmd/issues/837
     }
 
     /**

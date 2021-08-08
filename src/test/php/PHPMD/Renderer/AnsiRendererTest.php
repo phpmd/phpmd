@@ -73,6 +73,7 @@ class AnsiRendererTest extends AbstractTest
         $expectedChunks = array(
             PHP_EOL . "FILE: /bar.php" . PHP_EOL . "--------------" . PHP_EOL,
             " 1 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
+            PHP_EOL,
             PHP_EOL . "FILE: /foo.php" . PHP_EOL . "--------------" . PHP_EOL,
             " 2 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
             " 3 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,

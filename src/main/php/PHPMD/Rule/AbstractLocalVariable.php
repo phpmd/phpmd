@@ -49,7 +49,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array(string=>boolean)
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    private static $superGlobals = array(
+    protected static $superGlobals = array(
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
@@ -216,6 +216,23 @@ abstract class AbstractLocalVariable extends AbstractRule
         return $this->prependMemberPrimaryPrefix($image, $variable);
     }
 
+    protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
+    {
+        do {
+            $postfix = $postfix->getParent();
+        } while ($postfix && $postfix->getChild(0) && $postfix->getChild(0)->getImage() === $image);
+
+        $previousChildImage = $postfix->getChild(0)->getImage();
+
+        if ($postfix instanceof ASTMemberPrimaryPrefix &&
+            in_array($previousChildImage, $this->selfReferences)
+        ) {
+            return $previousChildImage;
+        }
+
+        return null;
+    }
+
     /**
      * Return the PDepend node of ASTNode PHPMD node.
      *
@@ -234,6 +251,33 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
+     * Reflect function trying as namespaced function first, then global function.
+     *
+     * @SuppressWarnings(PHPMD.EmptyCatchBlock)
+     * @param string $functionName
+     * @return ReflectionFunction|null
+     */
+    private function getReflectionFunctionByName($functionName)
+    {
+        try {
+            return new ReflectionFunction($functionName);
+        } catch (ReflectionException $exception) {
+            $chunks = explode('\\', $functionName);
+
+            if (count($chunks) > 1) {
+                try {
+                    return new ReflectionFunction(end($chunks));
+                } catch (ReflectionException $exception) {
+                }
+                // @TODO: Find a way to handle user-land functions
+                // @TODO: Find a way to handle methods
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Return true if the given variable is passed by reference in a native PHP function.
      *
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
@@ -243,25 +287,29 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $parent = $this->getNode($variable->getParent());
 
-        if ($parent && $parent instanceof ASTArguments) {
-            $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-            $function = $this->getNode($parent->getParent());
-            $functionName = $function->getImage();
-
-            try {
-                $reflectionFunction = new ReflectionFunction($functionName);
-                $parameters = $reflectionFunction->getParameters();
-
-                if ($parameters[$argumentPosition]->isPassedByReference()) {
-                    return true;
-                }
-            } catch (ReflectionException $exception) {
-                // @TODO: Find a way to handle user-land functions
-                // @TODO: Find a way to handle methods
-            }
+        if (!($parent && $parent instanceof ASTArguments)) {
+            return false;
         }
 
-        return false;
+        $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+        $function = $this->getNode($parent->getParent());
+        $functionParent = $this->getNode($function->getParent());
+        $functionName = $function->getImage();
+
+        if ($functionParent instanceof ASTMemberPrimaryPrefix) {
+            // @TODO: Find a way to handle methods
+            return false;
+        }
+
+        $reflectionFunction = $this->getReflectionFunctionByName($functionName);
+
+        if (!$reflectionFunction) {
+            return false;
+        }
+
+        $parameters = $reflectionFunction->getParameters();
+
+        return isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference();
     }
 
     /**
@@ -275,17 +323,19 @@ abstract class AbstractLocalVariable extends AbstractRule
         $base = $this->getNode($variable);
         $parent = $this->getNode($base->getParent());
 
-        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base) {
+
+        while ($parent instanceof ASTArrayIndexExpression &&
+            $base instanceof ASTNode &&
+            $parent->getChild(0) === $base->getNode()
+        ) {
             $base = $parent;
             $parent = $this->getNode($base->getParent());
         }
 
-        if ($parent && $parent instanceof ASTPropertyPostfix) {
-            $parent = $parent->getParent();
+        if ($parent instanceof ASTPropertyPostfix) {
+            $previousChildImage = $this->getParentMemberPrimaryPrefixImage($image, $parent);
 
-            if ($parent instanceof ASTMemberPrimaryPrefix &&
-                in_array($parent->getChild(0)->getImage(), $this->selfReferences)
-            ) {
+            if (in_array($previousChildImage, $this->selfReferences, true)) {
                 return "::$image";
             }
         }
