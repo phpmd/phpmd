@@ -50,6 +50,9 @@ jobs:
       - name: Git submodules
         run: git submodule update --init
 
+      - name: Fix PHP compatibility
+        run: php src/phar/compatibility.php
+
       - name: Ant
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
 
