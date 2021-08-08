@@ -323,11 +323,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         $base = $this->getNode($variable);
         $parent = $this->getNode($base->getParent());
 
-
-        while ($parent instanceof ASTArrayIndexExpression &&
-            $base instanceof ASTNode &&
-            $parent->getChild(0) === $base->getNode()
-        ) {
+        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base) {
             $base = $parent;
             $parent = $this->getNode($base->getParent());
         }
