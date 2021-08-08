@@ -7,20 +7,6 @@ use RuntimeException;
 class Paths
 {
     /**
-     * Append $pathB to $pathA and apply the correct amount of slashes between them
-     *
-     * @param string $pathA
-     * @param string $pathB
-     * @return string
-     */
-    public static function concat($pathA, $pathB)
-    {
-        $pathA = rtrim(str_replace('\\', '/', $pathA), '/');
-        $pathB = ltrim(str_replace('\\', '/', $pathB), '/');
-        return $pathA . '/' . $pathB;
-    }
-
-    /**
      * Transform the given absolute path to the relative path based on the given base path.
      *
      * @param string $basePath
@@ -39,18 +25,6 @@ class Paths
         }
 
         return $filePath;
-    }
-
-    /**
-     * Derive the absolute path from the given resource
-     * @param resource $resource
-     * @return string
-     * @throws RuntimeException
-     */
-    public static function getAbsolutePath($resource)
-    {
-        $metaData = stream_get_meta_data($resource);
-        return self::getRealPath($metaData['uri']);
     }
 
     /**
