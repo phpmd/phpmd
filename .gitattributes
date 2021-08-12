@@ -19,6 +19,7 @@
 
 /src/test         export-ignore
 /src/site         export-ignore
+/src/phar         export-ignore
 /vendor/squizlabs export-ignore
 .gitattributes    export-ignore
 .github           export-ignore

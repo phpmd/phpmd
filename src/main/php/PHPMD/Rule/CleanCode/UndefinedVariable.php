@@ -119,12 +119,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectGlobalStatements(AbstractNode $node)
     {
-        $globalStatements = $node->findChildrenOfType('GlobalStatement');
-
-        foreach ($globalStatements as $globalStatement) {
-            foreach ($globalStatement->getChildren() as $variable) {
-                $this->addVariableDefinition($variable);
-            }
+        foreach ($node->findChildrenWithParentType('GlobalStatement') as $variable) {
+            $this->addVariableDefinition($variable);
         }
     }
 
@@ -136,13 +132,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectExceptionCatches(AbstractCallableNode $node)
     {
-        $catchStatements = $node->findChildrenOfType('CatchStatement');
-
-        foreach ($catchStatements as $catchStatement) {
-            foreach ($catchStatement->getChildren() as $children) {
-                if ($children instanceof ASTVariable) {
-                    $this->addVariableDefinition($children);
-                }
+        foreach ($node->findChildrenWithParentType('CatchStatement') as $child) {
+            if ($child instanceof ASTVariable) {
+                $this->addVariableDefinition($child);
             }
         }
     }
@@ -155,12 +147,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectListExpressions(AbstractCallableNode $node)
     {
-        $lists = $node->findChildrenOfType('ListExpression');
-
-        foreach ($lists as $listExpression) {
-            foreach ($listExpression->getChildren() as $variable) {
-                $this->addVariableDefinition($variable);
-            }
+        foreach ($node->findChildrenWithParentType('ListExpression') as $variable) {
+            $this->addVariableDefinition($variable);
         }
     }
 
@@ -172,18 +160,18 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectForeachStatements(AbstractCallableNode $node)
     {
-        $foreachStatements = $node->findChildrenOfType('ForeachStatement');
+        foreach ($node->findChildrenWithParentType('ForeachStatement') as $child) {
+            if ($child instanceof ASTVariable) {
+                $this->addVariableDefinition($child);
+            }
 
-        foreach ($foreachStatements as $foreachStatement) {
-            foreach ($foreachStatement->getChildren() as $children) {
-                if ($children instanceof ASTVariable) {
-                    $this->addVariableDefinition($children);
-                } elseif ($children instanceof ASTUnaryExpression) {
-                    foreach ($children->getChildren() as $refChildren) {
-                        if ($refChildren instanceof ASTVariable) {
-                            $this->addVariableDefinition($refChildren);
-                        }
-                    }
+            if (!($child instanceof ASTUnaryExpression)) {
+                continue;
+            }
+
+            foreach ($child->getChildren() as $refChildren) {
+                if ($refChildren instanceof ASTVariable) {
+                    $this->addVariableDefinition($refChildren);
                 }
             }
         }
@@ -273,13 +261,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectPropertyPostfix(AbstractNode $node)
     {
-        $properties = $node->findChildrenOfType('PropertyPostfix');
-
-        foreach ($properties as $property) {
-            foreach ($property->getChildren() as $children) {
-                if ($children instanceof ASTVariable) {
-                    $this->addVariableDefinition($children);
-                }
+        foreach ($node->findChildrenWithParentType('PropertyPostfix') as $child) {
+            if ($child instanceof ASTVariable) {
+                $this->addVariableDefinition($child);
             }
         }
     }

@@ -141,6 +141,28 @@ abstract class AbstractNode
     }
 
     /**
+     * List all first-level children of the nodes of the given type found in any depth of
+     * the current node.
+     *
+     * @param string $type The searched child type.
+     * @return ASTNode[]
+     */
+    public function findChildrenWithParentType($type)
+    {
+        $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
+
+        $nodes = array();
+
+        foreach ($children as $child) {
+            foreach ($child->getChildren() as $subChild) {
+                $nodes[] = $subChild;
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
      * Searches recursive for all children of this node that are of variable.
      *
      * @return ASTVariable[]
