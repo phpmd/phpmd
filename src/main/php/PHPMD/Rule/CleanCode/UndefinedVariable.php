@@ -163,11 +163,15 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         foreach ($node->findChildrenWithParentType('ForeachStatement') as $child) {
             if ($child instanceof ASTVariable) {
                 $this->addVariableDefinition($child);
-            } elseif ($child instanceof ASTUnaryExpression) {
-                foreach ($child->getChildren() as $refChildren) {
-                    if ($refChildren instanceof ASTVariable) {
-                        $this->addVariableDefinition($refChildren);
-                    }
+            }
+
+            if (!($child instanceof ASTUnaryExpression)) {
+                continue;
+            }
+
+            foreach ($child->getChildren() as $refChildren) {
+                if ($refChildren instanceof ASTVariable) {
+                    $this->addVariableDefinition($refChildren);
                 }
             }
         }
