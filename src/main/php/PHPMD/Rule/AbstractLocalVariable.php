@@ -205,10 +205,11 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $image = $variable->getImage();
 
-        if (substr($image, 0, 1) === '$' && $this->getNode($variable->getParent()) instanceof ASTFieldDeclaration) {
+        if ($this->isFieldDeclaration($variable, $image)) {
             $image = "::$image";
         }
 
+        // If variable name is not in the node, it's in the second child
         if ($image === '::') {
             return $image.$variable->getChild(1)->getImage();
         }
@@ -315,6 +316,22 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Prepend "::" if the variable has a ASTMemberPrimaryPrefix.
      *
+     * So we can distinguish members from local variable, identify quickly the scope
+     * by the image and mostly avoid conflict between a local variable and a property
+     * having the same name such as in:
+     *
+     * ```
+     * public function bar()
+     * {
+     *     self::$foo = 9;
+     *     return $foo; // Undefined variable
+     * }
+     * ```
+     *
+     * We'll raise the violation because `$foo` and `self::$foo` are not referring the
+     * same variable and won't overlap in a storage keyed by image as first one
+     * image is "$foo", second one is "::$foo".
+     *
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
      * @return string
      */
@@ -337,5 +354,25 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return $image;
+    }
+
+    /**
+     * Return true if given node (+ optional image) represent en field declaration:
+     *
+     * ```
+     * class Foo
+     * {
+     *   public static $field = 9;
+     * }
+     * ```
+     *
+     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @param string $image
+     * @return bool
+     */
+    private function isFieldDeclaration($variable, $image = '$')
+    {
+        return substr($image, 0, 1) === '$' &&
+            $this->getNode($variable->getParent()) instanceof ASTFieldDeclaration;
     }
 }
