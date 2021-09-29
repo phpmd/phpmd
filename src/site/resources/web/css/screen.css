@@ -234,8 +234,8 @@ table td {
 }
 
 .follow {
-    padding-right: 1em;
     float: right;
+    padding-right: 1em;
 }
 
 .twitter-follow {
