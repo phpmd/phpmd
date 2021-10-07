@@ -241,7 +241,6 @@ table td {
 .twitter-follow {
     background-color: #1b95e0;
     border-radius: 3px;
-    box-sizing: border-box;
     color: #fff;
     display: inline-block;
     font-size: 0.8em;
