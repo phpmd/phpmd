@@ -52,6 +52,12 @@
 <div id="footer">
     By <strong>Manuel Pichler</strong>
     licensed under <a href="https://opensource.org/licenses/bsd-license.php" title="BSD 3-Clause">BSD 3-Clause</a>
+
+    <span class="follow">
+        <a href="https://twitter.com/php_pmd" title="Follow on Twitter" class="twitter-follow" target="_blank">
+            <i></i> Follow @PHP_PMD
+        </a>
+    </span>
 </div>
 
 <div id="formats">
