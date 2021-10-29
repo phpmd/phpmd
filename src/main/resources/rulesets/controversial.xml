@@ -41,7 +41,7 @@ class Foo {
           externalInfoUrl="#">
         <description>
             <![CDATA[
-It is considered best practice to use the CamelCase notation to name classes.
+It is considered best practice to use the camelCase notation to name classes.
             ]]>
         </description>
         <priority>1</priority>
