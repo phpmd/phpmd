@@ -241,3 +241,10 @@ Available as part of the Tidelift Subscription.
 The maintainers of ``PHPMD`` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. `Learn more.`__
 
 __ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=enterprise&utm_term=repo
+
+Contributing
+------------
+
+If you want to contribute to PHPMD, please consult the `contribution guide`__.
+
+__ ./.github/CONTRIBUTING.md
