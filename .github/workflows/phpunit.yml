@@ -12,12 +12,14 @@ jobs:
   php-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    continue-on-error: ${{ matrix.experimental }}
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
       matrix:
         php: [5.3, 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0]
+        experimental: [false]
         dependency-version: [prefer-lowest, prefer-stable]
         exclude:
           - dependency-version: prefer-lowest
@@ -26,6 +28,14 @@ jobs:
             php: 7.3
           - dependency-version: prefer-lowest
             php: 7.4
+        include:
+          - dependency-version: prefer-lowest
+            php: 8.1
+            experimental: true
+          - dependency-version: prefer-stable
+            php: 8.1
+            experimental: true
+
 
     name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
 
