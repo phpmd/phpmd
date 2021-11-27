@@ -15,14 +15,12 @@
  * @link http://phpmd.org/
  */
 
-class testCompactFunctionRuleWorksCaseInsensitive
+class testRuleDoesNotApplyToCompoundVariableInString
 {
-    public function testCompactFunctionRuleWorksCaseInsensitive()
+    public function testRuleDoesNotApplyToCompoundVariableInString()
     {
-        $foo = 1;
-        $bar = 2;
-        $baz = 0;
+        $bar = 'foo';
 
-        return Compact('foo', 'bar', 'baz');
+        return "${bar}_me";
     }
 }

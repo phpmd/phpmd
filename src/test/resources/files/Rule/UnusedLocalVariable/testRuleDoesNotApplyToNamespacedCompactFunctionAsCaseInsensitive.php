@@ -15,11 +15,16 @@
  * @link http://phpmd.org/
  */
 
-function testInnerFunctionParametersDoNotHideUnusedVariables()
-{
-    $x = 42;
-    function z_testInnerFunctionParametersDoNotHideUnusedVariables($x)
-    {
+namespace PHPMDTest;
 
+class testRuleDoesNotApplyToNamespacedCompactFunctionAsCaseInsensitive
+{
+    public function testRuleDoesNotApplyToNamespacedCompactFunctionAsCaseInsensitive()
+    {
+        $foo = 1;
+        $bar = 2;
+        $baz = 0;
+
+        return Compact('foo', 'bar', 'baz');
     }
 }

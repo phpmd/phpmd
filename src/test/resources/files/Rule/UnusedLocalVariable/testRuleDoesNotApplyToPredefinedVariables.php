@@ -17,11 +17,10 @@
 
 namespace PHPMDTest;
 
-class testRuleNotAppliesToPredefinedVariables
+class testRuleDoesNotApplyToPredefinedVariables
 {
-    public function testRuleNotAppliesToPredefinedVariables()
+    public function testRuleDoesNotApplyToPredefinedVariables()
     {
-        $foo = 'bar';
         $headers = array();
         foreach ($http_response_header as $header) {
             $headers[] = $header;
