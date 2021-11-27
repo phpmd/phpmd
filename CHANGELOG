@@ -1,3 +1,9 @@
+phpmd-2.11.0 (2021/11/29)
+========================
+
+- Fixed #884 in #905: Avoid unused parameters on PHP 8: Constructor property
+- Fixed #870 in #906: False-positive message "Avoid using undefined variables" on a static variable
+
 phpmd-2.10.2 (2021/07/22)
 ========================
 
