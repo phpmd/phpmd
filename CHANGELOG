@@ -1,3 +1,11 @@
+phpmd-2.11.0 (2021/11/29)
+========================
+
+- Added #815 in #817: Rule name in text output
+- Fixed #884 in #905: Avoid unused parameters on PHP 8: Constructor property
+- Fixed #870 in #906: False-positive message "Avoid using undefined variables" on a static variable
+- Fixed #714 in #781: static:: and self:: properties access
+
 phpmd-2.10.2 (2021/07/22)
 ========================
 
