@@ -368,7 +368,7 @@ class RuleSetFactory
 
         $rule->setRuleSetName($ruleSet->getName());
 
-        if (trim($ruleNode['since']) !== '') {
+        if (isset($ruleNode['since']) && trim($ruleNode['since']) !== '') {
             $rule->setSince((string)$ruleNode['since']);
         }
 
@@ -411,13 +411,13 @@ class RuleSetFactory
         $ruleSetRef = $ruleSetFactory->createSingleRuleSet($fileName);
         $rule = $ruleSetRef->getRuleByName($ruleName);
 
-        if (trim($ruleNode['name']) !== '') {
+        if (isset($ruleNode['name']) && trim($ruleNode['name']) !== '') {
             $rule->setName((string)$ruleNode['name']);
         }
-        if (trim($ruleNode['message']) !== '') {
+        if (isset($ruleNode['message']) && trim($ruleNode['message']) !== '') {
             $rule->setMessage((string)$ruleNode['message']);
         }
-        if (trim($ruleNode['externalInfoUrl']) !== '') {
+        if (isset($ruleNode['externalInfoUrl']) && trim($ruleNode['externalInfoUrl']) !== '') {
             $rule->setExternalInfoUrl((string)$ruleNode['externalInfoUrl']);
         }
 
