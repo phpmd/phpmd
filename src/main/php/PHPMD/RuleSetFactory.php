@@ -245,7 +245,7 @@ class RuleSetFactory
      */
     private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node)
     {
-        if (substr($node['ref'], -3, 3) === 'xml') {
+        if ($node['ref'] !== null && substr($node['ref'], -3, 3) === 'xml') {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;

@@ -263,6 +263,7 @@ class RuleSet implements \IteratorAggregate
      *
      * @return \Iterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getRules();
