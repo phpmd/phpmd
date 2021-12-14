@@ -96,7 +96,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     protected function isInheritedSignature(AbstractNode $node)
     {
         if ($node instanceof MethodNode) {
-            return preg_match('/@inheritdoc/i', $node->getDocComment()) === 1;
+            $comment = $node->getDocComment();
+
+            return $comment && preg_match('/@inheritdoc/i', $comment);
         }
 
         return false;
