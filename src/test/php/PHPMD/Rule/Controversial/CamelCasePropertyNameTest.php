@@ -42,15 +42,15 @@ class CamelCasePropertyNameTest extends AbstractTest
     }
 
     /**
-     * Tests that the rule does apply for a property name
+     * Tests that the rule does NOT apply for an property name
      * starting with a capital.
      *
      * @return void
      */
-    public function testRuleDoesApplyForPropertyNameWithCapital()
+    public function testRuleDoesNotApplyForPropertyNameWithCapital()
     {
         // Test property name with capital at the beginning
-        $report = $this->getReportWithOneViolation();
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCasePropertyName();
         $rule->setReport($report);
