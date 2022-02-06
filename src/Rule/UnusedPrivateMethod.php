@@ -21,6 +21,8 @@ namespace PHPMD\Rule;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTCloneExpression;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
@@ -209,7 +211,44 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             $owner->isInstanceOf(ASTMethodPostfix::class) ||
             $owner->isInstanceOf(ASTSelfReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
-            strcasecmp($owner->getImage(), $class->getImage()) === 0
+            strcasecmp($owner->getImage(), $class->getImage()) === 0 ||
+            $this->isCloneOfThis($class, $owner)
         );
+    }
+
+    /**
+     * Checks if the given variable is assigned from a clone of $this or self.
+     *
+     * @param AbstractNode<PDependNode> $owner
+     * @throws OutOfBoundsException
+     */
+    private function isCloneOfThis(ClassNode $class, AbstractNode $owner): bool
+    {
+        if (!$owner->isInstanceOf(ASTVariable::class)) {
+            return false;
+        }
+
+        $variableName = $owner->getImage();
+
+        foreach ($class->findChildrenOfType(ASTAssignmentExpression::class) as $assignment) {
+            $leftSide = $assignment->getChild(0);
+            if ($leftSide->getImage() !== $variableName) {
+                continue;
+            }
+
+            // Check if the right side of the assignment is clone $this
+            foreach ($assignment->findChildrenOfType(ASTCloneExpression::class) as $clone) {
+                $clonedObject = $clone->getChild(0);
+
+                if (
+                    strcasecmp($clonedObject->getImage(), '$this') === 0 ||
+                    $clonedObject->isInstanceOf(ASTSelfReference::class)
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
