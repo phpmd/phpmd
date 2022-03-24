@@ -1,4 +1,12 @@
-phpmd-2.11.0 (2021/12/17)
+phpmd-2.12.0 (2022/03/24)
+========================
+
+- Added composer/xdebug-handler 3 support #930
+- Added GitHub action config for PHP 8.1 #918 #942
+- Fixed #276 in #833: Disallow capital letter at the beginning in CamelCasePropertyName rule.
+- Fixed typo in exclude-pattern.xml #944
+
+phpmd-2.11.1 (2021/12/17)
 ========================
 
 - Fixed #925 #926 #928: PHP 8.1 deprecation notices
