@@ -53,7 +53,9 @@ Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
-While the ``rulesets.xml`` ruleset file could look like this::
+While the ``rulesets.xml`` ruleset file could look like this:
+
+.. code:: xml
 
   <?xml version="1.0"?>
   <ruleset name="My first PHPMD rule set"
@@ -75,7 +77,9 @@ While the ``rulesets.xml`` ruleset file could look like this::
     <rule ref="rulesets/unusedcode.xml" />
   </ruleset>
 
-The xml report would like like this::
+The xml report would like like this:
+
+.. code:: xml
 
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
