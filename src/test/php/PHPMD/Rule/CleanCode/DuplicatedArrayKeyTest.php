@@ -35,7 +35,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithoutArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -47,7 +47,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -59,7 +59,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -71,7 +71,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -83,7 +83,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -95,7 +95,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -119,7 +119,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithoutArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -131,7 +131,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -143,7 +143,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -155,7 +155,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -167,7 +167,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -179,7 +179,7 @@ class DuplicatedArrayKeyTest extends AbstractTest
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
     {
         $rule = new DuplicatedArrayKey();
-        $rule->setReport($this->getReportMock(1));
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 

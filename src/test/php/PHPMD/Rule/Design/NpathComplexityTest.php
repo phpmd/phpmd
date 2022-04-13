@@ -35,7 +35,7 @@ class NpathComplexityTest extends AbstractTest
     public function testRuleAppliesForValueGreaterThanThreshold()
     {
         $method = $this->getMethodMock('npath', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new NpathComplexity();
         $rule->setReport($report);
@@ -52,7 +52,7 @@ class NpathComplexityTest extends AbstractTest
     public function testRuleAppliesForValueEqualToThreshold()
     {
         $method = $this->getMethodMock('npath', 42);
-        $report = $this->getReportMock(1);
+        $report = $this->getReportWithOneViolation();
 
         $rule = new NpathComplexity();
         $rule->setReport($report);
@@ -69,7 +69,7 @@ class NpathComplexityTest extends AbstractTest
     public function testRuleDoesNotApplyForValueLowerThanThreshold()
     {
         $method = $this->getMethodMock('npath', 22);
-        $report = $this->getReportMock(0);
+        $report = $this->getReportWithNoViolation();
 
         $rule = new NpathComplexity();
         $rule->setReport($report);

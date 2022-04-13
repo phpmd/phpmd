@@ -23,5 +23,6 @@ function testRuleDoesNotApplyToInnerFunctionDeclaration($x, $y, $z)
         $c
     ) {
     }
+
     return ($x + $y + $z);
 }

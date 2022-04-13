@@ -1,6 +1,6 @@
 linters:
   phpcs:
-    standard: 'PSR2'
+    standard: './phpcs.xml.dist'
     extensions: '.php'
     exclude:
       - 'Squiz.Classes.ValidClassName'

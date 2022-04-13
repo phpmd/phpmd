@@ -298,51 +298,79 @@ abstract class AbstractRule implements Rule
     }
 
     /**
-     * Returns the value of a configured property as a boolean or throws an
-     * exception when no property with <b>$name</b> exists.
+     * Returns the value of a configured property
      *
-     * @param string $name
-     * @return boolean
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
-     */
-    public function getBooleanProperty($name)
-    {
-        if (isset($this->properties[$name])) {
-            return in_array($this->properties[$name], array('true', 'on', 1));
-        }
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
-    }
-
-    /**
-     * Returns the value of a configured property as an integer or throws an
-     * exception when no property with <b>$name</b> exists.
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
      *
-     * @param string $name
-     * @return integer
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param mixed $default An optional default value to fall back instead of throwing an exception.
+     * @return mixed The value of a configured property.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
      */
-    public function getIntProperty($name)
-    {
-        if (isset($this->properties[$name])) {
-            return (int) $this->properties[$name];
-        }
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
-    }
-
-    /**
-     * Returns the raw string value of a configured property or throws an
-     * exception when no property with <b>$name</b> exists.
-     *
-     * @param string $name
-     * @return string
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
-     */
-    public function getStringProperty($name)
+    protected function getProperty($name, $default = null)
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
+
+        if ($default !== null) {
+            return $default;
+        }
+
         throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+    }
+
+    /**
+     * Returns the value of a configured property as a boolean
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param bool $default An optional default value to fall back instead of throwing an exception.
+     * @return bool The value of a configured property as a boolean.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
+     */
+    public function getBooleanProperty($name, $default = null)
+    {
+        return in_array($this->getProperty($name, $default), array('true', 'on', 1), false);
+    }
+
+    /**
+     * Returns the value of a configured property as an integer
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "minimum".
+     * @param int $default An optional default value to fall back instead of throwing an exception.
+     * @return int The value of a configured property as an integer.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
+     */
+    public function getIntProperty($name, $default = null)
+    {
+        return (int)$this->getProperty($name, $default);
+    }
+
+    /**
+     * Returns the raw string value of a configured property
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "exceptions".
+     * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return string The raw string value of a configured property.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
+     */
+    public function getStringProperty($name, $default = null)
+    {
+        return (string)$this->getProperty($name, $default);
     }
 
     /**
@@ -359,14 +387,10 @@ abstract class AbstractRule implements Rule
         array $args = array(),
         $metric = null
     ) {
-        $search  = array();
-        $replace = array();
-        foreach ($args as $index => $value) {
-            $search[]  = '{' . $index . '}';
-            $replace[] = $value;
-        }
-
-        $message = str_replace($search, $replace, $this->message);
+        $message = array(
+            'message' => $this->message,
+            'args' => $args,
+        );
 
         $ruleViolation = new RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);

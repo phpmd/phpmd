@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
+
 /**
  * This class is a collection of concrete source analysis rules.
  */
@@ -64,10 +66,10 @@ class RuleSet implements \IteratorAggregate
      * @var array(string=>string)
      */
     private $applyTo = array(
-        'PHPMD\\Rule\\ClassAware'     => 'PHPMD\\Node\\ClassNode',
-        'PHPMD\\Rule\\FunctionAware'  => 'PHPMD\\Node\\FunctionNode',
+        'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
+        'PHPMD\\Rule\\FunctionAware' => 'PHPMD\\Node\\FunctionNode',
         'PHPMD\\Rule\\InterfaceAware' => 'PHPMD\\Node\\InterfaceNode',
-        'PHPMD\\Rule\\MethodAware'    => 'PHPMD\\Node\\MethodNode',
+        'PHPMD\\Rule\\MethodAware' => 'PHPMD\\Node\\MethodNode',
     );
 
     /**
@@ -76,10 +78,10 @@ class RuleSet implements \IteratorAggregate
      * @var array(string=>array)
      */
     private $rules = array(
-        'PHPMD\\Node\\ClassNode'     =>  array(),
-        'PHPMD\\Node\\FunctionNode'  =>  array(),
-        'PHPMD\\Node\\InterfaceNode' =>  array(),
-        'PHPMD\\Node\\MethodNode'    =>  array(),
+        'PHPMD\\Node\\ClassNode' => array(),
+        'PHPMD\\Node\\FunctionNode' => array(),
+        'PHPMD\\Node\\InterfaceNode' => array(),
+        'PHPMD\\Node\\MethodNode' => array(),
     );
 
     /**
@@ -190,6 +192,7 @@ class RuleSet implements \IteratorAggregate
                 return $rule;
             }
         }
+
         return null;
     }
 
@@ -210,7 +213,7 @@ class RuleSet implements \IteratorAggregate
             }
         }
 
-        return new \ArrayIterator($result);
+        return new ArrayIterator($result);
     }
 
     /**
@@ -260,6 +263,7 @@ class RuleSet implements \IteratorAggregate
      *
      * @return \Iterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getRules();

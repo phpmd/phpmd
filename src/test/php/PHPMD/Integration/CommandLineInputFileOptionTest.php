@@ -23,7 +23,7 @@ use PHPMD\TextUI\Command;
 /**
  * Integration tests for the command line option <em>--inputfile</em>.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class CommandLineInputFileOptionTest extends AbstractTest
 {
@@ -62,7 +62,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
      */
     protected static function runCommandLine()
     {
-        $inputfile  = self::createResourceUriForTest('inputfile.txt');
+        $inputfile = self::createResourceUriForTest('inputfile.txt');
         $reportfile = self::createTempFileUri();
 
         self::changeWorkingDirectory(dirname($inputfile));
@@ -75,9 +75,10 @@ class CommandLineInputFileOptionTest extends AbstractTest
                 '--reportfile',
                 $reportfile,
                 '--inputfile',
-                $inputfile
+                $inputfile,
             )
         );
+
         return file_get_contents($reportfile);
     }
 }

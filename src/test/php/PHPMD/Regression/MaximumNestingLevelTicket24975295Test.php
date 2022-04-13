@@ -19,14 +19,15 @@ namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 
 /**
  * Regression test for issue 14990109.
  *
- * @link       https://www.pivotaltracker.com/story/show/24975295
- * @since      1.3.1
+ * @link https://www.pivotaltracker.com/story/show/24975295
+ * @since 1.3.1
  *
  * @covers \stdClass
  */
@@ -43,12 +44,12 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
         $renderer = new TextRenderer();
         $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
 
-        $inputs   = self::createCodeResourceUriForTest();
-        $rules    = 'unusedcode';
+        $inputs = self::createCodeResourceUriForTest();
+        $rules = 'unusedcode';
         $renderes = array($renderer);
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
-        $phpmd->processFiles($inputs, $rules, $renderes, $factory);
+        $phpmd->processFiles($inputs, $rules, $renderes, $factory, new Report());
     }
 }

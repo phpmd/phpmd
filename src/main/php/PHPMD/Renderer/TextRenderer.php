@@ -26,6 +26,7 @@ use PHPMD\Report;
  */
 class TextRenderer extends AbstractRenderer
 {
+    protected $columnSpacing = 2;
 
     /**
      * This method will be called when the engine has finished the source analysis
@@ -37,12 +38,26 @@ class TextRenderer extends AbstractRenderer
     public function renderReport(Report $report)
     {
         $writer = $this->getWriter();
+        $longestLocationLength = 0;
+        $longestRuleNameLength = 0;
+        $violations = array();
 
         foreach ($report->getRuleViolations() as $violation) {
-            $writer->write($violation->getFileName());
-            $writer->write(':');
-            $writer->write($violation->getBeginLine());
-            $writer->write("\t");
+            $location = $violation->getFileName().':'.$violation->getBeginLine();
+            $ruleName = $violation->getRule()->getName();
+            $locationLength = mb_strlen($location);
+            $ruleNameLength = mb_strlen($ruleName);
+            $longestLocationLength = max($longestLocationLength, $locationLength);
+            $longestRuleNameLength = max($longestRuleNameLength, $ruleNameLength);
+            $violations[] = array($violation, $location, $ruleName, $locationLength, $ruleNameLength);
+        }
+
+        foreach ($violations as $data) {
+            list($violation, $location, $ruleName, $locationLength, $ruleNameLength) = $data;
+            $writer->write($location);
+            $writer->write(str_repeat(' ', $longestLocationLength + $this->columnSpacing - $locationLength));
+            $writer->write($ruleName);
+            $writer->write(str_repeat(' ', $longestRuleNameLength + $this->columnSpacing - $ruleNameLength));
             $writer->write($violation->getDescription());
             $writer->write(PHP_EOL);
         }

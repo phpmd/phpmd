@@ -21,8 +21,6 @@ Bugfixes
 Download
 --------
 
-You can download release 1.1.0 through PHPMD's `PEAR Channel Server`__ or you
-can download the release as a `Phar archive`__
+You can download release 1.1.0 as a `Phar archive`__
 
-__ http://pear.phpmd.org
 __ http://static.phpmd.org/php/1.1.0/phpmd.phar

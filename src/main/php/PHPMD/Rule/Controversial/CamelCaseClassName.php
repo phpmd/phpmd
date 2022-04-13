@@ -25,8 +25,8 @@ use PHPMD\Rule\InterfaceAware;
 /**
  * This rule class detects classes not named in CamelCase.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware
 {

@@ -9,16 +9,20 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
 
+use PHPMD\Baseline\BaselineMode;
+use PHPMD\Baseline\BaselineSet;
+use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test case for the main PHPMD class.
@@ -47,7 +51,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
@@ -72,7 +77,8 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/single-directory.xml');
@@ -97,10 +103,22 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/ccn_function.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
         $this->assertXmlEquals($writer->getData(), 'pmd/single-file.xml');
+    }
+
+    /**
+     * testHasErrorsReturnsFalseByDefault
+     *
+     * @return void
+     */
+    public function testHasErrorsReturnsFalseByDefault()
+    {
+        $phpmd = new PHPMD();
+        $this->assertFalse($phpmd->hasErrors());
     }
 
     /**
@@ -131,9 +149,11 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/source_without_violations.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertFalse($phpmd->hasViolations());
     }
 
@@ -154,9 +174,100 @@ class PHPMDTest extends AbstractTest
             self::createFileUri('source/source_with_npath_violation.php'),
             'pmd-refset1',
             array($renderer),
-            new RuleSetFactory()
+            new RuleSetFactory(),
+            new Report()
         );
 
+        $this->assertFalse($phpmd->hasErrors());
         $this->assertTrue($phpmd->hasViolations());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasViolationsReturnsFalseWhenViolationIsBaselined()
+    {
+        self::changeWorkingDirectory();
+
+        /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject $baselineSet */
+        $baselineSet = $this->getMockFromBuilder(
+            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+        );
+        $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
+
+        $renderer = new XMLRenderer();
+        $renderer->setWriter(new WriterStub());
+
+        $phpmd = new PHPMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_npath_violation.php'),
+            'pmd-refset1',
+            array($renderer),
+            new RuleSetFactory(),
+            new Report(new BaselineValidator($baselineSet, BaselineMode::NONE))
+        );
+
+        static::assertFalse($phpmd->hasViolations());
+    }
+
+    /**
+     * testHasErrorsReturnsTrueForSourceWithError
+     *
+     * @return void
+     */
+    public function testHasErrorsReturnsTrueForSourceWithError()
+    {
+        self::changeWorkingDirectory();
+
+        $renderer = new XMLRenderer();
+        $renderer->setWriter(new WriterStub());
+
+        $phpmd = new PHPMD();
+        $phpmd->processFiles(
+            self::createFileUri('source/source_with_parse_error.php'),
+            'pmd-refset1',
+            array($renderer),
+            new RuleSetFactory(),
+            new Report()
+        );
+
+        $this->assertTrue($phpmd->hasErrors());
+        $this->assertFalse($phpmd->hasViolations());
+    }
+
+    /**
+     * testIgnorePattern
+     *
+     * @return void
+     */
+    public function testIgnorePattern()
+    {
+        self::changeWorkingDirectory();
+
+        $phpmd = new PHPMD();
+
+        // Process without exclusions, should result in violations.
+        $phpmd->processFiles(
+            self::createFileUri('sourceExcluded/'),
+            'pmd-refset1',
+            array(),
+            new RuleSetFactory(),
+            new Report()
+        );
+
+        $this->assertFalse($phpmd->hasErrors());
+        $this->assertTrue($phpmd->hasViolations());
+
+        // Process with exclusions, should result in no violations.
+        $phpmd->processFiles(
+            self::createFileUri('sourceExcluded/'),
+            'exclude-pattern',
+            array(),
+            new RuleSetFactory(),
+            new Report()
+        );
+
+        $this->assertFalse($phpmd->hasErrors());
+        $this->assertFalse($phpmd->hasViolations());
     }
 }

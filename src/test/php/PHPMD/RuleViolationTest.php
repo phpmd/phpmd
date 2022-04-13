@@ -20,7 +20,7 @@ namespace PHPMD;
 /**
  * Test case for the {@link \PHPMD\RuleViolation} class.
  *
- * @since     0.2.5
+ * @since 0.2.5
  *
  * @covers \PHPMD\RuleViolation
  */

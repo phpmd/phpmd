@@ -31,7 +31,7 @@ class RuleStub extends AbstractRule implements ClassAware
     /**
      * Constructs a new rule stub instance.
      *
-     * @param string $ruleName    The rule name.
+     * @param string $ruleName The rule name.
      * @param string $ruleSetName The rule-set name.
      */
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')
@@ -41,6 +41,7 @@ class RuleStub extends AbstractRule implements ClassAware
         $this->setRuleSetName($ruleSetName);
         $this->setSince('42.23');
         $this->setDescription('Simple rule stub');
+        $this->setMessage('Test description');
     }
 
     /**

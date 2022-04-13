@@ -22,7 +22,7 @@ class testRuleAppliesToParentReferencedUnusedPrivateMethod extends stdClass
 
     }
 
-    public function  __construct()
+    public function __construct()
     {
         parent::foo();
     }

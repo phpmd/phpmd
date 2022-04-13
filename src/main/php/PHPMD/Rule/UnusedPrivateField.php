@@ -34,7 +34,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      *
      * @var \PHPMD\Node\ASTNode[]
      */
-    private $fields = array();
+    protected $fields = array();
 
     /**
      * This method checks that all private class properties are at least accessed
@@ -58,7 +58,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\ClassNode $class
      * @return \PHPMD\AbstractNode[]
      */
-    private function collectUnusedPrivateFields(ClassNode $class)
+    protected function collectUnusedPrivateFields(ClassNode $class)
     {
         $this->fields = array();
 
@@ -75,7 +75,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\ClassNode $class
      * @return void
      */
-    private function collectPrivateFields(ClassNode $class)
+    protected function collectPrivateFields(ClassNode $class)
     {
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
             /** @var ASTNode $declaration */
@@ -92,7 +92,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\ASTNode $declaration
      * @return void
      */
-    private function collectPrivateField(ASTNode $declaration)
+    protected function collectPrivateField(ASTNode $declaration)
     {
         $fields = $declaration->findChildrenOfType('VariableDeclarator');
         foreach ($fields as $field) {
@@ -108,7 +108,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\ClassNode $class
      * @return void
      */
-    private function removeUsedFields(ClassNode $class)
+    protected function removeUsedFields(ClassNode $class)
     {
         foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
             /** @var $postfix ASTNode */
@@ -125,7 +125,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\ASTNode $postfix
      * @return void
      */
-    private function removeUsedField(ASTNode $postfix)
+    protected function removeUsedField(ASTNode $postfix)
     {
         $image = '$';
         $child = $postfix->getFirstChildOfType('Identifier');
@@ -160,9 +160,10 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
             }
             $parent = $parent->getParent();
             if (is_null($parent)) {
-                   return false;
+                return false;
             }
         }
+
         return true;
     }
 

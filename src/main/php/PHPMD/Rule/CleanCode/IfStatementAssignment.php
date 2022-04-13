@@ -17,8 +17,6 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PDepend\Source\AST\ASTAssignmentExpression;
-use PDepend\Source\AST\ASTExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -69,7 +67,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
      * @return ASTNode[]
      */
-    private function getStatements(AbstractNode $node)
+    protected function getStatements(AbstractNode $node)
     {
         return call_user_func_array('array_merge', array_map(function ($type) use ($node) {
             return $node->findChildrenOfType($type);
@@ -82,7 +80,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param ASTNode[] $statements Array of if and elseif clauses
      * @return ASTExpression[]
      */
-    private function getExpressions(array $statements)
+    protected function getExpressions(array $statements)
     {
         return array_map(function (ASTNode $statement) {
             return $statement->getFirstChildOfType('Expression');
@@ -95,7 +93,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param ASTExpression[] $expressions Array of expressions
      * @return ASTAssignmentExpression[]
      */
-    private function getAssignments(array $expressions)
+    protected function getAssignments(array $expressions)
     {
         $assignments = array();
         /** @var ASTNode $expression */
@@ -112,7 +110,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
      * @param ASTAssignmentExpression[] $assignments Array of assignments
      */
-    private function addViolations(AbstractNode $node, array $assignments)
+    protected function addViolations(AbstractNode $node, array $assignments)
     {
         $processesViolations = array();
         /** @var \PDepend\Source\AST\AbstractASTNode $assignment */
