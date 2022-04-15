@@ -17,7 +17,7 @@ namespace Test\namespace;
  * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link http://phpmd.org/
  */
-class testRuleNotAppliesToMethodWithinNamespaceByDefault
+class testRuleAppliesToMethodWithinNamespaceByDefault
 {
     public function __construct($test = 'Test')
     {

@@ -163,11 +163,23 @@ class DevelopmentCodeFragmentTest extends AbstractTest
     }
 
     /**
-     * testRuleNotAppliesToMethodWithinNamespaceByDefault
+     * testRuleAppliesToMethodWithinNamespaceByDefault
      *
      * @return void
      */
-    public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
+    public function testRuleAppliesToMethodWithinNamespaceByDefault()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleNotAppliesToMethodWithinNamespaceByDefaultWhenFunctionExistsInNamespace
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToMethodWithinNamespaceByDefaultWhenFunctionExistsInNamespace()
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithNoViolation());
