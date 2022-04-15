@@ -45,7 +45,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
         $namespace = $node->getNamespaceName();
         foreach ($node->findChildrenOfType('FunctionPostfix') as $postfix) {
             $fragment = $postfix->getImage();
-            if ($ignoreNS) {
+            if ($ignoreNS || !function_exists($fragment)) {
                 $fragment = str_replace("{$namespace}\\", "", $fragment);
             }
             $fragment = strtolower($fragment);
