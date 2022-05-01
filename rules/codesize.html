@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 12 Apr 2022 21:13:26 +0000" />
+    <meta name="date" content="Sun, 01 May 2022 14:55:01 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 12 Apr 2022 21:13:26 +0000" />
+    <meta name="DC.date" content="Sun, 01 May 2022 14:55:01 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -83,14 +83,29 @@ class Foo {
 <a id="npathcomplexity"></a>
 <h2>NPathComplexity</h2>
 <p>Since: PHPMD 0.1</p>
-<p>The NPath complexity of a method is the number of acyclic execution paths through that method. A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.</p>
+<p>The NPath complexity of a method is the number of acyclic execution paths through that method, that is how many possible outcomes it has.</p>
+<p>A threshold of 200 is generally considered the point where measures should be taken to reduce complexity. </p>
 <p>Example: :</p>
-<pre><code class="">class Foo {
-    function bar() {
-        // lots of complicated code
+<pre><code class="">function foo() {
+    if ($a &gt; 10) {
+        echo 1;
+    } else {
+        echo 2;
+    }
+
+    if ($a &gt; $b) {
+        echo 3;
+    } else {
+        echo 4;
     }
 }
+
+foo(1, 2); // Outputs 24
+foo(11, 1); // Outputs 13
+foo(11, 20); // Outputs 14
+foo(5, 1); // Outputs 23
 </code></pre>
+<p>The method in this example has 4 possible outcomes as stated. That means it has a NPath complexity of 4.</p>
 <p>This rule has the following properties:</p>
 <table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>minimum</td><td>200</td><td>The npath reporting threshold</td></tr></table>
 <a id="excessivemethodlength"></a>
