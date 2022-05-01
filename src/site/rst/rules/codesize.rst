@@ -68,15 +68,32 @@ NPathComplexity
 
 Since: PHPMD 0.1
 
-The NPath complexity of a method is the number of acyclic execution paths through that method. A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
+The NPath complexity of a method is the number of acyclic execution paths through that method, that is how many possible outcomes it has.
+
+A threshold of 200 is generally considered the point where measures should be taken to reduce complexity. 
 
 Example: ::
 
-  class Foo {
-      function bar() {
-          // lots of complicated code
+  function foo() {
+      if ($a > 10) {
+          echo 1;
+      } else {
+          echo 2;
+      }
+
+      if ($a > $b) {
+          echo 3;
+      } else {
+          echo 4;
       }
   }
+
+  foo(1, 2); // Outputs 24
+  foo(11, 1); // Outputs 13
+  foo(11, 20); // Outputs 14
+  foo(5, 1); // Outputs 23
+
+The method in this example has 4 possible outcomes as stated. That means it has a NPath complexity of 4.
 
 This rule has the following properties:
 
