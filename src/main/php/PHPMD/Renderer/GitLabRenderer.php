@@ -41,7 +41,7 @@ class GitLabRenderer extends AbstractRenderer
 
 
     /**
-     * Add violations, if any, to the report data
+     * Add violations, if any, to GitLab Code Quality report format
      *
      * @param Report $report The report with potential violations.
      *
@@ -83,7 +83,7 @@ class GitLabRenderer extends AbstractRenderer
     }
 
     /**
-     * Add errors, if any, to the report data
+     * Add errors, if any, to GitLab Code Quality report format
      *
      * @param Report $report The report with potential errors.
      * @param array  $data   The report output to add the errors to.
