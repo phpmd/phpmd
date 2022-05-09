@@ -1,0 +1,56 @@
+[
+  {
+    "type": "issue",
+    "categories": [
+      "Style",
+      "PHP"
+    ],
+    "check_name": "RuleStub",
+    "fingerprint": "\/bar.php:23:RuleStub",
+    "description": "Test description",
+    "severity": "minor",
+    "location": {
+      "path": "\/bar.php",
+      "lines": {
+        "begin": 23,
+        "end": 42
+      }
+    }
+  },
+  {
+    "type": "issue",
+    "categories": [
+      "Style",
+      "PHP"
+    ],
+    "check_name": "RuleStub",
+    "fingerprint": "\/bar.php:23:RuleStub",
+    "description": "Test description",
+    "severity": "minor",
+    "location": {
+      "path": "\/bar.php",
+      "lines": {
+        "begin": 23,
+        "end": 42
+      }
+    }
+  },
+  {
+    "type": "issue",
+    "categories": [
+      "Style",
+      "PHP"
+    ],
+    "check_name": "RuleStub",
+    "fingerprint": "\/foo.php:23:RuleStub",
+    "description": "Test description",
+    "severity": "minor",
+    "location": {
+      "path": "\/foo.php",
+      "lines": {
+        "begin": 23,
+        "end": 42
+      }
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "description": "Failed for file \u0022\/tmp\/foo.php\u0022.",
+    "fingerprint": "/tmp/foo.php:0:MajorErrorInFile",
+    "severity": "major",
+    "location": {
+      "path": "/tmp/foo.php",
+      "lines": {
+        "begin": 0
+      }
+    }
+  }
+]
