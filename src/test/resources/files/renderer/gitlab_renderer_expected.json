@@ -24,11 +24,11 @@
       "PHP"
     ],
     "check_name": "RuleStub",
-    "fingerprint": "\/bar.php:23:RuleStub",
+    "fingerprint": "\/foo.php:23:RuleStub",
     "description": "Test description",
     "severity": "minor",
     "location": {
-      "path": "\/bar.php",
+      "path": "\/foo.php",
       "lines": {
         "begin": 23,
         "end": 42
@@ -42,11 +42,11 @@
       "PHP"
     ],
     "check_name": "RuleStub",
-    "fingerprint": "\/foo.php:23:RuleStub",
+    "fingerprint": "\/bar.php:23:RuleStub",
     "description": "Test description",
     "severity": "minor",
     "location": {
-      "path": "\/foo.php",
+      "path": "\/bar.php",
       "lines": {
         "begin": 23,
         "end": 42

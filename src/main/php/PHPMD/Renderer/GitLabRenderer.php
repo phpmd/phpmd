@@ -49,11 +49,11 @@ class GitLabRenderer extends AbstractRenderer
      */
     protected function addViolationsToReport(Report $report)
     {
-        $violationResult = array();
+        $data = array();
 
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
-            $violationResult[] = array(
+            $violationResult = array(
                 'type' => 'issue',
                 'categories' =>
                     array(
@@ -62,7 +62,7 @@ class GitLabRenderer extends AbstractRenderer
                     ),
                 'check_name' => $violation->getRule()->getName(),
                 'fingerprint' => $violation->getFileName().':'.$violation->getBeginLine().':'.$violation->getRule(
-                    )->getName(),
+                )->getName(),
                 'description' => $violation->getDescription(),
                 'severity' => 'minor',
                 'location' =>
@@ -75,9 +75,9 @@ class GitLabRenderer extends AbstractRenderer
                             ),
                     ),
             );
-        }
 
-        $data[] = $violationResult;
+            $data[] = $violationResult;
+        }
 
         return $data;
     }
@@ -95,7 +95,7 @@ class GitLabRenderer extends AbstractRenderer
         $errors = $report->getErrors();
         if ($errors) {
             foreach ($errors as $error) {
-                $data[] = array(
+                $errorResult = array(
                     'description' => $error->getMessage(),
                     'fingerprint' => $error->getFile().':0:MajorErrorInFile',
                     'severity' => 'major',
@@ -108,6 +108,8 @@ class GitLabRenderer extends AbstractRenderer
                                 ),
                         ),
                 );
+
+                $data[] = $errorResult;
             }
         }
 
