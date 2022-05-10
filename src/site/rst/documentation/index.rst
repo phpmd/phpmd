@@ -123,7 +123,7 @@ PHPMD's command line tool currently defines four different exit codes.
 Renderers
 =========
 
-At the moment PHPMD comes with the following five renderers:
+At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
