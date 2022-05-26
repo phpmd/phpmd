@@ -64,7 +64,8 @@ class BaselineFileFinder
             return $this->nullOrThrow(
                 sprintf(
                     'Unable to determine the baseline file location. ' .
-                    'Either specify file location via --baseline-file or make sure `%s` is a valid ruleset file location',
+                    'Either specify file location via --baseline-file or make sure `%s` ' .
+                    'is a valid ruleset file location',
                     $ruleSets[0]
                 )
             );
@@ -83,6 +84,7 @@ class BaselineFileFinder
      * @param string $message
      *
      * @return null
+     * @throws RuntimeException
      */
     private function nullOrThrow($message)
     {
