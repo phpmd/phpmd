@@ -15,7 +15,23 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForPropertyNameWithCapital
+class testRuleDoesNotApplyToVariableUsedInAnonymousClass
 {
-    public $AlsoValidPropertyName;
+    function testRuleDoesNotApplyToVariableUsedInAnonymousClass()
+    {
+        return new class($var)
+        {
+            private $prop;
+
+            public function __construct($var)
+            {
+                $this->prop = $var;
+            }
+
+            public function getProp()
+            {
+                return $this->prop;
+            }
+        };
+    }
 }

@@ -15,21 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class testRuleNotAppliesToPredefinedVariables
+class testRuleDoesApplyForPropertyNameWithCapital
 {
-    public function testRuleNotAppliesToPredefinedVariables()
-    {
-        $foo = 'bar';
-        $headers = array();
-        foreach ($http_response_header as $header) {
-            $headers[] = $header;
-            if (null !== $php_errormsg) {
-                continue;
-            }
-        }
-
-        return $headers;
-    }
+    public $NotValidPropertyName;
 }

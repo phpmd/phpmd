@@ -15,13 +15,11 @@
  * @link http://phpmd.org/
  */
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+function testRuleAppliesToInnerFunctionParameters()
+{
+    $x = 42;
+    function z_testRuleAppliesToInnerFunctionParameters($x)
+    {
 
-spl_autoload_register(
-    function ($class) {
-        $file = __DIR__ . '/' . strtr($class, '\\', '/') . '.php';
-        if (file_exists($file)) {
-            include $file;
-        }
     }
-);
+}

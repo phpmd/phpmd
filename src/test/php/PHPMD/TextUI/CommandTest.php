@@ -192,7 +192,8 @@ class CommandTest extends AbstractTest
 
         $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
         $this->assertSame(
-            "$uri:8	Avoid variables with short names like \$a. Configured minimum length is 3." . PHP_EOL,
+            "$uri:8  ShortVariable  Avoid variables with short names like \$a. " .
+            'Configured minimum length is 3.' . PHP_EOL,
             file_get_contents($temp)
         );
     }

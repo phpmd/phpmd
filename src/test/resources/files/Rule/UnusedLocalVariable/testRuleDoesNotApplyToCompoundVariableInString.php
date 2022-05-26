@@ -15,9 +15,9 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyToCompoundVariableInString
+class testRuleDoesNotApplyToCompoundVariableInString
 {
-    public function testRuleDoesApplyToCompoundVariableInString()
+    public function testRuleDoesNotApplyToCompoundVariableInString()
     {
         $bar = 'foo';
 
