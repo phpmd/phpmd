@@ -42,12 +42,14 @@ class BaselineFileFinderTest extends AbstractTest
     /**
      * @covers ::find
      * @covers ::tryFind
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unable to determine the baseline file location.
      */
     public function testShouldReturnNullForNonExistingRuleSet()
     {
         $args   = array('script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml'));
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
-        static::assertNull($finder->find());
+        $finder->find();
     }
 
     /**

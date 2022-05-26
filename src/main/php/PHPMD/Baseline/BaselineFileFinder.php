@@ -77,7 +77,13 @@ class BaselineFileFinder
         $ruleSets = explode(',', $this->options->getRuleSets());
         $rulePath = realpath($ruleSets[0]);
         if ($rulePath === false) {
-            return null;
+            throw new RuntimeException(
+                sprintf(
+                    'Unable to determine the baseline file location. ' .
+                    'Either specify file location via --baseline-file or make sure `%s` is a valid ruleset file location',
+                    $ruleSets[0]
+                )
+            );
         }
 
         // create file path and check for existence
