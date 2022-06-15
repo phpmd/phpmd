@@ -19,6 +19,7 @@ The Naming Ruleset contains a collection of rules about names - too long, too sh
         <priority>3</priority>
         <properties>
             <property name="maximum" description="The class name length reporting threshold" value="40"/>
+            <property name="subtract-prefixes" description="Comma-separated list of prefixes that will not count in the length of the class name. Only the longest, first matching prefix will be subtracted." value=""/>
             <property name="subtract-suffixes" description="Comma-separated list of suffixes that will not count in the length of the class name. Only the first matching suffix will be subtracted." value=""/>
         </properties>
         <example>
@@ -28,6 +29,10 @@ class ATooLongClassNameThatHintsAtADesignProblem {
 }
 
 interface ATooLongInterfaceNameThatHintsAtADesignProblem {
+
+}
+
+class ClassGroupPrefixesThatIsUsedForGrouping {
 
 }
 ]]>
@@ -99,12 +104,14 @@ Detects when a field, formal or local variable is declared with a long name.
         <priority>3</priority>
         <properties>
             <property name="maximum" description="The variable length reporting threshold" value="20"/>
+            <property name="subtract-prefixes" description="Comma-separated list of prefixes that will not count in the length of the variable name. Only the longest, first matching prefix will be subtracted." value=""/>
             <property name="subtract-suffixes" description="Comma-separated list of suffixes that will not count in the length of the variable name. Only the first matching suffix will be subtracted." value=""/>
         </properties>
         <example>
             <![CDATA[
 class Something {
     protected $reallyLongIntName = -3; // VIOLATION - Field
+    protected $hungarianUintArrOptions = []; // VIOLATION - Field
     public static function main( array $interestingArgumentsList[] ) { // VIOLATION - Formal
         $otherReallyLongName = -5; // VIOLATION - Local
         for ($interestingIntIndex = 0; // VIOLATION - For

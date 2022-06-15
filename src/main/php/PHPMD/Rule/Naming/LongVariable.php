@@ -31,6 +31,13 @@ use PHPMD\Utility\Strings;
 class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
 {
     /**
+     * Temporary cache of configured prefixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractPrefixes;
+
+    /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var string[]|null
@@ -108,7 +115,11 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
-        $lengthWithoutDollarSign = Strings::lengthWithoutSuffixes($variableName, $this->getSubtractSuffixList()) - 1;
+        $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
+            \ltrim($variableName, '$'),
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
         if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
@@ -181,6 +192,20 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractPrefixList()
+    {
+        if ($this->subtractPrefixes === null) {
+            $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
+        }
+
+        return $this->subtractPrefixes;
     }
 
     /**

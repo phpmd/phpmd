@@ -368,4 +368,18 @@ class LongVariableTest extends AbstractTest
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleAppliesToVariableNameFollowingHungarianNotation
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameFollowingHungarianNotation()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 12);
+        $rule->addProperty('subtract-prefixes', 'arru8');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
 }
