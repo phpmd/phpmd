@@ -91,7 +91,8 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      * @param string $ignorePattern
      * @return bool
      */
-    protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern) {
+    protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
+    {
         if ($ignorePattern === '') {
             return false;
         }
