@@ -63,7 +63,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleAppliesTo*');
+        return $this->getFilesForCalledClass('testRuleApplies*');
     }
 
     /**
@@ -75,7 +75,7 @@ abstract class AbstractTest extends AbstractStaticTest
      */
     public function getNotApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleDoesNotApplyTo*');
+        return $this->getFilesForCalledClass('testRuleDoesNotApply*');
     }
 
     /**

@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
+use PHPMD\Utility\Paths;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\Command} class.
@@ -191,7 +192,8 @@ class CommandTest extends AbstractTest
 
         $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
         $this->assertSame(
-            "$uri:8	Avoid variables with short names like \$a. Configured minimum length is 3." . PHP_EOL,
+            "$uri:8  ShortVariable  Avoid variables with short names like \$a. " .
+            'Configured minimum length is 3.' . PHP_EOL,
             file_get_contents($temp)
         );
     }
@@ -246,7 +248,7 @@ class CommandTest extends AbstractTest
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
-        static::assertContains($uri, file_get_contents($temp));
+        static::assertContains(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
     }
 
     /**
@@ -262,6 +264,9 @@ class CommandTest extends AbstractTest
     {
         $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
         $baselineTemp = self::createTempFileUri();
+        // set work directory to the temp dir
+        self::changeWorkingDirectory(dirname($baselineTemp));
+
         copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
         copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
@@ -95,7 +96,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     protected function isInheritedSignature(AbstractNode $node)
     {
         if ($node instanceof MethodNode) {
-            return preg_match('/@inheritdoc/i', $node->getDocComment()) === 1;
+            $comment = $node->getDocComment();
+
+            return $comment && preg_match('/@inheritdoc/i', $comment);
         }
 
         return false;
@@ -180,6 +183,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         $this->removeRegularVariables($node);
         $this->removeCompoundVariables($node);
         $this->removeVariablesUsedByFuncGetArgs($node);
+        $this->removePropertyPromotionVariables($node);
     }
 
     /**
@@ -255,6 +259,32 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
                 foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
                     unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Removes all the property promotion parameters from a given node
+     *
+     * @param \PHPMD\AbstractNode $node The node to remove the property promotion parameters from.
+     * @return void
+     */
+    protected function removePropertyPromotionVariables(AbstractNode $node)
+    {
+        if (! $node instanceof MethodNode) {
+            return;
+        }
+        if ($node->getImage() !== '__construct') {
+            return;
+        }
+
+        /** @var ASTFormalParameter&ASTNode $parameter */
+        foreach ($node->findChildrenOfType('FormalParameter') as $parameter) {
+            if ($parameter->isPromoted()) {
+                $variable = $parameter->getFirstChildOfType('VariableDeclarator');
+                if ($variable !== null) {
+                    unset($this->nodes[$variable->getImage()]);
                 }
             }
         }

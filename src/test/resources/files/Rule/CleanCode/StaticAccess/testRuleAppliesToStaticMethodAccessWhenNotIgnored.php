@@ -15,21 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-class testRuleNotAppliesToPredefinedVariables
+class Foo
 {
-    public function testRuleNotAppliesToPredefinedVariables()
+    public function testRuleAppliesToStaticMethodAccessWhenNotIgnored()
     {
-        $foo = 'bar';
-        $headers = array();
-        foreach ($http_response_header as $header) {
-            $headers[] = $header;
-            if (null !== $php_errormsg) {
-                continue;
-            }
-        }
-
-        return $headers;
+        Foo::create();
     }
 }

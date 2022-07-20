@@ -15,14 +15,23 @@
  * @link http://phpmd.org/
  */
 
-class testCompactFunctionRuleWorksCaseInsensitive
+class testRuleDoesNotApplyToVariableUsedInAnonymousClass
 {
-    public function testCompactFunctionRuleWorksCaseInsensitive()
+    function testRuleDoesNotApplyToVariableUsedInAnonymousClass()
     {
-        $foo = 1;
-        $bar = 2;
-        $baz = 0;
+        return new class($var)
+        {
+            private $prop;
 
-        return Compact('foo', 'bar', 'baz');
+            public function __construct($var)
+            {
+                $this->prop = $var;
+            }
+
+            public function getProp()
+            {
+                return $this->prop;
+            }
+        };
     }
 }

@@ -15,11 +15,12 @@
  * @link http://phpmd.org/
  */
 
-function testInnerFunctionParametersDoNotHideUnusedVariables()
+class testRuleDoesNotApplyToCompoundVariableInString
 {
-    $x = 42;
-    function z_testInnerFunctionParametersDoNotHideUnusedVariables($x)
+    public function testRuleDoesNotApplyToCompoundVariableInString()
     {
+        $bar = 'foo';
 
+        return "${bar}_me";
     }
 }

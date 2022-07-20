@@ -13,7 +13,6 @@ class BaselineFileFinderTest extends AbstractTest
 {
     /**
      * @covers ::find
-     * @covers ::tryFind
      */
     public function testShouldFindFileFromCLI()
     {
@@ -24,7 +23,6 @@ class BaselineFileFinderTest extends AbstractTest
 
     /**
      * @covers ::find
-     * @covers ::tryFind
      * @covers ::existingFile
      */
     public function testShouldFindExistingFileNearRuleSet()
@@ -41,7 +39,20 @@ class BaselineFileFinderTest extends AbstractTest
 
     /**
      * @covers ::find
-     * @covers ::tryFind
+     * @covers ::nullOrThrow
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Unable to determine the baseline file location.
+     */
+    public function testShouldThrowExceptionForNonExistingRuleSet()
+    {
+        $args   = array('script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml'));
+        $finder = new BaselineFileFinder(new CommandLineOptions($args));
+        $finder->notNull()->find();
+    }
+
+    /**
+     * @covers ::find
+     * @covers ::nullOrThrow
      */
     public function testShouldReturnNullForNonExistingRuleSet()
     {
@@ -52,7 +63,7 @@ class BaselineFileFinderTest extends AbstractTest
 
     /**
      * @covers ::find
-     * @covers ::tryFind
+     * @covers ::nullOrThrow
      * @covers ::existingFile
      */
     public function testShouldOnlyFindExistingFile()
@@ -64,8 +75,8 @@ class BaselineFileFinderTest extends AbstractTest
 
     /**
      * @covers ::find
-     * @covers ::tryFind
      * @covers ::notNull
+     * @covers ::nullOrThrow
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Unable to find the baseline file
      */

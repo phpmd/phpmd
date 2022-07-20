@@ -34,7 +34,7 @@ class MissingImportTest extends AbstractTest
     public function getRule()
     {
         $rule = new MissingImport();
-        $rule->addProperty('ignore-global', false);
+        $rule->addProperty('ignore-global', 'false');
         return $rule;
     }
 
@@ -47,7 +47,10 @@ class MissingImportTest extends AbstractTest
      */
     public function testRuleAppliesTo($file)
     {
-        $this->expectRuleHasViolationsForFile($this->getRule(), static::ONE_VIOLATION, $file);
+        $expectedInvokes = strpos($file, 'testRuleAppliesTwice') !== false
+            ? 2
+            : static::ONE_VIOLATION;
+        $this->expectRuleHasViolationsForFile($this->getRule(), $expectedInvokes, $file);
     }
 
     /**
@@ -77,16 +80,25 @@ class MissingImportTest extends AbstractTest
     }
 
     /**
-     * Tests the rule ignores classes in global namespace with `ignore-global`.
+     * Tests that it does not apply to a class in root namespace when configured.
      *
-     * @param string $file The test file to test against.
      * @return void
-     * @dataProvider getApplyingCases
+     * @covers ::apply
+     * @covers ::isGlobalNamespace
      */
-    public function testRuleDoesNotApplyWithIgnoreGlobalProperty($file)
+    public function testRuleDoesNotApplyWhenSuppressed()
     {
-        $rule = $this->getRule();
-        $rule->addProperty('ignore-global', true);
-        $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
+        $rule = new MissingImport();
+        $rule->addProperty('ignore-global', 'true');
+        $files = $this->getFilesForCalledClass('testRuleAppliesTo*');
+        foreach ($files as $file) {
+            // Covers case when the new property is set and the rule *should* apply.
+            if (strpos($file, 'WithNotImportedDeepDependencies')) {
+                $this->expectRuleHasViolationsForFile($rule, static::ONE_VIOLATION, $file);
+                continue;
+            }
+            // Covers case when the new property is set and the rule *should not* apply.
+            $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
+        }
     }
 }

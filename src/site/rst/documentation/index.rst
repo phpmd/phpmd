@@ -65,13 +65,14 @@ Command line options
     violations are found.
 
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
-    next to the ruleset definition file.
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.
 
   - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
-    that no longer exist. New violations will _not_ be added.
+    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
+    to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
-    of all baselined files must be relative to this file location.
+  - ``--baseline-file`` - the filepath to a custom baseline xml file.
 
   An example command line: ::
 
@@ -122,14 +123,21 @@ PHPMD's command line tool currently defines four different exit codes.
 Renderers
 =========
 
-At the moment PHPMD comes with the following five renderers:
+At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
 - *ansi*, colorful, formatted text for the command line.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
+- *gitlab*, a format that GitLab CI understands.
 - *github*, a format that GitHub Actions understands (see `CI Integration </documentation/ci-integration.html#github-actions>`_).
+
+Some more formats can be obtained by conversion such as:
+
+*junit* can be obtained using `xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file <https://phpmd.org/junit.xslt>`_::
+
+  ~ $ phpmd src xml cleancode | xsltproc junit.xslt -
 
 Baseline
 =========

@@ -53,7 +53,9 @@ Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
-While the ``rulesets.xml`` ruleset file could look like this::
+While the ``rulesets.xml`` ruleset file could look like this:
+
+.. code:: xml
 
   <?xml version="1.0"?>
   <ruleset name="My first PHPMD rule set"
@@ -75,7 +77,9 @@ While the ``rulesets.xml`` ruleset file could look like this::
     <rule ref="rulesets/unusedcode.xml" />
   </ruleset>
 
-The xml report would like like this::
+The xml report would like like this:
+
+.. code:: xml
 
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
@@ -133,13 +137,14 @@ Command line options
     violations are found.
 
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
-    next to the ruleset definition file.
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.
 
   - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
-    that no longer exist. New violations will _not_ be added.
+    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
+    to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file. The filepath
-    of all baselined files must be relative to this file location.
+  - ``--baseline-file`` - the filepath to a custom baseline xml file.
 
   An example command line: ::
 
@@ -209,6 +214,7 @@ At the moment PHPMD comes with the following renderers:
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
+- *gitlab*, a format that GitLab CI understands.
 - *sarif*, the Static Analysis Results Interchange Format.
 - *checkstyle*, language and tool agnostic XML format
 
@@ -241,3 +247,10 @@ Available as part of the Tidelift Subscription.
 The maintainers of ``PHPMD`` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. `Learn more.`__
 
 __ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=enterprise&utm_term=repo
+
+Contributing
+------------
+
+If you want to contribute to PHPMD, please consult the `contribution guide`__.
+
+__ ./.github/CONTRIBUTING.md

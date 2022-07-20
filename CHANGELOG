@@ -1,3 +1,63 @@
+phpmd-2.12.0 (2022/03/24)
+========================
+
+- Added composer/xdebug-handler 3 support #930
+- Added GitHub action config for PHP 8.1 #918 #942
+- Fixed #276 in #833: Disallow capital letter at the beginning in CamelCasePropertyName rule.
+- Fixed typo in exclude-pattern.xml #944
+
+phpmd-2.11.1 (2021/12/17)
+========================
+
+- Fixed #925 #926 #928: PHP 8.1 deprecation notices
+
+phpmd-2.11.0 (2021/11/29)
+========================
+
+- Added #815 in #817: Rule name in text output
+- Fixed #884 in #905: Avoid unused parameters on PHP 8: Constructor property
+- Fixed #870 in #906: False-positive message "Avoid using undefined variables" on a static variable
+- Fixed #714 in #781: static:: and self:: properties access
+
+phpmd-2.10.2 (2021/07/22)
+========================
+
+- Added #898 in #902: Added newline for better ANSI output
+- Changed #901 in #903: Improve baseline basepath calculation
+- Fixed #894: Fixed typo in DuplicatedArrayKey title incl. link
+- Fixed Update PHP Depend to the latest version, this fixed different PHP 8 options: #889 #893 #896 
+
+phpmd-2.10.1 (2021/05/11)
+========================
+
+- Implemented #885: Allowing 2.0 version of the composer/xdebug-handler
+
+phpmd-2.10.0 (2021/04/26)
+========================
+
+- Added #879: Documentation for Junit export with third party
+- Added #836: Provide option to allow reference to a class in the root namespace without an import
+- Added #856: Adds checkstyle compatible renderer, suitable for cs2pr or reviewdog
+- Added #858 in #865: Add SARIF renderer.
+- Added #873 and #876: Added option to baseline existing violations
+- Added #861: Docs for GitHub renderer
+- Added #868 In #869: Option to ignore globally-namespaced classes from MissingImport
+- Added #834 : Add "tool" property to main "pmd" tag in XML report
+- Fixed #673 in #782: Ignore dynamic class name from missing imports 
+- Fixed #577 in #844: Recognize compact variables with double quotes
+- Fixed #818 in #822: Fix passing-by-reference detection
+- Fixed #826 in #827: Consider foreach exception only for direct children
+- Fixed #851 in #852: Fix multiple underscores in method name when allow-underscore-test is allowed
+- Fixed #846 in #847: Catch DevelopmentCodeFragment with fully qualified functions
+- Fixed #829 in #835: Fatal error while analyzing anonymous class
+- Fixed #816 in #818: Fixed undefined index referring
+- Changed #786: Add convenience method AbstractNode::findChildrenOfTypeVariable()
+- Changed documentation: #874 #849 #724 
+- Changed #514 in #872: Change exit code on processing errors
+- Changed: Internal code improvement #839 #875 #838 #862 #788 #830 
+- Changed #848 #864: Use GitHub actions
+- Deprecated: getIgnorePattern and setIgnorePattern on PHPMD\PHPMD see #772
+
 phpmd-2.9.1 (2020/09/23)
 ========================
 

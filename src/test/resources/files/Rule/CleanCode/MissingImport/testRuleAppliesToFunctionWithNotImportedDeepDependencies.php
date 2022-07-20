@@ -15,12 +15,14 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyToCompoundVariableInString
-{
-    public function testRuleDoesApplyToCompoundVariableInString()
-    {
-        $bar = 'foo';
+namespace PHPMDTest;
 
-        return "${bar}_me";
-    }
+function testRuleAppliesToFunctionWithNotImportedDeepDependencies()
+{
+    $bbb = new \PHPMDTest\Nested\MyClass();
+}
+
+namespace PHPMDTest\Nested;
+
+class MyClass {
 }

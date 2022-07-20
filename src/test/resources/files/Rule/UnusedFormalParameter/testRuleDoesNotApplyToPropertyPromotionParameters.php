@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForPropertyNameWithCapital
+class testRuleDoesNotApplyToPropertyPromotionParameters
 {
-    public $AlsoValidPropertyName;
+    function __construct(private string $foo) {}
 }
