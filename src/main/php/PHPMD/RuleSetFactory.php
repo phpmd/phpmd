@@ -245,16 +245,20 @@ class RuleSetFactory
      */
     private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node)
     {
-        if (substr($node['ref'], -3, 3) === 'xml') {
+        $ref = (string)$node['ref'];
+
+        if (substr($ref, -3, 3) === 'xml') {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;
         }
-        if ('' === (string)$node['ref']) {
+
+        if ('' === $ref) {
             $this->parseSingleRuleNode($ruleSet, $node);
 
             return;
         }
+
         $this->parseRuleReferenceNode($ruleSet, $node);
     }
 
