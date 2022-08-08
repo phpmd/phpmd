@@ -21,6 +21,7 @@ use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
+use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
@@ -459,6 +460,8 @@ class CommandLineOptions
                 return $this->createAnsiRenderer();
             case 'checkstyle':
                 return $this->createCheckStyleRenderer();
+            case 'gitlab':
+                return $this->createGitLabRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
             case 'html':
@@ -498,6 +501,14 @@ class CommandLineOptions
     protected function createAnsiRenderer()
     {
         return new AnsiRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\GitLabRenderer
+     */
+    protected function createGitLabRenderer()
+    {
+        return new GitLabRenderer();
     }
 
     /**

@@ -78,6 +78,9 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     protected function isReturnTypeBoolean(MethodNode $node)
     {
         $comment = $node->getDocComment();
+        if ($comment === null) {
+            return false;
+        }
 
         return (preg_match('(\*\s*@return\s+bool(ean)?\s)i', $comment) > 0);
     }

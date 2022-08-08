@@ -17,8 +17,10 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTest;
 use PHPMD\ProcessingError;
+use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
 
 /**
@@ -37,20 +39,23 @@ class TextRendererTest extends AbstractTest
     {
         // Create a writer instance.
         $writer = new WriterStub();
+        $rule = new RuleStub();
+        $rule->setName('LongerNamedRule');
+        $rule->setDescription('An other description for this rule');
 
         $violations = array(
-            $this->getRuleViolationMock('/bar.php', 1),
-            $this->getRuleViolationMock('/foo.php', 2),
-            $this->getRuleViolationMock('/foo.php', 3),
+            $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
+            $this->getRuleViolationMock('/foo-biz.php', 2),
+            $this->getRuleViolationMock('/foo.php', 34),
         );
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
+            ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator(array())));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
@@ -60,9 +65,9 @@ class TextRendererTest extends AbstractTest
         $renderer->end();
 
         $this->assertEquals(
-            "/bar.php:1\tTest description" . PHP_EOL .
-            "/foo.php:2\tTest description" . PHP_EOL .
-            "/foo.php:3\tTest description" . PHP_EOL,
+            "/bar.php:1      LongerNamedRule  An other description for this rule" . PHP_EOL .
+            "/foo-biz.php:2  RuleStub         Test description" . PHP_EOL .
+            "/foo.php:34     RuleStub         Test description" . PHP_EOL,
             $writer->getData()
         );
     }
@@ -86,10 +91,10 @@ class TextRendererTest extends AbstractTest
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator(array())));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($errors)));
+            ->will($this->returnValue(new ArrayIterator($errors)));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);

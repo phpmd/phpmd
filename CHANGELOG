@@ -1,3 +1,24 @@
+phpmd-2.12.0 (2022/03/24)
+========================
+
+- Added composer/xdebug-handler 3 support #930
+- Added GitHub action config for PHP 8.1 #918 #942
+- Fixed #276 in #833: Disallow capital letter at the beginning in CamelCasePropertyName rule.
+- Fixed typo in exclude-pattern.xml #944
+
+phpmd-2.11.1 (2021/12/17)
+========================
+
+- Fixed #925 #926 #928: PHP 8.1 deprecation notices
+
+phpmd-2.11.0 (2021/11/29)
+========================
+
+- Added #815 in #817: Rule name in text output
+- Fixed #884 in #905: Avoid unused parameters on PHP 8: Constructor property
+- Fixed #870 in #906: False-positive message "Avoid using undefined variables" on a static variable
+- Fixed #714 in #781: static:: and self:: properties access
+
 phpmd-2.10.2 (2021/07/22)
 ========================
 

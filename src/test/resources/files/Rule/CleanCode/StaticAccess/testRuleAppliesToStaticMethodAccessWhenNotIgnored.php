@@ -15,7 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForPropertyNameWithCapital
+class Foo
 {
-    public $AlsoValidPropertyName;
+    public function testRuleAppliesToStaticMethodAccessWhenNotIgnored()
+    {
+        Foo::create();
+    }
 }

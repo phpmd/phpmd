@@ -15,13 +15,10 @@
  * @link http://phpmd.org/
  */
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-spl_autoload_register(
-    function ($class) {
-        $file = __DIR__ . '/' . strtr($class, '\\', '/') . '.php';
-        if (file_exists($file)) {
-            include $file;
-        }
+class Foo
+{
+    public function testRuleNotAppliesToStaticMethodAccessWhenIgnored()
+    {
+        Foo::create();
     }
-);
+}

@@ -51,22 +51,6 @@ class BaselineFileFinder
      */
     public function find()
     {
-        $file = $this->tryFind();
-        if ($file === null && $this->notNull === true) {
-            throw new RuntimeException('Unable to find the baseline file. Use --baseline-file to specify the filepath');
-        }
-
-        return $file;
-    }
-
-    /**
-     * Try to find the violation baseline file
-     *
-     * @return string|null
-     * @throws RuntimeException
-     */
-    private function tryFind()
-    {
         // read baseline file from cli arguments
         $file = $this->options->baselineFile();
         if ($file !== null) {
@@ -77,15 +61,36 @@ class BaselineFileFinder
         $ruleSets = explode(',', $this->options->getRuleSets());
         $rulePath = realpath($ruleSets[0]);
         if ($rulePath === false) {
-            return null;
+            return $this->nullOrThrow(
+                sprintf(
+                    'Unable to determine the baseline file location. ' .
+                    'Either specify file location via --baseline-file or make sure `%s` ' .
+                    'is a valid ruleset file location',
+                    $ruleSets[0]
+                )
+            );
         }
 
         // create file path and check for existence
         $baselinePath = dirname($rulePath) . '/' . self::DEFAULT_FILENAME;
         if ($this->existingFile === true && file_exists($baselinePath) === false) {
-            return null;
+            return $this->nullOrThrow('Unable to find the baseline file. Use --baseline-file to specify the filepath');
         }
 
         return $baselinePath;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return null
+     * @throws RuntimeException
+     */
+    private function nullOrThrow($message)
+    {
+        if ($this->notNull === true) {
+            throw new RuntimeException($message);
+        }
+        return null;
     }
 }
