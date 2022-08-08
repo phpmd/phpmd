@@ -247,14 +247,14 @@ class RuleSetFactory
     {
         $ref = (string)$node['ref'];
 
-        if (substr($ref, -3, 3) === 'xml') {
-            $this->parseRuleSetReferenceNode($ruleSet, $node);
+        if ($ref === '') {
+            $this->parseSingleRuleNode($ruleSet, $node);
 
             return;
         }
 
-        if ('' === $ref) {
-            $this->parseSingleRuleNode($ruleSet, $node);
+        if (substr($ref, -3, 3) === 'xml') {
+            $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;
         }
