@@ -20,7 +20,11 @@ https://phpmd.org
 .. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
    :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
-
+   
+.. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE 
+   :target: https://codecov.io/gh/phpmd/phpmd
+   :alt: Codecov Status
+ 
 .. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/build-status/master
    :alt: Scrutinizer Build Status
