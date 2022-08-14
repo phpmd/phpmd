@@ -13,10 +13,6 @@ https://phpmd.org
    :target: https://packagist.org/packages/phpmd/phpmd
    :alt: License
 
-.. image:: https://travis-ci.org/phpmd/phpmd.svg?branch=master
-   :target: https://travis-ci.org/phpmd/phpmd
-   :alt: Travis Build Status
-
 .. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
    :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
