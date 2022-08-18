@@ -50,3 +50,5 @@ jobs:
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
