@@ -15,12 +15,12 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToVariableInVariadicFunctions
+class testRuleAppliesToVariableInVariadicFunctions
 {
-    function testRuleDoesNotApplyToVariableInVariadicFunctions()
+    function testRuleAppliesToVariableInVariadicFunctions()
     {
         $variadic1 = 1;
-        $variadic2 = 2;
+
         return sprintf("Text %d", $variadic1, $variadic2);
     }
 }
