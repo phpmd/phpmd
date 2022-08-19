@@ -15,12 +15,17 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyToVariableInVariadicFunctions
+class testRuleDoesNotApplyToVariableReferenceInVariadicFunctions
 {
-    function testRuleDoesNotApplyToVariableInVariadicFunctions()
+    function foo(string $format, mixed &...$values)
+    {
+        return sprintf($format, ...$values);
+    }
+
+    function testRuleDoesNotApplyToVariableReferenceInVariadicFunctions()
     {
         $variadic1 = 1;
-        $variadic2 = 2;
-        return sprintf("Text %d", $variadic1, $variadic2);
+
+        return $this->foo("Text %d %d", $variadic1, $variadic2);
     }
 }
