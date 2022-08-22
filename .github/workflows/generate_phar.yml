@@ -53,14 +53,22 @@ jobs:
       - name: Fix PHP compatibility
         run: php src/phar/compatibility.php
 
+      - name: Decrypt PGP key
+        run: openssl aes-256-cbc -K $encrypted_73b85f5c6110_key -iv $encrypted_73b85f5c6110_iv -in src/conf/all.gpg.enc -out all.gpg -d
+
       - name: Ant
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
+
+      - name: Sign Phar
+        run: gpg --import all.gpg && gpg -u $SIGNING_EMAIL --detach-sign --output ./phpmd.phar.asc ./phpmd.phar
 
       - name: Archive generated phar
         uses: actions/upload-artifact@v2
         with:
           name: phpmd.phar
-          path: phpmd.phar
+          path: |
+            phpmd.phar
+            phpmd.phar.asc
 
       - name: Release phpmd.phar
         if: github.event_name == 'release'
@@ -68,4 +76,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: 'phpmd.phar'
+          args: 'phpmd.phar*'
