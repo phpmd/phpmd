@@ -2,13 +2,11 @@ name: Generate phar
 
 on:
   push:
-    tags:
-      - "*"
     branches:
       - "*"
-  release:
-    types:
-      - created
+  pull_request:
+    branches:
+      - "*"
 
 jobs:
   php-tests:
