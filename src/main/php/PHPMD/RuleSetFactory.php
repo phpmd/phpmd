@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use PHPMD\Exception\RuleClassFileNotFoundException;
+use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
 
 /**
