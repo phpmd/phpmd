@@ -557,6 +557,14 @@ class CommandLineOptionsTest extends AbstractTest
                 array('text' => __FILE__),
             ),
             array(
+                array('--reportfile-github', __FILE__),
+                array('github' => __FILE__),
+            ),
+            array(
+                array('--reportfile-gitlab', __FILE__),
+                array('gitlab' => __FILE__),
+            ),
+            array(
                 array(
                     '--reportfile-text',
                     __FILE__,
@@ -564,8 +572,18 @@ class CommandLineOptionsTest extends AbstractTest
                     __FILE__,
                     '--reportfile-html',
                     __FILE__,
+                    '--reportfile-github',
+                    __FILE__,
+                    '--reportfile-gitlab',
+                    __FILE__,
                 ),
-                array('text' => __FILE__, 'xml' => __FILE__, 'html' => __FILE__),
+                array(
+                    'text' => __FILE__,
+                    'xml' => __FILE__,
+                    'html' => __FILE__,
+                    'github' => __FILE__,
+                    'gitlab' => __FILE__
+                ),
             ),
         );
     }
