@@ -245,12 +245,14 @@ class CommandLineOptions
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-checkstyle':
+                case '--reportfile-github':
+                case '--reportfile-gitlab':
                 case '--reportfile-html':
                 case '--reportfile-json':
                 case '--reportfile-sarif':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(checkstyle|html|json|sarif|text|xml)$)', $arg, $match);
+                    preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
