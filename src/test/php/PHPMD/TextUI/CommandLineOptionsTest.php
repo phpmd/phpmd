@@ -582,7 +582,7 @@ class CommandLineOptionsTest extends AbstractTest
                     'xml' => __FILE__,
                     'html' => __FILE__,
                     'github' => __FILE__,
-                    'gitlab' => __FILE__
+                    'gitlab' => __FILE__,
                 ),
             ),
         );
