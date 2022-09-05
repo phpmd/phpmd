@@ -42,10 +42,15 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node)
     {
+        $ignoreRegexp = trim($this->getStringProperty('ignorepattern', ''));
         $exceptions = $this->getExceptionsList();
         $nodes = $node->findChildrenOfType('MemberPrimaryPrefix');
 
         foreach ($nodes as $methodCall) {
+            if ($this->isMethodIgnored($methodCall, $ignoreRegexp)) {
+                continue;
+            }
+
             if (!$this->isStaticMethodCall($methodCall)) {
                 continue;
             }
@@ -80,6 +85,21 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     protected function isCallingSelf(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
+    }
+
+    /**
+     * @param string $ignorePattern
+     * @return bool
+     */
+    protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
+    {
+        if ($ignorePattern === '') {
+            return false;
+        }
+
+        $methodName = $methodCall->getFirstChildOfType('MethodPostfix');
+
+        return $methodName !== null && preg_match($ignorePattern, $methodName->getName()) === 1;
     }
 
     /**
