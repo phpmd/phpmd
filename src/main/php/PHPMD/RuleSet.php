@@ -19,7 +19,6 @@ namespace PHPMD;
 
 use ArrayIterator;
 use IteratorAggregate;
-use PHPMD\Rule\Naming\LongClassName;
 
 /**
  * This class is a collection of concrete source analysis rules.
