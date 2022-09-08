@@ -22,13 +22,14 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
     /**
      * Temporary cache of configured suffixes to subtract

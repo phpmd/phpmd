@@ -331,7 +331,7 @@ class RuleSetFactory
      */
     private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
     {
-        $fileName = "";
+        $fileName = '';
 
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
