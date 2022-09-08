@@ -209,7 +209,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     }
 
     /**
-     * Visits a trait node.
+     * Visits a enum node.
      *
      * @param \PDepend\Source\AST\ASTEnum $node
      * @return void
