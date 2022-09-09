@@ -1,3 +1,102 @@
+phpmd-2.12.0 (2022/03/24)
+========================
+
+- Added composer/xdebug-handler 3 support #930
+- Added GitHub action config for PHP 8.1 #918 #942
+- Fixed #276 in #833: Disallow capital letter at the beginning in CamelCasePropertyName rule.
+- Fixed typo in exclude-pattern.xml #944
+
+phpmd-2.11.1 (2021/12/17)
+========================
+
+- Fixed #925 #926 #928: PHP 8.1 deprecation notices
+
+phpmd-2.11.0 (2021/11/29)
+========================
+
+- Added #815 in #817: Rule name in text output
+- Fixed #884 in #905: Avoid unused parameters on PHP 8: Constructor property
+- Fixed #870 in #906: False-positive message "Avoid using undefined variables" on a static variable
+- Fixed #714 in #781: static:: and self:: properties access
+
+phpmd-2.10.2 (2021/07/22)
+========================
+
+- Added #898 in #902: Added newline for better ANSI output
+- Changed #901 in #903: Improve baseline basepath calculation
+- Fixed #894: Fixed typo in DuplicatedArrayKey title incl. link
+- Fixed Update PHP Depend to the latest version, this fixed different PHP 8 options: #889 #893 #896 
+
+phpmd-2.10.1 (2021/05/11)
+========================
+
+- Implemented #885: Allowing 2.0 version of the composer/xdebug-handler
+
+phpmd-2.10.0 (2021/04/26)
+========================
+
+- Added #879: Documentation for Junit export with third party
+- Added #836: Provide option to allow reference to a class in the root namespace without an import
+- Added #856: Adds checkstyle compatible renderer, suitable for cs2pr or reviewdog
+- Added #858 in #865: Add SARIF renderer.
+- Added #873 and #876: Added option to baseline existing violations
+- Added #861: Docs for GitHub renderer
+- Added #868 In #869: Option to ignore globally-namespaced classes from MissingImport
+- Added #834 : Add "tool" property to main "pmd" tag in XML report
+- Fixed #673 in #782: Ignore dynamic class name from missing imports 
+- Fixed #577 in #844: Recognize compact variables with double quotes
+- Fixed #818 in #822: Fix passing-by-reference detection
+- Fixed #826 in #827: Consider foreach exception only for direct children
+- Fixed #851 in #852: Fix multiple underscores in method name when allow-underscore-test is allowed
+- Fixed #846 in #847: Catch DevelopmentCodeFragment with fully qualified functions
+- Fixed #829 in #835: Fatal error while analyzing anonymous class
+- Fixed #816 in #818: Fixed undefined index referring
+- Changed #786: Add convenience method AbstractNode::findChildrenOfTypeVariable()
+- Changed documentation: #874 #849 #724 
+- Changed #514 in #872: Change exit code on processing errors
+- Changed: Internal code improvement #839 #875 #838 #862 #788 #830 
+- Changed #848 #864: Use GitHub actions
+- Deprecated: getIgnorePattern and setIgnorePattern on PHPMD\PHPMD see #772
+
+phpmd-2.9.1 (2020/09/23)
+========================
+
+- Fixed #714: Improved static member detection
+- Fixed #816: Fixed undefined index referring 
+
+phpmd-2.9.0 (2020/09/02)
+========================
+
+- Added #496: Added rule for PHP's @ operator
+- Added #737: Allowed custom exclusion for StaticAccess by extending the class
+- Added #749: Added allow-underscore option for CamelCaseParameterName & CamelCaseVariableName 
+- Added #747: Long variable subtract suffix
+- Added #763 via #765: Added rules LongClassName and ShortClassName
+- Fixed #743: Output for version
+- Fixed #754: Fixed #720 undefined variable in foreach when passed by reference
+- Fixed #764: Fixed #718 Handle anonymous class in "undefined variable" rule
+- Fixed #770: Fixed #769 Handle deconstruction assignation for undefined variable
+- Fixed #781: Fixed #714 static:: and self:: properties access
+- Fixed #784: Fixed #672 Handle passing-by-reference in native PHP functions
+- Fixed #793: Fixed #580 Raise UnusedFormalParameter instead UnusedLocalVariable for unused closure parameter
+- Fixed #794: Fixed #540 Detect unused variable declared multiple times
+- Fixed #805: Fixed #802 Prevent an error with nested arrays
+- Fixed #807: Fixed #790 Fix for short variables rule inside foreach statements
+- Fixed #809: Fixed #808 Ignore rule path for supression annotation
+- Updated different parts of the documentation. #717 #736 #748 #811
+- Changed: #529 : Replaced HTML renderer with new "pretty HTML" renderer
+- Changed: #806 : Changed #44 Change private methods to protected in rules. Make rules extendable  
+- Changed: Internal code improvement #750 #752 #756 #757 #758 #759 #768 #773 #775 #785 #787 #791 #792
+- Deprecated all the PHPMD exceptions that aren't part of the PHPMD\Exceptions namespace. See #775
+
+### A potential BC change:
+With the clean-up in #768 we have a potential BC break in an unsupported part that we want to give attention for.
+> The class aliases ``PHP_PMD_*`` used for PHPMD 1.x backwards PEAR compatibility were removed. If you happen to still depend on these, please adjust your code like so:
+> 
+> From ``PHP_PMD_[Component]_[Class]'`` to ``PHPMD\[Component]\[Class]``,
+> as in ``PHP_PMD_Renderer_HTMLRenderer'`` to ``PHPMD\Renderer\HTMLRenderer``.
+See #768
+
 phpmd-2.8.2 (2020/02/24)
 ========================
 

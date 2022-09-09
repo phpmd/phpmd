@@ -314,6 +314,7 @@ abstract class AbstractRule implements Rule
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
+
         if ($default !== null) {
             return $default;
         }
@@ -386,14 +387,10 @@ abstract class AbstractRule implements Rule
         array $args = array(),
         $metric = null
     ) {
-        $search = array();
-        $replace = array();
-        foreach ($args as $index => $value) {
-            $search[] = '{' . $index . '}';
-            $replace[] = $value;
-        }
-
-        $message = str_replace($search, $replace, $this->message);
+        $message = array(
+            'message' => $this->message,
+            'args' => $args,
+        );
 
         $ruleViolation = new RuleViolation($this, $node, $message, $metric);
         $this->report->addRuleViolation($ruleViolation);

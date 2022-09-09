@@ -52,7 +52,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param ClassNode $class
      * @return ASTMethodPostfix[]
      */
-    private function collectUnusedPrivateMethods(ClassNode $class)
+    protected function collectUnusedPrivateMethods(ClassNode $class)
     {
         $methods = $this->collectPrivateMethods($class);
 
@@ -65,7 +65,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param ClassNode $class
      * @return AbstractNode[]
      */
-    private function collectPrivateMethods(ClassNode $class)
+    protected function collectPrivateMethods(ClassNode $class)
     {
         $methods = array();
 
@@ -86,7 +86,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param MethodNode $method
      * @return boolean
      */
-    private function acceptMethod(ClassNode $class, MethodNode $method)
+    protected function acceptMethod(ClassNode $class, MethodNode $method)
     {
         return (
             $method->isPrivate() &&
@@ -105,7 +105,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param MethodNode[] $methods
      * @return ASTMethodPostfix[]
      */
-    private function removeUsedMethods(ClassNode $class, array $methods)
+    protected function removeUsedMethods(ClassNode $class, array $methods)
     {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
             /** @var $postfix ASTNode */
@@ -125,7 +125,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param ASTNode $postfix
      * @return boolean
      */
-    private function isClassScope(ClassNode $class, ASTNode $postfix)
+    protected function isClassScope(ClassNode $class, ASTNode $postfix)
     {
         $owner = $postfix->getParent()->getChild(0);
 

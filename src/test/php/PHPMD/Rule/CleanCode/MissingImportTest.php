@@ -27,30 +27,42 @@ use PHPMD\AbstractTest;
 class MissingImportTest extends AbstractTest
 {
     /**
-     * Tests that it does not apply to a class without any class dependencies
+     * Get the rule under test.
      *
-     * @return void
-     * @covers ::apply
+     * @return MissingImport
      */
-    public function testRuleNotAppliesToClassWithoutAnyDependencies()
+    public function getRule()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        $rule->addProperty('ignore-global', 'false');
+        return $rule;
     }
 
     /**
-     * Tests that it does not apply to a class with only imported classes
+     * Tests the rule for cases where it should apply.
      *
+     * @param string $file The test file to test against.
      * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
+     * @dataProvider getApplyingCases
      */
-    public function testRuleNotAppliesToClassWithOnlyImportedDependencies()
+    public function testRuleAppliesTo($file)
     {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        $expectedInvokes = strpos($file, 'testRuleAppliesTwice') !== false
+            ? 2
+            : static::ONE_VIOLATION;
+        $this->expectRuleHasViolationsForFile($this->getRule(), $expectedInvokes, $file);
+    }
+
+    /**
+     * Tests the rule for cases where it should not apply.
+     *
+     * @param string $file The test file to test against.
+     * @return void
+     * @dataProvider getNotApplyingCases
+     */
+    public function testRuleDoesNotApplyTo($file)
+    {
+        $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
 
     /**
@@ -60,65 +72,33 @@ class MissingImportTest extends AbstractTest
      * @covers ::apply
      * @covers ::isSelfReference
      */
-    public function testRuleAppliesToClassWithNotImportedDependencies()
+    public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
     {
-        $rule = new MissingImport();
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
 
     /**
-     * Tests that it does not apply to a class that uses self references
+     * Tests that it does not apply to a class in root namespace when configured.
      *
      * @return void
      * @covers ::apply
-     * @covers ::isSelfReference
+     * @covers ::isGlobalNamespace
      */
-    public function testRuleNotAppliesToClassWithSelfAndStaticCalls()
+    public function testRuleDoesNotApplyWhenSuppressed()
     {
         $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
-    }
-
-    /**
-     * Tests that it does not apply to a function without any class dependencies
-     *
-     * @return void
-     * @covers ::apply
-     */
-    public function testRuleNotAppliesToFunctionWithoutAnyDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getFunction());
-    }
-
-    /**
-     * Tests that it does not apply to a function with only imported classes
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleNotAppliesToFunctionWithOnlyImportedDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getFunction());
-    }
-
-    /**
-     * Tests that it applies to a function that has fully qualified class names
-     *
-     * @return void
-     * @covers ::apply
-     * @covers ::isSelfReference
-     */
-    public function testRuleAppliesToFunctionWithNotImportedDependencies()
-    {
-        $rule = new MissingImport();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getFunction());
+        $rule->addProperty('ignore-global', 'true');
+        $files = $this->getFilesForCalledClass('testRuleAppliesTo*');
+        foreach ($files as $file) {
+            // Covers case when the new property is set and the rule *should* apply.
+            if (strpos($file, 'WithNotImportedDeepDependencies')) {
+                $this->expectRuleHasViolationsForFile($rule, static::ONE_VIOLATION, $file);
+                continue;
+            }
+            // Covers case when the new property is set and the rule *should not* apply.
+            $this->expectRuleHasViolationsForFile($rule, static::NO_VIOLATION, $file);
+        }
     }
 }

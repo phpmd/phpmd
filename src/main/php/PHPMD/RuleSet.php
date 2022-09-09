@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
+
 /**
  * This class is a collection of concrete source analysis rules.
  */
@@ -212,7 +214,7 @@ class RuleSet implements \IteratorAggregate
             }
         }
 
-        return new \ArrayIterator($result);
+        return new ArrayIterator($result);
     }
 
     /**
@@ -262,6 +264,7 @@ class RuleSet implements \IteratorAggregate
      *
      * @return \Iterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getRules();

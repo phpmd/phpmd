@@ -13,14 +13,14 @@ https://phpmd.org
    :target: https://packagist.org/packages/phpmd/phpmd
    :alt: License
 
-.. image:: https://travis-ci.org/phpmd/phpmd.svg?branch=master
-   :target: https://travis-ci.org/phpmd/phpmd
-   :alt: Travis Build Status
-
 .. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
    :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
-
+   
+.. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE 
+   :target: https://codecov.io/gh/phpmd/phpmd
+   :alt: Codecov Status
+ 
 .. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/build-status/master
    :alt: Scrutinizer Build Status
@@ -53,7 +53,9 @@ Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
-While the ``rulesets.xml`` ruleset file could look like this::
+While the ``rulesets.xml`` ruleset file could look like this:
+
+.. code:: xml
 
   <?xml version="1.0"?>
   <ruleset name="My first PHPMD rule set"
@@ -75,7 +77,9 @@ While the ``rulesets.xml`` ruleset file could look like this::
     <rule ref="rulesets/unusedcode.xml" />
   </ruleset>
 
-The xml report would like like this::
+The xml report would like like this:
+
+.. code:: xml
 
   <?xml version="1.0" encoding="UTF-8" ?>
   <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
@@ -127,8 +131,20 @@ Command line options
 
   - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
 
+  - ``--ignore-errors-on-exit`` - will exit with a zero code, even on error.
+
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
+
+  - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.
+
+  - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
+    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
+    to the current working directory.
+
+  - ``--baseline-file`` - the filepath to a custom baseline xml file.
 
   An example command line: ::
 
@@ -170,18 +186,21 @@ to create one output for certain parts of your code ::
 Exit codes
 ----------
 
-PHPMD's command line tool currently defines three different exit codes.
+PHPMD's command line tool currently defines four different exit codes.
 
 - *0*, This exit code indicates that everything worked as expected. This means
   there was no error/exception and PHPMD hasn't detected any rule violation
   in the code under test.
-- *1*, This exit code indicates that an error/exception occured which has
+- *1*, This exit code indicates that an exception occurred which has
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
-  without the occurence of an error/exception, but it has detected rule
+  without the occurrence of an error/exception, but it has detected rule
   violations in the analyzed source code. You can also prevent this behaviour
   with the ``--ignore-violations-on-exit`` flag, which will result to a *0*
   even if any violations are found.
+- *3*, This exit code means that one or multiple files under test could not
+   be processed because of an error. There may also be violations in other
+   files that could be processed correctly.
 
 Renderers
 ---------
@@ -193,6 +212,31 @@ At the moment PHPMD comes with the following renderers:
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
 - *ansi*, a command line friendly format.
+- *github*, a format that GitHub Actions understands.
+- *gitlab*, a format that GitLab CI understands.
+- *sarif*, the Static Analysis Results Interchange Format.
+- *checkstyle*, language and tool agnostic XML format
+
+Baseline
+--------
+
+For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
+
+The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the ``phpmd.baseline.xml`` next to it::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
+
+To specify a custom baseline filepath for export::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
+
+By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+
+To clean up an existing baseline file and *only remove* no longer existing violations::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --update-baseline
 
 PHPMD for enterprise
 --------------------
@@ -202,3 +246,10 @@ Available as part of the Tidelift Subscription.
 The maintainers of ``PHPMD`` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. `Learn more.`__
 
 __ https://tidelift.com/subscription/pkg/packagist-phpmd-phpmd?utm_source=packagist-phpmd-phpmd&utm_medium=referral&utm_campaign=enterprise&utm_term=repo
+
+Contributing
+------------
+
+If you want to contribute to PHPMD, please consult the `contribution guide`__.
+
+__ ./.github/CONTRIBUTING.md

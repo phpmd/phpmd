@@ -33,7 +33,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     /**
      * @var array
      */
-    private $exceptions = array(
+    protected $exceptions = array(
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',
@@ -56,7 +56,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      */
     public function apply(AbstractNode $node)
     {
-        foreach ($node->findChildrenOfType('Variable') as $variable) {
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable)) {
                 $this->addViolation(
                     $node,
@@ -68,7 +68,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         }
     }
 
-    private function isValid($variable)
+    protected function isValid($variable)
     {
         $image = $variable->getImage();
 

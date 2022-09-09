@@ -16,6 +16,6 @@
 
     <!-- unix path -->
     <exclude-pattern>*sourceExcluded/*.php</exclude-pattern>
-    <!-- widnows path -->
+    <!-- windows path -->
     <exclude-pattern>*sourceExcluded\*.php</exclude-pattern>
 </ruleset>

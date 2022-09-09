@@ -59,8 +59,20 @@ Command line options
 
   - ``--not-strict`` - Does not report those nodes with a @SuppressWarnings annotation.
 
+  - ``--ignore-errors-on-exit`` - will exit with a zero code, even on error.
+
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
+
+  - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
+    next to the ruleset definition file. The file paths of the violations will be relative to the current
+    working directory.
+
+  - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
+    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
+    to the current working directory.
+
+  - ``--baseline-file`` - the filepath to a custom baseline xml file.
 
   An example command line: ::
 
@@ -92,26 +104,58 @@ that will check the source code.
 Exit codes
 ==========
 
-PHPMD's command line tool currently defines three different exit codes.
+PHPMD's command line tool currently defines four different exit codes.
 
 - *0*, This exit code indicates that everything worked as expected. This means
   there was no error/exception and PHPMD hasn't detected any rule violation
   in the code under test.
-- *1*, This exit code indicates that an error/exception occurred which has
+- *1*, This exit code indicates that an exception occurred which has
   interrupted PHPMD during execution.
 - *2*, This exit code means that PHPMD has processed the code under test
   without the occurrence of an error/exception, but it has detected rule
   violations in the analyzed source code. You can also prevent this behaviour
   with the ``--ignore-violations-on-exit`` flag, which will result to a *0*
   even if any violations are found.
+- *3*, This exit code means that one or multiple files under test could not
+   be processed because of an error. There may also be violations in other
+   files that could be processed correctly.
 
 Renderers
 =========
 
-At the moment PHPMD comes with the following five renderers:
+At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
-- *ansi*, colorful, formated text for the command line.
+- *ansi*, colorful, formatted text for the command line.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
+- *gitlab*, a format that GitLab CI understands.
+- *github*, a format that GitHub Actions understands (see `CI Integration </documentation/ci-integration.html#github-actions>`_).
+
+Some more formats can be obtained by conversion such as:
+
+*junit* can be obtained using `xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file <https://phpmd.org/junit.xslt>`_::
+
+  ~ $ phpmd src xml cleancode | xsltproc junit.xslt -
+
+Baseline
+=========
+
+For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
+
+The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the phpmd.baseline.xml next to it::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
+
+To specify a custom baseline filepath for export::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
+
+By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+
+To clean up an existing baseline file and *only remove* no longer existing violations::
+
+  ~ $ phpmd /path/to/source text phpmd.xml --update-baseline

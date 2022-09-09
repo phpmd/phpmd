@@ -42,6 +42,20 @@ class ShortVariableTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToTryCatchBlocks
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToTryCatchBlocksInsideForeach()
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getFunction());
+    }
+
+    /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
      *
      * @return void
@@ -344,5 +358,35 @@ class ShortVariableTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
 
         $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesToVariablesWithinForeach
+     *
+     * @dataProvider provideClassWithShortForeachVariables
+     * @return void
+     */
+    public function testRuleAppliesToVariablesWithinForeach($allowShortVarInLoop, $expectedErrorsCount)
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', '');
+        $rule->addProperty('allow-short-variables-in-loop', $allowShortVarInLoop);
+        $rule->setReport($this->getReportMock($expectedErrorsCount));
+
+        $class = $this->getClass();
+        $rule->apply($class);
+
+        foreach ($class->getMethods() as $method) {
+            $rule->apply($method);
+        }
+    }
+
+    public function provideClassWithShortForeachVariables()
+    {
+        return array(
+            array(true, 2),
+            array(false, 5),
+        );
     }
 }

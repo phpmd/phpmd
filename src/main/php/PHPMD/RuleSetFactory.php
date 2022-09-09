@@ -17,6 +17,11 @@
 
 namespace PHPMD;
 
+use PHPMD\Exception\RuleClassFileNotFoundException;
+use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleSetNotFoundException;
+use RuntimeException;
+
 /**
  * This factory class is used to create the {@link \PHPMD\RuleSet} instance
  * that PHPMD will use to analyze the source code.
@@ -184,7 +189,7 @@ class RuleSetFactory
      *
      * @param string $fileName
      * @return \PHPMD\RuleSet
-     * @throws \RuntimeException When loading the XML file fails.
+     * @throws RuntimeException When loading the XML file fails.
      */
     private function parseRuleSetNode($fileName)
     {
@@ -196,7 +201,7 @@ class RuleSetFactory
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
-            throw new \RuntimeException(trim(libxml_get_last_error()->message));
+            throw new RuntimeException(trim(libxml_get_last_error()->message));
         }
 
         $ruleSet = new RuleSet();
@@ -243,16 +248,20 @@ class RuleSetFactory
      */
     private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node)
     {
-        if (substr($node['ref'], -3, 3) === 'xml') {
-            $this->parseRuleSetReferenceNode($ruleSet, $node);
+        $ref = (string)$node['ref'];
 
-            return;
-        }
-        if ('' === (string)$node['ref']) {
+        if ($ref === '') {
             $this->parseSingleRuleNode($ruleSet, $node);
 
             return;
         }
+
+        if (substr($ref, -3, 3) === 'xml') {
+            $this->parseRuleSetReferenceNode($ruleSet, $node);
+
+            return;
+        }
+
         $this->parseRuleReferenceNode($ruleSet, $node);
     }
 
@@ -366,7 +375,7 @@ class RuleSetFactory
 
         $rule->setRuleSetName($ruleSet->getName());
 
-        if (trim($ruleNode['since']) !== '') {
+        if (isset($ruleNode['since']) && trim($ruleNode['since']) !== '') {
             $rule->setSince((string)$ruleNode['since']);
         }
 
@@ -409,13 +418,13 @@ class RuleSetFactory
         $ruleSetRef = $ruleSetFactory->createSingleRuleSet($fileName);
         $rule = $ruleSetRef->getRuleByName($ruleName);
 
-        if (trim($ruleNode['name']) !== '') {
+        if (isset($ruleNode['name']) && trim($ruleNode['name']) !== '') {
             $rule->setName((string)$ruleNode['name']);
         }
-        if (trim($ruleNode['message']) !== '') {
+        if (isset($ruleNode['message']) && trim($ruleNode['message']) !== '') {
             $rule->setMessage((string)$ruleNode['message']);
         }
-        if (trim($ruleNode['externalInfoUrl']) !== '') {
+        if (isset($ruleNode['externalInfoUrl']) && trim($ruleNode['externalInfoUrl']) !== '') {
             $rule->setExternalInfoUrl((string)$ruleNode['externalInfoUrl']);
         }
 
@@ -505,7 +514,7 @@ class RuleSetFactory
      *
      * @param string $fileName The filename of a rule-set definition.
      * @return array|null
-     * @throws \RuntimeException Thrown if file is not proper xml
+     * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
     {
@@ -521,7 +530,7 @@ class RuleSetFactory
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
 
-                throw new \RuntimeException(trim(libxml_get_last_error()->message));
+                throw new RuntimeException(trim(libxml_get_last_error()->message));
             }
 
             foreach ($xml->children() as $node) {

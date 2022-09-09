@@ -38,6 +38,10 @@ class AnsiRenderer extends AbstractRenderer
         $previousFile = null;
         foreach ($report->getRuleViolations() as $violation) {
             if ($violation->getFileName() !== $previousFile) {
+                if ($previousFile !== null) {
+                    $this->getWriter()->write(PHP_EOL);
+                }
+
                 $this->writeViolationFileHeader($violation);
             }
 

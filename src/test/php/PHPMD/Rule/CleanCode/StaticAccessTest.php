@@ -19,6 +19,9 @@ namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTest;
 
+/**
+ * @coversDefaultClass \PHPMD\Rule\CleanCode\StaticAccess
+ */
 class StaticAccessTest extends AbstractTest
 {
     public function testRuleNotAppliesToParentStaticCall()
@@ -69,6 +72,30 @@ class StaticAccessTest extends AbstractTest
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @covers ::apply
+     * @covers ::isMethodIgnored
+     */
+    public function testRuleNotAppliesToStaticMethodAccessWhenIgnored()
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('ignorepattern', '/^create/');
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @covers ::apply
+     * @covers ::isMethodIgnored
+     */
+    public function testRuleAppliesToStaticMethodAccessWhenNotIgnored()
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('ignorepattern', '/^foobar/');
         $rule->apply($this->getMethod());
     }
 }
