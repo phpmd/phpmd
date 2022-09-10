@@ -2,6 +2,9 @@ linters:
   phpcs:
     standard: './phpcs.xml.dist'
     extensions: '.php'
+    exclude:
+      - 'Squiz.Classes.ValidClassName'
+      - 'PEAR.NamingConventions.ValidClassName'
     tab_width: 4
     ignore: 'src/test/resources/*'
 branches:
