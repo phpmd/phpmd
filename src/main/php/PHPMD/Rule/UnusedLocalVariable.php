@@ -20,6 +20,7 @@ namespace PHPMD\Rule;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule collects all local variables within a given function or method
@@ -225,7 +226,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
 
         $image = $this->getVariableImage($node);
 
-        if (substr($image, 0, 2) === '::' || in_array(substr($image, 1), $this->getExceptionsList())) {
+        if (substr($image, 0, 2) === '::' || $this->getExceptionsList()->contains(substr($image, 1))) {
             return;
         }
 
@@ -287,12 +288,16 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     }
 
     /**
-     * Gets array of exceptions from property
+     * Gets exceptions from property
      *
-     * @return array
+     * @return ExceptionsList
      */
     protected function getExceptionsList()
     {
-        return explode(',', $this->getStringProperty('exceptions', ''));
+        if ($this->exceptions === null) {
+            $this->exceptions = new ExceptionsList($this);
+        }
+
+        return $this->exceptions;
     }
 }

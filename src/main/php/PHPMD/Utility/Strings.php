@@ -76,20 +76,38 @@ class Strings
      *
      * @param string $listAsString The string to split.
      * @param string $separator The separator to split the string with, similar to explode.
+     * @param string $trim Extra character to be trimmed off of each value.
      * @return array The list of trimmed and filtered parts of the string.
      * @throws InvalidArgumentException When the separator is an empty string.
      */
-    public static function splitToList($listAsString, $separator)
+    public static function splitToList($listAsString, $separator = ',', $trim = '')
     {
         if ($separator === '') {
             throw new InvalidArgumentException("Separator can't be empty string");
         }
 
         return array_filter(
-            array_map('trim', explode($separator, $listAsString)),
+            array_map(
+                function ($value) use ($trim) {
+                    return Strings::trim($value, $trim);
+                },
+                explode($separator, $listAsString)
+            ),
             function ($value) {
                 return $value !== '';
             }
         );
+    }
+
+    /**
+     * Trim " \t\n\r\0\x0B" and specified extra characters from start and end of a string.
+     *
+     * @param string $value
+     * @param string $trim
+     * @return string
+     */
+    public static function trim($value, $trim = '')
+    {
+        return trim($value, " \t\n\r\0\x0B$trim");
     }
 }

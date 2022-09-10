@@ -21,12 +21,20 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule class will detect methods and functions with very short names.
  */
 class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
 {
+    /**
+     * Temporary cache of configured exceptions.
+     *
+     * @var ExceptionsList|null
+     */
+    protected $exceptions;
+
     /**
      * Extracts all variable and variable declarator nodes from the given node
      * and checks the variable name length against the configured minimum
@@ -42,9 +50,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-
-        if (in_array($node->getName(), $exceptions)) {
+        if ($this->getExceptionsList()->contains($node->getName())) {
             return;
         }
 
@@ -61,16 +67,14 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Gets array of exceptions from property
      *
-     * @return array
+     * @return ExceptionsList
      */
     protected function getExceptionsList()
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
+        if ($this->exceptions === null) {
+            $this->exceptions = new ExceptionsList($this);
         }
 
-        return explode(',', $exceptions);
+        return $this->exceptions;
     }
 }

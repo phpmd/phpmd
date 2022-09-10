@@ -23,6 +23,7 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Rule\TraitAware;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule class will detect variables, parameters and properties with short
@@ -37,6 +38,13 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @var array(string=>boolean)
      */
     protected $processedVariables = array();
+
+    /**
+     * Temporary cache of configured exceptions.
+     *
+     * @var ExceptionsList|null
+     */
+    protected $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -139,7 +147,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
         $exceptions = $this->getExceptionsList();
 
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+        if ($exceptions->contains(substr($node->getImage(), 1))) {
             return;
         }
 
@@ -147,19 +155,17 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     }
 
     /**
-     * Gets array of exceptions from property
+     * Gets exceptions from property
      *
-     * @return array
+     * @return ExceptionsList
      */
     protected function getExceptionsList()
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
+        if ($this->exceptions === null) {
+            $this->exceptions = new ExceptionsList($this);
         }
 
-        return explode(',', $exceptions);
+        return $this->exceptions;
     }
 
     /**
