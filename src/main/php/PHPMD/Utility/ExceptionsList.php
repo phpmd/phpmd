@@ -21,6 +21,7 @@ use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 use PHPMD\Rule;
+use ReturnTypeWillChange;
 use RuntimeException;
 
 class ExceptionsList implements IteratorAggregate, ArrayAccess
@@ -96,6 +97,7 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return $this->exceptions;
     }
 
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         $keys = array_keys($this->getExceptionsList());
@@ -103,11 +105,13 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return new ArrayIterator(array_combine($keys, $keys));
     }
 
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->contains($offset);
     }
 
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $exceptions = $this->getExceptionsList();
@@ -115,11 +119,13 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return $exceptions[Strings::trim($offset, $this->trim)];
     }
 
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');
     }
 
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');

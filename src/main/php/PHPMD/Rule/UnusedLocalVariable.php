@@ -36,6 +36,13 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     protected $images = array();
 
     /**
+     * Temporary cache of configured exceptions.
+     *
+     * @var ExceptionsList|null
+     */
+    protected $exceptions;
+
+    /**
      * This method checks that all local variables within the given function or
      * method are used at least one time.
      *
