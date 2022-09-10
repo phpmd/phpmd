@@ -94,7 +94,8 @@ class StringsTest extends AbstractTest
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract()
     {
-        static::assertSame(8, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
+        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
+        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', array('Foo', 'Bar')));
     }
 
     /**
