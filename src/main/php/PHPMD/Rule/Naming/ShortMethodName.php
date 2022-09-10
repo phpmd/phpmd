@@ -46,11 +46,17 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
     public function apply(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
-        if ($threshold <= strlen($node->getName())) {
+        $name = $node->getName();
+
+        if (!$name) {
             return;
         }
 
-        if ($this->getExceptionsList()->contains($node->getName())) {
+        if ($threshold <= strlen($name)) {
+            return;
+        }
+
+        if ($this->getExceptionsList()->contains($name)) {
             return;
         }
 
