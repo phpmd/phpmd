@@ -17,11 +17,13 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTValue;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\Strings;
 
 /**
  * Check for a boolean flag in the method/function signature.
@@ -31,6 +33,13 @@ use PHPMD\Rule\MethodAware;
 class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
+     * Temporary cache of configured exceptions.
+     *
+     * @return array<string, int>
+     */
+    protected $exceptions;
+
+    /**
      * This method checks if a method/function has boolean flag arguments and warns about them.
      *
      * @param \PHPMD\AbstractNode $node
@@ -38,6 +47,29 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
      */
     public function apply(AbstractNode $node)
     {
+        $name = $node->getName();
+
+        if ($name) {
+            $ignorePattern = trim($this->getStringProperty('ignorepattern', ''));
+
+            if ($ignorePattern !== '' && preg_match($ignorePattern, $node->getName())) {
+                return;
+            }
+        }
+
+        $parent = $node->getNode()->getParent();
+
+        if ($parent &&
+            ($parent instanceof AbstractASTClassOrInterface) &&
+            ($name = $parent->getName())
+        ) {
+            $exceptions = $this->getExceptionsList();
+
+            if (isset($exceptions[$name])) {
+                return;
+            }
+        }
+
         foreach ($node->findChildrenOfType('FormalParameter') as $param) {
             $declarator = $param->getFirstChildOfType('VariableDeclarator');
             $value = $declarator->getValue();
@@ -53,5 +85,24 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
     protected function isBooleanValue(ASTValue $value = null)
     {
         return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
+    }
+
+    /**
+     * Gets exceptions from property
+     *
+     * @return array<string, int>
+     */
+    protected function getExceptionsList()
+    {
+        if ($this->exceptions === null) {
+            $this->exceptions = array_flip(
+                Strings::splitToList(
+                    $this->getStringProperty('exceptions', ''),
+                    ','
+                )
+            );
+        }
+
+        return $this->exceptions;
     }
 }
