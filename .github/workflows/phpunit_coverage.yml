@@ -49,9 +49,4 @@ jobs:
         run: phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
 
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: |
-            coverage.xml
-            coverage_html
+        uses: codecov/codecov-action@v3

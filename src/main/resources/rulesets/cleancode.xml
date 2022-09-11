@@ -117,6 +117,7 @@ case when static access is acceptable is when used for factory methods.
         <priority>1</priority>
         <properties>
             <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+            <property name="ignorepattern" description="Ignore methods matching this regex. Example: /^create/i" value=""/>
         </properties>
         <example>
             <![CDATA[

@@ -21,6 +21,7 @@ use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
+use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
@@ -244,12 +245,14 @@ class CommandLineOptions
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-checkstyle':
+                case '--reportfile-github':
+                case '--reportfile-gitlab':
                 case '--reportfile-html':
                 case '--reportfile-json':
                 case '--reportfile-sarif':
                 case '--reportfile-text':
                 case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(checkstyle|html|json|sarif|text|xml)$)', $arg, $match);
+                    preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
                     break;
                 default:
@@ -459,6 +462,8 @@ class CommandLineOptions
                 return $this->createAnsiRenderer();
             case 'checkstyle':
                 return $this->createCheckStyleRenderer();
+            case 'gitlab':
+                return $this->createGitLabRenderer();
             case 'github':
                 return $this->createGitHubRenderer();
             case 'html':
@@ -498,6 +503,14 @@ class CommandLineOptions
     protected function createAnsiRenderer()
     {
         return new AnsiRenderer();
+    }
+
+    /**
+     * @return \PHPMD\Renderer\GitLabRenderer
+     */
+    protected function createGitLabRenderer()
+    {
+        return new GitLabRenderer();
     }
 
     /**
