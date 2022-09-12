@@ -99,13 +99,13 @@ class StringsTest extends AbstractTest
     }
 
     /**
-     * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched in the best order
+     * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched in order
      *
      * @return void
      */
-    public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInBestOrder()
+    public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder()
     {
-        static::assertSame(4, Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', array('Foo', 'FooUnit'), array('Foo', 'Bar')));
+        static::assertSame(8, Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', array('Foo', 'FooUnit'), array('Foo', 'Bar')));
     }
 
     /**

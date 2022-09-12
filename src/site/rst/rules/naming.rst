@@ -33,8 +33,8 @@ This rule has the following properties:
 | maximum                           | 40            | The class name length reporting threshold.                 |
 +-----------------------------------+---------------+------------------------------------------------------------+
 | subtract-prefixes                 |               | Comma-separated list of prefixes that will not count in    |
-|                                   |               | the length of the class name. Only the longest, first      |
-|                                   |               | matching prefix will be subtracted.                        |
+|                                   |               | the length of the class name. Only the first matching      |
+|                                   |               | prefix will be subtracted.                                 |
 +-----------------------------------+---------------+------------------------------------------------------------+
 | subtract-suffixes                 |               | Comma-separated list of suffixes that will not count in    |
 |                                   |               | the length of the class name. Only the first matching      |
@@ -128,8 +128,8 @@ This rule has the following properties:
 +-----------------------------------+---------------+-------------------------------------------+
 | subtract-prefixes                 |               | Comma-separated list of prefixes that will|
 |                                   |               | not count in the length of the variable   |
-|                                   |               | name. Only the longest, first matching    |
-|                                   |               | suffix will be subtracted.                |
+|                                   |               | name. Only the first matching prefix will |
+|                                   |               | be subtracted.                            |
 +-----------------------------------+---------------+-------------------------------------------+
 | subtract-suffixes                 |               | Comma-separated list of suffixes that will|
 |                                   |               | not count in the length of the variable   |

@@ -56,8 +56,6 @@ class Strings
             }
         }
 
-        rsort($subtractPrefixes, SORT_STRING);
-
         foreach ($subtractPrefixes as $prefix) {
             $prefixLength = strlen($prefix);
             if (strncmp($stringName, $prefix, $prefixLength) === 0) {
