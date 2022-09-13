@@ -44,8 +44,12 @@ class Strings
      * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.
      */
-    public static function lengthWithoutPrefixesAndSuffixes($stringName, array $subtractPrefixes, array $subtractSuffixes)
-    {
+    public static function lengthWithoutPrefixesAndSuffixes(
+        $stringName,
+        array $subtractPrefixes,
+        array $subtractSuffixes
+    ) {
+
         $stringLength = strlen($stringName);
 
         foreach ($subtractSuffixes as $suffix) {

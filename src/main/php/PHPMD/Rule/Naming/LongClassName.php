@@ -26,7 +26,8 @@ use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
- * This rule checks if an interface or class name exceeds the configured length excluding certain configured prefixes and suffixes
+ * This rule checks if an interface or class name exceeds the configured length
+ * excluding certain configured prefixes and suffixes
  */
 class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
 {
@@ -54,8 +55,13 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
     {
         $threshold = $this->getIntProperty('maximum');
         $classOrInterfaceName = $node->getName();
+        $length = Strings::lengthWithoutPrefixesAndSuffixes(
+            $classOrInterfaceName,
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
 
-        if (Strings::lengthWithoutPrefixesAndSuffixes($classOrInterfaceName, $this->getSubtractPrefixList(), $this->getSubtractSuffixList()) <= $threshold) {
+        if ($length <= $threshold) {
             return;
         }
         $this->addViolation($node, array($classOrInterfaceName, $threshold));

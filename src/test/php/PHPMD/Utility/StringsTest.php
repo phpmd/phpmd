@@ -105,7 +105,10 @@ class StringsTest extends AbstractTest
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder()
     {
-        static::assertSame(8, Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', array('Foo', 'FooUnit'), array('Foo', 'Bar')));
+        $prefixes = array('Foo', 'Bar');
+        $suffixes = array('Foo', 'FooUnit');
+        $length = Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', $suffixes, $prefixes);
+        static::assertSame(8, $length);
     }
 
     /**
