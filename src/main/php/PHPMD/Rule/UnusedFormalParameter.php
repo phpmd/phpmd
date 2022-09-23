@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use Matrix\Exception;
 use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ASTNode;
@@ -184,6 +185,21 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         $this->removeCompoundVariables($node);
         $this->removeVariablesUsedByFuncGetArgs($node);
         $this->removePropertyPromotionVariables($node);
+        $this->removeExceptionsVariables($node);
+    }
+
+    /**
+     * Removes all the exceptions variables from a given node
+     *
+     * @param \PHPMD\AbstractNode $node The node to remove the property promotion parameters from.
+     * @return void
+     */
+    protected function removeExceptionsVariables()
+    {
+        $exceptionsVariablesList = $this->getExceptionsList();
+        foreach ($exceptionsVariablesList as $exceptionVariable) {
+            unset($this->nodes[$exceptionVariable]);
+        }
     }
 
     /**
@@ -288,5 +304,15 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
                 }
             }
         }
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    protected function getExceptionsList()
+    {
+        return explode(',', $this->getStringProperty('exceptions', ''));
     }
 }
