@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule;
 
-use Matrix\Exception;
 use PDepend\Source\AST\ASTFormalParameter;
 use PHPMD\AbstractNode;
 use PHPMD\Node\ASTNode;
