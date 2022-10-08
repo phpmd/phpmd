@@ -70,16 +70,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
             }
         }
 
-        foreach ($node->findChildrenOfType('FormalParameter') as $param) {
-            $declarator = $param->getFirstChildOfType('VariableDeclarator');
-            $value = $declarator->getValue();
-
-            if (false === $this->isBooleanValue($value)) {
-                continue;
-            }
-
-            $this->addViolation($param, array($node->getImage(), $declarator->getImage()));
-        }
+        $this->scanFormalParameters($node);
     }
 
     protected function isBooleanValue(ASTValue $value = null)
@@ -104,5 +95,19 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         }
 
         return $this->exceptions;
+    }
+
+    private function scanFormalParameters(AbstractNode $node)
+    {
+        foreach ($node->findChildrenOfType('FormalParameter') as $param) {
+            $declarator = $param->getFirstChildOfType('VariableDeclarator');
+            $value = $declarator->getValue();
+
+            if (false === $this->isBooleanValue($value)) {
+                continue;
+            }
+
+            $this->addViolation($param, array($node->getImage(), $declarator->getImage()));
+        }
     }
 }
