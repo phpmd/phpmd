@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Fri, 21 Oct 2022 20:07:05 +0000" />
+    <meta name="date" content="Fri, 18 Nov 2022 14:07:20 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Fri, 21 Oct 2022 20:07:05 +0000" />
+    <meta name="DC.date" content="Fri, 18 Nov 2022 14:07:20 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -34,7 +34,7 @@
     <hr />
 <a id="command-line-usage"></a>
 <h2>Command line usage</h2>
-<p>Type phpmd [filename|directory] [report format] [ruleset file], i.e: :</p>
+<p>Type phpmd [filenamedirectory[,...]]] [report format] [ruleset file], i.e: :</p>
 <pre><code class="">mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
 &lt;pmd version=&quot;0.0.1&quot; timestamp=&quot;2009-12-19T22:17:18+01:00&quot;&gt;
@@ -51,8 +51,8 @@
   &lt;/file&gt;
 &lt;/pmd&gt;
 </code></pre>
-<p>You can pass a file name or a directory name containing PHP source
-code to PHPMD.</p>
+<p>You can pass a comma-separated string with list of file names
+or a directory names, containing PHP source code to PHPMD.</p>
 <p>The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the &quot;rulesets/codesize.xml&quot; parameter above looks
 like a filesystem reference.</p>
