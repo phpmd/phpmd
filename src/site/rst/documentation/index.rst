@@ -2,7 +2,7 @@
 Command line usage
 ==================
 
-Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
+Type phpmd [filename|directory[,filename|directory[,...]]] [report format] [ruleset file], i.e: ::
 
   mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
   <?xml version="1.0" encoding="UTF-8" ?>
@@ -20,8 +20,8 @@ Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
     </file>
   </pmd>
 
-You can pass a file name or a directory name containing PHP source
-code to PHPMD.
+You can pass a comma-separated string with list of file names
+or a directory names, containing PHP source code to PHPMD.
 
 The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
