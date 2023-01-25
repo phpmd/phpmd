@@ -89,6 +89,6 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      */
     protected function isGlobalNamespace(ASTNode $classNode)
     {
-        return !strpos($classNode->getImage(), '\\', 1);
+        return $classNode->getImage() !== '' && !strpos($classNode->getImage(), '\\', 1);
     }
 }
