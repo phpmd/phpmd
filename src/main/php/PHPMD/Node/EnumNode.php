@@ -15,13 +15,27 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
+namespace PHPMD\Node;
 
-function testRuleAppliesToFunctionWithNotImportedDependencies()
+use PDepend\Source\AST\ASTEnum;
+
+/**
+ * Wrapper around PHP_Depend's enum objects.
+ */
+class EnumNode extends AbstractTypeNode
 {
-    $a = new \stdClass();
+    /**
+     * The type of this enum.
+     */
+    const CLAZZ = __CLASS__;
 
-    // Using an array value as a classname can break the code, as the node will not be an ASTClass*
-    $classes = array('\stdClass');
-    $b = new $classes[0];
+    /**
+     * Constructs a new class wrapper node.
+     *
+     * @param \PDepend\Source\AST\ASTEnum $node
+     */
+    public function __construct(ASTEnum $node)
+    {
+        parent::__construct($node);
+    }
 }

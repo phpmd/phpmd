@@ -24,7 +24,7 @@ use PHPMD\AbstractRule;
  * This rule checks the number of public methods and fields in a given class.
  * Then it compares the number of public members against a configured threshold.
  */
-class ExcessivePublicCount extends AbstractRule implements ClassAware
+class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAware
 {
     /**
      * This method checks the number of public fields and methods in the given

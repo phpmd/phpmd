@@ -15,13 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
-
-function testRuleAppliesToFunctionWithNotImportedDependencies()
+/**
+ * Trait name length: 40
+ */
+trait testRuleAppliesToTraitNameAboveThreshold
 {
-    $a = new \stdClass();
 
-    // Using an array value as a classname can break the code, as the node will not be an ASTClass*
-    $classes = array('\stdClass');
-    $b = new $classes[0];
 }

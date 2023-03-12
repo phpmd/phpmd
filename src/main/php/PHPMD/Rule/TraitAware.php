@@ -15,13 +15,11 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMDTest;
+namespace PHPMD\Rule;
 
-function testRuleAppliesToFunctionWithNotImportedDependencies()
+/**
+ * This interface is used to mark a rule implementation as trait aware.
+ */
+interface TraitAware
 {
-    $a = new \stdClass();
-
-    // Using an array value as a classname can break the code, as the node will not be an ASTClass*
-    $classes = array('\stdClass');
-    $b = new $classes[0];
 }

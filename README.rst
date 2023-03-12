@@ -13,13 +13,13 @@ https://phpmd.org
    :target: https://packagist.org/packages/phpmd/phpmd
    :alt: License
 
-.. image:: https://travis-ci.org/phpmd/phpmd.svg?branch=master
-   :target: https://travis-ci.org/phpmd/phpmd
-   :alt: Travis Build Status
-
 .. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
    :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
+
+.. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE
+   :target: https://codecov.io/gh/phpmd/phpmd
+   :alt: Codecov Status
 
 .. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/build-status/master
@@ -49,7 +49,7 @@ See https://phpmd.org/download/index.html
 Command line usage
 ------------------
 
-Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
+Type ``phpmd [filename|directory[,filename|directory[,...]]] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
@@ -95,8 +95,8 @@ The xml report would like like this:
     </file>
   </pmd>
 
-You can pass a file name or a directory name containing PHP source
-code to PHPMD.
+You can pass a comma-separated string with list of file names
+or a directory names, containing PHP source code to PHPMD.
 
 The `PHPMD Phar distribution`__ includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
