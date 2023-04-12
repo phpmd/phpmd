@@ -37,7 +37,7 @@ This assumes that you have a `custom rule set </documentation/creating-a-ruleset
 GitLab Code Quality Reporting
 =========
 
-GitLab Code Quality reporting is supported out of the box with its own PHPMD renderer called ``gitlab``. You can read the GitLab docs about this topic `here </https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html>`_.
+GitLab Code Quality reporting is supported out of the box with its own PHPMD renderer called ``gitlab``. You can read the GitLab docs about this topic `here <https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html>`_.
 
 A simple GitLab Code Quality report workflow could look like this: ::
 
