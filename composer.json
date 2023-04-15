@@ -2,6 +2,7 @@
   "name": "phpmd/phpmd",
   "description": "PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the well known Java tool PMD.",
   "keywords": [
+    "dev",
     "phpmd",
     "pdepend",
     "pmd",
