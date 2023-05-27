@@ -40,7 +40,8 @@ class SARIFRendererTest extends AbstractTest
 
         $rule = new RuleStub('AnotherRuleStub');
         $rule->addExample('   class Example'. PHP_EOL . '{'.PHP_EOL . '}'. PHP_EOL . '   ');
-        $rule->addExample(PHP_EOL . 'class AnotherExample'. PHP_EOL . '{'.PHP_EOL .'    public $var;'. PHP_EOL . '}'. PHP_EOL . '   ');
+        $rule->addExample(PHP_EOL . 'class AnotherExample'. PHP_EOL .
+            '{' . PHP_EOL . '    public $var;' . PHP_EOL . '}' . PHP_EOL . '   ');
         $rule->setSince(null);
 
         $complexRuleViolationMock = $this->getRuleViolationMock(getcwd() . '/src/foobar.php', 23, 42, $rule);
