@@ -70,6 +70,16 @@ class SARIFRendererTest extends AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
 
+        self::assertJson(
+            $writer->getData(),
+            'The writer json is invalid: ' . $writer->getData()
+        );
+        $sarifContent = file_get_contents(__DIR__.'/../../../resources/files/renderer/sarif_renderer_expected.sarif');
+        self::assertJson(
+            $sarifContent,
+            'The sarif json is invalid: ' . $sarifContent
+        );
+
         $this->assertJsonEquals(
             $writer->getData(),
             'renderer/sarif_renderer_expected.sarif',
