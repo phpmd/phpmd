@@ -7,7 +7,7 @@
                 "driver": {
                     "name": "PHPMD",
                     "informationUri": "https:\/\/phpmd.org",
-                    "version": "2.1.0",
+                    "version": "@package_version@",
                     "rules": []
                 }
             },
