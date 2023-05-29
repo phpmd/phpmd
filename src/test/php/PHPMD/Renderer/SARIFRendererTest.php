@@ -82,11 +82,7 @@ class SARIFRendererTest extends AbstractTest
 
         $this->assertJsonEquals(
             $writer->getData(),
-            'renderer/sarif_renderer_expected.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+            'renderer/sarif_renderer_expected.sarif'
         );
     }
 
@@ -123,11 +119,7 @@ class SARIFRendererTest extends AbstractTest
 
         $this->assertJsonEquals(
             $writer->getData(),
-            'renderer/sarif_renderer_processing_errors.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+            'renderer/sarif_renderer_processing_errors.sarif'
         );
     }
 }
