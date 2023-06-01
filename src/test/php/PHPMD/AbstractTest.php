@@ -28,6 +28,7 @@ use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
@@ -149,6 +150,18 @@ abstract class AbstractTest extends AbstractStaticTest
         return new TraitNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getTraits()
+            )
+        );
+    }
+
+    /**
+     * @return EnumNode
+     */
+    protected function getEnum()
+    {
+        return new EnumNode(
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getEnums()
             )
         );
     }

@@ -18,11 +18,12 @@
 namespace PHPMD;
 
 use ArrayIterator;
+use IteratorAggregate;
 
 /**
  * This class is a collection of concrete source analysis rules.
  */
-class RuleSet implements \IteratorAggregate
+class RuleSet implements IteratorAggregate
 {
     /**
      * Should this rule set force the strict mode.
@@ -67,6 +68,8 @@ class RuleSet implements \IteratorAggregate
      */
     private $applyTo = array(
         'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
+        'PHPMD\\Rule\\TraitAware' => 'PHPMD\\Node\\TraitNode',
+        'PHPMD\\Rule\\EnumAware' => 'PHPMD\\Node\\EnumNode',
         'PHPMD\\Rule\\FunctionAware' => 'PHPMD\\Node\\FunctionNode',
         'PHPMD\\Rule\\InterfaceAware' => 'PHPMD\\Node\\InterfaceNode',
         'PHPMD\\Rule\\MethodAware' => 'PHPMD\\Node\\MethodNode',
@@ -79,6 +82,8 @@ class RuleSet implements \IteratorAggregate
      */
     private $rules = array(
         'PHPMD\\Node\\ClassNode' => array(),
+        'PHPMD\\Node\\TraitNode' => array(),
+        'PHPMD\\Node\\EnumNode' => array(),
         'PHPMD\\Node\\FunctionNode' => array(),
         'PHPMD\\Node\\InterfaceNode' => array(),
         'PHPMD\\Node\\MethodNode' => array(),

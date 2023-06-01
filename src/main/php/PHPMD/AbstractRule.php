@@ -17,7 +17,11 @@
 
 namespace PHPMD;
 
+use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\TraitNode;
 
 /**
  * This is the abstract base class for pmd rules.
@@ -399,9 +403,9 @@ abstract class AbstractRule implements Rule
     /**
      * Apply the current rule on each method of a class node.
      *
-     * @param ClassNode $node class node containing methods.
+     * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node class node containing methods.
      */
-    protected function applyOnClassMethods(ClassNode $node)
+    protected function applyOnClassMethods(AbstractTypeNode $node)
     {
         foreach ($node->getMethods() as $method) {
             if ($method->hasSuppressWarningsAnnotationFor($this)) {

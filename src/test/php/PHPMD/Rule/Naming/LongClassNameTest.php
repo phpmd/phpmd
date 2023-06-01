@@ -79,6 +79,32 @@ class LongClassNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule applies to trait name length (40) above threshold (39)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTraitNameAboveThreshold()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 39);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getTrait());
+    }
+
+    /**
+     * Tests that the rule applies to enum name length (39) above threshold (38)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToEnumNameAboveThreshold()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 38);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getEnum());
+    }
+
+    /**
      * Tests that the rule does not apply to class name length (69) below threshold (60)
      * with configured suffix length (9)
      *

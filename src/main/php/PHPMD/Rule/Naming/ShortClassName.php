@@ -20,13 +20,15 @@ namespace PHPMD\Rule\Naming;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
  * This rule will detect classes and interfaces with names that are too short.
  */
-class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware
+class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
 {
     /**
      * Temporary cache of configured exceptions. Have name as key

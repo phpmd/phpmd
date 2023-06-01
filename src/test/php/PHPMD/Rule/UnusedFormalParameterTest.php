@@ -64,6 +64,18 @@ class UnusedFormalParameterTest extends AbstractTest
     }
 
     /**
+     * testRuleAppliesToEnumMethodUnusedFormalParameter
+     *
+     * @return void
+     */
+    public function testRuleAppliesToEnumMethodUnusedFormalParameter()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * testRuleAppliesToClosureUnusedFormalParameter
      *
      * @return void
