@@ -39,10 +39,10 @@ class ResultCacheState
      * @param string $hash
      * @return bool
      */
-    public function isFileStale($filePath, $hash)
+    public function isFileModified($filePath, $hash)
     {
         if (isset($this->state['files'][$filePath]) === false) {
-            return false;
+            return true;
         }
 
         return $this->state['files'][$filePath]['hash'] !== $hash;

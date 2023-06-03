@@ -19,6 +19,9 @@ class ResultCacheEngine implements Filter
     /** @var string */
     private $basePath;
 
+    /** @var array<string, bool> */
+    private $fileIsModified = array();
+
     /**
      * @param string $basePath
      */
@@ -43,25 +46,31 @@ class ResultCacheEngine implements Filter
      */
     public function accept($relative, $absolute)
     {
+        $filePath = Paths::getRelativePath($this->basePath, $absolute);
+
+        // Seemingly PDepend iterates twice over the same file. Cache results for performance.
+        if (isset($this->fileIsModified[$filePath])) {
+            return $this->fileIsModified[$filePath];
+        }
+
+        // Determine file hash. Either `timestamp` or `content`
         if ($this->config->getStrategy() === 'timestamp') {
             $hash = (string)filemtime($absolute);
         } else {
             $hash = md5_file($absolute);
         }
-        $filePath = Paths::getRelativePath($this->basePath, $absolute);
 
-        // determine is file has changed
-        $isStale = $this->state->isFileStale($filePath, $hash);
+        // Determine if file was modified since last analyses
+        $isModified = $this->state->isFileModified($filePath, $hash);
 
-        if ($isStale === false) {
-            // file has not changed, transfer violations
+        if ($isModified === false) {
+            // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
         } else {
-            // file has changed, set state and initialize violations
+            // File was modified, set state
             $this->newState->setFileState($filePath, $hash);
-            $this->newState->setViolations($filePath, array());
         }
 
-        return $isStale;
+        return  $this->fileIsModified[$filePath] = $isModified;
     }
 }
