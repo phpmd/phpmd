@@ -23,7 +23,9 @@ class ResultCacheEngine implements Filter
     private $fileIsModified = array();
 
     /**
-     * @param string $basePath
+     * @param string            $basePath
+     * @param ResultCacheConfig $config
+     * @param ResultCacheState  $state
      */
     public function __construct($basePath, $config, $state)
     {
@@ -42,13 +44,15 @@ class ResultCacheEngine implements Filter
     }
 
     /**
+     * A hook to allow filtering out certain files from inspection by pdepend.
      * @inheritDoc
+     * @return bool `true` will inspect the file, when `false` the file will be filtered out.
      */
     public function accept($relative, $absolute)
     {
         $filePath = Paths::getRelativePath($this->basePath, $absolute);
 
-        // Seemingly PDepend iterates twice over the same file. Cache results for performance.
+        // Seemingly Iterator::accept is invoked more than once for the same file. Cache results for performance.
         if (isset($this->fileIsModified[$filePath])) {
             return $this->fileIsModified[$filePath];
         }
@@ -71,6 +75,6 @@ class ResultCacheEngine implements Filter
             $this->newState->setFileState($filePath, $hash);
         }
 
-        return  $this->fileIsModified[$filePath] = $isModified;
+        return $this->fileIsModified[$filePath] = $isModified;
     }
 }
