@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Cache\ResultCacheEngine;
+
 /**
  * This is the main facade of the PHP PMD application
  */
@@ -56,6 +58,9 @@ class PHPMD
      * @var string
      */
     private $input;
+
+    /** @var ResultCacheEngine */
+    private $resultCache;
 
     /**
      * This property will be set to <b>true</b> when a violation
@@ -180,6 +185,25 @@ class PHPMD
             $this->ignorePatterns,
             $ignorePatterns
         );
+
+        return $this;
+    }
+
+    /**
+     * @return ResultCacheEngine
+     */
+    public function getResultCache()
+    {
+        return $this->resultCache;
+    }
+
+    /**
+     * @param ResultCacheEngine $resultCache
+     * @return $this;
+     */
+    public function setResultCache($resultCache)
+    {
+        $this->resultCache = $resultCache;
 
         return $this;
     }

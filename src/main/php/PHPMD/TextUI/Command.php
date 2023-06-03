@@ -21,6 +21,9 @@ use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\Baseline\BaselineValidator;
+use PHPMD\Cache\ResultCacheConfig;
+use PHPMD\Cache\ResultCacheEngine;
+use PHPMD\Cache\ResultCacheState;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
@@ -127,6 +130,10 @@ class Command
         if ($ignore !== null) {
             $phpmd->addIgnorePatterns(explode(',', $ignore));
         }
+
+        // Configure Result Cache Engine
+        $resultCache = new ResultCacheEngine(getcwd(), new ResultCacheConfig(true, '.phpmd.result-cache.php', 'content'), new ResultCacheState());
+        $phpmd->setResultCache($resultCache);
 
         $phpmd->processFiles(
             $opts->getInputPath(),
