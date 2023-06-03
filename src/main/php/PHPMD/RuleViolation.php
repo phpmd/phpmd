@@ -20,6 +20,7 @@ namespace PHPMD;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\NodeInfo;
 
 /**
  * This class is used as container for a single rule violation related to a source
@@ -35,11 +36,11 @@ class RuleViolation
     private $rule;
 
     /**
-     * The context code node for this rule violation.
+     * The AST Node information for this rule violation.
      *
-     * @var \PHPMD\AbstractNode
+     * @var NodeInfo
      */
-    private $node;
+    private $nodeInfo;
 
     /**
      * The description/message text that describes the violation.
@@ -64,41 +65,18 @@ class RuleViolation
     private $metric;
 
     /**
-     * Name of the owning/context class or interface of this violation.
-     *
-     * @var string
-     */
-    private $className = null;
-
-    /**
-     * The name of a method or <b>null</b> when this violation has no method
-     * context.
-     *
-     * @var string|null
-     */
-    private $methodName = null;
-
-    /**
-     * The name of a function or <b>null</b> when this violation has no function
-     * context.
-     *
-     * @var string
-     */
-    private $functionName = null;
-
-    /**
      * Constructs a new rule violation instance.
      *
      * @param \PHPMD\Rule $rule
-     * @param \PHPMD\AbstractNode $node
+     * @param NodeInfo $nodeInfo
      * @param string|array $violationMessage
      * @param mixed $metric
      */
-    public function __construct(Rule $rule, AbstractNode $node, $violationMessage, $metric = null)
+    public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
     {
         $this->rule = $rule;
-        $this->node = $node;
         $this->metric = $metric;
+        $this->nodeInfo = $nodeInfo;
 
         if (is_array($violationMessage) === true) {
             $search = array();
@@ -112,15 +90,6 @@ class RuleViolation
             $this->description = str_replace($search, $replace, $violationMessage['message']);
         } else {
             $this->description = $violationMessage;
-        }
-
-        if ($node instanceof AbstractTypeNode) {
-            $this->className = $node->getName();
-        } elseif ($node instanceof MethodNode) {
-            $this->className = $node->getParentName();
-            $this->methodName = $node->getName();
-        } elseif ($node instanceof FunctionNode) {
-            $this->functionName = $node->getName();
         }
     }
 
@@ -172,7 +141,7 @@ class RuleViolation
      */
     public function getFileName()
     {
-        return $this->node->getFileName();
+        return $this->nodeInfo->fileName;
     }
 
     /**
@@ -182,7 +151,7 @@ class RuleViolation
      */
     public function getBeginLine()
     {
-        return $this->node->getBeginLine();
+        return $this->nodeInfo->beginLine;
     }
 
     /**
@@ -192,7 +161,7 @@ class RuleViolation
      */
     public function getEndLine()
     {
-        return $this->node->getEndLine();
+        return $this->nodeInfo->endLine;
     }
 
     /**
@@ -202,18 +171,18 @@ class RuleViolation
      */
     public function getNamespaceName()
     {
-        return $this->node->getNamespaceName();
+        return $this->nodeInfo->namespaceName;
     }
 
     /**
      * Returns the name of the parent class or interface or <b>null</b> when there
      * is no parent class.
      *
-     * @return string
+     * @return string|null
      */
     public function getClassName()
     {
-        return $this->className;
+        return $this->nodeInfo->className;
     }
 
     /**
@@ -224,17 +193,17 @@ class RuleViolation
      */
     public function getMethodName()
     {
-        return $this->methodName;
+        return $this->nodeInfo->methodName;
     }
 
     /**
      * Returns the name of a function or <b>null</b> when this violation has no
      * function context.
      *
-     * @return string
+     * @return string|null
      */
     public function getFunctionName()
     {
-        return $this->functionName;
+        return $this->nodeInfo->functionName;
     }
 }
