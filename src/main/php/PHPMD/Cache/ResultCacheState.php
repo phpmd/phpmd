@@ -15,6 +15,27 @@ class ResultCacheState
 
     /**
      * @param string $filePath
+     * @return array
+     */
+    public function getViolations($filePath)
+    {
+        if (isset($this->state['files'][$filePath]['violations']) === false) {
+            return array();
+        }
+
+        return $this->state['files'][$filePath]['violations'];
+    }
+
+    /**
+     * @param string $filePath
+     */
+    public function setViolations($filePath, array $violations)
+    {
+        $this->state['files'][$filePath]['violations'] = $violations;
+    }
+
+    /**
+     * @param string $filePath
      * @param string $hash
      * @return bool
      */
@@ -31,7 +52,7 @@ class ResultCacheState
      * @param string $filePath
      * @param string $hash
      */
-    public function updateFileState($filePath, $hash)
+    public function setFileState($filePath, $hash)
     {
         return $this->state['files'][$filePath]['hash'] = $hash;
     }

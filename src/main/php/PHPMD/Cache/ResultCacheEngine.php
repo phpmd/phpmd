@@ -50,10 +50,17 @@ class ResultCacheEngine implements Filter
         }
         $filePath = Paths::getRelativePath($this->basePath, $absolute);
 
+        // determine is file has changed
         $isStale = $this->state->isFileStale($filePath, $hash);
-        $this->newState->updateFileState($filePath, $hash);
 
-        // TODO transfer violations
+        if ($isStale === false) {
+            // file has not changed, transfer violations
+            $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
+        } else {
+            // file has changed, set state and initialize violations
+            $this->newState->setFileState($filePath, $hash);
+            $this->newState->setViolations($filePath, array());
+        }
 
         return $isStale;
     }
