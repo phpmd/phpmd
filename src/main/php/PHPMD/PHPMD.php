@@ -9,16 +9,15 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
 
 use PHPMD\Cache\ResultCacheEngine;
-use PHPMD\Cache\ResultCacheIO;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -140,7 +139,7 @@ class PHPMD
      * Returns an array with string patterns that mark a file path as invalid.
      *
      * @return string[]
-     * @since 0.2.0
+     * @since      0.2.0
      * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
      */
     public function getIgnorePattern()
@@ -235,11 +234,11 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string $inputPath
-     * @param string $ruleSets
+     * @param string                    $inputPath
+     * @param string                    $ruleSets
      * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSetFactory $ruleSetFactory
-     * @param \PHPMD\Report $report
+     * @param \PHPMD\RuleSetFactory     $ruleSetFactory
+     * @param \PHPMD\Report             $report
      * @return void
      */
     public function processFiles(
@@ -248,14 +247,15 @@ class PHPMD
         array $renderers,
         RuleSetFactory $ruleSetFactory,
         Report $report
-    ) {
+    )
+    {
         // Merge parsed excludes
         $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
 
         $this->input = $inputPath;
 
         $factory = new ParserFactory();
-        $parser = $factory->create($this);
+        $parser  = $factory->create($this);
 
         $ruleSetList = $ruleSetFactory->createRuleSets($ruleSets);
         foreach ($ruleSetList as $ruleSet) {
@@ -265,8 +265,9 @@ class PHPMD
         $report->start();
         $parser->parse($report);
         if ($this->resultCache !== null) {
-            $writer = new ResultCacheIO();
-            $writer->toFile($this->resultCache->processReport($ruleSetList, $report), $this->resultCache->getConfig()->getFilePath());
+            $state = $this->resultCache->getFileFilter()->getState();
+            $state = $this->resultCache->getUpdater()->update($ruleSetList, $state, $report);
+            $this->resultCache->getWriter()->write($state);
         }
         $report->end();
 
@@ -282,7 +283,7 @@ class PHPMD
             $renderer->end();
         }
 
-        $this->errors = $report->hasErrors();
+        $this->errors     = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

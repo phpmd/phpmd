@@ -76,7 +76,7 @@ class ResultCacheFileFilter implements Filter
     /**
      * @return ResultCacheState
      */
-    public function getNewState()
+    public function getState()
     {
         return $this->newState;
     }
