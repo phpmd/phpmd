@@ -59,7 +59,7 @@ class PHPMD
      */
     private $input;
 
-    /** @var ResultCacheEngine */
+    /** @var ResultCacheEngine|null */
     private $resultCache;
 
     /**
@@ -262,6 +262,9 @@ class PHPMD
 
         $report->start();
         $parser->parse($report);
+        if ($this->resultCache !== null) {
+            $this->resultCache->processReport($report);
+        }
         $report->end();
 
         foreach ($renderers as $renderer) {

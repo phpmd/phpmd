@@ -2,6 +2,8 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\RuleViolation;
+
 class ResultCacheState
 {
     /** @var array{files: array<string, array{hash: string, violations: array}>} */
@@ -32,6 +34,24 @@ class ResultCacheState
     public function setViolations($filePath, array $violations)
     {
         $this->state['files'][$filePath]['violations'] = $violations;
+    }
+
+    /**
+     * @param string $filePath
+     */
+    public function addViolation($filePath, RuleViolation $violation)
+    {
+        $this->state['files'][$filePath]['violations'][] = array(
+            'namespaceName' => $violation->getNamespaceName(),
+            'className'     => $violation->getClassName(),
+            'methodName'    => $violation->getMethodName(),
+            'functionName'  => $violation->getFunctionName(),
+            'beginLine'     => $violation->getBeginLine(),
+            'endLine'       => $violation->getEndLine(),
+            'description'   => $violation->getDescription(),
+            'args'          => $violation->getArgs(),
+            'metric'        => $violation->getMetric()
+        );
     }
 
     /**

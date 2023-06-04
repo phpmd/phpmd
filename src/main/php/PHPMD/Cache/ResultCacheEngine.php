@@ -3,6 +3,7 @@
 namespace PHPMD\Cache;
 
 use PDepend\Input\Filter;
+use PHPMD\Report;
 use PHPMD\Utility\Paths;
 
 class ResultCacheEngine implements Filter
@@ -44,7 +45,7 @@ class ResultCacheEngine implements Filter
     }
 
     /**
-     * A hook to allow filtering out certain files from inspection by pdepend.
+     * Stage 1: A hook to allow filtering out certain files from inspection by pdepend.
      * @inheritDoc
      * @return bool `true` will inspect the file, when `false` the file will be filtered out.
      */
@@ -76,5 +77,22 @@ class ResultCacheEngine implements Filter
         }
 
         return $this->fileIsModified[$filePath] = $isModified;
+    }
+
+    /**
+     * Stage 2: Invoked when all modified and new files have been inspected and added to the report. Next:
+     * - Add new violations from the report to the cache
+     * - Add all existing violations from the result cache to the report.
+     */
+    public function processReport(Report $report)
+    {
+        // grab a copy of the new violations
+        $newViolations = $report->getRuleViolations();
+
+        // add violations from the cache to the report
+        foreach ($newViolations as $violation) {
+            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $this->newState->addViolation($filePath, $violation);
+        }
     }
 }
