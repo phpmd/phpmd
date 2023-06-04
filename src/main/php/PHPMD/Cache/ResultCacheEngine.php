@@ -65,7 +65,7 @@ class ResultCacheEngine implements Filter
             $hash = md5_file($absolute);
         }
 
-        // Determine if file was modified since last analyses
+        // Determine if file was modified since last analyse
         if ($this->state === null) {
             $isModified = true;
         } else {
