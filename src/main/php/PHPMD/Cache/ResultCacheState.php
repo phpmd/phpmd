@@ -2,7 +2,11 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Node\NodeInfo;
+use PHPMD\Rule;
+use PHPMD\RuleSet;
 use PHPMD\RuleViolation;
+use PHPMD\Utility\Paths;
 
 class ResultCacheState
 {
@@ -41,7 +45,7 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function addViolation($filePath, RuleViolation $violation)
+    public function addRuleViolation($filePath, RuleViolation $violation)
     {
         $this->state['files'][$filePath]['violations'][] = array(
             'rule'          => get_class($violation->getRule()),
@@ -58,13 +62,49 @@ class ResultCacheState
     }
 
     /**
+     * @param string    $basePath
+     * @param RuleSet[] $ruleSetList
+     */
+    public function getRuleViolations($basePath, array $ruleSetList)
+    {
+        if (isset($this->state['files']) === false) {
+            return array();
+        }
+
+        $ruleViolations = array();
+
+        foreach ($this->state['files'] as $filePath => $violations) {
+            if (isset($violations['violations']) === false) {
+                continue;
+            }
+            foreach ($violations['violations'] as $violation) {
+                $rule     = self::findRuleIn($violation['rule'], $ruleSetList);
+                $nodeInfo = new NodeInfo(
+                    Paths::concat($basePath, $filePath),
+                    $violation['namespaceName'],
+                    $violation['className'],
+                    $violation['methodName'],
+                    $violation['functionName'],
+                    $violation['beginLine'],
+                    $violation['endLine']
+                );
+
+                $violationMessage = array('args' => $violation['args'], 'message' => $violation['description']);
+                $ruleViolations[] = new RuleViolation($rule, $nodeInfo, $violationMessage, $violation['metric']);
+            }
+        }
+
+        return $ruleViolations;
+    }
+
+    /**
      * @param string $filePath
      * @param string $hash
      * @return bool
      */
     public function isFileModified($filePath, $hash)
     {
-        if (isset($this->state['files'][$filePath]) === false) {
+        if (isset($this->state['files'][$filePath]['hash']) === false) {
             return true;
         }
 
@@ -86,5 +126,23 @@ class ResultCacheState
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * @param string    $ruleClassName
+     * @param RuleSet[] $ruleSetList
+     * @return Rule|null
+     */
+    private static function findRuleIn($ruleClassName, array $ruleSetList)
+    {
+        foreach ($ruleSetList as $ruleSet) {
+            foreach ($ruleSet->getRules() as $rule) {
+                if (get_class($rule) === $ruleClassName) {
+                    return $rule;
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -257,7 +257,8 @@ class PHPMD
         $factory = new ParserFactory();
         $parser = $factory->create($this);
 
-        foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
+        $ruleSetList = $ruleSetFactory->createRuleSets($ruleSets);
+        foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
         }
 
@@ -265,7 +266,7 @@ class PHPMD
         $parser->parse($report);
         if ($this->resultCache !== null) {
             $writer = new ResultCacheIO();
-            $writer->toFile($this->resultCache->processReport($report), $this->resultCache->getConfig()->getFilePath());
+            $writer->toFile($this->resultCache->processReport($ruleSetList, $report), $this->resultCache->getConfig()->getFilePath());
         }
         $report->end();
 

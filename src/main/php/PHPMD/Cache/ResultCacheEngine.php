@@ -4,6 +4,7 @@ namespace PHPMD\Cache;
 
 use PDepend\Input\Filter;
 use PHPMD\Report;
+use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
 
 class ResultCacheEngine implements Filter
@@ -72,12 +73,10 @@ class ResultCacheEngine implements Filter
             $isModified = $this->state->isFileModified($filePath, $hash);
         }
 
+        $this->newState->setFileState($filePath, $hash);
         if ($isModified === false) {
             // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
-        } else {
-            // File was modified, set state
-            $this->newState->setFileState($filePath, $hash);
         }
 
         return $this->fileIsModified[$filePath] = $isModified;
@@ -87,17 +86,23 @@ class ResultCacheEngine implements Filter
      * Stage 2: Invoked when all modified and new files have been inspected and added to the report. Next:
      * - Add new violations from the report to the cache
      * - Add all existing violations from the files that were skipped to the report.
+     * @param RuleSet[] $ruleSetList
      * @return ResultCacheState
      */
-    public function processReport(Report $report)
+    public function processReport(array $ruleSetList, Report $report)
     {
         // grab a copy of the new violations
         $newViolations = $report->getRuleViolations();
 
-        // add violations from the cache to the report
+        // add RuleViolations from the result cache to the report
+        foreach ($this->newState->getRuleViolations($this->basePath, $ruleSetList) as $ruleViolation) {
+            $report->addRuleViolation($ruleViolation);
+        }
+
+        // add violations from the report to the result cache
         foreach ($newViolations as $violation) {
             $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
-            $this->newState->addViolation($filePath, $violation);
+            $this->newState->addRuleViolation($filePath, $violation);
         }
 
         return $this->newState;
