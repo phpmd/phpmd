@@ -24,7 +24,6 @@ use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheConfig;
 use PHPMD\Cache\ResultCacheEngine;
 use PHPMD\Cache\ResultCacheIO;
-use PHPMD\Cache\ResultCacheState;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
@@ -87,8 +86,8 @@ class Command
         }
 
         // Configure baseline violations
-        $report   = null;
-        $finder   = new BaselineFileFinder($opts);
+        $report = null;
+        $finder = new BaselineFileFinder($opts);
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
             $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
@@ -133,7 +132,9 @@ class Command
         }
 
         // Configure Result Cache Engine
-        $resultCache = new ResultCacheEngine(getcwd(), new ResultCacheConfig(true, '.phpmd.result-cache.php', 'content'), new ResultCacheState());
+        $config      = new ResultCacheConfig(true, getcwd() . '/.phpmd.result-cache.php', 'content');
+        $reader      = new ResultCacheIO();
+        $resultCache = new ResultCacheEngine(getcwd(), $config, $reader->fromFile($config->getFilePath()));
         $phpmd->setResultCache($resultCache);
 
         $phpmd->processFiles(

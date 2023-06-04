@@ -11,7 +11,7 @@ class ResultCacheEngine implements Filter
     /** @var ResultCacheConfig */
     private $config;
 
-    /** @var ResultCacheState */
+    /** @var ResultCacheState|null */
     private $state;
 
     /** @var ResultCacheState */
@@ -24,9 +24,9 @@ class ResultCacheEngine implements Filter
     private $fileIsModified = array();
 
     /**
-     * @param string            $basePath
-     * @param ResultCacheConfig $config
-     * @param ResultCacheState  $state
+     * @param string                $basePath
+     * @param ResultCacheConfig     $config
+     * @param ResultCacheState|null $state
      */
     public function __construct($basePath, $config, $state)
     {
@@ -66,7 +66,11 @@ class ResultCacheEngine implements Filter
         }
 
         // Determine if file was modified since last analyses
-        $isModified = $this->state->isFileModified($filePath, $hash);
+        if ($this->state === null) {
+            $isModified = true;
+        } else {
+            $isModified = $this->state->isFileModified($filePath, $hash);
+        }
 
         if ($isModified === false) {
             // File was not modified, transfer previous violations
