@@ -23,6 +23,7 @@ use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheConfig;
 use PHPMD\Cache\ResultCacheEngine;
+use PHPMD\Cache\ResultCacheFileFilter;
 use PHPMD\Cache\ResultCacheIO;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
@@ -134,7 +135,8 @@ class Command
         // Configure Result Cache Engine
         $config      = new ResultCacheConfig(true, getcwd() . '/.phpmd.result-cache.php', 'content');
         $reader      = new ResultCacheIO();
-        $resultCache = new ResultCacheEngine(getcwd(), $config, $reader->fromFile($config->getFilePath()));
+        $filter      = new ResultCacheFileFilter(getcwd(), $config->getStrategy(), $reader->fromFile($config->getFilePath()));
+        $resultCache = new ResultCacheEngine(getcwd(), $config, $filter);
         $phpmd->setResultCache($resultCache);
 
         $phpmd->processFiles(

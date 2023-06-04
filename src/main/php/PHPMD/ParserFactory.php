@@ -151,8 +151,8 @@ class ParserFactory
     private function initResultCache(Engine $pdepend, PHPMD $phpmd)
     {
         $resultCache = $phpmd->getResultCache();
-        if ($resultCache->getConfig()->isEnabled()) {
-            $pdepend->addFileFilter($resultCache);
+        if ($resultCache !== null && $resultCache->getConfig()->isEnabled()) {
+            $pdepend->addFileFilter($resultCache->getFileFilter());
         }
     }
 

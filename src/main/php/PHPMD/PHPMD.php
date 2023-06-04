@@ -191,7 +191,7 @@ class PHPMD
     }
 
     /**
-     * @return ResultCacheEngine
+     * @return ResultCacheEngine|null
      */
     public function getResultCache()
     {
