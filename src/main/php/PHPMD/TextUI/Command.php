@@ -23,6 +23,7 @@ use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheConfig;
 use PHPMD\Cache\ResultCacheEngine;
+use PHPMD\Cache\ResultCacheIO;
 use PHPMD\Cache\ResultCacheState;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;

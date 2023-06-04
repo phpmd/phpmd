@@ -82,7 +82,8 @@ class ResultCacheEngine implements Filter
     /**
      * Stage 2: Invoked when all modified and new files have been inspected and added to the report. Next:
      * - Add new violations from the report to the cache
-     * - Add all existing violations from the result cache to the report.
+     * - Add all existing violations from the files that were skipped to the report.
+     * @return ResultCacheState
      */
     public function processReport(Report $report)
     {
@@ -94,5 +95,7 @@ class ResultCacheEngine implements Filter
             $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
             $this->newState->addViolation($filePath, $violation);
         }
+
+        return $this->newState;
     }
 }

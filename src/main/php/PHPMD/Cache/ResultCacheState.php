@@ -7,13 +7,15 @@ use PHPMD\RuleViolation;
 class ResultCacheState
 {
     /** @var array{files: array<string, array{hash: string, violations: array}>} */
-    private $state = array(
-        'files' => array(
-            'src/main/php/PHPMD/Baseline/BaselineFileFinder.php' => array(
-                'hash' => '678869f0ed211c0926c4e6d9c4b9fd23'
-            )
-        )
-    );
+    private $state;
+
+    /**
+     * @param array{files: array<string, array{hash: string, violations: array}>} $state
+     */
+    public function __construct($state = array())
+    {
+        $this->state = $state;
+    }
 
     /**
      * @param string $filePath
@@ -42,6 +44,7 @@ class ResultCacheState
     public function addViolation($filePath, RuleViolation $violation)
     {
         $this->state['files'][$filePath]['violations'][] = array(
+            'rule'          => get_class($violation->getRule()),
             'namespaceName' => $violation->getNamespaceName(),
             'className'     => $violation->getClassName(),
             'methodName'    => $violation->getMethodName(),
@@ -75,5 +78,13 @@ class ResultCacheState
     public function setFileState($filePath, $hash)
     {
         return $this->state['files'][$filePath]['hash'] = $hash;
+    }
+
+    /**
+     * @return array{files: array<string, array{hash: string, violations: array}>}
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 }

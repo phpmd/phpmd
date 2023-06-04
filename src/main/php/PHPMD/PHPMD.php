@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use PHPMD\Cache\ResultCacheEngine;
+use PHPMD\Cache\ResultCacheIO;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -263,7 +264,8 @@ class PHPMD
         $report->start();
         $parser->parse($report);
         if ($this->resultCache !== null) {
-            $this->resultCache->processReport($report);
+            $writer = new ResultCacheIO();
+            $writer->toFile($this->resultCache->processReport($report), $this->resultCache->getConfig()->getFilePath());
         }
         $report->end();
 
