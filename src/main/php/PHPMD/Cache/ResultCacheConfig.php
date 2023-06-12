@@ -4,27 +4,19 @@ namespace PHPMD\Cache;
 
 class ResultCacheConfig
 {
-    /** @var bool */
-    private $enabled;
     /** @var string */
     private $filePath;
     /** @var string */
     private $strategy;
 
     /**
-     * @param bool $enabled
      * @param string $filePath
      * @param string $strategy
      */
-    public function __construct($enabled, $filePath, $strategy) {
-        $this->enabled = $enabled;
+    public function __construct($filePath, $strategy)
+    {
         $this->filePath = $filePath;
         $this->strategy = $strategy;
-    }
-
-    public function isEnabled()
-    {
-        return $this->enabled;
     }
 
     public function getFilePath()

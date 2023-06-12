@@ -12,12 +12,12 @@ class ResultCacheEngineFactory
      */
     public static function create($basePath, CommandLineOptions $options)
     {
-        $config = new ResultCacheConfig($options->isCacheEnabled(), $options->cacheFile(), 'content');
-        if ($config->isEnabled() === false) {
+        if ($options->isCacheEnabled() === false) {
             return null;
         }
 
-        $state   = ResultCacheStateFactory::fromFile($config->getFilePath());
+        $config = new ResultCacheConfig($options->cacheFile(), 'content');
+        $state  = ResultCacheStateFactory::fromFile($config->getFilePath());
         return new ResultCacheEngine(
             $config,
             new ResultCacheFileFilter($basePath, $config->getStrategy(), $state),
