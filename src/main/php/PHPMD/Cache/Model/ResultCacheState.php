@@ -10,15 +10,27 @@ use PHPMD\Utility\Paths;
 
 class ResultCacheState
 {
+    /** @var ResultCacheKey */
+    private $cacheKey;
+
     /** @var array{files: array<string, array{hash: string, violations: array}>} */
     private $state;
 
     /**
      * @param array{files: array<string, array{hash: string, violations: array}>} $state
      */
-    public function __construct($state = array())
+    public function __construct(ResultCacheKey $cacheKey, $state = array())
     {
-        $this->state = $state;
+        $this->cacheKey = $cacheKey;
+        $this->state    = $state;
+    }
+
+    /**
+     * @return ResultCacheKey
+     */
+    public function getCacheKey()
+    {
+        return $this->cacheKey;
     }
 
     /**
@@ -121,11 +133,14 @@ class ResultCacheState
     }
 
     /**
-     * @return array{files: array<string, array{hash: string, violations: array}>}
+     * @return array
      */
-    public function getState()
+    public function toArray()
     {
-        return $this->state;
+        return array(
+            'key'   => $this->cacheKey->toArray(),
+            'state' => $this->state
+        );
     }
 
     /**

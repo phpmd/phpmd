@@ -3,6 +3,7 @@
 namespace PHPMD\Cache;
 
 use PDepend\Input\Filter;
+use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Utility\Paths;
 
@@ -29,12 +30,12 @@ class ResultCacheFileFilter implements Filter
      * @param string                $strategy
      * @param ResultCacheState|null $state
      */
-    public function __construct($basePath, $strategy, $state)
+    public function __construct($basePath, $strategy, ResultCacheKey $cacheKey, $state)
     {
         $this->basePath = $basePath;
         $this->strategy = $strategy;
         $this->state    = $state;
-        $this->newState = new ResultCacheState();
+        $this->newState = new ResultCacheState($cacheKey);
     }
 
     /**

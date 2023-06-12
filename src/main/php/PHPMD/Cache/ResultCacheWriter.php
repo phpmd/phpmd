@@ -20,7 +20,7 @@ class ResultCacheWriter
     public function write(ResultCacheState $state)
     {
         $output = "<?php \n\nreturn ";
-        $output .= var_export($state->getState(), true);
+        $output .= var_export($state->toArray(), true);
         $output .= ";\n";
 
         file_put_contents($this->filePath, $output);

@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 
 class ResultCacheStateFactory
@@ -16,8 +17,13 @@ class ResultCacheStateFactory
             return null;
         }
 
-        $state = require $filePath;
+        $resultCache = require $filePath;
+        if (isset($resultCache['state'], $resultCache['key']['rules'], $resultCache['key']['phpVersion']) === false) {
+            return null;
+        }
 
-        return new ResultCacheState($state);
+        $cacheKey = new ResultCacheKey($resultCache['key']['rules'], $resultCache['key']['phpVersion']);
+
+        return new ResultCacheState($cacheKey, $resultCache['state']);
     }
 }
