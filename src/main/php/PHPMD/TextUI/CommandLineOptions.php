@@ -166,6 +166,18 @@ class CommandLineOptions
     protected $baselineFile;
 
     /**
+     * Should PHPMD read or write the result cache state from the cache file
+     * @var bool
+     */
+    protected $cacheEnabled = false;
+
+    /**
+     * If set the path to read and write the result cache state from and to.
+     * @var string|null
+     */
+    protected $cacheFile;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -237,6 +249,12 @@ class CommandLineOptions
                     break;
                 case '--baseline-file':
                     $this->baselineFile = array_shift($args);
+                    break;
+                case '--cache':
+                    $this->cacheEnabled = true;
+                    break;
+                case '--cache-file':
+                    $this->cacheFile = array_shift($args);
                     break;
                 case '--ignore-errors-on-exit':
                     $this->ignoreErrorsOnExit = true;
@@ -414,6 +432,24 @@ class CommandLineOptions
     public function baselineFile()
     {
         return $this->baselineFile;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCacheEnabled()
+    {
+        return $this->cacheEnabled;
+    }
+
+    /**
+     * The filepath to the result cache state file
+     *
+     * @return string
+     */
+    public function cacheFile()
+    {
+        return $this->cacheFile === null ? '.phpmd.result-cache.php' : $this->cacheFile;
     }
 
     /**
