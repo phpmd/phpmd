@@ -130,7 +130,7 @@ class Command
         }
 
         // Configure Result Cache Engine
-        $phpmd->setResultCache(ResultCacheEngineFactory::create(getcwd()));
+        $phpmd->setResultCache(ResultCacheEngineFactory::create(getcwd(), $opts));
 
         $phpmd->processFiles(
             $opts->getInputPath(),

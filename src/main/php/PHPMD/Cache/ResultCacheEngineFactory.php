@@ -2,16 +2,18 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\TextUI\CommandLineOptions;
+
 class ResultCacheEngineFactory
 {
     /**
      * @param string $basePath
      * @return ResultCacheEngine|null
      */
-    public static function create($basePath)
+    public static function create($basePath, CommandLineOptions $options)
     {
-        $config = new ResultCacheConfig(true, $basePath . '/.phpmd.result-cache.php', 'content');
-        if ($config->isEnabled()) {
+        $config = new ResultCacheConfig($options->isCacheEnabled(), $options->cacheFile(), 'content');
+        if ($config->isEnabled() === false) {
             return null;
         }
 
