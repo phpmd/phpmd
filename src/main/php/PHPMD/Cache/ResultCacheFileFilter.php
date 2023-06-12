@@ -3,6 +3,7 @@
 namespace PHPMD\Cache;
 
 use PDepend\Input\Filter;
+use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Utility\Paths;
 
 class ResultCacheFileFilter implements Filter

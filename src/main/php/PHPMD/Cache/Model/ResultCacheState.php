@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPMD\Cache;
+namespace PHPMD\Cache\Model;
 
 use PHPMD\Node\NodeInfo;
 use PHPMD\Rule;

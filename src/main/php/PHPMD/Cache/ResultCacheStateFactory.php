@@ -2,6 +2,8 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Cache\Model\ResultCacheState;
+
 class ResultCacheStateFactory
 {
     /**

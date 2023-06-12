@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Report;
 use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;

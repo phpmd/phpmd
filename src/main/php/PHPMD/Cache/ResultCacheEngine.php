@@ -2,6 +2,8 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Cache\Model\ResultCacheConfig;
+
 class ResultCacheEngine
 {
     /** @var ResultCacheConfig */
@@ -12,7 +14,7 @@ class ResultCacheEngine
 
     /** @var ResultCacheUpdater */
     private $updater;
-    
+
     /** @var ResultCacheWriter */
     private $writer;
 

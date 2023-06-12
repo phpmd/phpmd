@@ -19,15 +19,15 @@ namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
-use PHPMD\Cache\ResultCacheStrategy;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Renderer\AnsiRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
-use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 

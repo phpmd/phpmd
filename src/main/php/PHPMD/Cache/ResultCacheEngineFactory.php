@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use PHPMD\Cache\Model\ResultCacheConfig;
 use PHPMD\TextUI\CommandLineOptions;
 
 class ResultCacheEngineFactory
