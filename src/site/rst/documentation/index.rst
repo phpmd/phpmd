@@ -70,6 +70,9 @@ Command line options
   - ``--cache-file`` - in cooperation with ``--cache`` will override the default result cache file path of
     ``.phpmd.result-cache.php`` to the given file path.
 
+  - ``--cache-strategy`` - sets the caching strategy to determine if a file is still fresh. Either
+    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
     working directory.

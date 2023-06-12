@@ -19,6 +19,7 @@ namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
+use PHPMD\Cache\ResultCacheStrategy;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
@@ -178,6 +179,12 @@ class CommandLineOptions
     protected $cacheFile;
 
     /**
+     * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
+     * @var string|null
+     */
+    protected $cacheStrategy;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -255,6 +262,9 @@ class CommandLineOptions
                     break;
                 case '--cache-file':
                     $this->cacheFile = array_shift($args);
+                    break;
+                case '--cache-strategy':
+                    $this->cacheStrategy = array_shift($args);
                     break;
                 case '--ignore-errors-on-exit':
                     $this->ignoreErrorsOnExit = true;
@@ -450,6 +460,22 @@ class CommandLineOptions
     public function cacheFile()
     {
         return $this->cacheFile === null ? '.phpmd.result-cache.php' : $this->cacheFile;
+    }
+
+    /**
+     * The caching strategy to determine if a file should be (re)inspected. Either `content` or last modified `timestamp` based.
+     *
+     * @return string
+     */
+    public function cacheStrategy()
+    {
+        switch ($this->cacheStrategy) {
+            case ResultCacheStrategy::CONTENT:
+            case ResultCacheStrategy::TIMESTAMP:
+                return $this->cacheStrategy;
+            default:
+                return ResultCacheStrategy::CONTENT;
+        }
     }
 
     /**

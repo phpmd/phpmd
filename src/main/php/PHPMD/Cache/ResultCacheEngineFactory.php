@@ -16,7 +16,7 @@ class ResultCacheEngineFactory
             return null;
         }
 
-        $config = new ResultCacheConfig($options->cacheFile(), 'content');
+        $config = new ResultCacheConfig($options->cacheFile(), $options->cacheStrategy());
         $state  = ResultCacheStateFactory::fromFile($config->getFilePath());
         return new ResultCacheEngine(
             $config,
