@@ -2,8 +2,6 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\Cache\Model\ResultCacheConfig;
-
 class ResultCacheEngine
 {
     /** @var ResultCacheFileFilter */

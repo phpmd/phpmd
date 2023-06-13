@@ -2,13 +2,13 @@
 
 namespace PHPMD\Cache\Model;
 
-use PHPUnit\Framework\TestCase;
+use PHPMD\AbstractTest;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheKey
  * @covers ::__construct
  */
-class ResultCacheKeyTest extends TestCase
+class ResultCacheKeyTest extends AbstractTest
 {
     /**
      * @covers ::toArray
