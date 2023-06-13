@@ -247,8 +247,7 @@ class PHPMD
         array $renderers,
         array $ruleSetList,
         Report $report
-    )
-    {
+    ) {
         // Merge parsed excludes
         $this->addIgnorePatterns($ignorePattern);
 

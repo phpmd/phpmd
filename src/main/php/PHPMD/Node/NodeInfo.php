@@ -80,8 +80,7 @@ class NodeInfo
         $functionName,
         $beginLine,
         $endLine
-    )
-    {
+    ) {
         $this->fileName      = $fileName;
         $this->namespaceName = $namespaceName;
         $this->className     = $className;

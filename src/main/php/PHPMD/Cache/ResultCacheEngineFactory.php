@@ -29,7 +29,7 @@ class ResultCacheEngineFactory
             return null;
         }
 
-        // create cache key based on the current rule and environment
+        // create cache key based on the current rules and environment
         $cacheKey = $this->cacheKeyFactory->create($options->hasStrict(), $ruleSetList);
 
         // load result cache from file
