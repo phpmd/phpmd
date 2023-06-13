@@ -235,29 +235,28 @@ class PHPMD
      * argument. The result will be passed to all given renderer instances.
      *
      * @param string                    $inputPath
-     * @param string                    $ruleSets
+     * @param array|null                $ignorePattern
      * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSetFactory     $ruleSetFactory
+     * @param \PHPMD\RuleSet[]          $ruleSetList
      * @param \PHPMD\Report             $report
      * @return void
      */
     public function processFiles(
         $inputPath,
-        $ruleSets,
+        $ignorePattern,
         array $renderers,
-        RuleSetFactory $ruleSetFactory,
+        array $ruleSetList,
         Report $report
     )
     {
         // Merge parsed excludes
-        $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ignorePattern);
 
         $this->input = $inputPath;
 
         $factory = new ParserFactory();
         $parser  = $factory->create($this);
 
-        $ruleSetList = $ruleSetFactory->createRuleSets($ruleSets);
         foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
         }

@@ -129,14 +129,17 @@ class Command
             $phpmd->addIgnorePatterns(explode(',', $ignore));
         }
 
+        $ignorePattern = $ruleSetFactory->getIgnorePattern($opts->getRuleSets());
+        $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
+
         // Configure Result Cache Engine
-        $phpmd->setResultCache(ResultCacheEngineFactory::create(getcwd(), $opts));
+        $phpmd->setResultCache(ResultCacheEngineFactory::create(getcwd(), $opts, $ruleSetList));
 
         $phpmd->processFiles(
             $opts->getInputPath(),
-            $opts->getRuleSets(),
+            $ignorePattern,
             $renderers,
-            $ruleSetFactory,
+            $ruleSetList,
             $report !== null ? $report : new Report()
         );
 
