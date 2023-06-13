@@ -98,7 +98,7 @@ class ResultCacheFileFilterTest extends AbstractTest
     {
         $filter = new ResultCacheFileFilter(__DIR__, ResultCacheStrategy::CONTENT, $this->key, $this->state);
 
-        // expect invocation once
+        // expect one invocation
         $this->state->expects(self::once())->method('isFileModified')->willReturn(true);
 
         // call twice
