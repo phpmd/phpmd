@@ -6,9 +6,6 @@ use PHPMD\Cache\Model\ResultCacheConfig;
 
 class ResultCacheEngine
 {
-    /** @var ResultCacheConfig */
-    private $config;
-
     /** @var ResultCacheFileFilter */
     private $fileFilter;
 
@@ -18,20 +15,11 @@ class ResultCacheEngine
     /** @var ResultCacheWriter */
     private $writer;
 
-    public function __construct(ResultCacheConfig $config, ResultCacheFileFilter $fileFilter, ResultCacheUpdater $updater, ResultCacheWriter $writer)
+    public function __construct(ResultCacheFileFilter $fileFilter, ResultCacheUpdater $updater, ResultCacheWriter $writer)
     {
-        $this->config     = $config;
         $this->fileFilter = $fileFilter;
         $this->updater    = $updater;
         $this->writer     = $writer;
-    }
-
-    /**
-     * @return ResultCacheConfig
-     */
-    public function getConfig()
-    {
-        return $this->config;
     }
 
     /**

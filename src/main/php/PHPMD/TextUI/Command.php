@@ -22,6 +22,8 @@ use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheEngineFactory;
+use PHPMD\Cache\ResultCacheKeyFactory;
+use PHPMD\Cache\ResultCacheStateFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
@@ -133,7 +135,8 @@ class Command
         $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
 
         // Configure Result Cache Engine
-        $phpmd->setResultCache(ResultCacheEngineFactory::create(getcwd(), $opts, $ruleSetList));
+        $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(), new ResultCacheStateFactory());
+        $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
 
         $phpmd->processFiles(
             $opts->getInputPath(),

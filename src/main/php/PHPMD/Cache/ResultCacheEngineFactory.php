@@ -2,28 +2,38 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\Cache\Model\ResultCacheConfig;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 
 class ResultCacheEngineFactory
 {
+    /** @var ResultCacheKeyFactory */
+    private $cacheKeyFactory;
+    /** @var ResultCacheStateFactory */
+    private $cacheStateFactory;
+
+    public function __construct(ResultCacheKeyFactory $cacheKeyFactory, ResultCacheStateFactory $cacheStateFactory)
+    {
+        $this->cacheKeyFactory   = $cacheKeyFactory;
+        $this->cacheStateFactory = $cacheStateFactory;
+    }
+
     /**
      * @param string    $basePath
      * @param RuleSet[] $ruleSetList
      * @return ResultCacheEngine|null
      */
-    public static function create($basePath, CommandLineOptions $options, array $ruleSetList)
+    public function create($basePath, CommandLineOptions $options, array $ruleSetList)
     {
         if ($options->isCacheEnabled() === false) {
             return null;
         }
 
-        $cacheKeyFactory = new ResultCacheKeyFactory();
-        $cacheKey        = $cacheKeyFactory->create($options->hasStrict(), $ruleSetList);
+        // create cache key based on the current rule and environment
+        $cacheKey = $this->cacheKeyFactory->create($options->hasStrict(), $ruleSetList);
 
-        $config = new ResultCacheConfig($options->cacheFile(), $options->cacheStrategy());
-        $state  = ResultCacheStateFactory::fromFile($config->getFilePath());
+        // load result cache from file
+        $state = $this->cacheStateFactory->fromFile($options->cacheFile());
 
         // the cache key doesn't match the stored cache key. Invalidate cache
         if ($state !== null && $state->getCacheKey()->isEqualTo($cacheKey) === false) {
@@ -31,10 +41,9 @@ class ResultCacheEngineFactory
         }
 
         return new ResultCacheEngine(
-            $config,
-            new ResultCacheFileFilter($basePath, $config->getStrategy(), $cacheKey, $state),
+            new ResultCacheFileFilter($basePath, $options->cacheStrategy(), $cacheKey, $state),
             new ResultCacheUpdater($basePath),
-            new ResultCacheWriter($config->getFilePath())
+            new ResultCacheWriter($options->cacheFile())
         );
     }
 }
