@@ -4,22 +4,26 @@ namespace PHPMD\Cache\Model;
 
 class ResultCacheKey
 {
-    /** @var string[] */
-    private $rules;
-    /** @var int */
-    private $phpVersion;
     /** @var bool */
     private $strict;
+    /** @var array<string, string> */
+    private $rules;
+    /** @var array<string, string> */
+    private $composer;
+    /** @var int */
+    private $phpVersion;
 
     /**
-     * @param bool     $strict
-     * @param string[] $rules
-     * @param int      $phpVersion
+     * @param bool                  $strict
+     * @param array<string, string> $rules
+     * @param array<string, string> $composer
+     * @param int                   $phpVersion
      */
-    public function __construct($strict, $rules, $phpVersion)
+    public function __construct($strict, $rules, $composer, $phpVersion)
     {
         $this->strict     = $strict;
         $this->rules      = $rules;
+        $this->composer   = $composer;
         $this->phpVersion = $phpVersion;
     }
 
@@ -31,6 +35,7 @@ class ResultCacheKey
         return array(
             'strict'     => $this->strict,
             'rules'      => $this->rules,
+            'composer'   => $this->composer,
             'phpVersion' => $this->phpVersion,
         );
     }
@@ -42,6 +47,7 @@ class ResultCacheKey
     {
         return $this->strict === $other->strict
             && $this->rules === $other->rules
+            && $this->composer === $other->composer
             && $this->phpVersion === $other->phpVersion;
     }
 }

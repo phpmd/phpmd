@@ -35,10 +35,10 @@ class ResultCacheStateFactory
      */
     private function createCacheKey(array $data)
     {
-        if (isset($data['strict'], $data['rules'], $data['phpVersion']) === false) {
+        if (isset($data['strict'], $data['rules'], $data['composer'], $data['phpVersion']) === false) {
             return null;
         }
 
-        return new ResultCacheKey($data['strict'], $data['rules'], $data['phpVersion']);
+        return new ResultCacheKey($data['strict'], $data['rules'], $data['composer'], $data['phpVersion']);
     }
 }

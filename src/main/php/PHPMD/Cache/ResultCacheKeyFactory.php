@@ -9,12 +9,12 @@ use PHPMD\RuleSet;
 class ResultCacheKeyFactory
 {
     /**
-     * @param bool $strict
+     * @param bool      $strict
      * @param RuleSet[] $ruleSetList
      */
     public function create($strict, array $ruleSetList)
     {
-        return new ResultCacheKey($strict, self::createRuleHashes($ruleSetList), PHP_VERSION_ID);
+        return new ResultCacheKey($strict, self::createRuleHashes($ruleSetList), self::getComposerHashes(), PHP_VERSION_ID);
     }
 
     /**
@@ -36,6 +36,26 @@ class ResultCacheKeyFactory
         }
 
         ksort($result);
+
+        return $result;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private static function getComposerHashes()
+    {
+        // read composer.json and lock from current working directory
+        $path  = getcwd() . DIRECTORY_SEPARATOR;
+        $files = array('composer.json', 'composer.lock');
+
+        $result = array();
+        foreach ($files as $file) {
+            $filePath = $path . $file;
+            if (file_exists($filePath)) {
+                $result[$file] = sha1_file($filePath);
+            }
+        }
 
         return $result;
     }
