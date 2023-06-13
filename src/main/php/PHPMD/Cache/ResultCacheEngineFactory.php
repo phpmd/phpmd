@@ -20,7 +20,7 @@ class ResultCacheEngineFactory
         }
 
         $cacheKeyFactory = new ResultCacheKeyFactory();
-        $cacheKey        = $cacheKeyFactory->create($ruleSetList);
+        $cacheKey        = $cacheKeyFactory->create($options->hasStrict(), $ruleSetList);
 
         $config = new ResultCacheConfig($options->cacheFile(), $options->cacheStrategy());
         $state  = ResultCacheStateFactory::fromFile($config->getFilePath());

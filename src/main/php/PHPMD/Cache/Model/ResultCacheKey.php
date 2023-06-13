@@ -8,13 +8,17 @@ class ResultCacheKey
     private $rules;
     /** @var int */
     private $phpVersion;
+    /** @var bool */
+    private $strict;
 
     /**
+     * @param bool     $strict
      * @param string[] $rules
      * @param int      $phpVersion
      */
-    public function __construct($rules, $phpVersion)
+    public function __construct($strict, $rules, $phpVersion)
     {
+        $this->strict     = $strict;
         $this->rules      = $rules;
         $this->phpVersion = $phpVersion;
     }
@@ -25,6 +29,7 @@ class ResultCacheKey
     public function toArray()
     {
         return array(
+            'strict'     => $this->strict,
             'rules'      => $this->rules,
             'phpVersion' => $this->phpVersion,
         );
@@ -35,7 +40,8 @@ class ResultCacheKey
      */
     public function isEqualTo(ResultCacheKey $other)
     {
-        return $this->rules === $other->rules
+        return $this->strict === $other->strict
+            && $this->rules === $other->rules
             && $this->phpVersion === $other->phpVersion;
     }
 }

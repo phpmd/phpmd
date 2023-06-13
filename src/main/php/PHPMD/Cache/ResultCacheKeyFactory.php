@@ -9,11 +9,12 @@ use PHPMD\RuleSet;
 class ResultCacheKeyFactory
 {
     /**
+     * @param bool $strict
      * @param RuleSet[] $ruleSetList
      */
-    public function create(array $ruleSetList)
+    public function create($strict, array $ruleSetList)
     {
-        return new ResultCacheKey(self::createRuleHashes($ruleSetList), PHP_VERSION_ID);
+        return new ResultCacheKey($strict, self::createRuleHashes($ruleSetList), PHP_VERSION_ID);
     }
 
     /**

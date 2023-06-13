@@ -18,11 +18,11 @@ class ResultCacheStateFactory
         }
 
         $resultCache = require $filePath;
-        if (isset($resultCache['state'], $resultCache['key']['rules'], $resultCache['key']['phpVersion']) === false) {
+        if (isset($resultCache['state'], $resultCache['key']['strict'], $resultCache['key']['rules'], $resultCache['key']['phpVersion']) === false) {
             return null;
         }
 
-        $cacheKey = new ResultCacheKey($resultCache['key']['rules'], $resultCache['key']['phpVersion']);
+        $cacheKey = new ResultCacheKey($resultCache['key']['strict'], $resultCache['key']['rules'], $resultCache['key']['phpVersion']);
 
         return new ResultCacheState($cacheKey, $resultCache['state']);
     }
