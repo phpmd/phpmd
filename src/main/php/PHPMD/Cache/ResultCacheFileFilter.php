@@ -56,7 +56,7 @@ class ResultCacheFileFilter implements Filter
         if ($this->strategy === 'timestamp') {
             $hash = (string)filemtime($absolute);
         } else {
-            $hash = md5_file($absolute);
+            $hash = sha1_file($absolute);
         }
 
         // Determine if file was modified since last analyse
