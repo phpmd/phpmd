@@ -7,7 +7,6 @@ use PHPMD\Cache\Model\ResultCacheKey;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheStateFactory
- * @covers ::__construct
  */
 class ResultCacheStateFactoryTest extends AbstractTest
 {
@@ -34,7 +33,7 @@ class ResultCacheStateFactoryTest extends AbstractTest
      */
     public function testFromFileEmptyCache()
     {
-        $state = $this->factory->fromFile(static::createResourceUriForTest('.empty-cache.php'));
+        $state = $this->factory->fromFile(static::createResourceUriForTest('.invalid-cache.php'));
         static::assertNull($state);
     }
 

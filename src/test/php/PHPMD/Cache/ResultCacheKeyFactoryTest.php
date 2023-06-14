@@ -27,6 +27,7 @@ class ResultCacheKeyFactoryTest extends AbstractTest
     /**
      * @covers ::create
      * @covers ::createRuleHashes
+     * @covers ::getComposerHashes
      */
     public function testCreate()
     {
