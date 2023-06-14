@@ -5,16 +5,28 @@ namespace PHPMD\Cache;
 use PHPMD\AbstractRule;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\RuleSet;
+use PHPMD\Utility\Paths;
 
 class ResultCacheKeyFactory
 {
+    /** @var string */
+    private $basePath;
+
+    /**
+     * @param string $basePath
+     */
+    public function __construct($basePath)
+    {
+        $this->basePath = $basePath;
+    }
+
     /**
      * @param bool      $strict
      * @param RuleSet[] $ruleSetList
      */
     public function create($strict, array $ruleSetList)
     {
-        return new ResultCacheKey($strict, self::createRuleHashes($ruleSetList), self::getComposerHashes(), PHP_VERSION_ID);
+        return new ResultCacheKey($strict, $this->createRuleHashes($ruleSetList), $this->getComposerHashes(), PHP_VERSION_ID);
     }
 
     /**
@@ -25,7 +37,7 @@ class ResultCacheKeyFactory
      *
      * @return array<string, string>
      */
-    private static function createRuleHashes(array $ruleSetList)
+    private function createRuleHashes(array $ruleSetList)
     {
         $result = array();
         foreach ($ruleSetList as $ruleSet) {
@@ -43,15 +55,12 @@ class ResultCacheKeyFactory
     /**
      * @return array<string, string>
      */
-    private static function getComposerHashes()
+    private function getComposerHashes()
     {
-        // read composer.json and lock from current working directory
-        $path  = getcwd() . DIRECTORY_SEPARATOR;
-        $files = array('composer.json', 'composer.lock');
-
+        // read sha1 hash of composer.json and lock from current base directory
         $result = array();
-        foreach ($files as $file) {
-            $filePath = $path . $file;
+        foreach (array('composer.json', 'composer.lock') as $file) {
+            $filePath = Paths::concat($this->basePath, $file);
             if (file_exists($filePath)) {
                 $result[$file] = sha1_file($filePath);
             }

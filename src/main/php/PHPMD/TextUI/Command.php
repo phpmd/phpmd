@@ -135,7 +135,7 @@ class Command
         $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
 
         // Configure Result Cache Engine
-        $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(), new ResultCacheStateFactory());
+        $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(getcwd()), new ResultCacheStateFactory());
         $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
 
         $phpmd->processFiles(
