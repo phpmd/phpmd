@@ -80,6 +80,7 @@ class ResultCacheStateTest extends TestCase
 
     /**
      * @covers ::getRuleViolations
+     * @covers ::findRuleIn
      */
     public function testGetRuleViolationsWithoutDescriptionArgs()
     {
@@ -98,6 +99,7 @@ class ResultCacheStateTest extends TestCase
 
     /**
      * @covers ::getRuleViolations
+     * @covers ::findRuleIn
      */
     public function testGetRuleViolationsWithDescriptionArgs()
     {
