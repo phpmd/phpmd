@@ -32,6 +32,7 @@ use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\NodeInfo;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
@@ -574,7 +575,7 @@ abstract class AbstractTest extends AbstractStaticTest
     ) {
         $ruleViolation = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\RuleViolation')
-                ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+                ->setConstructorArgs(array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello'))
         );
 
         if ($rule === null) {
