@@ -101,7 +101,11 @@ class ResultCacheState
                     $violation['endLine']
                 );
 
-                $violationMessage = array('args' => $violation['args'], 'message' => $violation['description']);
+                if ($violation['args'] === null) {
+                    $violationMessage = $violation['description'];
+                } else {
+                    $violationMessage = array('args' => $violation['args'], 'message' => $violation['description']);
+                }
                 $ruleViolations[] = new RuleViolation($rule, $nodeInfo, $violationMessage, $violation['metric']);
             }
         }
