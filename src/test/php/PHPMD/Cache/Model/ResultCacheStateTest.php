@@ -54,7 +54,15 @@ class ResultCacheStateTest extends TestCase
     public function testAddRuleViolation()
     {
         $rule     = new BooleanArgumentFlag();
-        $nodeInfo = new NodeInfo('fileName', 'namespace', 'className', 'methodName', 'functionName', 123, 456);
+        $nodeInfo = new NodeInfo(
+            'fileName',
+            'namespace',
+            'className',
+            'methodName',
+            'functionName',
+            123,
+            456
+        );
         $metric   = array('line' => 100);
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
@@ -145,7 +153,13 @@ class ResultCacheStateTest extends TestCase
         $this->state->addRuleViolation('/file/path', $ruleViolation);
 
         $expected = array(
-            'key'   => array('strict' => true, 'baselineHash' => 'baseline', 'rules' => array(), 'composer' => array(), 'phpVersion' => 123),
+            'key'   => array(
+                'strict'       => true,
+                'baselineHash' => 'baseline',
+                'rules'        => array(),
+                'composer'     => array(),
+                'phpVersion'   => 123
+            ),
             'state' => array(
                 'files' => array(
                     '/file/path' => array(

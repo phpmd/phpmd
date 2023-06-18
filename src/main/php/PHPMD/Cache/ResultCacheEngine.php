@@ -13,8 +13,12 @@ class ResultCacheEngine
     /** @var ResultCacheWriter */
     private $writer;
 
-    public function __construct(ResultCacheFileFilter $fileFilter, ResultCacheUpdater $updater, ResultCacheWriter $writer)
-    {
+    public function __construct(
+        ResultCacheFileFilter $fileFilter,
+        ResultCacheUpdater    $updater,
+        ResultCacheWriter     $writer
+    ) {
+    
         $this->fileFilter = $fileFilter;
         $this->updater    = $updater;
         $this->writer     = $writer;

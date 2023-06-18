@@ -463,7 +463,8 @@ class CommandLineOptions
     }
 
     /**
-     * The caching strategy to determine if a file should be (re)inspected. Either `content` or last modified `timestamp` based.
+     * The caching strategy to determine if a file should be (re)inspected. Either
+     * `content` or last modified `timestamp` based.
      *
      * @return string
      */

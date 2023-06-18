@@ -575,7 +575,9 @@ abstract class AbstractTest extends AbstractStaticTest
     ) {
         $ruleViolation = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\RuleViolation')
-                ->setConstructorArgs(array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello'))
+                ->setConstructorArgs(
+                    array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello')
+                )
         );
 
         if ($rule === null) {

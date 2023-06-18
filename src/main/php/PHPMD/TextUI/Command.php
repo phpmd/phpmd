@@ -86,11 +86,12 @@ class Command
         }
 
         // Configure baseline violations
-        $report = null;
-        $finder = new BaselineFileFinder($opts);
+        $report       = null;
+        $finder       = new BaselineFileFinder($opts);
+        $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
-            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
             $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
@@ -136,7 +137,10 @@ class Command
 
         // Configure Result Cache Engine
         if ($opts->generateBaseline() === BaselineMode::NONE) {
-            $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(getcwd(), $baselineFile), new ResultCacheStateFactory());
+            $cacheEngineFactory = new ResultCacheEngineFactory(
+                new ResultCacheKeyFactory(getcwd(), $baselineFile),
+                new ResultCacheStateFactory()
+            );
             $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
         }
 

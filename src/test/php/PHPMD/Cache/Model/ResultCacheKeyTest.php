@@ -15,7 +15,13 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testToArray()
     {
-        $key      = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
+        $key      = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
         $expected = array(
             'strict'       => true,
             'baselineHash' => 'baselineHash',
@@ -32,8 +38,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualTo()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
-        $keyB = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
 
         static::assertTrue($keyA->isEqualTo($keyB));
         static::assertTrue($keyB->isEqualTo($keyA));
@@ -44,8 +62,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualToDiffStrict()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
-        $keyB = new ResultCacheKey(false, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            false,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
 
         static::assertFalse($keyA->isEqualTo($keyB));
         static::assertFalse($keyB->isEqualTo($keyA));
@@ -56,8 +86,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualToDiffRules()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
-        $keyB = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash2'), array('composer.json' => 'hash2'), 12345);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash2'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
 
         static::assertFalse($keyA->isEqualTo($keyB));
         static::assertFalse($keyB->isEqualTo($keyA));
@@ -68,8 +110,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualToDiffComposer()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash1'), 12345);
-        $keyB = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash1'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
 
         static::assertFalse($keyA->isEqualTo($keyB));
         static::assertFalse($keyB->isEqualTo($keyA));
@@ -80,8 +134,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualToDiffPhpVersion()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
-        $keyB = new ResultCacheKey(true, 'baselineHash', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 54321);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            true,
+            'baselineHash',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            54321
+        );
 
         static::assertFalse($keyA->isEqualTo($keyB));
         static::assertFalse($keyB->isEqualTo($keyA));
@@ -92,8 +158,20 @@ class ResultCacheKeyTest extends AbstractTest
      */
     public function testIsEqualToDiffBaselineHash()
     {
-        $keyA = new ResultCacheKey(true, 'baselineHashA', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
-        $keyB = new ResultCacheKey(true, 'baselineHashB', array('rule A' => 'hash1'), array('composer.json' => 'hash2'), 12345);
+        $keyA = new ResultCacheKey(
+            true,
+            'baselineHashA',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
+        $keyB = new ResultCacheKey(
+            true,
+            'baselineHashB',
+            array('rule A' => 'hash1'),
+            array('composer.json' => 'hash2'),
+            12345
+        );
 
         static::assertFalse($keyA->isEqualTo($keyB));
         static::assertFalse($keyB->isEqualTo($keyA));

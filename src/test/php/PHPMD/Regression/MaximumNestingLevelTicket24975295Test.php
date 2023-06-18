@@ -51,6 +51,12 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
 
 
         $phpmd = new PHPMD();
-        $phpmd->processFiles($inputs, $factory->getIgnorePattern($rules), $renderes, $factory->createRuleSets($rules), new Report());
+        $phpmd->processFiles(
+            $inputs,
+            $factory->getIgnorePattern($rules),
+            $renderes,
+            $factory->createRuleSets($rules),
+            new Report()
+        );
     }
 }
