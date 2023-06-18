@@ -117,27 +117,59 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @covers ::setFileState
      * @covers ::isFileModified
      */
     public function testIsFileModified()
     {
+        $this->state->setFileState('/file/path', 'hash');
 
+        static::assertTrue($this->state->isFileModified('foobar', 'hash'));
+        static::assertTrue($this->state->isFileModified('/file/path', 'foobar'));
+        static::assertFalse($this->state->isFileModified('/file/path', 'hash'));
     }
-
 
     /**
      * @covers ::toArray
      */
     public function testToArray()
     {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule(new BooleanArgumentFlag());
+        $rule     = new BooleanArgumentFlag();
+        $nodeInfo = new NodeInfo('/file/path', 'namespace', 'className', 'methodName', 'functionName', 123, 456);
+        $metric   = array('line' => 100);
 
-    }
+        $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
+        $this->state->setFileState('/file/path', 'hash');
+        $this->state->addRuleViolation('/file/path', $ruleViolation);
 
-    /**
-     * @covers ::setFileState
-     */
-    public function testSetFileState()
-    {
+        $expected = array(
+            'key'   => array('strict' => true, 'rules' => array(), 'composer' => array(), 'phpVersion' => 123),
+            'state' => array(
+                'files' => array(
+                    '/file/path' => array(
+                        'hash'       => 'hash',
+                        'violations' => array(
+                            array(
+                                'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
+                                'namespaceName' => 'namespace',
+                                'className'     => 'className',
+                                'methodName'    => 'methodName',
+                                'functionName'  => 'functionName',
+                                'beginLine'     => 123,
+                                'endLine'       => 456,
+                                'description'   => 'violation',
+                                'args'          => null,
+                                'metric'        => $metric
+                            )
+                        )
+                    )
 
+                )
+            )
+        );
+
+        static::assertSame($expected, $this->state->toArray());
     }
 }
