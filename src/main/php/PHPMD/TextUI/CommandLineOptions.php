@@ -687,6 +687,13 @@ class CommandLineOptions
             'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
             'even if any violations are found' . \PHP_EOL .
+            '--cache: will enable the result cache.' . \PHP_EOL .
+            '--cache-file: instead of the default .phpmd.result-cache.php' .
+            ' will use this file as result cache file path.' . \PHP_EOL .
+            '--cache-strategy: sets the caching strategy to determine if' .
+            ' a file is still fresh. Either `content` to base it on the ' .
+            'file contents, or `timestamp` to base it on the file modified ' .
+            'timestamp' . \PHP_EOL .
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
