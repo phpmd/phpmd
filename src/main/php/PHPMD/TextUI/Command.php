@@ -90,7 +90,8 @@ class Command
         $finder = new BaselineFileFinder($opts);
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
-            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+            $baselineFile = $finder->notNull()->find();
+            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile)));
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
             $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
@@ -135,7 +136,7 @@ class Command
         $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
 
         // Configure Result Cache Engine
-        $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(getcwd()), new ResultCacheStateFactory());
+        $cacheEngineFactory = new ResultCacheEngineFactory(new ResultCacheKeyFactory(getcwd(), $baselineFile), new ResultCacheStateFactory());
         $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
 
         $phpmd->processFiles(

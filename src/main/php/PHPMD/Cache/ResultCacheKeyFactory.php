@@ -11,13 +11,17 @@ class ResultCacheKeyFactory
 {
     /** @var string */
     private $basePath;
+    /** @var string|null */
+    private $baselineFile;
 
     /**
-     * @param string $basePath
+     * @param string      $basePath
+     * @param string|null $baselineFile
      */
-    public function __construct($basePath)
+    public function __construct($basePath, $baselineFile)
     {
-        $this->basePath = $basePath;
+        $this->basePath     = $basePath;
+        $this->baselineFile = $baselineFile;
     }
 
     /**
@@ -26,7 +30,12 @@ class ResultCacheKeyFactory
      */
     public function create($strict, array $ruleSetList)
     {
-        return new ResultCacheKey($strict, $this->createRuleHashes($ruleSetList), $this->getComposerHashes(), PHP_VERSION_ID);
+        return new ResultCacheKey(
+            $strict,
+            $this->getBaselineHash(),
+            $this->createRuleHashes($ruleSetList),
+            $this->getComposerHashes(), PHP_VERSION_ID
+        );
     }
 
     /**
@@ -50,6 +59,18 @@ class ResultCacheKeyFactory
         ksort($result);
 
         return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getBaselineHash()
+    {
+        if ($this->baselineFile === null || file_exists($this->baselineFile) === false) {
+            return null;
+        }
+
+        return sha1_file($this->baselineFile);
     }
 
     /**

@@ -6,6 +6,8 @@ class ResultCacheKey
 {
     /** @var bool */
     private $strict;
+    /** @var string|null */
+    private $baselineHash;
     /** @var array<string, string> */
     private $rules;
     /** @var array<string, string> */
@@ -15,16 +17,18 @@ class ResultCacheKey
 
     /**
      * @param bool                  $strict
+     * @param string|null           $baselineHash
      * @param array<string, string> $rules
      * @param array<string, string> $composer
      * @param int                   $phpVersion
      */
-    public function __construct($strict, $rules, $composer, $phpVersion)
+    public function __construct($strict, $baselineHash, $rules, $composer, $phpVersion)
     {
-        $this->strict     = $strict;
-        $this->rules      = $rules;
-        $this->composer   = $composer;
-        $this->phpVersion = $phpVersion;
+        $this->strict       = $strict;
+        $this->baselineHash = $baselineHash;
+        $this->rules        = $rules;
+        $this->composer     = $composer;
+        $this->phpVersion   = $phpVersion;
     }
 
     /**
@@ -33,10 +37,11 @@ class ResultCacheKey
     public function toArray()
     {
         return array(
-            'strict'     => $this->strict,
-            'rules'      => $this->rules,
-            'composer'   => $this->composer,
-            'phpVersion' => $this->phpVersion,
+            'strict'       => $this->strict,
+            'baselineHash' => $this->baselineHash,
+            'rules'        => $this->rules,
+            'composer'     => $this->composer,
+            'phpVersion'   => $this->phpVersion,
         );
     }
 
@@ -46,6 +51,7 @@ class ResultCacheKey
     public function isEqualTo(ResultCacheKey $other)
     {
         return $this->strict === $other->strict
+            && $this->baselineHash === $other->baselineHash
             && $this->rules === $other->rules
             && $this->composer === $other->composer
             && $this->phpVersion === $other->phpVersion;
