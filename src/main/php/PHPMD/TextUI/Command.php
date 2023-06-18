@@ -90,8 +90,7 @@ class Command
         $finder = new BaselineFileFinder($opts);
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
-            $baselineFile = $finder->notNull()->find();
-            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile)));
+            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
             $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
