@@ -95,7 +95,15 @@ class ResultCacheStateTest extends TestCase
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
         $rule     = new BooleanArgumentFlag();
-        $nodeInfo = new NodeInfo('/file/path', 'namespace', 'className', 'methodName', 'functionName', 123, 456);
+        $nodeInfo = new NodeInfo(
+            '/file/path',
+            'namespace',
+            'className',
+            'methodName',
+            'functionName',
+            123,
+            456
+        );
         $metric   = array('line' => 100);
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
