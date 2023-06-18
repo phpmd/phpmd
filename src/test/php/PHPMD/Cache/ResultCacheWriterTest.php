@@ -30,7 +30,7 @@ class ResultCacheWriterTest extends AbstractTest
      */
     public function testWrite()
     {
-        $cacheKey   = new ResultCacheKey(true, array(), array(), 70000);
+        $cacheKey   = new ResultCacheKey(true, 'baseline', array(), array(), 70000);
         $cacheState = new ResultCacheState($cacheKey, array());
 
         $this->writer->write($cacheState);

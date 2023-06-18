@@ -60,8 +60,8 @@ class ResultCacheEngineFactoryTest extends AbstractTest
     public function testCreateCacheMissShouldHaveNoOriginalState()
     {
         $ruleSetList = array(new RuleSet());
-        $cacheKeyA   = new ResultCacheKey(true, array(), array(), 123);
-        $cacheKeyB   = new ResultCacheKey(false, array(), array(), 321);
+        $cacheKeyA   = new ResultCacheKey(true, 'baseline', array(), array(), 123);
+        $cacheKeyB   = new ResultCacheKey(false, 'baseline', array(), array(), 321);
         $state       = new ResultCacheState($cacheKeyB, array());
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
@@ -82,7 +82,7 @@ class ResultCacheEngineFactoryTest extends AbstractTest
     public function testCreateCacheHitShouldHaveOriginalState()
     {
         $ruleSetList = array(new RuleSet());
-        $cacheKey    = new ResultCacheKey(true, array(), array(), 123);
+        $cacheKey    = new ResultCacheKey(true, 'baseline',array(), array(), 123);
         $state       = new ResultCacheState($cacheKey, array());
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);

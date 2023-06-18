@@ -56,7 +56,13 @@ class ResultCacheStateFactoryTest extends AbstractTest
         $state = $this->factory->fromFile(static::createResourceUriForTest('.result-cache.php'));
 
         // assert cache key
-        $expectedKey = new ResultCacheKey(false, array('rule' => 'hash'), array('composer.json' => 'hash1', 'composer.lock' => 'hash2'), 70000);
+        $expectedKey = new ResultCacheKey(
+            false,
+            'baseline',
+            array('rule' => 'hash'),
+            array('composer.json' => 'hash1', 'composer.lock' => 'hash2'),
+            70000
+        );
         $cacheKey    = $state->getCacheKey();
         static::assertEquals($expectedKey, $cacheKey);
 

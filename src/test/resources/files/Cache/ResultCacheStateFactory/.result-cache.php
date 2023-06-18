@@ -3,17 +3,18 @@
 return array(
     'key'   =>
         array(
-            'strict'     => false,
-            'rules'      =>
+            'strict'       => false,
+            'baselineHash' => 'baseline',
+            'rules'        =>
                 array(
                     'rule' => 'hash',
                 ),
-            'composer'   =>
+            'composer'     =>
                 array(
                     'composer.json' => 'hash1',
                     'composer.lock' => 'hash2',
                 ),
-            'phpVersion' => 70000,
+            'phpVersion'   => 70000,
         ),
     'state' =>
         array(

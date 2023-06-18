@@ -22,7 +22,7 @@ class ResultCacheStateTest extends TestCase
 
     protected function setUp()
     {
-        $this->key   = new ResultCacheKey(true, array(), array(), 123);
+        $this->key   = new ResultCacheKey(true, 'baseline', array(), array(), 123);
         $this->state = new ResultCacheState($this->key, array());
     }
 
@@ -145,7 +145,7 @@ class ResultCacheStateTest extends TestCase
         $this->state->addRuleViolation('/file/path', $ruleViolation);
 
         $expected = array(
-            'key'   => array('strict' => true, 'rules' => array(), 'composer' => array(), 'phpVersion' => 123),
+            'key'   => array('strict' => true, 'baselineHash' => 'baseline', 'rules' => array(), 'composer' => array(), 'phpVersion' => 123),
             'state' => array(
                 'files' => array(
                     '/file/path' => array(
