@@ -56,11 +56,21 @@ jobs:
       - name: Ant
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
 
+      - name: Sign phar
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        run: |
+          echo "$SECRET_KEY" > keys.asc;
+          echo "$PASSPHRASE" | gpg --batch --import keys.asc;
+          sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@phpmd.org --batch --detach-sign --output phpmd.phar.asc phpmd.phar";
+
       - name: Archive generated phar
         uses: actions/upload-artifact@v3
         with:
-          name: phpmd.phar
-          path: phpmd.phar
+          path: |
+            phpmd.phar
+            phpmd.phar.asc
 
       - name: Release phpmd.phar
         if: github.event_name == 'release'
@@ -68,4 +78,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: 'phpmd.phar'
+          args: |
+            phpmd.phar
+            phpmd.phar.asc
