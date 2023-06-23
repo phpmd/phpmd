@@ -111,14 +111,20 @@ class SARIFRendererTest extends AbstractTest
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+        $data = strtr($writer->getData(), array(
+            addslashes(realpath(__DIR__ . '/../../../resources/files')) => '#{rootDirectory}',
+            'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
+        ));
+        $actual = json_decode($data, true);
+        $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
+        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        $this->assertJsonEquals(
-            $writer->getData(),
-            'renderer/sarif_renderer_processing_errors.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+        $this->assertSame(
+            json_encode($actual, $flags),
+            json_encode(json_decode(file_get_contents(
+                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
+            )), $flags)
         );
     }
 }
