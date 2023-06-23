@@ -39,9 +39,8 @@ class SARIFRendererTest extends AbstractTest
         $writer = new WriterStub();
 
         $rule = new RuleStub('AnotherRuleStub');
-        $rule->addExample('   class Example'. PHP_EOL . '{'.PHP_EOL . '}'. PHP_EOL . '   ');
-        $rule->addExample(PHP_EOL . 'class AnotherExample'. PHP_EOL .
-            '{' . PHP_EOL . '    public $var;' . PHP_EOL . '}' . PHP_EOL . '   ');
+        $rule->addExample("   class Example\n{\n}\n   ");
+        $rule->addExample("\nclass AnotherExample\n{\n    public \$var;\n}\n   ");
         $rule->setSince(null);
 
         $complexRuleViolationMock = $this->getRuleViolationMock(getcwd() . '/src/foobar.php', 23, 42, $rule);
@@ -69,24 +68,16 @@ class SARIFRendererTest extends AbstractTest
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+        $actual = json_decode($writer->getData(), true);
+        $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
+        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        self::assertJson(
-            $writer->getData(),
-            'The writer json is invalid: ' . $writer->getData()
-        );
-        $sarifContent = file_get_contents(__DIR__.'/../../../resources/files/renderer/sarif_renderer_expected.sarif');
-        self::assertJson(
-            $sarifContent,
-            'The sarif json is invalid: ' . $sarifContent
-        );
-
-        $this->assertJsonEquals(
-            $writer->getData(),
-            'renderer/sarif_renderer_expected.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+        $this->assertSame(
+            json_encode($actual, $flags),
+            json_encode(json_decode(file_get_contents(
+                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif'
+            )), $flags)
         );
     }
 
