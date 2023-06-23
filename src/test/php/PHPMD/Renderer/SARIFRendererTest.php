@@ -112,7 +112,7 @@ class SARIFRendererTest extends AbstractTest
         $renderer->renderReport($report);
         $renderer->end();
         $data = strtr($writer->getData(), array(
-            addslashes(realpath(__DIR__ . '/../../../resources/files')) => '#{rootDirectory}',
+            substr(json_encode(realpath(__DIR__ . '/../../../resources/files')), 1, -1) => '#{rootDirectory}',
             'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
         ));
         $actual = json_decode($data, true);
