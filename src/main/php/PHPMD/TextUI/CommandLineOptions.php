@@ -432,6 +432,14 @@ class CommandLineOptions
     }
 
     /**
+     * @return bool
+     */
+    public function isDebug()
+    {
+        return $this->debug;
+    }
+
+    /**
      * Should the current violations be baselined
      *
      * @return string

@@ -28,6 +28,7 @@ use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
+use PHPMD\Utility\Output;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
 
@@ -43,6 +44,14 @@ class Command
         EXIT_EXCEPTION = 1,
         EXIT_VIOLATION = 2,
         EXIT_ERROR = 3;
+
+    /** @var Output */
+    private $output;
+
+    public function __construct(Output $output)
+    {
+        $this->output = $output;
+    }
 
     /**
      * This method creates a PHPMD instance and configures this object based
@@ -138,6 +147,7 @@ class Command
         // Configure Result Cache Engine
         if ($opts->generateBaseline() === BaselineMode::NONE) {
             $cacheEngineFactory = new ResultCacheEngineFactory(
+                $this->output,
                 new ResultCacheKeyFactory(getcwd(), $baselineFile),
                 new ResultCacheStateFactory()
             );
@@ -195,7 +205,8 @@ class Command
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $command        = new Command();
+            $output         = new Output(fopen("php://output", 'wb'), $options->isDebug() ? Output::VERBOSITY_VERY_VERBOSE : Output::VERBOSITY_NORMAL);
+            $command        = new Command($output);
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {

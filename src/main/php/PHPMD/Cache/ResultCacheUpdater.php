@@ -5,18 +5,22 @@ namespace PHPMD\Cache;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Report;
 use PHPMD\RuleSet;
+use PHPMD\Utility\Output;
 use PHPMD\Utility\Paths;
 
 class ResultCacheUpdater
 {
+    /** @var Output */
+    private $output;
     /** @var string */
     private $basePath;
 
     /**
      * @param string $basePath
      */
-    public function __construct($basePath)
+    public function __construct(Output $output, $basePath)
     {
+        $this->output   = $output;
         $this->basePath = $basePath;
     }
 
@@ -30,8 +34,11 @@ class ResultCacheUpdater
         $newViolations = $report->getRuleViolations();
 
         // add RuleViolations from the result cache to the report
+        $violationsFromCache = 0;
+
         foreach ($state->getRuleViolations($this->basePath, $ruleSetList) as $ruleViolation) {
             $report->addRuleViolation($ruleViolation);
+            ++$violationsFromCache;
         }
 
         // add violations from the report to the result cache
@@ -39,6 +46,9 @@ class ResultCacheUpdater
             $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
             $state->addRuleViolation($filePath, $violation);
         }
+
+        $this->output->writeln('Cache: added ' . count($newViolations) . ' to the result cache.', Output::VERBOSITY_VERY_VERBOSE);
+        $this->output->writeln('Cache: added ' . $violationsFromCache . ' from the result cache to the report.', Output::VERBOSITY_VERY_VERBOSE);
 
         return $state;
     }
