@@ -47,8 +47,14 @@ class ResultCacheUpdater
             $state->addRuleViolation($filePath, $violation);
         }
 
-        $this->output->writeln('Cache: added ' . count($newViolations) . ' to the result cache.', Output::VERBOSITY_VERY_VERBOSE);
-        $this->output->writeln('Cache: added ' . $violationsFromCache . ' from the result cache to the report.', Output::VERBOSITY_VERY_VERBOSE);
+        $this->output->writeln(
+            'Cache: added ' . count($newViolations) . ' violations to the result cache.',
+            Output::VERBOSITY_VERY_VERBOSE
+        );
+        $this->output->writeln(
+            'Cache: added ' . $violationsFromCache . ' violations from the result cache to the report.',
+            Output::VERBOSITY_VERY_VERBOSE
+        );
 
         return $state;
     }
