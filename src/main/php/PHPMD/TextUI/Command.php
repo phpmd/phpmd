@@ -24,11 +24,13 @@ use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheEngineFactory;
 use PHPMD\Cache\ResultCacheKeyFactory;
 use PHPMD\Cache\ResultCacheStateFactory;
+use PHPMD\Console\Output;
+use PHPMD\Console\OutputInterface;
+use PHPMD\Console\StreamOutput;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
-use PHPMD\Utility\Output;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
 
@@ -205,7 +207,10 @@ class Command
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $output         = new Output(fopen("php://output", 'wb'), $options->isDebug() ? Output::VERBOSITY_VERY_VERBOSE : Output::VERBOSITY_NORMAL);
+            $output         = new StreamOutput(
+                fopen("php://output", 'wb'),
+                $options->isDebug() ? OutputInterface::VERBOSITY_VERY_VERBOSE : OutputInterface::VERBOSITY_NORMAL
+            );
             $command        = new Command($output);
 
             $exitCode = $command->run($options, $ruleSetFactory);

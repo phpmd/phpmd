@@ -3,14 +3,14 @@
 namespace PHPMD\Cache;
 
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Report;
 use PHPMD\RuleSet;
-use PHPMD\Utility\Output;
 use PHPMD\Utility\Paths;
 
 class ResultCacheUpdater
 {
-    /** @var Output */
+    /** @var OutputInterface */
     private $output;
     /** @var string */
     private $basePath;
@@ -18,7 +18,7 @@ class ResultCacheUpdater
     /**
      * @param string $basePath
      */
-    public function __construct(Output $output, $basePath)
+    public function __construct(OutputInterface $output, $basePath)
     {
         $this->output   = $output;
         $this->basePath = $basePath;
@@ -49,11 +49,11 @@ class ResultCacheUpdater
 
         $this->output->writeln(
             'Cache: added ' . count($newViolations) . ' violations to the result cache.',
-            Output::VERBOSITY_VERY_VERBOSE
+            OutputInterface::VERBOSITY_VERY_VERBOSE
         );
         $this->output->writeln(
             'Cache: added ' . $violationsFromCache . ' violations from the result cache to the report.',
-            Output::VERBOSITY_VERY_VERBOSE
+            OutputInterface::VERBOSITY_VERY_VERBOSE
         );
 
         return $state;

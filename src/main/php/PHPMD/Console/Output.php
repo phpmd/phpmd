@@ -1,32 +1,17 @@
 <?php
 
-namespace PHPMD\Utility;
+namespace PHPMD\Console;
 
-/**
- * A basic write-to-stream output class. Follows a partial implementation of Symfony's OutputInterface to allow future drop-in replacement
- * by the Console package.
- */
-class Output
+abstract class Output implements OutputInterface
 {
-    const VERBOSITY_QUIET        = 16;
-    const VERBOSITY_NORMAL       = 32;
-    const VERBOSITY_VERBOSE      = 64;
-    const VERBOSITY_VERY_VERBOSE = 128;
-    const VERBOSITY_DEBUG        = 256;
-
-    /** @var resource */
-    private $stream;
-
     /** @var int */
     private $verbosity;
 
     /**
-     * @param resource $stream
-     * @param int      $verbosity
+     * @param int $verbosity
      */
-    public function __construct($stream, $verbosity = self::VERBOSITY_NORMAL)
+    public function __construct($verbosity = self::VERBOSITY_NORMAL)
     {
-        $this->stream    = $stream;
         $this->verbosity = $verbosity;
     }
 
@@ -55,7 +40,7 @@ class Output
         }
 
         foreach ($messages as $message) {
-            fwrite($this->stream, $message . ($newline ? "\n" : ""));
+            $this->doWrite($message . ($newline ? "\n" : ""));
         }
     }
 
@@ -86,4 +71,10 @@ class Output
     {
         return $this->verbosity;
     }
+
+    /**
+     * @param string $message
+     * @return void
+     */
+    abstract protected function doWrite($message);
 }
