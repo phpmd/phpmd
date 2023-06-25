@@ -131,6 +131,9 @@ class CommandLineOptions
      */
     protected $strict = false;
 
+    /** @var bool */
+    protected $debug = false;
+
     /**
      * Should PHPMD exit without error code even if error is found?
      *
@@ -201,6 +204,10 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '-vvv':
+                case '--debug':
+                    $this->debug = true;
+                    break;
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
@@ -673,6 +680,7 @@ class CommandLineOptions
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
+            '-vvv, --debug: Show debug information' . \PHP_EOL .
             '--minimumpriority: rule priority threshold; rules with lower ' .
             'priority than this will not be used' . \PHP_EOL .
             '--reportfile: send report output to a file; default to STDOUT' .
