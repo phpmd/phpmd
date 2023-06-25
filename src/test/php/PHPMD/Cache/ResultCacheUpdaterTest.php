@@ -4,6 +4,7 @@ namespace PHPMD\Cache;
 
 use PHPMD\AbstractTest;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
@@ -25,7 +26,7 @@ class ResultCacheUpdaterTest extends AbstractTest
             $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheState')->disableOriginalConstructor()
         );
 
-        $this->updater = new ResultCacheUpdater('/base/path/');
+        $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');
     }
 
     /**
