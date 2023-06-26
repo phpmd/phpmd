@@ -56,7 +56,7 @@ class ResultCacheEngineFactory
         }
 
         return new ResultCacheEngine(
-            new ResultCacheFileFilter($basePath, $options->cacheStrategy(), $cacheKey, $state),
+            new ResultCacheFileFilter($this->output, $basePath, $options->cacheStrategy(), $cacheKey, $state),
             new ResultCacheUpdater($this->output, $basePath),
             new ResultCacheWriter($options->cacheFile())
         );

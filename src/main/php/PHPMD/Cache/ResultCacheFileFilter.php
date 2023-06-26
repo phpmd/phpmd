@@ -5,6 +5,7 @@ namespace PHPMD\Cache;
 use PDepend\Input\Filter;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Utility\Paths;
 
 class ResultCacheFileFilter implements Filter
@@ -24,14 +25,18 @@ class ResultCacheFileFilter implements Filter
     /** @var array<string, bool> */
     private $fileIsModified = array();
 
+    /** @var OutputInterface */
+    private $output;
+
 
     /**
      * @param string                $basePath
      * @param string                $strategy
      * @param ResultCacheState|null $state
      */
-    public function __construct($basePath, $strategy, ResultCacheKey $cacheKey, $state)
+    public function __construct(OutputInterface $output, $basePath, $strategy, ResultCacheKey $cacheKey, $state)
     {
+        $this->output   = $output;
         $this->basePath = $basePath;
         $this->strategy = $strategy;
         $this->state    = $state;
@@ -70,6 +75,18 @@ class ResultCacheFileFilter implements Filter
         if ($isModified === false) {
             // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
+        }
+
+        if ($isModified) {
+            $this->output->writeln(
+                'Cache: ' . $filePath . ' is modified since last run and will be inspected.',
+                OutputInterface::VERBOSITY_DEBUG
+            );
+        } else {
+            $this->output->writeln(
+                'Cache: ' . $filePath . ' is not modified and will not be inspected.',
+                OutputInterface::VERBOSITY_DEBUG
+            );
         }
 
         return $this->fileIsModified[$filePath] = $isModified;
