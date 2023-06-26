@@ -20,6 +20,7 @@ namespace PHPMD\TextUI;
 use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\GitHubRenderer;
@@ -131,8 +132,8 @@ class CommandLineOptions
      */
     protected $strict = false;
 
-    /** @var bool */
-    protected $debug = false;
+    /** @var int */
+    protected $verbosity = OutputInterface::VERBOSITY_NORMAL;
 
     /**
      * Should PHPMD exit without error code even if error is found?
@@ -204,9 +205,14 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '-v':
+                    $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
+                    break;
+                case '-vv':
+                    $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
+                    break;
                 case '-vvv':
-                case '--debug':
-                    $this->debug = true;
+                    $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
                     break;
                 case '--min-priority':
                 case '--minimum-priority':
@@ -432,11 +438,11 @@ class CommandLineOptions
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isDebug()
+    public function getVerbosity()
     {
-        return $this->debug;
+        return $this->verbosity;
     }
 
     /**
@@ -688,7 +694,7 @@ class CommandLineOptions
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
-            '-vvv, --debug: Show debug information' . \PHP_EOL .
+            '-v, -vv, -vvv: Show debug information.' . \PHP_EOL .
             '--minimumpriority: rule priority threshold; rules with lower ' .
             'priority than this will not be used' . \PHP_EOL .
             '--reportfile: send report output to a file; default to STDOUT' .
