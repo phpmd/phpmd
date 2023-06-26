@@ -6,6 +6,7 @@ use PHPMD\AbstractTest;
 
 /**
  * @coversDefaultClass  \PHPMD\Console\Output
+ * @covers ::__construct
  */
 class OutputTest extends AbstractTest
 {
