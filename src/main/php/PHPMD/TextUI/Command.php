@@ -206,7 +206,7 @@ class Command
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $output         = new StreamOutput(fopen("php://output", 'wb'), $options->getVerbosity());
+            $output         = new StreamOutput(STDERR, $options->getVerbosity());
             $command        = new Command($output);
 
             $exitCode = $command->run($options, $ruleSetFactory);
