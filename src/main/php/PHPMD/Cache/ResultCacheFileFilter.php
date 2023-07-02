@@ -79,12 +79,12 @@ class ResultCacheFileFilter implements Filter
 
         if ($isModified) {
             $this->output->writeln(
-                'Cache: ' . $filePath . ' is modified since last run and will be inspected.',
+                'Cache: MISS for file ' . $filePath . '.',
                 OutputInterface::VERBOSITY_DEBUG
             );
         } else {
             $this->output->writeln(
-                'Cache: ' . $filePath . ' is not modified and will not be inspected.',
+                'Cache: HIT for file ' . $filePath . '.',
                 OutputInterface::VERBOSITY_DEBUG
             );
         }
