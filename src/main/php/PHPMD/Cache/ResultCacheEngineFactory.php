@@ -19,8 +19,7 @@ class ResultCacheEngineFactory
         OutputInterface         $output,
         ResultCacheKeyFactory   $cacheKeyFactory,
         ResultCacheStateFactory $cacheStateFactory
-    )
-    {
+    ) {
         $this->output            = $output;
         $this->cacheKeyFactory   = $cacheKeyFactory;
         $this->cacheStateFactory = $cacheStateFactory;
