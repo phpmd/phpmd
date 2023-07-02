@@ -42,6 +42,7 @@ class OutputTest extends AbstractTest
      */
     public function testWriteSingleMessage()
     {
+        $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         $this->output->write("message", false, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame('message', $this->output->getOutput());
@@ -53,6 +54,7 @@ class OutputTest extends AbstractTest
      */
     public function testWriteMultiMessageWithNewline()
     {
+        $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
         $this->output->write(array("foo", "bar"), true, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame("foo\nbar\n", $this->output->getOutput());

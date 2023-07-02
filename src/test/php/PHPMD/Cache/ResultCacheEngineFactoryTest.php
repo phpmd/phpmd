@@ -88,7 +88,7 @@ class ResultCacheEngineFactoryTest extends AbstractTest
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
-        $this->options->expects(self::exactly(2))->method('cacheFile')->willReturn('/path/to/cache');
+        $this->options->expects(self::exactly(3))->method('cacheFile')->willReturn('/path/to/cache');
 
         $this->keyFactory->expects(self::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKey);
         $this->stateFactory->expects(self::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
