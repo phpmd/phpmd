@@ -3,8 +3,8 @@
 namespace PHPMD\Console;
 
 /**
- * A basic OutputInterface that follows a partial implementation of Symfony's OutputInterface to allow future drop-in replacement
- * by the Console package.
+ * A basic OutputInterface that follows a partial implementation of Symfony's OutputInterface to allow future drop-in
+ * replacement by the Console package.
  */
 interface OutputInterface
 {

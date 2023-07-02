@@ -82,11 +82,31 @@ class OutputTest extends AbstractTest
     public static function verbosityProvider()
     {
         return array(
-            array(Output::VERBOSITY_QUIET, '2', '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed'),
-            array(Output::VERBOSITY_NORMAL, '123', '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity'),
-            array(Output::VERBOSITY_VERBOSE, '1234', '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity'),
-            array(Output::VERBOSITY_VERY_VERBOSE, '12345', '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity'),
-            array(Output::VERBOSITY_DEBUG, '123456', '->write() in DEBUG mode outputs everything'),
+            array(
+                Output::VERBOSITY_QUIET,
+                '2',
+                '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed'
+            ),
+            array(
+                Output::VERBOSITY_NORMAL,
+                '123',
+                '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity'
+            ),
+            array(
+                Output::VERBOSITY_VERBOSE,
+                '1234',
+                '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity'
+            ),
+            array(
+                Output::VERBOSITY_VERY_VERBOSE,
+                '12345',
+                '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity'
+            ),
+            array(
+                Output::VERBOSITY_DEBUG,
+                '123456',
+                '->write() in DEBUG mode outputs everything'
+            ),
         );
     }
 

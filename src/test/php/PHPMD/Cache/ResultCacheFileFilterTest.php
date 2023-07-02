@@ -5,7 +5,7 @@ namespace PHPMD\Cache;
 use PHPMD\AbstractTest;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
-use PHPMD\Cache\Model\ResultCacheStrategy;
+use PHPMD\Cache\Model\ResultCacheStrategy as Strategy;
 use PHPMD\Console\NullOutput;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
@@ -39,7 +39,7 @@ class ResultCacheFileFilterTest extends AbstractTest
      */
     public function testAcceptStrategyContentModified()
     {
-        $filter = new ResultCacheFileFilter($this->output, __DIR__, ResultCacheStrategy::CONTENT, $this->key, $this->state);
+        $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(true);
 
@@ -54,7 +54,7 @@ class ResultCacheFileFilterTest extends AbstractTest
      */
     public function testAcceptStrategyContentUnmodified()
     {
-        $filter = new ResultCacheFileFilter($this->output, __DIR__, ResultCacheStrategy::CONTENT, $this->key, $this->state);
+        $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(false);
         $this->state->expects(self::once())->method('getViolations')->willReturn(array('violations'));
@@ -71,7 +71,7 @@ class ResultCacheFileFilterTest extends AbstractTest
     public function testAcceptStrategyTimestampModified()
     {
         $timestamp = (string)filemtime(__FILE__);
-        $filter    = new ResultCacheFileFilter($this->output, __DIR__, ResultCacheStrategy::TIMESTAMP, $this->key, $this->state);
+        $filter    = new ResultCacheFileFilter($this->output, __DIR__, Strategy::TIMESTAMP, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(true);
 
@@ -86,7 +86,7 @@ class ResultCacheFileFilterTest extends AbstractTest
      */
     public function testAcceptWithoutState()
     {
-        $filter = new ResultCacheFileFilter($this->output, __DIR__, ResultCacheStrategy::CONTENT, $this->key, null);
+        $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, null);
 
         $this->state->expects(self::never())->method('isFileModified')->willReturn(false);
 
@@ -100,7 +100,7 @@ class ResultCacheFileFilterTest extends AbstractTest
      */
     public function testAcceptShouldCacheResults()
     {
-        $filter = new ResultCacheFileFilter($this->output, __DIR__, ResultCacheStrategy::CONTENT, $this->key, $this->state);
+        $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
         // expect one invocation
         $this->state->expects(self::once())->method('isFileModified')->willReturn(true);
