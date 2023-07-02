@@ -21,6 +21,9 @@ use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
 use PHPMD\Baseline\BaselineValidator;
+use PHPMD\Cache\ResultCacheEngineFactory;
+use PHPMD\Cache\ResultCacheKeyFactory;
+use PHPMD\Cache\ResultCacheStateFactory;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
@@ -83,8 +86,9 @@ class Command
         }
 
         // Configure baseline violations
-        $report   = null;
-        $finder   = new BaselineFileFinder($opts);
+        $report       = null;
+        $finder       = new BaselineFileFinder($opts);
+        $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
             $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
@@ -128,11 +132,23 @@ class Command
             $phpmd->addIgnorePatterns(explode(',', $ignore));
         }
 
+        $ignorePattern = $ruleSetFactory->getIgnorePattern($opts->getRuleSets());
+        $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
+
+        // Configure Result Cache Engine
+        if ($opts->generateBaseline() === BaselineMode::NONE) {
+            $cacheEngineFactory = new ResultCacheEngineFactory(
+                new ResultCacheKeyFactory(getcwd(), $baselineFile),
+                new ResultCacheStateFactory()
+            );
+            $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
+        }
+
         $phpmd->processFiles(
             $opts->getInputPath(),
-            $opts->getRuleSets(),
+            $ignorePattern,
             $renderers,
-            $ruleSetFactory,
+            $ruleSetList,
             $report !== null ? $report : new Report()
         );
 

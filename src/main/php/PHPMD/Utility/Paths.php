@@ -28,6 +28,18 @@ class Paths
     }
 
     /**
+     * Concat pathB to pathA with a single path separators between them
+     *
+     * @param string $pathA
+     * @param string $pathB
+     * @return string
+     */
+    public static function concat($pathA, $pathB)
+    {
+        return rtrim(str_replace('\\', '/', $pathA), '/') . '/' . ltrim(str_replace('\\', '/', $pathB), '/');
+    }
+
+    /**
      * Get the realpath of the given path or exception on failure
      * @param string $path
      * @return string

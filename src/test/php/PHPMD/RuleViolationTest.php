@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use PHPMD\Node\NodeInfo;
+
 /**
  * Test case for the {@link \PHPMD\RuleViolation} class.
  *
@@ -27,50 +29,21 @@ namespace PHPMD;
 class RuleViolationTest extends AbstractTest
 {
     /**
-     * testConstructorExtractsClassNameFromGivenType
-     *
      * @return void
      */
-    public function testConstructorExtractsClassNameFromGivenType()
+    public function testNodeInfoGetters()
     {
         $rule = $this->getRuleMock();
 
-        $node = $this->getClassMock();
-        $node->expects($this->once())
-            ->method('getName');
+        $nodeInfo = new NodeInfo('fileName', 'namespace', 'className', 'methodName', 'functionName', 123, 456);
 
-        new RuleViolation($rule, $node, 'foo');
-    }
-
-    /**
-     * testConstructorExtractsClassNameFromGivenMethod
-     *
-     * @return void
-     */
-    public function testConstructorExtractsClassNameFromGivenMethod()
-    {
-        $rule = $this->getRuleMock();
-
-        $node = $this->getMethodMock();
-        $node->expects($this->once())
-            ->method('getParentName');
-
-        new RuleViolation($rule, $node, 'foo');
-    }
-
-    /**
-     * testConstructorExtractsMethodNameFromGivenMethod
-     *
-     * @return void
-     */
-    public function testConstructorExtractsMethodNameFromGivenMethod()
-    {
-        $rule = $this->getRuleMock();
-
-        $node = $this->getMethodMock();
-        $node->expects($this->once())
-            ->method('getName');
-
-        new RuleViolation($rule, $node, 'foo');
+        $violation = new RuleViolation($rule, $nodeInfo, 'foo');
+        static::assertSame('fileName', $violation->getFileName());
+        static::assertSame('namespace', $violation->getNamespaceName());
+        static::assertSame('className', $violation->getClassName());
+        static::assertSame('methodName', $violation->getMethodName());
+        static::assertSame('functionName', $violation->getFunctionName());
+        static::assertSame(123, $violation->getBeginLine());
+        static::assertSame(456, $violation->getEndLine());
     }
 }

@@ -19,14 +19,15 @@ namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
 use PHPMD\Baseline\BaselineMode;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Renderer\AnsiRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
-use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 
@@ -166,6 +167,24 @@ class CommandLineOptions
     protected $baselineFile;
 
     /**
+     * Should PHPMD read or write the result cache state from the cache file
+     * @var bool
+     */
+    protected $cacheEnabled = false;
+
+    /**
+     * If set the path to read and write the result cache state from and to.
+     * @var string|null
+     */
+    protected $cacheFile;
+
+    /**
+     * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
+     * @var string|null
+     */
+    protected $cacheStrategy;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -237,6 +256,15 @@ class CommandLineOptions
                     break;
                 case '--baseline-file':
                     $this->baselineFile = array_shift($args);
+                    break;
+                case '--cache':
+                    $this->cacheEnabled = true;
+                    break;
+                case '--cache-file':
+                    $this->cacheFile = array_shift($args);
+                    break;
+                case '--cache-strategy':
+                    $this->cacheStrategy = array_shift($args);
                     break;
                 case '--ignore-errors-on-exit':
                     $this->ignoreErrorsOnExit = true;
@@ -414,6 +442,41 @@ class CommandLineOptions
     public function baselineFile()
     {
         return $this->baselineFile;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCacheEnabled()
+    {
+        return $this->cacheEnabled;
+    }
+
+    /**
+     * The filepath to the result cache state file
+     *
+     * @return string
+     */
+    public function cacheFile()
+    {
+        return $this->cacheFile === null ? '.phpmd.result-cache.php' : $this->cacheFile;
+    }
+
+    /**
+     * The caching strategy to determine if a file should be (re)inspected. Either
+     * `content` or last modified `timestamp` based.
+     *
+     * @return string
+     */
+    public function cacheStrategy()
+    {
+        switch ($this->cacheStrategy) {
+            case ResultCacheStrategy::CONTENT:
+            case ResultCacheStrategy::TIMESTAMP:
+                return $this->cacheStrategy;
+            default:
+                return ResultCacheStrategy::CONTENT;
+        }
     }
 
     /**
@@ -625,6 +688,13 @@ class CommandLineOptions
             'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .
             'even if any violations are found' . \PHP_EOL .
+            '--cache: will enable the result cache.' . \PHP_EOL .
+            '--cache-file: instead of the default .phpmd.result-cache.php' .
+            ' will use this file as result cache file path.' . \PHP_EOL .
+            '--cache-strategy: sets the caching strategy to determine if' .
+            ' a file is still fresh. Either `content` to base it on the ' .
+            'file contents, or `timestamp` to base it on the file modified ' .
+            'timestamp' . \PHP_EOL .
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .

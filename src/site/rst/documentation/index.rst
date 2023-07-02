@@ -64,6 +64,15 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
+  - ``--cache`` - will enable the result cache. Will default to ``.phpmd.result-cache.php`` in the
+    current working directory.
+
+  - ``--cache-file`` - in cooperation with ``--cache`` will override the default result cache file path of
+    ``.phpmd.result-cache.php`` to the given file path.
+
+  - ``--cache-strategy`` - sets the caching strategy to determine if a file is still fresh. Either
+    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
     working directory.
@@ -72,7 +81,8 @@ Command line options
     that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
     to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file.
+  -  ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
+    default to ``phpmd.baseline.xml``
 
   An example command line: ::
 
