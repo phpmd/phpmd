@@ -13,6 +13,7 @@ Main Authors/Maintainers
 - Marc Würth (Since 2014) / https://github.com/ravage84
 - Kyle (Since 2019) / https://github.com/kylekatarnls
 - Tobias van Beek  (Since 2019) / https://github.com/tvbeek
+- Anders Jenbo  (Since 2018) / https://github.com/AJenbo
 
 Contributors
 ------------
