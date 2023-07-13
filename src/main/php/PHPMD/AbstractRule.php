@@ -21,6 +21,7 @@ use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
 
 /**
@@ -396,7 +397,7 @@ abstract class AbstractRule implements Rule
             'args' => $args,
         );
 
-        $ruleViolation = new RuleViolation($this, $node, $message, $metric);
+        $ruleViolation = new RuleViolation($this, NodeInfoFactory::fromNode($node), $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
     }
 

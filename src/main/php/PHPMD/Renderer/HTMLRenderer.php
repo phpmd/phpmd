@@ -487,7 +487,7 @@ class HTMLRenderer extends AbstractRenderer
     protected static function highlightFile($path)
     {
         $file = substr(strrchr($path, "/"), 1);
-        $dir = str_replace($file, null, $path);
+        $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';
     }

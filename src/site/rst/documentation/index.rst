@@ -2,7 +2,7 @@
 Command line usage
 ==================
 
-Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
+Type phpmd [filename|directory[,filename|directory[,...]]] [report format] [ruleset file], i.e: ::
 
   mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
   <?xml version="1.0" encoding="UTF-8" ?>
@@ -20,8 +20,8 @@ Type phpmd [filename|directory] [report format] [ruleset file], i.e: ::
     </file>
   </pmd>
 
-You can pass a file name or a directory name containing PHP source
-code to PHPMD.
+You can pass a comma-separated string with list of file names
+or a directory names, containing PHP source code to PHPMD.
 
 The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
@@ -64,6 +64,15 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
+  - ``--cache`` - will enable the result cache. Will default to ``.phpmd.result-cache.php`` in the
+    current working directory.
+
+  - ``--cache-file`` - in cooperation with ``--cache`` will override the default result cache file path of
+    ``.phpmd.result-cache.php`` to the given file path.
+
+  - ``--cache-strategy`` - sets the caching strategy to determine if a file is still fresh. Either
+    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
     working directory.
@@ -72,7 +81,8 @@ Command line options
     that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
     to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file.
+  -  ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
+    default to ``phpmd.baseline.xml``
 
   An example command line: ::
 

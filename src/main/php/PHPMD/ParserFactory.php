@@ -21,6 +21,7 @@ use PDepend\Application;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
+use PHPMD\Cache\CacheFileFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
@@ -88,6 +89,7 @@ class ParserFactory
         $this->initInput($pdepend, $phpmd);
         $this->initIgnores($pdepend, $phpmd);
         $this->initExtensions($pdepend, $phpmd);
+        $this->initResultCache($pdepend, $phpmd);
 
         return $pdepend;
     }
@@ -140,6 +142,17 @@ class ParserFactory
             $pdepend->addFileFilter(
                 new ExtensionFilter($phpmd->getFileExtensions())
             );
+        }
+    }
+
+    /**
+     * Cache result hook to filter cached files
+     */
+    private function initResultCache(Engine $pdepend, PHPMD $phpmd)
+    {
+        $resultCache = $phpmd->getResultCache();
+        if ($resultCache !== null) {
+            $pdepend->addFileFilter($resultCache->getFileFilter());
         }
     }
 
