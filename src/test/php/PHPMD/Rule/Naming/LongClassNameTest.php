@@ -147,4 +147,19 @@ class LongClassNameTest extends AbstractTest
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
+
+    /**
+     * Tests that the rule applies to class name length (43) below threshold (40)
+     * not matching configured prefix length (15)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToClassNameWithPrefixMatched()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 45);
+        $rule->addProperty('subtract-prefixes', 'testRule,testRuleApplies');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
 }

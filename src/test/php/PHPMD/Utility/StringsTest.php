@@ -88,6 +88,30 @@ class StringsTest extends AbstractTest
     }
 
     /**
+     * Tests the lengthWithoutSuffixes() method that a Prefix should be matched
+     *
+     * @return void
+     */
+    public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract()
+    {
+        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
+        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', array('Foo', 'Bar')));
+    }
+
+    /**
+     * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched in order
+     *
+     * @return void
+     */
+    public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder()
+    {
+        $prefixes = array('Foo', 'Bar');
+        $suffixes = array('Foo', 'FooUnit');
+        $length = Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', $suffixes, $prefixes);
+        static::assertSame(8, $length);
+    }
+
+    /**
      * Tests the splitToList() method with an empty separator
      *
      * @expectedException \InvalidArgumentException

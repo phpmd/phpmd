@@ -21,12 +21,20 @@ Example: ::
 
   }
 
+  class ClassGroupPrefixesThatIsUsedForGrouping {
+
+  }
+
 This rule has the following properties:
 
 +-----------------------------------+---------------+------------------------------------------------------------+
 | Name                              | Default Value | Description                                                |
 +===================================+===============+============================================================+
 | maximum                           | 40            | The class name length reporting threshold.                 |
++-----------------------------------+---------------+------------------------------------------------------------+
+| subtract-prefixes                 |               | Comma-separated list of prefixes that will not count in    |
+|                                   |               | the length of the class name. Only the first matching      |
+|                                   |               | prefix will be subtracted.                                 |
 +-----------------------------------+---------------+------------------------------------------------------------+
 | subtract-suffixes                 |               | Comma-separated list of suffixes that will not count in    |
 |                                   |               | the length of the class name. Only the first matching      |
@@ -101,6 +109,7 @@ Example: ::
 
   class Something {
       protected $reallyLongIntName = -3; // VIOLATION - Field
+      protected $hungarianUintArrOptions = []; // VIOLATION - Field
       public static function main( array $interestingArgumentsList[] ) { // VIOLATION - Formal
           $otherReallyLongName = -5; // VIOLATION - Local
           for ($interestingIntIndex = 0; // VIOLATION - For
@@ -116,6 +125,11 @@ This rule has the following properties:
 | Name                              | Default Value | Description                               |
 +===================================+===============+===========================================+
 | maximum                           | 20            | The variable length reporting threshold   |
++-----------------------------------+---------------+-------------------------------------------+
+| subtract-prefixes                 |               | Comma-separated list of prefixes that will|
+|                                   |               | not count in the length of the variable   |
+|                                   |               | name. Only the first matching prefix will |
+|                                   |               | be subtracted.                            |
 +-----------------------------------+---------------+-------------------------------------------+
 | subtract-suffixes                 |               | Comma-separated list of suffixes that will|
 |                                   |               | not count in the length of the variable   |
