@@ -19,6 +19,7 @@ namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTest;
 use PHPMD\Baseline\BaselineMode;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Rule;
 
 /**
@@ -353,6 +354,46 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
         static::assertSame(BaselineMode::NONE, $opts->generateBaseline());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionVerbosityNormal()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(OutputInterface::VERBOSITY_NORMAL, $opts->getVerbosity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionVerbosityVerbose()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-v');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(OutputInterface::VERBOSITY_VERBOSE, $opts->getVerbosity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionVerbosityVeryVerbose()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-vv');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(OutputInterface::VERBOSITY_VERY_VERBOSE, $opts->getVerbosity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionVerbosityDebug()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-vvv');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(OutputInterface::VERBOSITY_DEBUG, $opts->getVerbosity());
     }
 
     /**

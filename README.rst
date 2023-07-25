@@ -117,6 +117,10 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
+  - ``-v, -vv, -vvv`` - The output verbosity level. Will print more information
+    what is being processed or cached. Will be send to ``STDERR`` to not interfere
+    with report output.
+
   - ``--minimumpriority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 

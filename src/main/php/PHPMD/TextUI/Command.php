@@ -24,6 +24,8 @@ use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Cache\ResultCacheEngineFactory;
 use PHPMD\Cache\ResultCacheKeyFactory;
 use PHPMD\Cache\ResultCacheStateFactory;
+use PHPMD\Console\Output;
+use PHPMD\Console\StreamOutput;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Report;
@@ -43,6 +45,14 @@ class Command
         EXIT_EXCEPTION = 1,
         EXIT_VIOLATION = 2,
         EXIT_ERROR = 3;
+
+    /** @var Output */
+    private $output;
+
+    public function __construct(Output $output)
+    {
+        $this->output = $output;
+    }
 
     /**
      * This method creates a PHPMD instance and configures this object based
@@ -138,6 +148,7 @@ class Command
         // Configure Result Cache Engine
         if ($opts->generateBaseline() === BaselineMode::NONE) {
             $cacheEngineFactory = new ResultCacheEngineFactory(
+                $this->output,
                 new ResultCacheKeyFactory(getcwd(), $baselineFile),
                 new ResultCacheStateFactory()
             );
@@ -195,7 +206,8 @@ class Command
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $command        = new Command();
+            $output         = new StreamOutput(STDERR, $options->getVerbosity());
+            $command        = new Command($output);
 
             $exitCode = $command->run($options, $ruleSetFactory);
         } catch (\Exception $e) {

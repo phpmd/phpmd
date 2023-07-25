@@ -5,6 +5,7 @@ namespace PHPMD\Cache;
 use PHPMD\AbstractTest;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -40,7 +41,7 @@ class ResultCacheEngineFactoryTest extends AbstractTest
             $this->getMockBuilder('\PHPMD\Cache\ResultCacheStateFactory')->disableOriginalConstructor()
         );
 
-        $this->engineFactory = new ResultCacheEngineFactory($this->keyFactory, $this->stateFactory);
+        $this->engineFactory = new ResultCacheEngineFactory(new NullOutput(), $this->keyFactory, $this->stateFactory);
     }
 
     /**
@@ -87,7 +88,7 @@ class ResultCacheEngineFactoryTest extends AbstractTest
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
-        $this->options->expects(self::exactly(2))->method('cacheFile')->willReturn('/path/to/cache');
+        $this->options->expects(self::exactly(3))->method('cacheFile')->willReturn('/path/to/cache');
 
         $this->keyFactory->expects(self::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKey);
         $this->stateFactory->expects(self::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
