@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 25 Jul 2023 18:16:11 +0000" />
+    <meta name="date" content="Tue, 25 Jul 2023 18:17:10 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 25 Jul 2023 18:16:11 +0000" />
+    <meta name="DC.date" content="Tue, 25 Jul 2023 18:17:10 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -64,7 +64,10 @@ like a filesystem reference.</p>
   like this: ::
     phpmd PHP/Depend/DbusUI/ xml codesize</li>
 <li class="dash">The command line interface also accepts the following optional arguments:</li>
-<ul><li class="dash"><code>--minimumpriority</code> <code>--min-priority</code> <code>--minimum-priority</code> - The rule priority threshold; rules with lower
+<ul><li class="dash"><code>-v, -vv, -vvv</code> - The output verbosity level. Will print more information
+    what is being processed or cached. Will be send to <code>STDERR</code> to not interfere
+    with report output.</li>
+<li class="dash"><code>--minimumpriority</code> <code>--min-priority</code> <code>--minimum-priority</code> - The rule priority threshold; rules with lower
     priority than they will not be used.</li>
 <li class="dash"><code>--maximumpriority</code> <code>--max-priority</code> <code>--maximum-priority</code> - The rule priority threshold; rules with higher
     priority than this will not be used.</li>
