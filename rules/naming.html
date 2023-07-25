@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Fri, 14 Jul 2023 05:57:15 +0000" />
+    <meta name="date" content="Tue, 25 Jul 2023 18:16:11 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Fri, 14 Jul 2023 05:57:15 +0000" />
+    <meta name="DC.date" content="Tue, 25 Jul 2023 18:16:11 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -47,9 +47,13 @@
 interface ATooLongInterfaceNameThatHintsAtADesignProblem {
 
 }
+
+class ClassGroupPrefixesThatIsUsedForGrouping {
+
+}
 </code></pre>
 <p>This rule has the following properties:</p>
-<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>40</td><td>The class name length reporting threshold.</td></tr><tr><td>subtract-suffixes</td><td></td><td>Comma-separated list of suffixes that will not count in the length of the class name. Only the first matching suffix will be subtracted.</td></tr></table>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>40</td><td>The class name length reporting threshold.</td></tr><tr><td>subtract-prefixes</td><td></td><td>Comma-separated list of prefixes that will not count in the length of the class name. Only the first matching prefix will be subtracted.</td></tr><tr><td>subtract-suffixes</td><td></td><td>Comma-separated list of suffixes that will not count in the length of the class name. Only the first matching suffix will be subtracted.</td></tr></table>
 <a id="shortclassname"></a>
 <h2>ShortClassName</h2>
 <p>Since: PHPMD 2.9</p>
@@ -89,6 +93,7 @@ interface Fo {
 <p>Example: :</p>
 <pre><code class="">class Something {
     protected $reallyLongIntName = -3; // VIOLATION - Field
+    protected $hungarianUintArrOptions = []; // VIOLATION - Field
     public static function main( array $interestingArgumentsList[] ) { // VIOLATION - Formal
         $otherReallyLongName = -5; // VIOLATION - Local
         for ($interestingIntIndex = 0; // VIOLATION - For
@@ -99,7 +104,7 @@ interface Fo {
 }
 </code></pre>
 <p>This rule has the following properties:</p>
-<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>20</td><td>The variable length reporting threshold</td></tr><tr><td>subtract-suffixes</td><td></td><td>Comma-separated list of suffixes that will not count in the length of the variable name. Only the first matching suffix will be subtracted.</td></tr></table>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>20</td><td>The variable length reporting threshold</td></tr><tr><td>subtract-prefixes</td><td></td><td>Comma-separated list of prefixes that will not count in the length of the variable name. Only the first matching prefix will be subtracted.</td></tr><tr><td>subtract-suffixes</td><td></td><td>Comma-separated list of suffixes that will not count in the length of the variable name. Only the first matching suffix will be subtracted.</td></tr></table>
 <a id="shortmethodname"></a>
 <h2>ShortMethodName</h2>
 <p>Since: PHPMD 0.2</p>
