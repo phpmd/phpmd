@@ -511,7 +511,7 @@ class HTMLRenderer extends AbstractRenderer
         $sum = array_sum($items);
 
         foreach ($items as $name => $count) {
-            // Calculate chart/bar's percentage width relative to the highest occuring item.
+            // Calculate chart/bar's percentage width relative to the highest occurring item.
             $width = $max !== 0 ? $count / $max * 100 : 0; // Avoid division by zero.
 
             $bar = sprintf(

@@ -17,8 +17,8 @@
 
 class testRuleDoesApplyForInparameterNameWithUnderscore
 {
-    public function invalidParameterNameWithUnderscore($ivalid_parameter)
+    public function invalidParameterNameWithUnderscore($invalid_parameter)
     {
-        $foo = $ivalid_parameter;
+        $foo = $invalid_parameter;
     }
 }
