@@ -27,6 +27,8 @@ use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\Option\Color;
+use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
@@ -189,6 +191,20 @@ class CommandLineOptions
     protected $cacheStrategy;
 
     /**
+     * The level of verbosity as per set in CLI options.
+     *
+     * @var int
+     */
+    protected $verbosityLevel = 0;
+
+    /**
+     * Either the output should be colored.
+     *
+     * @var bool
+     */
+    protected $colored = false;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -250,6 +266,12 @@ class CommandLineOptions
                     break;
                 case '--exclude':
                     $this->ignore = array_shift($args);
+                    break;
+                case '--color':
+                    $this->colored = true;
+                    break;
+                case '--verbose':
+                    $this->verbosityLevel = 1;
                     break;
                 case '--version':
                     $this->version = true;
@@ -538,6 +560,26 @@ class CommandLineOptions
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
+    {
+        $renderer = $this->createRendererWithoutOptions($reportFormat);
+
+        if ($renderer instanceof Verbose) {
+            $renderer->setVerbosityLevel($this->verbosityLevel);
+        }
+
+        if ($renderer instanceof Color) {
+            $renderer->setColored($this->colored);
+        }
+
+        return $renderer;
+    }
+
+    /**
+     * @param string $reportFormat
+     * @return \PHPMD\AbstractRenderer
+     * @throws InvalidArgumentException When the specified renderer does not exist.
+     */
+    protected function createRendererWithoutOptions($reportFormat = null)
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
