@@ -160,6 +160,14 @@ Command line options
   - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
 
+  - ``--verbose`` - get a more verbose output, for instance text renderer
+    will add under each error a link to the documentation of the rule
+    and format the location in a way that most IDEs will convert into
+    a link that will open the file at the line of the error when clicked.
+
+  - ``--color`` - enable color in output, for instance text renderer
+    will show rule name in yellow and error description in red.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml

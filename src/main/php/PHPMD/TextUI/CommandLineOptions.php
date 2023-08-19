@@ -762,7 +762,9 @@ class CommandLineOptions
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
-            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
+            '--verbose: will return a more verbose output' . \PHP_EOL .
+            '--color: enable color in output' . \PHP_EOL;
     }
 
     /**
