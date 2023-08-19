@@ -9,7 +9,7 @@ Release 1.0.0
 :Keywords:     Release, Version, Features, Bugfixes
 
 Version 1.0.0 of PHPMD was released on Februrary the 05th 2011. This release
-closes a bug in PHPMD and introduces a completly new directory layout and
+closes a bug in PHPMD and introduces a completely new directory layout and
 build process for PHPMD.
 
 Bugfixes

@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 25 Jul 2023 18:17:10 +0000" />
+    <meta name="date" content="Sat, 19 Aug 2023 21:01:41 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 25 Jul 2023 18:17:10 +0000" />
+    <meta name="DC.date" content="Sat, 19 Aug 2023 21:01:41 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -154,7 +154,7 @@ the <a href="/rules/index.html">rules section</a> to learn more about all implem
 <li class="dash">Fixed #794: Fixed #540 Detect unused variable declared multiple times</li>
 <li class="dash">Fixed #805: Fixed #802 Prevent an error with nested arrays</li>
 <li class="dash">Fixed #807: Fixed #790 Fix for short variables rule inside foreach statements</li>
-<li class="dash">Fixed #809: Fixed #808 Ignore rule path for supression annotation</li>
+<li class="dash">Fixed #809: Fixed #808 Ignore rule path for suppression annotation</li>
 <li class="dash">Updated different parts of the documentation. #717 #736 #748 #811</li>
 <li class="dash">Changed: #529 : Replaced HTML renderer with new &quot;pretty HTML&quot; renderer</li>
 <li class="dash">Changed: #806 : Changed #44 Change private methods to protected in rules. Make rules extendable</li>
@@ -165,7 +165,8 @@ the <a href="/rules/index.html">rules section</a> to learn more about all implem
 <p>### A potential BC change:
 With the clean-up in #768 we have a potential BC break in an unsupported part that we want to give attention for.
 &gt; The class aliases <code>PHP_PMD_*</code> used for PHPMD 1.x backwards PEAR compatibility were removed. If you happen to still depend on these, please adjust your code like so:
-&gt;<br />&gt; From <code>PHP_PMD_[Component]_[Class]'</code> to <code>PHPMD\[Component]\[Class]</code>,
+&gt;
+&gt; From <code>PHP_PMD_[Component]_[Class]'</code> to <code>PHPMD\[Component]\[Class]</code>,
 &gt; as in <code>PHP_PMD_Renderer_HTMLRenderer'</code> to <code>PHPMD\Renderer\HTMLRenderer</code>.
 See #768</p>
 <a id="phpmd-2-8-2-2020-02-24-"></a>
@@ -200,9 +201,13 @@ See #768</p>
 
 <a id="phpmd-2-7-0-2019-07-30-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.7.0" title="phpmd-2.7.0 release">phpmd-2.7.0</a> (2019/07/30)</h2>
-<p>This is the first minor release of the new PHPMD maintainer team. It<br />contains all the new features, improvements and fixes from two and a<br />half years since 2.6.0. Please take note of a backwards incompatible<br />property renaming in the CouplingBetweenObjects rule.</p>
+<p>This is the first minor release of the new PHPMD maintainer team. It
+contains all the new features, improvements and fixes from two and a
+half years since 2.6.0. Please take note of a backwards incompatible
+property renaming in the CouplingBetweenObjects rule.</p>
 <ul><li class="dash">Fixed #482: Renamed minimum property to maximum in
-  CouplingBetweenObjects rule (backwards incompatible) Fixed in commit<br />  #9210116.</li>
+  CouplingBetweenObjects rule (backwards incompatible) Fixed in commit
+  #9210116.</li>
 <li class="dash">Fixed #626: Fixed special characters escaping in violation
   description for XML output Fixed in commit #5305f5b.</li>
 <li class="dash">Fixed #378: Fixed warning/error when trying to export to a
@@ -257,9 +262,11 @@ See #768</p>
 <li class="dash">Implemented #405: Added JSON output format Implemented in commit
   #7552089.</li>
 <li class="dash">Implemented #525: Added new options to CLI (min-priority,
-  minimum-priority, report-file, input-file, not-strict) Implemented<br />  in commit #71b52be.</li>
+  minimum-priority, report-file, input-file, not-strict) Implemented
+  in commit #71b52be.</li>
 <li class="dash">Implemented #579: Added support for setting the maximum execution
-  priority through CLI (max-priority, maximum-priority,<br />  maximumpriority) Implemented in commit #45de3be.</li>
+  priority through CLI (max-priority, maximum-priority,
+  maximumpriority) Implemented in commit #45de3be.</li>
 <li class="dash">Implemented #489: Added new predefined variables to
   AbstractLocalVariable rule Implemented in commit #63047d9.</li>
 <li class="dash">Implemented #382: Changed TooManyMethods rule to ignore isser-,
@@ -271,7 +278,8 @@ See #768</p>
 <li class="dash">Implemented #643: Fixed Travis-CI build to run PHP 5.3 and fixed 5.3
   compatibility Implemented in commit #4a8a567.</li>
 <li class="dash">Implemented #475: Added tests that show support for chained methods
-  (fluent interfaces) for UnusedPrivateMethod rule Implemented in<br />  commit #d5c1372.</li>
+  (fluent interfaces) for UnusedPrivateMethod rule Implemented in
+  commit #d5c1372.</li>
 <li class="dash">Implemented #495: Added test for SuppressWarnings for
   ExcessivePublicCount Implemented in commit #b1c15f8.</li>
 <li class="dash">Implemented #381: Added annotations to allow IDEs to reference
@@ -311,13 +319,15 @@ See #768</p>
 <li class="dash">Implemented #460: Added ApiGen config file Implemented in commit
   #4514235.</li>
 <li class="dash">Implemented #471: Modified default PHP installation directory to
-  match Chocolatey package in AppVeyor CI config Implemented in commit<br />  #2b55442.</li>
+  match Chocolatey package in AppVeyor CI config Implemented in commit
+  #2b55442.</li>
 <li class="dash">Implemented #552: Updated PHP in AppVeyor CI builds to 7.1
   Implemented in commit #252b178.</li>
 <li class="dash">Implemented #605: Added a pure PHP build script to generate the
   website as static files Implemented in commit #6f56a8f.</li>
 <li class="dash">Implemented #608: Updated the website build script to handle anchor
-  links and to use direct links whenever possible Implemented in<br />  commit #6cf7a2d.</li>
+  links and to use direct links whenever possible Implemented in
+  commit #6cf7a2d.</li>
 <li class="dash">Implemented #483: Removed broken link to Web Content Viewer from
   website Implemented in commit #eeea9ee.</li>
 <li class="dash">Implemented #611: Removed section about commercial support from
@@ -359,14 +369,18 @@ See #768</p>
 
 <a id="phpmd-2-6-1-2019-07-06-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.6.1" title="phpmd-2.6.1 release">phpmd-2.6.1</a> (2019/07/06)</h2>
-<p>This is the first release of the new maintainer team of PHPMD. It is a<br />re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to<br />GitHub releases.</p>
+<p>This is the first release of the new maintainer team of PHPMD. It is a
+re-tag of 2.6.0 but with PHAR build on Travis-CI and deployment to
+GitHub releases.</p>
 <ul><li class="dash">Implemented #616: Build the PHAR file on Travis-CI and publish it to
   GitHub releases Implemented in commit #135327d.</li>
 </ul>
 
 <a id="phpmd-2-6-0-2017-01-20-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.6.0" title="phpmd-2.6.0 release">phpmd-2.6.0</a> (2017/01/20)</h2>
-<p>This release incorporates several pending PRs. Beside that we have<br />rebased PHPMD on PDepend 2.5 which should complete support for PHP 7<br />language features.</p>
+<p>This release incorporates several pending PRs. Beside that we have
+rebased PHPMD on PDepend 2.5 which should complete support for PHP 7
+language features.</p>
 <ul><li class="dash">Fixed #345: Development Code Fragment feature is not working Fixed
   in commit #1c0afd4.</li>
 <li class="dash">Fixed #384: use-statement for functions returns in:
@@ -392,7 +406,9 @@ See #768</p>
 
 <a id="phpmd-2-5-0-2016-11-23-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.5.0" title="phpmd-2.5.0 release">phpmd-2.5.0</a> (2016/11/23)</h2>
-<p>This release closes several minor/major issues in PHPMD itself and it<br />bundles a new version of PDepend that also provides fixes for several<br />bugs.</p>
+<p>This release closes several minor/major issues in PHPMD itself and it
+bundles a new version of PDepend that also provides fixes for several
+bugs.</p>
 <ul><li class="dash">Fixed #386: English language fixes Fixed in commit #2a31103.</li>
 <li class="dash">Fixed #395: Fix typo in rulesets/cleancode Fixed in commit #f6aa5be.</li>
 <li class="dash">Fix copy &amp;amp; paste error Fixed in commit #c51ea72.</li>
@@ -401,7 +417,8 @@ See #768</p>
 <li class="dash">Implemented #365: Remove the leading blank line from the
   TextRenderer Implemented in commit #ca59154.</li>
 <li class="dash">Implemented #380: add --ignore-exit-violations CLI flag to allow
-  exit code 0 event if violation is found (will allow successfull<br />  build for CI) Implemented in commit #9f71d98.</li>
+  exit code 0 event if violation is found (will allow successful
+  build for CI) Implemented in commit #9f71d98.</li>
 <li class="dash">Bump PHP dependency to 5.3.9 Implemented in commit #540d61c.</li>
 </ul>
 
@@ -426,14 +443,17 @@ See #768</p>
 
 <a id="phpmd-2-4-1-2016-03-08-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.1" title="phpmd-2.4.1 release">phpmd-2.4.1</a> (2016/03/08)</h2>
-<p>This release fixes a method naming issue, that was introduced with<br />2.4.0.</p>
+<p>This release fixes a method naming issue, that was introduced with
+2.4.0.</p>
 <a id="phpmd-2-4-0-2016-03-08-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.4.0" title="phpmd-2.4.0 release">phpmd-2.4.0</a> (2016/03/08)</h2>
-<p>This release adds a new helper method to access the full qualified<br />name of an analyzed node.</p>
+<p>This release adds a new helper method to access the full qualified
+name of an analyzed node.</p>
 <ul><li class="dash">Fixed #335: Typo in clean code rule description fixed. Fixed in
   commit #59a6e8a.</li>
 <li class="dash">Helper method added, so that we can access the full qualified name
-  of a class, method, interface or function. Implemented in commit<br />  #e46a099.</li>
+  of a class, method, interface or function. Implemented in commit
+  #e46a099.</li>
 <li class="dash">Implemented #334: Added __debugInfo to list of ignored methods.
   Implemented in commit #f8b017a.</li>
 </ul>
@@ -457,7 +477,9 @@ See #768</p>
 
 <a id="phpmd-2-3-0-2015-09-22-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.3.0" title="phpmd-2.3.0 release">phpmd-2.3.0</a> (2015/09/22)</h2>
-<p>This new release contains several contributed bugfixes and additions<br />to PHPMD. Beside that we now have better support for language<br />constructs in the upcoming PHP 7.</p>
+<p>This new release contains several contributed bugfixes and additions
+to PHPMD. Beside that we now have better support for language
+constructs in the upcoming PHP 7.</p>
 <ul><li class="dash">Fixed #272: Improve type hint. Fixed in commit #724bf76.</li>
 <li class="dash">Fixed #293: Declared missing method in abstract class Fixed in
   commit #9b806f6.</li>
@@ -494,17 +516,20 @@ See #768</p>
 
 <a id="phpmd-2-2-2-2015-03-26-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.2" title="phpmd-2.2.2 release">phpmd-2.2.2</a> (2015/03/26)</h2>
-<p>Bugfix release that closes some issues in phpmd's core and in the<br />project documentation.</p>
+<p>Bugfix release that closes some issues in phpmd's core and in the
+project documentation.</p>
 <ul><li class="dash">Fixed #271: Fix cp error in doc Fixed in commit #b73dd32.</li>
 <li class="dash">Fixed #270: Fixing namespace issue for OutOfBoundsException Fixed in
   commit #0d4bed1.</li>
-<li class="dash">Fixed #80: Out ot the box usage in combination with composer of all
-  rules failes throws error Property $exceptions does not exist. Fixed<br />  in commit #0d4bed1.</li>
+<li class="dash">Fixed #80: Out of the box usage in combination with composer of all
+  rules fails throws error Property $exceptions does not exist. Fixed
+  in commit #0d4bed1.</li>
 </ul>
 
 <a id="phpmd-2-2-1-2015-03-01-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.2.1" title="phpmd-2.2.1 release">phpmd-2.2.1</a> (2015/03/01)</h2>
-<p>This release integration several pull requests and closes and handful<br />of issues.</p>
+<p>This release integration several pull requests and closes and handful
+of issues.</p>
 <ul><li class="dash">Fixed #237: Display type correctly for constructors Fixed in commit
   #49f19d8.</li>
 <li class="dash">Fixed #238: Fix link to rulesets Fixed in commit #829d110.</li>
@@ -582,7 +607,8 @@ See #768</p>
 
 <a id="phpmd-2-1-2-2014-09-25-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.1.2" title="phpmd-2.1.2 release">phpmd-2.1.2</a> (2014/09/25)</h2>
-<p>This release closes several minor issues and integrates some<br />outstanding pull requests.</p>
+<p>This release closes several minor issues and integrates some
+outstanding pull requests.</p>
 <ul><li class="dash">Fixed #164: Fixed IRC link Fixed in commit #84f2d8a.</li>
 <li class="dash">Fixed #165: Removed lie regarding PEAR Fixed in commit #74b9f84.</li>
 <li class="dash">Fixed #85: Documentation changes, fixed typo in PHPMD's online
@@ -632,7 +658,10 @@ See #768</p>
 <ul><li class="dash">Fixed #111: Changelog with old releases and invalid dates removed.
   Fixed in commit #cdfbb8f.</li>
 <li class="dash">Implemented #40: Allow multiple report files Now it is possible to
-  render multiple report files during a single PHPMD run, just add:<br />  --reportfile-xml report.xml --reportfile-html report.html<br />  --reportfile-text report.txt to the PHP command line call.<br />  Implemented in commit #e16c38c.</li>
+  render multiple report files during a single PHPMD run, just add:
+  --reportfile-xml report.xml --reportfile-html report.html
+  --reportfile-text report.txt to the PHP command line call.
+  Implemented in commit #e16c38c.</li>
 <li class="dash">Implemented #61: UnusedLocalVariable fix for compact handling in
   Symfony2 Implemented in commit #a1dc403.</li>
 <li class="dash">Implemented #119: PDepend 2.0 support Implemented in commit
@@ -663,12 +692,15 @@ See #768</p>
 <li class="dash">Implemented #10: Fix UnusedLocalVariable to recognize compact
   function. Implemented in commit #e478912.</li>
 <li class="dash">Implemented #58: Skip &quot;unused formal parameter&quot; checking when method
-  signature has been annotated as inherited using @inheritdoc.<br />  Implemented in commit #158e1f5.</li>
+  signature has been annotated as inherited using @inheritdoc.
+  Implemented in commit #158e1f5.</li>
 </ul>
 
 <a id="phpmd-1-4-0-2012-09-07-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.4.0" title="phpmd-1.4.0 release">phpmd-1.4.0</a> (2012/09/07)</h2>
-<p>This release integrates some longer pending pull requests and smaller<br />bugfixes. One major addition is support for Composer as distribution<br />channel.</p>
+<p>This release integrates some longer pending pull requests and smaller
+bugfixes. One major addition is support for Composer as distribution
+channel.</p>
 <ul><li class="dash">Fixed #51: Fixed handling of traits. Fixed in commit #22b523c.</li>
 <li class="dash">Implemented #11: Add getStringProperty($name) to AbstractRule.php.
   Implemented in commit #b7d659f.</li>
@@ -682,31 +714,43 @@ See #768</p>
 
 <a id="phpmd-1-3-3-2012-02-29-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.3" title="phpmd-1.3.3 release">phpmd-1.3.3</a> (2012/02/29)</h2>
-<p>This release closes an issue introduced with the last release. It<br />closes one more regression related to PHP's memory_limit and the<br />Suhosin patch.</p>
+<p>This release closes an issue introduced with the last release. It
+closes one more regression related to PHP's memory_limit and the
+Suhosin patch.</p>
 <ul><li class="dash">Fixed fatal error due to bug in memory_limit modification code.
   Fixed in commit #e8b546d.</li>
 </ul>
 
 <a id="phpmd-1-3-2-2012-02-25-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.2" title="phpmd-1.3.2 release">phpmd-1.3.2</a> (2012/02/25)</h2>
-<p>This release closes a minor issue in PHP_PMD's memory handling when it<br />is run in a PHP environment that uses the Suhosin patch and the<br />suhosin.memory_limit setting.</p>
+<p>This release closes a minor issue in PHP_PMD's memory handling when it
+is run in a PHP environment that uses the Suhosin patch and the
+suhosin.memory_limit setting.</p>
 <ul><li class="dash">Fixed #25450811: Alert disable memory_limit Fixed in commit
   #19e4fc5.</li>
 </ul>
 
 <a id="phpmd-1-3-1-2012-02-16-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.1" title="phpmd-1.3.1 release">phpmd-1.3.1</a> (2012/02/16)</h2>
-<p>The 1.3.1 release of PHPMD closes one critical bug in PHPMD, that<br />causes a fatal error due to the xdebug max_nesting_level setting for<br />very deep self calls on methods.</p>
+<p>The 1.3.1 release of PHPMD closes one critical bug in PHPMD, that
+causes a fatal error due to the xdebug max_nesting_level setting for
+very deep self calls on methods.</p>
 <ul><li class="dash">Fixed #24975295: Fatal: Maximum function nesting level reached in
   ASTNode.php:425 Fixed in commit #f6550df.</li>
 </ul>
 
 <a id="phpmd-1-3-0-2012-02-04-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.3.0" title="phpmd-1.3.0 release">phpmd-1.3.0</a> (2012/02/04)</h2>
-<p>Version 1.3.0 now depends on PHP_Depend 1.0.0 which has support for<br />all the new language constructs introduced with PHP 5.4. Additionally<br />this release contains some minor fixes for PHPMD's rule violation<br />messages.</p>
+<p>Version 1.3.0 now depends on PHP_Depend 1.0.0 which has support for
+all the new language constructs introduced with PHP 5.4. Additionally
+this release contains some minor fixes for PHPMD's rule violation
+messages.</p>
 <a id="phpmd-1-2-1-2011-10-04-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.2.1" title="phpmd-1.2.1 release">phpmd-1.2.1</a> (2011/10/04)</h2>
-<p>The 1.2.1 release of PHPMD closes several minor issues and bugs.<br />Beside that we have added a contribution by Francis Besset with<br />additions rules for PHPMD. Finally we have updated the utilized<br />PHP_Depend version to a newer release.</p>
+<p>The 1.2.1 release of PHPMD closes several minor issues and bugs.
+Beside that we have added a contribution by Francis Besset with
+additions rules for PHPMD. Finally we have updated the utilized
+PHP_Depend version to a newer release.</p>
 <ul><li class="dash">Fixed #14990109: False detection of unused variable Fixed in commit
   #183fbd5.</li>
 <li class="dash">Fixed #23278127: PHPMD should exclude unused parameters from
@@ -722,8 +766,11 @@ See #768</p>
 
 <a id="phpmd-1-2-0-2011-09-27-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.2.0" title="phpmd-1.2.0 release">phpmd-1.2.0</a> (2011/09/27)</h2>
-<p>Version 1.2.0 is a small feature release of PHPMD that introduces the<br />new command line option --strict. This options forces PHPMD to apply<br />all rules, even if a source node contains the @SuppressWarnings<br />annotation.</p>
-<ul><li class="dash">Controverial PHPMD rule that checks if the project under test does
+<p>Version 1.2.0 is a small feature release of PHPMD that introduces the
+new command line option --strict. This options forces PHPMD to apply
+all rules, even if a source node contains the @SuppressWarnings
+annotation.</p>
+<ul><li class="dash">Controversial PHPMD rule that checks if the project under test does
   not utilize PHP's super globals. Implemented in commit #0e60fb9.</li>
 <li class="dash">Implemented #18462127: PHPMD needs a <em>strict</em> mode. Implemented in
   commit #b066b44.</li>
@@ -731,14 +778,24 @@ See #768</p>
 
 <a id="phpmd-1-1-1-2011-06-30-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.1.1" title="phpmd-1.1.1 release">phpmd-1.1.1</a> (2011/06/30)</h2>
-<p>Version 1.1.1 of PHPMD is a pure Bugfix release that fixes an issue in<br />PHPMD's package manifest. This bug prevents Pyrus the PEAR2 installer<br />from installing PHPMD.</p>
+<p>Version 1.1.1 of PHPMD is a pure Bugfix release that fixes an issue in
+PHPMD's package manifest. This bug prevents Pyrus the PEAR2 installer
+from installing PHPMD.</p>
 <ul><li class="dash">Fixed #10096717: Bug in PHPMD's package manifest file. Fixed in
   commit #f063bc9.</li>
 </ul>
 
 <a id="phpmd-1-1-0-2011-03-20-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/1.1.0" title="phpmd-1.1.0 release">phpmd-1.1.0</a> (2011/03/20)</h2>
-<p>Version 1.1.0 of PHPMD was released on March the 20th 2011. The key<br />features for this release were two new rules. The first one utilizes<br />the Coupling Between Objects (CBO) metric to detect strongly coupled<br />classes. The second one detects the usage of PHP's questionable 'goto'<br />statement. Beside that we have closed a minor bug in the LongVariable<br />rule, where also private properties with descriptive names were<br />reported. And finally we have replaced deprecated PHPUnit features in<br />the PHPMD's test suite, so that PHPMD's tests should now work with<br />PHPUnit 3.4.x and 3.5.x without deprecated warnings.</p>
+<p>Version 1.1.0 of PHPMD was released on March the 20th 2011. The key
+features for this release were two new rules. The first one utilizes
+the Coupling Between Objects (CBO) metric to detect strongly coupled
+classes. The second one detects the usage of PHP's questionable 'goto'
+statement. Beside that we have closed a minor bug in the LongVariable
+rule, where also private properties with descriptive names were
+reported. And finally we have replaced deprecated PHPUnit features in
+the PHPMD's test suite, so that PHPMD's tests should now work with
+PHPUnit 3.4.x and 3.5.x without deprecated warnings.</p>
 <ul><li class="dash">Fixed #10096717: LongVariable rule should not apply on private
   properties. Fixed in commit #f063bc9.</li>
 <li class="dash">Implemented #10474873: Add rule for PHP's goto statement.
@@ -775,7 +832,7 @@ See #768</p>
 
 <a id="phpmd-0-2-7-2010-09-01-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.7" title="phpmd-0.2.7 release">phpmd-0.2.7</a> (2010/09/01)</h2>
-<ul><li class="dash">Fixed #36: @SupressWarnings annotation does not work for
+<ul><li class="dash">Fixed #36: @SuppressWarnings annotation does not work for
   UnusedPrivateMethod rule. Fixed in commit #284.</li>
 <li class="dash">Fixed #35: Stream Writer closes STDOUT. Fixed in commit #286.</li>
 <li class="dash">Fixed #33: PEAR package.xml does not @php_bin@ and @bin_dir@ on
@@ -797,7 +854,8 @@ See #768</p>
 <li class="dash">Implemented #30: New option --version added to PHPMD's command line
   interface. Implemented in commit #246.</li>
 <li class="dash">Names of several command line options unified with PHPUnit and
-  PHPCPD. The --ignore option is now --exclude and --extensions is now<br />  --suffixes.</li>
+  PHPCPD. The --ignore option is now --exclude and --extensions is now
+  --suffixes.</li>
 </ul>
 
 <a id="phpmd-0-2-5-2010-04-03-"></a>
@@ -839,7 +897,7 @@ See #768</p>
 <a id="phpmd-0-2-2-2010-01-20-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/0.2.2" title="phpmd-0.2.2 release">phpmd-0.2.2</a> (2010/01/20)</h2>
 <ul><li class="dash">Small change to the command line interface, which did not return an
-  exit code != 0 when an exception occured.</li>
+  exit code != 0 when an exception occurred.</li>
 </ul>
 
 <a id="phpmd-0-2-1-2010-01-05-"></a>
