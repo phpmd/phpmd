@@ -191,13 +191,6 @@ class CommandLineOptions
     protected $cacheStrategy;
 
     /**
-     * The level of verbosity as per set in CLI options.
-     *
-     * @var int
-     */
-    protected $verbosityLevel = 0;
-
-    /**
      * Either the output should be colored.
      *
      * @var bool
@@ -221,6 +214,7 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '--verbose':
                 case '-v':
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
                     break;
@@ -269,9 +263,6 @@ class CommandLineOptions
                     break;
                 case '--color':
                     $this->colored = true;
-                    break;
-                case '--verbose':
-                    $this->verbosityLevel = 1;
                     break;
                 case '--version':
                     $this->version = true;
@@ -564,7 +555,7 @@ class CommandLineOptions
         $renderer = $this->createRendererWithoutOptions($reportFormat);
 
         if ($renderer instanceof Verbose) {
-            $renderer->setVerbosityLevel($this->verbosityLevel);
+            $renderer->setVerbosityLevel($this->verbosity);
         }
 
         if ($renderer instanceof Color) {
@@ -736,7 +727,7 @@ class CommandLineOptions
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
-            '-v, -vv, -vvv: Show debug information.' . \PHP_EOL .
+            '--verbose, -v, -vv, -vvv: Show debug information.' . \PHP_EOL .
             '--minimumpriority: rule priority threshold; rules with lower ' .
             'priority than this will not be used' . \PHP_EOL .
             '--reportfile: send report output to a file; default to STDOUT' .
@@ -763,7 +754,6 @@ class CommandLineOptions
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
-            '--verbose: will return a more verbose output' . \PHP_EOL .
             '--color: enable color in output' . \PHP_EOL;
     }
 

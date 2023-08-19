@@ -19,6 +19,7 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTest;
+use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
@@ -85,7 +86,7 @@ class TextRendererTest extends AbstractTest
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
-        $renderer->setVerbosityLevel(1);
+        $renderer->setVerbosityLevel(OutputInterface::VERBOSITY_VERBOSE);
 
         $violations = array(
             $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),

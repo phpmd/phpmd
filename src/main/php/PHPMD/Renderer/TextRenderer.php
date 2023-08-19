@@ -18,6 +18,7 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Renderer\Option\Color;
 use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Report;
@@ -30,7 +31,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
 {
     protected $columnSpacing = 2;
 
-    protected $verbosityLevel = 0;
+    protected $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
 
     protected $colored = false;
 
@@ -63,7 +64,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         foreach ($violations as $data) {
             list($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength) = $data;
 
-            if ($this->verbosityLevel < 1) {
+            if ($this->verbosityLevel < OutputInterface::VERBOSITY_VERBOSE) {
                 $writer->write($location);
                 $writer->write(str_repeat(' ', $longestLocationLength + $this->columnSpacing - $locationLength));
             }
@@ -72,7 +73,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             $writer->write(str_repeat(' ', $longestRuleNameLength + $this->columnSpacing - $ruleNameLength));
             $writer->write($this->applyColor($violation->getDescription(), 'red'));
 
-            if ($this->verbosityLevel >= 1) {
+            if ($this->verbosityLevel >= OutputInterface::VERBOSITY_VERBOSE) {
                 $writer->write(PHP_EOL);
                 $writer->write('📁 in ' . preg_replace('/:(\d+)$/', ' on line $1', $location) . PHP_EOL);
                 $set = preg_replace('/rules$/', '', strtolower(str_replace(' ', '', $ruleSet)));

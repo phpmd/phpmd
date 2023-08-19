@@ -21,6 +21,7 @@ use PHPMD\AbstractTest;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Rule;
+use ReflectionProperty;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\CommandLineOptions} class.
@@ -59,6 +60,42 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         self::assertEquals(__FILE__, $opts->getInputPath());
+    }
+
+    /**
+     * @return void
+     * @since 2.14.0
+     */
+    public function testVerbose()
+    {
+        $args = array('foo.php', __FILE__, 'text', 'design', '-vvv');
+        $opts = new CommandLineOptions($args);
+        $renbderer = $opts->createRenderer();
+
+        $verbosityExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'verbosityLevel');
+        $verbosityExtractor->setAccessible(true);
+
+        $verbosityLevel = $verbosityExtractor->getValue($renbderer);
+
+        self::assertSame(OutputInterface::VERBOSITY_DEBUG, $verbosityLevel);
+    }
+
+    /**
+     * @return void
+     * @since 2.14.0
+     */
+    public function testColored()
+    {
+        $args = array('foo.php', __FILE__, 'text', 'design', '--color');
+        $opts = new CommandLineOptions($args);
+        $renbderer = $opts->createRenderer();
+
+        $coloredExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'colored');
+        $coloredExtractor->setAccessible(true);
+
+        $colored = $coloredExtractor->getValue($renbderer);
+
+        self::assertTrue($colored);
     }
 
     /**
