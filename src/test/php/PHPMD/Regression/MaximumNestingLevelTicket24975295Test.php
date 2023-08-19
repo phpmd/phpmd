@@ -46,7 +46,7 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
 
         $inputs = self::createCodeResourceUriForTest();
         $rules = 'unusedcode';
-        $renderes = array($renderer);
+        $renderers = array($renderer);
         $factory = new RuleSetFactory();
 
 
@@ -54,7 +54,7 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
         $phpmd->processFiles(
             $inputs,
             $factory->getIgnorePattern($rules),
-            $renderes,
+            $renderers,
             $factory->createRuleSets($rules),
             new Report()
         );

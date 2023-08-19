@@ -198,7 +198,7 @@ that will check the source code.
 Using multiple source files and folders
 ```````````````````````````````````````
 
-PHPMD also allowes you to specify multiple source directories in case you want
+PHPMD also allows you to specify multiple source directories in case you want
 to create one output for certain parts of your code ::
 
  ~ $ phpmd /path/to/code,index.php,/another/place/with/code text codesize
