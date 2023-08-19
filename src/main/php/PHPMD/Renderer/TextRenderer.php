@@ -76,7 +76,8 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
                 $writer->write(PHP_EOL);
                 $writer->write('📁 in ' . preg_replace('/:(\d+)$/', ' on line $1', $location) . PHP_EOL);
                 $set = preg_replace('/rules$/', '', strtolower(str_replace(' ', '', $ruleSet)));
-                $writer->write('🔗 ' . $set . '.xml https://phpmd.org/rules/' . $set . '.html#' . strtolower($ruleName) . PHP_EOL);
+                $url = 'https://phpmd.org/rules/' . $set . '.html#' . strtolower($ruleName);
+                $writer->write('🔗 ' . $set . '.xml ' . $url . PHP_EOL);
             }
 
             $writer->write(PHP_EOL);
@@ -92,7 +93,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
 
     public function setVerbosityLevel($level)
     {
-        $this->verbosityLevel = (int) $level;
+        $this->verbosityLevel = (int)$level;
     }
 
     public function setColored($colored)
