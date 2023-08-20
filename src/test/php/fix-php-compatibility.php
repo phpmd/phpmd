@@ -123,18 +123,12 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function hasChildren",
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => array(
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => PHP_VERSION >= 7 ? array(
         array(
             '$numTests = count($coverageData[$i]);',
             '$numTests = count($coverageData[$i] ?? []);',
         ),
-    ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/Constraint.php' => array(
-        array(
-            'public function count()',
-            "#[\\ReturnTypeWillChange]\npublic function count()",
-        ),
-    ),
+    ) : array(),
     __DIR__ . '/../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
         array(
             'public function count()',
@@ -178,13 +172,13 @@ $replacements = array(
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => array(
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => PHP_VERSION >= 7 ? array(
         array(
             '$docblock = $token->getDocblock();',
             '$docblock = $token->getDocblock() ?? \'\';',
             '$docblock = $token->getDocblock() ?? \'\';',
         ),
-    ),
+    ) : array(),
     __DIR__ . '/../../../vendor/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
         array(
             'public function accept(',
