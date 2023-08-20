@@ -27,7 +27,7 @@ jobs:
           - dependency-version: prefer-lowest
             php: 7.4
 
-    name: P${{ matrix.php }} - ${{ matrix.dependency-version }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.dependency-version }}
 
     steps:
       - name: Checkout code

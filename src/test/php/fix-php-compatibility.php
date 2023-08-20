@@ -123,6 +123,60 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function hasChildren",
         ),
     ),
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => array(
+        array(
+            '$numTests = count($coverageData[$i]);',
+            '$numTests = count($coverageData[$i] ?? []);',
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/Constraint.php' => array(
+        array(
+            'public function count()',
+            "#[\\ReturnTypeWillChange]\npublic function count()",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
+        array(
+            'public function count()',
+            "#[\\ReturnTypeWillChange]\npublic function count()",
+        ),
+        array(
+            'xdebug.default_enable=0',
+            'xdebug.mode=coverage',
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestSuite.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/TestResult.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+        ),
+    ),
+    __DIR__ . '/../../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => array(
+        array(
+            '$docblock = $token->getDocblock();',
+            '$docblock = $token->getDocblock() ?? \'\';',
+        ),
+    ),
 );
 
 foreach ($replacements as $file => $patterns) {

@@ -25,3 +25,7 @@ spl_autoload_register(
         }
     }
 );
+
+if (class_exists('PHP_Token')) {
+    require_once __DIR__ . '/load-coverage-tokens.php';
+}

@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [7.4]
+        php: [8.2]
         dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }}
@@ -43,7 +43,12 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: |
+          composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+          composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
+
+      - name: Fix PHP compatibility
+        run: php src/test/php/fix-php-compatibility.php
 
       - name: Execute Unit Tests
         run: phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html

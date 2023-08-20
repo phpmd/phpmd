@@ -754,6 +754,7 @@ class CommandLineOptions
     public function usage()
     {
         $availableRenderers = $this->getListOfAvailableRenderers();
+        $noRenderers = ($availableRenderers === null);
 
         return 'Mandatory arguments:' . \PHP_EOL .
             '1) A php source code filename or directory. Can be a comma-' .
@@ -762,7 +763,7 @@ class CommandLineOptions
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
             'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
-            ($availableRenderers === null ? 'No available formats' : 'Available formats: ' . $availableRenderers) . '.' . \PHP_EOL .
+            ($noRenderers ? 'No available formats' : 'Available formats: ' . $availableRenderers) . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
