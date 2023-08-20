@@ -362,20 +362,20 @@ class CommandTest extends AbstractTest
         unlink($file);
 
         $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
-        $this->assertContains(
-            str_replace(
+        $this->assertRegExp(
+            '`' . preg_quote(str_replace(
                 '/',
                 DIRECTORY_SEPARATOR,
-                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:701'
-            ) . PHP_EOL,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:'
+            ), '`') . '\d+' . PHP_EOL . '`',
             $errors
         );
-        $this->assertContains(
-            str_replace(
+        $this->assertRegExp(
+            '`' . preg_quote(str_replace(
                 '/',
                 DIRECTORY_SEPARATOR,
-                'src/main/php/PHPMD/TextUI/CommandLineOptions.php(603): '
-            ) . 'PHPMD\\TextUI\\CommandLineOptions->createCustomRenderer()',
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php'
+            ), '`') . '\(\d+\): PHPMD\\\\TextUI\\\\CommandLineOptions->createCustomRenderer\(\)`',
             $errors
         );
     }
