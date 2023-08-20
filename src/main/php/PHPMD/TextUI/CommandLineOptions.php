@@ -319,9 +319,9 @@ class CommandLineOptions
             throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath    = (string)array_shift($arguments);
-        $this->reportFormat = (string)array_shift($arguments);
-        $this->ruleSets     = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_pop($arguments);
+        $this->reportFormat = (string)array_pop($arguments);
+        $this->inputPath    = implode(',', $arguments);
 
         if ($this->inputPath === '-') {
             $this->inputPath = 'php://stdin';
