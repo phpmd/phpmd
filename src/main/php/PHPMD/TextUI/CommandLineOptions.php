@@ -322,6 +322,10 @@ class CommandLineOptions
         $this->inputPath    = (string)array_shift($arguments);
         $this->reportFormat = (string)array_shift($arguments);
         $this->ruleSets     = (string)array_shift($arguments);
+
+        if ($this->inputPath === '-') {
+            $this->inputPath = 'php://stdin';
+        }
     }
 
     /**
