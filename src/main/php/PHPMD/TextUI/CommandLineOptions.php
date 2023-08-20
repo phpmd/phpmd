@@ -27,6 +27,8 @@ use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\Option\Color;
+use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
@@ -189,6 +191,13 @@ class CommandLineOptions
     protected $cacheStrategy;
 
     /**
+     * Either the output should be colored.
+     *
+     * @var bool
+     */
+    protected $colored = false;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -205,6 +214,7 @@ class CommandLineOptions
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
             switch ($arg) {
+                case '--verbose':
                 case '-v':
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
                     break;
@@ -250,6 +260,9 @@ class CommandLineOptions
                     break;
                 case '--exclude':
                     $this->ignore = array_shift($args);
+                    break;
+                case '--color':
+                    $this->colored = true;
                     break;
                 case '--version':
                     $this->version = true;
@@ -539,6 +552,26 @@ class CommandLineOptions
      */
     public function createRenderer($reportFormat = null)
     {
+        $renderer = $this->createRendererWithoutOptions($reportFormat);
+
+        if ($renderer instanceof Verbose) {
+            $renderer->setVerbosityLevel($this->verbosity);
+        }
+
+        if ($renderer instanceof Color) {
+            $renderer->setColored($this->colored);
+        }
+
+        return $renderer;
+    }
+
+    /**
+     * @param string $reportFormat
+     * @return \PHPMD\AbstractRenderer
+     * @throws InvalidArgumentException When the specified renderer does not exist.
+     */
+    protected function createRendererWithoutOptions($reportFormat = null)
+    {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
         switch ($reportFormat) {
@@ -694,7 +727,7 @@ class CommandLineOptions
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
-            '-v, -vv, -vvv: Show debug information.' . \PHP_EOL .
+            '--verbose, -v, -vv, -vvv: Show debug information.' . \PHP_EOL .
             '--minimumpriority: rule priority threshold; rules with lower ' .
             'priority than this will not be used' . \PHP_EOL .
             '--reportfile: send report output to a file; default to STDOUT' .
@@ -720,7 +753,8 @@ class CommandLineOptions
             '--generate-baseline: will generate a phpmd.baseline.xml next ' .
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
-            '--baseline-file: a custom location of the baseline file' . \PHP_EOL;
+            '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
+            '--color: enable color in output' . \PHP_EOL;
     }
 
     /**

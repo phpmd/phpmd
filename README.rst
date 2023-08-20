@@ -117,9 +117,12 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
-  - ``-v, -vv, -vvv`` - The output verbosity level. Will print more information
+  - ``--verbose, -v, -vv, -vvv`` - The output verbosity level. Will print more information
     what is being processed or cached. Will be send to ``STDERR`` to not interfere
-    with report output.
+    with report output. ``text`` output will also have under each error a link
+    to the documentation of the rule and format the location in a way that most
+    IDEs will convert into a link to open the file at the line of the error
+    when clicked.
 
   - ``--minimumpriority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
@@ -159,6 +162,9 @@ Command line options
 
   - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
+
+  - ``--color`` - enable color in output, for instance text renderer
+    will show rule name in yellow and error description in red.
 
   An example command line: ::
 

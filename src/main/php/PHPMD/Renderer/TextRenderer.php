@@ -18,15 +18,22 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
+use PHPMD\Console\OutputInterface;
+use PHPMD\Renderer\Option\Color;
+use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Report;
 
 /**
  * This renderer output a textual log with all found violations and suspect
  * software artifacts.
  */
-class TextRenderer extends AbstractRenderer
+class TextRenderer extends AbstractRenderer implements Verbose, Color
 {
     protected $columnSpacing = 2;
+
+    protected $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
+
+    protected $colored = false;
 
     /**
      * This method will be called when the engine has finished the source analysis
@@ -44,21 +51,36 @@ class TextRenderer extends AbstractRenderer
 
         foreach ($report->getRuleViolations() as $violation) {
             $location = $violation->getFileName().':'.$violation->getBeginLine();
-            $ruleName = $violation->getRule()->getName();
+            $rule = $violation->getRule();
+            $ruleName = $rule->getName();
+            $ruleSet = $rule->getRuleSetName();
             $locationLength = mb_strlen($location);
             $ruleNameLength = mb_strlen($ruleName);
             $longestLocationLength = max($longestLocationLength, $locationLength);
             $longestRuleNameLength = max($longestRuleNameLength, $ruleNameLength);
-            $violations[] = array($violation, $location, $ruleName, $locationLength, $ruleNameLength);
+            $violations[] = array($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength);
         }
 
         foreach ($violations as $data) {
-            list($violation, $location, $ruleName, $locationLength, $ruleNameLength) = $data;
-            $writer->write($location);
-            $writer->write(str_repeat(' ', $longestLocationLength + $this->columnSpacing - $locationLength));
-            $writer->write($ruleName);
+            list($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength) = $data;
+
+            if ($this->verbosityLevel < OutputInterface::VERBOSITY_VERBOSE) {
+                $writer->write($location);
+                $writer->write(str_repeat(' ', $longestLocationLength + $this->columnSpacing - $locationLength));
+            }
+
+            $writer->write($this->applyColor($ruleName, 'yellow'));
             $writer->write(str_repeat(' ', $longestRuleNameLength + $this->columnSpacing - $ruleNameLength));
-            $writer->write($violation->getDescription());
+            $writer->write($this->applyColor($violation->getDescription(), 'red'));
+
+            if ($this->verbosityLevel >= OutputInterface::VERBOSITY_VERBOSE) {
+                $writer->write(PHP_EOL);
+                $writer->write('📁 in ' . preg_replace('/:(\d+)$/', ' on line $1', $location) . PHP_EOL);
+                $set = preg_replace('/rules$/', '', strtolower(str_replace(' ', '', $ruleSet)));
+                $url = 'https://phpmd.org/rules/' . $set . '.html#' . strtolower($ruleName);
+                $writer->write('🔗 ' . $set . '.xml ' . $url . PHP_EOL);
+            }
+
             $writer->write(PHP_EOL);
         }
 
@@ -68,5 +90,30 @@ class TextRenderer extends AbstractRenderer
             $writer->write($error->getMessage());
             $writer->write(PHP_EOL);
         }
+    }
+
+    public function setVerbosityLevel($level)
+    {
+        $this->verbosityLevel = (int)$level;
+    }
+
+    public function setColored($colored)
+    {
+        $this->colored = $colored;
+    }
+
+    protected function applyColor($text, $color)
+    {
+        if (!$this->colored) {
+            return $text;
+        }
+
+        $colors = array(
+            'yellow' => 33,
+            'red' => 31,
+        );
+        $color = isset($colors[$color]) ? $colors[$color] : $color;
+
+        return "\033[{$color}m{$text}\033[0m";
     }
 }
