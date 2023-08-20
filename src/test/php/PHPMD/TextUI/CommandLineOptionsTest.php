@@ -20,6 +20,7 @@ namespace PHPMD\TextUI;
 use Closure;
 use PHPMD\AbstractTest;
 use PHPMD\Baseline\BaselineMode;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Rule;
 use ReflectionProperty;
@@ -500,6 +501,57 @@ class CommandLineOptionsTest extends AbstractTest
         );
 
         $this->assertEquals(__METHOD__, $opts->getCoverageReport());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCacheWithCliOption()
+    {
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        $this->assertFalse($opts->isCacheEnabled());
+
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+                '--cache',
+                '--cache-strategy',
+                ResultCacheStrategy::TIMESTAMP,
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::TIMESTAMP, $opts->cacheStrategy());
+        $this->assertTrue($opts->isCacheEnabled());
+
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+                '--cache',
+                '--cache-strategy',
+                ResultCacheStrategy::CONTENT,
+                '--cache-file',
+                'abc',
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        $this->assertSame('abc', $opts->cacheFile());
+        $this->assertTrue($opts->isCacheEnabled());
     }
 
     /**
