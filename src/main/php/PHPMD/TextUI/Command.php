@@ -210,7 +210,9 @@ class Command
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $output         = new StreamOutput($options->getErrorFile() ?: STDERR, $options->getVerbosity());
+            $errorFile      = $options->getErrorFile();
+            $errorStream    = new StreamWriter($errorFile ?: STDERR);
+            $output         = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
             $command        = new self($output);
 
             foreach ($options->getDeprecations() as $deprecation) {
@@ -218,6 +220,7 @@ class Command
             }
 
             $exitCode = $command->run($options, $ruleSetFactory);
+            unset($errorStream);
         } catch (Exception $e) {
             $file = $options ? $options->getErrorFile() : null;
             $writer = new StreamWriter($file ?: STDERR);

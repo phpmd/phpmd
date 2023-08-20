@@ -380,6 +380,32 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testOutputDeprecation()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'naming',
+                '--ignore',
+                'foobar',
+                '--error-file',
+                $file,
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame(
+            'The --ignore option is deprecated, please use --exclude instead.' . PHP_EOL . PHP_EOL,
+            $errors
+        );
+    }
+
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
