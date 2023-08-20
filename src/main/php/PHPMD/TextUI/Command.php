@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use Exception;
 use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
@@ -25,6 +26,7 @@ use PHPMD\Cache\ResultCacheEngineFactory;
 use PHPMD\Cache\ResultCacheKeyFactory;
 use PHPMD\Cache\ResultCacheStateFactory;
 use PHPMD\Console\Output;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Console\StreamOutput;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
@@ -80,7 +82,7 @@ class Command
         }
 
         // Create a report stream
-        $stream = $opts->getReportFile() ? $opts->getReportFile() : STDOUT;
+        $stream = $opts->getReportFile() ?: STDOUT;
 
         // Create renderer and configure output
         $renderer = $opts->createRenderer();
@@ -203,15 +205,29 @@ class Command
      */
     public static function main(array $args)
     {
+        $options = null;
+
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $output         = new StreamOutput(STDERR, $options->getVerbosity());
-            $command        = new Command($output);
+            $output         = new StreamOutput($options->getErrorFile() ?: STDERR, $options->getVerbosity());
+            $command        = new self($output);
+
+            foreach ($options->getDeprecations() as $deprecation) {
+                $output->write($deprecation . PHP_EOL . PHP_EOL);
+            }
 
             $exitCode = $command->run($options, $ruleSetFactory);
-        } catch (\Exception $e) {
-            fwrite(STDERR, $e->getMessage() . PHP_EOL);
+        } catch (Exception $e) {
+            $file = $options ? $options->getErrorFile() : null;
+            $writer = new StreamWriter($file ?: STDERR);
+            $writer->write($e->getMessage() . PHP_EOL);
+
+            if ($options && $options->getVerbosity() >= OutputInterface::VERBOSITY_DEBUG) {
+                $writer->write($e->getFile() . ':' . $e->getLine() . PHP_EOL);
+                $writer->write($e->getTraceAsString() . PHP_EOL);
+            }
+
             $exitCode = self::EXIT_EXCEPTION;
         }
 

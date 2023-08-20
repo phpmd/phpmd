@@ -31,24 +31,6 @@ use ReflectionProperty;
 class CommandLineOptionsTest extends AbstractTest
 {
     /**
-     * @var resource
-     */
-    private $stderrStreamFilter;
-
-    /**
-     * @return void
-     */
-    protected function tearDown()
-    {
-        if (is_resource($this->stderrStreamFilter)) {
-            stream_filter_remove($this->stderrStreamFilter);
-        }
-        $this->stderrStreamFilter = null;
-
-        parent::tearDown();
-    }
-
-    /**
      * testAssignsInputArgumentToInputProperty
      *
      * @return void
@@ -515,6 +497,26 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testExcludeOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--ignore', 'foo/bar', '--error-file', 'abc');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame('abc', $opts->getErrorFile());
+        $this->assertSame('foo/bar', $opts->getIgnore());
+        $this->assertSame(array(
+            'The --ignore option is deprecated, please use --exclude instead.',
+        ), $opts->getDeprecations());
+
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--exclude', 'bar/biz');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame('bar/biz', $opts->getIgnore());
+    }
+
+    /**
      * @param string $reportFormat
      * @param string $expectedClass
      * @return void
@@ -577,20 +579,18 @@ class CommandLineOptionsTest extends AbstractTest
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName)
     {
-        stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
-
-        $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
-
         $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
-        new CommandLineOptions($args);
+        $opts = new CommandLineOptions($args);
 
-        $this->assertContains(
-            sprintf(
-                'The --%s option is deprecated, please use --%s instead.',
-                $deprecatedName,
-                $newName
+        $this->assertSame(
+            array(
+                sprintf(
+                    'The --%s option is deprecated, please use --%s instead.',
+                    $deprecatedName,
+                    $newName
+                ),
             ),
-            StreamFilter::$streamHandle
+            $opts->getDeprecations()
         );
     }
 

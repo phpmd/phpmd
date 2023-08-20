@@ -324,6 +324,62 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testMainWritesExceptionMessageToErrorFileIfSpecified()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
+
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+                '-vvv',
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
+        $this->assertContains(
+            str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:701'
+            ) . PHP_EOL,
+            $errors
+        );
+        $this->assertContains(
+            str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php(603): '
+            ) . 'PHPMD\\TextUI\\CommandLineOptions->createCustomRenderer()',
+            $errors
+        );
+    }
+
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
