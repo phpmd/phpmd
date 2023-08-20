@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use Closure;
 use PHPMD\AbstractTest;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Console\OutputInterface;
@@ -341,6 +342,11 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasStrict());
+
+        $args = array(__FILE__, '--not-strict', __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        self::assertFalse($opts->hasStrict());
     }
 
     /**
@@ -540,6 +546,11 @@ class CommandLineOptionsTest extends AbstractTest
             array('text', 'PHPMD\\Renderer\\TextRenderer'),
             array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
             array('ansi', 'PHPMD\\Renderer\\AnsiRenderer'),
+            array('github', 'PHPMD\\Renderer\\GitHubRenderer'),
+            array('gitlab', 'PHPMD\\Renderer\\GitLabRenderer'),
+            array('json', 'PHPMD\\Renderer\\JSONRenderer'),
+            array('checkstyle', 'PHPMD\\Renderer\\CheckStyleRenderer'),
+            array('sarif', 'PHPMD\\Renderer\\SARIFRenderer'),
             array('PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'),
             array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
             /* Test what happens when class already exists. */
@@ -575,11 +586,12 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @param string $deprecatedName
      * @param string $newName
+     * @param Closure $result
      * @dataProvider dataProviderDeprecatedCliOptions
      */
-    public function testDeprecatedCliOptions($deprecatedName, $newName)
+    public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result)
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), '42');
         $opts = new CommandLineOptions($args);
 
         $this->assertSame(
@@ -592,6 +604,16 @@ class CommandLineOptionsTest extends AbstractTest
             ),
             $opts->getDeprecations()
         );
+        $result($opts);
+
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $newName), '42');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame(
+            array(),
+            $opts->getDeprecations()
+        );
+        $result($opts);
     }
 
     /**
@@ -599,9 +621,15 @@ class CommandLineOptionsTest extends AbstractTest
      */
     public function dataProviderDeprecatedCliOptions()
     {
+        $testCase = $this;
+
         return array(
-            array('extensions', 'suffixes'),
-            array('ignore', 'exclude'),
+            array('extensions', 'suffixes', function (CommandLineOptions $opts) use ($testCase) {
+                $testCase->assertSame('42', $opts->getExtensions());
+            }),
+            array('ignore', 'exclude', function (CommandLineOptions $opts) use ($testCase) {
+                $testCase->assertSame('42', $opts->getIgnore());
+            }),
         );
     }
 
