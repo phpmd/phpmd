@@ -694,7 +694,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\JSONRenderer
+     * @return \PHPMD\Renderer\CheckStyleRenderer
      */
     protected function createCheckStyleRenderer()
     {
@@ -762,7 +762,7 @@ class CommandLineOptions
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
             'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
-            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
+            ($availableRenderers === null ? 'No available formats' : 'Available formats: ' . $availableRenderers) . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
@@ -802,7 +802,7 @@ class CommandLineOptions
     /**
      * Get a list of available renderers
      *
-     * @return string The list of renderers found.
+     * @return string|null The list of renderers found separated by comma, or null if none.
      */
     protected function getListOfAvailableRenderers()
     {
@@ -818,11 +818,7 @@ class CommandLineOptions
 
         sort($renderers);
 
-        if (count($renderers) > 1) {
-            return implode(', ', $renderers);
-        }
-
-        return array_pop($renderers);
+        return implode(', ', $renderers) ?: null;
     }
 
     /**
