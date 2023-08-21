@@ -83,11 +83,25 @@ class CommandLineOptions
     protected $reportFile;
 
     /**
+     * An optional filename to collect errors.
+     *
+     * @var string
+     */
+    protected $errorFile;
+
+    /**
      * Additional report files.
      *
      * @var array
      */
     protected $reportFiles = array();
+
+    /**
+     * List of deprecations.
+     *
+     * @var array
+     */
+    protected $deprecations = array();
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
@@ -238,6 +252,10 @@ class CommandLineOptions
                 case '--reportfile':
                     $this->reportFile = array_shift($args);
                     break;
+                case '--error-file':
+                case '--errorfile':
+                    $this->errorFile = array_shift($args);
+                    break;
                 case '--input-file':
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile(array_shift($args)));
@@ -357,6 +375,27 @@ class CommandLineOptions
     public function getReportFile()
     {
         return $this->reportFile;
+    }
+
+    /**
+     * Returns the output filename for the errors or <b>null</b> when
+     * the report should be displayed in STDERR.
+     *
+     * @return string
+     */
+    public function getErrorFile()
+    {
+        return $this->errorFile;
+    }
+
+    /**
+     * Return the list of deprecations raised when parsing options.
+     *
+     * @return list<string>
+     */
+    public function getDeprecations()
+    {
+        return $this->deprecations;
     }
 
     /**
@@ -659,7 +698,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\JSONRenderer
+     * @return \PHPMD\Renderer\CheckStyleRenderer
      */
     protected function createCheckStyleRenderer()
     {
@@ -719,6 +758,7 @@ class CommandLineOptions
     public function usage()
     {
         $availableRenderers = $this->getListOfAvailableRenderers();
+        $noRenderers = ($availableRenderers === null);
 
         return 'Mandatory arguments:' . \PHP_EOL .
             '1) A php source code filename or directory. Can be a comma-' .
@@ -727,14 +767,17 @@ class CommandLineOptions
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
             'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
-            'Available formats: ' . $availableRenderers . '.' . \PHP_EOL .
+            ($noRenderers ? 'No available formats' : 'Available formats: ' . $availableRenderers) . '.' . \PHP_EOL .
             'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
             'Optional arguments that may be put after the mandatory arguments:' .
             \PHP_EOL .
             '--verbose, -v, -vv, -vvv: Show debug information.' . \PHP_EOL .
-            '--minimumpriority: rule priority threshold; rules with lower ' .
+            '--minimum-priority: rule priority threshold; rules with lower ' .
             'priority than this will not be used' . \PHP_EOL .
-            '--reportfile: send report output to a file; default to STDOUT' .
+            '--report-file: send report output to a file; default to STDOUT' .
+            \PHP_EOL .
+            '--error-file: send errors (other than reported violations) ' .
+            'output to a file; default to STDERR' .
             \PHP_EOL .
             '--suffixes: comma-separated string of valid source code ' .
             'filename extensions, e.g. php,phtml' . \PHP_EOL .
@@ -764,7 +807,7 @@ class CommandLineOptions
     /**
      * Get a list of available renderers
      *
-     * @return string The list of renderers found.
+     * @return string|null The list of renderers found separated by comma, or null if none.
      */
     protected function getListOfAvailableRenderers()
     {
@@ -780,11 +823,7 @@ class CommandLineOptions
 
         sort($renderers);
 
-        if (count($renderers) > 1) {
-            return implode(', ', $renderers);
-        }
-
-        return array_pop($renderers);
+        return implode(', ', $renderers) ?: null;
     }
 
     /**
@@ -796,13 +835,11 @@ class CommandLineOptions
      */
     protected function logDeprecated($deprecatedName, $newName)
     {
-        $message = sprintf(
+        $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
             $deprecatedName,
             $newName
         );
-
-        fwrite(STDERR, $message . PHP_EOL . PHP_EOL);
     }
 
     /**

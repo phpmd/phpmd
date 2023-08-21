@@ -56,6 +56,8 @@ Command line options
   - ``--reportfile`` ``--report-file`` - Sends the report output to the specified file,
     instead of the default output target ``STDOUT``.
 
+  - ``--error-file`` - Sends errors (other than reported violations) output to a file; defaults to STDERR,
+
   - ``--suffixes`` - Comma-separated string of valid source code filename
     extensions, e.g. php, phtml.
 

@@ -324,6 +324,88 @@ class CommandTest extends AbstractTest
         );
     }
 
+    public function testMainWritesExceptionMessageToErrorFileIfSpecified()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
+
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+                '-vvv',
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
+        $this->assertRegExp(
+            '`' . preg_quote(str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:'
+            ), '`') . '\d+' . PHP_EOL . '`',
+            $errors
+        );
+        $this->assertRegExp(
+            '`' . preg_quote(str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php'
+            ), '`') . '\(\d+\): PHPMD\\\\TextUI\\\\CommandLineOptions->createCustomRenderer\(\)`',
+            $errors
+        );
+    }
+
+    public function testOutputDeprecation()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'naming',
+                '--ignore',
+                'foobar',
+                '--error-file',
+                $file,
+            )
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame(
+            'The --ignore option is deprecated, please use --exclude instead.' . PHP_EOL . PHP_EOL,
+            $errors
+        );
+    }
+
     public function testMainPrintsVersionToStdout()
     {
         stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');

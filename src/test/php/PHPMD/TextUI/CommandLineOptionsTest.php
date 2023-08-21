@@ -17,8 +17,10 @@
 
 namespace PHPMD\TextUI;
 
+use Closure;
 use PHPMD\AbstractTest;
 use PHPMD\Baseline\BaselineMode;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Rule;
 use ReflectionProperty;
@@ -30,24 +32,6 @@ use ReflectionProperty;
  */
 class CommandLineOptionsTest extends AbstractTest
 {
-    /**
-     * @var resource
-     */
-    private $stderrStreamFilter;
-
-    /**
-     * @return void
-     */
-    protected function tearDown()
-    {
-        if (is_resource($this->stderrStreamFilter)) {
-            stream_filter_remove($this->stderrStreamFilter);
-        }
-        $this->stderrStreamFilter = null;
-
-        parent::tearDown();
-    }
-
     /**
      * testAssignsInputArgumentToInputProperty
      *
@@ -88,12 +72,12 @@ class CommandLineOptionsTest extends AbstractTest
     {
         $args = array('foo.php', __FILE__, 'text', 'design', '--color');
         $opts = new CommandLineOptions($args);
-        $renbderer = $opts->createRenderer();
+        $renderer = $opts->createRenderer();
 
         $coloredExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'colored');
         $coloredExtractor->setAccessible(true);
 
-        $colored = $coloredExtractor->getValue($renbderer);
+        $colored = $coloredExtractor->getValue($renderer);
 
         self::assertTrue($colored);
     }
@@ -386,6 +370,11 @@ class CommandLineOptionsTest extends AbstractTest
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasStrict());
+
+        $args = array(__FILE__, '--not-strict', __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+
+        self::assertFalse($opts->hasStrict());
     }
 
     /**
@@ -542,6 +531,77 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testGetCacheWithCliOption()
+    {
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        $this->assertFalse($opts->isCacheEnabled());
+
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+                '--cache',
+                '--cache-strategy',
+                ResultCacheStrategy::TIMESTAMP,
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::TIMESTAMP, $opts->cacheStrategy());
+        $this->assertTrue($opts->isCacheEnabled());
+
+        $opts = new CommandLineOptions(
+            array(
+                __FILE__,
+                __FILE__,
+                'text',
+                'codesize',
+                '--cache',
+                '--cache-strategy',
+                ResultCacheStrategy::CONTENT,
+                '--cache-file',
+                'abc',
+            )
+        );
+
+        $this->assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        $this->assertSame('abc', $opts->cacheFile());
+        $this->assertTrue($opts->isCacheEnabled());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExcludeOption()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--ignore', 'foo/bar', '--error-file', 'abc');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame('abc', $opts->getErrorFile());
+        $this->assertSame('foo/bar', $opts->getIgnore());
+        $this->assertSame(array(
+            'The --ignore option is deprecated, please use --exclude instead.',
+        ), $opts->getDeprecations());
+
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--exclude', 'bar/biz');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame('bar/biz', $opts->getIgnore());
+    }
+
+    /**
      * @param string $reportFormat
      * @param string $expectedClass
      * @return void
@@ -565,6 +625,11 @@ class CommandLineOptionsTest extends AbstractTest
             array('text', 'PHPMD\\Renderer\\TextRenderer'),
             array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
             array('ansi', 'PHPMD\\Renderer\\AnsiRenderer'),
+            array('github', 'PHPMD\\Renderer\\GitHubRenderer'),
+            array('gitlab', 'PHPMD\\Renderer\\GitLabRenderer'),
+            array('json', 'PHPMD\\Renderer\\JSONRenderer'),
+            array('checkstyle', 'PHPMD\\Renderer\\CheckStyleRenderer'),
+            array('sarif', 'PHPMD\\Renderer\\SARIFRenderer'),
             array('PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'),
             array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
             /* Test what happens when class already exists. */
@@ -600,25 +665,34 @@ class CommandLineOptionsTest extends AbstractTest
     /**
      * @param string $deprecatedName
      * @param string $newName
+     * @param Closure $result
      * @dataProvider dataProviderDeprecatedCliOptions
      */
-    public function testDeprecatedCliOptions($deprecatedName, $newName)
+    public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result)
     {
-        stream_filter_register('stderr_stream', 'PHPMD\\TextUI\\StreamFilter');
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), '42');
+        $opts = new CommandLineOptions($args);
 
-        $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
-
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), 42);
-        new CommandLineOptions($args);
-
-        $this->assertContains(
-            sprintf(
-                'The --%s option is deprecated, please use --%s instead.',
-                $deprecatedName,
-                $newName
+        $this->assertSame(
+            array(
+                sprintf(
+                    'The --%s option is deprecated, please use --%s instead.',
+                    $deprecatedName,
+                    $newName
+                ),
             ),
-            StreamFilter::$streamHandle
+            $opts->getDeprecations()
         );
+        $result($opts);
+
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $newName), '42');
+        $opts = new CommandLineOptions($args);
+
+        $this->assertSame(
+            array(),
+            $opts->getDeprecations()
+        );
+        $result($opts);
     }
 
     /**
@@ -626,9 +700,15 @@ class CommandLineOptionsTest extends AbstractTest
      */
     public function dataProviderDeprecatedCliOptions()
     {
+        $testCase = $this;
+
         return array(
-            array('extensions', 'suffixes'),
-            array('ignore', 'exclude'),
+            array('extensions', 'suffixes', function (CommandLineOptions $opts) use ($testCase) {
+                $testCase->assertSame('42', $opts->getExtensions());
+            }),
+            array('ignore', 'exclude', function (CommandLineOptions $opts) use ($testCase) {
+                $testCase->assertSame('42', $opts->getIgnore());
+            }),
         );
     }
 

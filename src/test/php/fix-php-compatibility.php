@@ -123,6 +123,69 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function hasChildren",
         ),
     ),
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
+        array(
+            '$numTests = count($coverageData[$i]);',
+            '$numTests = count($coverageData[$i] ?? []);',
+        ),
+    ) : array(),
+    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
+        array(
+            'public function count()',
+            "#[\\ReturnTypeWillChange]\npublic function count()",
+            '#[\\ReturnTypeWillChange]',
+        ),
+        array(
+            'xdebug.default_enable=0',
+            'xdebug.mode=coverage',
+            'xdebug.mode=coverage',
+        ),
+    ),
+    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+    ),
+    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestSuite.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+    ),
+    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestResult.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+    ),
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
+        array(
+            '$docblock = $token->getDocblock();',
+            '$docblock = $token->getDocblock() ?? \'\';',
+            '$docblock = $token->getDocblock() ?? \'\';',
+        ),
+    ) : array(),
+    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
+        array(
+            'public function accept(',
+            "#[\\ReturnTypeWillChange]\npublic function accept(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+    ),
 );
 
 foreach ($replacements as $file => $patterns) {
