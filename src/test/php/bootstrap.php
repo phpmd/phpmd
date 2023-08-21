@@ -26,6 +26,11 @@ spl_autoload_register(
     }
 );
 
+/**
+ * If t runs with coverage, it needs all the tokens to exist.
+ * load-coverage-tokens.php will load the tokens that can be missing,
+ * such as the PHP 8 tokens when running PHPUnit 5.
+ */
 if (class_exists('PHP_Token')) {
     require_once __DIR__ . '/load-coverage-tokens.php';
 }
