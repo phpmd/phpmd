@@ -319,9 +319,13 @@ class CommandLineOptions
             throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->inputPath    = (string)array_shift($arguments);
-        $this->reportFormat = (string)array_shift($arguments);
-        $this->ruleSets     = (string)array_shift($arguments);
+        $this->ruleSets     = (string)array_pop($arguments);
+        $this->reportFormat = (string)array_pop($arguments);
+        $this->inputPath    = implode(',', $arguments);
+
+        if ($this->inputPath === '-') {
+            $this->inputPath = 'php://stdin';
+        }
     }
 
     /**
@@ -718,7 +722,7 @@ class CommandLineOptions
 
         return 'Mandatory arguments:' . \PHP_EOL .
             '1) A php source code filename or directory. Can be a comma-' .
-            'separated string' . \PHP_EOL .
+            'separated string, glob pattern, or "-" to scan stdin' . \PHP_EOL .
             '2) A report format' . \PHP_EOL .
             '3) A ruleset filename or a comma-separated string of ruleset' .
             'filenames' . \PHP_EOL . \PHP_EOL .
