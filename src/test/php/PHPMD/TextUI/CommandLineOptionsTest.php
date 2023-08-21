@@ -72,12 +72,12 @@ class CommandLineOptionsTest extends AbstractTest
     {
         $args = array('foo.php', __FILE__, 'text', 'design', '--color');
         $opts = new CommandLineOptions($args);
-        $renbderer = $opts->createRenderer();
+        $renderer = $opts->createRenderer();
 
         $coloredExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'colored');
         $coloredExtractor->setAccessible(true);
 
-        $colored = $coloredExtractor->getValue($renbderer);
+        $colored = $coloredExtractor->getValue($renderer);
 
         self::assertTrue($colored);
     }
