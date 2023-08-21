@@ -123,7 +123,7 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function hasChildren",
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => PHP_VERSION >= 7 ? array(
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$numTests = count($coverageData[$i]);',
             '$numTests = count($coverageData[$i] ?? []);',
@@ -172,7 +172,7 @@ $replacements = array(
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => PHP_VERSION >= 7 ? array(
+    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$docblock = $token->getDocblock();',
             '$docblock = $token->getDocblock() ?? \'\';',
