@@ -26,8 +26,8 @@ spl_autoload_register(
     }
 );
 
-/**
- * If t runs with coverage, it needs all the tokens to exist.
+/*
+ * If the test suite runs with coverage, it needs all the tokens to exist.
  * load-coverage-tokens.php will load the tokens that can be missing,
  * such as the PHP 8 tokens when running PHPUnit 5.
  */
