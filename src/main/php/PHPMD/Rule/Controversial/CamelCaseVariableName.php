@@ -56,14 +56,16 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      */
     public function apply(AbstractNode $node)
     {
+        $variables = array();
+
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable)) {
-                $this->addViolation(
-                    $node,
-                    array(
-                        $variable->getImage(),
-                    )
-                );
+                $variableName = $variable->getImage();
+
+                if (!isset($variables[$variableName])) {
+                    $variables[$variableName] = true;
+                    $this->addViolation($variable, array($variableName));
+                }
             }
         }
     }
