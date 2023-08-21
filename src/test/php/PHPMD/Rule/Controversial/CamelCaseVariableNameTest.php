@@ -88,6 +88,21 @@ class CamelCaseVariableNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule does NOT apply if name allowed by config
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyIfExcluded()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * Tests that the rule does apply for a valid variable name
      * with an underscore at the beginning when it is allowed.
      *

@@ -83,6 +83,33 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
+     * @return void
+     * @since 2.14.0
+     */
+    public function testStdInDashShortCut()
+    {
+        $args = array('foo.php', '-', 'text', 'design');
+        $opts = new CommandLineOptions($args);
+
+        self::assertSame('php://stdin', $opts->getInputPath());
+    }
+
+    /**
+     * @return void
+     * @since 2.14.0
+     */
+    public function testMultipleFiles()
+    {
+        // What happen when calling: phpmd src/*Service.php text design
+        $args = array('foo.php', 'src/FooService.php', 'src/BarService.php', 'text', 'design');
+        $opts = new CommandLineOptions($args);
+
+        self::assertSame('src/FooService.php,src/BarService.php', $opts->getInputPath());
+        self::assertSame('text', $opts->getReportFormat());
+        self::assertSame('design', $opts->getRuleSets());
+    }
+
+    /**
      * testAssignsFormatArgumentToReportFormatProperty
      *
      * @return void
