@@ -66,12 +66,14 @@ class HTMLRenderer extends AbstractRenderer
 
     /**
      * Specify how many extra lines are added to a code snippet
+     * By default 2
      * @var int
      */
     protected $extraLineInExcerpt = 2;
 
-    public function __construct($extraLineInExcerpt){
-        if ($extraLineInExcerpt) {
+    public function __construct($extraLineInExcerpt = null)
+    {
+        if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
             $this->extraLineInExcerpt = $extraLineInExcerpt;
         }
     }
