@@ -587,6 +587,15 @@ class CommandLineOptions
     }
 
     /**
+     * Specify how many extra lines are added to a code snippet
+     *
+     * @return int|null
+     */
+    public function extraLineInExcerpt()
+    {
+        return $this->extraLineInExcerpt;
+    }
+    /**
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
