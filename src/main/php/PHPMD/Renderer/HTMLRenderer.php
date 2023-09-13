@@ -65,6 +65,18 @@ class HTMLRenderer extends AbstractRenderer
     protected static $compiledHighlightRegex = null;
 
     /**
+     * Specify how many extra lines are added to a code snippet
+     * @var int
+     */
+    protected $extraLineInExcerpt = 2;
+
+    public function __construct($extraLineInExcerpt){
+        if ($extraLineInExcerpt) {
+            $this->extraLineInExcerpt = $extraLineInExcerpt;
+        }
+    }
+
+    /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
      *
@@ -362,7 +374,7 @@ class HTMLRenderer extends AbstractRenderer
             $excerpt = self::getLineExcerpt(
                 $violation->getFileName(),
                 $violation->getBeginLine(),
-                2
+                $this->extraLineInExcerpt
             );
 
             foreach ($excerpt as $line => $code) {
