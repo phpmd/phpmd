@@ -820,7 +820,8 @@ class CommandLineOptions
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
             '--color: enable color in output' . \PHP_EOL .
-            '--extra-line-in-excerpt: Specify how many extra lines are added to a code snippet' . \PHP_EOL;
+            '--extra-line-in-excerpt: Specify how many extra lines are added ' .
+            'to a code snippet in html format' . \PHP_EOL;
     }
 
     /**
