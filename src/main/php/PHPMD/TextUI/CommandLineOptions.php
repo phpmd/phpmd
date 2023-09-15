@@ -212,6 +212,12 @@ class CommandLineOptions
     protected $colored = false;
 
     /**
+     * Specify how many extra lines are added to a code snippet
+     * @var int|null
+     */
+    protected $extraLineInExcerpt;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -326,6 +332,9 @@ class CommandLineOptions
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = array_shift($args);
+                    break;
+                case '--extra-line-in-excerpt':
+                    $this->extraLineInExcerpt = (int)array_shift($args);
                     break;
                 default:
                     $arguments[] = $arg;
@@ -578,6 +587,15 @@ class CommandLineOptions
     }
 
     /**
+     * Specify how many extra lines are added to a code snippet
+     *
+     * @return int|null
+     */
+    public function extraLineInExcerpt()
+    {
+        return $this->extraLineInExcerpt;
+    }
+    /**
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
@@ -686,7 +704,7 @@ class CommandLineOptions
      */
     protected function createHtmlRenderer()
     {
-        return new HTMLRenderer();
+        return new HTMLRenderer($this->extraLineInExcerpt);
     }
 
     /**
@@ -801,7 +819,9 @@ class CommandLineOptions
             'to the first ruleset file location' . \PHP_EOL .
             '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
-            '--color: enable color in output' . \PHP_EOL;
+            '--color: enable color in output' . \PHP_EOL .
+            '--extra-line-in-excerpt: Specify how many extra lines are added ' .
+            'to a code snippet in html format' . \PHP_EOL;
     }
 
     /**

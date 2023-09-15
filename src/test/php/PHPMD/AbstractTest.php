@@ -611,7 +611,7 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Creates a mocked rul violation instance.
+     * Creates a mocked rule violation instance.
      *
      * @param string $file
      * @param string $message

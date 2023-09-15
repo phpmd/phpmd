@@ -726,6 +726,16 @@ class CommandLineOptionsTest extends AbstractTest
         $this->assertEquals($expected, $opts->getReportFiles());
     }
 
+    /**
+     * @return void
+     */
+    public function testCliOptionExtraLineInExcerptShouldBeWithNumber()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5');
+        $opts = new CommandLineOptions($args);
+        static::assertSame(5, $opts->extraLineInExcerpt());
+    }
+
     public function dataProviderGetReportFiles()
     {
         return array(

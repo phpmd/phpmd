@@ -165,6 +165,7 @@ Command line options
 
   - ``--color`` - enable color in output, for instance text renderer
     will show rule name in yellow and error description in red.
+  - ``--extra-line-in-excerpt`` - specify how many extra lines are added to a code snippet in html format
 
   An example command line: ::
 
