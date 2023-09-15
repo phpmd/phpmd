@@ -58,7 +58,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         }
 
         $currNode = $node->getNode();
-        $parent = is_callable(array($currNode, 'getParent') ? $currNode->getParent() : null;
+        $parent = is_callable(array($currNode, 'getParent')) ? $currNode->getParent() : null;
 
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
