@@ -48,7 +48,6 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
     public function apply(AbstractNode $node)
     {
         $name = $node->getName();
-
         if ($name) {
             $ignorePattern = trim($this->getStringProperty('ignorepattern', ''));
 
@@ -57,14 +56,17 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
             }
         }
 
-        $parent = $node->getNode()->getParent();
-
+        $mainNode = $node->getNode();
+        if (is_callable(array($mainNode, 'getParent'))) {
+            $parent = $mainNode->getParent();
+        } else {
+            $parent = null;
+        }
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
             ($name = $parent->getName())
         ) {
             $exceptions = $this->getExceptionsList();
-
             if (isset($exceptions[$name])) {
                 return;
             }
