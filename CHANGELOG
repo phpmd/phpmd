@@ -22,6 +22,7 @@ phpmd-2.14.0 (2023/09/26)
 - Fixed #1021: Fix typos
 - Fixed #467 in #1026: Dedupe violation for CamelCaseVariableName.
 - Fixed #1031: Fix call to undefined getParent() method.
+- Fixed #989 in #990: Documentation about coma-separated syntax for multiple paths.
 
 phpmd-2.13.0 (2022/09/10)
 ========================
