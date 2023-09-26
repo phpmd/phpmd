@@ -1,3 +1,29 @@
+phpmd-2.14.0 (2023/09/26)
+========================
+
+- Require pdepend/pdepend 2.15
+  - https://github.com/pdepend/pdepend/releases/tag/2.15.0
+  - https://github.com/pdepend/pdepend/releases/tag/2.14.0
+  - https://github.com/pdepend/pdepend/releases/tag/2.13.0
+- Added #997: Add a follow on mastodon link to the footer on the website.
+- Added #999: Add dev as keyword to the composer.json file.
+- Added #1014: Add phar signing.
+- Added #1011: Add support for cache results.
+- Added internal #1017: Run PHPStan in CI.
+- Added #1015: Add debug information to cache results.
+- Added #1022: Add --verbose and --color options to text renderer.
+- Added #1025: Support file globbing, and STDIN.
+- Added #1023: Add trace of the error when debug verbosity.
+- Added #1029: Added the option to the command line to set the number of extra lines in code snippets.
+- Fixed #924 in #983: Add exceptions and ignorepattern properties to BooleanArgumentFlag rule.
+- Fixed #986: PHP 8.1 deprecation message when rendering html reports.
+- Fixed #996: Global import from an array value.
+- Fixed #1000: Correct url by removing leading slash.
+- Fixed #1021: Fix typos
+- Fixed #467 in #1026: Dedupe violation for CamelCaseVariableName.
+- Fixed #1031: Fix call to undefined getParent() method.
+- Fixed #989 in #990: Documentation about coma-separated syntax for multiple paths.
+
 phpmd-2.13.0 (2022/09/10)
 ========================
 
