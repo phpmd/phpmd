@@ -71,4 +71,25 @@ class ResultCacheStateFactoryTest extends AbstractTest
         static::assertTrue($state->isFileModified('file2', 'file1-hash'));
         static::assertSame(array('violations'), $state->getViolations('file2'));
     }
+
+    /**
+     * @covers ::fromFile
+     * @covers ::createCacheKey
+     */
+    public function testFromFileWithCacheWithoutBaselineOrComposer()
+    {
+        $state = $this->factory->fromFile(static::createResourceUriForTest('.minimal-cache.php'));
+        static::assertNotNull($state);
+
+        // assert cache key
+        $expectedKey = new ResultCacheKey(
+            false,
+            null,
+            array('rule' => 'hash'),
+            array(),
+            70000
+        );
+        $cacheKey    = $state->getCacheKey();
+        static::assertEquals($expectedKey, $cacheKey);
+    }
 }
