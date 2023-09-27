@@ -33,6 +33,7 @@ use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
+use PHPMD\Utility\ArgumentsValidator;
 
 /**
  * This is a helper class that collects the specified cli arguments and puts them
@@ -229,13 +230,27 @@ class CommandLineOptions
         // Remove current file name
         array_shift($args);
 
+        $originalArguments = $args;
         $this->availableRuleSets = $availableRuleSets;
 
         $arguments = array();
+        $listenOptions = true;
+        $hasImplicitArguments = false;
+
         while (($arg = array_shift($args)) !== null) {
+            if (!$listenOptions) {
+                $arguments[] = $arg;
+
+                continue;
+            }
+
             $equalChunk = explode('=', $arg, 2);
 
             switch ($equalChunk[0]) {
+                case '--':
+                    $this->refuseValue($equalChunk);
+                    $listenOptions = false;
+                    break;
                 case '--verbose':
                 case '-v':
                     $this->refuseValue($equalChunk);
@@ -351,6 +366,7 @@ class CommandLineOptions
                     $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
                     break;
                 default:
+                    $hasImplicitArguments = true;
                     $arguments[] = $arg;
                     break;
             }
@@ -360,12 +376,24 @@ class CommandLineOptions
             throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->ruleSets     = (string)array_pop($arguments);
+        $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
+
+        $this->ruleSets = (string)array_pop($arguments);
+        $validator->validate('ruleset', $this->ruleSets);
+
         $this->reportFormat = (string)array_pop($arguments);
-        $this->inputPath    = implode(',', $arguments);
+        $validator->validate('report format', $this->reportFormat);
+
+        $this->inputPath = implode(',', $arguments);
 
         if ($this->inputPath === '-') {
             $this->inputPath = 'php://stdin';
+
+            return;
+        }
+
+        foreach ($arguments as $arg) {
+            $validator->validate('input path', $arg);
         }
     }
 
