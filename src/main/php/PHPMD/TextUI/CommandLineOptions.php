@@ -233,93 +233,107 @@ class CommandLineOptions
 
         $arguments = array();
         while (($arg = array_shift($args)) !== null) {
-            switch ($arg) {
+            $equalChunk = explode('=', $arg, 2);
+
+            switch ($equalChunk[0]) {
                 case '--verbose':
                 case '-v':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
                     break;
                 case '-vv':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
                     break;
                 case '-vvv':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
                     break;
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
-                    $this->minimumPriority = (int)array_shift($args);
+                    $this->minimumPriority = (int)$this->readValue($equalChunk, $args);
                     break;
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
-                    $this->maximumPriority = (int)array_shift($args);
+                    $this->maximumPriority = (int)$this->readValue($equalChunk, $args);
                     break;
                 case '--report-file':
                 case '--reportfile':
-                    $this->reportFile = array_shift($args);
+                    $this->reportFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--error-file':
                 case '--errorfile':
-                    $this->errorFile = array_shift($args);
+                    $this->errorFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--input-file':
                 case '--inputfile':
-                    array_unshift($arguments, $this->readInputFile(array_shift($args)));
+                    array_unshift($arguments, $this->readInputFile($this->readValue($equalChunk, $args)));
                     break;
                 case '--coverage':
-                    $this->coverageReport = array_shift($args);
+                    $this->coverageReport = $this->readValue($equalChunk, $args);
                     break;
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
                     /* Deprecated: We use the suffixes option now */
-                    $this->extensions = array_shift($args);
+                    $this->extensions = $this->readValue($equalChunk, $args);
                     break;
                 case '--suffixes':
-                    $this->extensions = array_shift($args);
+                    $this->extensions = $this->readValue($equalChunk, $args);
                     break;
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
                     /* Deprecated: We use the exclude option now */
-                    $this->ignore = array_shift($args);
+                    $this->ignore = $this->readValue($equalChunk, $args);
                     break;
                 case '--exclude':
-                    $this->ignore = array_shift($args);
+                    $this->ignore = $this->readValue($equalChunk, $args);
                     break;
                 case '--color':
+                    $this->refuseValue($equalChunk);
                     $this->colored = true;
                     break;
                 case '--version':
+                    $this->refuseValue($equalChunk);
                     $this->version = true;
 
                     return;
                 case '--strict':
+                    $this->refuseValue($equalChunk);
                     $this->strict = true;
                     break;
                 case '--not-strict':
+                    $this->refuseValue($equalChunk);
                     $this->strict = false;
                     break;
                 case '--generate-baseline':
+                    $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::GENERATE;
                     break;
                 case '--update-baseline':
+                    $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::UPDATE;
                     break;
                 case '--baseline-file':
-                    $this->baselineFile = array_shift($args);
+                    $this->baselineFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--cache':
+                    $this->refuseValue($equalChunk);
                     $this->cacheEnabled = true;
                     break;
                 case '--cache-file':
-                    $this->cacheFile = array_shift($args);
+                    $this->cacheFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--cache-strategy':
-                    $this->cacheStrategy = array_shift($args);
+                    $this->cacheStrategy = $this->readValue($equalChunk, $args);
                     break;
                 case '--ignore-errors-on-exit':
+                    $this->refuseValue($equalChunk);
                     $this->ignoreErrorsOnExit = true;
                     break;
                 case '--ignore-violations-on-exit':
+                    $this->refuseValue($equalChunk);
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-checkstyle':
@@ -331,10 +345,10 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
-                    $this->reportFiles[$match[1]] = array_shift($args);
+                    $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
                     break;
                 case '--extra-line-in-excerpt':
-                    $this->extraLineInExcerpt = (int)array_shift($args);
+                    $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
                     break;
                 default:
                     $arguments[] = $arg;
@@ -879,5 +893,21 @@ class CommandLineOptions
             return implode(',', array_map('trim', file($inputFile)));
         }
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
+    }
+
+    private function refuseValue(array $equalChunk)
+    {
+        if (count($equalChunk) > 1) {
+            throw new InvalidArgumentException($equalChunk[0] . ' option does not accept value');
+        }
+    }
+
+    private function readValue(array $equalChunk, array &$args)
+    {
+        if (count($equalChunk) > 1) {
+            return $equalChunk[1];
+        }
+
+        return array_shift($args);
     }
 }
