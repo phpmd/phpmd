@@ -1,3 +1,10 @@
+phpmd-2.14.1 (2023/09/28)
+========================
+
+- Require pdepend/pdepend 2.15.1
+  - Fixed #1039 Re-allow empty compilation unit.
+- Fixed #1037: Cache result also if there are no composer or baseline files.
+
 phpmd-2.14.0 (2023/09/26)
 ========================
 
