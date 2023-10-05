@@ -34,8 +34,6 @@ And finally let Composer install the project dependencies: ::
 
   ~ $ php composer.phar install
 
-__ http://getcomposer.org/composer.phar
-
 From the github repository
 ==========================
 
@@ -69,6 +67,7 @@ current state. It relies on the following software products:
 
 __ https://keys.openpgp.org/search?q=pgp%40phpmd.org
 __ https://keys.openpgp.org/
+__ http://getcomposer.org/composer.phar
 __ https://github.com/phpmd/phpmd
 __ http://getcomposer.org/composer.phar
 __ http://pdepend.org
