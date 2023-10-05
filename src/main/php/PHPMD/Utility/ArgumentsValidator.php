@@ -9,10 +9,10 @@ class ArgumentsValidator
 {
     /** @var bool */
     private $hasImplicitArguments;
-    
+
     /** @var string[] */
     private $originalArguments;
-    
+
     /** @var string[] */
     private $arguments;
 
@@ -23,6 +23,16 @@ class ArgumentsValidator
         $this->arguments = $arguments;
     }
 
+    /**
+     * Throw an exception if the given $value cannot be used as a value for the argument $name.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     *
+     * @throws InvalidArgumentException if the given $value cannot be used as a value for the argument $name
+     */
     public function validate($name, $value)
     {
         if (!$this->hasImplicitArguments) {

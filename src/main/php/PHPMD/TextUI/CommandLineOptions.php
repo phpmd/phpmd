@@ -925,13 +925,28 @@ class CommandLineOptions
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 
+    /**
+     * Throw an exception if a boolean option has a value (is followed by equal).
+     *
+     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
+     *
+     * @throws InvalidArgumentException if a boolean option has a value (is followed by equal)
+     */
     private function refuseValue(array $equalChunk)
     {
         if (count($equalChunk) > 1) {
-            throw new InvalidArgumentException($equalChunk[0] . ' option does not accept value');
+            throw new InvalidArgumentException($equalChunk[0] . ' option does not accept a value');
         }
     }
 
+    /**
+     * Return value for an option either what is after "=" sign if present, else take the next CLI parameter.
+     *
+     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
+     * @param string[] &$args      The remaining CLI parameters not yet parsed
+     *
+     * return string|null
+     */
     private function readValue(array $equalChunk, array &$args)
     {
         if (count($equalChunk) > 1) {

@@ -215,7 +215,7 @@ class CommandLineOptionsTest extends AbstractTest
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage --color option does not accept value
+     * @expectedExceptionMessage --color option does not accept a value
      *
      * @covers \PHPMD\TextUI\ArgumentsValidator
      */
