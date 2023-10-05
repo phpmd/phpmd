@@ -171,8 +171,8 @@ Command line options
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
 
-  Options can be before or after arguments, and separated to their value either with a space or ``=``, so this syntax
-  is equivalent to the previous one: ::
+  Options can be before or after arguments. They can be separated from their value either with a space or an equal (``=``) sign.
+  Thus, the following syntax is equivalent to the previous one: ::
 
     phpmd --reportfile=phpmd.xml --suffixes=php,phtml PHP/Depend/DbusUI xml codesize
 
