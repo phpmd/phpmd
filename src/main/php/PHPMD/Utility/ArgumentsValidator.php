@@ -9,8 +9,10 @@ class ArgumentsValidator
 {
     /** @var bool */
     private $hasImplicitArguments;
+    
     /** @var string[] */
     private $originalArguments;
+    
     /** @var string[] */
     private $arguments;
 
