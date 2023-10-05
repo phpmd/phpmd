@@ -5,10 +5,13 @@ Downloads
 Installing as a Phar
 ====================
 
-You can always fetch the latest stable version as a phar archive through
+You can always fetch the latest stable version as a Phar archive through
 the following version agnostic link: ::
 
   ~ $ wget -c https://phpmd.org/static/latest/phpmd.phar
+
+The Phar files of *PHPMD* are signed with a public key associated to ``pgp@phpmd.org.``.
+The `key(s) associated with this E-Mail address`__ can be queried at `keys.openpgp.org`__.
 
 Installing via Composer
 =======================
@@ -64,6 +67,8 @@ current state. It relies on the following software products:
 - `PHP_Depend >= 2.0.0`__
 - `PHP >= 5.3.9`__
 
+__ https://keys.openpgp.org/search?q=pgp%40phpmd.org
+__ https://keys.openpgp.org/
 __ https://github.com/phpmd/phpmd
 __ http://getcomposer.org/composer.phar
 __ http://pdepend.org
