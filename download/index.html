@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Fri, 06 Oct 2023 15:07:58 +0000" />
+    <meta name="date" content="Fri, 06 Oct 2023 17:24:39 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Fri, 06 Oct 2023 15:07:58 +0000" />
+    <meta name="DC.date" content="Fri, 06 Oct 2023 17:24:39 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -42,6 +42,27 @@ the following version agnostic link: :</p>
 </code></pre>
 <p>The Phar files of <em>PHPMD</em> are signed with a public key associated to <code>pgp@phpmd.org.</code>.
 The <a href="">key(s) associated with this E-Mail address</a> can be queried at <a href="">keys.openpgp.org</a>.</p>
+<a id="installing-using-phive"></a>
+<h2>Installing using PHIVE</h2>
+<p>Alternatively, <strong>PHPMD</strong> can be installed through <a href="">PHAR Installation and Verification Environment (PHIVE)</a>.
+After <a href="">installing PHIVE</a>,<strong>PHPMD</strong> can be installed using the following command: :</p>
+<pre><code class="">php phive.phar install phpmd
+Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
+Fetching repository list
+Downloading key 9093F8B32E4815AA
+Trying to connect to keys.openpgp.org (37.218.245.50)
+Successfully downloaded key.
+
+        Fingerprint: E7A7 4510 2ECC 980F 7338 B307 9093 F8B3 2E48 15AA
+
+        PHPMD (PHP Mess Detector) &lt;pgp@phpmd.org&gt;
+
+        Created: 2023-09-15
+
+Import this key? [y|N] y
+  Linking Y:\\.phive\phars/<a href="https://github.com/phpmd/phpmd/releases/tag/2.14.1.phar" title="phpmd-2.14.1.phar release">phpmd-2.14.1.phar</a> to /path/to/your/project/tools/phpmd.bat
+</code></pre>
+<p>There are alternative <a href="">commands for PHIVE</a>.</p>
 <a id="installing-via-composer"></a>
 <h2>Installing via Composer</h2>
 <p>Create a <code>composer.json</code> file in your project directory and add <em>PHPMD</em>
