@@ -33,6 +33,7 @@ use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
+use PHPMD\Utility\ArgumentsValidator;
 
 /**
  * This is a helper class that collects the specified cli arguments and puts them
@@ -229,97 +230,125 @@ class CommandLineOptions
         // Remove current file name
         array_shift($args);
 
+        $originalArguments = $args;
         $this->availableRuleSets = $availableRuleSets;
 
         $arguments = array();
+        $listenOptions = true;
+        $hasImplicitArguments = false;
+
         while (($arg = array_shift($args)) !== null) {
-            switch ($arg) {
+            if (!$listenOptions) {
+                $arguments[] = $arg;
+
+                continue;
+            }
+
+            $equalChunk = explode('=', $arg, 2);
+
+            switch ($equalChunk[0]) {
+                case '--':
+                    $this->refuseValue($equalChunk);
+                    $listenOptions = false;
+                    break;
                 case '--verbose':
                 case '-v':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
                     break;
                 case '-vv':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
                     break;
                 case '-vvv':
+                    $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
                     break;
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
-                    $this->minimumPriority = (int)array_shift($args);
+                    $this->minimumPriority = (int)$this->readValue($equalChunk, $args);
                     break;
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
-                    $this->maximumPriority = (int)array_shift($args);
+                    $this->maximumPriority = (int)$this->readValue($equalChunk, $args);
                     break;
                 case '--report-file':
                 case '--reportfile':
-                    $this->reportFile = array_shift($args);
+                    $this->reportFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--error-file':
                 case '--errorfile':
-                    $this->errorFile = array_shift($args);
+                    $this->errorFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--input-file':
                 case '--inputfile':
-                    array_unshift($arguments, $this->readInputFile(array_shift($args)));
+                    array_unshift($arguments, $this->readInputFile($this->readValue($equalChunk, $args)));
                     break;
                 case '--coverage':
-                    $this->coverageReport = array_shift($args);
+                    $this->coverageReport = $this->readValue($equalChunk, $args);
                     break;
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
                     /* Deprecated: We use the suffixes option now */
-                    $this->extensions = array_shift($args);
+                    $this->extensions = $this->readValue($equalChunk, $args);
                     break;
                 case '--suffixes':
-                    $this->extensions = array_shift($args);
+                    $this->extensions = $this->readValue($equalChunk, $args);
                     break;
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
                     /* Deprecated: We use the exclude option now */
-                    $this->ignore = array_shift($args);
+                    $this->ignore = $this->readValue($equalChunk, $args);
                     break;
                 case '--exclude':
-                    $this->ignore = array_shift($args);
+                    $this->ignore = $this->readValue($equalChunk, $args);
                     break;
                 case '--color':
+                    $this->refuseValue($equalChunk);
                     $this->colored = true;
                     break;
                 case '--version':
+                    $this->refuseValue($equalChunk);
                     $this->version = true;
 
                     return;
                 case '--strict':
+                    $this->refuseValue($equalChunk);
                     $this->strict = true;
                     break;
                 case '--not-strict':
+                    $this->refuseValue($equalChunk);
                     $this->strict = false;
                     break;
                 case '--generate-baseline':
+                    $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::GENERATE;
                     break;
                 case '--update-baseline':
+                    $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::UPDATE;
                     break;
                 case '--baseline-file':
-                    $this->baselineFile = array_shift($args);
+                    $this->baselineFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--cache':
+                    $this->refuseValue($equalChunk);
                     $this->cacheEnabled = true;
                     break;
                 case '--cache-file':
-                    $this->cacheFile = array_shift($args);
+                    $this->cacheFile = $this->readValue($equalChunk, $args);
                     break;
                 case '--cache-strategy':
-                    $this->cacheStrategy = array_shift($args);
+                    $this->cacheStrategy = $this->readValue($equalChunk, $args);
                     break;
                 case '--ignore-errors-on-exit':
+                    $this->refuseValue($equalChunk);
                     $this->ignoreErrorsOnExit = true;
                     break;
                 case '--ignore-violations-on-exit':
+                    $this->refuseValue($equalChunk);
                     $this->ignoreViolationsOnExit = true;
                     break;
                 case '--reportfile-checkstyle':
@@ -331,12 +360,13 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
-                    $this->reportFiles[$match[1]] = array_shift($args);
+                    $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
                     break;
                 case '--extra-line-in-excerpt':
-                    $this->extraLineInExcerpt = (int)array_shift($args);
+                    $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
                     break;
                 default:
+                    $hasImplicitArguments = true;
                     $arguments[] = $arg;
                     break;
             }
@@ -346,12 +376,24 @@ class CommandLineOptions
             throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
         }
 
-        $this->ruleSets     = (string)array_pop($arguments);
+        $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
+
+        $this->ruleSets = (string)array_pop($arguments);
+        $validator->validate('ruleset', $this->ruleSets);
+
         $this->reportFormat = (string)array_pop($arguments);
-        $this->inputPath    = implode(',', $arguments);
+        $validator->validate('report format', $this->reportFormat);
+
+        $this->inputPath = implode(',', $arguments);
 
         if ($this->inputPath === '-') {
             $this->inputPath = 'php://stdin';
+
+            return;
+        }
+
+        foreach ($arguments as $arg) {
+            $validator->validate('input path', $arg);
         }
     }
 
@@ -821,7 +863,9 @@ class CommandLineOptions
             '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
             '--color: enable color in output' . \PHP_EOL .
             '--extra-line-in-excerpt: Specify how many extra lines are added ' .
-            'to a code snippet in html format' . \PHP_EOL;
+            'to a code snippet in html format' . \PHP_EOL .
+            '--: Explicit argument separator: Anything after "--" will be read as an argument even if' .
+            'it starts with "-" or matches the name of an option' . \PHP_EOL;
     }
 
     /**
@@ -879,5 +923,36 @@ class CommandLineOptions
             return implode(',', array_map('trim', file($inputFile)));
         }
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
+    }
+
+    /**
+     * Throw an exception if a boolean option has a value (is followed by equal).
+     *
+     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
+     *
+     * @throws InvalidArgumentException if a boolean option has a value (is followed by equal)
+     */
+    private function refuseValue(array $equalChunk)
+    {
+        if (count($equalChunk) > 1) {
+            throw new InvalidArgumentException($equalChunk[0] . ' option does not accept a value');
+        }
+    }
+
+    /**
+     * Return value for an option either what is after "=" sign if present, else take the next CLI parameter.
+     *
+     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
+     * @param string[] &$args      The remaining CLI parameters not yet parsed
+     *
+     * @return string|null
+     */
+    private function readValue(array $equalChunk, array &$args)
+    {
+        if (count($equalChunk) > 1) {
+            return $equalChunk[1];
+        }
+
+        return array_shift($args);
     }
 }

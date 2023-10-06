@@ -169,7 +169,17 @@ Command line options
 
   An example command line: ::
 
-    phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
+    phpmd PHP/Depend/DbusUI xml codesize --reportfile "phpmd.xml" --suffixes "php,phtml"
+
+  Options can be before or after arguments. They can be separated from their value either with a space or an equal (``=``) sign.
+  Thus, the following syntax is equivalent to the previous one: ::
+
+    phpmd --reportfile="phpmd.xml" --suffixes="php,phtml" PHP/Depend/DbusUI xml codesize
+
+  Strings starting with ``-`` will be recognized as option names. If you have arguments starting with ``-``, set options
+  first, then use ``--`` to mark the explicit start or the arguments list: ::
+
+    phpmd --reportfile "phpmd.xml" --suffixes "php,phtml" -- -foo/Folder xml codesize
 
 Using multiple rule sets
 ````````````````````````
