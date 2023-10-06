@@ -945,7 +945,7 @@ class CommandLineOptions
      * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
      * @param string[] &$args      The remaining CLI parameters not yet parsed
      *
-     * return string|null
+     * @return string|null
      */
     private function readValue(array $equalChunk, array &$args)
     {
