@@ -102,6 +102,13 @@ abstract class AbstractRule implements Rule
     private $report = null;
 
     /**
+     * Should this rule force the strict mode.
+     *
+     * @var boolean
+     */
+    private $strict = false;
+
+    /**
      * Returns the name for this rule instance.
      *
      * @return string
@@ -379,6 +386,15 @@ abstract class AbstractRule implements Rule
     }
 
     /**
+     * @param bool $strict
+     * @return void
+     */
+    public function setStrict($strict)
+    {
+        $this->strict = $strict;
+    }
+
+    /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
      *
@@ -409,7 +425,7 @@ abstract class AbstractRule implements Rule
     protected function applyOnClassMethods(AbstractTypeNode $node)
     {
         foreach ($node->getMethods() as $method) {
-            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+            if (!$this->strict && $method->hasSuppressWarningsAnnotationFor($this)) {
                 continue;
             }
 
