@@ -259,6 +259,9 @@ class RuleSet implements IteratorAggregate
                 continue;
             }
             $rule->setReport($this->report);
+            if (method_exists($rule, 'setStrict')) {
+                $rule->setStrict($this->strict);
+            }
             $rule->apply($node);
         }
     }
