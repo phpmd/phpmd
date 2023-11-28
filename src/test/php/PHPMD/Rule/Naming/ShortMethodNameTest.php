@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the very short method and function name rule.
  *
- * @covers PHPMD\Rule\Naming\ShortMethodName
+ * @covers \PHPMD\Rule\Naming\ShortMethodName
  */
 class ShortMethodNameTest extends AbstractTest
 {
