@@ -28,7 +28,7 @@ use PHPMD\Rule\MethodAware;
 class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * Extracts all variable and variable declarator nodes from the given node
+     * Extracts all method and function nodes from the given node
      * and checks the variable name length against the configured minimum
      * length.
      *
@@ -38,13 +38,14 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
     public function apply(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('minimum');
-        if ($threshold <= strlen($node->getName())) {
+
+        if (strlen($node->getName()) >= $threshold) {
             return;
         }
 
         $exceptions = $this->getExceptionsList();
 
-        if (in_array($node->getName(), $exceptions)) {
+        if (in_array($node->getName(), $exceptions, true)) {
             return;
         }
 
