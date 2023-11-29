@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\RuleProperty\RulePropertySetter;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
@@ -87,6 +88,24 @@ class LongMethodNameTest extends AbstractTestCase
         $rule->addProperty('maximum', '10');
         $rule->addProperty('exceptions', 'testRuleNotAppliesToMethodWithLongNameWhenException,another');
         $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock(): void
+    {
+        $rule = new LongMethodName();
+        $rule->addProperty('maximum', '5');
+        $rule->setReport($this->getReportWithNoViolation());
+        RulePropertySetter::setDefaultValues($rule);
+        $rule->apply($this->getMethodMock());
+    }
+
+    public function testRuleAppliesAlsoWithoutExceptionListConfigured(): void
+    {
+        $rule = new LongMethodName();
+        $rule->addProperty('maximum', '5');
+        $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethod());
     }
 }

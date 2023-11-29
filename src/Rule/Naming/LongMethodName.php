@@ -29,7 +29,7 @@ use PHPMD\RuleProperty\Threshold;
 /**
  * This rule class will detect methods and functions with very long names.
  */
-final class LongMethodName extends AbstractRule implements MethodAware, FunctionAware
+final class LongMethodName extends AbstractRule implements FunctionAware, MethodAware
 {
     #[Threshold(['threshold', 'maximum'])]
     public int $threshold;
