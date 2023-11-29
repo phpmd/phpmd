@@ -28,6 +28,7 @@ class LongMethodNameTest extends AbstractTest
 {
     /**
      * @return void
+     * @group i
      */
     public function testRuleAppliesToFunctionWithNameLongerThanThreshold()
     {
@@ -104,7 +105,7 @@ class LongMethodNameTest extends AbstractTest
     public function testRuleNotAppliesToMethodWithShortNameWhenException()
     {
         $rule = new LongMethodName();
-        $rule->addProperty('maximum', 100);
+        $rule->addProperty('maximum', 50);
         $rule->addProperty('exceptions', 'testRuleNotAppliesToMethodWithShortNameWhenException,another');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
@@ -113,11 +114,22 @@ class LongMethodNameTest extends AbstractTest
     /**
      * @return void
      */
-    public function testRuleAlsoWorksWithoutExceptionListConfigured()
+    public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock()
     {
         $rule = new LongMethodName();
-        $rule->addProperty('maximum', 100);
+        $rule->addProperty('maximum', 5);
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethodMock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleAppliesAlsoWithoutExceptionListConfigured()
+    {
+        $rule = new LongMethodName();
+        $rule->addProperty('maximum', 5);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
     }
 }
