@@ -200,7 +200,7 @@ abstract class AbstractNode
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {

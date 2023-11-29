@@ -23,9 +23,9 @@ use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
- * This rule class will detect methods and functions with very short names.
+ * This rule class will detect methods and functions with very long names.
  */
-class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
+class LongMethodName extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
      * Extracts all method and function nodes from the given node
@@ -37,10 +37,10 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node)
     {
-        $threshold = $this->getIntProperty('minimum');
+        $threshold = $this->getIntProperty('maximum');
         $name = (string)$node->getName();
 
-        if (strlen($name) >= $threshold) {
+        if (strlen($name) <= $threshold) {
             return;
         }
 
