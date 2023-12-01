@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.2]
+        php: [8.3]
         dependency-version: [prefer-stable]
 
     name: P${{ matrix.php }}
@@ -45,13 +45,16 @@ jobs:
       - name: Install dependencies
         run: |
           composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
-          composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
+          composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php+
 
       - name: Fix PHP compatibility
         run: php src/test/php/fix-php-compatibility.php
 
       - name: Execute Unit Tests
-        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
+        run: |
+          wget -O phpunit https://phar.phpunit.de/phpunit-8.phar
+          chmod +x ./phpunit
+          ./phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v3
