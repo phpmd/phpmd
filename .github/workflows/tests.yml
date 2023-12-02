@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.3, 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3]
+        php: [5.3, 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4]
         dependency-version: [prefer-lowest, prefer-stable]
         exclude:
           - dependency-version: prefer-lowest
@@ -52,6 +52,10 @@ jobs:
       - name: Upgrade PHPUnit
         if: matrix.php >= 7.2
         run: composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+
+      - name: Downgrade Symfony
+        if: matrix.php >= 8.0 && matrix.dependency-version == 'prefer-stable'
+        run: composer require symfony/config:^6.4 --no-update --no-interaction --dev
 
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress ${{ matrix.php >= 8 && '--ignore-platform-req=php' || '' }}

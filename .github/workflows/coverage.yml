@@ -17,10 +17,10 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.2]
+        php: [8.3]
         dependency-version: [prefer-stable]
 
-    name: P${{ matrix.php }}
+    name: PHP ${{ matrix.php }}
 
     steps:
       - name: Checkout code
@@ -43,8 +43,10 @@ jobs:
             coverage-${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: |
           composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+          composer require symfony/config:^6.4 --no-update --no-interaction --dev
           composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
 
       - name: Fix PHP compatibility
