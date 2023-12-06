@@ -50,6 +50,9 @@
     "ext-json": "*",
     "easy-doc/easy-doc": "0.0.0 || ^1.3.2"
   },
+  "conflict": {
+    "pdepend/pdepend": "2.16.0"
+  },
   "autoload": {
     "psr-0": {
       "PHPMD\\": "src/main/php"
