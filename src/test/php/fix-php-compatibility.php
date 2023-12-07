@@ -1,10 +1,11 @@
 <?php
 
+$vendorPath = __DIR__ . '/../vendor';
 $replacements = array(
     /**
      * Patch phpunit/phpunit-mock-objects Generator.php file to not create double nullable tokens: `??`
      */
-    __DIR__ . '/../../../vendor/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
+    $vendorPath . '/phpunit/phpunit-mock-objects/src/Framework/MockObject/Generator.php' => array(
         array(
             "if (version_compare(PHP_VERSION, '7.1', '>=') && " .
             "\$parameter->allowsNull() && !\$parameter->isVariadic()) {",
@@ -12,7 +13,7 @@ $replacements = array(
             "\$parameter->allowsNull() && !\$parameter->isVariadic()) {",
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Util/Configuration.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Util/Configuration.php' => array(
         array(
             'final private function',
             'private function',
@@ -22,14 +23,20 @@ $replacements = array(
             '',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/Constraint.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Framework/Constraint.php' => array(
         array(
             'public function count()',
             "#[\\ReturnTypeWillChange]\npublic function count()",
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-token-stream/src/Token/Stream.php' => array(
+    $vendorPath . '/phpunit/php-token-stream/src/Token.php' => array(
+        array(
+            '$docComment = $this->getDocblock();',
+            '$docComment = (string) $this->getDocblock();',
+        ),
+    ),
+    $vendorPath . '/phpunit/php-token-stream/src/Token/Stream.php' => array(
         array(
             'public function offsetExists',
             "#[\\ReturnTypeWillChange]\npublic function offsetExists",
@@ -86,7 +93,7 @@ $replacements = array(
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Util/TestSuiteIterator.php' => array(
         array(
             'public function current',
             "#[\\ReturnTypeWillChange]\npublic function current",
@@ -123,13 +130,13 @@ $replacements = array(
             "#[\\ReturnTypeWillChange]\npublic function hasChildren",
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
+    $vendorPath . '/phpunit/php-code-coverage/src/Report/Html/Renderer/File.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$numTests = count($coverageData[$i]);',
             '$numTests = count($coverageData[$i] ?? []);',
         ),
     ) : array(),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Extensions/PhptTestCase.php' => array(
         array(
             'public function count()',
             "#[\\ReturnTypeWillChange]\npublic function count()",
@@ -141,26 +148,14 @@ $replacements = array(
             'xdebug.mode=coverage',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestCase.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Framework/TestCase.php' => array(
         array(
             'public function count(',
             "#[\\ReturnTypeWillChange]\npublic function count(",
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestSuite.php' => array(
-        array(
-            'public function count(',
-            "#[\\ReturnTypeWillChange]\npublic function count(",
-            '#[\\ReturnTypeWillChange]',
-        ),
-        array(
-            'public function getIterator(',
-            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
-            '#[\\ReturnTypeWillChange]',
-        ),
-    ),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Framework/TestResult.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Framework/TestSuite.php' => array(
         array(
             'public function count(',
             "#[\\ReturnTypeWillChange]\npublic function count(",
@@ -172,14 +167,32 @@ $replacements = array(
             '#[\\ReturnTypeWillChange]',
         ),
     ),
-    __DIR__ . '/../../../vendor/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
+    $vendorPath . '/phpunit/phpunit/src/Framework/TestResult.php' => array(
+        array(
+            'public function count(',
+            "#[\\ReturnTypeWillChange]\npublic function count(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+        array(
+            'public function getIterator(',
+            "#[\\ReturnTypeWillChange]\npublic function getIterator(",
+            '#[\\ReturnTypeWillChange]',
+        ),
+    ),
+    $vendorPath . '/phpunit/phpunit/src/Util/Getopt.php' => array(
+        array(
+            'strlen($opt_arg)',
+            'strlen((string) $opt_arg)',
+        ),
+    ),
+    $vendorPath . '/phpunit/php-code-coverage/src/CodeCoverage.php' => (PHP_VERSION >= 7) ? array(
         array(
             '$docblock = $token->getDocblock();',
             '$docblock = $token->getDocblock() ?? \'\';',
             '$docblock = $token->getDocblock() ?? \'\';',
         ),
     ) : array(),
-    __DIR__ . '/../../../vendor/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
+    $vendorPath . '/phpunit/phpunit/src/Runner/Filter/Test.php' => array(
         array(
             'public function accept(',
             "#[\\ReturnTypeWillChange]\npublic function accept(",
