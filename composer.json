@@ -58,7 +58,7 @@
     "src/bin/phpmd"
   ],
   "scripts": {
-    "test": "phpunit",
+    "test": "cd src/test && composer update && cd ../.. && php src/test/php/fix-php-compatibility.php && php src/test/vendor/bin/phpunit --no-coverage",
     "cs-check": "phpcs -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "cs-fix": "phpcbf -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "build-website": "easy-doc build src/site/config.php --verbose"
