@@ -1,5 +1,6 @@
 {
   "name": "phpmd/phpmd-tester",
+  "description": "Test-related dependencies for phpmd/phpmd",
   "license": "BSD-3-Clause",
   "type": "library",
   "require": {

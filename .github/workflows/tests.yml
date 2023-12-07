@@ -1,5 +1,9 @@
 name: Tests
 
+# Ensure tests pass whatever is the minor PHP version currently supported (see strategy.matrix.php)
+# crossed with "lowest" setup (install the lowest possible dependency versions allowed by the range)
+# and with "stable" setup (install the highest possible dependency stable versions allowed by the range)
+
 on:
   push:
     branches: [ '**' ]

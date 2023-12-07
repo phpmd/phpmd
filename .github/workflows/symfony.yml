@@ -1,5 +1,10 @@
 name: Symfony
 
+# Ensure tests pass whatever is the major version of Symfony installed
+# along with the library
+# Guarantee to users that it can be installed and ran with no conflict
+# in a composer project that also include Symfony dependencies
+
 on:
   push:
     branches: [ '**' ]
