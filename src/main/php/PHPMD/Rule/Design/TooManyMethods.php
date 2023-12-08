@@ -23,7 +23,7 @@ use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Rule\ClassAware;
 
 /**
- * This rule class will detect all classes with too much methods.
+ * This rule class will detect all classes with too many methods.
  */
 class TooManyMethods extends AbstractRule implements ClassAware
 {

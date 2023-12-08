@@ -23,7 +23,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use PHPMD\Utility\Strings;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * Check for a boolean flag in the method/function signature.
@@ -35,7 +35,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
     /**
      * Temporary cache of configured exceptions.
      *
-     * @return array<string, int>
+     * @var ExceptionsList|null
      */
     protected $exceptions;
 
@@ -62,13 +62,10 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
 
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
-            ($name = $parent->getName())
+            ($name = $parent->getName()) &&
+            $this->getExceptionsList()->contains($name)
         ) {
-            $exceptions = $this->getExceptionsList();
-
-            if (isset($exceptions[$name])) {
-                return;
-            }
+            return;
         }
 
         $this->scanFormalParameters($node);
@@ -82,17 +79,12 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
     /**
      * Gets exceptions from property
      *
-     * @return array<string, int>
+     * @return ExceptionsList
      */
     protected function getExceptionsList()
     {
         if ($this->exceptions === null) {
-            $this->exceptions = array_flip(
-                Strings::splitToList(
-                    $this->getStringProperty('exceptions', ''),
-                    ','
-                )
-            );
+            $this->exceptions = new ExceptionsList($this);
         }
 
         return $this->exceptions;
