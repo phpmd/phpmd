@@ -37,12 +37,11 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.3.9",
-    "pdepend/pdepend": "^2.15.1",
     "ext-xml": "*",
-    "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0"
+    "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
+    "pdepend/pdepend": "^2.16.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8.36 || ^5.7.27",
     "squizlabs/php_codesniffer": "^2.9.2 || ^3.7.2",
     "mikey179/vfsstream": "^1.6.8",
     "gregwar/rst": "^1.0",
@@ -59,7 +58,7 @@
     "src/bin/phpmd"
   ],
   "scripts": {
-    "test": "phpunit",
+    "test": "php src/test/php/install-test-vendor.php && php src/test/vendor/bin/phpunit --no-coverage",
     "cs-check": "phpcs -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "cs-fix": "phpcbf -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "build-website": "easy-doc build src/site/config.php --verbose"

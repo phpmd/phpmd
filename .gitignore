@@ -9,4 +9,5 @@
 /*.xml
 composer.lock
 vendor
+src/test/vendor
 dist

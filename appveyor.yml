@@ -23,4 +23,4 @@ install:
 
 test_script:
   - cd C:\projects\phpmd
-  - vendor\bin\phpunit.bat
+  - php composer.phar test
