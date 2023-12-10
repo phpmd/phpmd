@@ -20,7 +20,7 @@ namespace PHPMD\Rule\Naming;
 use PHPMD\AbstractTest;
 
 /**
- * Test case for the very short method and function name rule.
+ * Test case for the very long method and function name rule.
  *
  * @covers \PHPMD\Rule\Naming\LongMethodName
  */
