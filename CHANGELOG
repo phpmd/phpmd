@@ -1,3 +1,18 @@
+phpmd-2.15.0 (2023/09/28)
+========================
+
+- Added #1036 [CLI] Allow option and value separated with equal sign
+- Require pdepend/pdepend 2.16.1
+  - Support PHP 8.3 pdepend/pdepend#699
+  - Support Symfony 7 pdepend/pdepend#692
+  - Fixed pdepend/pdepend#691 Float parsing for number starting with 0.
+  - Fixed pdepend/pdepend#689 Handle conversion to/detection of UTF-8 encoding using either mbstring PHP extension or the polyfill provided by Symfony
+  - Fixed pdepend/pdepend#687 Parsing the correct comment for method doc-block (Allow correct SuppressWarnings annotation handling on PHPMD) (https://github.com/phpmd/phpmd/issues/914)
+  - Fixed pdepend/pdepend#694 Handle yield termination depending on context (https://github.com/phpmd/phpmd/issues/804)
+- Fixed #1044 strict option on applyOnClassMethods
+- Documented #1041 Mention public key used for signing the Phars
+- Documented #1042 Document installation with PHIVE
+
 phpmd-2.14.1 (2023/09/28)
 ========================
 
