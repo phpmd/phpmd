@@ -18,12 +18,12 @@
 namespace PHPMD;
 
 use Closure;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
+abstract class AbstractStaticTestCase extends TestCase
 {
     /**
      * Directory with test files.
@@ -194,7 +194,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 

@@ -28,7 +28,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \stdClass
  */
-class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
+class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testCliAcceptsDirectoryAsInput

@@ -2,18 +2,18 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheStateFactory
  */
-class ResultCacheStateFactoryTest extends AbstractTest
+class ResultCacheStateFactoryTest extends AbstractTestCase
 {
     /** @var ResultCacheStateFactory */
     private $factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new ResultCacheStateFactory();
     }

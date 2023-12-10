@@ -20,18 +20,18 @@ namespace PHPMD\Regression;
 use PHPMD\Rule\UnusedLocalVariable;
 
 /**
- * Regression test for issue 019.
+ * Regression test for issue 020.
  *
  * @covers \stdClass
  */
-class SuperGlobalsFlaggedAsUnusedTicket019Test extends AbstractTest
+class StaticVariablesFlaggedAsUnusedTicket020RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testRuleDoesNotApplyToAnySuperGlobalVariable
      *
      * @return void
      */
-    public function testRuleDoesNotApplyToAnySuperGlobalVariable()
+    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());

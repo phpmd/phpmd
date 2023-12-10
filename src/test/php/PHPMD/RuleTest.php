@@ -17,12 +17,14 @@
 
 namespace PHPMD;
 
+use OutOfBoundsException;
+
 /**
  * Test case for the {@link \PHPMD\AbstractRule} class.
  *
  * @coversDefaultClass \PHPMD\AbstractRule
  */
-class RuleTest extends AbstractTest
+class RuleTest extends AbstractTestCase
 {
     /**
      * testGetBooleanPropertyReturnsTrueForStringValue1
@@ -123,12 +125,13 @@ class RuleTest extends AbstractTest
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
     public function testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        self::expectException(OutOfBoundsException::class);
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getIntProperty(__FUNCTION__);
@@ -153,12 +156,13 @@ class RuleTest extends AbstractTest
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        self::expectException(OutOfBoundsException::class);
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getBooleanProperty(__FUNCTION__);
@@ -168,12 +172,13 @@ class RuleTest extends AbstractTest
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @expectedException \OutOfBoundsException
      * @covers ::getStringProperty
      * @covers ::getProperty
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
+        self::expectException(OutOfBoundsException::class);
+
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
         $rule->getStringProperty(__FUNCTION__);

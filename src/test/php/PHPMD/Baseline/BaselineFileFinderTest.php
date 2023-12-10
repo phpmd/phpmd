@@ -2,14 +2,15 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\CommandLineOptions;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineFileFinder
  * @covers ::__construct
  */
-class BaselineFileFinderTest extends AbstractTest
+class BaselineFileFinderTest extends AbstractTestCase
 {
     /**
      * @covers ::find
@@ -40,11 +41,13 @@ class BaselineFileFinderTest extends AbstractTest
     /**
      * @covers ::find
      * @covers ::nullOrThrow
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to determine the baseline file location.
      */
     public function testShouldThrowExceptionForNonExistingRuleSet()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to determine the baseline file location.',
+        ));
+
         $args   = array('script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml'));
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         $finder->notNull()->find();
@@ -77,11 +80,13 @@ class BaselineFileFinderTest extends AbstractTest
      * @covers ::find
      * @covers ::notNull
      * @covers ::nullOrThrow
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to find the baseline file
      */
     public function testShouldThrowExceptionWhenFileIsNull()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to find the baseline file',
+        ));
+
         $args   = array('script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml'));
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertNull($finder->existingFile()->notNull()->find());

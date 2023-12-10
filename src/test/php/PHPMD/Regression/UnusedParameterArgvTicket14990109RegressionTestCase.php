@@ -28,7 +28,7 @@ use PHPMD\RuleSet;
  *
  * @covers \stdClass
  */
-class UnusedParameterArgvTicket14990109Test extends AbstractTest
+class UnusedParameterArgvTicket14990109RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testRuleDoesNotApplyToFunctionParameterNamedArgv

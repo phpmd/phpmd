@@ -3,7 +3,7 @@
 namespace PHPMD\Renderer;
 
 use ArrayIterator;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Report;
 use PHPMD\Stubs\WriterStub;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -12,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
  * @covers ::__construct
  */
-class BaselineRendererTest extends AbstractTest
+class BaselineRendererTest extends AbstractTestCase
 {
     /**
      * @covers ::renderReport

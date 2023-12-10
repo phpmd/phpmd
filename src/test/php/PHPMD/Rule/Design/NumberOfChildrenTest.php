@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\NumberOfChildren} class.
  *
  * @covers \PHPMD\Rule\Design\NumberOfChildren
  */
-class NumberOfChildrenTest extends AbstractTest
+class NumberOfChildrenTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithChildrenLessThanThreshold

@@ -2,13 +2,13 @@
 
 namespace PHPMD\Console;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass  \PHPMD\Console\Output
  * @covers ::__construct
  */
-class OutputTest extends AbstractTest
+class OutputTest extends AbstractTestCase
 {
     /** @var TestOutput */
     private $output;
@@ -16,7 +16,7 @@ class OutputTest extends AbstractTest
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->output = new TestOutput();

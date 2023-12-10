@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Duplicated Array Key Test.
@@ -25,7 +25,7 @@ use PHPMD\AbstractTest;
  * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  */
-class DuplicatedArrayKeyTest extends AbstractTest
+class DuplicatedArrayKeyTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutArrayDefinition

@@ -18,7 +18,7 @@
 namespace PHPMD\TextUI;
 
 use Closure;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
@@ -30,7 +30,7 @@ use ReflectionProperty;
  *
  * @covers \PHPMD\TextUI\CommandLineOptions
  */
-class CommandLineOptionsTest extends AbstractTest
+class CommandLineOptionsTest extends AbstractTestCase
 {
     /**
      * testAssignsInputArgumentToInputProperty
@@ -370,7 +370,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        self::assertContains('--ignore-errors-on-exit:', $opts->usage());
+        self::assertStringContainsString('--ignore-errors-on-exit:', $opts->usage());
     }
 
     /**
@@ -409,7 +409,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        self::assertContains('--ignore-violations-on-exit:', $opts->usage());
+        self::assertStringContainsString('--ignore-violations-on-exit:', $opts->usage());
     }
 
     /**
@@ -422,7 +422,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        self::assertContains(
+        self::assertStringContainsString(
             'Available formats: ansi, baseline, checkstyle, github, gitlab, html, json, sarif, text, xml.',
             $opts->usage()
         );
@@ -438,7 +438,7 @@ class CommandLineOptionsTest extends AbstractTest
         $args = array(__FILE__, __FILE__, 'text', 'codesize');
         $opts = new CommandLineOptions($args);
 
-        self::assertContains('--strict:', $opts->usage());
+        self::assertStringContainsString('--strict:', $opts->usage());
     }
 
     /**
@@ -712,26 +712,23 @@ class CommandLineOptionsTest extends AbstractTest
         self::assertInstanceOf($expectedClass, $opts->createRenderer($reportFormat));
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderCreateRenderer()
+    public static function dataProviderCreateRenderer(): array
     {
-        return array(
-            array('html', 'PHPMD\\Renderer\\HtmlRenderer'),
-            array('text', 'PHPMD\\Renderer\\TextRenderer'),
-            array('xml', 'PHPMD\\Renderer\\XmlRenderer'),
-            array('ansi', 'PHPMD\\Renderer\\AnsiRenderer'),
-            array('github', 'PHPMD\\Renderer\\GitHubRenderer'),
-            array('gitlab', 'PHPMD\\Renderer\\GitLabRenderer'),
-            array('json', 'PHPMD\\Renderer\\JSONRenderer'),
-            array('checkstyle', 'PHPMD\\Renderer\\CheckStyleRenderer'),
-            array('sarif', 'PHPMD\\Renderer\\SARIFRenderer'),
-            array('PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'),
-            array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
+        return [
+            ['html', 'PHPMD\\Renderer\\HtmlRenderer'],
+            ['text', 'PHPMD\\Renderer\\TextRenderer'],
+            ['xml', 'PHPMD\\Renderer\\XmlRenderer'],
+            ['ansi', 'PHPMD\\Renderer\\AnsiRenderer'],
+            ['github', 'PHPMD\\Renderer\\GitHubRenderer'],
+            ['gitlab', 'PHPMD\\Renderer\\GitLabRenderer'],
+            ['json', 'PHPMD\\Renderer\\JSONRenderer'],
+            ['checkstyle', 'PHPMD\\Renderer\\CheckStyleRenderer'],
+            ['sarif', 'PHPMD\\Renderer\\SARIFRenderer'],
+            ['PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'],
+            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
             /* Test what happens when class already exists. */
-            array('PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'),
-        );
+            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
+        ];
     }
 
     /**
@@ -748,15 +745,12 @@ class CommandLineOptionsTest extends AbstractTest
         $opts->createRenderer();
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderCreateRendererThrowsException()
+    public static function dataProviderCreateRendererThrowsException(): array
     {
-        return array(
-            array(''),
-            array('PHPMD\\Test\\Renderer\\NotExistsRenderer'),
-        );
+        return [
+            [''],
+            ['PHPMD\\Test\\Renderer\\NotExistsRenderer'],
+        ];
     }
 
     /**
@@ -792,21 +786,16 @@ class CommandLineOptionsTest extends AbstractTest
         $result($opts);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderDeprecatedCliOptions()
+    public static function dataProviderDeprecatedCliOptions(): array
     {
-        $testCase = $this;
-
-        return array(
-            array('extensions', 'suffixes', function (CommandLineOptions $opts) use ($testCase) {
-                $testCase->assertSame('42', $opts->getExtensions());
-            }),
-            array('ignore', 'exclude', function (CommandLineOptions $opts) use ($testCase) {
-                $testCase->assertSame('42', $opts->getIgnore());
-            }),
-        );
+        return [
+            ['extensions', 'suffixes', static function (CommandLineOptions $opts) {
+                self::assertSame('42', $opts->getExtensions());
+            }],
+            ['ignore', 'exclude', static function (CommandLineOptions $opts) {
+                self::assertSame('42', $opts->getIgnore());
+            }],
+        ];
     }
 
     /**
@@ -833,31 +822,31 @@ class CommandLineOptionsTest extends AbstractTest
         static::assertSame(5, $opts->extraLineInExcerpt());
     }
 
-    public function dataProviderGetReportFiles()
+    public static function dataProviderGetReportFiles(): array
     {
-        return array(
-            array(
-                array('--reportfile-xml', __FILE__),
-                array('xml' => __FILE__),
-            ),
-            array(
-                array('--reportfile-html', __FILE__),
-                array('html' => __FILE__),
-            ),
-            array(
-                array('--reportfile-text', __FILE__),
-                array('text' => __FILE__),
-            ),
-            array(
-                array('--reportfile-github', __FILE__),
-                array('github' => __FILE__),
-            ),
-            array(
-                array('--reportfile-gitlab', __FILE__),
-                array('gitlab' => __FILE__),
-            ),
-            array(
-                array(
+        return [
+            [
+                ['--reportfile-xml', __FILE__],
+                ['xml' => __FILE__],
+            ],
+            [
+                ['--reportfile-html', __FILE__],
+                ['html' => __FILE__],
+            ],
+            [
+                ['--reportfile-text', __FILE__],
+                ['text' => __FILE__],
+            ],
+            [
+                ['--reportfile-github', __FILE__],
+                ['github' => __FILE__],
+            ],
+            [
+                ['--reportfile-gitlab', __FILE__],
+                ['gitlab' => __FILE__],
+            ],
+            [
+                [
                     '--reportfile-text',
                     __FILE__,
                     '--reportfile-xml',
@@ -868,15 +857,15 @@ class CommandLineOptionsTest extends AbstractTest
                     __FILE__,
                     '--reportfile-gitlab',
                     __FILE__,
-                ),
-                array(
+                ],
+                [
                     'text' => __FILE__,
                     'xml' => __FILE__,
                     'html' => __FILE__,
                     'github' => __FILE__,
                     'gitlab' => __FILE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 }

@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
@@ -26,7 +26,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\GitLabRenderer
  */
-class GitLabRendererTest extends AbstractTest
+class GitLabRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfGitLabElements

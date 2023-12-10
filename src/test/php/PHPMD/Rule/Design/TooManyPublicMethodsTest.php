@@ -19,7 +19,7 @@ namespace PHPMD\Rule\Design;
 
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\State;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Node\MethodNode;
 use PHPMD\Report;
 
@@ -28,7 +28,7 @@ use PHPMD\Report;
  *
  * @covers \PHPMD\Rule\Design\TooManyPublicMethods
  */
-class TooManyPublicMethodsTest extends AbstractTest
+class TooManyPublicMethodsTest extends AbstractTestCase
 {
     /**
      * @return void

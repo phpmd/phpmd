@@ -18,13 +18,14 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use RuntimeException;
 
 /**
  * Test case for the rule set factory class.
  *
  * @covers \PHPMD\RuleSetFactory
  */
-class RuleSetFactoryTest extends AbstractTest
+class RuleSetFactoryTest extends AbstractTestCase
 {
     /**
      * Used to test files/directories access for ignore code rule
@@ -69,7 +70,7 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsReturnsArray()
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertIsArray($ruleSets);
     }
 
     /**
@@ -185,7 +186,7 @@ class RuleSetFactoryTest extends AbstractTest
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertInternalType('array', $ruleSets);
+        $this->assertIsArray($ruleSets);
     }
 
     /**
@@ -617,10 +618,11 @@ class RuleSetFactoryTest extends AbstractTest
      *
      * @return void
      * @covers \PHPMD\RuleClassNotFoundException
-     * @expectedException \RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
+        self::expectException(RuntimeException::class);
+
         $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
 
         $factory = new RuleSetFactory();
@@ -736,10 +738,8 @@ class RuleSetFactoryTest extends AbstractTest
 
     /**
      * Provides an array of the file paths to rule sets provided with PHPMD
-     *
-     * @return array
      */
-    public function getDefaultRuleSets()
+    public static function getDefaultRuleSets(): array
     {
         return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
     }

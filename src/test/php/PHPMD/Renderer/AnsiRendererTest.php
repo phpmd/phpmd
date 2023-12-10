@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Stubs\WriterStub;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\AnsiRendererTest
  */
-class AnsiRendererTest extends AbstractTest
+class AnsiRendererTest extends AbstractTestCase
 {
     /**
      * testRendererOutputsForReportWithContents

@@ -2,13 +2,13 @@
 
 namespace PHPMD\Utility;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Utility\Paths
  */
-class PathsTest extends AbstractTest
+class PathsTest extends AbstractTestCase
 {
     /**
      * @covers ::getRelativePath

@@ -18,7 +18,7 @@
 namespace PHPMD\Renderer;
 
 use ArrayIterator;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
@@ -29,7 +29,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\TextRenderer
  */
-class TextRendererTest extends AbstractTest
+class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries

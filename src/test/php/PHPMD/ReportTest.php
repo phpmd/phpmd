@@ -27,7 +27,7 @@ use PHPMD\Baseline\ViolationBaseline;
  *
  * @covers \PHPMD\Report
  */
-class ReportTest extends AbstractTest
+class ReportTest extends AbstractTestCase
 {
     /**
      * Tests that the report returns a linear/sorted list of all rule violation

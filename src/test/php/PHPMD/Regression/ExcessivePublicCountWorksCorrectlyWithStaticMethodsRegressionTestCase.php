@@ -26,7 +26,7 @@ use PHPMD\RuleSetFactory;
  *
  * @link https://github.com/phpmd/phpmd/issues/409
  */
-class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTest
+class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * @var string Beginning of the violation message
@@ -41,7 +41,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     /**
      * Sets up the renderer mock
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->renderer = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\Renderer\TextRenderer')

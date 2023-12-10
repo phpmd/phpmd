@@ -29,12 +29,12 @@ use PHPUnit_Framework_MockObject_MockObject;
  *
  * @covers \PHPMD\PHPMD
  */
-class PHPMDTest extends AbstractTest
+class PHPMDTest extends AbstractTestCase
 {
     /** @var RuleSetFactory */
     private $ruleSetFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->ruleSetFactory = new RuleSetFactory();
     }

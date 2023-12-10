@@ -24,7 +24,7 @@ use PHPMD\Stubs\RuleStub;
  *
  * @covers \PHPMD\RuleSet
  */
-class RuleSetTest extends AbstractTest
+class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists

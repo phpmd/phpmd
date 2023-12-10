@@ -17,10 +17,11 @@
 
 namespace PHPMD\Node;
 
+use BadMethodCallException;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the method node implementation.
@@ -28,7 +29,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\MethodNode
  * @covers \PHPMD\Node\AbstractCallableNode
  */
-class MethodNodeTest extends AbstractTest
+class MethodNodeTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependMethod
@@ -52,10 +53,11 @@ class MethodNodeTest extends AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @expectedException \BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
+        self::expectException(BadMethodCallException::class);
+
         $node = new MethodNode(new ASTMethod(null));
         $node->getFooBar();
     }

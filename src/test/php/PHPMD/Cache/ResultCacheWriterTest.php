@@ -3,7 +3,7 @@
 namespace PHPMD\Cache;
 
 use org\bovigo\vfs\vfsStream;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 
@@ -11,7 +11,7 @@ use PHPMD\Cache\Model\ResultCacheState;
  * @coversDefaultClass \PHPMD\Cache\ResultCacheWriter
  * @covers ::__construct
  */
-class ResultCacheWriterTest extends AbstractTest
+class ResultCacheWriterTest extends AbstractTestCase
 {
     /** @var string */
     private $filePath;
@@ -19,7 +19,7 @@ class ResultCacheWriterTest extends AbstractTest
     /** @var ResultCacheWriter */
     private $writer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->filePath = vfsStream::setup()->url() . '/.result-cache.php';
         $this->writer   = new ResultCacheWriter($this->filePath);
@@ -37,7 +37,7 @@ class ResultCacheWriterTest extends AbstractTest
         static::assertFileExists($this->filePath);
 
         $data = require $this->filePath;
-        static::assertInternalType('array', $data);
+        static::assertIsArray($data);
         static::assertSame(array('key', 'state'), array_keys($data));
     }
 }

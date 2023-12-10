@@ -19,15 +19,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [ 5.3, 5.4, 5.5, 5.6, 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4 ]
+        php: [ 8.0, 8.1, 8.2, 8.3, 8.4 ]
         setup: [ lowest, stable ]
-        exclude:
-          - setup: lowest
-            php: 7.2
-          - setup: lowest
-            php: 7.3
-          - setup: lowest
-            php: 7.4
 
     name: PHP ${{ matrix.php }} - prefer-${{ matrix.setup }}
 
@@ -42,7 +35,7 @@ jobs:
           coverage: none
           tools: composer:v2
 
-      - name: Cache library packages
+      - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
         with:
@@ -50,28 +43,9 @@ jobs:
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
           restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
 
-      - name: Cache test packages
-        id: composer-test-cache
-        uses: actions/cache@v3
-        with:
-          path: src/test/vendor
-          key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
-          restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
-
-      - name: Upgrade PHPUnit
-        if: matrix.php >= 7.2
-        run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
-
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php+
 
-      - name: Install test dependencies
-        if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable --ignore-platform-req=php+
-
-      - name: Fix PHP compatibility
-        run: php src/test/php/fix-php-compatibility.php
-
       - name: Execute Unit Tests
-        run: src/test/vendor/bin/phpunit -v
+        run: vendor/bin/phpunit -v

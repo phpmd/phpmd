@@ -17,7 +17,7 @@
 
 namespace PHPMD\Utility;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Strings;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\Utility\Strings;
  *
  * @coversDefaultClass  \PHPMD\Utility\Strings
  */
-class StringsTest extends AbstractTest
+class StringsTest extends AbstractTestCase
 {
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string

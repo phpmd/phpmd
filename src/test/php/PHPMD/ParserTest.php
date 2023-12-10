@@ -28,7 +28,7 @@ use Symfony\Component\DependencyInjection\Container;
  *
  * @covers \PHPMD\Parser
  */
-class ParserTest extends AbstractTest
+class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case variable name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName
  */
-class CamelCaseVariableNameTest extends AbstractTest
+class CamelCaseVariableNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid variable name

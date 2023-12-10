@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the too many methods rule.
  *
  * @covers \PHPMD\Rule\Design\TooManyFields
  */
-class TooManyFieldsTest extends AbstractTest
+class TooManyFieldsTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold

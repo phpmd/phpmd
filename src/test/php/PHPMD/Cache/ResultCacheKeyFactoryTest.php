@@ -3,7 +3,7 @@
 namespace PHPMD\Cache;
 
 use org\bovigo\vfs\vfsStream;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Rule\CleanCode\DuplicatedArrayKey;
 use PHPMD\RuleSet;
 
@@ -11,12 +11,12 @@ use PHPMD\RuleSet;
  * @coversDefaultClass \PHPMD\Cache\ResultCacheKeyFactory
  * @covers ::__construct
  */
-class ResultCacheKeyFactoryTest extends AbstractTest
+class ResultCacheKeyFactoryTest extends AbstractTestCase
 {
     /** @var ResultCacheKeyFactory */
     private $factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $basePath = vfsStream::setup()->url();
         file_put_contents($basePath . '/composer.json', 'composer.json');

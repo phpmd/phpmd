@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
@@ -26,7 +26,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\JSONRenderer
  */
-class JSONRendererTest extends AbstractTest
+class JSONRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements

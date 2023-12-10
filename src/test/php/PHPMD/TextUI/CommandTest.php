@@ -17,7 +17,7 @@
 
 namespace PHPMD\TextUI;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Paths;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\Utility\Paths;
  *
  * @covers \PHPMD\TextUI\Command
  */
-class CommandTest extends AbstractTest
+class CommandTest extends AbstractTestCase
 {
     /**
      * @var resource
@@ -35,7 +35,7 @@ class CommandTest extends AbstractTest
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (is_resource($this->stderrStreamFilter)) {
             stream_filter_remove($this->stderrStreamFilter);
@@ -72,73 +72,70 @@ class CommandTest extends AbstractTest
         $this->assertEquals($expectedExitCode, $exitCode);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderTestMainWithOption()
+    public static function dataProviderTestMainWithOption(): array
     {
-        return array(
-            array(
+        return [
+            [
                 'source/source_without_violations.php',
                 Command::EXIT_SUCCESS,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_VIOLATION,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_VIOLATION,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_ERROR,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_ERROR,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_ERROR,
-            ),
-            array(
+            ],
+            [
                 'source',
                 Command::EXIT_ERROR,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_VIOLATION,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_SUCCESS,
-                array('--ignore-errors-on-exit', '--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit', '--ignore-violations-on-exit'],
+            ],
+            [
                 'source/ccn_suppress_function.php',
                 Command::EXIT_VIOLATION,
-                array('--strict'),
-            ),
-            array(
+                ['--strict'],
+            ],
+            [
                 'source/ccn_suppress_function.php',
                 Command::EXIT_SUCCESS,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -221,15 +218,12 @@ class CommandTest extends AbstractTest
         $this->assertEquals(Command::EXIT_SUCCESS, $exitCode);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderWithFilter()
+    public static function dataProviderWithFilter(): array
     {
-        return array(
-            array('--suffixes', '.class.php'),
-            array('--exclude', 'ccn_,npath_,parse_error'),
-        );
+        return [
+            ['--suffixes', '.class.php'],
+            ['--exclude', 'ccn_,npath_,parse_error'],
+        ];
     }
 
     public function testMainGenerateBaseline()

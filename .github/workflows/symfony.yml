@@ -37,21 +37,13 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Cache library packages
+      - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-${{ hashFiles('composer.lock') }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-
-
-      - name: Cache test packages
-        id: composer-test-cache
-        uses: actions/cache@v3
-        with:
-          path: src/test/vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-${{ hashFiles('src/test/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-
 
       - name: Set Symfony version
         run: |
@@ -60,24 +52,12 @@ jobs:
             symfony/filesystem:^${{ matrix.symfony }} \
             symfony/config:^${{ matrix.symfony }}
 
-      - name: Upgrade PHPUnit
-        if: matrix.php >= 7.2
-        run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
-
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
-
-      - name: Install test dependencies
-        if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
-
-      - name: Fix PHP compatibility
-        if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: php src/test/php/fix-php-compatibility.php
 
       - name: Check Symfony version
         run: php src/test/symfony-version.php
 
       - name: Run test suite
-        run: src/test/vendor/bin/phpunit -v
+        run: vendor/bin/phpunit -v

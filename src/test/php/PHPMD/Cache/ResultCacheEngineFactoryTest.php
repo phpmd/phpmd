@@ -2,7 +2,7 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
@@ -15,7 +15,7 @@ use ReflectionProperty;
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngineFactory
  * @covers ::__construct
  */
-class ResultCacheEngineFactoryTest extends AbstractTest
+class ResultCacheEngineFactoryTest extends AbstractTestCase
 {
     /** @var CommandLineOptions&MockObject */
     private $options;
@@ -29,7 +29,7 @@ class ResultCacheEngineFactoryTest extends AbstractTest
     /** @var ResultCacheUpdater */
     private $engineFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->options      = $this->getMockFromBuilder(
             $this->getMockBuilder('\PHPMD\TextUI\CommandLineOptions')->disableOriginalConstructor()

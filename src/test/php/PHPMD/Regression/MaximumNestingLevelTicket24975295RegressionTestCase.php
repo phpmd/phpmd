@@ -31,7 +31,7 @@ use PHPMD\Writer\StreamWriter;
  *
  * @covers \stdClass
  */
-class MaximumNestingLevelTicket24975295Test extends AbstractTest
+class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported

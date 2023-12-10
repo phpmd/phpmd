@@ -22,7 +22,7 @@ namespace PHPMD;
  *
  * @covers \PHPMD\ParserFactory
  */
-class ParserFactoryTest extends AbstractTest
+class ParserFactoryTest extends AbstractTestCase
 {
     /**
      * testFactoryConfiguresInputDirectory
@@ -37,11 +37,11 @@ class ParserFactoryTest extends AbstractTest
 
         $phpmd = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\PHPMD')
-                ->setMethods(array('getInput'))
+                ->onlyMethods(['getInput'])
         );
         $phpmd->expects($this->once())
             ->method('getInput')
-            ->will($this->returnValue($uri));
+            ->willReturn($uri);
 
         $ruleSet = $this->getRuleSetMock('PHPMD\\Node\\ClassNode');
 
