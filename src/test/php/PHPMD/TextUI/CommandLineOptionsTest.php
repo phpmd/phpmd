@@ -154,7 +154,7 @@ class CommandLineOptionsTest extends AbstractTest
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Unknown option --help.
      *
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFound()
     {
@@ -175,7 +175,7 @@ class CommandLineOptionsTest extends AbstractTest
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Unknown option -foobar
      *
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundInFront()
     {
@@ -196,7 +196,7 @@ class CommandLineOptionsTest extends AbstractTest
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Unknown option --help.
      *
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundUsingArgumentSeparator()
     {
@@ -217,7 +217,7 @@ class CommandLineOptionsTest extends AbstractTest
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage --color option does not accept a value
      *
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenBooleanOptionReceiveValue()
     {
@@ -226,7 +226,7 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testOptionEqualSyntax()
     {
@@ -237,7 +237,7 @@ class CommandLineOptionsTest extends AbstractTest
     }
 
     /**
-     * @covers \PHPMD\TextUI\ArgumentsValidator
+     * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testArgumentSeparatorEnforced()
     {

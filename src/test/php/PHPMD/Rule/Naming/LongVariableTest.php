@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the really long variable, parameter and property name rule.
  *
- * @covers PHPMD\Rule\Naming\LongVariable
+ * @covers \PHPMD\Rule\Naming\LongVariable
  */
 class LongVariableTest extends AbstractTest
 {
