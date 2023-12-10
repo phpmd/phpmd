@@ -29,7 +29,7 @@ jobs:
           - setup: lowest
             php: 7.4
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.setup }}
+    name: PHP ${{ matrix.php }} - prefer-${{ matrix.setup }}
 
     steps:
       - name: Checkout code

@@ -39,7 +39,7 @@
     "php": ">=5.3.9",
     "ext-xml": "*",
     "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
-    "pdepend/pdepend": "dev-fix/symfony-compatibility as 2.16.1"
+    "pdepend/pdepend": "^2.16.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.9.2 || ^3.7.2",
@@ -58,7 +58,7 @@
     "src/bin/phpmd"
   ],
   "scripts": {
-    "test": "cd src/test && composer update && cd ../.. && php src/test/php/fix-php-compatibility.php && php src/test/vendor/bin/phpunit --no-coverage",
+    "test": "php src/test/php/install-test-vendor.php && php src/test/vendor/bin/phpunit --no-coverage",
     "cs-check": "phpcs -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "cs-fix": "phpcbf -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "build-website": "easy-doc build src/site/config.php --verbose"
