@@ -62,10 +62,6 @@ jobs:
         if: matrix.php >= 7.2
         run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
 
-      - name: Downgrade Symfony
-        if: matrix.php >= 8.0 && matrix.dependency-version == 'prefer-stable'
-        run: composer require symfony/config:^6.4 --no-update --no-interaction --dev
-
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php+
