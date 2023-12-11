@@ -38,14 +38,14 @@ class GotoStatementIntegrationTest extends AbstractTestCase
         $file = self::createTempFileUri();
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 $this->createCodeResourceUriForTest(),
                 'text',
                 'design',
                 '--reportfile',
                 $file,
-            )
+            ]
         );
 
         self::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));

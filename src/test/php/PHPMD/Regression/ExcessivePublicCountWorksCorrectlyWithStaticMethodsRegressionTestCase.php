@@ -46,7 +46,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
         $this->renderer = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
                 ->disableOriginalConstructor()
-                ->setMethods(array('renderReport', 'start', 'end'))
+                ->onlyMethods(['renderReport', 'start', 'end'])
         );
     }
 
@@ -89,7 +89,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
             $ruleSetFactory->getIgnorePattern('codesize'),
-            array($this->renderer),
+            [$this->renderer],
             $ruleSetFactory->createRuleSets('codesize'),
             new Report()
         );
@@ -132,7 +132,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
             $ruleSetFactory->getIgnorePattern('codesize'),
-            array($this->renderer),
+            [$this->renderer],
             $ruleSetFactory->createRuleSets('codesize'),
             new Report()
         );

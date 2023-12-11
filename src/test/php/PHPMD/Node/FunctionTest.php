@@ -38,7 +38,7 @@ class FunctionTest extends AbstractTestCase
     {
         $function = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $function->expects($this->once())
             ->method('getStartLine');

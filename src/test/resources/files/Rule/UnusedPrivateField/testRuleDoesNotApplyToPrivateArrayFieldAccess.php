@@ -17,7 +17,7 @@
 
 class testRuleDoesNotApplyToPrivateArrayFieldAccess
 {
-    private $foo = array();
+    private $foo = [];
 
     private function bar()
     {

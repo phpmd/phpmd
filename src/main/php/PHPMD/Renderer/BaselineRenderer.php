@@ -22,7 +22,7 @@ class BaselineRenderer extends AbstractRenderer
     public function renderReport(Report $report)
     {
         // keep track of which violations have been written, to avoid duplicates in the baseline
-        $registered = array();
+        $registered = [];
 
         $writer = $this->getWriter();
         $writer->write('<?xml version="1.0"?>' . PHP_EOL);

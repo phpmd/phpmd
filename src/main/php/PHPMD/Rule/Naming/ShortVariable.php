@@ -36,7 +36,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @var array(string=>boolean)
      */
-    protected $processedVariables = array();
+    protected $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -143,7 +143,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $this->addViolation($node, array($node->getImage(), $threshold));
+        $this->addViolation($node, [$node->getImage(), $threshold]);
     }
 
     /**
@@ -195,7 +195,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return false;
         }
 
-        $exceptionVariables = array();
+        $exceptionVariables = [];
 
         $parentForeaches = $this->getParentsOfType($node, 'ForeachStatement');
         foreach ($parentForeaches as $foreach) {
@@ -217,7 +217,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function getParentsOfType(AbstractNode $node, $type)
     {
-        $parents = array();
+        $parents = [];
 
         $parent = $node->getParent();
 
@@ -259,7 +259,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function resetProcessed()
     {
-        $this->processedVariables = array();
+        $this->processedVariables = [];
     }
 
     /**

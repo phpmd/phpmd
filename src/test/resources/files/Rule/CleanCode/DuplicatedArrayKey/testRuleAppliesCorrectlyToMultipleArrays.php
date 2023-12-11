@@ -17,27 +17,27 @@
 
 function testRuleAppliesCorrectlyToMultipleArrays()
 {
-    $arrayOne = array(
+    $arrayOne = [
         'foo' => 'bar',
         'foo' => 'bar',
-    );
+    ];
 
-    $arrayTwo = array(
+    $arrayTwo = [
         'foo' => 'bar',
-    );
+    ];
 
-    $arrayThree = array(
+    $arrayThree = [
         'foo' => 'bar',
         'foo' => 'bar',
         'foo' => 'bar',
-    );
+    ];
 
-    $arrayFour = array(
-        'foo' => array(
-            'foo' => array(
+    $arrayFour = [
+        'foo' => [
+            'foo' => [
                 'foo' => 'bar',
                 'foo' => 'bar',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 }

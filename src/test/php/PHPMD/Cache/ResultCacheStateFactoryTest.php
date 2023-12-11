@@ -59,8 +59,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
         $expectedKey = new ResultCacheKey(
             false,
             'baseline',
-            array('rule' => 'hash'),
-            array('composer.json' => 'hash1', 'composer.lock' => 'hash2'),
+            ['rule' => 'hash'],
+            ['composer.json' => 'hash1', 'composer.lock' => 'hash2'],
             70000
         );
         $cacheKey    = $state->getCacheKey();
@@ -69,7 +69,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
         // assert file state
         static::assertFalse($state->isFileModified('file1', 'file1-hash'));
         static::assertTrue($state->isFileModified('file2', 'file1-hash'));
-        static::assertSame(array('violations'), $state->getViolations('file2'));
+        static::assertSame(['violations'], $state->getViolations('file2'));
     }
 
     /**
@@ -85,8 +85,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
         $expectedKey = new ResultCacheKey(
             false,
             null,
-            array('rule' => 'hash'),
-            array(),
+            ['rule' => 'hash'],
+            [],
             70000
         );
         $cacheKey    = $state->getCacheKey();

@@ -52,7 +52,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(false);
         $this->keyFactory->expects(self::never())->method('create');
 
-        static::assertNull($this->engineFactory->create('/base/path/', $this->options, array()));
+        static::assertNull($this->engineFactory->create('/base/path/', $this->options, []));
     }
 
     /**
@@ -60,10 +60,10 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
      */
     public function testCreateCacheMissShouldHaveNoOriginalState()
     {
-        $ruleSetList = array(new RuleSet());
-        $cacheKeyA   = new ResultCacheKey(true, 'baseline', array(), array(), 123);
-        $cacheKeyB   = new ResultCacheKey(false, 'baseline', array(), array(), 321);
-        $state       = new ResultCacheState($cacheKeyB, array());
+        $ruleSetList = [new RuleSet()];
+        $cacheKeyA   = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $cacheKeyB   = new ResultCacheKey(false, 'baseline', [], [], 321);
+        $state       = new ResultCacheState($cacheKeyB, []);
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
@@ -82,9 +82,9 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
      */
     public function testCreateCacheHitShouldHaveOriginalState()
     {
-        $ruleSetList = array(new RuleSet());
-        $cacheKey    = new ResultCacheKey(true, 'baseline', array(), array(), 123);
-        $state       = new ResultCacheState($cacheKey, array());
+        $ruleSetList = [new RuleSet()];
+        $cacheKey    = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $state       = new ResultCacheState($cacheKey, []);
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);

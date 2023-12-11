@@ -44,7 +44,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @var array(string)
      */
-    private static $tempFiles = array();
+    private static $tempFiles = [];
 
     /**
      * Return to original working directory if changed.
@@ -73,7 +73,7 @@ abstract class AbstractStaticTestCase extends TestCase
             unlink($tempFile);
         }
 
-        self::$tempFiles = array();
+        self::$tempFiles = [];
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class AbstractStaticTestCase extends TestCase
     protected static function getValuesAsArrays($values)
     {
         return array_map(function ($value) {
-            return array($value);
+            return [$value];
         }, $values);
     }
 

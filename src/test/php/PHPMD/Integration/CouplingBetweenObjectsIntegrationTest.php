@@ -38,14 +38,14 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
         $file = self::createTempFileUri();
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 $this->createCodeResourceUriForTest(),
                 'text',
                 'design',
                 '--reportfile',
                 $file,
-            )
+            ]
         );
 
         self::assertStringContainsString(

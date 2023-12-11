@@ -48,14 +48,14 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @var array
      */
-    protected $unwantedFunctions = array('count', 'sizeof');
+    protected $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
      * @var array
      */
-    protected $processedFunctions = array();
+    protected $processedFunctions = [];
 
     /**
      * Functions in classes tends to be name-spaced
@@ -112,7 +112,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
                     continue;
                 }
 
-                $this->addViolation($loop, array($function->getImage(), $loop->getImage()));
+                $this->addViolation($loop, [$function->getImage(), $loop->getImage()]);
                 $this->processedFunctions[$hash] = true;
             }
         }

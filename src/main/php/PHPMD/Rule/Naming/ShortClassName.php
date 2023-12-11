@@ -56,7 +56,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
             return;
         }
 
-        $this->addViolation($node, array($classOrInterfaceName, $threshold));
+        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
     }
 
     /**

@@ -71,7 +71,7 @@ abstract class AbstractRule implements Rule
      *
      * @var array(string)
      */
-    private $examples = array();
+    private $examples = [];
 
     /**
      * The name of the parent rule-set instance.
@@ -92,7 +92,7 @@ abstract class AbstractRule implements Rule
      *
      * @var array(string=>string)
      */
-    private $properties = array();
+    private $properties = [];
 
     /**
      * The report for object for this rule.
@@ -348,7 +348,7 @@ abstract class AbstractRule implements Rule
      */
     public function getBooleanProperty($name, $default = null)
     {
-        return in_array($this->getProperty($name, $default), array('true', 'on', 1), false);
+        return in_array($this->getProperty($name, $default), ['true', 'on', 1], false);
     }
 
     /**
@@ -405,13 +405,13 @@ abstract class AbstractRule implements Rule
      */
     protected function addViolation(
         AbstractNode $node,
-        array $args = array(),
+        array $args = [],
         $metric = null
     ) {
-        $message = array(
+        $message = [
             'message' => $this->message,
             'args' => $args,
-        );
+        ];
 
         $ruleViolation = new RuleViolation($this, NodeInfoFactory::fromNode($node), $message, $metric);
         $this->report->addRuleViolation($ruleViolation);

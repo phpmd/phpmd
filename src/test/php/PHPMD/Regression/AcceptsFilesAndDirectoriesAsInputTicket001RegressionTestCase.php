@@ -48,7 +48,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends Abstr
         $phpmd->processFiles(
             self::createFileUri('source'),
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -72,7 +72,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends Abstr
         $phpmd->processFiles(
             self::createFileUri('source/FooBar.php'),
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );

@@ -17,7 +17,7 @@
 
 class testRuleDoesNotApplyToStaticArrayProperty
 {
-    protected static $a = array();
+    protected static $a = [];
 
     public function testRuleDoesNotApplyToStaticArrayProperty()
     {

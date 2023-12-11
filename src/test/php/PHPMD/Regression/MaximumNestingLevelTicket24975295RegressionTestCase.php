@@ -46,7 +46,7 @@ class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegres
 
         $inputs = self::createCodeResourceUriForTest();
         $rules = 'unusedcode';
-        $renderers = array($renderer);
+        $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
 

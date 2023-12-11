@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use Closure;
+use InvalidArgumentException;
 use PHPMD\AbstractTestCase;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
@@ -40,7 +41,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testAssignsInputArgumentToInputProperty()
     {
-        $args = array('foo.php', __FILE__, 'text', 'design');
+        $args = ['foo.php', __FILE__, 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertEquals(__FILE__, $opts->getInputPath());
@@ -52,7 +53,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testVerbose()
     {
-        $args = array('foo.php', __FILE__, 'text', 'design', '-vvv');
+        $args = ['foo.php', __FILE__, 'text', 'design', '-vvv'];
         $opts = new CommandLineOptions($args);
         $renbderer = $opts->createRenderer();
 
@@ -70,7 +71,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testColored()
     {
-        $args = array('foo.php', __FILE__, 'text', 'design', '--color');
+        $args = ['foo.php', __FILE__, 'text', 'design', '--color'];
         $opts = new CommandLineOptions($args);
         $renderer = $opts->createRenderer();
 
@@ -88,7 +89,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testStdInDashShortCut()
     {
-        $args = array('foo.php', '-', 'text', 'design');
+        $args = ['foo.php', '-', 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('php://stdin', $opts->getInputPath());
@@ -101,7 +102,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testMultipleFiles()
     {
         // What happen when calling: phpmd src/*Service.php text design
-        $args = array('foo.php', 'src/FooService.php', 'src/BarService.php', 'text', 'design');
+        $args = ['foo.php', 'src/FooService.php', 'src/BarService.php', 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('src/FooService.php,src/BarService.php', $opts->getInputPath());
@@ -117,7 +118,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testAssignsFormatArgumentToReportFormatProperty()
     {
-        $args = array('foo.php', __FILE__, 'text', 'design');
+        $args = ['foo.php', __FILE__, 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertEquals('text', $opts->getReportFormat());
@@ -131,7 +132,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testAssignsRuleSetsArgumentToRuleSetProperty()
     {
-        $args = array('foo.php', __FILE__, 'text', 'design');
+        $args = ['foo.php', __FILE__, 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertEquals('design', $opts->getRuleSets());
@@ -142,86 +143,76 @@ class CommandLineOptionsTest extends AbstractTestCase
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
     {
-        $args = array(__FILE__, 'text', 'design');
+        self::expectException(InvalidArgumentException::class);
+
+        $args = [__FILE__, 'text', 'design'];
         new CommandLineOptions($args);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown option --help.
-     *
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFound()
     {
-        if (method_exists($this, 'expectExceptionMessage')) {
-            self::expectExceptionMessage(
-                'Unknown option --help.' . PHP_EOL .
-                'If you intend to use "--help" as a value for ruleset argument, ' .
-                'use the explicit argument separator:' . PHP_EOL .
-                'phpmd -- text design --help'
-            );
-        }
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage(
+            'Unknown option --help.' . PHP_EOL .
+            'If you intend to use "--help" as a value for ruleset argument, ' .
+            'use the explicit argument separator:' . PHP_EOL .
+            'phpmd -- text design --help'
+        );
 
-        $args = array(__FILE__, 'text', 'design', '--help');
+        $args = [__FILE__, 'text', 'design', '--help'];
         new CommandLineOptions($args);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown option -foobar
-     *
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundInFront()
     {
-        if (method_exists($this, 'expectExceptionMessage')) {
-            self::expectExceptionMessage(
-                'Unknown option -foobar.' . PHP_EOL .
-                'If you intend to use "-foobar" as a value for input path argument, ' .
-                'use the explicit argument separator:' . PHP_EOL .
-                'phpmd -- -foobar text design'
-            );
-        }
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage(
+            'Unknown option -foobar.' . PHP_EOL .
+            'If you intend to use "-foobar" as a value for input path argument, ' .
+            'use the explicit argument separator:' . PHP_EOL .
+            'phpmd -- -foobar text design'
+        );
 
-        $args = array(__FILE__, '-foobar', 'text', 'design');
+        $args = [__FILE__, '-foobar', 'text', 'design'];
         new CommandLineOptions($args);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown option --help.
-     *
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundUsingArgumentSeparator()
     {
-        if (method_exists($this, 'expectExceptionMessage')) {
-            self::expectExceptionMessage(
-                'Unknown option --help.' . PHP_EOL .
-                'If you intend to use "--help" as a value for input path argument, ' .
-                'use the explicit argument separator:' . PHP_EOL .
-                'phpmd -- --help text design'
-            );
-        }
+        self::expectException(InvalidArgumentException::class);
+        self::expectExceptionMessage(
+            'Unknown option --help.' . PHP_EOL .
+            'If you intend to use "--help" as a value for input path argument, ' .
+            'use the explicit argument separator:' . PHP_EOL .
+            'phpmd -- --help text design'
+        );
 
-        $args = array(__FILE__, '--help', '--', 'text', 'design');
+        $args = [__FILE__, '--help', '--', 'text', 'design'];
         new CommandLineOptions($args);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage --color option does not accept a value
-     *
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenBooleanOptionReceiveValue()
     {
-        $args = array(__FILE__, '--color=on', 'text', 'design');
+        self::expectExceptionObject(new InvalidArgumentException(
+            '--color option does not accept a value',
+        ));
+
+        $args = [__FILE__, '--color=on', 'text', 'design'];
         new CommandLineOptions($args);
     }
 
@@ -230,7 +221,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testOptionEqualSyntax()
     {
-        $args = array(__FILE__, '--exclude=*/vendor/*', '-', 'text', 'design');
+        $args = [__FILE__, '--exclude=*/vendor/*', '-', 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('*/vendor/*', $opts->getIgnore());
@@ -241,7 +232,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testArgumentSeparatorEnforced()
     {
-        $args = array(__FILE__, '--', '--help', 'text', 'design');
+        $args = [__FILE__, '--', '--help', 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('--help', $opts->getInputPath());
@@ -257,7 +248,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $uri = self::createResourceUriForTest('inputfile.txt');
 
-        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $args = ['foo.php', 'text', 'design', '--inputfile', $uri];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('Dir1/Class1.php,Dir2/Class2.php', $opts->getInputPath());
@@ -273,7 +264,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $uri = self::createResourceUriForTest('inputfile.txt');
 
-        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $args = ['foo.php', 'text', 'design', '--inputfile', $uri];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('text', $opts->getReportFormat());
@@ -289,7 +280,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $uri = self::createResourceUriForTest('inputfile.txt');
 
-        $args = array('foo.php', 'text', 'design', '--inputfile', $uri);
+        $args = ['foo.php', 'text', 'design', '--inputfile', $uri];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('design', $opts->getRuleSets());
@@ -304,7 +295,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
-        $args = array('foo.php', 'text', 'design', '--inputfile', 'inputfail.txt');
+        $args = ['foo.php', 'text', 'design', '--inputfile', 'inputfail.txt'];
         new CommandLineOptions($args);
     }
 
@@ -315,7 +306,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testHasVersionReturnsFalseByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $args = [__FILE__, __FILE__, 'text', 'unusedcode'];
         $opts = new CommandLineOptions($args);
 
         self::assertFalse($opts->hasVersion());
@@ -328,7 +319,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsVersionArgument()
     {
-        $args = array(__FILE__, '--version');
+        $args = [__FILE__, '--version'];
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasVersion());
@@ -341,7 +332,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testIgnoreErrorsOnExitReturnsFalseByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $args = [__FILE__, __FILE__, 'text', 'unusedcode'];
         $opts = new CommandLineOptions($args);
 
         self::assertFalse($opts->ignoreErrorsOnExit());
@@ -354,7 +345,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsIgnoreErrorsOnExitArgument()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-errors-on-exit');
+        $args = [__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-errors-on-exit'];
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->ignoreErrorsOnExit());
@@ -367,7 +358,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliUsageContainsIgnoreErrorsOnExitOption()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertStringContainsString('--ignore-errors-on-exit:', $opts->usage());
@@ -380,7 +371,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testIgnoreViolationsOnExitReturnsFalseByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode');
+        $args = [__FILE__, __FILE__, 'text', 'unusedcode'];
         $opts = new CommandLineOptions($args);
 
         self::assertFalse($opts->ignoreViolationsOnExit());
@@ -393,7 +384,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsIgnoreViolationsOnExitArgument()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-violations-on-exit');
+        $args = [__FILE__, __FILE__, 'text', 'unusedcode', '--ignore-violations-on-exit'];
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->ignoreViolationsOnExit());
@@ -406,7 +397,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliUsageContainsIgnoreViolationsOnExitOption()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertStringContainsString('--ignore-violations-on-exit:', $opts->usage());
@@ -419,7 +410,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliUsageContainsAutoDiscoveredRenderers()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertStringContainsString(
@@ -435,7 +426,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliUsageContainsStrictOption()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertStringContainsString('--strict:', $opts->usage());
@@ -449,7 +440,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsIsStrictReturnsFalseByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertFalse($opts->hasStrict());
@@ -463,12 +454,12 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsStrictArgument()
     {
-        $args = array(__FILE__, '--strict', __FILE__, 'text', 'codesize');
+        $args = [__FILE__, '--strict', __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertTrue($opts->hasStrict());
 
-        $args = array(__FILE__, '--not-strict', __FILE__, 'text', 'codesize');
+        $args = [__FILE__, '--not-strict', __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertFalse($opts->hasStrict());
@@ -479,7 +470,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsMinimumpriorityArgument()
     {
-        $args = array(__FILE__, '--minimumpriority', 42, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, '--minimumpriority', 42, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame(42, $opts->getMinimumPriority());
@@ -490,7 +481,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionsAcceptsMaximumpriorityArgument()
     {
-        $args = array(__FILE__, '--maximumpriority', 42, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, '--maximumpriority', 42, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame(42, $opts->getMaximumPriority());
@@ -501,7 +492,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionGenerateBaselineFalseByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
         static::assertSame(BaselineMode::NONE, $opts->generateBaseline());
     }
@@ -511,7 +502,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionVerbosityNormal()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
         static::assertSame(OutputInterface::VERBOSITY_NORMAL, $opts->getVerbosity());
     }
@@ -521,7 +512,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionVerbosityVerbose()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-v');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '-v'];
         $opts = new CommandLineOptions($args);
         static::assertSame(OutputInterface::VERBOSITY_VERBOSE, $opts->getVerbosity());
     }
@@ -531,7 +522,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionVerbosityVeryVerbose()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-vv');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '-vv'];
         $opts = new CommandLineOptions($args);
         static::assertSame(OutputInterface::VERBOSITY_VERY_VERBOSE, $opts->getVerbosity());
     }
@@ -541,7 +532,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionVerbosityDebug()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '-vvv');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '-vvv'];
         $opts = new CommandLineOptions($args);
         static::assertSame(OutputInterface::VERBOSITY_DEBUG, $opts->getVerbosity());
     }
@@ -551,7 +542,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionGenerateBaselineShouldBeSet()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline'];
         $opts = new CommandLineOptions($args);
         static::assertSame(BaselineMode::GENERATE, $opts->generateBaseline());
     }
@@ -561,7 +552,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionUpdateBaselineShouldBeSet()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--update-baseline');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--update-baseline'];
         $opts = new CommandLineOptions($args);
         static::assertSame(BaselineMode::UPDATE, $opts->generateBaseline());
     }
@@ -571,7 +562,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionBaselineFileShouldBeNullByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
         static::assertNull($opts->baselineFile());
     }
@@ -581,7 +572,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionBaselineFileShouldBeWithFilename()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--baseline-file', 'foobar.txt');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--baseline-file', 'foobar.txt'];
         $opts = new CommandLineOptions($args);
         static::assertSame('foobar.txt', $opts->baselineFile());
     }
@@ -591,7 +582,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testGetMinimumPriorityReturnsLowestValueByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame(Rule::LOWEST_PRIORITY, $opts->getMinimumPriority());
@@ -602,7 +593,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testGetCoverageReportReturnsNullByDefault()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertNull($opts->getCoverageReport());
@@ -614,14 +605,14 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testGetCoverageReportWithCliOption()
     {
         $opts = new CommandLineOptions(
-            array(
+            [
                 __FILE__,
                 __FILE__,
                 'text',
                 'codesize',
                 '--coverage',
                 __METHOD__,
-            )
+            ]
         );
 
         self::assertSame(__METHOD__, $opts->getCoverageReport());
@@ -633,19 +624,19 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testGetCacheWithCliOption()
     {
         $opts = new CommandLineOptions(
-            array(
+            [
                 __FILE__,
                 __FILE__,
                 'text',
                 'codesize',
-            )
+            ]
         );
 
         self::assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
         self::assertFalse($opts->isCacheEnabled());
 
         $opts = new CommandLineOptions(
-            array(
+            [
                 __FILE__,
                 __FILE__,
                 'text',
@@ -653,14 +644,14 @@ class CommandLineOptionsTest extends AbstractTestCase
                 '--cache',
                 '--cache-strategy',
                 ResultCacheStrategy::TIMESTAMP,
-            )
+            ]
         );
 
         self::assertSame(ResultCacheStrategy::TIMESTAMP, $opts->cacheStrategy());
         self::assertTrue($opts->isCacheEnabled());
 
         $opts = new CommandLineOptions(
-            array(
+            [
                 __FILE__,
                 __FILE__,
                 'text',
@@ -670,7 +661,7 @@ class CommandLineOptionsTest extends AbstractTestCase
                 ResultCacheStrategy::CONTENT,
                 '--cache-file',
                 'abc',
-            )
+            ]
         );
 
         self::assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
@@ -683,16 +674,16 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testExcludeOption()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--ignore', 'foo/bar', '--error-file', 'abc');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--ignore', 'foo/bar', '--error-file', 'abc'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('abc', $opts->getErrorFile());
         self::assertSame('foo/bar', $opts->getIgnore());
-        self::assertSame(array(
+        self::assertSame([
             'The --ignore option is deprecated, please use --exclude instead.',
-        ), $opts->getDeprecations());
+        ], $opts->getDeprecations());
 
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--exclude', 'bar/biz');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--exclude', 'bar/biz'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame('bar/biz', $opts->getIgnore());
@@ -706,7 +697,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCreateRenderer($reportFormat, $expectedClass)
     {
-        $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
+        $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
 
         self::assertInstanceOf($expectedClass, $opts->createRenderer($reportFormat));
@@ -740,7 +731,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCreateRendererThrowsException($reportFormat)
     {
-        $args = array(__FILE__, __FILE__, $reportFormat, 'codesize');
+        $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
         $opts->createRenderer();
     }
@@ -761,26 +752,26 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result)
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), '42');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), '42'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame(
-            array(
+            [
                 sprintf(
                     'The --%s option is deprecated, please use --%s instead.',
                     $deprecatedName,
                     $newName
                 ),
-            ),
+            ],
             $opts->getDeprecations()
         );
         $result($opts);
 
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $newName), '42');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $newName), '42'];
         $opts = new CommandLineOptions($args);
 
         self::assertSame(
-            array(),
+            [],
             $opts->getDeprecations()
         );
         $result($opts);
@@ -806,7 +797,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testGetReportFiles(array $options, array $expected)
     {
-        $args = array_merge(array(__FILE__, __FILE__, 'text', 'codesize'), $options);
+        $args = array_merge([__FILE__, __FILE__, 'text', 'codesize'], $options);
         $opts = new CommandLineOptions($args);
 
         self::assertEquals($expected, $opts->getReportFiles());
@@ -817,7 +808,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testCliOptionExtraLineInExcerptShouldBeWithNumber()
     {
-        $args = array(__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5');
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5'];
         $opts = new CommandLineOptions($args);
         static::assertSame(5, $opts->extraLineInExcerpt());
     }

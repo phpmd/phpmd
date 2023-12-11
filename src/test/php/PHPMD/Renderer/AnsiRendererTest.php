@@ -36,15 +36,15 @@ class AnsiRendererTest extends AbstractTestCase
     {
         $writer = new WriterStub();
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
             $this->getRuleViolationMock('/foo.php', 2),
             $this->getRuleViolationMock('/foo.php', 3),
-        );
+        ];
 
-        $errors = array(
+        $errors = [
             $this->getErrorMock(),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
@@ -70,7 +70,7 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $expectedChunks = array(
+        $expectedChunks = [
             PHP_EOL . "FILE: /bar.php" . PHP_EOL . "--------------" . PHP_EOL,
             " 1 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
             PHP_EOL,
@@ -81,7 +81,7 @@ class AnsiRendererTest extends AbstractTestCase
             (version_compare(PHP_VERSION, '5.4.0-dev', '<') ? '--' : '') . PHP_EOL,
             "Error in file \"/foo/baz.php\"" . PHP_EOL,
             PHP_EOL . "Found 3 violations and 1 error in 200ms" . PHP_EOL,
-        );
+        ];
 
         foreach ($writer->getChunks() as $i => $chunk) {
             $this->assertEquals(
@@ -104,7 +104,7 @@ class AnsiRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->atLeastOnce())
             ->method('isEmpty')
             ->will($this->returnValue(true));
@@ -113,7 +113,7 @@ class AnsiRendererTest extends AbstractTestCase
             ->will($this->returnValue(false));
         $report->expects($this->atLeastOnce())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->once())
             ->method('getElapsedTimeInMillis')
             ->will($this->returnValue(200));
@@ -125,10 +125,10 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $expectedChunks = array(
+        $expectedChunks = [
             PHP_EOL . "Found 0 violations and 0 errors in 200ms" . PHP_EOL,
             PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL,
-        );
+        ];
 
         foreach ($writer->getChunks() as $i => $chunk) {
             $this->assertEquals(

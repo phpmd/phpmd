@@ -40,12 +40,12 @@ class NumberOfChildren extends AbstractRule implements ClassAware
         if ($nocc >= $threshold) {
             $this->addViolation(
                 $node,
-                array(
+                [
                     $node->getType(),
                     $node->getName(),
                     $nocc,
                     $threshold,
-                )
+                ]
             );
         }
     }

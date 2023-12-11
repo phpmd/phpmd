@@ -17,8 +17,8 @@
 
 function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
 {
-    return array(
+    return [
         'foo' => 42,
         'bar' => 43,
-    );
+    ];
 }

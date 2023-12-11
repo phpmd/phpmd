@@ -17,7 +17,7 @@
 
 class testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex
 {
-    private static $staticAttributes = array();
+    private static $staticAttributes = [];
 
     public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex(array $declaredClasses)
     {

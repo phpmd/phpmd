@@ -18,17 +18,17 @@ class ResultCacheKeyTest extends AbstractTestCase
         $key      = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
-        $expected = array(
+        $expected = [
             'strict'       => true,
             'baselineHash' => 'baselineHash',
-            'rules'        => array('rule A' => 'hash1'),
-            'composer'     => array('composer.json' => 'hash2'),
+            'rules'        => ['rule A' => 'hash1'],
+            'composer'     => ['composer.json' => 'hash2'],
             'phpVersion'   => 12345
-        );
+        ];
 
         static::assertSame($expected, $key->toArray());
     }
@@ -41,15 +41,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
         $keyB = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
 
@@ -65,15 +65,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
         $keyB = new ResultCacheKey(
             false,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
 
@@ -89,15 +89,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
         $keyB = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash2'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash2'],
+            ['composer.json' => 'hash2'],
             12345
         );
 
@@ -113,15 +113,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash1'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash1'],
             12345
         );
         $keyB = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
 
@@ -137,15 +137,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
         $keyB = new ResultCacheKey(
             true,
             'baselineHash',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             54321
         );
 
@@ -161,15 +161,15 @@ class ResultCacheKeyTest extends AbstractTestCase
         $keyA = new ResultCacheKey(
             true,
             'baselineHashA',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
         $keyB = new ResultCacheKey(
             true,
             'baselineHashB',
-            array('rule A' => 'hash1'),
-            array('composer.json' => 'hash2'),
+            ['rule A' => 'hash1'],
+            ['composer.json' => 'hash2'],
             12345
         );
 

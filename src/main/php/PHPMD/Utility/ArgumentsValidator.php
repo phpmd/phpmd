@@ -43,7 +43,7 @@ class ArgumentsValidator
             return;
         }
 
-        $options = array_diff($this->originalArguments, $this->arguments, array('--'));
+        $options = array_diff($this->originalArguments, $this->arguments, ['--']);
 
         throw new InvalidArgumentException(
             'Unknown option ' . $value . '.' . PHP_EOL .

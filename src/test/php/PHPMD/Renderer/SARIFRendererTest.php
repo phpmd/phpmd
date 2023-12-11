@@ -46,13 +46,13 @@ class SARIFRendererTest extends AbstractTestCase
         $complexRuleViolationMock = $this->getRuleViolationMock(getcwd() . '/src/foobar.php', 23, 42, $rule);
         $complexRuleViolationMock
             ->method('getArgs')
-            ->willReturn(array(123, 3.2, 'awesomeFunction()'));
+            ->willReturn([123, 3.2, 'awesomeFunction()']);
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
             $complexRuleViolationMock,
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -60,7 +60,7 @@ class SARIFRendererTest extends AbstractTestCase
             ->will($this->returnValue(new \ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -90,17 +90,17 @@ class SARIFRendererTest extends AbstractTestCase
     {
         $writer = new WriterStub();
 
-        $processingErrors = array(
+        $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "' . static::createFileUri('foobar.php') . '".'),
             new ProcessingError('Cannot read file "/tmp/foo.php". Permission denied.'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));
@@ -111,10 +111,10 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
-        $data = strtr($writer->getData(), array(
+        $data = strtr($writer->getData(), [
             substr(json_encode(realpath(__DIR__ . '/../../../resources/files')), 1, -1) => '#{rootDirectory}',
             'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
-        ));
+        ]);
         $actual = json_decode($data, true);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';

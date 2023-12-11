@@ -38,11 +38,11 @@ class GitHubRendererTest extends AbstractTestCase
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
             $this->getRuleViolationMock('/foo.php', 2),
             $this->getRuleViolationMock('/foo.php', 3),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -50,7 +50,7 @@ class GitHubRendererTest extends AbstractTestCase
             ->will($this->returnValue(new \ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
 
         $renderer = new GitHubRenderer();
         $renderer->setWriter($writer);
@@ -77,16 +77,16 @@ class GitHubRendererTest extends AbstractTestCase
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $errors = array(
+        $errors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "/tmp/baz.php".'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($errors)));

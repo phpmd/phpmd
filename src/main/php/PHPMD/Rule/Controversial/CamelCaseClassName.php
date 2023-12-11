@@ -44,9 +44,9 @@ class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAw
         if (!preg_match('/^[A-Z][a-zA-Z0-9]*$/', $node->getName())) {
             $this->addViolation(
                 $node,
-                array(
+                [
                     $node->getName(),
-                )
+                ]
             );
         }
     }

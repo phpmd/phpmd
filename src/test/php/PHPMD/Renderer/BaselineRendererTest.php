@@ -20,10 +20,10 @@ class BaselineRendererTest extends AbstractTestCase
     public function testRenderReport()
     {
         $writer     = new WriterStub();
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/src/php/bar.php'),
             $this->getRuleViolationMock('/src/php/foo.php'),
-        );
+        ];
 
         /** @var Report|MockObject $report */
         $report = $this->getReportWithNoViolation();
@@ -56,7 +56,7 @@ class BaselineRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
-            ->willReturn(new ArrayIterator(array($violationMock)));
+            ->willReturn(new ArrayIterator([$violationMock]));
 
         $renderer = new BaselineRenderer('/src');
         $renderer->setWriter($writer);
@@ -84,7 +84,7 @@ class BaselineRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
-            ->willReturn(new ArrayIterator(array($violationMock, $violationMock)));
+            ->willReturn(new ArrayIterator([$violationMock, $violationMock]));
 
         $renderer = new BaselineRenderer('/src');
         $renderer->setWriter($writer);
@@ -107,7 +107,7 @@ class BaselineRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
-            ->willReturn(new ArrayIterator(array()));
+            ->willReturn(new ArrayIterator([]));
 
         /** @var Report|MockObject $report */
         $renderer = new BaselineRenderer('/src');

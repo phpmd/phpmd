@@ -10,7 +10,7 @@ if (file_exists($input) === false) {
     exit(1);
 }
 
-$sets = array();
+$sets = [];
 
 $files = glob($input . '/src/main/resources/rulesets/*.xml');
 sort($files);
@@ -42,20 +42,20 @@ foreach ($files as $file) {
               '        <path>' . $name . '.rst</path>' . PHP_EOL .
               '    </site>' . PHP_EOL;
 
-    $rules = array();
+    $rules = [];
     foreach ($sxml->rule as $rule) {
-        $rules[] = array(
+        $rules[] = [
             'name'  =>  normalize($rule['name']),
             'desc'  =>  normalize($rule->description),
             'href'  =>  $name . '.html#' . strtolower($rule['name']),
-        );
+        ];
     }
 
-    $sets[] = array(
+    $sets[] = [
         'name'   =>  normalize($sxml['name']),
         'desc'   =>  normalize($sxml->description),
         'rules'  =>  $rules,
-    );
+    ];
 }
 
 $index .= '</index>';

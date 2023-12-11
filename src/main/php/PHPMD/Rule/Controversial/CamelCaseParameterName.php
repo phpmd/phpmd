@@ -43,9 +43,9 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
             if (!$this->isValid($parameter->getName())) {
                 $this->addViolation(
                     $node,
-                    array(
+                    [
                         $parameter->getName(),
-                    )
+                    ]
                 );
             }
         }

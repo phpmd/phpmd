@@ -40,7 +40,7 @@ class MethodNodeTest extends AbstractTestCase
     {
         $method = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\\Source\\AST\\ASTMethod')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $method->expects($this->once())
             ->method('getStartLine');

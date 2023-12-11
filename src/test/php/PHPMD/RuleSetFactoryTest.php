@@ -44,7 +44,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        $this->assertContains('The Code Size Ruleset', $ruleSet->getDescription());
+        $this->assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     /**
@@ -265,8 +265,8 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset2.xml');
 
-        $actual = array();
-        $expected = array('RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet');
+        $actual = [];
+        $expected = ['RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet'];
 
         foreach ($ruleSets[0]->getRules() as $rule) {
             $actual[] = $rule->getName();
@@ -351,10 +351,10 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $excludes = $factory->getIgnorePattern('exclude-pattern');
 
-        $expected = array(
+        $expected = [
             '*sourceExcluded/*.php',
             '*sourceExcluded\*.php',
-        );
+        ];
 
         $this->assertEquals($expected, $excludes);
     }
@@ -388,7 +388,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('set1');
 
         $rule = $ruleSets[0]->getRules()->current();
-        $this->assertEquals(array(__FUNCTION__), $rule->getExamples());
+        $this->assertEquals([__FUNCTION__], $rule->getExamples());
     }
 
     /**
@@ -404,7 +404,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('set2');
 
         $rule = $ruleSets[0]->getRules()->current();
-        $this->assertEquals(array(__FUNCTION__ . 'One', __FUNCTION__ . 'Two'), $rule->getExamples());
+        $this->assertEquals([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
     }
 
     /**
@@ -562,12 +562,9 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
     {
-        $factory = new RuleSetFactory();
+        self::expectExceptionObject(new RuleSetNotFoundException('foo-bar-ruleset-23'));
 
-        $this->setExpectedException(
-            'PHPMD\\RuleSetNotFoundException',
-            'Cannot find specified rule-set "foo-bar-ruleset-23".'
-        );
+        $factory = new RuleSetFactory();
 
         $factory->createRuleSets('foo-bar-ruleset-23');
     }
@@ -581,13 +578,12 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
+        self::expectExceptionObject(new RuleClassFileNotFoundException(
+            'PHPMD\\Stubs\\ClassFileNotFoundRule',
+        ));
+
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
         $factory = new RuleSetFactory();
-
-        $this->setExpectedException(
-            'PHPMD\\RuleClassFileNotFoundException',
-            'Cannot load source file for class: PHPMD\\Stubs\\ClassFileNotFoundRule'
-        );
 
         $factory->createRuleSets($fileName);
     }
@@ -601,13 +597,11 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
+        self::expectExceptionObject(new RuleClassNotFoundException(
+            'PHPMD\\Stubs\\ClassNotFoundRule',
+        ));
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
-
-        $this->setExpectedException(
-            'PHPMD\\RuleClassNotFoundException',
-            'Cannot find rule class: PHPMD\\Stubs\\ClassNotFoundRule'
-        );
 
         $factory->createRuleSets($fileName);
     }
@@ -643,7 +637,7 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
+        $this->assertTrue($ruleSets[0]->isStrict());
     }
 
     /**
@@ -697,10 +691,10 @@ class RuleSetFactoryTest extends AbstractTestCase
         foreach ($this->getPathsForFileAccessTest() as $path) {
             try {
                 $this->assertEquals(
-                    array(
+                    [
                         '*sourceExcluded/*.php',
                         '*sourceExcluded\*.php',
-                    ),
+                    ],
                     $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
                 );
             } catch (RuleSetNotFoundException $e) {
@@ -754,10 +748,10 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     private function createRuleSetsFromAbsoluteFiles($file)
     {
-        $files = (1 === func_num_args() ? array($file) : func_get_args());
-        $files = array_map(array(__CLASS__, 'createFileUri'), $files);
+        $files = (1 === func_num_args() ? [$file] : func_get_args());
+        $files = array_map([__CLASS__, 'createFileUri'], $files);
 
-        return call_user_func_array(array($this, 'createRuleSetsFromFiles'), $files);
+        return call_user_func_array([$this, 'createRuleSetsFromFiles'], $files);
     }
 
     /**
@@ -786,38 +780,38 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function getPathsForFileAccessTest()
     {
         $fileContent = file_get_contents(__DIR__ . '/../../resources/files/rulesets/exclude-pattern.xml');
-        $structure = array(
-            'dir1' => array(
-                self::DIR_UNDER_TESTS => array(), // directory - skipped
-                'foo' => array(), // directory, criteria do not apply
-            ),
-            'dir2' => array(
-                self::DIR_UNDER_TESTS => array(), // directory, wrong permissions
-            ),
-            'dir3' => array(
-                self::DIR_UNDER_TESTS => array(), // directory, wrong owner and group
-            ),
-            'dirÅ' => array( // check UTF-8 characters handling
-                'foo' => array(
+        $structure = [
+            'dir1' => [
+                self::DIR_UNDER_TESTS => [], // directory - skipped
+                'foo' => [], // directory, criteria do not apply
+            ],
+            'dir2' => [
+                self::DIR_UNDER_TESTS => [], // directory, wrong permissions
+            ],
+            'dir3' => [
+                self::DIR_UNDER_TESTS => [], // directory, wrong owner and group
+            ],
+            'dirÅ' => [ // check UTF-8 characters handling
+                'foo' => [
                     self::DIR_UNDER_TESTS => $fileContent, // wrong permissions
-                ),
-                'bar' => array(
+                ],
+                'bar' => [
                     self::DIR_UNDER_TESTS => $fileContent, // OK
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
         $root = vfsStream::setup('root', null, $structure);
         $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(000);
         $root->getChild('dir3/' . self::DIR_UNDER_TESTS)->chown(vfsStream::OWNER_ROOT)->chgrp(vfsStream::GROUP_ROOT);
         $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(000);
 
-        return array(
+        return [
             $root->url(),
             $root->url() . '/dir1/',
             $root->url() . '/dir2/',
             $root->url() . '/dir3/',
             $root->url() . '/dirÅ/foo/',
             $root->url() . '/dirÅ/bar/',
-        );
+        ];
     }
 }

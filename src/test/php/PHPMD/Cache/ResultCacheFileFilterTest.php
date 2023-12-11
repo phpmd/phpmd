@@ -57,7 +57,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(false);
-        $this->state->expects(self::once())->method('getViolations')->willReturn(array('violations'));
+        $this->state->expects(self::once())->method('getViolations')->willReturn(['violations']);
 
         static::assertFalse($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();

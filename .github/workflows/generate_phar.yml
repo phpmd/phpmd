@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ '**' ]
   release:
-    types:
-      - created
+    types: [ 'created', 'published' ]
 
 jobs:
   php-tests:
@@ -18,8 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.0]
-        dependency-version: [prefer-stable]
+        php: [ '8.0' ]
+        dependency-version: [ 'prefer-stable' ]
 
     name: Release phar
 

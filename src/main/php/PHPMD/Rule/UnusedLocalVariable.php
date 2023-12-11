@@ -32,7 +32,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @var array(string)
      */
-    protected $images = array();
+    protected $images = [];
 
     /**
      * This method checks that all local variables within the given function or
@@ -43,7 +43,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     public function apply(AbstractNode $node)
     {
-        $this->images = array();
+        $this->images = [];
 
         /** @var $node AbstractCallableNode */
         $this->collectVariables($node);
@@ -184,7 +184,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     protected function storeImage($imageName, ASTNode $node)
     {
         if (!isset($this->images[$imageName])) {
-            $this->images[$imageName] = array();
+            $this->images[$imageName] = [];
         }
 
         $this->images[$imageName][] = $node;
@@ -201,7 +201,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $variable = '$' . trim($node->getImage(), '\'"');
 
         if (!isset($this->images[$variable])) {
-            $this->images[$variable] = array();
+            $this->images[$variable] = [];
         }
 
         $this->images[$variable][] = $node;
@@ -236,7 +236,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             return;
         }
 
-        $this->addViolation($node, array($image));
+        $this->addViolation($node, [$image]);
     }
 
     /**

@@ -56,14 +56,14 @@ class CommandTest extends AbstractTestCase
     {
         $args = array_filter(
             array_merge(
-                array(
+                [
                     __FILE__,
                     self::createFileUri($sourceFile),
                     'html',
                     'codesize',
                     '--reportfile',
                     self::createTempFileUri(),
-                ),
+                ],
                 (array)$options
             )
         );
@@ -143,7 +143,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testWithMultipleReportFiles()
     {
-        $args = array(
+        $args = [
             __FILE__,
             self::createFileUri('source/source_with_npath_violation.php'),
             'xml',
@@ -162,7 +162,7 @@ class CommandTest extends AbstractTestCase
             $checkstyle = self::createTempFileUri(),
             '--reportfile-sarif',
             $sarif = self::createTempFileUri(),
-        );
+        ];
 
         Command::main($args);
 
@@ -178,14 +178,14 @@ class CommandTest extends AbstractTestCase
     {
         $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
         $temp     = self::createTempFileUri();
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $uri,
             'text',
             'naming',
             '--reportfile',
             $temp,
-        ));
+        ]);
 
         $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
         $this->assertSame(
@@ -203,7 +203,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testWithFilter($option, $value)
     {
-        $args = array(
+        $args = [
             __FILE__,
             self::createFileUri('source/'),
             'text',
@@ -212,7 +212,7 @@ class CommandTest extends AbstractTestCase
             self::createTempFileUri(),
             $option,
             $value,
-        );
+        ];
 
         $exitCode = Command::main($args);
         $this->assertEquals(Command::EXIT_SUCCESS, $exitCode);
@@ -230,7 +230,7 @@ class CommandTest extends AbstractTestCase
     {
         $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
         $temp     = self::createTempFileUri();
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $uri,
             'text',
@@ -238,11 +238,11 @@ class CommandTest extends AbstractTestCase
             '--generate-baseline',
             '--baseline-file',
             $temp,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
-        static::assertContains(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
+        static::assertStringContainsString(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
     }
 
     /**
@@ -264,7 +264,7 @@ class CommandTest extends AbstractTestCase
         copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
         copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $sourceTemp,
             'text',
@@ -272,7 +272,7 @@ class CommandTest extends AbstractTestCase
             '--update-baseline',
             '--baseline-file',
             $baselineTemp,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertXmlStringEqualsXmlString(
@@ -285,14 +285,14 @@ class CommandTest extends AbstractTestCase
     {
         $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
-        $exitCode     = Command::main(array(
+        $exitCode     = Command::main([
             __FILE__,
             $sourceFile,
             'text',
             'naming',
             '--baseline-file',
             $baselineFile,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
     }
@@ -304,15 +304,15 @@ class CommandTest extends AbstractTestCase
         $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
                 'naming',
-            )
+            ]
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Can\'t find the custom report class: ',
             StreamFilter::$streamHandle
         );
@@ -323,14 +323,14 @@ class CommandTest extends AbstractTestCase
         $file = tempnam(sys_get_temp_dir(), 'err');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
                 'naming',
                 '--error-file',
                 $file,
-            )
+            ]
         );
 
         $errors = (string)file_get_contents($file);
@@ -341,7 +341,7 @@ class CommandTest extends AbstractTestCase
         $file = tempnam(sys_get_temp_dir(), 'err');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
@@ -349,14 +349,14 @@ class CommandTest extends AbstractTestCase
                 '--error-file',
                 $file,
                 '-vvv',
-            )
+            ]
         );
 
         $errors = (string)file_get_contents($file);
         unlink($file);
 
         $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '`' . preg_quote(str_replace(
                 '/',
                 DIRECTORY_SEPARATOR,
@@ -364,7 +364,7 @@ class CommandTest extends AbstractTestCase
             ), '`') . '\d+' . PHP_EOL . '`',
             $errors
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '`' . preg_quote(str_replace(
                 '/',
                 DIRECTORY_SEPARATOR,
@@ -379,7 +379,7 @@ class CommandTest extends AbstractTestCase
         $file = tempnam(sys_get_temp_dir(), 'err');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 __FILE__,
                 'text',
@@ -388,7 +388,7 @@ class CommandTest extends AbstractTestCase
                 'foobar',
                 '--error-file',
                 $file,
-            )
+            ]
         );
 
         $errors = (string)file_get_contents($file);
@@ -407,10 +407,10 @@ class CommandTest extends AbstractTestCase
         $this->stderrStreamFilter = stream_filter_prepend(STDOUT, 'stderr_stream');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 '--version',
-            )
+            ]
         );
 
         $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');

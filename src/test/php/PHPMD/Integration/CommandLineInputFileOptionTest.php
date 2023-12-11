@@ -68,7 +68,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
         self::changeWorkingDirectory(dirname($inputfile));
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 'text',
                 'unusedcode',
@@ -76,7 +76,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
                 $reportfile,
                 '--inputfile',
                 $inputfile,
-            )
+            ]
         );
 
         return file_get_contents($reportfile);

@@ -19,6 +19,6 @@ class testRuleDoesNotApplyToSuperGlobals
 {
     function testRuleDoesNotApplyToSuperGlobals()
     {
-        return array($_POST, $_GET, $_COOKIE, $GLOBALS, $_SERVER, $_REQUEST, $_SERVER, $_ENV, $_FILES);
+        return [$_POST, $_GET, $_COOKIE, $GLOBALS, $_SERVER, $_REQUEST, $_SERVER, $_ENV, $_FILES];
     }
 }

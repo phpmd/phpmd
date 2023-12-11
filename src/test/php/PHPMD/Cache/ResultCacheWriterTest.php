@@ -30,14 +30,14 @@ class ResultCacheWriterTest extends AbstractTestCase
      */
     public function testWrite()
     {
-        $cacheKey   = new ResultCacheKey(true, 'baseline', array(), array(), 70000);
-        $cacheState = new ResultCacheState($cacheKey, array());
+        $cacheKey   = new ResultCacheKey(true, 'baseline', [], [], 70000);
+        $cacheState = new ResultCacheState($cacheKey, []);
 
         $this->writer->write($cacheState);
         static::assertFileExists($this->filePath);
 
         $data = require $this->filePath;
         static::assertIsArray($data);
-        static::assertSame(array('key', 'state'), array_keys($data));
+        static::assertSame(['key', 'state'], array_keys($data));
     }
 }

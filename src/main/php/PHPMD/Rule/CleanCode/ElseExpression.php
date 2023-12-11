@@ -51,7 +51,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
                 continue;
             }
 
-            $this->addViolation($scope, array($node->getImage()));
+            $this->addViolation($scope, [$node->getImage()]);
         }
     }
 

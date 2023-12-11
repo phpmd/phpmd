@@ -38,11 +38,11 @@ class HTMLRendererTest extends AbstractTestCase
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
             $this->getRuleViolationMock('/foo.php', 2),
             $this->getRuleViolationMock('/foo.php', 3),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -57,7 +57,7 @@ class HTMLRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
             $writer->getData()
         );

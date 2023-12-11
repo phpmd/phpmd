@@ -385,7 +385,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     {
         $class = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\Node\\ClassNode')
-                ->setConstructorArgs(array(new ASTClass('FooBar')))
+                ->setConstructorArgs([new ASTClass('FooBar')])
         );
 
         if ($metric !== null) {
@@ -572,7 +572,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         $ruleViolation = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\RuleViolation')
                 ->setConstructorArgs(
-                    array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello')
+                    [new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello']
                 )
         );
 
@@ -620,8 +620,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
-                ->setConstructorArgs(array(null))
-                ->setMethods(array('getFile', 'getMessage'))
+                ->setConstructorArgs([null])
+                ->onlyMethods(['getFile', 'getMessage'])
         );
 
         $processingError
@@ -657,7 +657,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         return $this->initFunctionOrMethod(
             $this->getMockFromBuilder(
                 $this->getMockBuilder($mockBuilder)
-                    ->setConstructorArgs(array($mock))
+                    ->setConstructorArgs([$mock])
             ),
             $metric,
             $value

@@ -45,14 +45,14 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @var \PHPMD\RuleSet[]
      */
-    private $ruleSets = array();
+    private $ruleSets = [];
 
     /**
      * The metric containing analyzer instances.
      *
      * @var \PDepend\Metrics\AnalyzerNodeAware[]
      */
-    private $analyzers = array();
+    private $analyzers = [];
 
     /**
      * The raw PDepend code nodes.
@@ -161,7 +161,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
             'pdepend.analyzer.npath_complexity',
@@ -173,7 +173,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.class_level',
             'pdepend.analyzer.cohesion',
-        );
+        ];
     }
 
     /**
@@ -305,7 +305,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     private function collectMetrics(AbstractNode $node)
     {
-        $metrics = array();
+        $metrics = [];
 
         $pdepend = $node->getNode();
         foreach ($this->analyzers as $analyzer) {
