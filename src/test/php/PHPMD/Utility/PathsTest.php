@@ -56,10 +56,13 @@ class PathsTest extends AbstractTestCase
 
     /**
      * @covers ::getRealPath
-     * @expectedException RuntimeException
      */
     public function testGetRealPathShouldThrowExceptionOnFailure()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to determine the realpath for: unknown/path',
+        ));
+
         Paths::getRealPath('unknown/path');
     }
 }

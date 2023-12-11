@@ -291,10 +291,13 @@ class CommandLineOptionsTest extends AbstractTestCase
      *
      * @return void
      * @since 1.1.0
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
+        self::expectExceptionObject(new InvalidArgumentException(
+            "Input file 'inputfail.txt' not exists.",
+        ));
+
         $args = ['foo.php', 'text', 'design', '--inputfile', 'inputfail.txt'];
         new CommandLineOptions($args);
     }
@@ -723,14 +726,15 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
-     * @param string $reportFormat
-     * @return void
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp (^Can\'t )
      * @dataProvider dataProviderCreateRendererThrowsException
      */
-    public function testCreateRendererThrowsException($reportFormat)
+    public function testCreateRendererThrowsException(string $reportFormat): void
     {
+        self::expectExceptionObject(new InvalidArgumentException(
+            "Can't",
+            code: 23,
+        ));
+
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
         $opts->createRenderer();

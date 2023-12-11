@@ -17,8 +17,8 @@
 
 namespace PHPMD\Utility;
 
+use InvalidArgumentException;
 use PHPMD\AbstractTestCase;
-use PHPMD\Utility\Strings;
 
 /**
  * Test cases for the Strings utility class.
@@ -114,12 +114,14 @@ class StringsTest extends AbstractTestCase
     /**
      * Tests the splitToList() method with an empty separator
      *
-     * @expectedException \InvalidArgumentException
-     *
      * @return void
      */
     public function testSplitToListEmptySeparatorThrowsException()
     {
+        self::expectExceptionObject(new InvalidArgumentException(
+            "Separator can't be empty string",
+        ));
+
         Strings::splitToList('UnitTest', '');
     }
 

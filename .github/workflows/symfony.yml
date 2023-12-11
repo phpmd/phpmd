@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [ 8.3 ]
-        symfony: [ 2, 3, 4, 5, 6, 7 ]
+        symfony: [ 5, 6, 7 ]
 
     name: Symfony ${{ matrix.symfony }}
 
@@ -56,8 +56,5 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
 
-      - name: Check Symfony version
-        run: php src/test/symfony-version.php
-
       - name: Run test suite
-        run: vendor/bin/phpunit -v
+        run: vendor/bin/phpunit --display-deprecations || vendor/bin/phpunit
