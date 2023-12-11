@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 10 Dec 2023 22:40:21 +0000" />
+    <meta name="date" content="Mon, 11 Dec 2023 08:22:43 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 10 Dec 2023 22:40:21 +0000" />
+    <meta name="DC.date" content="Mon, 11 Dec 2023 08:22:43 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -35,6 +35,22 @@
 <a id="releases"></a>
 <h2>Releases</h2>
 <p>The following releases of PHPMD are available for download</p>
+<a id="phpmd-2-15-0-2023-12-11-"></a>
+<h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.15.0" title="phpmd-2.15.0 release">phpmd-2.15.0</a> (2023/12/11)</h2>
+<ul><li class="dash">Added #1036 [CLI] Allow option and value separated with equal sign</li>
+<li class="dash">Require pdepend/pdepend 2.16.1</li>
+<ul><li class="dash">Support PHP 8.3 pdepend/pdepend#699</li>
+<li class="dash">Support Symfony 7 pdepend/pdepend#692</li>
+<li class="dash">Fixed pdepend/pdepend#691 Float parsing for number starting with 0.</li>
+<li class="dash">Fixed pdepend/pdepend#689 Handle conversion to/detection of UTF-8 encoding using either mbstring PHP extension or the polyfill provided by Symfony</li>
+<li class="dash">Fixed pdepend/pdepend#687 Parsing the correct comment for method doc-block (Allow correct SuppressWarnings annotation handling on PHPMD) (https://github.com/phpmd/phpmd/issues/914)</li>
+<li class="dash">Fixed pdepend/pdepend#694 Handle yield termination depending on context (https://github.com/phpmd/phpmd/issues/804)</li>
+</ul>
+<li class="dash">Fixed #1044 strict option on applyOnClassMethods</li>
+<li class="dash">Documented #1041 Mention public key used for signing the Phars</li>
+<li class="dash">Documented #1042 Document installation with PHIVE</li>
+</ul>
+
 <a id="phpmd-2-14-1-2023-09-28-"></a>
 <h2><a href="https://github.com/phpmd/phpmd/releases/tag/2.14.1" title="phpmd-2.14.1 release">phpmd-2.14.1</a> (2023/09/28)</h2>
 <ul><li class="dash">Require pdepend/pdepend 2.15.1</li>
