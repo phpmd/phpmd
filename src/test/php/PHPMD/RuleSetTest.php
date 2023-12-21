@@ -30,8 +30,9 @@ class RuleSetTest extends AbstractTest
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
      *
      * @return void
+     * @expectedException \PHPMD\RuleByNameNotFoundException
      */
-    public function testGetRuleByNameReturnsNullWhenNoMatchingRuleExists()
+    public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists()
     {
         $ruleSet = $this->createRuleSetFixture();
         $this->assertNull($ruleSet->getRuleByName(__FUNCTION__));
