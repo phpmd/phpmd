@@ -22,7 +22,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 
 /**
- * This rule will detect classes that are to deep in the inheritance tree.
+ * This rule will detect classes that are too deep in the inheritance tree.
  */
 class DepthOfInheritance extends AbstractRule implements ClassAware
 {
@@ -38,7 +38,7 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
         try {
             $threshold = $this->getIntProperty('maximum');
             $comparison = 1;
-        } catch (\OutOfBoundsException $e) {
+        } catch (\OutOfBoundsException) {
             $threshold = $this->getIntProperty('minimum');
             $comparison = 2;
         }

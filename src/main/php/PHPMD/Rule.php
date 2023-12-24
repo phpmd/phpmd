@@ -36,167 +36,114 @@ interface Rule
 
     /**
      * Returns the name for this rule instance.
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Sets the name for this rule instance.
-     *
-     * @param string $name
-     * @return void
      */
-    public function setName($name);
+    public function setName(string $name): void;
 
     /**
      * Returns the version since when this rule is available or <b>null</b>.
-     *
-     * @return string
      */
-    public function getSince();
+    public function getSince(): ?string;
 
     /**
      * Sets the version since when this rule is available.
-     *
-     * @param string $since
-     * @return void
      */
-    public function setSince($since);
+    public function setSince(?string $since): void;
 
     /**
      * Returns the violation message text for this rule.
-     *
-     * @return string
      */
-    public function getMessage();
+    public function getMessage(): string;
 
     /**
      * Sets the violation message text for this rule.
-     *
-     * @param string $message
-     * @return void
      */
-    public function setMessage($message);
+    public function setMessage(string $message): void;
 
     /**
      * Returns an url will external information for this rule.
-     *
-     * @return string
      */
-    public function getExternalInfoUrl();
+    public function getExternalInfoUrl(): string;
 
     /**
      * Sets an url will external information for this rule.
-     *
-     * @param string $externalInfoUrl
-     * @return void
      */
-    public function setExternalInfoUrl($externalInfoUrl);
+    public function setExternalInfoUrl(string $externalInfoUrl): void;
 
     /**
      * Returns the description text for this rule instance.
-     *
-     * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * Sets the description text for this rule instance.
-     *
-     * @param string $description
-     * @return void
      */
-    public function setDescription($description);
+    public function setDescription(string $description): void;
 
     /**
      * Returns a list of examples for this rule.
-     *
-     * @return array
      */
-    public function getExamples();
+    public function getExamples(): array;
 
     /**
      * Adds a code example for this rule.
-     *
-     * @param string $example
-     * @return void
      */
-    public function addExample($example);
+    public function addExample(string $example): void;
 
     /**
      * Returns the priority of this rule.
-     *
-     * @return integer
      */
-    public function getPriority();
+    public function getPriority(): int;
 
     /**
      * Set the priority of this rule.
-     *
-     * @param integer $priority
-     * @return void
      */
-    public function setPriority($priority);
+    public function setPriority(int $priority): void;
 
     /**
      * Returns the name of the parent rule-set instance.
-     *
-     * @return string
      */
-    public function getRuleSetName();
+    public function getRuleSetName(): string;
 
     /**
      * Sets the name of the parent rule set instance.
-     *
-     * @param string $ruleSetName
-     * @return void
      */
-    public function setRuleSetName($ruleSetName);
+    public function setRuleSetName(string $ruleSetName): void;
 
     /**
      * Returns the violation report for this rule.
-     *
-     * @return Report
      */
-    public function getReport();
+    public function getReport(): ?Report;
 
     /**
      * Sets the violation report for this rule.
-     *
-     * @param Report $report
-     * @return void
      */
-    public function setReport(Report $report);
+    public function setReport(?Report $report): void;
 
     /**
      * Adds a configuration property to this rule instance.
-     *
-     * @param string $name
-     * @param string $value
-     * @return void
      */
-    public function addProperty($name, $value);
+    public function addProperty(string $name, string $value): void;
 
     /**
      * Returns the value of a configured property as a boolean or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @param string $name
-     * @return boolean
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
      */
-    public function getBooleanProperty($name);
+    public function getBooleanProperty(string $name): bool;
 
     /**
      * Returns the value of a configured property as an integer or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @param string $name
-     * @return integer
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
      */
-    public function getIntProperty($name);
+    public function getIntProperty(string $name): int;
 
     /**
      * This method should implement the violation analysis algorithm of concrete

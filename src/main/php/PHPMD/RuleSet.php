@@ -159,7 +159,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Returns the violation report used by the rule-set.
      */
-    public function getReport(): Report
+    public function getReport(): ?Report
     {
         return $this->report;
     }
