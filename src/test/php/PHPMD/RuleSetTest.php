@@ -137,9 +137,35 @@ class RuleSetTest extends AbstractTestCase
         }
 
         static::assertSame([$else], $iteration);
+        // With a node ElseExpression is not aware (since its implements only MethodAware and FunctionAware)
         $ruleSet->apply(new ClassNode(new ASTClass('FooBar')));
 
         static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+
+        // With a node not registered at all
+        $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
+            public function hasSuppressWarningsAnnotationFor(Rule $rule)
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName()
+            {
+                return '';
+            }
+
+            public function getParentName()
+            {
+                return '';
+            }
+
+            public function getNamespaceName()
+            {
+                return '';
+            }
+        });
+
+        $this->assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
         $function = new ASTFunction('fooBar');
         $statement = new ASTIfStatement('if');
@@ -147,6 +173,8 @@ class RuleSetTest extends AbstractTestCase
         $statement->addChild(new ASTScopeStatement());
         $statement->addChild(new ASTScopeStatement());
         $function->addChild($statement);
+
+        // With a node ElseExpression is aware of (thanks to FunctionAware)
         $ruleSet->apply(new FunctionNode($function));
 
         static::assertCount(1, $ruleSet->getReport()->getRuleViolations());

@@ -180,13 +180,13 @@ class RuleSetFactory
      */
     private function parseRuleSetNode(string $fileName): RuleSet
     {
-        $format = preg_match('/\.(?<format>php|yaml)(?:\.dist)?$/i', $fileName, $match)
+        $format = preg_match('/\.(?<format>php|ya?ml)(?:\.dist)?$/i', $fileName, $match)
             ? strtolower($match['format'])
             : 'xml';
 
         return match ($format) {
             'php' => $this->getConfigFromPhpFile($fileName),
-            'yaml' => $this->getConfigFromYamlFile($fileName),
+            'yml', 'yaml' => $this->getConfigFromYamlFile($fileName),
             default => $this->getConfigFromXmlFile($fileName),
         };
     }
@@ -199,9 +199,9 @@ class RuleSetFactory
      * @throws RuleClassNotFoundException
      * @throws RuntimeException
      */
-    private function parseRuleNode(RuleSet $ruleSet, SimpleXMLElement $node): void
+    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement|\ArrayAccess|array $node)
     {
-        $ref = (string) $node['ref'];
+        $ref = (string) ($node['ref'] ?? '');
 
         if ($ref === '') {
             $this->parseSingleRuleNode($ruleSet, $node);
@@ -209,7 +209,7 @@ class RuleSetFactory
             return;
         }
 
-        if (preg_match('/\.(?:xml|yaml|php)$/i', $ref)) {
+        if (preg_match('/\.(?:xml|ya?ml|php)$/i', $ref)) {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;
@@ -224,8 +224,10 @@ class RuleSetFactory
      *
      * @throws RuntimeException
      */
-    private function parseRuleSetReferenceNode(RuleSet $ruleSet, SimpleXMLElement $ruleSetNode): void
-    {
+    private function parseRuleSetReferenceNode(
+        RuleSet $ruleSet,
+        \SimpleXMLElement|\ArrayAccess|array $ruleSetNode,
+    ): void {
         foreach ($this->parseRuleSetReference($ruleSetNode) as $rule) {
             if ($this->isIncluded($rule, $ruleSetNode)) {
                 $ruleSet->addRule($rule);
@@ -239,7 +241,7 @@ class RuleSetFactory
      * @throws RuntimeException
      * @since 0.2.3
      */
-    private function parseRuleSetReference(SimpleXMLElement $ruleSetNode): RuleSet
+    private function parseRuleSetReference(\SimpleXMLElement|\ArrayAccess|array $ruleSetNode): RuleSet
     {
         $ruleSetFactory = new self();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
@@ -254,10 +256,16 @@ class RuleSetFactory
      *
      * @since 0.2.3
      */
-    private function isIncluded(Rule $rule, SimpleXMLElement $ruleSetNode): bool
+    private function isIncluded(Rule $rule, \SimpleXMLElement|\ArrayAccess|array $ruleSetNode): bool
     {
-        foreach ($ruleSetNode->exclude as $exclude) {
-            if ($rule->getName() === (string) $exclude['name']) {
+        $excludes = (is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
+            ?? $ruleSetNode['exclude']
+            ?? [];
+
+        foreach ($excludes as $exclude) {
+            $name = is_array($exclude) ? (string) ($exclude['name'] ?? '') : $exclude;
+
+            if ($rule->getName() === $name) {
                 return false;
             }
         }
@@ -272,7 +280,7 @@ class RuleSetFactory
      * @throws RuleClassFileNotFoundException
      * @throws RuleClassNotFoundException
      */
-    private function parseSingleRuleNode(RuleSet $ruleSet, SimpleXMLElement $ruleNode): void
+    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement|\ArrayAccess|array $ruleNode): void
     {
         $fileName = '';
 
@@ -288,8 +296,9 @@ class RuleSetFactory
             }
         }
 
-        /** @var class-string<Rule> */
-        $className = (string) $ruleNode['class'];
+        $className = (string) ($ruleNode['class']
+            ?? ($fileName === '' ? '' : pathinfo($fileName, PATHINFO_FILENAME))
+        );
 
         if (!is_readable($fileName)) {
             $fileName = strtr($className, '\\', '/') . '.php';
@@ -314,15 +323,13 @@ class RuleSetFactory
         }
 
         $rule = new $className();
-        $rule->setName((string) $ruleNode['name']);
-        $rule->setMessage((string) $ruleNode['message']);
-        $rule->setExternalInfoUrl((string) $ruleNode['externalInfoUrl']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
 
         $rule->setRuleSetName($ruleSet->getName());
 
-        if (isset($ruleNode['since']) && trim($ruleNode['since']) !== '') {
-            $rule->setSince((string) $ruleNode['since']);
-        }
+        $this->withNonEmptyStringAtKey($ruleNode, 'since', [$rule, 'setSince']);
 
         $this->parseRuleProperties($rule, $ruleNode);
 
@@ -341,12 +348,12 @@ class RuleSetFactory
         [
             'file' => $fileName,
             'rule' => $ruleName,
-        ] = preg_match('`^(?<file>.*\.(?:xml|yaml|php))/(?<rule>.*)`i', $ref, $matches)
+        ] = preg_match('`^(?<file>.*\.(?:xml|ya?ml|php))/(?<rule>.*)`i', $ref, $matches)
             ? $matches
             : ['file' => '', 'rule' => $ref];
 
         $ruleSetRef = $fileName === ''
-            ? $this->findFileForRule($ref)
+            ? $this->findFileForRule($ruleName)
             : $this->createSingleRuleSet($this->createRuleSetFileName($fileName));
 
         $rule = $ruleSetRef->getRuleByName($ruleName) ?? throw new RuleNotFoundException($ruleName);
@@ -621,7 +628,7 @@ class RuleSetFactory
         }
 
         foreach (((array)$config['rules'] ?? []) as $rule) {
-            $this->parseRuleReferenceNode($ruleSet, $rule);
+            $this->parseRuleNode($ruleSet, $rule);
         }
     }
 

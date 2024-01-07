@@ -1,11 +1,11 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://json.schemastore.org/phpmd.json",
   "title": "PHPMD Configuration",
   "description": "Define source code location, reporting format, rule-set and options to run PHPMD",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "additionalProperties": false,
     "name": {
       "description": "A name identifier for the set of rules",
       "type": "string"
@@ -17,10 +17,11 @@
     "rules": {
       "description": "List of the rules to be checked with this set",
       "type": "array",
+      "uniqueItems": true,
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
-          "additionalProperties": false,
           "ref": {
             "description": "Reference to another ruleset identified by file (my-rule-sets/my-custom-rules.yml) or a single rule identified by filepath/name (rulesets/cleancode.xml/StaticAccess) or just name (StaticAccess) if it belongs to internal PHPMD rules, if ref is not defined, other properties must be set to describe the rule",
             "type": "string"
@@ -74,6 +75,8 @@
               "exceptions": {
                 "description": "List of names (variable name for rules checking variables, method names for rules checking methods, etc.) that are allowed not to follow the rule, *-wildcard can be used to check against patterns",
                 "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
                 "items": {
                   "type": "string"
                 }
