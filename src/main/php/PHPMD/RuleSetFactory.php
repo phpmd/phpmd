@@ -180,13 +180,14 @@ class RuleSetFactory
      */
     private function parseRuleSetNode(string $fileName): RuleSet
     {
-        $format = preg_match('/\.(?<format>php|ya?ml)(?:\.dist)?$/i', $fileName, $match)
+        $format = preg_match('/\.(?<format>php|json|ya?ml)(?:\.dist)?$/i', $fileName, $match)
             ? strtolower($match['format'])
             : 'xml';
 
         return match ($format) {
             'php' => $this->getConfigFromPhpFile($fileName),
             'yml', 'yaml' => $this->getConfigFromYamlFile($fileName),
+            'json' => $this->getConfigFromJsonFile($fileName),
             default => $this->getConfigFromXmlFile($fileName),
         };
     }
@@ -562,11 +563,7 @@ class RuleSetFactory
      */
     private function getConfigFromPhpFile(string $fileName): RuleSet
     {
-        $config = include $fileName;
-        $ruleSet = $this->initRuleSet($fileName, $config['name'] ?? null);
-        $this->configRuleSetWith($ruleSet, $config);
-
-        return $ruleSet;
+        return $this->getConfigFromArray($fileName, include $fileName);
     }
 
     /**
@@ -574,7 +571,22 @@ class RuleSetFactory
      */
     private function getConfigFromYamlFile(string $fileName): RuleSet
     {
-        $config = Yaml::parseFile($fileName);
+        return $this->getConfigFromArray($fileName, Yaml::parseFile($fileName));
+    }
+
+    /**
+     * Load rule-set config from a .json file.
+     */
+    private function getConfigFromJsonFile(string $fileName): RuleSet
+    {
+        return $this->getConfigFromArray($fileName, json_decode(file_get_contents($fileName)));
+    }
+
+    /**
+     * Load rule-set config from filename and array.
+     */
+    private function getConfigFromArray(string $fileName, array $config): RuleSet
+    {
         $ruleSet = $this->initRuleSet($fileName, $config['name'] ?? null);
         $this->configRuleSetWith($ruleSet, $config);
 
