@@ -264,7 +264,7 @@ class RuleSetFactory
             ?? [];
 
         foreach ($excludes as $exclude) {
-            $name = is_array($exclude) ? (string) ($exclude['name'] ?? '') : $exclude;
+            $name = is_string($exclude) ? $exclude : (string) ($exclude['name'] ?? '');
 
             if ($rule->getName() === $name) {
                 return false;
@@ -635,11 +635,11 @@ class RuleSetFactory
     {
         $ruleSet->setDescription((string)($config['description'] ?? ''));
 
-        foreach (((array)$config['php-includepath'] ?? []) as $value) {
+        foreach ((array)($config['php-includepath'] ?? []) as $value) {
             $this->addIncludePath($ruleSet->getFileName(), (string)$value);
         }
 
-        foreach (((array)$config['rules'] ?? []) as $rule) {
+        foreach ((array)($config['rules'] ?? []) as $rule) {
             $this->parseRuleNode($ruleSet, $rule);
         }
     }

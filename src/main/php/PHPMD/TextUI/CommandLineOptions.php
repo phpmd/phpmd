@@ -780,10 +780,13 @@ class CommandLineOptions
         $files = [
             'phpmd.php',
             'phpmd.yml',
+            'phpmd.yaml',
+            'phpmd.json',
             'phpmd.xml',
         ];
 
         foreach ($files as $file) {
+            // Search for phpmd.yml, .phpmd.yml and phpmd.yml.dist
             foreach ([$file, ".$file", "$file.dist"] as $path) {
                 if (file_exists($path)) {
                     return $path;
