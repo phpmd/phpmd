@@ -363,13 +363,17 @@ class CommandLineOptions
             }
         }
 
-        if (count($arguments) < 3) {
-            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
-        }
+        array_push($arguments, ...match (count($arguments)) {
+            0 => [file_exists('src') ? 'src' : '.', 'text', $this->getDefaultConfig()],
+            1 => ['text', $this->getDefaultConfig()],
+            2 => [$this->getDefaultConfig()],
+            default => [],
+        });
 
         $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
 
-        $this->ruleSets = (string) array_pop($arguments);
+        $ruleSets = (string) array_pop($arguments);
+        $this->ruleSets = $ruleSets === 'all' ? 'codesize,unusedcode,naming,design,controversial' : $ruleSets;
         $validator->validate('ruleset', $this->ruleSets);
 
         $this->reportFormat = array_pop($arguments);
@@ -766,5 +770,28 @@ class CommandLineOptions
         }
 
         return array_shift($args);
+    }
+
+    private function getDefaultConfig(): string
+    {
+        // Files to be used as config automatically
+        // Ordered by priority
+        $files = [
+            'phpmd.php',
+            'phpmd.yml',
+            'phpmd.xml',
+        ];
+
+        foreach ($files as $file) {
+            foreach ([$file, ".$file", "$file.dist"] as $path) {
+                if (file_exists($path)) {
+                    return $path;
+                }
+            }
+        }
+
+        // If there is no file, return "all" to mean all the rules from PHPMD core package
+        // with their default config
+        return 'all';
     }
 }

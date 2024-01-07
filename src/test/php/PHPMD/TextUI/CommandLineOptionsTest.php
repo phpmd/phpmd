@@ -133,7 +133,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = ['foo.php', __FILE__, 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
-        static::assertEquals('text', $opts->getReportFormat());
+        self::assertSame('text', $opts->getReportFormat());
     }
 
     /**
@@ -147,21 +147,31 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = ['foo.php', __FILE__, 'text', 'design'];
         $opts = new CommandLineOptions($args);
 
-        static::assertEquals('design', $opts->getRuleSets());
+        self::assertSame('design', $opts->getRuleSets());
     }
 
     /**
-     * testThrowsExpectedExceptionWhenRequiredArgumentsNotSet
-     *
-     * @throws Throwable
-     * @since 1.1.0
+     * @since 3.0.0
      */
-    public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet(): void
+    public function testArgumentsAreAllOptional(): void
     {
-        self::expectException(InvalidArgumentException::class);
+        $options = new CommandLineOptions([__FILE__, 'app', 'sarif']);
 
-        $args = [__FILE__, 'text', 'design'];
-        new CommandLineOptions($args);
+        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('sarif', $options->getReportFormat());
+        self::assertSame('app', $options->getInputPath());
+
+        $options = new CommandLineOptions([__FILE__, 'app']);
+
+        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('text', $options->getReportFormat());
+        self::assertSame('app', $options->getInputPath());
+
+        $options = new CommandLineOptions([__FILE__]);
+
+        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('text', $options->getReportFormat());
+        self::assertSame('src', $options->getInputPath());
     }
 
     /**
