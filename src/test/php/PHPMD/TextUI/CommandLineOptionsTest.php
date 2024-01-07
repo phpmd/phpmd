@@ -157,19 +157,19 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $options = new CommandLineOptions([__FILE__, 'app', 'sarif']);
 
-        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('cleancode,codesize,controversial,design,naming,unusedcode', $options->getRuleSets());
         self::assertSame('sarif', $options->getReportFormat());
         self::assertSame('app', $options->getInputPath());
 
         $options = new CommandLineOptions([__FILE__, 'app']);
 
-        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('cleancode,codesize,controversial,design,naming,unusedcode', $options->getRuleSets());
         self::assertSame('text', $options->getReportFormat());
         self::assertSame('app', $options->getInputPath());
 
         $options = new CommandLineOptions([__FILE__]);
 
-        self::assertSame('codesize,unusedcode,naming,design,controversial', $options->getRuleSets());
+        self::assertSame('cleancode,codesize,controversial,design,naming,unusedcode', $options->getRuleSets());
         self::assertSame('text', $options->getReportFormat());
         self::assertSame('src', $options->getInputPath());
     }

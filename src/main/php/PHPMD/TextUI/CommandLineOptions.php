@@ -23,6 +23,7 @@ use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
+use PHPMD\InternalRuleSet;
 use PHPMD\Renderer\Option\Color;
 use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\RendererFactory;
@@ -373,7 +374,7 @@ class CommandLineOptions
         $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
 
         $ruleSets = (string) array_pop($arguments);
-        $this->ruleSets = $ruleSets === 'all' ? 'codesize,unusedcode,naming,design,controversial' : $ruleSets;
+        $this->ruleSets = $ruleSets === 'all' ? InternalRuleSet::getNamesConcatenated() : $ruleSets;
         $validator->validate('ruleset', $this->ruleSets);
 
         $this->reportFormat = array_pop($arguments);

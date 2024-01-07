@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://json.schemastore.org/phpmd.json",
+  "title": "PHPMD Configuration",
+  "description": "Define source code location, reporting format, rule-set and options to run PHPMD",
+  "type": "object",
+  "properties": {
+    "additionalProperties": false,
+    "name": {
+      "description": "A name identifier for the set of rules",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description about the rule-set and what it covers",
+      "type": "string"
+    },
+    "rules": {
+      "description": "List of the rules to be checked with this set",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "additionalProperties": false,
+          "ref": {
+            "description": "Reference to another ruleset identified by file (my-rule-sets/my-custom-rules.yml) or a single rule identified by filepath/name (rulesets/cleancode.xml/StaticAccess) or just name (StaticAccess) if it belongs to internal PHPMD rules, if ref is not defined, other properties must be set to describe the rule",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the rule",
+            "type": "string"
+          },
+          "class": {
+            "description": "PHP class running the rule",
+            "type": "string"
+          },
+          "file": {
+            "description": "File where the class is declared",
+            "type": "string"
+          },
+          "since": {
+            "description": "Version number at which the rule has been introduced in the package (package being PHPMD for internal rules)",
+            "type": "string"
+          },
+          "message": {
+            "description": "Message raised for each violation of the rule",
+            "type": "string"
+          },
+          "externalInfoUrl": {
+            "description": "A URL where to read more details about the rule",
+            "type": "string"
+          },
+          "description": {
+            "description": "Describe what the rule checks",
+            "type": "string"
+          },
+          "example": {
+            "description": "A code example of what would raise a violation of the rule",
+            "type": "string"
+          },
+          "priority": {
+            "description": "An integer value ranking the rule from 1 (top-priority) to 5 (lowest priority), when option --minimum-priority and/or --maximum-priority are used, only rules in between priorities will be checked (by default a rule has lowest priority: 5)",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "properties": {
+            "description": "Options specific to the given rules",
+            "type": "object",
+            "properties": {
+              "threshold": {
+                "description": "Any rule checking a numeric limit (minimum or maximum), length, count can have its threshold customized: the defined value is the latest value to be allowed before raising the violation (so for instance if a rule checks name of a thing is too short: threshold=3 means [name-length >= 3] is allowed, [name-length < 3] is forbidden; for a rule checking name is too long, it's the opposite: threshold=3 means [name-length <= 3] is allowed, [name-length > 3] is forbidden)",
+                "type": "number"
+              },
+              "exceptions": {
+                "description": "List of names (variable name for rules checking variables, method names for rules checking methods, etc.) that are allowed not to follow the rule, *-wildcard can be used to check against patterns",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "php-includepath": {
+      "description": "Add PHP include paths to be used for auto-load and PHP resource loading",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
