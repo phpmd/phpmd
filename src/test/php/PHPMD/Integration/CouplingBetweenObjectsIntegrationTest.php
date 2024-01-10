@@ -48,7 +48,7 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTest
             )
         );
 
-        self::assertContains(
+        self::assertStringContainsString(
             'has a coupling between objects value of 14. ' .
             'Consider to reduce the number of dependencies under 13.',
             file_get_contents($file)
