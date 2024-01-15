@@ -48,7 +48,7 @@ class JSONRenderer extends AbstractRenderer
     protected function initReportData()
     {
         $data = array(
-            'version' => PHPMD::VERSION,
+            'version' => self::getVersion(),
             'package' => 'phpmd',
             'timestamp' => date('c'),
         );

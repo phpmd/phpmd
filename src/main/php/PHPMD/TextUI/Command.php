@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use Exception;
+use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
@@ -185,15 +186,7 @@ class Command
      */
     private function getVersion()
     {
-        $build = __DIR__ . '/../../../../../build.properties';
-
-        $version = '@package_version@';
-        if (file_exists($build)) {
-            $data    = @parse_ini_file($build);
-            $version = $data['project.version'];
-        }
-
-        return $version;
+        return AbstractRenderer::getVersion();
     }
 
     /**

@@ -39,7 +39,8 @@
     "php": ">=5.3.9",
     "ext-xml": "*",
     "composer/xdebug-handler": "^1.0 || ^2.0 || ^3.0",
-    "pdepend/pdepend": "^2.16.1"
+    "pdepend/pdepend": "^2.16.1",
+    "sebastian/version": "^1.0 || ^2.0 || ^3.0 || ^4.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.9.2 || ^3.7.2",

@@ -45,7 +45,7 @@ class SARIFRenderer extends JSONRenderer
                         'driver' => array(
                             'name' => 'PHPMD',
                             'informationUri' => 'https://phpmd.org',
-                            'version' => PHPMD::VERSION,
+                            'version' => self::getVersion(),
                             'rules' => array(),
                         ),
                     ),
@@ -202,7 +202,7 @@ class SARIFRenderer extends JSONRenderer
                 'uriBaseId' => 'WORKINGDIR',
             );
         }
-        
+
         // absolute path with protocol
         return array(
             'uri' => static::pathToUri($path),
