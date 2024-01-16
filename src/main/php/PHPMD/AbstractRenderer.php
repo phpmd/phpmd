@@ -100,7 +100,8 @@ abstract class AbstractRenderer
             }
         }
         if ('@package_version@' == $version) {
-            // on previous attempt, if "build.properties" file does not exist or did not define "project.version" property
+            // on previous attempt,
+            // if "build.properties" file does not exist or did not define "project.version" property
             // then fallback to git latest tag
 
             $gitVersion = new Version('2.x-dev', __DIR__ . '/../../../../');
