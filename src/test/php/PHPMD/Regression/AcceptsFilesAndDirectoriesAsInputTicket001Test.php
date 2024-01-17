@@ -19,6 +19,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
 use PHPMD\Renderer\XMLRenderer;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Stubs\WriterStub;
 
@@ -41,15 +42,16 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $renderer = new XMLRenderer();
         $renderer->setWriter(new WriterStub());
 
+        $ruleSetFactory = new RuleSetFactory();
+
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            ($uri = self::createFileUri('source')),
-            'pmd-refset1',
+            self::createFileUri('source'),
+            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             array($renderer),
-            new RuleSetFactory()
+            $ruleSetFactory->createRuleSets('pmd-refset1'),
+            new Report()
         );
-
-        $this->assertSame($uri, $phpmd->getInput());
     }
 
     /**
@@ -64,14 +66,15 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $renderer = new XMLRenderer();
         $renderer->setWriter(new WriterStub());
 
+        $ruleSetFactory = new RuleSetFactory();
+
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            ($uri = self::createFileUri('source/FooBar.php')),
-            'pmd-refset1',
+            self::createFileUri('source/FooBar.php'),
+            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             array($renderer),
-            new RuleSetFactory()
+            $ruleSetFactory->createRuleSets('pmd-refset1'),
+            new Report()
         );
-
-        $this->assertSame($uri, $phpmd->getInput());
     }
 }

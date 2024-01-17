@@ -53,6 +53,7 @@ abstract class AbstractTypeNode extends AbstractNode
         foreach ($this->node->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
+
         return $methods;
     }
 
@@ -68,6 +69,7 @@ abstract class AbstractTypeNode extends AbstractNode
         foreach ($this->node->getMethods() as $method) {
             $names[] = $method->getName();
         }
+
         return $names;
     }
 

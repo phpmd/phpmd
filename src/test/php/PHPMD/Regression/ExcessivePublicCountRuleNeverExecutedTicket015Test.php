@@ -42,7 +42,7 @@ class ExcessivePublicCountRuleNeverExecutedTicket015Test extends AbstractTest
 
         $ruleSet = new RuleSet();
         $ruleSet->addRule($rule);
-        $ruleSet->setReport($this->getReportMock(1));
+        $ruleSet->setReport($this->getReportWithOneViolation());
 
         $ruleSet->apply($class);
     }

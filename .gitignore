@@ -4,7 +4,10 @@
 .project
 .buildpath
 .settings
-composer.phar
+.phpmd.result-cache.php
+*.phar
+/*.xml
 composer.lock
 vendor
+src/test/vendor
 dist

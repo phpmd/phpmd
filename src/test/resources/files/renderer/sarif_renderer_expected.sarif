@@ -1,0 +1,137 @@
+{
+    "version": "2.1.0",
+    "$schema": "https:\/\/raw.githubusercontent.com\/oasis-tcs\/sarif-spec\/master\/Schemata\/sarif-schema-2.1.0.json",
+    "runs": [
+        {
+            "tool": {
+                "driver": {
+                    "name": "PHPMD",
+                    "informationUri": "https:\/\/phpmd.org",
+                    "version": "@package_version@",
+                    "rules": [
+                        {
+                            "id": "TestRuleSet\/RuleStub",
+                            "name": "RuleStub",
+                            "shortDescription": {
+                                "text": "TestRuleSet: RuleStub"
+                            },
+                            "messageStrings": {
+                                "default": {
+                                    "text": "Test description"
+                                }
+                            },
+                            "help": {
+                                "text": "Simple rule stub"
+                            },
+                            "helpUri": "https:\/\/phpmd.org\/rules\/index.html",
+                            "properties": {
+                                "ruleSet": "TestRuleSet",
+                                "priority": 5,
+                                "since": "PHPMD 42.23"
+                            }
+                        },
+                        {
+                            "id": "TestRuleSet\/AnotherRuleStub",
+                            "name": "AnotherRuleStub",
+                            "shortDescription": {
+                                "text": "TestRuleSet: AnotherRuleStub"
+                            },
+                            "messageStrings": {
+                                "default": {
+                                    "text": "Test description"
+                                }
+                            },
+                            "help": {
+                                "text": "Simple rule stub",
+                                "markdown": "Simple rule stub\n\n### Example\n\n```php\nclass Example\n{\n}\n```\n\n```php\nclass AnotherExample\n{\n    public $var;\n}\n```"
+                            },
+                            "helpUri": "https:\/\/phpmd.org\/rules\/index.html",
+                            "properties": {
+                                "ruleSet": "TestRuleSet",
+                                "priority": 5
+                            }
+                        }
+                    ]
+                }
+            },
+            "originalUriBaseIds": {
+                "WORKINGDIR": {
+                    "uri": "file:\/\/#{workingDirectory}\/"
+                }
+            },
+            "results": [
+                {
+                    "ruleId": "TestRuleSet\/RuleStub",
+                    "ruleIndex": 0,
+                    "message": {
+                        "id": "default",
+                        "arguments": [],
+                        "text": "Test description"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:\/\/\/bar.php"
+                                },
+                                "region": {
+                                    "startLine": 23,
+                                    "endLine": 42
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "TestRuleSet\/RuleStub",
+                    "ruleIndex": 0,
+                    "message": {
+                        "id": "default",
+                        "arguments": [],
+                        "text": "Test description"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:\/\/\/foo.php"
+                                },
+                                "region": {
+                                    "startLine": 23,
+                                    "endLine": 42
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "TestRuleSet\/AnotherRuleStub",
+                    "ruleIndex": 1,
+                    "message": {
+                        "id": "default",
+                        "arguments": [
+                            "123",
+                            "3.2",
+                            "awesomeFunction()"
+                        ],
+                        "text": "Test description"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "src\/foobar.php",
+                                    "uriBaseId": "WORKINGDIR"
+                                },
+                                "region": {
+                                    "startLine": 23,
+                                    "endLine": 42
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<ruleset name="PHPMD">
+    <description>The coding standard for PHPMD.</description>
+    <file>./src/main/php/PHPMD</file>
+    <file>./src/test/php/PHPMD</file>
+    <!-- Include Slevomat standard -->
+
+<!--    <config name="installed_paths" value="../../slevomat/coding-standard,../../../slevomat/coding-standard,../vendor/slevomat/coding-standard"/>-->
+
+    <arg name="extensions" value="php"/>
+
+    <!-- General sniffs -->
+    <rule ref="Generic.Files.LineLength"/>
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
+    <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+    <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
+    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
+    <rule ref="Squiz.Operators.ValidLogicalOperators"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
+    <rule ref="Squiz.PHP.Eval"/>
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+    <rule ref="Squiz.PHP.NonExecutableCode"/>
+    <rule ref="Squiz.Classes.ClassFileName"/>
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+    <rule ref="Squiz.Scope.StaticThisUsage"/>
+    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
+    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
+    <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+        </properties>
+    </rule>
+
+    <!-- PSR-2 base standard -->
+    <rule ref="PSR2"/>
+
+    <!-- Sniffs from Slevomat standard -->
+
+    <!-- Functional - improving the safety and behaviour of code -->
+<!--    <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>-->
+<!--    <rule ref="SlevomatCodingStandard.ControlStructures.AssignmentInCondition"/>-->
+<!--    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>-->
+<!--    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>-->
+<!--    <rule ref="SlevomatCodingStandard.PHP.DisallowDirectMagicInvokeCall"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Operators.DisallowEqualOperators"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Operators.RequireOnlyStandaloneIncrementAndDecrementOperators"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Operators.RequireCombinedAssignmentOperator"/>-->
+
+    <!-- Cleaning - detecting dead code -->
+<!--    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Functions.UnusedInheritedVariablePassedToClosure"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Functions.UselessParameterDefaultValue"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>-->
+<!--    <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Variables.DisallowSuperGlobalVariable"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Variables.DuplicateAssignmentToVariable"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Variables.UnusedVariable"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Exceptions.DeadCatch"/>-->
+
+    <!-- Formatting - rules for consistent code looks -->
+<!--    <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>-->
+<!--    <rule ref="SlevomatCodingStandard.ControlStructures.UselessTernaryOperator"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Commenting.EmptyComment"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Whitespaces.DuplicateSpaces"/>-->
+<!--    <rule ref="SlevomatCodingStandard.Classes.MethodSpacing"/>-->
+
+</ruleset>

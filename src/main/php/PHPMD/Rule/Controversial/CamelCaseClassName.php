@@ -20,15 +20,17 @@ namespace PHPMD\Rule\Controversial;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * This rule class detects classes not named in CamelCase.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
-class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware
+class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
 {
     /**
      * This method checks if a class is not named in CamelCase

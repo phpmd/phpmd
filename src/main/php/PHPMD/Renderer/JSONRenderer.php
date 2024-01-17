@@ -20,7 +20,6 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\RuleViolation;
 
 /**
  * This class will render a JSON report.
@@ -40,12 +39,13 @@ class JSONRenderer extends AbstractRenderer
         $writer = $this->getWriter();
         $writer->write($jsonData . PHP_EOL);
     }
+
     /**
      * Create report data and add renderer meta properties
      *
      * @return array
      */
-    private function initReportData()
+    protected function initReportData()
     {
         $data = array(
             'version' => PHPMD::VERSION,
@@ -63,9 +63,9 @@ class JSONRenderer extends AbstractRenderer
      * @param array $data The report output to add the violations to.
      * @return array The report output with violations, if any.
      */
-    private function addViolationsToReport(Report $report, array $data)
+    protected function addViolationsToReport(Report $report, array $data)
     {
-        $filesList = [];
+        $filesList = array();
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
@@ -97,7 +97,7 @@ class JSONRenderer extends AbstractRenderer
      * @param array $data The report output to add the errors to.
      * @return array The report output with errors, if any.
      */
-    private function addErrorsToReport(Report $report, array $data)
+    protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
         if ($errors) {
@@ -115,13 +115,14 @@ class JSONRenderer extends AbstractRenderer
     /**
      * Encode report data to the JSON representation string
      *
-     * @param $data array The report data
+     * @param array $data The report data
      *
      * @return string
      */
     private function encodeReport($data)
     {
-        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PRETTY_PRINT;
+        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |
+            (defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0);
 
         return json_encode($data, $encodeOptions);
     }

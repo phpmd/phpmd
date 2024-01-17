@@ -23,7 +23,7 @@ use PHPMD\TextUI\Command;
 /**
  * Integration tests for the coupling between objects rule class.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class CouplingBetweenObjectsIntegrationTest extends AbstractTest
 {
@@ -44,11 +44,11 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTest
                 'text',
                 'design',
                 '--reportfile',
-                $file
+                $file,
             )
         );
 
-        self::assertStringContainsString(
+        self::assertContains(
             'has a coupling between objects value of 14. ' .
             'Consider to reduce the number of dependencies under 13.',
             file_get_contents($file)

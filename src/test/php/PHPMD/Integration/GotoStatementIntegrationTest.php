@@ -23,7 +23,7 @@ use PHPMD\TextUI\Command;
 /**
  * Test case for the goto statement GotoStatementIntegrationTest.
  *
- * @since      1.1.0
+ * @since 1.1.0
  */
 class GotoStatementIntegrationTest extends AbstractTest
 {
@@ -44,10 +44,10 @@ class GotoStatementIntegrationTest extends AbstractTest
                 'text',
                 'design',
                 '--reportfile',
-                $file
+                $file,
             )
         );
 
-        self::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
+        self::assertContains('utilizes a goto statement.', file_get_contents($file));
     }
 }

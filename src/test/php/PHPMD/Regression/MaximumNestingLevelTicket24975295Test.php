@@ -19,14 +19,15 @@ namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
 use PHPMD\Renderer\TextRenderer;
+use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
 
 /**
  * Regression test for issue 14990109.
  *
- * @link       https://www.pivotaltracker.com/story/show/24975295
- * @since      1.3.1
+ * @link https://www.pivotaltracker.com/story/show/24975295
+ * @since 1.3.1
  *
  * @covers \stdClass
  */
@@ -43,18 +44,19 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
         $renderer = new TextRenderer();
         $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
 
-        $inputs   = self::createCodeResourceUriForTest();
-        $rules    = 'unusedcode';
-        $renderes = array($renderer);
-        $factory  = new RuleSetFactory();
+        $inputs = self::createCodeResourceUriForTest();
+        $rules = 'unusedcode';
+        $renderers = array($renderer);
+        $factory = new RuleSetFactory();
+
 
         $phpmd = new PHPMD();
-        $phpmd->processFiles($inputs, $rules, $renderes, $factory);
-
-        $this->assertSame(
-            realpath(__DIR__.'/../../../resources/files/Regression/24975295/'.
-                'testLocalVariableUsedInDoubleQuoteStringGetsNotReported.php'),
-            realpath($phpmd->getInput())
+        $phpmd->processFiles(
+            $inputs,
+            $factory->getIgnorePattern($rules),
+            $renderers,
+            $factory->createRuleSets($rules),
+            new Report()
         );
     }
 }

@@ -34,7 +34,7 @@ class SuperGlobalsFlaggedAsUnusedTicket019Test extends AbstractTest
     public function testRuleDoesNotApplyToAnySuperGlobalVariable()
     {
         $rule = new UnusedLocalVariable();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 }

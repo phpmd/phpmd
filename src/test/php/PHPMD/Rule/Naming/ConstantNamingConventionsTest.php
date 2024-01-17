@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the constructor name rule.
  *
- * @covers PHPMD\Rule\Naming\ConstantNamingConventions
+ * @covers \PHPMD\Rule\Naming\ConstantNamingConventions
  */
 class ConstantNamingConventionsTest extends AbstractTest
 {
@@ -58,7 +58,7 @@ class ConstantNamingConventionsTest extends AbstractTest
     public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters()
     {
         $rule = new ConstantNamingConventions();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
@@ -70,7 +70,7 @@ class ConstantNamingConventionsTest extends AbstractTest
     public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters()
     {
         $rule = new ConstantNamingConventions();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getInterface());
     }
 }

@@ -17,7 +17,11 @@ Clean Code Rules
 - `BooleanArgumentFlag <cleancode.html#booleanargumentflag>`_: A boolean flag argument is a reliable indicator for a violation of the Single Responsibility Principle (SRP). You can fix this problem by extracting the logic in the boolean flag into its own class or method.
 - `ElseExpression <cleancode.html#elseexpression>`_: An if expression with an else branch is basically not necessary. You can rewrite the conditions in a way that the else clause is not necessary and the code becomes simpler to read. To achieve this, use early return statements, though you may need to split the code in several smaller methods. For very simple assignments you could also use the ternary operations.
 - `StaticAccess <cleancode.html#staticaccess>`_: Static access causes unexchangeable dependencies to other classes and leads to hard to test code. Avoid using static access at all costs and instead inject dependencies through the constructor. The only case when static access is acceptable is when used for factory methods.
-- `DuplicateArrayKey <cleancode.html#duplicatearraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+- `IfStatementAssignment <cleancode.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
+- `DuplicatedArrayKey <cleancode.html#duplicatedarraykey>`_: Defining another value for the same key in an array literal overrides the previous key/value, which makes it effectively an unused code. If it's known from the beginning that the key will have different value, there is usually no point in defining first one.
+- `MissingImport <cleancode.html#missingimport>`_: Importing all external classes in a file through use statements makes them clearly visible.
+- `UndefinedVariable <cleancode.html#undefinedvariable>`_: Detects when a variable is used that has not been defined before.
+- `ErrorControlOperator <cleancode.html#errorcontroloperator>`_: Error suppression should be avoided if possible as it doesn't just suppress the error, that you are trying to stop, but will also suppress errors that you didn't predict would ever occur. Moreover it can slow down the execution of your code. Consider changing error_reporting() level and/or setting up your own error handler.
 
 Code Size Rules
 ===============
@@ -53,7 +57,6 @@ Design Rules
 - `DepthOfInheritance <design.html#depthofinheritance>`_: A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.
 - `CouplingBetweenObjects <design.html#couplingbetweenobjects>`_: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 - `DevelopmentCodeFragment <design.html#developmentcodefragment>`_: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
-- `IfStatementAssignment <design.html#ifstatementassignment>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `EmptyCatchBlock <design.html#emptycatchblock>`_: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
 - `CountInLoopExpression <design.html#countinloopexpression>`_: Using count/sizeof in loops expressions is considered bad practice and is a potential source of
 many bugs, especially when the loop manipulates an array, as count happens on each iteration.
@@ -61,6 +64,8 @@ many bugs, especially when the loop manipulates an array, as count happens on ea
 Naming Rules
 ============
 
+- `LongClassName <naming.html#longclassname>`_: Detects when classes or interfaces are declared with excessively long names.
+- `ShortClassName <naming.html#shortclassname>`_: Detects when classes or interfaces have a very short name.
 - `ShortVariable <naming.html#shortvariable>`_: Detects when a field, local, or parameter has a very short name.
 - `LongVariable <naming.html#longvariable>`_: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName <naming.html#shortmethodname>`_: Detects when very short method names are used.

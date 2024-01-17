@@ -36,9 +36,8 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
-        $rule->setReport($this->getReportMock(0));
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -49,9 +48,8 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToMethodWithSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
-        $rule->setReport($this->getReportMock(1));
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
@@ -62,8 +60,31 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getMethod());
     }
@@ -75,9 +96,8 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
-        $rule->setReport($this->getReportMock(0));
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -88,9 +108,8 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToFunctionWithSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
-        $rule->setReport($this->getReportMock(1));
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
@@ -101,9 +120,71 @@ class DevelopmentCodeFragmentTest extends AbstractTest
      */
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall()
     {
-        $rule = new DevelopmentCodeFragment();
-        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall
+     *
+     * @return void
+     */
+    public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportMock(3));
+        $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testRuleAppliesToMethodWithinNamespace
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithinNamespace()
+    {
+        $rule = $this->getRule();
+        $rule->addProperty('ignore-namespaces', 'true');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleNotAppliesToMethodWithinNamespaceByDefault
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
+    {
+        $rule = $this->getRule();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Get a configured DevelopmentCodeFragment rule
+     *
+     * @return DevelopmentCodeFragment
+     */
+    private function getRule()
+    {
+        $rule = new DevelopmentCodeFragment();
+        $rule->addProperty('unwanted-functions', 'var_dump,print_r,debug_zval_dump,debug_print_backtrace');
+        $rule->addProperty('ignore-namespaces', 'false');
+
+        return $rule;
     }
 }

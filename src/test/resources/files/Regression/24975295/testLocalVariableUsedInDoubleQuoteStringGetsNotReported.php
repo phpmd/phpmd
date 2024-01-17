@@ -25,7 +25,7 @@ class Bootstrap extends Bootstrap24975295
         $front = $this->getResource('frontController');
         $router = $front->getRouter();
 
-        $route = new Hostname24975295('foo', array('module' => 'default' ));
+        $route = new Hostname24975295('foo', array('module' => 'default'));
         $router
             ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
             ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
@@ -94,7 +94,6 @@ class Bootstrap extends Bootstrap24975295
             ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
             ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
             ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
-            ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))))
-        ;
+            ->addRoute('default', $route->chain(new Route('x', array('controller' => 'index'))));
     }
 }

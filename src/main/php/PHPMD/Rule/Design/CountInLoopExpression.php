@@ -21,7 +21,12 @@ use PDepend\Source\AST\AbstractASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
+use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\TraitNode;
 use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * Count In Loop Expression Rule
@@ -36,14 +41,14 @@ use PHPMD\Rule\ClassAware;
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class CountInLoopExpression extends AbstractRule implements ClassAware
+class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAware, EnumAware
 {
     /**
      * List of functions to search against
      *
      * @var array
      */
-    private $unwantedFunctions = array('count', 'sizeof');
+    protected $unwantedFunctions = array('count', 'sizeof');
 
     /**
      * List of already processed functions
@@ -67,6 +72,10 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node)
     {
+        if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
+            return $this->applyOnClassMethods($node);
+        }
+
         $this->currentNamespace = $node->getNamespaceName() . '\\';
         $loops = array_merge(
             $node->findChildrenOfType('ForStatement'),

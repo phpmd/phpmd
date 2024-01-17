@@ -41,12 +41,13 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     /**
      * Sets up the renderer mock
      */
-    public function setUp(): void
+    public function setUp()
     {
-        $this->renderer = $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
-            ->disableOriginalConstructor()
-            ->setMethods(array('renderReport', 'start', 'end'))
-            ->getMock();
+        $this->renderer = $this->getMockFromBuilder(
+            $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
+                ->disableOriginalConstructor()
+                ->setMethods(array('renderReport', 'start', 'end'))
+        );
     }
 
     /**
@@ -65,6 +66,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
+        $ruleSetFactory = new RuleSetFactory();
+
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will(
@@ -82,11 +85,13 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
                     }
                 )
             );
+
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
-            'codesize',
+            $ruleSetFactory->getIgnorePattern('codesize'),
             array($this->renderer),
-            new RuleSetFactory()
+            $ruleSetFactory->createRuleSets('codesize'),
+            new Report()
         );
     }
 
@@ -105,6 +110,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
+        $ruleSetFactory = new RuleSetFactory();
+
         $this->renderer->expects($this->once())
             ->method('renderReport')
             ->will(
@@ -124,9 +131,10 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
             );
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
-            'codesize',
+            $ruleSetFactory->getIgnorePattern('codesize'),
             array($this->renderer),
-            new RuleSetFactory()
+            $ruleSetFactory->createRuleSets('codesize'),
+            new Report()
         );
     }
 }

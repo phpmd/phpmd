@@ -32,7 +32,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    private $ignoreRegexp;
+    protected $ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks
@@ -49,7 +49,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
         if ($node->getMetric('nom') <= $threshold) {
             return;
         }
-        /** @var $node AbstractTypeNode */
+        /** @var AbstractTypeNode $node */
         $nom = $this->countMethods($node);
         if ($nom <= $threshold) {
             return;
@@ -60,7 +60,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
                 $node->getType(),
                 $node->getName(),
                 $nom,
-                $threshold
+                $threshold,
             )
         );
     }
@@ -71,7 +71,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      * @param \PHPMD\Node\AbstractTypeNode $node
      * @return integer
      */
-    private function countMethods(AbstractTypeNode $node)
+    protected function countMethods(AbstractTypeNode $node)
     {
         $count = 0;
         foreach ($node->getMethodNames() as $name) {
@@ -79,6 +79,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
                 ++$count;
             }
         }
+
         return $count;
     }
 }

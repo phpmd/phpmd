@@ -18,6 +18,7 @@
 class testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix
 {
     private static $_foo = 23;
+
     public static $foo = 17;
 
     public function bar()

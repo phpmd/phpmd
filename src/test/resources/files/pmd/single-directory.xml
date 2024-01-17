@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<pmd version="@package_version@" timestamp="">
+<pmd version="@package_version@" tool="phpmd" timestamp="">
   <file name="#{rootDirectory}_DS_source_DS_ccn_function.php">
     <violation beginline="21" endline="52" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#cyclomaticcomplexity" function="ccn_function" priority="3">
       The function ccn_function() has a Cyclomatic Complexity of 12. The configured cyclomatic complexity threshold is 10.
@@ -11,11 +11,12 @@
     </violation>
   </file>
   <file name="#{rootDirectory}_DS_source_DS_source_with_npath_violation.php">
-    <violation beginline="22" endline="33" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="NPathClass" method="doSomething" priority="3">
+    <violation beginline="23" endline="43" rule="CyclomaticComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#cyclomaticcomplexity" class="NPathClass" method="doSomething" priority="3">
       The method doSomething() has a Cyclomatic Complexity of 25. The configured cyclomatic complexity threshold is 10.
     </violation>
-    <violation beginline="22" endline="33" rule="NPathComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#npathcomplexity" class="NPathClass" method="doSomething" priority="3">
+    <violation beginline="23" endline="43" rule="NPathComplexity" ruleset="Code Size Rules" package="+global" externalInfoUrl="https://phpmd.org/rules/codesize.html#npathcomplexity" class="NPathClass" method="doSomething" priority="3">
       The method doSomething() has an NPath complexity of 50000. The configured NPath complexity threshold is 50.
     </violation>
   </file>
+  <error filename="#{rootDirectory}_DS_source_DS_source_with_parse_error.php" msg="Unexpected end of token stream in file: #{rootDirectory}_DS_source_DS_source_with_parse_error.php."/>
 </pmd>

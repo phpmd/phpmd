@@ -22,20 +22,36 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
+use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
+    /**
+     * Temporary cache of configured prefixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractPrefixes;
+
+    /**
+     * Temporary cache of configured suffixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractSuffixes;
+
     /**
      * Temporary map holding variables that were already processed in the
      * current context.
      *
      * @var array(string=>boolean)
      */
-    private $processedVariables = array();
+    protected $processedVariables = array();
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -57,16 +73,18 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
                     $this->checkNodeImage($declarator);
                 }
             }
-        } else {
-            $declarators = $node->findChildrenOfType('VariableDeclarator');
-            foreach ($declarators as $declarator) {
-                $this->checkNodeImage($declarator);
-            }
+            $this->resetProcessed();
 
-            $variables = $node->findChildrenOfType('Variable');
-            foreach ($variables as $variable) {
-                $this->checkNodeImage($variable);
-            }
+            return;
+        }
+        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        foreach ($declarators as $declarator) {
+            $this->checkNodeImage($declarator);
+        }
+
+        $variables = $node->findChildrenOfTypeVariable();
+        foreach ($variables as $variable) {
+            $this->checkNodeImage($variable);
         }
 
         $this->resetProcessed();
@@ -92,17 +110,24 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @param \PHPMD\AbstractNode $node
      * @return void
+     * @SuppressWarnings(PHPMD.LongVariable)
      */
     protected function checkMaximumLength(AbstractNode $node)
     {
         $threshold = $this->getIntProperty('maximum');
-        if ($threshold >= strlen($node->getImage()) - 1) {
+        $variableName = $node->getImage();
+        $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
+            \ltrim($variableName, '$'),
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
+        if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($node->getImage(), $threshold));
+        $this->addViolation($node, array($variableName, $threshold));
     }
 
     /**
@@ -112,7 +137,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return boolean
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    protected function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'MemberPrimaryPrefix');
     }
@@ -125,7 +150,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param string $type
      * @return boolean
      */
-    private function isChildOf(AbstractNode $node, $type)
+    protected function isChildOf(AbstractNode $node, $type)
     {
         $parent = $node->getParent();
         while (is_object($parent)) {
@@ -134,6 +159,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
             }
             $parent = $parent->getParent();
         }
+
         return false;
     }
 
@@ -167,5 +193,33 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractPrefixList()
+    {
+        if ($this->subtractPrefixes === null) {
+            $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
+        }
+
+        return $this->subtractPrefixes;
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractSuffixList()
+    {
+        if ($this->subtractSuffixes === null) {
+            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
+        }
+
+        return $this->subtractSuffixes;
     }
 }

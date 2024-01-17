@@ -19,5 +19,7 @@ class testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold
 {
     protected $_x;
 
-    public function testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold($x) {}
+    public function testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold($x)
+    {
+    }
 }

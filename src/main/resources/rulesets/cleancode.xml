@@ -24,7 +24,10 @@ or method.
             ]]>
         </description>
         <priority>1</priority>
-        <properties />
+        <properties>
+            <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+            <property name="ignorepattern" description="Ignore methods matching this regex. Example: /^(__construct|get.*Filtered)$/" value=""/>
+        </properties>
         <example>
             <![CDATA[
 class Foo {
@@ -83,7 +86,7 @@ operand could result in zero, null or an empty string and the like.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties/>
         <example>
             <![CDATA[
 class Foo
@@ -117,6 +120,7 @@ case when static access is acceptable is when used for factory methods.
         <priority>1</priority>
         <properties>
             <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+            <property name="ignorepattern" description="Ignore methods matching this regex. Example: /^create/i" value=""/>
         </properties>
         <example>
             <![CDATA[
@@ -157,4 +161,73 @@ function createArray() {
             ]]>
         </example>
     </rule>
+
+    <rule name="ErrorControlOperator"
+          message="Remove error control operator '@' on line {0}."
+          class="PHPMD\Rule\CleanCode\ErrorControlOperator"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#errorcontroloperator">
+        <description>
+            <![CDATA[
+Error suppression should be avoided if possible as it doesn't just suppress the error, that
+you are trying to stop, but will also suppress errors that you didn't predict would ever occur.
+Consider changing error_reporting() level and/or setting up your own error handler.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <example>
+            <![CDATA[
+function foo($filePath) {
+    $file = @fopen($filPath); // hides exceptions
+    $key = @$array[$notExistingKey]; // assigns null to $key
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="MissingImport"
+          since="2.7.0"
+          message="Missing class import via use statement (line '{0}', column '{1}')."
+          class="PHPMD\Rule\CleanCode\MissingImport"
+          externalInfoUrl="http://phpmd.org/rules/cleancode.html#MissingImport">
+        <description>
+            <![CDATA[
+Importing all external classes in a file through use statements makes them clearly visible.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="ignore-global" value="false" description="Ignore classes in the global namespace" />
+        </properties>
+        <example>
+            <![CDATA[
+function make() {
+    return new \stdClass();
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="UndefinedVariable"
+          since="2.8.0"
+          message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
+          class="PHPMD\Rule\CleanCode\UndefinedVariable"
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#undefinedvariable">
+        <description>
+            Detects when a variable is used that has not been defined before.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+class Foo
+{
+    private function bar()
+    {
+        // $message is undefined
+        echo $message;
+    }
+}
+]]>
+        </example>
+    </rule>
+
 </ruleset>

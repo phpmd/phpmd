@@ -25,8 +25,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects parameters not named in camelCase.
  *
- * @author     Francis Besset <francis.besset@gmail.com>
- * @since      1.1.0
+ * @author Francis Besset <francis.besset@gmail.com>
+ * @since 1.1.0
  */
 class CamelCaseParameterName extends AbstractRule implements MethodAware, FunctionAware
 {
@@ -40,7 +40,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     public function apply(AbstractNode $node)
     {
         foreach ($node->getParameters() as $parameter) {
-            if (!preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameter->getName())) {
+            if (!$this->isValid($parameter->getName())) {
                 $this->addViolation(
                     $node,
                     array(
@@ -49,5 +49,14 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
                 );
             }
         }
+    }
+
+    protected function isValid($parameterName)
+    {
+        if ($this->getBooleanProperty('allow-underscore')) {
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName);
+        }
+
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName);
     }
 }

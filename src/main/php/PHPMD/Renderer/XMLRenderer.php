@@ -57,6 +57,7 @@ class XMLRenderer extends AbstractRenderer
     {
         $writer = $this->getWriter();
         $writer->write('<pmd version="' . PHPMD::VERSION . '" ');
+        $writer->write('tool="phpmd" ');
         $writer->write('timestamp="' . date('c') . '">');
         $writer->write(PHP_EOL);
 
@@ -115,11 +116,11 @@ class XMLRenderer extends AbstractRenderer
      * This method will write a xml attribute named <b>$attr</b> to the output
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *
-     * @param string $attr  The xml attribute name.
+     * @param string $attr The xml attribute name.
      * @param string $value The attribute value.
      * @return void
      */
-    private function maybeAdd($attr, $value)
+    protected function maybeAdd($attr, $value)
     {
         if ($value === null || trim($value) === '') {
             return;

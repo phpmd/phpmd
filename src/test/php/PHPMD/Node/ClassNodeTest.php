@@ -21,6 +21,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTest;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 
 /**
  * Test case for the class node implementation.
@@ -55,11 +56,39 @@ class ClassNodeTest extends AbstractTest
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
 
-        $rule = $this->createMock('PHPMD\\AbstractRule');
+        $rule = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\\AbstractRule'));
 
         $node = new ClassNode($class);
 
         $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+    }
+
+    /**
+     * testHasSuppressWarningsWithRuleNameContainingSlashes
+     *
+     * @return void
+     */
+    public function testHasSuppressWarningsWithRuleNameContainingSlashes()
+    {
+        $class = new ASTClass(null);
+        $class->setComment('/** @SuppressWarnings(PMD.CouplingBetweenObjects) */');
+
+        $rule = new CouplingBetweenObjects();
+        $rule->setName('rulesets/design.xml/CouplingBetweenObjects');
+
+        $node = new ClassNode($class);
+
+        $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+
+        $class = new ASTClass(null);
+        $class->setComment('/** @SuppressWarnings(PMD.TooManyFields) */');
+
+        $rule = new CouplingBetweenObjects();
+        $rule->setName('rulesets/design.xml/CouplingBetweenObjects');
+
+        $node = new ClassNode($class);
+
+        $this->assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**

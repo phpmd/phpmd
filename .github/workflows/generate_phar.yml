@@ -1,0 +1,82 @@
+name: Generate phar
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
+  release:
+    types:
+      - created
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [5.4]
+        dependency-version: [prefer-stable]
+
+    name: Release phar
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Git submodules
+        run: git submodule update --init
+
+      - name: Fix PHP compatibility
+        run: php src/phar/compatibility.php
+
+      - name: Ant
+        run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
+
+      - name: Sign phar
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        run: |
+          echo "$SECRET_KEY" > keys.asc;
+          echo "$PASSPHRASE" | gpg --batch --import keys.asc;
+          sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@phpmd.org --batch --detach-sign --output phpmd.phar.asc phpmd.phar";
+
+      - name: Archive generated phar
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            phpmd.phar
+            phpmd.phar.asc
+
+      - name: Release phpmd.phar
+        if: github.event_name == 'release'
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: |
+            phpmd.phar
+            phpmd.phar.asc

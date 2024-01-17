@@ -45,9 +45,14 @@ class Annotations
      */
     public function __construct(\PHPMD\AbstractNode $node)
     {
-        preg_match_all($this->regexp, $node->getDocComment(), $matches);
+        $comment = $node->getDocComment();
+        if ($comment === null) {
+            return;
+        }
+
+        preg_match_all($this->regexp, $comment, $matches);
         foreach (array_keys($matches[0]) as $i) {
-            $name  = $matches[1][$i];
+            $name = $matches[1][$i];
             $value = trim($matches[2][$i], '" ');
 
             $this->annotations[] = new Annotation($name, $value);
@@ -67,6 +72,7 @@ class Annotations
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -4,6 +4,71 @@ Naming Rules
 
 The Naming Ruleset contains a collection of rules about names - too long, too short, and so forth.
 
+LongClassName
+=============
+
+Since: PHPMD 2.9
+
+Detects when classes or interfaces are declared with excessively long names.
+
+Example: ::
+
+  class ATooLongClassNameThatHintsAtADesignProblem {
+
+  }
+
+  interface ATooLongInterfaceNameThatHintsAtADesignProblem {
+
+  }
+
+  class ClassGroupPrefixesThatIsUsedForGrouping {
+
+  }
+
+This rule has the following properties:
+
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| maximum                           | 40            | The class name length reporting threshold.                 |
++-----------------------------------+---------------+------------------------------------------------------------+
+| subtract-prefixes                 |               | Comma-separated list of prefixes that will not count in    |
+|                                   |               | the length of the class name. Only the first matching      |
+|                                   |               | prefix will be subtracted.                                 |
++-----------------------------------+---------------+------------------------------------------------------------+
+| subtract-suffixes                 |               | Comma-separated list of suffixes that will not count in    |
+|                                   |               | the length of the class name. Only the first matching      |
+|                                   |               | suffix will be subtracted.                                 |
++-----------------------------------+---------------+------------------------------------------------------------+
+
+ShortClassName
+==============
+
+Since: PHPMD 2.9
+
+Detects when classes or interfaces have a very short name.
+
+Example: ::
+
+  class Fo {
+
+  }
+
+  interface Fo {
+
+  }
+
+This rule has the following properties:
+
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| minimum                           | 3             | The class name length reporting threshold                  |
++-----------------------------------+---------------+------------------------------------------------------------+
+| exceptions                        |               | Comma-separated list of exceptions. Example: Log,URL,FTP   |
++-----------------------------------+---------------+------------------------------------------------------------+
+
+
 ShortVariable
 =============
 
@@ -25,12 +90,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ===========================================================
- Name                                Default Value   Description                                               
-=================================== =============== ===========================================================
- minimum                             3               Minimum length for a variable, property or parameter name 
- exceptions                                          Comma-separated list of exceptions                        
-=================================== =============== ===========================================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| minimum                           | 3             | Minimum length for a variable, property or parameter name. |
++-----------------------------------+---------------+------------------------------------------------------------+
+| exceptions                        |               | Comma-separated list of exceptions                         |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 LongVariable
 ============
@@ -43,6 +109,7 @@ Example: ::
 
   class Something {
       protected $reallyLongIntName = -3; // VIOLATION - Field
+      protected $hungarianUintArrOptions = []; // VIOLATION - Field
       public static function main( array $interestingArgumentsList[] ) { // VIOLATION - Formal
           $otherReallyLongName = -5; // VIOLATION - Local
           for ($interestingIntIndex = 0; // VIOLATION - For
@@ -54,11 +121,21 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== =========================================
- Name                                Default Value   Description                             
-=================================== =============== =========================================
- maximum                             20              The variable length reporting threshold 
-=================================== =============== =========================================
++-----------------------------------+---------------+-------------------------------------------+
+| Name                              | Default Value | Description                               |
++===================================+===============+===========================================+
+| maximum                           | 20            | The variable length reporting threshold   |
++-----------------------------------+---------------+-------------------------------------------+
+| subtract-prefixes                 |               | Comma-separated list of prefixes that will|
+|                                   |               | not count in the length of the variable   |
+|                                   |               | name. Only the first matching prefix will |
+|                                   |               | be subtracted.                            |
++-----------------------------------+---------------+-------------------------------------------+
+| subtract-suffixes                 |               | Comma-separated list of suffixes that will|
+|                                   |               | not count in the length of the variable   |
+|                                   |               | name. Only the first matching suffix will |
+|                                   |               | be subtracted.                            |
++-----------------------------------+---------------+-------------------------------------------+
 
 ShortMethodName
 ===============
@@ -76,12 +153,13 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ==============================================
- Name                                Default Value   Description                                  
-=================================== =============== ==============================================
- minimum                             3               Minimum length for a method or function name 
- exceptions                                          Comma-separated list of exceptions           
-=================================== =============== ==============================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| minimum                           | 3             | Minimum length for a method or function name               |
++-----------------------------------+---------------+------------------------------------------------------------+
+| exceptions                        |               | Comma-separated list of exceptions                         |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 ConstructorWithNameAsEnclosingClass
 ===================================
@@ -139,11 +217,11 @@ Example: ::
 
 This rule has the following properties:
 
-=================================== =============== ============================================================
- Name                                Default Value   Description                                                
-=================================== =============== ============================================================
- checkParameterizedMethods           false           Applies only to methods without parameter when set to true 
-=================================== =============== ============================================================
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| checkParameterizedMethods         | false         | Applies only to methods without parameter when set to true |
++-----------------------------------+---------------+------------------------------------------------------------+
 
 Remark
 ======
@@ -151,4 +229,4 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        
+

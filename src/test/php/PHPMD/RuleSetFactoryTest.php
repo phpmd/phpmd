@@ -18,8 +18,6 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
-use ReflectionProperty;
-use RuntimeException;
 
 /**
  * Test case for the rule set factory class.
@@ -45,7 +43,7 @@ class RuleSetFactoryTest extends AbstractTest
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        $this->assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
+        $this->assertContains('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     /**
@@ -71,7 +69,7 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsReturnsArray()
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertIsArray($ruleSets);
+        $this->assertInternalType('array', $ruleSets);
     }
 
     /**
@@ -187,7 +185,7 @@ class RuleSetFactoryTest extends AbstractTest
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertIsArray($ruleSets);
+        $this->assertInternalType('array', $ruleSets);
     }
 
     /**
@@ -266,7 +264,7 @@ class RuleSetFactoryTest extends AbstractTest
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset2.xml');
 
-        $actual   = array();
+        $actual = array();
         $expected = array('RuleTwoInFirstRuleSet', 'RuleOneInSecondRuleSet');
 
         foreach ($ruleSets[0]->getRules() as $rule) {
@@ -349,11 +347,12 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $excludes = $factory->getIgnorePattern('exclude-pattern');
 
         $expected = array(
-            'some/excluded/files'
+            '*sourceExcluded/*.php',
+            '*sourceExcluded\*.php',
         );
 
         $this->assertEquals($expected, $excludes);
@@ -368,7 +367,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -384,7 +383,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('set1');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -400,7 +399,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('set2');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -416,7 +415,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -432,7 +431,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -448,7 +447,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('alternative-property-value-syntax');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -464,7 +463,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -482,7 +481,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -498,7 +497,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -514,7 +513,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
@@ -530,7 +529,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset-exclude-one');
 
         $rules = $ruleSets[0]->getRules();
@@ -546,7 +545,7 @@ class RuleSetFactoryTest extends AbstractTest
     {
         self::changeWorkingDirectory();
 
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
         $ruleSets = $factory->createRuleSets('refset-exclude-all');
 
         $rules = $ruleSets[0]->getRules();
@@ -564,8 +563,8 @@ class RuleSetFactoryTest extends AbstractTest
     {
         $factory = new RuleSetFactory();
 
-        $this->expectException('PHPMD\\RuleSetNotFoundException');
-        $this->expectExceptionMessage(
+        $this->setExpectedException(
+            'PHPMD\\RuleSetNotFoundException',
             'Cannot find specified rule-set "foo-bar-ruleset-23".'
         );
 
@@ -582,12 +581,10 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
 
-        $this->expectException(
-            'PHPMD\\RuleClassFileNotFoundException'
-        );
-        $this->expectExceptionMessage(
+        $this->setExpectedException(
+            'PHPMD\\RuleClassFileNotFoundException',
             'Cannot load source file for class: PHPMD\\Stubs\\ClassFileNotFoundRule'
         );
 
@@ -604,12 +601,10 @@ class RuleSetFactoryTest extends AbstractTest
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
-        $factory  = new RuleSetFactory();
+        $factory = new RuleSetFactory();
 
-        $this->expectException(
-            'PHPMD\\RuleClassNotFoundException'
-        );
-        $this->expectExceptionMessage(
+        $this->setExpectedException(
+            'PHPMD\\RuleClassNotFoundException',
             'Cannot find rule class: PHPMD\\Stubs\\ClassNotFoundRule'
         );
 
@@ -622,10 +617,10 @@ class RuleSetFactoryTest extends AbstractTest
      *
      * @return void
      * @covers \PHPMD\RuleClassNotFoundException
+     * @expectedException \RuntimeException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
-        $this->expectException(RuntimeException::class);
         $fileName = self::createFileUri('rulesets/set-invalid-xml.xml');
 
         $factory = new RuleSetFactory();
@@ -646,12 +641,7 @@ class RuleSetFactoryTest extends AbstractTest
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertInstanceOf(RuleSet::class, $ruleSets[0]);
-
-        $property = new ReflectionProperty($ruleSets[0], 'strict');
-        $property->setAccessible(true);
-
-        $this->assertTrue($property->getValue($ruleSets[0]));
+        $this->assertAttributeEquals(true, 'strict', $ruleSets[0]);
     }
 
     /**
@@ -673,8 +663,8 @@ class RuleSetFactoryTest extends AbstractTest
             $factory = new RuleSetFactory();
             $factory->createRuleSets($fileName);
 
-            $expectedIncludePath  = "/foo/bar/baz";
-            $actualIncludePaths   = explode(PATH_SEPARATOR, get_include_path());
+            $expectedIncludePath = "/foo/bar/baz";
+            $actualIncludePaths = explode(PATH_SEPARATOR, get_include_path());
             $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
         } catch (\Exception $exception) {
             set_include_path($includePathBefore);
@@ -705,17 +695,53 @@ class RuleSetFactoryTest extends AbstractTest
         foreach ($this->getPathsForFileAccessTest() as $path) {
             try {
                 $this->assertEquals(
-                    array('some/excluded/files'),
+                    array(
+                        '*sourceExcluded/*.php',
+                        '*sourceExcluded\*.php',
+                    ),
                     $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
                 );
             } catch (RuleSetNotFoundException $e) {
                 $ruleSetNotFoundExceptionCount++;
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $runtimeExceptionCount++;
             }
         }
         $this->assertEquals(0, $runtimeExceptionCount);
         $this->assertEquals(5, $ruleSetNotFoundExceptionCount);
+    }
+
+    /**
+     * Checks the ruleset XML files provided with PHPMD all provide externalInfoUrls
+     *
+     * @param string $file The path to the ruleset xml to test
+     * @return void
+     * @dataProvider getDefaultRuleSets
+     */
+    public function testDefaultRuleSetsProvideExternalInfoUrls($file)
+    {
+        $ruleSets = $this->createRuleSetsFromFiles($file);
+        $ruleSet = $ruleSets[0];
+        /** @var Rule $rule */
+        foreach ($ruleSet->getRules() as $rule) {
+            $message = sprintf(
+                '%s in rule set %s should provide an externalInfoUrl',
+                $rule->getName(),
+                $ruleSet->getName()
+            );
+
+            $this->assertNotEmpty($rule->getExternalInfoUrl(), $message);
+        }
+    }
+
+    /**
+     * Provides an array of the file paths to rule sets provided with PHPMD
+     *
+     * @return array
+     */
+    public function getDefaultRuleSets()
+    {
+        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
     }
 
     /**
@@ -741,13 +767,15 @@ class RuleSetFactoryTest extends AbstractTest
      * @param string $file At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     private function createRuleSetsFromFiles($file)
     {
         $args = func_get_args();
 
         $factory = new RuleSetFactory();
-        return $factory->createRuleSets(join(',', $args));
+
+        return $factory->createRuleSets(implode(',', $args));
     }
 
     /**

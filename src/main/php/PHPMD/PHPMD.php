@@ -9,13 +9,15 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
+
+use PHPMD\Cache\ResultCacheEngine;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -25,7 +27,16 @@ class PHPMD
     /**
      * The current PHPMD version.
      */
-    const VERSION = '@project.version@';
+    const VERSION = '@package_version@';
+
+    /**
+     * This property will be set to <b>true</b> when an error
+     * was found in the processed source code.
+     *
+     * @var boolean
+     * @since 2.10.0
+     */
+    private $errors = false;
 
     /**
      * List of valid file extensions for analyzed files.
@@ -48,8 +59,11 @@ class PHPMD
      */
     private $input;
 
+    /** @var ResultCacheEngine|null */
+    private $resultCache;
+
     /**
-     * This property will be set to <b>true</b> when an error or a violation
+     * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
      * @var boolean
@@ -64,6 +78,18 @@ class PHPMD
      * @since 1.2.0
      */
     private $options = array();
+
+    /**
+     * This method will return <b>true</b> when the processed source code
+     * contains errors.
+     *
+     * @return boolean
+     * @since 2.10.0
+     */
+    public function hasErrors()
+    {
+        return $this->errors;
+    }
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -101,7 +127,7 @@ class PHPMD
     /**
      * Sets a list of filename extensions for valid php source code files.
      *
-     * @param array(string) $fileExtensions Extensions without leading dot.
+     * @param array<string> $fileExtensions Extensions without leading dot.
      * @return void
      */
     public function setFileExtensions(array $fileExtensions)
@@ -113,9 +139,21 @@ class PHPMD
      * Returns an array with string patterns that mark a file path as invalid.
      *
      * @return string[]
-     * @since 0.2.0
+     * @since      0.2.0
+     * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
      */
     public function getIgnorePattern()
+    {
+        return $this->getIgnorePatterns();
+    }
+
+    /**
+     * Returns an array with string patterns that mark a file path invalid.
+     *
+     * @return string[]
+     * @since 2.9.0
+     */
+    public function getIgnorePatterns()
     {
         return $this->ignorePatterns;
     }
@@ -124,15 +162,50 @@ class PHPMD
      * Sets a list of ignore patterns that is used to exclude directories from
      * the source analysis.
      *
-     * @param array(string) $ignorePatterns List of ignore patterns.
+     * @param array<string> $ignorePatterns List of ignore patterns.
      * @return void
+     * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
      */
     public function setIgnorePattern(array $ignorePatterns)
+    {
+        $this->addIgnorePatterns($ignorePatterns);
+    }
+
+    /**
+     * Add a list of ignore patterns which is used to exclude directories from
+     * the source analysis.
+     *
+     * @param array<string> $ignorePatterns List of ignore patterns.
+     * @return $this
+     * @since 2.9.0
+     */
+    public function addIgnorePatterns(array $ignorePatterns)
     {
         $this->ignorePatterns = array_merge(
             $this->ignorePatterns,
             $ignorePatterns
         );
+
+        return $this;
+    }
+
+    /**
+     * @return ResultCacheEngine|null
+     */
+    public function getResultCache()
+    {
+        return $this->resultCache;
+    }
+
+    /**
+     * @param ResultCacheEngine $resultCache
+     * @return $this;
+     */
+    public function setResultCache($resultCache)
+    {
+        $this->resultCache = $resultCache;
+
+        return $this;
     }
 
     /**
@@ -161,35 +234,39 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string $inputPath
-     * @param string $ruleSets
+     * @param string                    $inputPath
+     * @param array|null                $ignorePattern
      * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSetFactory $ruleSetFactory
+     * @param \PHPMD\RuleSet[]          $ruleSetList
+     * @param \PHPMD\Report             $report
      * @return void
      */
     public function processFiles(
         $inputPath,
-        $ruleSets,
+        $ignorePattern,
         array $renderers,
-        RuleSetFactory $ruleSetFactory
+        array $ruleSetList,
+        Report $report
     ) {
-
         // Merge parsed excludes
-        $this->ignorePatterns = array_merge($this->ignorePatterns, $ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ignorePattern);
 
         $this->input = $inputPath;
-
-        $report = new Report();
 
         $factory = new ParserFactory();
         $parser  = $factory->create($this);
 
-        foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
+        foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
         }
 
         $report->start();
         $parser->parse($report);
+        if ($this->resultCache !== null) {
+            $state = $this->resultCache->getFileFilter()->getState();
+            $state = $this->resultCache->getUpdater()->update($ruleSetList, $state, $report);
+            $this->resultCache->getWriter()->write($state);
+        }
         $report->end();
 
         foreach ($renderers as $renderer) {
@@ -204,6 +281,7 @@ class PHPMD
             $renderer->end();
         }
 
+        $this->errors     = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

@@ -37,6 +37,7 @@ class CountInLoopExpressionTest extends AbstractTest
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getMethod());
     }
+
     /**
      * testRuleNotApplyToExpressionElsewhere
      *
@@ -45,9 +46,10 @@ class CountInLoopExpressionTest extends AbstractTest
     public function testRuleNotApplyToExpressionElsewhere()
     {
         $rule = new CountInLoopExpression();
-        $rule->setReport($this->getReportMock(0));
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
+
     /**
      * testRuleApplyToNestedLoops
      *
@@ -58,5 +60,29 @@ class CountInLoopExpressionTest extends AbstractTest
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportMock(8));
         $rule->apply($this->getFunction());
+    }
+
+    /**
+     * testMutedRuleAtClassLevel
+     *
+     * @return void
+     */
+    public function testMutedRuleAtClassLevel()
+    {
+        $rule = new CountInLoopExpression();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testMutedRuleAtMethodLevel
+     *
+     * @return void
+     */
+    public function testMutedRuleAtMethodLevel()
+    {
+        $rule = new CountInLoopExpression();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
     }
 }

@@ -17,8 +17,7 @@
 
 function testRuleDoesNotApplyToFunctionParameterNamedArgv($argv)
 {
-    foreach ($argv as $arg)
-    {
+    foreach ($argv as $arg) {
         echo $arg;
     }
 }
