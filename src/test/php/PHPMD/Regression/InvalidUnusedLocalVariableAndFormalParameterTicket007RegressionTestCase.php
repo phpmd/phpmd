@@ -25,7 +25,7 @@ use PHPMD\Rule\UnusedLocalVariable;
  *
  * @covers stdClass
  */
-class InvalidUnusedLocalVariableAndFormalParameterTicket007Test extends AbstractTest
+class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * This is a test case for the NPath complexity rule.
  *
  * @covers \PHPMD\Rule\Design\NpathComplexity
  */
-class NpathComplexityTest extends AbstractTest
+class NpathComplexityTest extends AbstractTestCase
 {
     /**
      * Tests that the rule applies for a value greater than the configured

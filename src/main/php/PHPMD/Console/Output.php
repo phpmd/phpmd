@@ -25,7 +25,7 @@ abstract class Output implements OutputInterface
     public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL)
     {
         if (is_array($messages) === false) {
-            $messages = array($messages);
+            $messages = [$messages];
         }
 
         $verbosities = self::VERBOSITY_QUIET

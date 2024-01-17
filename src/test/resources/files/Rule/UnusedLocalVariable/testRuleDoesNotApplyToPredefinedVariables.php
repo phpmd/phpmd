@@ -21,7 +21,7 @@ class testRuleDoesNotApplyToPredefinedVariables
 {
     public function testRuleDoesNotApplyToPredefinedVariables()
     {
-        $headers = array();
+        $headers = [];
         foreach ($http_response_header as $header) {
             $headers[] = $header;
             if (null !== $php_errormsg) {

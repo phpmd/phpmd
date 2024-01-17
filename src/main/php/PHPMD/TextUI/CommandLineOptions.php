@@ -95,14 +95,14 @@ class CommandLineOptions
      *
      * @var array
      */
-    protected $reportFiles = array();
+    protected $reportFiles = [];
 
     /**
      * List of deprecations.
      *
      * @var array
      */
-    protected $deprecations = array();
+    protected $deprecations = [];
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
@@ -172,7 +172,7 @@ class CommandLineOptions
      *
      * @var array(string)
      */
-    protected $availableRuleSets = array();
+    protected $availableRuleSets = [];
 
     /**
      * Should PHPMD baseline the existing violations and write them to the $baselineFile
@@ -225,7 +225,7 @@ class CommandLineOptions
      * @param string[] $availableRuleSets
      * @throws InvalidArgumentException
      */
-    public function __construct(array $args, array $availableRuleSets = array())
+    public function __construct(array $args, array $availableRuleSets = [])
     {
         // Remove current file name
         array_shift($args);
@@ -233,7 +233,7 @@ class CommandLineOptions
         $originalArguments = $args;
         $this->availableRuleSets = $availableRuleSets;
 
-        $arguments = array();
+        $arguments = [];
         $listenOptions = true;
         $hasImplicitArguments = false;
 
@@ -876,10 +876,10 @@ class CommandLineOptions
     protected function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers            = array();
+        $renderers            = [];
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
-            $rendererName = array();
+            $rendererName = [];
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
             }

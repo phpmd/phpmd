@@ -44,12 +44,12 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
 
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $count,
                 $threshold,
-            )
+            ]
         );
     }
 }

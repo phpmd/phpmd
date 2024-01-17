@@ -49,6 +49,6 @@ class LongClass extends AbstractRule implements ClassAware
             return;
         }
 
-        $this->addViolation($node, array($node->getName(), $loc, $threshold));
+        $this->addViolation($node, [$node->getName(), $loc, $threshold]);
     }
 }

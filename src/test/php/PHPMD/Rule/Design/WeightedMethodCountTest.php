@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the weighted method count rule.
@@ -26,7 +26,7 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
  */
-class WeightedMethodCountTest extends AbstractTest
+class WeightedMethodCountTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesForValueGreaterThanThreshold

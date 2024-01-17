@@ -21,9 +21,9 @@ class testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQu
 {
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
     {
-        return array(
+        return [
             'foo' => 42,
             "foo" => 42,
-        );
+        ];
     }
 }

@@ -2,23 +2,23 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\RuleViolation;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
  * @covers ::__construct
  */
-class BaselineValidatorTest extends AbstractTest
+class BaselineValidatorTest extends AbstractTestCase
 {
-    /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject */
+    /** @var BaselineSet|MockObject */
     private $baselineSet;
 
-    /** @var RuleViolation|PHPUnit_Framework_MockObject_MockObject */
+    /** @var RuleViolation|MockObject */
     private $violation;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $rule            = $this->getMockFromBuilder(
@@ -49,18 +49,15 @@ class BaselineValidatorTest extends AbstractTest
         static::assertSame($isBaselined, $validator->isBaselined($this->violation));
     }
 
-    /**
-     * @return array
-     */
-    public function dataProvider()
+    public static function dataProvider(): array
     {
-        return array(
-            'contains: true, mode: none'      => array(true, BaselineMode::NONE, true),
-            'contains: false, mode: none'     => array(false, BaselineMode::NONE, false),
-            'contains: true, mode: update'    => array(true, BaselineMode::UPDATE, false),
-            'contains: false, mode: update'   => array(false, BaselineMode::UPDATE, true),
-            'contains: true, mode: generate'  => array(true, BaselineMode::GENERATE, false),
-            'contains: false, mode: generate' => array(false, BaselineMode::GENERATE, false),
-        );
+        return [
+            'contains: true, mode: none'      => [true, BaselineMode::NONE, true],
+            'contains: false, mode: none'     => [false, BaselineMode::NONE, false],
+            'contains: true, mode: update'    => [true, BaselineMode::UPDATE, false],
+            'contains: false, mode: update'   => [false, BaselineMode::UPDATE, true],
+            'contains: true, mode: generate'  => [true, BaselineMode::GENERATE, false],
+            'contains: false, mode: generate' => [false, BaselineMode::GENERATE, false],
+        ];
     }
 }

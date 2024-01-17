@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\EvalExpression} class.
  *
  * @covers \PHPMD\Rule\Design\EvalExpression
  */
-class EvalExpressionTest extends AbstractTest
+class EvalExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutEvalExpression

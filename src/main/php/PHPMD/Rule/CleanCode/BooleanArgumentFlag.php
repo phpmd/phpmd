@@ -58,7 +58,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         }
 
         $currNode = $node->getNode();
-        $parent = is_callable(array($currNode, 'getParent')) ? $currNode->getParent() : null;
+        $parent = is_callable([$currNode, 'getParent']) ? $currNode->getParent() : null;
 
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
@@ -108,7 +108,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
                 continue;
             }
 
-            $this->addViolation($param, array($node->getImage(), $declarator->getImage()));
+            $this->addViolation($param, [$node->getImage(), $declarator->getImage()]);
         }
     }
 }

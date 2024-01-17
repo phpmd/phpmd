@@ -33,7 +33,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     /**
      * @var array
      */
-    protected $exceptions = array(
+    protected $exceptions = [
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',
@@ -45,7 +45,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         '$_SESSION',
         '$_REQUEST',
         '$_ENV',
-    );
+    ];
 
     /**
      * This method checks if a variable is not named in camelCase
@@ -56,7 +56,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      */
     public function apply(AbstractNode $node)
     {
-        $variables = array();
+        $variables = [];
 
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable)) {
@@ -64,7 +64,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
 
                 if (!isset($variables[$variableName])) {
                     $variables[$variableName] = true;
-                    $this->addViolation($variable, array($variableName));
+                    $this->addViolation($variable, [$variableName]);
                 }
             }
         }

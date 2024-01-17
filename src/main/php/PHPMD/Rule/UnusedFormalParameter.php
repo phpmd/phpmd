@@ -33,7 +33,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      *
      * @var \PHPMD\Node\ASTNode[]
      */
-    protected $nodes = array();
+    protected $nodes = [];
 
     /**
      * This method checks that all parameters of a given function or method are
@@ -61,13 +61,13 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             return;
         }
 
-        $this->nodes = array();
+        $this->nodes = [];
 
         $this->collectParameters($node);
         $this->removeUsedParameters($node);
 
         foreach ($this->nodes as $node) {
-            $this->addViolation($node, array($node->getImage()));
+            $this->addViolation($node, [$node->getImage()]);
         }
     }
 
@@ -119,7 +119,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         static $magicMethodRegExp = null;
 
         if ($magicMethodRegExp === null) {
-            $magicMethodRegExp = '/__(?:' . implode("|", array(
+            $magicMethodRegExp = '/__(?:' . implode("|", [
                     'call',
                     'callStatic',
                     'get',
@@ -127,7 +127,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
                     'isset',
                     'unset',
                     'set_state',
-                )) . ')/i';
+                ]) . ')/i';
         }
 
         return preg_match($magicMethodRegExp, $node->getName()) === 1;
@@ -253,7 +253,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
-                $this->nodes = array();
+                $this->nodes = [];
             }
 
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {

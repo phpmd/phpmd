@@ -56,12 +56,12 @@ class TooManyMethods extends AbstractRule implements ClassAware
         }
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $nom,
                 $threshold,
-            )
+            ]
         );
     }
 

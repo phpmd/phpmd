@@ -2,12 +2,13 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineSetFactory
  */
-class BaselineSetFactoryTest extends AbstractTest
+class BaselineSetFactoryTest extends AbstractTestCase
 {
     /**
      * @covers ::fromFile
@@ -41,41 +42,49 @@ class BaselineSetFactoryTest extends AbstractTest
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to locate the baseline file at
      */
     public function testFromFileShouldThrowExceptionForMissingFile()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to locate the baseline file at',
+        ));
+
         BaselineSetFactory::fromFile('foobar.xml');
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Unable to read xml from
      */
     public function testFromFileShouldThrowExceptionForOnInvalidXML()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to read xml from',
+        ));
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('invalid-baseline.xml'));
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Missing `rule` attribute in `violation`
      */
     public function testFromFileViolationMissingRuleShouldThrowException()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Missing `rule` attribute in `violation`',
+        ));
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-rule-baseline.xml'));
     }
 
     /**
      * @covers ::fromFile
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Missing `file` attribute in `violation` in
      */
     public function testFromFileViolationMissingFileShouldThrowException()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Missing `file` attribute in `violation` in',
+        ));
+
         BaselineSetFactory::fromFile(static::createResourceUriForTest('missing-file-baseline.xml'));
     }
 }

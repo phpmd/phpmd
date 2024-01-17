@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the excessive use of public members rule.
  *
  * @covers \PHPMD\Rule\ExcessivePublicCount
  */
-class ExcessivePublicCountTest extends AbstractTest
+class ExcessivePublicCountTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold

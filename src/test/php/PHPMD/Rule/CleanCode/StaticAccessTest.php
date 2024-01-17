@@ -17,12 +17,12 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Rule\CleanCode\StaticAccess
  */
-class StaticAccessTest extends AbstractTest
+class StaticAccessTest extends AbstractTestCase
 {
     public function testRuleNotAppliesToParentStaticCall()
     {

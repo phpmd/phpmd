@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the unused private method rule.
  *
  * @covers \PHPMD\Rule\UnusedPrivateMethod
  */
-class UnusedPrivateMethodTest extends AbstractTest
+class UnusedPrivateMethodTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToUnusedPrivateMethod

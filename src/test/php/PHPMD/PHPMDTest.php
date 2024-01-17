@@ -29,12 +29,12 @@ use PHPUnit_Framework_MockObject_MockObject;
  *
  * @covers \PHPMD\PHPMD
  */
-class PHPMDTest extends AbstractTest
+class PHPMDTest extends AbstractTestCase
 {
     /** @var RuleSetFactory */
     private $ruleSetFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->ruleSetFactory = new RuleSetFactory();
     }
@@ -58,7 +58,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/ccn_function.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -84,7 +84,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -110,7 +110,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/ccn_function.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -156,7 +156,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/source_without_violations.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -181,7 +181,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/source_with_npath_violation.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -210,7 +210,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/source_with_npath_violation.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report(new BaselineValidator($baselineSet, BaselineMode::NONE))
         );
@@ -234,7 +234,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/source_with_parse_error.php'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -258,7 +258,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('sourceExcluded/'),
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array(),
+            [],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -270,7 +270,7 @@ class PHPMDTest extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('sourceExcluded/'),
             $this->ruleSetFactory->getIgnorePattern('exclude-pattern'),
-            array(),
+            [],
             $this->ruleSetFactory->createRuleSets('exclude-pattern'),
             new Report()
         );

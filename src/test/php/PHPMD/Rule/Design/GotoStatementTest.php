@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
@@ -26,7 +26,7 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Rule\Design\GotoStatement
  */
-class GotoStatementTest extends AbstractTest
+class GotoStatementTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutGotoStatement

@@ -17,12 +17,12 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Rule\CleanCode\BooleanArgumentFlag
  */
-class BooleanArgumentFlagTest extends AbstractTest
+class BooleanArgumentFlagTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the undefined variable rule.
  *
  * @coversDefaultClass \PHPMD\Rule\CleanCode\UndefinedVariable
  */
-class UndefinedVariableTest extends AbstractTest
+class UndefinedVariableTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.

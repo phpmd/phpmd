@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Empty Catch Block Test
@@ -25,7 +25,7 @@ use PHPMD\AbstractTest;
  * @author Grégoire Paris <postmaster@greg0ire.fr>
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class EmptyCatchBlockTest extends AbstractTest
+class EmptyCatchBlockTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutTryCatchBlock

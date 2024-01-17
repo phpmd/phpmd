@@ -37,7 +37,7 @@ class EvalExpression extends AbstractRule implements MethodAware, FunctionAware
     public function apply(AbstractNode $node)
     {
         foreach ($node->findChildrenOfType('EvalExpression') as $eval) {
-            $this->addViolation($eval, array($node->getType(), $node->getName()));
+            $this->addViolation($eval, [$node->getType(), $node->getName()]);
         }
     }
 }

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Node;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Node\Annotations} class.
  *
  * @covers \PHPMD\Node\Annotations
  */
-class AnnotationsTest extends AbstractTest
+class AnnotationsTest extends AbstractTestCase
 {
     /**
      * testCollectionReturnsFalseWhenNoAnnotationExists

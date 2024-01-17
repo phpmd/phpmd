@@ -53,12 +53,12 @@ class LongMethod extends AbstractRule implements FunctionAware, MethodAware
 
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $loc,
                 $threshold,
-            )
+            ]
         );
     }
 }

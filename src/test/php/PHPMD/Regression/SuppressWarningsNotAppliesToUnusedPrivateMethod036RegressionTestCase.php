@@ -25,7 +25,7 @@ use PHPMD\RuleSet;
  *
  * @covers stdClass
  */
-class SuppressWarningsNotAppliesToUnusedPrivateMethod036Test extends AbstractTest
+class SuppressWarningsNotAppliesToUnusedPrivateMethod036RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation

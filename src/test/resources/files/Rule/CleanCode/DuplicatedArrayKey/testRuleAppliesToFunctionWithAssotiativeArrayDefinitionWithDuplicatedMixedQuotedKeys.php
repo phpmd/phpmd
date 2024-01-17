@@ -17,8 +17,8 @@
 
 function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
 {
-    return array(
+    return [
         'foo' => 42,
         "foo" => 43,
-    );
+    ];
 }

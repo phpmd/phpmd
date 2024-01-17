@@ -20,7 +20,7 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 
 /**
@@ -29,7 +29,7 @@ use PHPMD\Rule\Design\CouplingBetweenObjects;
  * @covers \PHPMD\Node\ClassNode
  * @covers \PHPMD\Node\AbstractTypeNode
  */
-class ClassNodeTest extends AbstractTest
+class ClassNodeTest extends AbstractTestCase
 {
     /**
      * testGetMethodNamesReturnsExpectedResult
@@ -43,7 +43,7 @@ class ClassNodeTest extends AbstractTest
         $class->addMethod(new ASTMethod(__FUNCTION__));
 
         $node = new ClassNode($class);
-        $this->assertEquals(array(__CLASS__, __FUNCTION__), $node->getMethodNames());
+        $this->assertEquals([__CLASS__, __FUNCTION__], $node->getMethodNames());
     }
 
     /**

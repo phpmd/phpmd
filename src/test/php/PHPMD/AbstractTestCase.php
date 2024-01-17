@@ -36,16 +36,16 @@ use PHPMD\Node\NodeInfo;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
-use PHPUnit_Framework_ExpectationFailedException;
-use PHPUnit_Framework_MockObject_MockBuilder;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\MockObject\MockBuilder;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
 use Traversable;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractTest extends AbstractStaticTest
+abstract class AbstractTestCase extends AbstractStaticTestCase
 {
     /** @var int At least one violation is expected */
     const AL_LEAST_ONE_VIOLATION = -1;
@@ -63,9 +63,9 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return string[]
      */
-    public function getApplyingFiles()
+    public static function getApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleApplies*');
+        return static::getFilesForCalledClass('testRuleApplies*');
     }
 
     /**
@@ -75,9 +75,9 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return string[]
      */
-    public function getNotApplyingFiles()
+    public static function getNotApplyingFiles()
     {
-        return $this->getFilesForCalledClass('testRuleDoesNotApply*');
+        return static::getFilesForCalledClass('testRuleDoesNotApply*');
     }
 
     /**
@@ -85,9 +85,9 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return string[][]
      */
-    public function getApplyingCases()
+    public static function getApplyingCases()
     {
-        return static::getValuesAsArrays($this->getApplyingFiles());
+        return static::getValuesAsArrays(static::getApplyingFiles());
     }
 
     /**
@@ -95,9 +95,9 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return string[][]
      */
-    public function getNotApplyingCases()
+    public static function getNotApplyingCases()
     {
-        return static::getValuesAsArrays($this->getNotApplyingFiles());
+        return static::getValuesAsArrays(static::getNotApplyingFiles());
     }
 
     /**
@@ -105,7 +105,7 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         static::returnToOriginalWorkingDirectory();
         static::cleanupTempFiles();
@@ -254,7 +254,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
      * @return void
-     * @throws PHPUnit_Framework_ExpectationFailedException
+     * @throws ExpectationFailedException
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
     {
@@ -268,7 +268,7 @@ abstract class AbstractTest extends AbstractStaticTest
             : $actualInvokes === $expectedInvokes;
 
         if (!$assertion) {
-            throw new PHPUnit_Framework_ExpectationFailedException(
+            throw new ExpectationFailedException(
                 $this->getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
             );
         }
@@ -358,9 +358,9 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param string $pattern
      * @return string
      */
-    protected function createResourceUriForCalledClass($pattern)
+    protected static function createResourceUriForCalledClass($pattern)
     {
-        return $this->getResourceFilePathFromClassName(get_class($this), $pattern);
+        return static::getResourceFilePathFromClassName(static::class, $pattern);
     }
 
     /**
@@ -369,9 +369,9 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param string $pattern
      * @return string[]
      */
-    protected function getFilesForCalledClass($pattern = '*')
+    protected static function getFilesForCalledClass($pattern = '*')
     {
-        return glob($this->createResourceUriForCalledClass($pattern));
+        return glob(static::createResourceUriForCalledClass($pattern));
     }
 
     /**
@@ -385,7 +385,7 @@ abstract class AbstractTest extends AbstractStaticTest
     {
         $class = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\Node\\ClassNode')
-                ->setConstructorArgs(array(new ASTClass('FooBar')))
+                ->setConstructorArgs([new ASTClass('FooBar')])
         );
 
         if ($metric !== null) {
@@ -504,19 +504,15 @@ abstract class AbstractTest extends AbstractStaticTest
         return $this->getReportMock(self::AL_LEAST_ONE_VIOLATION);
     }
 
-    protected function getMockFromBuilder(PHPUnit_Framework_MockObject_MockBuilder $builder)
+    protected function getMockFromBuilder(MockBuilder $builder)
     {
-        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
-            return $builder->getMock();
-        }
-
-        return @$builder->getMock();
+        return $builder->getMock();
     }
 
     /**
      * Creates a mocked {@link \PHPMD\AbstractRule} instance.
      *
-     * @return AbstractRule|PHPUnit_Framework_MockObject_MockObject
+     * @return AbstractRule|MockObject
      */
     protected function getRuleMock()
     {
@@ -532,7 +528,7 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @param string $expectedClass Optional class name for apply() expected at least once.
      * @param int|string $count How often should apply() be called?
-     * @return RuleSet|PHPUnit_Framework_MockObject_MockObject
+     * @return RuleSet|MockObject
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
@@ -564,7 +560,7 @@ abstract class AbstractTest extends AbstractStaticTest
      * @param integer $endLine The end of violation line number to use.
      * @param null|object $rule The rule object to use.
      * @param null|string $description The violation description to use.
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     protected function getRuleViolationMock(
         $fileName = '/foo/bar.php',
@@ -576,7 +572,7 @@ abstract class AbstractTest extends AbstractStaticTest
         $ruleViolation = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\RuleViolation')
                 ->setConstructorArgs(
-                    array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello')
+                    [new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello']
                 )
         );
 
@@ -615,7 +611,7 @@ abstract class AbstractTest extends AbstractStaticTest
      *
      * @param string $file
      * @param string $message
-     * @return ProcessingError|PHPUnit_Framework_MockObject_MockObject
+     * @return ProcessingError|MockObject
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
@@ -624,8 +620,8 @@ abstract class AbstractTest extends AbstractStaticTest
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
-                ->setConstructorArgs(array(null))
-                ->setMethods(array('getFile', 'getMessage'))
+                ->setConstructorArgs([null])
+                ->onlyMethods(['getFile', 'getMessage'])
         );
 
         $processingError
@@ -661,7 +657,7 @@ abstract class AbstractTest extends AbstractStaticTest
         return $this->initFunctionOrMethod(
             $this->getMockFromBuilder(
                 $this->getMockBuilder($mockBuilder)
-                    ->setConstructorArgs(array($mock))
+                    ->setConstructorArgs([$mock])
             ),
             $metric,
             $value

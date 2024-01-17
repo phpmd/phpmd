@@ -17,7 +17,7 @@
 
 class testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed
 {
-    public static $foo = array();
+    public static $foo = [];
 
     public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed($foo)
     {

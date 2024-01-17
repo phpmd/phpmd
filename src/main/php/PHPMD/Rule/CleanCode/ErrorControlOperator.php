@@ -43,7 +43,7 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
     {
         foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {
-                $this->addViolation($node, array($unaryExpression->getBeginLine()));
+                $this->addViolation($node, [$unaryExpression->getBeginLine()]);
             }
         }
     }

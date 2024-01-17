@@ -40,7 +40,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * @var array Self reference class names.
      */
-    protected $selfReferences = array('self', 'static');
+    protected $selfReferences = ['self', 'static'];
 
     /**
      * PHP super globals that are available in all php scopes, so that they
@@ -49,7 +49,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array(string=>boolean)
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    protected static $superGlobals = array(
+    protected static $superGlobals = [
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
@@ -64,7 +64,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         '$HTTP_RAW_POST_DATA' => true,
         '$php_errormsg' => true,
         '$http_response_header' => true,
-    );
+    ];
 
     /**
      * Tests if the given variable node represents a local variable or if it is

@@ -45,7 +45,7 @@ class testRuleAppliesWhenKeyIsDeclaredInNonStandardWay extends testRuleAppliesWh
         $foo = 'foo';
         $baz = $this->getDuplicatedName();
 
-        return array(
+        return [
             // not applied - comment
             // 0 => 'bar', // not applied - comment with content
             0 => 'bar', // not applied - first occurrence
@@ -74,7 +74,7 @@ class testRuleAppliesWhenKeyIsDeclaredInNonStandardWay extends testRuleAppliesWh
             global_function_duplicate() => 'bar', // not applied - may be different depending on namespace
             GLOBAL_DUPLICATE => 'bar', // not applied - may be different depending on context
             "foo" => 'bar', // applied - duplicated variable to check if none of above breaks execution
-        );
+        ];
     }
 
     /**

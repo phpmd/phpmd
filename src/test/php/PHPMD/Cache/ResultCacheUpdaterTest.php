@@ -2,7 +2,7 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
@@ -12,7 +12,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater
  * @covers ::__construct
  */
-class ResultCacheUpdaterTest extends AbstractTest
+class ResultCacheUpdaterTest extends AbstractTestCase
 {
     /** @var ResultCacheState&MockObject */
     private $state;
@@ -20,7 +20,7 @@ class ResultCacheUpdaterTest extends AbstractTest
     /** @var ResultCacheUpdater */
     private $updater;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->state = $this->getMockFromBuilder(
             $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheState')->disableOriginalConstructor()
@@ -39,11 +39,11 @@ class ResultCacheUpdaterTest extends AbstractTest
         $violationA = $this->getRuleViolationMock('/base/path/violation/a');
         $violationB = $this->getRuleViolationMock('/base/path/violation/b');
 
-        $report->expects(self::once())->method('getRuleViolations')->willReturn(array($violationA));
+        $report->expects(self::once())->method('getRuleViolations')->willReturn([$violationA]);
         $this->state->expects(self::once())
             ->method('getRuleViolations')
-            ->with('/base/path/', array($ruleSet))
-            ->willReturn(array($violationB));
+            ->with('/base/path/', [$ruleSet])
+            ->willReturn([$violationB]);
 
         // expect ViolationB be added to the report
         $report->expects(self::once())->method('addRuleViolation')->with($violationB);
@@ -51,7 +51,7 @@ class ResultCacheUpdaterTest extends AbstractTest
         // expect ViolationA be added to the state
         $this->state->expects(self::once())->method('addRuleViolation')->with('violation/a', $violationA);
 
-        $state = $this->updater->update(array($ruleSet), $this->state, $report);
+        $state = $this->updater->update([$ruleSet], $this->state, $report);
         static::assertSame($this->state, $state);
     }
 }

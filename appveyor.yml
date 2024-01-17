@@ -10,14 +10,15 @@ install:
   - ps: Set-Service wuauserv -StartupType Manual
   - cinst -y OpenSSL.Light
   - SET PATH=C:\Program Files\OpenSSL;%PATH%
-  - cinst -y php -version 7.1.14
-  - cd c:\tools\php71
+  - cinst -y php -version 8.0.30
+  - cd c:\tools\php80
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini
   - echo extension_dir=ext >> php.ini
   - echo extension=php_openssl.dll >> php.ini
+  - echo extension=php_mbstring.dll >> php.ini
   - cd C:\projects\phpmd
-  - SET PATH=C:\tools\php71;%PATH%
+  - SET PATH=C:\tools\php80;%PATH%
   - php -r "readfile('http://getcomposer.org/installer');" | php
   - php composer.phar install --prefer-source --no-interaction
 

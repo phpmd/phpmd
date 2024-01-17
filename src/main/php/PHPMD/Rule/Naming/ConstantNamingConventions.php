@@ -41,7 +41,7 @@ class ConstantNamingConventions extends AbstractRule implements ClassAware, Inte
     {
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $declarator) {
             if ($declarator->getImage() !== strtoupper($declarator->getImage())) {
-                $this->addViolation($declarator, array($declarator->getImage()));
+                $this->addViolation($declarator, [$declarator->getImage()]);
             }
         }
     }

@@ -17,7 +17,7 @@
 
 namespace PHPMD\Integration;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\TextUI\Command;
  *
  * @since 1.1.0
  */
-class CouplingBetweenObjectsIntegrationTest extends AbstractTest
+class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
 {
     /**
      * testReportContainsCouplingBetweenObjectsWarning
@@ -38,17 +38,17 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTest
         $file = self::createTempFileUri();
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 $this->createCodeResourceUriForTest(),
                 'text',
                 'design',
                 '--reportfile',
                 $file,
-            )
+            ]
         );
 
-        self::assertContains(
+        self::assertStringContainsString(
             'has a coupling between objects value of 14. ' .
             'Consider to reduce the number of dependencies under 13.',
             file_get_contents($file)

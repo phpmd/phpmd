@@ -21,9 +21,9 @@ class testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
 {
     public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
     {
-        return array(
+        return [
             42,
             43,
-        );
+        ];
     }
 }

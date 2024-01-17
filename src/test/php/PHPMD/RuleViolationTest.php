@@ -26,7 +26,7 @@ use PHPMD\Node\NodeInfo;
  *
  * @covers \PHPMD\RuleViolation
  */
-class RuleViolationTest extends AbstractTest
+class RuleViolationTest extends AbstractTestCase
 {
     /**
      * @return void

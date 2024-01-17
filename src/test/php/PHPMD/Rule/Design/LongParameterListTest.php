@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the excessive long parameter list rule.
  *
  * @covers \PHPMD\Rule\Design\LongParameterList
  */
-class LongParameterListTest extends AbstractTest
+class LongParameterListTest extends AbstractTestCase
 {
     /**
      * testApplyIgnoresMethodsWithLessParametersThanMinimum

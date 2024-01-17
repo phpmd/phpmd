@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case property name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCasePropertyName
  */
-class CamelCasePropertyNameTest extends AbstractTest
+class CamelCasePropertyNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid property name.

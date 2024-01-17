@@ -20,7 +20,7 @@ class testRuleDoesNotApplyToNestedArrays
     function testRuleDoesNotApplyToNestedArrays()
     {
         $foo = 'foo';
-        $arr = array();
+        $arr = [];
         $arr[$foo]['bar']['baz'] = 'yes';
     }
 }

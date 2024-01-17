@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
  *
  * @covers \PHPMD\Rule\Naming\BooleanGetMethodName
  */
-class BooleanGetMethodNameTest extends AbstractTest
+class BooleanGetMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToMethodStartingWithGetAndReturningBoolean

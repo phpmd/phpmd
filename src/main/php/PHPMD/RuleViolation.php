@@ -76,8 +76,8 @@ class RuleViolation
         $this->nodeInfo = $nodeInfo;
 
         if (is_array($violationMessage) === true) {
-            $search = array();
-            $replace = array();
+            $search = [];
+            $replace = [];
             foreach ($violationMessage['args'] as $index => $value) {
                 $search[] = '{' . $index . '}';
                 $replace[] = $value;

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Node;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Node\Annotation} class.
  *
  * @covers \PHPMD\Node\Annotation
  */
-class AnnotationTest extends AbstractTest
+class AnnotationTest extends AbstractTestCase
 {
     /**
      * testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists

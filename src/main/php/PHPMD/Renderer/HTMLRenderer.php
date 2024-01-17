@@ -38,29 +38,29 @@ class HTMLRenderer extends AbstractRenderer
 
     const CATEGORY_RULE = 'category_rule';
 
-    protected static $priorityTitles = array(
+    protected static $priorityTitles = [
         1 => 'Top (1)',
         2 => 'High (2)',
         3 => 'Moderate (3)',
         4 => 'Low (4)',
         5 => 'Lowest (5)',
-    );
+    ];
 
     // Used in self::colorize() method.
-    protected static $descHighlightRules = array(
-        'method' => array( // Method names.
+    protected static $descHighlightRules = [
+        'method' => [ // Method names.
             'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
             'css-class' => 'hlt-method',
-        ),
-        'quoted' => array( // Quoted strings.
+        ],
+        'quoted' => [ // Quoted strings.
             'regex' => '(["\'][^\'"]+["\'])',
             'css-class' => 'hlt-quoted',
-        ),
-        'variable' => array( // Variables.
+        ],
+        'variable' => [ // Variables.
             'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
             'css-class' => 'hlt-variable',
-        ),
-    );
+        ],
+    ];
 
     protected static $compiledHighlightRegex = null;
 
@@ -442,7 +442,7 @@ class HTMLRenderer extends AbstractRenderer
     protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
     {
         if (!is_readable($file)) {
-            return array();
+            return [];
         }
 
         $file = new SplFileObject($file);
@@ -450,7 +450,7 @@ class HTMLRenderer extends AbstractRenderer
         // We have to subtract 1 to extract correct lines via SplFileObject.
         $line = max($lineNumber - 1 - $extra, 0);
 
-        $result = array();
+        $result = [];
 
         if (!$file->eof()) {
             $file->seek($line);
@@ -554,12 +554,12 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected static function sumUpViolations($violations)
     {
-        $result = array(
-            self::CATEGORY_PRIORITY => array(),
-            self::CATEGORY_NAMESPACE => array(),
-            self::CATEGORY_RULESET => array(),
-            self::CATEGORY_RULE => array(),
-        );
+        $result = [
+            self::CATEGORY_PRIORITY => [],
+            self::CATEGORY_NAMESPACE => [],
+            self::CATEGORY_RULESET => [],
+            self::CATEGORY_RULE => [],
+        ];
 
         foreach ($violations as $v) {
             // We use "ref" reference to make things somewhat easier to read.

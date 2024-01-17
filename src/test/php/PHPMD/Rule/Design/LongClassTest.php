@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the excessive long class rule.
  *
  * @covers \PHPMD\Rule\Design\LongClass
  */
-class LongClassTest extends AbstractTest
+class LongClassTest extends AbstractTestCase
 {
     /**
      * Tests that the rule applies for a value greater than the configured

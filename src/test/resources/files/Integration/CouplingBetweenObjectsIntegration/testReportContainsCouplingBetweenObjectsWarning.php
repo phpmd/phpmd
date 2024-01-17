@@ -95,7 +95,7 @@ class testReportContainsCouplingBetweenObjectsWarning
      */
     public function getIterator()
     {
-        return new \ArrayIterator(array());
+        return new \ArrayIterator([]);
     }
 
     /**

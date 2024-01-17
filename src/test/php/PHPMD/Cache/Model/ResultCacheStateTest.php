@@ -20,10 +20,10 @@ class ResultCacheStateTest extends TestCase
     /** @var ResultCacheState */
     private $state;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->key   = new ResultCacheKey(true, 'baseline', array(), array(), 123);
-        $this->state = new ResultCacheState($this->key, array());
+        $this->key   = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $this->state = new ResultCacheState($this->key, []);
     }
 
     /**
@@ -40,7 +40,7 @@ class ResultCacheStateTest extends TestCase
      */
     public function testGetSetViolations()
     {
-        $violations = array('violations');
+        $violations = ['violations'];
 
         static::assertCount(0, $this->state->getViolations('/file/path'));
 
@@ -63,12 +63,12 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = array('line' => 100);
+        $metric   = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
-        $expected = array(
-            array(
+        $expected = [
+            [
                 'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
                 'namespaceName' => 'namespace',
                 'className'     => 'className',
@@ -79,8 +79,8 @@ class ResultCacheStateTest extends TestCase
                 'description'   => 'violation',
                 'args'          => null,
                 'metric'        => $metric
-            )
-        );
+            ]
+        ];
 
         $this->state->addRuleViolation('/file/path', $ruleViolation);
         static::assertSame($expected, $this->state->getViolations('/file/path'));
@@ -104,12 +104,12 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = array('line' => 100);
+        $metric   = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
         $this->state->addRuleViolation('/file/path', $ruleViolation);
-        $violations = $this->state->getRuleViolations('', array($ruleSet));
+        $violations = $this->state->getRuleViolations('', [$ruleSet]);
         static::assertEquals($ruleViolation, $violations[0]);
     }
 
@@ -131,17 +131,17 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = array('line' => 100);
+        $metric   = ['line' => 100];
 
         $ruleViolation = new RuleViolation(
             $rule,
             $nodeInfo,
-            array('args' => array('foo' => 'bar'), 'message' => 'violation'),
+            ['args' => ['foo' => 'bar'], 'message' => 'violation'],
             $metric
         );
 
         $this->state->addRuleViolation('/file/path', $ruleViolation);
-        $violations = $this->state->getRuleViolations('', array($ruleSet));
+        $violations = $this->state->getRuleViolations('', [$ruleSet]);
         static::assertEquals($ruleViolation, $violations[0]);
     }
 
@@ -175,26 +175,26 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = array('line' => 100);
+        $metric   = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
         $this->state->setFileState('/file/path', 'hash');
         $this->state->addRuleViolation('/file/path', $ruleViolation);
 
-        $expected = array(
-            'key'   => array(
+        $expected = [
+            'key'   => [
                 'strict'       => true,
                 'baselineHash' => 'baseline',
-                'rules'        => array(),
-                'composer'     => array(),
+                'rules'        => [],
+                'composer'     => [],
                 'phpVersion'   => 123
-            ),
-            'state' => array(
-                'files' => array(
-                    '/file/path' => array(
+            ],
+            'state' => [
+                'files' => [
+                    '/file/path' => [
                         'hash'       => 'hash',
-                        'violations' => array(
-                            array(
+                        'violations' => [
+                            [
                                 'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
                                 'namespaceName' => 'namespace',
                                 'className'     => 'className',
@@ -205,13 +205,13 @@ class ResultCacheStateTest extends TestCase
                                 'description'   => 'violation',
                                 'args'          => null,
                                 'metric'        => $metric
-                            )
-                        )
-                    )
+                            ]
+                        ]
+                    ]
 
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         static::assertSame($expected, $this->state->toArray());
     }

@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the unused private field rule.
  *
  * @covers \PHPMD\Rule\UnusedPrivateField
  */
-class UnusedPrivateFieldTest extends AbstractTest
+class UnusedPrivateFieldTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToUnusedPrivateField

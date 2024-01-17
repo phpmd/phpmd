@@ -2,7 +2,7 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy as Strategy;
@@ -13,7 +13,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  * @coversDefaultClass \PHPMD\Cache\ResultCacheFileFilter
  * @covers ::__construct
  */
-class ResultCacheFileFilterTest extends AbstractTest
+class ResultCacheFileFilterTest extends AbstractTestCase
 {
     /** @var NullOutput */
     private $output;
@@ -22,7 +22,7 @@ class ResultCacheFileFilterTest extends AbstractTest
     /** @var ResultCacheState&MockObject */
     private $state;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->output = new NullOutput();
         $this->key    = $this->getMockFromBuilder(
@@ -57,7 +57,7 @@ class ResultCacheFileFilterTest extends AbstractTest
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(false);
-        $this->state->expects(self::once())->method('getViolations')->willReturn(array('violations'));
+        $this->state->expects(self::once())->method('getViolations')->willReturn(['violations']);
 
         static::assertFalse($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();

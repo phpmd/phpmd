@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * MissingImport Tests
  *
  * @coversDefaultClass \PHPMD\Rule\CleanCode\MissingImport
  */
-class MissingImportTest extends AbstractTest
+class MissingImportTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.

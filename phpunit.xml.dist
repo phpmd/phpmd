@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
-<phpunit bootstrap="src/test/php/bootstrap.php">
-    <testsuites>
-        <testsuite name="PHPMD AllTests">
-            <directory suffix="Test.php">src/test/php</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/main/php</directory>
-        </whitelist>
-    </filter>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  bootstrap="src/test/php/bootstrap.php"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+  cacheDirectory=".phpunit.cache"
+>
+  <coverage/>
+  <testsuites>
+    <testsuite name="PHPMD AllTests">
+      <directory>src/test/php</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory>src/main/php</directory>
+    </include>
+  </source>
 </phpunit>

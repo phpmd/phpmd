@@ -41,7 +41,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     {
         /** @var ClassNode $node */
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
-            $this->addViolation($node, array($node->getImage()));
+            $this->addViolation($node, [$node->getImage()]);
         }
     }
 
@@ -67,7 +67,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function collectPrivateMethods(ClassNode $class)
     {
-        $methods = array();
+        $methods = [];
 
         foreach ($class->getMethods() as $method) {
             if ($this->acceptMethod($class, $method)) {

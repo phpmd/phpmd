@@ -40,10 +40,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * @var array List of statement types where to forbid assignation.
      */
-    protected $ifStatements = array(
+    protected $ifStatements = [
         'IfStatement',
         'ElseIfStatement',
-    );
+    ];
 
     /**
      * This method checks if method/function has if clauses
@@ -95,7 +95,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      */
     protected function getAssignments(array $expressions)
     {
-        $assignments = array();
+        $assignments = [];
         /** @var ASTNode $expression */
         foreach ($expressions as $expression) {
             $assignments = array_merge($assignments, $expression->findChildrenOfType('AssignmentExpression'));
@@ -112,7 +112,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      */
     protected function addViolations(AbstractNode $node, array $assignments)
     {
-        $processesViolations = array();
+        $processesViolations = [];
         /** @var \PDepend\Source\AST\AbstractASTNode $assignment */
         foreach ($assignments as $assignment) {
             if (null === $assignment || $assignment->getImage() !== '=') {
@@ -122,7 +122,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
             if (!in_array($uniqueHash, $processesViolations)) {
                 $processesViolations[] = $uniqueHash;
-                $this->addViolation($node, array($assignment->getStartLine(), $assignment->getStartColumn()));
+                $this->addViolation($node, [$assignment->getStartLine(), $assignment->getStartColumn()]);
             }
         }
     }

@@ -69,7 +69,7 @@ abstract class AbstractNode
             );
         }
 
-        return call_user_func_array(array($node, $name), $args);
+        return call_user_func_array([$node, $name], $args);
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class AbstractNode
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
-        $nodes = array();
+        $nodes = [];
 
         foreach ($children as $child) {
             $nodes[] = new ASTNode($child, $this->getFileName());
@@ -151,7 +151,7 @@ abstract class AbstractNode
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
-        $nodes = array();
+        $nodes = [];
 
         foreach ($children as $child) {
             foreach ($child->getChildren() as $subChild) {

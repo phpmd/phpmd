@@ -17,8 +17,8 @@
 
 function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
 {
-    return array(
+    return [
         123 => 42,
         '123' => 42,
-    );
+    ];
 }

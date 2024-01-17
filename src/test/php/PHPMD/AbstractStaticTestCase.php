@@ -18,12 +18,12 @@
 namespace PHPMD;
 
 use Closure;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
+abstract class AbstractStaticTestCase extends TestCase
 {
     /**
      * Directory with test files.
@@ -44,7 +44,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @var array(string)
      */
-    private static $tempFiles = array();
+    private static $tempFiles = [];
 
     /**
      * Return to original working directory if changed.
@@ -73,7 +73,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
             unlink($tempFile);
         }
 
-        self::$tempFiles = array();
+        self::$tempFiles = [];
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     protected static function getValuesAsArrays($values)
     {
         return array_map(function ($value) {
-            return array($value);
+            return [$value];
         }, $values);
     }
 
@@ -194,7 +194,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 

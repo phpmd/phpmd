@@ -17,7 +17,7 @@
 
 namespace PHPMD\Integration;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\TextUI\Command;
  *
  * @since 1.1.0
  */
-class GotoStatementIntegrationTest extends AbstractTest
+class GotoStatementIntegrationTest extends AbstractTestCase
 {
     /**
      * testReportContainsGotoStatementWarning
@@ -38,16 +38,16 @@ class GotoStatementIntegrationTest extends AbstractTest
         $file = self::createTempFileUri();
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 $this->createCodeResourceUriForTest(),
                 'text',
                 'design',
                 '--reportfile',
                 $file,
-            )
+            ]
         );
 
-        self::assertContains('utilizes a goto statement.', file_get_contents($file));
+        self::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
     }
 }

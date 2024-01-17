@@ -19,7 +19,7 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\AST\ASTNamespace;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the trait node implementation.
@@ -27,7 +27,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\TraitNode
  * @covers \PHPMD\Node\AbstractTypeNode
  */
-class TraitNodeTest extends AbstractTest
+class TraitNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue

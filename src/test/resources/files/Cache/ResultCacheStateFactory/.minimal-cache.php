@@ -1,18 +1,18 @@
 <?php
 
-return array(
+return [
     'key'   =>
-        array(
+        [
             'strict'       => false,
             'baselineHash' => null,
             'rules'        =>
-                array(
+                [
                     'rule' => 'hash',
-                ),
-            'composer'     => array(),
+                ],
+            'composer'     => [],
             'phpVersion'   => 70000,
-        ),
+        ],
     'state' =>
-        array(
-        ),
-);
+        [
+        ],
+];

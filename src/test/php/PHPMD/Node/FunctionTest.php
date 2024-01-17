@@ -17,8 +17,9 @@
 
 namespace PHPMD\Node;
 
+use BadMethodCallException;
 use PDepend\Source\AST\ASTFunction;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the function node implementation.
@@ -26,7 +27,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\FunctionNode
  * @covers \PHPMD\Node\AbstractCallableNode
  */
-class FunctionTest extends AbstractTest
+class FunctionTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependFunction
@@ -37,7 +38,7 @@ class FunctionTest extends AbstractTest
     {
         $function = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $function->expects($this->once())
             ->method('getStartLine');
@@ -50,10 +51,11 @@ class FunctionTest extends AbstractTest
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
      *
      * @return void
-     * @expectedException BadMethodCallException
      */
     public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
     {
+        self::expectException(BadMethodCallException::class);
+
         $node = new FunctionNode(new ASTFunction(null));
         $node->getFooBar();
     }

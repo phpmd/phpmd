@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\ExitExpression} class.
  *
  * @covers \PHPMD\Rule\Design\ExitExpression
  */
-class ExitExpressionTest extends AbstractTest
+class ExitExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutExitExpression

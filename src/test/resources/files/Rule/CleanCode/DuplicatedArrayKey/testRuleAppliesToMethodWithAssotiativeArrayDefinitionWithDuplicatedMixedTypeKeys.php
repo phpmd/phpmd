@@ -21,9 +21,9 @@ class testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTy
 {
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
     {
-        return array(
+        return [
             123 => 42,
             '123' => 43,
-        );
+        ];
     }
 }

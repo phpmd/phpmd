@@ -31,7 +31,7 @@ class Report
      *
      * @var array
      */
-    private $ruleViolations = array();
+    private $ruleViolations = [];
 
     /**
      * The start time for this report.
@@ -53,7 +53,7 @@ class Report
      * @var array
      * @since 1.2.1
      */
-    private $errors = array();
+    private $errors = [];
 
     /** @var BaselineValidator|null */
     private $baselineValidator;
@@ -77,12 +77,12 @@ class Report
 
         $fileName = $violation->getFileName();
         if (!isset($this->ruleViolations[$fileName])) {
-            $this->ruleViolations[$fileName] = array();
+            $this->ruleViolations[$fileName] = [];
         }
 
         $beginLine = $violation->getBeginLine();
         if (!isset($this->ruleViolations[$fileName][$beginLine])) {
-            $this->ruleViolations[$fileName][$beginLine] = array();
+            $this->ruleViolations[$fileName][$beginLine] = [];
         }
 
         $this->ruleViolations[$fileName][$beginLine][] = $violation;
@@ -109,7 +109,7 @@ class Report
         // First sort by file name
         ksort($this->ruleViolations);
 
-        $violations = array();
+        $violations = [];
         foreach ($this->ruleViolations as $violationInLine) {
             // Second sort is by line number
             ksort($violationInLine);

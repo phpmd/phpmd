@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case parameter name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseParameterName
  */
-class CamelCaseParameterNameTest extends AbstractTest
+class CamelCaseParameterNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid parameter name

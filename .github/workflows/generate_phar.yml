@@ -6,8 +6,7 @@ on:
   pull_request:
     branches: [ '**' ]
   release:
-    types:
-      - created
+    types: [ 'created', 'published' ]
 
 jobs:
   php-tests:
@@ -18,8 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.4]
-        dependency-version: [prefer-stable]
+        php: [ '8.0' ]
+        dependency-version: [ 'prefer-stable' ]
 
     name: Release phar
 
@@ -48,9 +47,6 @@ jobs:
 
       - name: Git submodules
         run: git submodule update --init
-
-      - name: Fix PHP compatibility
-        run: php src/phar/compatibility.php
 
       - name: Ant
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version

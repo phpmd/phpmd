@@ -64,7 +64,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
         if ($length <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($classOrInterfaceName, $threshold));
+        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
     }
 
     /**

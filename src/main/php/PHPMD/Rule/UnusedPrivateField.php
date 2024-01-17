@@ -34,7 +34,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      *
      * @var \PHPMD\Node\ASTNode[]
      */
-    protected $fields = array();
+    protected $fields = [];
 
     /**
      * This method checks that all private class properties are at least accessed
@@ -47,7 +47,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     {
         /** @var ClassNode $field */
         foreach ($this->collectUnusedPrivateFields($node) as $field) {
-            $this->addViolation($field, array($field->getImage()));
+            $this->addViolation($field, [$field->getImage()]);
         }
     }
 
@@ -60,7 +60,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
     {
-        $this->fields = array();
+        $this->fields = [];
 
         $this->collectPrivateFields($class);
         $this->removeUsedFields($class);

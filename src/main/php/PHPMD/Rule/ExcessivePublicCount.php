@@ -42,12 +42,12 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAwar
         }
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $cis,
                 $threshold,
-            )
+            ]
         );
     }
 }

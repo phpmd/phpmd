@@ -29,7 +29,7 @@ class Annotations
      *
      * @var \PHPMD\Node\Annotation[]
      */
-    private $annotations = array();
+    private $annotations = [];
 
     /**
      * Regexp used to extract code annotations.

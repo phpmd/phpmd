@@ -2,13 +2,13 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngine
  * @covers ::__construct
  */
-class ResultCacheEngineTest extends AbstractTest
+class ResultCacheEngineTest extends AbstractTestCase
 {
     /**
      * @covers ::getFileFilter

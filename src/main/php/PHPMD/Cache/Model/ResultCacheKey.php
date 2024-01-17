@@ -36,13 +36,13 @@ class ResultCacheKey
      */
     public function toArray()
     {
-        return array(
+        return [
             'strict'       => $this->strict,
             'baselineHash' => $this->baselineHash,
             'rules'        => $this->rules,
             'composer'     => $this->composer,
             'phpVersion'   => $this->phpVersion,
-        );
+        ];
     }
 
     /**
