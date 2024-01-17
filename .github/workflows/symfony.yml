@@ -57,4 +57,4 @@ jobs:
         run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
 
       - name: Run test suite
-        run: vendor/bin/phpunit --display-deprecations || vendor/bin/phpunit
+        run: vendor/bin/phpunit --display-deprecations

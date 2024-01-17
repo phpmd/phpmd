@@ -48,7 +48,7 @@ jobs:
           composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
 
       - name: Execute Unit Tests
-        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
+        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v3
