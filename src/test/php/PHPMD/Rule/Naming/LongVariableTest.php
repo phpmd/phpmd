@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\ClassNode;
 
 /**
  * Test case for the really long variable, parameter and property name rule.

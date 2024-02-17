@@ -29,11 +29,8 @@ class CyclomaticComplexity extends AbstractRule implements FunctionAware, Method
     /**
      * This method checks the cyclomatic complexity for the given node against
      * a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('reportLevel');
         $ccn = $node->getMetric('ccn2');

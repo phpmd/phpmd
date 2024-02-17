@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\RuleProperty\RulePropertySetter;
 
 /**
  * Test case for the very short method and function name rule.
@@ -26,12 +27,7 @@ use PHPMD\AbstractTestCase;
  */
 class ShortMethodNameTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     *
-     * @return void
-     */
-    public function testRuleAppliesToFunctionWithNameShorterThanThreshold()
+    public function testRuleAppliesToFunctionWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 54);
@@ -40,12 +36,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameEqualToThreshold
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesToFunctionWithNameEqualToThreshold()
+    public function testRuleNotAppliesToFunctionWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
@@ -54,12 +45,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameLongerThanThreshold
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 54);
@@ -68,12 +54,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     *
-     * @return void
-     */
-    public function testRuleAppliesToMethodWithNameShorterThanThreshold()
+    public function testRuleAppliesToMethodWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
@@ -82,12 +63,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameEqualToThreshold
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesToMethodWithNameEqualToThreshold()
+    public function testRuleNotAppliesToMethodWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 50);
@@ -96,12 +72,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesToMethodWithNameLongerThanThreshold()
+    public function testRuleNotAppliesToMethodWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 52);
@@ -110,12 +81,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     *
-     * @return void
-     */
-    public function testRuleNotAppliesToMethodWithShortNameWhenException()
+    public function testRuleNotAppliesToMethodWithShortNameWhenException(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 100);
@@ -125,26 +91,25 @@ class ShortMethodNameTest extends AbstractTestCase
     }
 
     /**
-     * testRuleAlsoWorksWithoutExceptionListConfigured
-     *
-     * @return void
      * @since 2.2.2
      * @link https://github.com/phpmd/phpmd/issues/80
      * @link https://github.com/phpmd/phpmd/issues/270
      */
-    public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock()
-    {
-        $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 100);
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethodMock());
-    }
-
-    public function testRuleAppliesAlsoWithoutExceptionListConfigured()
+    public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 100);
         $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
+        $rule->apply($this->getMethodMock());
+    }
+
+    public function testRuleAppliesAlsoWithoutExceptionListConfigured(): void
+    {
+        $rule = new ShortMethodName();
+        $rule->addProperty('minimum', 100);
+        $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethod());
     }
 }

@@ -15,23 +15,13 @@
  * @link http://phpmd.org/
  */
 
-/**
- * Some class that stands as an example for classes not following PSR-0.
- *
- * @author Gerrit Addiks <gerrit@addiks.de>
- */
-class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
+class testRuleNotAppliesToVariablesFromExceptionsPattern
 {
-    /**
-     * A method that returns foo, bar and baz.
-     */
-    public function getFooBarBaz(): array
+    private $fooBar;
+
+    public function setFooBar($fooBar)
     {
-        return ['foo', 'bar', 'baz'];
+        $this->fooBar = $fooBar;
     }
 
-    public function apply(\PHPMD\AbstractNode $node): void
-    {
-
-    }
 }

@@ -33,11 +33,8 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     /**
      * This method checks if a parameter is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->getParameters() as $parameter) {
             if (!$this->isValid($parameter->getName())) {

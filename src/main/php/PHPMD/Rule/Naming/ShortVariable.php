@@ -23,6 +23,10 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Rule\TraitAware;
+use PHPMD\RuleProperty\Option;
+use PHPMD\RuleProperty\Threshold;
+use PHPMD\RuleProperty\Matcher;
+use PHPMD\RuleProperty\MatchList;
 
 /**
  * This rule class will detect variables, parameters and properties with short
@@ -30,24 +34,31 @@ use PHPMD\Rule\TraitAware;
  */
 class ShortVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
+    #[Threshold(['threshold', 'minimum'])]
+    public int $threshold;
+
+    /** @SuppressWarnings(LongVariable) */
+    #[Option]
+    public bool $allowShortVariablesInLoop = true;
+
+    #[MatchList]
+    public Matcher $exceptions;
+
     /**
      * Temporary map holding variables that were already processed in the
      * current context.
      *
-     * @var array(string=>boolean)
+     * @var array<string, bool>
      */
-    protected $processedVariables = [];
+    protected array $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
@@ -65,11 +76,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
-    protected function applyClass(AbstractNode $node)
+    protected function applyClass(AbstractNode $node): void
     {
         $fields = $node->findChildrenOfType('FieldDeclaration');
         foreach ($fields as $field) {
@@ -86,11 +94,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
-    protected function applyNonClass(AbstractNode $node)
+    protected function applyNonClass(AbstractNode $node): void
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
         foreach ($declarators as $declarator) {
@@ -107,11 +112,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the variable name of the given node is greater/equal to the
      * configured threshold or if the given node is an allowed context.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    protected function checkNodeImage(AbstractNode $node)
+    protected function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -121,15 +123,10 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Template method that performs the real node image check.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    protected function checkMinimumLength(AbstractNode $node)
+    protected function checkMinimumLength(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
-
-        if ($threshold <= strlen($node->getImage()) - 1) {
+        if ($this->threshold <= \strlen($node->getImage()) - 1) {
             return;
         }
 
@@ -137,40 +134,19 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+        if ($this->exceptions->contains(substr($node->getImage(), 1))) {
             return;
         }
 
-        $this->addViolation($node, [$node->getImage(), $threshold]);
-    }
-
-    /**
-     * Gets array of exceptions from property
-     *
-     * @return array
-     */
-    protected function getExceptionsList()
-    {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
-        }
-
-        return explode(',', $exceptions);
+        $this->addViolation($node, [$node->getImage(), $this->threshold]);
     }
 
     /**
      * Checks if a short name is acceptable in the current context. For the
      * moment these contexts are the init section of a for-loop and short
      * variable names in catch-statements.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
      */
-    protected function isNameAllowedInContext(AbstractNode $node)
+    protected function isNameAllowedInContext(AbstractNode $node): bool
     {
         $parent = $node->getParent();
 
@@ -184,14 +160,11 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     }
 
     /**
-     * Checks if a short name is initialized within a foreach loop statement
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * Checks if a short name is initialized within a foreach loop statement.
      */
-    protected function isInitializedInLoop(AbstractNode $node)
+    protected function isInitializedInLoop(AbstractNode $node): bool
     {
-        if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
+        if (!$this->allowShortVariablesInLoop) {
             return false;
         }
 
@@ -211,17 +184,14 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Returns an array of parent nodes of the specified type
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return array
      */
-    protected function getParentsOfType(AbstractNode $node, $type)
+    protected function getParentsOfType(AbstractNode $node, string $type): array
     {
         $parents = [];
 
         $parent = $node->getParent();
 
-        while (is_object($parent)) {
+        while (\is_object($parent)) {
             if ($parent->isInstanceOf($type)) {
                 $parents[] = $parent;
             }
@@ -234,15 +204,11 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the given node is a direct or indirect child of a node with
      * the given type.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @param string $type
-     * @return boolean
      */
-    protected function isChildOf(AbstractNode $node, $type)
+    protected function isChildOf(AbstractNode $node, string $type): bool
     {
         $parent = $node->getParent();
-        while (is_object($parent)) {
+        while (\is_object($parent)) {
             if ($parent->isInstanceOf($type)) {
                 return true;
             }
@@ -254,32 +220,24 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Resets the already processed nodes.
-     *
-     * @return void
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
         $this->processedVariables = [];
     }
 
     /**
      * Flags the given node as already processed.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    protected function addProcessed(AbstractNode $node)
+    protected function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }
 
     /**
      * Checks if the given node was already processed.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
      */
-    protected function isNotProcessed(AbstractNode $node)
+    protected function isNotProcessed(AbstractNode $node): bool
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }

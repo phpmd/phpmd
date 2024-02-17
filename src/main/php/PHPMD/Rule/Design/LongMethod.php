@@ -31,11 +31,8 @@ class LongMethod extends AbstractRule implements FunctionAware, MethodAware
     /**
      * This method checks the lines of code length for the given function or
      * method node against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
 

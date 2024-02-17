@@ -23,6 +23,8 @@ use PHPMD\Node\EnumNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
+use PHPMD\RuleProperty\RulePropertySetter;
+use RuntimeException;
 
 /**
  * This is the abstract base class for pmd rules.
@@ -251,10 +253,12 @@ abstract class AbstractRule implements Rule
     }
 
     /**
-     * Adds a configuration property to this rule instance.
+     * Add a configuration property to this rule instance.
      */
-    public function addProperty(string $name, string $value): void
+    public function addProperty(string $name, mixed $value): void
     {
+        RulePropertySetter::setValue($this, $name, $value);
+
         $this->properties[$name] = $value;
     }
 
@@ -270,7 +274,7 @@ abstract class AbstractRule implements Rule
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    protected function getProperty(string $name, mixed $default = null): mixed
+    public function getProperty(string $name, mixed $default = null): mixed
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
@@ -376,9 +380,6 @@ abstract class AbstractRule implements Rule
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    abstract public function apply(AbstractNode $node);
+    abstract public function apply(AbstractNode $node): void;
 }

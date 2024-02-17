@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use OutOfBoundsException;
+
 /**
  * Base interface for a PHPMD rule.
  *
@@ -130,10 +132,24 @@ interface Rule
     public function addProperty(string $name, string $value): void;
 
     /**
+     * Returns the value of a configured property
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param mixed $default An optional default value to fall back instead of throwing an exception.
+     * @return mixed The value of a configured property.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
+     * no default value to fall back was given.
+     */
+    public function getProperty(string $name, mixed $default = null): mixed;
+
+    /**
      * Returns the value of a configured property as a boolean or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
     public function getBooleanProperty(string $name): bool;
 
@@ -141,16 +157,13 @@ interface Rule
      * Returns the value of a configured property as an integer or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
     public function getIntProperty(string $name): int;
 
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node);
+    public function apply(AbstractNode $node): void;
 }

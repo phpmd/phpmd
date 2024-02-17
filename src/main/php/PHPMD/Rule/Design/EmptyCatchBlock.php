@@ -33,11 +33,8 @@ class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
     /**
      * This method checks if a given function or method contains an empty catch block
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
             $scope = $catchBlock->getFirstChildOfType('ScopeStatement');

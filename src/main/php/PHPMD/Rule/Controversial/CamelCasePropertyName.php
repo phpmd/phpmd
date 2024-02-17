@@ -33,11 +33,8 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
     /**
      * This method checks if a property is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $allowUnderscore = $this->getBooleanProperty('allow-underscore');
 

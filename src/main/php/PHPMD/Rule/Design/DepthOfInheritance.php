@@ -29,11 +29,8 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
     /**
      * This method checks the number of parents for the given class
      * node.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         try {
             $threshold = $this->getIntProperty('maximum');

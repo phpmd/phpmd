@@ -21,6 +21,7 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\RuleProperty\RulePropertySetter;
 use RuntimeException;
 use Symfony\Component\Yaml\Yaml;
 
@@ -255,12 +256,12 @@ class RuleSetFactory
      */
     private function isIncluded(Rule $rule, \SimpleXMLElement|\ArrayAccess|array $ruleSetNode): bool
     {
-        $excludes = (is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
+        $excludes = (\is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
             ?? $ruleSetNode['exclude']
             ?? [];
 
         foreach ($excludes as $exclude) {
-            $name = is_string($exclude) ? $exclude : (string)($exclude['name'] ?? '');
+            $name = \is_string($exclude) ? $exclude : (string)($exclude['name'] ?? '');
 
             if ($rule->getName() === $name) {
                 return false;
@@ -447,6 +448,8 @@ class RuleSetFactory
                 $this->addProperty($rule, $node);
             }
         }
+
+        RulePropertySetter::setDefaultValues($rule);
     }
 
     /**

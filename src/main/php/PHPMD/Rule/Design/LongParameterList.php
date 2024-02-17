@@ -30,11 +30,8 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
     /**
      * This method checks the number of arguments for the given function or method
      * node against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $count = $node->getParameterCount();

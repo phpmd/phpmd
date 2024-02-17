@@ -38,12 +38,9 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
     protected $exceptions;
 
     /**
-     * Check if a class or interface name is below the minimum configured length and emit a rule violation
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * Check if a class or interface name is below the minimum configured length and emit a rule violation.
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $classOrInterfaceName = $node->getName();

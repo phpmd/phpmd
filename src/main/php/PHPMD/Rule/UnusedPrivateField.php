@@ -39,11 +39,8 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * This method checks that all private class properties are at least accessed
      * by one method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         /** @var ClassNode $field */
         foreach ($this->collectUnusedPrivateFields($node) as $field) {

@@ -30,11 +30,8 @@ class ExitExpression extends AbstractRule implements MethodAware, FunctionAware
     /**
      * This method checks if a given function or method contains an exit-expression
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('ExitExpression') as $exit) {
             $this->addViolation($exit, [$node->getType(), $node->getName()]);

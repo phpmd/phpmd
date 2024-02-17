@@ -50,9 +50,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * that use assignment instead of comparison.
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $statements = $this->getStatements($node);
         $expressions = $this->getExpressions($statements);

@@ -31,6 +31,9 @@ class ASTNode extends \PHPMD\AbstractNode
      */
     private $fileName = null;
 
+    /** @var Annotations|null */
+    private $annotations = null;
+
     /**
      * Constructs a new ast node instance.
      *
@@ -55,7 +58,11 @@ class ASTNode extends \PHPMD\AbstractNode
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {
-        return false;
+        if ($this->annotations === null) {
+            $this->annotations = new Annotations($this);
+        }
+
+        return $this->annotations->suppresses($rule);
     }
 
     /**

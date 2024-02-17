@@ -37,11 +37,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     /**
      * This method checks that all local variables within the given function or
      * method are used at least one time.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->images = [];
 

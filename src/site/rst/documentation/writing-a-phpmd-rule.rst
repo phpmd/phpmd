@@ -29,7 +29,7 @@ the application during the source analysis phase. ::
 
   class Com_Example_Rule_NoFunctions extends \PHPMD\AbstractRule
   {
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -58,7 +58,7 @@ the rule will be called for functions found in the analyzed source code. ::
          extends \PHPMD\AbstractRule
       implements \PHPMD\Rule\FunctionAware
   {
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -71,7 +71,7 @@ method from it's parent class `\\PHPMD\\AbstractRule`__. ::
 
   class Com_Example_Rule_NoFunctions // ...
   {
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           $this->addViolation($node);
       }
@@ -160,7 +160,7 @@ PHPMD knows that this rule will only be called for classes. ::
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -179,7 +179,7 @@ of the metric as documented in PHP_Depends `metric catalog`__. ::
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           $npm = $node->getMetric('npm');
           if ($npm < self::MINIMUM || $npm > self::MAXIMUM) {
@@ -257,7 +257,7 @@ the configurable properties. ::
          extends \PHPMD\AbstractRule
       implements \PHPMD\Rule\ClassAware
   {
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           $npm = $node->getMetric('npm');
           if ($npm < $this->getIntProperty('minimum') ||
@@ -309,7 +309,7 @@ values for the placeholders ``{0}``, ``{1}`` and ``{2}`` ::
          extends \PHPMD\AbstractRule
       implements \PHPMD\Rule\ClassAware
   {
-      public function apply(\PHPMD\AbstractNode $node)
+      public function apply(\PHPMD\AbstractNode $node): void
       {
           $min = $this->getIntProperty('minimum');
           $max = $this->getIntProperty('maximum');
@@ -360,7 +360,7 @@ interfaces `\\PHPMD\\Rule\\FunctionAware`__ and `\\PHPMD\\Rule\\MethodAware`__.
 
   class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
   {
-      public function apply(AbstractNode $node)
+      public function apply(AbstractNode $node): void
       {
           foreach ($node->findChildrenOfType('GotoStatement') as $goto) {
               $this->addViolation($goto, array($node->getType(), $node->getName()));

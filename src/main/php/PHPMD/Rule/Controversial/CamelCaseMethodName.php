@@ -52,11 +52,8 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     /**
      * This method checks if a method is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $methodName = $node->getName();
         if (!in_array($methodName, $this->ignoredMethods)) {

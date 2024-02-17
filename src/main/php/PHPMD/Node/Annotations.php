@@ -17,6 +17,7 @@
 
 namespace PHPMD\Node;
 
+use BadMethodCallException;
 use PHPMD\Rule;
 
 /**
@@ -45,7 +46,18 @@ class Annotations
      */
     public function __construct(\PHPMD\AbstractNode $node)
     {
-        $comment = $node->getDocComment();
+        try {
+            $comment = $node->getDocComment();
+        } catch (BadMethodCallException) {
+            $comment = null;
+        }
+
+        try {
+            $comment ??= $node->getComment();
+        } catch (BadMethodCallException) {
+            $comment ??= null;
+        }
+
         if ($comment === null) {
             return;
         }

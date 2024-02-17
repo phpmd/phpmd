@@ -38,11 +38,8 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($this->isAbstractMethod($node)) {
             return;

@@ -35,11 +35,8 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
 {
     /**
      * Loops trough all class or function nodes and looks for '@' sign.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {

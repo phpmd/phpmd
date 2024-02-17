@@ -65,12 +65,9 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     protected $currentNamespace = '';
 
     /**
-     * Gets a list of loops in a node and iterates over them
-     *
-     * @param AbstractNode $node
-     * @return void
+     * Gets a list of loops in a node and iterates over them.
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
             $this->applyOnClassMethods($node);

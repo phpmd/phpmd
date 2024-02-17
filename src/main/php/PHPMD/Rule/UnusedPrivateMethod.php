@@ -33,11 +33,8 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
-     *
-     * @param AbstractNode $class
-     * @return void
      */
-    public function apply(AbstractNode $class)
+    public function apply(AbstractNode $class): void
     {
         /** @var ClassNode $node */
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
