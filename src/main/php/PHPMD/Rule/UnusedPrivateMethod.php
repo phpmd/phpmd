@@ -102,15 +102,39 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method removes all used methods from the given methods array.
      *
      * @param ClassNode $class
-     * @param MethodNode[] $methods
-     * @return ASTMethodPostfix[]
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
      */
     protected function removeUsedMethods(ClassNode $class, array $methods)
     {
+        // $this->privateMethod() makes "privateMethod" marked as used
+        // as an explicit call
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
-            /** @var $postfix ASTNode */
             if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
+            }
+        }
+
+        // [$this 'privateMethod'] makes "privateMethod" marked as used
+        // as very likely to be used as a callable value
+        foreach ($class->findChildrenOfType('Variable') as $variable) {
+            if ($this->isClassScope($class, $variable) && $variable->getImage() === '$this') {
+                $parent = $variable->getParent();
+
+                if ($parent instanceof ASTNode && $parent->isInstanceOf('ArrayElement')) {
+                    $array = $parent->getParent();
+
+                    if ($array instanceof ASTNode
+                        && $array->isInstanceOf('Array')
+                        && count($array->getChildren()) === 2
+                    ) {
+                        $secondElement = $array->getChild(1)->getChild(0);
+
+                        if ($secondElement->isInstanceOf('Literal')) {
+                            unset($methods[strtolower(substr($secondElement->getImage(), 1, -1))]);
+                        }
+                    }
+                }
             }
         }
 
