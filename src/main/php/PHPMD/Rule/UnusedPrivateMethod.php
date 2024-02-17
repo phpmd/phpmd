@@ -17,12 +17,17 @@
 
 namespace PHPMD\Rule;
 
-use PDepend\Source\AST\ASTMethodPostfix;
+use OutOfBoundsException;
+use PDepend\Source\AST\AbstractASTCombinationType;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTType;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use SplObjectStorage;
 
 /**
  * This rule collects all private methods in a class that aren't used in any
@@ -30,6 +35,12 @@ use PHPMD\Node\MethodNode;
  */
 class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
+    /** @var SplObjectStorage */
+    private $selfVariableCache;
+
+    /** @var SplObjectStorage */
+    private $parametersForScope;
+
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
@@ -39,6 +50,8 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $class)
     {
+        $this->selfVariableCache = new SplObjectStorage();
+
         /** @var ClassNode $node */
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, array($node->getImage()));
@@ -107,6 +120,13 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function removeUsedMethods(ClassNode $class, array $methods)
     {
+        $this->parametersForScope = new SplObjectStorage();
+
+        foreach ($class->getMethods() as $method) {
+            list($parameters, $scope) = $method->getNode()->getChildren();
+            $this->parametersForScope->offsetSet($scope, $parameters);
+        }
+
         $methods = $this->removeExplicitCalls($class, $methods);
         $methods = $this->removeCallableArrayRepresentations($class, $methods);
 
@@ -141,7 +161,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
     {
         foreach ($class->findChildrenOfType('Variable') as $variable) {
-            if ($this->isClassScope($class, $variable) && $variable->getImage() === '$this') {
+            if ($this->isInstanceOfTheCurrentClass($class, $variable)) {
                 $method = $this->getMethodNameFromArraySecondElement($variable->getParent());
 
                 if ($method) {
@@ -192,12 +212,142 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     {
         $owner = $postfix->getParent()->getChild(0);
 
+        if ($owner->isInstanceOf('Variable')) {
+            return $this->isInstanceOfTheCurrentClass($class, $owner);
+        }
+
         return (
             $owner->isInstanceOf('MethodPostfix') ||
             $owner->isInstanceOf('SelfReference') ||
             $owner->isInstanceOf('StaticReference') ||
-            strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
+    }
+
+    protected function isInstanceOfTheCurrentClass(ClassNode $class, ASTNode $variable)
+    {
+        if ($this->selfVariableCache->offsetExists($variable)) {
+            return $this->selfVariableCache->offsetGet($variable);
+        }
+
+        $result = $this->calculateInstanceOfTheCurrentClass($class, $variable);
+        $this->selfVariableCache->offsetSet($variable, $result);
+
+        return $result;
+    }
+
+    protected function calculateInstanceOfTheCurrentClass(ClassNode $class, ASTNode $variable)
+    {
+        $name = $variable->getImage();
+
+        if (strcasecmp($name, '$this') === 0) {
+            return true;
+        }
+
+        $scope = $variable->getParent();
+
+        while ($scope && !$scope->isInstanceOf('Scope')) {
+            $scope = $scope->getParent();
+        }
+
+        if (!$scope) {
+            return false;
+        }
+
+        $lastWriting = null;
+        $scopeNode = $scope->getNode();
+
+        if ($this->parametersForScope->offsetExists($scopeNode)) {
+            /** @var ASTFormalParameter $parameter */
+            foreach ($this->parametersForScope->offsetGet($scopeNode)->getChildren() as $parameter) {
+                if ($parameter->hasType() && $parameter->getChild(1)->getImage() === $name) {
+                    $lastWriting = $parameter->getType();
+                }
+            }
+        }
+
+        foreach ($scope->findChildrenOfType('Variable') as $occurrence) {
+            // Only care about occurrences of the same variable
+            if ($occurrence->getImage() !== $name) {
+                continue;
+            }
+
+            // Only check occurrences before, stop when found current node
+            if ($occurrence === $variable) {
+                break;
+            }
+
+            $parent = $occurrence->getParent();
+
+            if ($parent->isInstanceOf('AssignmentExpression')) {
+                $lastWriting = $this->getChildIfExist($parent, 1);
+            }
+        }
+
+        if ($lastWriting instanceof ASTType) {
+            return $this->canBeCurrentClassInstance($class, $lastWriting);
+        }
+
+        if (!($lastWriting instanceof AbstractNode)) {
+            return false;
+        }
+
+        if ($lastWriting->isInstanceOf('CloneExpression') && $lastWriting->ch) {
+            $cloned = $this->getChildIfExist($lastWriting, 0);
+
+            return $cloned
+                && $cloned->isInstanceOf('Variable')
+                && $this->isInstanceOfTheCurrentClass($class, $cloned);
+        }
+
+        if ($lastWriting->isInstanceOf('AllocationExpression')) {
+            $value = $this->getChildIfExist($lastWriting, 0);
+
+            return $value
+                && ($value->isInstanceOf('SelfReference') || $value->isInstanceOf('StaticReference'));
+        }
+
+        return false;
+    }
+
+    protected function canBeCurrentClassInstance(ClassNode $class, ASTType $type)
+    {
+        if ($type instanceof AbstractASTCombinationType) {
+            foreach ($type->getChildren() as $child) {
+                if ($child instanceof ASTType && $this->canBeCurrentClassInstance($class, $child)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        if ($type instanceof ASTClassOrInterfaceReference) {
+            return $this->representCurrentClassName($class, $type->getImage());
+        }
+
+        return false;
+    }
+
+    protected function representCurrentClassName(ClassNode $class, $name)
+    {
+        return in_array($name, array(
+            'self',
+            'static',
+            $class->getFullQualifiedName(),
+        ), true);
+    }
+
+    private function getChildIfExist($parent, $index)
+    {
+        try {
+            if ($parent instanceof ASTNode) {
+                return $parent->getChild($index);
+            }
+        } catch (OutOfBoundsException $e) {
+            // fallback to null
+        }
+
+        return null;
     }
 }
