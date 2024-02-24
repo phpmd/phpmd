@@ -40,7 +40,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-          tools: composer:v2
+          tools: composer
 
       - name: Cache library packages
         id: composer-cache
@@ -57,6 +57,10 @@ jobs:
           path: src/test/vendor
           key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
           restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
+
+      - name: Downgrade PHPUnit
+        if: matrix.php < 5.6
+        run: cd src/test && composer require phpunit/phpunit:^4.8.36 --no-update --no-interaction --dev
 
       - name: Upgrade PHPUnit
         if: matrix.php >= 7.2
