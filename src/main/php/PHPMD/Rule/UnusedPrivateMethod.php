@@ -292,7 +292,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return false;
         }
 
-        if ($lastWriting->isInstanceOf('CloneExpression') && $lastWriting->ch) {
+        if ($lastWriting->isInstanceOf('CloneExpression')) {
             $cloned = $this->getChildIfExist($lastWriting, 0);
 
             return $cloned
@@ -312,6 +312,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
 
     protected function canBeCurrentClassInstance(ClassNode $class, ASTType $type)
     {
+        // canBeCurrentClassInstance
         if ($type instanceof AbstractASTCombinationType) {
             foreach ($type->getChildren() as $child) {
                 if ($child instanceof ASTType && $this->canBeCurrentClassInstance($class, $child)) {

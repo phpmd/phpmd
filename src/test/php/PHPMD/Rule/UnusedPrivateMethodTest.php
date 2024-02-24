@@ -250,4 +250,34 @@ class UnusedPrivateMethodTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyToSelfType()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyToStaticType()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRuleDoesNotApplyToClone()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
 }

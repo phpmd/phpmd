@@ -5,6 +5,12 @@
   "type": "library",
   "require": {
     "php": ">=5.3.9",
-    "phpunit/phpunit": "^4.8.36 || ^5.7.27"
+    "phpunit/phpunit": "5.7.27"
+  },
+  "config": {
+    "process-timeout": 900,
+    "platform": {
+      "php": "7.2.0"
+    }
   }
 }
