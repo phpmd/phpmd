@@ -68,11 +68,11 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php+
+        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress${{ matrix.php >= 8 && ' --ignore-platform-req=php+' || '' }}
 
       - name: Install test dependencies
         if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable --ignore-platform-req=php+
+        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable${{ matrix.php >= 8 && ' --ignore-platform-req=php+' || '' }}
 
       - name: Fix PHP compatibility
         run: php src/test/php/fix-php-compatibility.php

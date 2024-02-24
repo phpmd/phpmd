@@ -20,7 +20,7 @@ class ResultCacheStateTest extends TestCase
     /** @var ResultCacheState */
     private $state;
 
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->key   = new ResultCacheKey(true, 'baseline', array(), array(), 123);
         $this->state = new ResultCacheState($this->key, array());
