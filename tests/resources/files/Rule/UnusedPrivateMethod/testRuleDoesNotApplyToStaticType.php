@@ -27,7 +27,7 @@ class testRuleDoesNotApplyToStaticType
 
     }
 
-    public function bar(Bar|(static&StuffInterface)|Biz $obj)
+    public function bar(Bar|(Biz&StuffInterface)|self $obj)
     {
         $obj->foo1();
 

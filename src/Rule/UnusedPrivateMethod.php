@@ -300,7 +300,11 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             $parent = $occurrence->getParent();
 
             if ($parent->isInstanceOf('AssignmentExpression')) {
-                $lastWriting = $this->getChildIfExist($parent, 1);
+                $assigned = $this->getChildIfExist($parent, 0);
+
+                if ($assigned && $assigned->getImage() === $name) {
+                    $lastWriting = $this->getChildIfExist($parent, 1);
+                }
             }
         }
 
@@ -325,6 +329,10 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 
             return $value
                 && ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf('StaticReference'));
+        }
+
+        if ($lastWriting->isInstanceOf('Variable') && $lastWriting->getImage() !== $name) {
+            return $this->isInstanceOfTheCurrentClass($class, $lastWriting);
         }
 
         return false;
