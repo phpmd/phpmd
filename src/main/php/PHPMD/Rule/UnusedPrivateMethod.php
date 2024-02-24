@@ -160,7 +160,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
     {
-        foreach ($class->findChildrenOfType('Variable') as $variable) {
+        foreach ($class->findChildrenOfTypeVariable() as $variable) {
             if ($this->isInstanceOfTheCurrentClass($class, $variable)) {
                 $method = $this->getMethodNameFromArraySecondElement($variable->getParent());
 
@@ -266,7 +266,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
             }
         }
 
-        foreach ($scope->findChildrenOfType('Variable') as $occurrence) {
+        foreach ($scope->findChildrenOfTypeVariable() as $occurrence) {
             // Only care about occurrences of the same variable
             if ($occurrence->getImage() !== $name) {
                 continue;
