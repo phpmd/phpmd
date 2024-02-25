@@ -173,7 +173,7 @@ abstract class AbstractNode
     }
 
     /**
-     * Tests if this node represents the the given type.
+     * Tests if this node represents the given type.
      *
      * @param string $type The expected node type.
      * @return boolean
