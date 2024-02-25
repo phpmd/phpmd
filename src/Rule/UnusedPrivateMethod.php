@@ -24,7 +24,6 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTExpression;
-use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTNode as PDependNode;
@@ -36,6 +35,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Utility\LastVariableWriting;
 use RuntimeException;
 use SplObjectStorage;
 
@@ -274,37 +274,14 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return false;
         }
 
-        $lastWriting = null;
-        $scopeNode = $scope->getNode();
+        $lastWritingFinder = new LastVariableWriting($variable);
+        $lastWriting = $lastWritingFinder->findInScope($scope);
 
-        if ($this->parametersForScope->offsetExists($scopeNode)) {
-            /** @var ASTFormalParameter $parameter */
-            foreach ($this->parametersForScope->offsetGet($scopeNode)->getChildren() as $parameter) {
-                if ($parameter->hasType() && $parameter->getChild(1)->getImage() === $name) {
-                    $lastWriting = $parameter->getType();
-                }
-            }
-        }
+        if (!$lastWriting) {
+            $scopeNode = $scope->getNode();
 
-        foreach ($scope->findChildrenOfTypeVariable() as $occurrence) {
-            // Only care about occurrences of the same variable
-            if ($occurrence->getImage() !== $name) {
-                continue;
-            }
-
-            // Only check occurrences before, stop when found current node
-            if ($occurrence === $variable) {
-                break;
-            }
-
-            $parent = $occurrence->getParent();
-
-            if ($parent->isInstanceOf('AssignmentExpression')) {
-                $assigned = $this->getChildIfExist($parent, 0);
-
-                if ($assigned && $assigned->getImage() === $name) {
-                    $lastWriting = $this->getChildIfExist($parent, 1);
-                }
+            if ($this->parametersForScope->offsetExists($scopeNode)) {
+                $lastWriting = $lastWritingFinder->findInParameters($this->parametersForScope->offsetGet($scopeNode));
             }
         }
 
@@ -312,7 +289,17 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return $this->canBeCurrentClassInstance($class, $lastWriting);
         }
 
-        if (!($lastWriting instanceof AbstractNode)) {
+        return $this->isWritingOfSelfType($class, $name, $lastWriting);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function isWritingOfSelfType(ClassNode $class, $name, $lastWriting)
+    {
+        if (!($lastWriting instanceof ASTNode)) {
             return false;
         }
 
