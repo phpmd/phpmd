@@ -17,15 +17,13 @@
 
 namespace PHPMD\Utility;
 
-use InvalidArgumentException;
-use OutOfBoundsException;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTType;
 use PHPMD\Node\ASTNode;
 
 /**
- * Utility class to provide string checks and manipulations
+ * Utility class to find the last time a variable was written before an occurrence of it.
  */
 final class LastVariableWriting
 {
@@ -56,10 +54,10 @@ final class LastVariableWriting
             $parent = $occurrence->getParent();
 
             if ($parent->isInstanceOf('AssignmentExpression')) {
-                $assigned = $this->getChildIfExist($parent, 0);
+                $assigned = Seeker::fromNode($parent)->getChildIfExist(0);
 
                 if ($assigned && $assigned->getImage() === $name) {
-                    $lastWriting = $this->getChildIfExist($parent, 1);
+                    $lastWriting = Seeker::fromNode($parent)->getChildIfExist(1);
                 }
             }
         }
@@ -77,20 +75,6 @@ final class LastVariableWriting
             if ($parameter->hasType() && $parameter->getChild(1)->getImage() === $name) {
                 return $parameter->getType();
             }
-        }
-
-        return null;
-    }
-
-    /** @return ASTNode|null */
-    private function getChildIfExist($parent, $index)
-    {
-        try {
-            if ($parent instanceof ASTNode) {
-                return $parent->getChild($index);
-            }
-        } catch (OutOfBoundsException $e) {
-            // fallback to null
         }
 
         return null;
