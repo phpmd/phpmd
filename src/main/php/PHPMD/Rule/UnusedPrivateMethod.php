@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule;
 
-use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTCombinationType;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTType;
@@ -27,6 +26,7 @@ use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Utility\LastVariableWriting;
+use PHPMD\Utility\Seeker;
 use SplObjectStorage;
 
 /**
@@ -244,11 +244,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return true;
         }
 
-        $scope = $variable->getParent();
-
-        while ($scope && !$scope->isInstanceOf('Scope')) {
-            $scope = $scope->getParent();
-        }
+        $scope = Seeker::fromNode($variable)->getParentOfType('Scope');
 
         if (!$scope) {
             return false;
@@ -269,7 +265,8 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return $this->canBeCurrentClassInstance($class, $lastWriting);
         }
 
-        return $this->isWritingOfSelfType($class, $name, $lastWriting);
+        return ($lastWriting instanceof ASTNode)
+            && $this->isWritingOfSelfType($class, $name, $lastWriting);
     }
 
     /**
@@ -277,14 +274,10 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      *
      * @return bool
      */
-    protected function isWritingOfSelfType(ClassNode $class, $name, $lastWriting)
+    protected function isWritingOfSelfType(ClassNode $class, $name, ASTNode $lastWriting)
     {
-        if (!($lastWriting instanceof ASTNode)) {
-            return false;
-        }
-
         if ($lastWriting->isInstanceOf('CloneExpression')) {
-            $cloned = $this->getChildIfExist($lastWriting, 0);
+            $cloned = Seeker::fromNode($lastWriting)->getChildIfExist(0);
 
             return $cloned
                 && $cloned->isInstanceOf('Variable')
@@ -292,7 +285,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
         }
 
         if ($lastWriting->isInstanceOf('AllocationExpression')) {
-            $value = $this->getChildIfExist($lastWriting, 0);
+            $value = Seeker::fromNode($lastWriting)->getChildIfExist(0);
 
             return $value
                 && ($value->isInstanceOf('SelfReference') || $value->isInstanceOf('StaticReference'));
@@ -332,18 +325,5 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
             'static',
             $class->getFullQualifiedName(),
         ), true);
-    }
-
-    private function getChildIfExist($parent, $index)
-    {
-        try {
-            if ($parent instanceof ASTNode) {
-                return $parent->getChild($index);
-            }
-        } catch (OutOfBoundsException $e) {
-            // fallback to null
-        }
-
-        return null;
     }
 }

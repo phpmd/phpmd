@@ -76,11 +76,12 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode
+     * @return ASTNode|null
      */
     public function getParent()
     {
         $node = $this->node->getParent();
+
         if ($node === null) {
             return null;
         }
