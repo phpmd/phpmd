@@ -25,6 +25,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Utility\CallableArray;
 use PHPMD\Utility\LastVariableWriting;
 use PHPMD\Utility\Seeker;
 use SplObjectStorage;
@@ -162,7 +163,8 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     {
         foreach ($class->findChildrenOfTypeVariable() as $variable) {
             if ($this->isInstanceOfTheCurrentClass($class, $variable)) {
-                $method = $this->getMethodNameFromArraySecondElement($variable->getParent());
+                $method = CallableArray::fromFirstArrayElement($variable->getParent())
+                    ->getMethodNameFromArraySecondElement();
 
                 if ($method) {
                     unset($methods[strtolower($method)]);
@@ -171,33 +173,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
         }
 
         return $methods;
-    }
-
-    /**
-     * Return represented method name if the given element is a 2-items array
-     * and that the second one is a literal static string.
-     *
-     * @param ASTNode|null $parent
-     * @return string|null
-     */
-    protected function getMethodNameFromArraySecondElement($parent)
-    {
-        if ($parent instanceof ASTNode && $parent->isInstanceOf('ArrayElement')) {
-            $array = $parent->getParent();
-
-            if ($array instanceof ASTNode
-                && $array->isInstanceOf('Array')
-                && count($array->getChildren()) === 2
-            ) {
-                $secondElement = $array->getChild(1)->getChild(0);
-
-                if ($secondElement->isInstanceOf('Literal')) {
-                    return substr($secondElement->getImage(), 1, -1);
-                }
-            }
-        }
-
-        return null;
     }
 
     /**

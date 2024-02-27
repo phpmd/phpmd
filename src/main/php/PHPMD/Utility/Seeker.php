@@ -29,6 +29,7 @@ use PHPMD\Node\ASTNode;
  */
 final class Seeker
 {
+    /** @var ASTNode */
     private $node;
 
     private function __construct(ASTNode $node)
