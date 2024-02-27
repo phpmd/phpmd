@@ -34,6 +34,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Utility\CallableArray;
 use PHPMD\Utility\LastVariableWriting;
 use PHPMD\Utility\Seeker;
 use RuntimeException;
@@ -172,9 +173,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     private function removeCallableArrayRepresentations(ClassNode $class, array $methods): array
     {
         foreach ($class->findChildrenOfTypeVariable() as $variable) {
-            $parent = $variable->getParent();
-            if ($parent && $this->isInstanceOfTheCurrentClass($class, $variable)) {
-                $method = $this->getMethodNameFromArraySecondElement($parent);
+            if ($this->isInstanceOfTheCurrentClass($class, $variable)) {
+                $method = CallableArray::fromFirstArrayElement($variable->getParent())
+                    ->getMethodNameFromArraySecondElement();
 
                 if ($method) {
                     unset($methods[strtolower($method)]);
@@ -183,33 +184,6 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         }
 
         return $methods;
-    }
-
-    /**
-     * Return represented method name if the given element is a 2-items array
-     * and that the second one is a literal static string.
-     *
-     * @param AbstractNode<PDependNode> $parent
-     * @throws OutOfBoundsException
-     */
-    private function getMethodNameFromArraySecondElement(AbstractNode $parent): ?string
-    {
-        if ($parent->isInstanceOf(ASTArrayElement::class)) {
-            $array = $parent->getParent();
-
-            if (
-                $array?->isInstanceOf(ASTArray::class)
-                && count($array->getChildren()) === 2
-            ) {
-                $secondElement = $array->getChild(1)->getChild(0);
-
-                if ($secondElement->isInstanceOf(ASTLiteral::class)) {
-                    return substr($secondElement->getImage(), 1, -1);
-                }
-            }
-        }
-
-        return null;
     }
 
     /**
