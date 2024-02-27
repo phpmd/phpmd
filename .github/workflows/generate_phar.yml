@@ -61,6 +61,18 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
+          if [ "$SECRET_KEY" = "" ]
+          then
+            echo "Missing SECRET_KEY";
+          else
+            echo "Writing SECRET_KEY keys.asc";
+          fi
+          if [ "$PASSPHRASE" = "" ]
+          then
+            echo "Missing PASSPHRASE";
+          else
+            echo "Unlocking key using PASSPHRASE";
+          fi
           echo "$SECRET_KEY" > keys.asc;
           echo "$PASSPHRASE" | gpg --batch --import keys.asc;
           sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@phpmd.org --batch --detach-sign --output phpmd.phar.asc phpmd.phar";
