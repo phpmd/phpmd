@@ -45,7 +45,11 @@ It is considered best practice to use the CamelCase notation to name classes.
             ]]>
         </description>
         <priority>1</priority>
-        <properties />
+        <properties>
+            <property name="camelcase-abbreviations"
+                      description="Name should be CamelCase including abbreviations."
+                      value="false" />
+        </properties>
         <example>
             <![CDATA[
 class class_name {
