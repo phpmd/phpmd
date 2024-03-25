@@ -15,8 +15,8 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForValidPropertyName
+class testRuleDoesApplyForAllCapsAbbreviationInProperty
 {
-    public $camelCasePropertyName;
-    public $camelCasePropertyNameWithABBR;
+    public $validPropertyNameUrl;
+    public $invalidPropertyNameURL;
 }
