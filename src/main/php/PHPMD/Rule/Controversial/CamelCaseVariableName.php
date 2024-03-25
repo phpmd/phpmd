@@ -78,6 +78,11 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
             return true;
         }
 
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations') && preg_match('/[A-Z]{2}/', $image) === 1) {
+            return false;
+        }
+
         if ($this->getBooleanProperty('allow-underscore')) {
             if (preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $image)) {
                 return true;
