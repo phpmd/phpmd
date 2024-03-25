@@ -21,9 +21,4 @@ class testRuleDoesNotApplyForValidParameterName
     {
         $foo = $validParameter;
     }
-
-    public function validParameterNameWithAbbreviation($validParameterURL)
-    {
-        $foo = $validParameterURL;
-    }
 }

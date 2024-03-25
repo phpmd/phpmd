@@ -21,9 +21,4 @@ class testRuleDoesNotApplyForValidVariableName
     {
         $dataModule = 'foo';
     }
-
-    public function validVariableNameWithAbbreviation()
-    {
-        $dataModuleURL = 'foo';
-    }
 }

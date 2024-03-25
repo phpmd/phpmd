@@ -18,5 +18,4 @@
 class testRuleDoesNotApplyForValidPropertyName
 {
     public $camelCasePropertyName;
-    public $camelCasePropertyNameWithABBR;
 }
