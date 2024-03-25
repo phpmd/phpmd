@@ -15,7 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyForAllCapsAbbreviationInProperty
+class  testRuleDoesNotApplyForCamelcaseAbbreviation
 {
-    public $invalidPropertyNameURL;
+    public function validVariableName()
+    {
+        $dataModuleUrl = 'foo';
+    }
 }

@@ -20,8 +20,4 @@ class testRuleDoesApplyForAllCapsAbbreviation
     public function invalidCapitalParameterName($invalidParameterURL)
     {
     }
-
-    public function validCapitalParameterName($validParameterUrl)
-    {
-    }
 }

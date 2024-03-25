@@ -62,6 +62,24 @@ class CamelCaseParameterNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule does not apply for camelcase abbreviation
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviation()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        foreach ($this->getClass()->getMethods() as $method) {
+            $rule = new CamelCaseParameterName();
+            $rule->setReport($report);
+            $rule->addProperty('camelcase-abbreviations', 'true');
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
      * Tests that the rule does apply for an invalid parameter name
      * starting with a capital.
      *

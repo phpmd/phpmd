@@ -17,11 +17,6 @@
 
 class testRuleDoesApplyForAllCapsAbbreviation
 {
-    public function validVariableName()
-    {
-        $dataModuleUrl = 'foo';
-    }
-
     public function invalidVariableName()
     {
         $dataModuleURL = 'foo';
