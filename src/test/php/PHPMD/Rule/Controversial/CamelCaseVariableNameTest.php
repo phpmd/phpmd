@@ -42,6 +42,23 @@ class CamelCaseVariableNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule does apply for variable name
+     * with all caps abbreviation.
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviation()
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * Tests that the rule does apply for an invalid variable name
      * starting with a capital.
      *

@@ -15,14 +15,14 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForValidVariableName
+class testRuleDoesApplyForAllCapsAbbreviation
 {
     public function validVariableName()
     {
-        $dataModule = 'foo';
+        $dataModuleUrl = 'foo';
     }
 
-    public function validVariableNameWithAbbreviation()
+    public function invalidVariableName()
     {
         $dataModuleURL = 'foo';
     }
