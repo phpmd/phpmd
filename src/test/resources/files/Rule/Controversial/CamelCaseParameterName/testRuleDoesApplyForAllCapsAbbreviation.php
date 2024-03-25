@@ -15,15 +15,13 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesNotApplyForValidParameterName
+class testRuleDoesApplyForAllCapsAbbreviation
 {
-    public function validParameterName($validParameter)
+    public function invalidCapitalParameterName($invalidParameterURL)
     {
-        $foo = $validParameter;
     }
 
-    public function validParameterNameWithAbbreviation($validParameterURL)
+    public function validCapitalParameterName($validParameterUrl)
     {
-        $foo = $validParameterURL;
     }
 }

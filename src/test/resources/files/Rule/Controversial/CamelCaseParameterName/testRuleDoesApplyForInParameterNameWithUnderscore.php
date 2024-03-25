@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyForInparameterNameWithUnderscore
+class testRuleDoesApplyForInParameterNameWithUnderscore
 {
     public function invalidParameterNameWithUnderscore($invalid_parameter)
     {
