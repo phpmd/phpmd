@@ -56,7 +56,8 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
     private function isValid($propertyName)
     {
         // disallow any consecutive uppercase letters
-        if ($this->getBooleanProperty('camelcase-abbreviations') && preg_match('/[A-Z]{2}/', $propertyName) === 1) {
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $propertyName) === 1) {
             return false;
         }
 
