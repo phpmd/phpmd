@@ -37,6 +37,28 @@ Example: ::
 | camelcase-abbreviations           | false         | Name should be CamelCase including abbreviations.       |
 +-----------------------------------+---------------+---------------------------------------------------------+
 
+CamelCaseNamespace
+==================
+
+Since: PHPMD 2.16
+
+A rule to use CamelCase notation to name namespaces.
+
+Example: ::
+
+  use example\name_space;
+
+  class class_name {
+  }
+
++-----------------------------------+---------------+---------------------------------------------------------+
+| Name                              | Default Value | Description                                             |
++===================================+===============+=========================================================+
+| camelcase-abbreviations           | false         | Name should be CamelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
+| exceptions                        |               | Comma-separated class name list of exceptions.          |
++-----------------------------------+---------------+---------------------------------------------------------+
+
 CamelCasePropertyName
 =====================
 

@@ -58,6 +58,35 @@ class class_name {
         </example>
     </rule>
 
+    <rule name="CamelCaseNamespace"
+          since="2.16"
+          message = "The name {0} in namespace {1} is not named in CamelCase."
+          class="PHPMD\Rule\Controversial\CamelCaseNamespace"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+A rule to use CamelCase notation to name namespaces.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="camelcase-abbreviations"
+                      description="Name should be CamelCase including abbreviations."
+                      value="false" />
+            <property name="exceptions"
+                      description="Comma-separated class name list of exceptions"
+                      value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+use example\name_space;
+
+class class_name {
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="CamelCasePropertyName"
           since="0.2"
           message = "The property {0} is not named in camelCase."
