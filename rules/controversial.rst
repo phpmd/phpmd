@@ -107,6 +107,8 @@ This rule has the following properties:
 +-----------------------------------+---------------+---------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
 +-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseParameterName
 ======================
