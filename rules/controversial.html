@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 26 Mar 2024 02:23:57 +0000" />
+    <meta name="date" content="Tue, 26 Mar 2024 09:06:10 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 26 Mar 2024 02:23:57 +0000" />
+    <meta name="DC.date" content="Tue, 26 Mar 2024 09:06:10 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -55,6 +55,17 @@
 }
 </code></pre>
 <table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>camelcase-abbreviations</td><td>false</td><td>Name should be CamelCase including abbreviations.</td></tr></table>
+<a id="camelcasenamespace"></a>
+<h2>CamelCaseNamespace</h2>
+<p>Since: PHPMD 2.16</p>
+<p>A rule to use CamelCase notation to name namespaces.</p>
+<p>Example: :</p>
+<pre><code class="">use example\name_space;
+
+class class_name {
+}
+</code></pre>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>camelcase-abbreviations</td><td>false</td><td>Name should be CamelCase including abbreviations.</td></tr><tr><td>exceptions</td><td></td><td>Comma-separated class name list of exceptions.</td></tr></table>
 <a id="camelcasepropertyname"></a>
 <h2>CamelCasePropertyName</h2>
 <p>Since: PHPMD 0.2</p>
