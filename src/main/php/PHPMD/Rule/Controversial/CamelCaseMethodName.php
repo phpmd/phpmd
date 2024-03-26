@@ -73,6 +73,12 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
 
     protected function isValid($methodName)
     {
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $methodName) === 1) {
+            return false;
+        }
+
         if ($this->getBooleanProperty('allow-underscore-test') && strpos($methodName, 'test') === 0) {
             return preg_match('/^test[a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/', $methodName);
         }

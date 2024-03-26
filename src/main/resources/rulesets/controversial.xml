@@ -136,6 +136,9 @@ It is considered best practice to use the camelCase notation to name methods.
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
                       value="false" />
+            <property name="camelcase-abbreviations"
+                      description="Name should be camelCase including abbreviations."
+                      value="false" />
         </properties>
         <example>
             <![CDATA[
