@@ -90,6 +90,9 @@ class Something
 Avoid passing parameters to methods or constructors and then not using those parameters.
         </description>
         <priority>3</priority>
+        <properties>
+            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
+        </properties>
         <example>
 <![CDATA[
 class Foo
