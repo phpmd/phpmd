@@ -34,7 +34,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: json, imagick
-          tools: composer:v2
+          tools: composer
           coverage: none
 
       - name: Cache library packages

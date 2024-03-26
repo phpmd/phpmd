@@ -76,11 +76,12 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode
+     * @return ASTNode|null
      */
     public function getParent()
     {
         $node = $this->node->getParent();
+
         if ($node === null) {
             return null;
         }
@@ -166,7 +167,6 @@ abstract class AbstractNode
      * Searches recursive for all children of this node that are of variable.
      *
      * @return ASTVariable[]
-     * @todo Cover by a test.
      */
     public function findChildrenOfTypeVariable()
     {
@@ -174,7 +174,7 @@ abstract class AbstractNode
     }
 
     /**
-     * Tests if this node represents the the given type.
+     * Tests if this node represents the given type.
      *
      * @param string $type The expected node type.
      * @return boolean
