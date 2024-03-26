@@ -59,6 +59,8 @@ This rule has the following properties:
 +-----------------------------------+---------------+---------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
 +-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseMethodName
 ===================
@@ -105,6 +107,8 @@ This rule has the following properties:
 +===================================+===============+=========================================================+
 | allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
 +-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseVariableName
 =====================
@@ -127,6 +131,8 @@ This rule has the following properties:
 | Name                              | Default Value | Description                                             |
 +===================================+===============+=========================================================+
 | allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
++-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
 +-----------------------------------+---------------+---------------------------------------------------------+
 
 Remark
