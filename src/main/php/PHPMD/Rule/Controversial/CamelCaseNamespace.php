@@ -38,9 +38,9 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
             $pattern = '/^([A-Z][a-z0-9]+)*$/';
         }
 
-        $exceptions              = $this->getExceptionsList();
-        $fullyQualifiedNamespace = $node->getNamespaceName();
-        $namespaceNames          = $fullyQualifiedNamespace === '' ? array() : explode('\\', $fullyQualifiedNamespace);
+        $exceptions     = $this->getExceptionsList();
+        $fullNamespace  = $node->getNamespaceName();
+        $namespaceNames = $fullNamespace === '' ? array() : explode('\\', $fullNamespace);
 
         foreach ($namespaceNames as $namespaceName) {
             if (isset($exceptions[$namespaceName])) {
@@ -48,7 +48,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
             }
 
             if (!preg_match($pattern, $namespaceName)) {
-                $this->addViolation($node, array($namespaceName, $fullyQualifiedNamespace));
+                $this->addViolation($node, array($namespaceName, $fullNamespace));
             }
         }
     }
