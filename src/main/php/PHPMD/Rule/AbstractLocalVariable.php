@@ -288,12 +288,17 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $parent = $this->getNode($variable->getParent());
 
-        if (!($parent && $parent instanceof ASTArguments)) {
+        if (!($parent instanceof ASTArguments)) {
             return false;
         }
 
         $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-        $function = $this->getNode($parent->getParent());
+        $parentParent = $parent->getParent();
+        if ($parentParent === null) {
+            return false;
+        }
+        $function = $this->getNode($parentParent);
+
         $functionParent = $this->getNode($function->getParent());
         $functionName = $function->getImage();
 

@@ -15,19 +15,10 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUnusedPrivateMethod
+class testRuleDoesApplyForAllCapsAbbreviation
 {
-    private function foo()
+    public function invalidVariableName()
     {
-
-    }
-
-    public function allOfThoseWontMakeItUsed()
-    {
-        foo();
-        $other->foo();
-        array_map([$other, 'foo'], [1]);
-        array_map([$this, 'foo' . 'bar'], [1]);
-        array_map(array($this, 'foo' . 'bar'), [1]);
+        $dataModuleURL = 'foo';
     }
 }

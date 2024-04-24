@@ -15,10 +15,9 @@
  * @link http://phpmd.org/
  */
 
-class testRuleDoesApplyForInparameterNameWithUnderscore
+class testRuleDoesNotApplyForCamelcaseAbbreviation
 {
-    public function invalidParameterNameWithUnderscore($invalid_parameter)
+    public function validCapitalParameterName($validParameterUrl)
     {
-        $foo = $invalid_parameter;
     }
 }

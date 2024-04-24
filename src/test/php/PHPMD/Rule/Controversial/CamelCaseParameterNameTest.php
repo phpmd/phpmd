@@ -31,13 +31,49 @@ class CamelCaseParameterNameTest extends AbstractTest
      *
      * @return void
      */
-    public function testRuleDoesApplyForInparameterNameWithUnderscore()
+    public function testRuleDoesApplyForInParameterNameWithUnderscore()
     {
         $report = $this->getReportWithOneViolation();
 
         foreach ($this->getClass()->getMethods() as $method) {
             $rule = new CamelCaseParameterName();
             $rule->setReport($report);
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
+     * Tests that the rule does apply for all caps abbreviation when not allowed
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviation()
+    {
+        $report = $this->getReportWithOneViolation();
+
+        foreach ($this->getClass()->getMethods() as $method) {
+            $rule = new CamelCaseParameterName();
+            $rule->setReport($report);
+            $rule->addProperty('camelcase-abbreviations', 'true');
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
+     * Tests that the rule does not apply for camelcase abbreviation
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviation()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        foreach ($this->getClass()->getMethods() as $method) {
+            $rule = new CamelCaseParameterName();
+            $rule->setReport($report);
+            $rule->addProperty('camelcase-abbreviations', 'true');
             $rule->addProperty('allow-underscore', 'false');
             $rule->apply($method);
         }

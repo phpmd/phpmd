@@ -1,4 +1,7 @@
 <?php
+
+namespace Invalid\IsNamespace\URL;
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -14,20 +17,6 @@
  * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link http://phpmd.org/
  */
-
-class testRuleAppliesToUnusedPrivateMethod
+class testRuleDoesApplyForNamespaceWithUppercaseAbbreviation
 {
-    private function foo()
-    {
-
-    }
-
-    public function allOfThoseWontMakeItUsed()
-    {
-        foo();
-        $other->foo();
-        array_map([$other, 'foo'], [1]);
-        array_map([$this, 'foo' . 'bar'], [1]);
-        array_map(array($this, 'foo' . 'bar'), [1]);
-    }
 }

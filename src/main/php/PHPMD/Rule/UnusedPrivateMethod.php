@@ -50,7 +50,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * as private and are not used in the same class' context.
      *
      * @param ClassNode $class
-     * @return ASTMethodPostfix[]
+     * @return array<string, MethodNode>
      */
     protected function collectUnusedPrivateMethods(ClassNode $class)
     {
@@ -102,19 +102,82 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method removes all used methods from the given methods array.
      *
      * @param ClassNode $class
-     * @param MethodNode[] $methods
-     * @return ASTMethodPostfix[]
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
      */
     protected function removeUsedMethods(ClassNode $class, array $methods)
     {
+        $methods = $this->removeExplicitCalls($class, $methods);
+        $methods = $this->removeCallableArrayRepresentations($class, $methods);
+
+        return $methods;
+    }
+
+    /**
+     * $this->privateMethod() makes "privateMethod" marked as used as an explicit call.
+     *
+     * @param ClassNode $class
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
+     */
+    protected function removeExplicitCalls(ClassNode $class, array $methods)
+    {
         foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
-            /** @var $postfix ASTNode */
             if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
             }
         }
 
         return $methods;
+    }
+
+    /**
+     * [$this 'privateMethod'] makes "privateMethod" marked as used as very likely to be used as a callable value.
+     *
+     * @param ClassNode $class
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
+     */
+    protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
+    {
+        foreach ($class->findChildrenOfType('Variable') as $variable) {
+            if ($this->isClassScope($class, $variable) && $variable->getImage() === '$this') {
+                $method = $this->getMethodNameFromArraySecondElement($variable->getParent());
+
+                if ($method) {
+                    unset($methods[strtolower($method)]);
+                }
+            }
+        }
+
+        return $methods;
+    }
+
+    /**
+     * Return represented method name if the given element is a 2-items array
+     * and that the second one is a literal static string.
+     *
+     * @param ASTNode|null $parent
+     * @return string|null
+     */
+    protected function getMethodNameFromArraySecondElement($parent)
+    {
+        if ($parent instanceof ASTNode && $parent->isInstanceOf('ArrayElement')) {
+            $array = $parent->getParent();
+
+            if ($array instanceof ASTNode
+                && $array->isInstanceOf('Array')
+                && count($array->getChildren()) === 2
+            ) {
+                $secondElement = $array->getChild(1)->getChild(0);
+
+                if ($secondElement->isInstanceOf('Literal')) {
+                    return substr($secondElement->getImage(), 1, -1);
+                }
+            }
+        }
+
+        return null;
     }
 
     /**
