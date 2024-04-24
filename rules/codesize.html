@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Tue, 02 Apr 2024 19:44:55 +0000" />
+    <meta name="date" content="Wed, 24 Apr 2024 06:59:50 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Tue, 02 Apr 2024 19:44:55 +0000" />
+    <meta name="DC.date" content="Wed, 24 Apr 2024 06:59:50 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -38,7 +38,7 @@
 <a id="cyclomaticcomplexity"></a>
 <h2>CyclomaticComplexity</h2>
 <p>Since: PHPMD 0.1</p>
-<p>Complexity is determined by the number of decision points in a method plus one for the method entry. The decision points are 'if', 'while', 'for', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.</p>
+<p>Complexity is determined by the number of decision points in a method plus one for the method entry. The decision points are 'if', 'while', 'for', 'catch', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.</p>
 <p>Example: :</p>
 <pre><code class="">// Cyclomatic Complexity = 11
 class Foo {
@@ -84,7 +84,7 @@ class Foo {
 <h2>NPathComplexity</h2>
 <p>Since: PHPMD 0.1</p>
 <p>The NPath complexity of a method is the number of acyclic execution paths through that method, that is how many possible outcomes it has.</p>
-<p>A threshold of 200 is generally considered the point where measures should be taken to reduce complexity. </p>
+<p>A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.</p>
 <p>Example: :</p>
 <pre><code class="">function foo() {
     if ($a &gt; 10) {
