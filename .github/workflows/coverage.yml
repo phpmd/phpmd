@@ -39,8 +39,6 @@ jobs:
         with:
           path: vendor
           key: coverage-${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            coverage-${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
