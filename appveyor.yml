@@ -11,14 +11,14 @@ install:
   - cinst -y OpenSSL.Light
   - SET PATH=C:\Program Files\OpenSSL;%PATH%
   - cinst -y php -version 8.1.28
-  - cd c:\tools\php80
+  - cd c:\tools\php81
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini
   - echo extension_dir=ext >> php.ini
   - echo extension=php_openssl.dll >> php.ini
   - echo extension=php_mbstring.dll >> php.ini
   - cd C:\projects\phpmd
-  - SET PATH=C:\tools\php80;%PATH%
+  - SET PATH=C:\tools\php81;%PATH%
   - php -r "readfile('http://getcomposer.org/installer');" | php
   - php composer.phar install --prefer-source --no-interaction
 
