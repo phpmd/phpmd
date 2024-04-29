@@ -78,8 +78,8 @@ class ResultCacheStateTest extends TestCase
                 'endLine'       => 456,
                 'description'   => 'violation',
                 'args'          => null,
-                'metric'        => $metric
-            ]
+                'metric'        => $metric,
+            ],
         ];
 
         $this->state->addRuleViolation('/file/path', $ruleViolation);
@@ -187,7 +187,7 @@ class ResultCacheStateTest extends TestCase
                 'baselineHash' => 'baseline',
                 'rules'        => [],
                 'composer'     => [],
-                'phpVersion'   => 123
+                'phpVersion'   => 123,
             ],
             'state' => [
                 'files' => [
@@ -204,13 +204,13 @@ class ResultCacheStateTest extends TestCase
                                 'endLine'       => 456,
                                 'description'   => 'violation',
                                 'args'          => null,
-                                'metric'        => $metric
-                            ]
-                        ]
-                    ]
+                                'metric'        => $metric,
+                            ],
+                        ],
+                    ],
 
-                ]
-            ]
+                ],
+            ],
         ];
 
         static::assertSame($expected, $this->state->toArray());
