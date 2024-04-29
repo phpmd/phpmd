@@ -620,7 +620,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\ProcessingError')
-                ->setConstructorArgs([null])
+                ->setConstructorArgs([$message])
                 ->onlyMethods(['getFile', 'getMessage'])
         );
 

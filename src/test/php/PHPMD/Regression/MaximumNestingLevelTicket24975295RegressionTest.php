@@ -28,10 +28,8 @@ use PHPMD\Writer\StreamWriter;
  *
  * @link https://www.pivotaltracker.com/story/show/24975295
  * @since 1.3.1
- *
- * @covers \stdClass
  */
-class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegressionTestCase
+class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported

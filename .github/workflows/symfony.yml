@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         php: [ 8.3 ]
-        symfony: [ 5, 6, 7 ]
+        symfony: [ 5.4, 6, 7 ]
 
     name: Symfony ${{ matrix.symfony }}
 
@@ -53,7 +53,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --prefer-dist --no-progress --prefer-stable --ignore-platform-req=php+
+        run: composer update --prefer-dist --no-progress --prefer-stable
 
       - name: Run test suite
         run: vendor/bin/phpunit --display-deprecations

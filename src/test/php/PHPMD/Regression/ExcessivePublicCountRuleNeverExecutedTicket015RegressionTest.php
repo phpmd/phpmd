@@ -22,10 +22,8 @@ use PHPMD\RuleSet;
 
 /**
  * Regression test for issue 015.
- *
- * @covers stdClass
  */
-class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTestCase extends AbstractRegressionTestCase
+class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testRuleSetInvokesRuleForClassInstance

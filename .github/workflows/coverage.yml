@@ -42,8 +42,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: |
-          composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
+        run: composer update --prefer-dist --no-progress --${{ matrix.dependency-version }}
 
       - name: Execute Unit Tests
         run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml

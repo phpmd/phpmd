@@ -74,9 +74,9 @@ class ProcessingError
      * message. This method should be removed once we have added the source file
      * as a mandatory property to PDepend's exceptions.
      */
-    private function extractFile(?string $message): string
+    private function extractFile(string $message): string
     {
-        preg_match('(file: (.+)\.$| file "([^"]+)")', $message ?? '', $match);
+        preg_match('(file: (.+)\.$| file "([^"]+)")', $message, $match);
 
         $match = array_values(array_filter($match));
 
