@@ -15,7 +15,7 @@
  * @link http://phpmd.org/
  */
 
-class testRuleAppliesToUnusedPrivateMethod
+class testRuleDoesNotApplyToMethodUsedViaCallable
 {
     private function foo()
     {
@@ -24,10 +24,6 @@ class testRuleAppliesToUnusedPrivateMethod
 
     public function allOfThoseWontMakeItUsed()
     {
-        foo();
-        $other->foo();
-        array_map([$other, 'foo'], [1]);
-        array_map([$this, 'foo' . 'bar'], [1]);
-        array_map(array($this, 'foo' . 'bar'), [1]);
+        array_map(array($this, 'foo'), array(1));
     }
 }
