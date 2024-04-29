@@ -66,7 +66,7 @@
 <div id="formats">
     <?php
 
-    $uri = $uri ?? '';
+    $uri ??= '';
     $sourceUri = ltrim(substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
 
     ?>

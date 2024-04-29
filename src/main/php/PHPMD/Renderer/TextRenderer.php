@@ -112,7 +112,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             'yellow' => 33,
             'red' => 31,
         ];
-        $color = isset($colors[$color]) ? $colors[$color] : $color;
+        $color = $colors[$color] ?? $color;
 
         return "\033[{$color}m{$text}\033[0m";
     }
