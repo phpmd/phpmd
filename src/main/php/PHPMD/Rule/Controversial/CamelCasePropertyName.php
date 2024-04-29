@@ -21,6 +21,8 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\TraitAware;
+use PHPMD\Node\ClassNode;
+use PHPMD\Node\TraitNode;
 
 /**
  * This rule class detects properties not named in camelCase.
@@ -39,6 +41,10 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof ClassNode && !$node instanceof TraitNode) {
+            return;
+        }
+
         foreach ($node->getProperties() as $property) {
             $propertyName = $property->getName();
 

@@ -106,7 +106,7 @@ class AnsiRenderer extends AbstractRenderer
             return;
         }
 
-        /** @var ProcessingError $error */
+        /** @var \PHPMD\ProcessingError $error */
         foreach ($report->getErrors() as $error) {
             $errorHeader = sprintf(
                 "\e[33mERROR\e[0m while parsing %s",

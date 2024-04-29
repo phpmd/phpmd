@@ -18,6 +18,7 @@
 namespace PHPMD\Node;
 
 use PHPMD\Rule;
+use PDepend\Source\AST\AbstractASTArtifact;
 
 /**
  * Collection of code annotations.
@@ -41,7 +42,7 @@ class Annotations
     /**
      * Constructs a new collection instance.
      *
-     * @param \PHPMD\AbstractNode $node
+     * @param \PHPMD\AbstractNode<AbstractASTArtifact> $node
      */
     public function __construct(\PHPMD\AbstractNode $node)
     {

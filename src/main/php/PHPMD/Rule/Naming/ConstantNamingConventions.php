@@ -39,7 +39,7 @@ class ConstantNamingConventions extends AbstractRule implements ClassAware, Inte
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('ConstantDeclarator') as $declarator) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTConstantDeclarator') as $declarator) {
             if ($declarator->getImage() !== strtoupper($declarator->getImage())) {
                 $this->addViolation($declarator, [$declarator->getImage()]);
             }

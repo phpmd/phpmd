@@ -36,7 +36,7 @@ class ExitExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('ExitExpression') as $exit) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTExitExpression') as $exit) {
             $this->addViolation($exit, [$node->getType(), $node->getName()]);
         }
     }

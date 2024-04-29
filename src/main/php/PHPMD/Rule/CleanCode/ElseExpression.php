@@ -40,7 +40,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('ScopeStatement') as $scope) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTScopeStatement') as $scope) {
             $parent = $scope->getParent();
 
             if (!$this->isIfOrElseIfStatement($parent)) {

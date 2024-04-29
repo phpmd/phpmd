@@ -21,6 +21,8 @@ use PDepend\Source\AST\ASTClass;
 
 /**
  * Wrapper around PHP_Depend's class objects.
+ *
+ * @extends AbstractTypeNode<ASTClass>
  */
 class ClassNode extends AbstractTypeNode
 {

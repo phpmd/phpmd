@@ -94,7 +94,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
             return true;
         }
 
-        if ($variable->getParent()->isInstanceOf('PropertyPostfix')) {
+        if ($variable->getParent()->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
             return true;
         }
 

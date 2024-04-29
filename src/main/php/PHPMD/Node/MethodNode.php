@@ -26,6 +26,8 @@ use PHPMD\Rule;
 /**
  * Wrapper around a PHP_Depend method node.
  *
+ * @extends AbstractCallableNode<ASTMethod>
+ *
  * Methods available on $node via PHPMD\AbstractNode::__call
  *
  * @method bool isPrivate() Returns true if this node is marked as private.

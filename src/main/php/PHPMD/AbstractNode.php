@@ -20,16 +20,21 @@ namespace PHPMD;
 use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\Node\ASTNode;
 
 /**
  * This is an abstract base class for PHPMD code nodes, it is just a wrapper
  * around PDepend's object model.
+ *
+ * @template TNode of \PDepend\Source\AST\ASTArtifact|PDependNode
+ *
+ * @mixin TNode
  */
 abstract class AbstractNode
 {
     /**
-     * @var \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node
+     * @var TNode $node
      */
     private $node = null;
 
@@ -43,7 +48,7 @@ abstract class AbstractNode
     /**
      * Constructs a new PHPMD node.
      *
-     * @param \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode $node
+     * @param TNode $node
      */
     public function __construct($node)
     {
@@ -76,7 +81,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode|null
+     * @return AbstractNode|null
      */
     public function getParent()
     {
@@ -92,7 +97,7 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param integer $index The child offset.
-     * @return \PHPMD\Node\ASTNode
+     * @return AbstractNode
      */
     public function getChild($index)
     {
@@ -106,12 +111,14 @@ abstract class AbstractNode
      * Returns the first child of the given type or <b>null</b> when this node
      * has no child of the given type.
      *
-     * @param string $type The searched child type.
-     * @return ASTNode|null
+     * @template T of PDependNode
+     *
+     * @param class-string<T> $type The searched child type.
+     * @return ASTNode<T>|null
      */
     public function getFirstChildOfType($type)
     {
-        $node = $this->node->getFirstChildOfType('PDepend\Source\AST\AST' . $type);
+        $node = $this->node->getFirstChildOfType($type);
 
         if ($node === null) {
             return null;
@@ -124,12 +131,15 @@ abstract class AbstractNode
      * Searches recursive for all children of this node that are of the given
      * type.
      *
-     * @param string $type The searched child type.
-     * @return ASTNode[]
+     * @template T of PDependNode
+     *
+     * @param class-string<T> $type The searched child type.
+     *
+     * @return array<int, ASTNode<T>>
      */
     public function findChildrenOfType($type)
     {
-        $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
+        $children = $this->node->findChildrenOfType($type);
 
         $nodes = [];
 
@@ -144,12 +154,12 @@ abstract class AbstractNode
      * List all first-level children of the nodes of the given type found in any depth of
      * the current node.
      *
-     * @param string $type The searched child type.
-     * @return ASTNode[]
+     * @param class-string<PDependNode> $type The searched child type.
+     * @return array<int, \PDepend\Source\AST\AbstractASTNode|\PDepend\Source\AST\ASTArtifact>
      */
     public function findChildrenWithParentType($type)
     {
-        $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
+        $children = $this->node->findChildrenOfType($type);
 
         $nodes = [];
 
@@ -170,20 +180,21 @@ abstract class AbstractNode
      */
     public function findChildrenOfTypeVariable()
     {
-        return $this->findChildrenOfType('Variable');
+        return $this->findChildrenOfType('PDepend\Source\AST\ASTVariable');
     }
 
     /**
      * Tests if this node represents the the given type.
      *
-     * @param string $type The expected node type.
-     * @return boolean
+     * @template T of PDependNode
+     *
+     * @param class-string<T> $class The expected node type.
+     *
+     * @phpstan-assert-if-true static<T> $this
      */
-    public function isInstanceOf($type)
+    public function isInstanceOf($class): bool
     {
-        $class = 'PDepend\Source\AST\AST' . $type;
-
-        return ($this->node instanceof $class);
+        return $this->node instanceof $class;
     }
 
     /**
@@ -246,7 +257,7 @@ abstract class AbstractNode
     /**
      * Returns the wrapped PDepend node instance.
      *
-     * @return \PDepend\Source\AST\ASTArtifact
+     * @return TNode
      */
     public function getNode()
     {

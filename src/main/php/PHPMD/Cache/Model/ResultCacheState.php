@@ -13,11 +13,11 @@ class ResultCacheState
     /** @var ResultCacheKey */
     private $cacheKey;
 
-    /** @var array{files: array<string, array{hash: string, violations: array}>} */
+    /** @var array{files?: array<string, array{hash: string, violations?: array}>} */
     private $state;
 
     /**
-     * @param array{files: array<string, array{hash: string, violations: array}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: array}>} $state
      */
     public function __construct(ResultCacheKey $cacheKey, $state = [])
     {
