@@ -17,23 +17,34 @@
 
 namespace PHPMD\Regression;
 
+use PHPMD\Rule\UnusedFormalParameter;
 use PHPMD\Rule\UnusedLocalVariable;
 
 /**
- * Regression test for issue 020.
- *
- * @covers \stdClass
+ * Regression test for issue 007.
  */
-class StaticVariablesFlaggedAsUnusedTicket020RegressionTestCase extends AbstractRegressionTestCase
+class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extends AbstractRegressionTestCase
 {
     /**
-     * testRuleDoesNotApplyToAnySuperGlobalVariable
+     * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
      *
      * @return void
      */
-    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
+    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
     {
         $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
+     *
+     * @return void
+     */
+    public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported()
+    {
+        $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }

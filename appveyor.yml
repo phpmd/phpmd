@@ -10,7 +10,7 @@ install:
   - ps: Set-Service wuauserv -StartupType Manual
   - cinst -y OpenSSL.Light
   - SET PATH=C:\Program Files\OpenSSL;%PATH%
-  - cinst -y php -version 8.0.30
+  - cinst -y php -version 8.1.28
   - cd c:\tools\php80
   - copy php.ini-production php.ini
   - echo date.timezone="UTC" >> php.ini

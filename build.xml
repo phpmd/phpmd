@@ -79,7 +79,7 @@
             <arg line="composer.phar" />
             <arg line="config" />
             <arg line="platform.php" />
-            <arg line="8.0.0"/>
+            <arg line="8.1.0"/>
         </exec>
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />

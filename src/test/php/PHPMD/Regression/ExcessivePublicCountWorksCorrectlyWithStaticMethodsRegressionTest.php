@@ -26,7 +26,7 @@ use PHPMD\RuleSetFactory;
  *
  * @link https://github.com/phpmd/phpmd/issues/409
  */
-class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase extends AbstractRegressionTestCase
+class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends AbstractRegressionTestCase
 {
     /**
      * @var string Beginning of the violation message

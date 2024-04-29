@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [ 8.0, 8.1, 8.2, 8.3, 8.4 ]
+        php: [ 8.1, 8.2, 8.3, 8.4 ]
         setup: [ lowest, stable ]
 
     name: PHP ${{ matrix.php }} - prefer-${{ matrix.setup }}
@@ -44,7 +44,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php+
+        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress
 
       - name: Execute Unit Tests
-        run: vendor/bin/phpunit ${{ matrix.setup != 'lowest' && matrix.php >= 8.1 && '--display-deprecations' || '' }}
+        run: vendor/bin/phpunit
