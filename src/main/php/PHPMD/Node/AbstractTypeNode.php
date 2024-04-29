@@ -97,7 +97,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {
