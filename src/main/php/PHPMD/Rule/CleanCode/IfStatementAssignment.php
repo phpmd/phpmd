@@ -69,9 +69,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      */
     protected function getStatements(AbstractNode $node)
     {
-        return call_user_func_array('array_merge', array_map(function ($type) use ($node) {
-            return $node->findChildrenOfType($type);
-        }, $this->ifStatements));
+        return array_merge(...array_map(fn ($type) => $node->findChildrenOfType($type), $this->ifStatements));
     }
 
     /**
@@ -82,9 +80,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      */
     protected function getExpressions(array $statements)
     {
-        return array_map(function (ASTNode $statement) {
-            return $statement->getFirstChildOfType('Expression');
-        }, $statements);
+        return array_map(fn (ASTNode $statement) => $statement->getFirstChildOfType('Expression'), $statements);
     }
 
     /**
