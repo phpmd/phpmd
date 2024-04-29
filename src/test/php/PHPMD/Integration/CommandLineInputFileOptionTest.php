@@ -17,7 +17,7 @@
 
 namespace PHPMD\Integration;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\TextUI\Command;
  *
  * @since 1.1.0
  */
-class CommandLineInputFileOptionTest extends AbstractTest
+class CommandLineInputFileOptionTest extends AbstractTestCase
 {
     /**
      * testReportContainsExpectedRuleViolationWarning
@@ -35,7 +35,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
      */
     public function testReportContainsExpectedRuleViolationWarning()
     {
-        self::assertContains(
+        self::assertStringContainsString(
             "Avoid unused local variables such as '\$foo'.",
             self::runCommandLine()
         );
@@ -49,7 +49,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
      */
     public function testReportNotContainsRuleViolationWarningForFileNotInList()
     {
-        self::assertNotContains(
+        self::assertStringNotContainsString(
             "Avoid unused local variables such as '\$bar'.",
             self::runCommandLine()
         );
@@ -68,7 +68,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
         self::changeWorkingDirectory(dirname($inputfile));
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 'text',
                 'unusedcode',
@@ -76,7 +76,7 @@ class CommandLineInputFileOptionTest extends AbstractTest
                 $reportfile,
                 '--inputfile',
                 $inputfile,
-            )
+            ]
         );
 
         return file_get_contents($reportfile);

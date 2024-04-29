@@ -43,14 +43,14 @@ class PHPMD
      *
      * @var array(string)
      */
-    private $fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
+    private $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
 
     /**
      * List of exclude directory patterns.
      *
      * @var array(string)
      */
-    private $ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS');
+    private $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
 
     /**
      * The input source file or directory.
@@ -77,7 +77,7 @@ class PHPMD
      * @var array
      * @since 1.2.0
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * This method will return <b>true</b> when the processed source code

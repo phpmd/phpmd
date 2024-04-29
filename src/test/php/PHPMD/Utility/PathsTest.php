@@ -2,13 +2,13 @@
 
 namespace PHPMD\Utility;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Utility\Paths
  */
-class PathsTest extends AbstractTest
+class PathsTest extends AbstractTestCase
 {
     /**
      * @covers ::getRelativePath
@@ -56,10 +56,13 @@ class PathsTest extends AbstractTest
 
     /**
      * @covers ::getRealPath
-     * @expectedException RuntimeException
      */
     public function testGetRealPathShouldThrowExceptionOnFailure()
     {
+        self::expectExceptionObject(new RuntimeException(
+            'Unable to determine the realpath for: unknown/path',
+        ));
+
         Paths::getRealPath('unknown/path');
     }
 }

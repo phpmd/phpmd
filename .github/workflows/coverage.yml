@@ -33,40 +33,20 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Cache library packages
+      - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-${{ matrix.php }}-
-
-      - name: Cache test packages
-        id: composer-test-cache
-        uses: actions/cache@v3
-        with:
-          path: src/test/vendor
-          key: ${{ runner.os }}-coverage-test-${{ matrix.php }}-${{ hashFiles('src/test/composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-test-${{ matrix.php }}-
-
-      - name: Upgrade PHPUnit
-        run: |
-          composer require symfony/config:^6.4 --no-update --no-interaction --dev
-          cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
+          key: coverage-${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --no-progress --prefer-stable --prefer-dist --no-progress --ignore-platform-req=php+
-
-      - name: Install test dependencies
-        if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable --ignore-platform-req=php+
-
-      - name: Fix PHP compatibility
-        run: php src/test/php/fix-php-compatibility.php
+        run: |
+          composer update --prefer-dist --no-progress --${{ matrix.dependency-version }} --ignore-platform-req=php
 
       - name: Execute Unit Tests
-        run: src/test/vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v3

@@ -86,8 +86,8 @@ Requirements
 PHPMD itself is considered as an early development version at its
 current state. It relies on the following software products:
 
-- `PHP_Depend >= 2.0.0`__
-- `PHP >= 5.3.9`__
+- `PHP_Depend >= 2.16.1 (>= 2.0.0 using PHPMD v2)`__
+- `PHP >= 8.0.0 (>= 5.3.9 using PHPMD v2)`__
 
 __ https://keys.openpgp.org/search?q=pgp%40phpmd.org
 __ https://keys.openpgp.org/

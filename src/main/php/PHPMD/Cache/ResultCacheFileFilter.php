@@ -23,7 +23,7 @@ class ResultCacheFileFilter implements Filter
     private $basePath;
 
     /** @var array<string, bool> */
-    private $fileIsModified = array();
+    private $fileIsModified = [];
 
     /** @var OutputInterface */
     private $output;

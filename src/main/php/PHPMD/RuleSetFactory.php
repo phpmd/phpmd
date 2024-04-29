@@ -106,7 +106,7 @@ class RuleSetFactory
      */
     public function createRuleSets($ruleSetFileNames)
     {
-        $ruleSets = array();
+        $ruleSets = [];
 
         $ruleSetFileName = strtok($ruleSetFileNames, ',');
         while ($ruleSetFileName !== false) {
@@ -171,10 +171,10 @@ class RuleSetFactory
      */
     private static function listRuleSetsInDirectory($directory)
     {
-        $ruleSets = array();
+        $ruleSets = [];
         if (is_dir($directory)) {
             foreach (scandir($directory) as $file) {
-                $matches = array();
+                $matches = [];
                 if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
                     $ruleSets[] = $matches[1];
                 }
@@ -350,7 +350,7 @@ class RuleSetFactory
         }
 
         if (!is_readable($fileName)) {
-            $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
+            $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
         }
 
         if (class_exists($className) === false) {
@@ -518,7 +518,7 @@ class RuleSetFactory
      */
     public function getIgnorePattern($fileName)
     {
-        $excludes = array();
+        $excludes = [];
         foreach (array_map('trim', explode(',', $fileName)) as $ruleSetFileName) {
             $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
 
@@ -565,16 +565,16 @@ class RuleSetFactory
      */
     private function filePaths($fileName)
     {
-        $filePathParts = array(
-            array($fileName),
-            array($this->location, $fileName),
-            array($this->location, 'rulesets', $fileName . '.xml'),
-            array(getcwd(), 'rulesets', $fileName . '.xml'),
-        );
+        $filePathParts = [
+            [$fileName],
+            [$this->location, $fileName],
+            [$this->location, 'rulesets', $fileName . '.xml'],
+            [getcwd(), 'rulesets', $fileName . '.xml'],
+        ];
 
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
-            $filePathParts[] = array($includePath, $fileName);
-            $filePathParts[] = array($includePath, $fileName . '.xml');
+            $filePathParts[] = [$includePath, $fileName];
+            $filePathParts[] = [$includePath, $fileName . '.xml'];
         }
 
         return array_map('implode', array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR), $filePathParts);

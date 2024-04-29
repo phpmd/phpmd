@@ -28,7 +28,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \stdClass
  */
-class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
+class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testCliAcceptsDirectoryAsInput
@@ -48,7 +48,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source'),
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
@@ -72,7 +72,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $phpmd->processFiles(
             self::createFileUri('source/FooBar.php'),
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
-            array($renderer),
+            [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );

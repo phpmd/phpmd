@@ -73,19 +73,13 @@ class ProcessingError
      * Evil hack that extracts the source file from the original exception
      * message. This method should be removed once we have added the source file
      * as a mandatory property to PDepend's exceptions.
-     *
-     * @param string $message
-     * @return string
      */
-    private function extractFile($message)
+    private function extractFile(?string $message): string
     {
-        preg_match('(file: (.+)\.$| file "([^"]+)")', $message, $match);
+        preg_match('(file: (.+)\.$| file "([^"]+)")', $message ?? '', $match);
 
         $match = array_values(array_filter($match));
-        if (isset($match[1])) {
-            return $match[1];
-        }
 
-        return '';
+        return $match[1] ?? '';
     }
 }

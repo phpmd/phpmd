@@ -39,9 +39,9 @@ class ParserFactory
      *
      * @var array
      */
-    private $phpmd2pdepend = array(
+    private $phpmd2pdepend = [
         'coverage' => 'coverage-report',
-    );
+    ];
 
     /**
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
@@ -165,7 +165,7 @@ class ParserFactory
      */
     private function initOptions(Engine $pdepend, PHPMD $phpmd)
     {
-        $options = array();
+        $options = [];
         foreach (array_filter($phpmd->getOptions()) as $name => $value) {
             if (isset($this->phpmd2pdepend[$name])) {
                 $options[$this->phpmd2pdepend[$name]] = $value;

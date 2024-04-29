@@ -18,7 +18,7 @@
 namespace PHPMD\Renderer;
 
 use ArrayIterator;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
@@ -29,7 +29,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\TextRenderer
  */
-class TextRendererTest extends AbstractTest
+class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
@@ -44,11 +44,11 @@ class TextRendererTest extends AbstractTest
         $rule->setName('LongerNamedRule');
         $rule->setDescription('An other description for this rule');
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
             $this->getRuleViolationMock('/foo-biz.php', 2),
             $this->getRuleViolationMock('/foo.php', 34),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -56,7 +56,7 @@ class TextRendererTest extends AbstractTest
             ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
@@ -88,9 +88,9 @@ class TextRendererTest extends AbstractTest
         $renderer->setWriter($writer);
         $renderer->setVerbosityLevel(OutputInterface::VERBOSITY_VERBOSE);
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -98,7 +98,7 @@ class TextRendererTest extends AbstractTest
             ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer->start();
         $renderer->renderReport($report);
@@ -127,9 +127,9 @@ class TextRendererTest extends AbstractTest
         $renderer->setWriter($writer);
         $renderer->setColored(true);
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -137,7 +137,7 @@ class TextRendererTest extends AbstractTest
             ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer->start();
         $renderer->renderReport($report);
@@ -159,16 +159,16 @@ class TextRendererTest extends AbstractTest
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $errors = array(
+        $errors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "/tmp/baz.php".'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new ArrayIterator($errors)));

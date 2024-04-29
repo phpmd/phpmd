@@ -17,13 +17,13 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case namespace rule.
  * @covers \PHPMD\Rule\Controversial\CamelCaseNamespace
  */
-class CamelCaseNamespaceTest extends AbstractTest
+class CamelCaseNamespaceTest extends AbstractTestCase
 {
     /**
      * Rule does not apply for valid namespace.

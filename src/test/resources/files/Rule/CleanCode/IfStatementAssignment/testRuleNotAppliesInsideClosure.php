@@ -22,7 +22,7 @@ class Foo
     public function testRuleNotAppliesInsideClosure()
     {
         if (true) {
-            array_filter(array(), function ($foo) {
+            array_filter([], function ($foo) {
                 $bar = $foo;
                 echo $bar;
             });

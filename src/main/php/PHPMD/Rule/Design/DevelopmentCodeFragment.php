@@ -59,7 +59,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 $image = sprintf('%s::%s', $node->getParentName(), $node->getImage());
             }
 
-            $this->addViolation($postfix, array($node->getType(), $image, $fragment));
+            $this->addViolation($postfix, [$node->getType(), $image, $fragment]);
         }
     }
 

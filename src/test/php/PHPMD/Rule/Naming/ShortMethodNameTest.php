@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the very short method and function name rule.
  *
  * @covers \PHPMD\Rule\Naming\ShortMethodName
  */
-class ShortMethodNameTest extends AbstractTest
+class ShortMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionWithNameShorterThanThreshold

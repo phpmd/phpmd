@@ -27,7 +27,7 @@ class StreamFilter extends \php_user_filter
     /**
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function filter($in, $out, &$consumed, $closing)
+    public function filter($in, $out, &$consumed, bool $closing): int
     {
         self::$streamHandle = '';
 

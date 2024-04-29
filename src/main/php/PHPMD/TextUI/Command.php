@@ -88,7 +88,7 @@ class Command
         $renderer = $opts->createRenderer();
         $renderer->setWriter(new StreamWriter($stream));
 
-        $renderers = array($renderer);
+        $renderers = [$renderer];
 
         foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
             $reportRenderer = $opts->createRenderer($reportFormat);
@@ -103,11 +103,11 @@ class Command
         $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
-            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find()))];
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
             $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile)));
+            $renderers    = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
             $report       = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
         } else {
             // try to locate a baseline file and read it
@@ -128,9 +128,9 @@ class Command
         $phpmd = new PHPMD();
         $phpmd->setOptions(
             array_filter(
-                array(
+                [
                     'coverage' => $opts->getCoverageReport(),
-                )
+                ]
             )
         );
 

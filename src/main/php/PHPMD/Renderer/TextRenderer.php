@@ -47,7 +47,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         $writer = $this->getWriter();
         $longestLocationLength = 0;
         $longestRuleNameLength = 0;
-        $violations = array();
+        $violations = [];
 
         foreach ($report->getRuleViolations() as $violation) {
             $location = $violation->getFileName().':'.$violation->getBeginLine();
@@ -58,7 +58,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             $ruleNameLength = mb_strlen($ruleName);
             $longestLocationLength = max($longestLocationLength, $locationLength);
             $longestRuleNameLength = max($longestRuleNameLength, $ruleNameLength);
-            $violations[] = array($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength);
+            $violations[] = [$violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength];
         }
 
         foreach ($violations as $data) {
@@ -108,10 +108,10 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             return $text;
         }
 
-        $colors = array(
+        $colors = [
             'yellow' => 33,
             'red' => 31,
-        );
+        ];
         $color = isset($colors[$color]) ? $colors[$color] : $color;
 
         return "\033[{$color}m{$text}\033[0m";

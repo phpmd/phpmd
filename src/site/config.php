@@ -6,7 +6,7 @@ use Gregwar\RST\Parser;
 
 class PhpMdEnvironment extends Environment
 {
-    public static $letters = array('=', '-', '`', '~', '*', '^', '"');
+    public static $letters = ['=', '-', '`', '~', '*', '^', '"'];
 
     /**
      * @var string

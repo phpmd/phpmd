@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
@@ -26,7 +26,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\GitLabRenderer
  */
-class GitLabRendererTest extends AbstractTest
+class GitLabRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfGitLabElements
@@ -37,11 +37,11 @@ class GitLabRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
             $this->getRuleViolationMock('/bar.php'), // TODO Set with description "foo <?php bar".
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -49,7 +49,7 @@ class GitLabRendererTest extends AbstractTest
             ->will($this->returnValue(new \ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
 
         $renderer = new GitLabRenderer();
         $renderer->setWriter($writer);
@@ -73,17 +73,17 @@ class GitLabRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
 
-        $processingErrors = array(
+        $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "/tmp/baz.php".'),
             new ProcessingError('Cannot read file "/tmp/foo.php". Permission denied.'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));

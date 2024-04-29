@@ -33,7 +33,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * @var array Self reference class names.
      */
-    protected $selfReferences = array('self', 'static');
+    protected $selfReferences = ['self', 'static'];
 
     /**
      * Checks for missing class imports and warns about it
@@ -65,7 +65,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             $fqcnLength = strlen($className);
 
             if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
-                $this->addViolation($classNode, array($classNode->getBeginLine(), $classNode->getStartColumn()));
+                $this->addViolation($classNode, [$classNode->getBeginLine(), $classNode->getStartColumn()]);
             }
         }
     }

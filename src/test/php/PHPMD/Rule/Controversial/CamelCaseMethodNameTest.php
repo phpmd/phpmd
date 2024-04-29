@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case method name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseMethodName
  */
-class CamelCaseMethodNameTest extends AbstractTest
+class CamelCaseMethodNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid method name.

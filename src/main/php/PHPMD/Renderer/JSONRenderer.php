@@ -47,11 +47,11 @@ class JSONRenderer extends AbstractRenderer
      */
     protected function initReportData()
     {
-        $data = array(
+        $data = [
             'version' => PHPMD::VERSION,
             'package' => 'phpmd',
             'timestamp' => date('c'),
-        );
+        ];
 
         return $data;
     }
@@ -65,13 +65,13 @@ class JSONRenderer extends AbstractRenderer
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
-        $filesList = array();
+        $filesList = [];
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
             $rule = $violation->getRule();
             $filesList[$fileName]['file'] = $fileName;
-            $filesList[$fileName]['violations'][] = array(
+            $filesList[$fileName]['violations'][] = [
                 'beginLine' => $violation->getBeginLine(),
                 'endLine' => $violation->getEndLine(),
                 'package' => $violation->getNamespaceName(),
@@ -83,7 +83,7 @@ class JSONRenderer extends AbstractRenderer
                 'ruleSet' => $rule->getRuleSetName(),
                 'externalInfoUrl' => $rule->getExternalInfoUrl(),
                 'priority' => $rule->getPriority(),
-            );
+            ];
         }
         $data['files'] = array_values($filesList);
 
@@ -102,10 +102,10 @@ class JSONRenderer extends AbstractRenderer
         $errors = $report->getErrors();
         if ($errors) {
             foreach ($errors as $error) {
-                $data['errors'][] = array(
+                $data['errors'][] = [
                     'fileName' => $error->getFile(),
                     'message' => $error->getMessage(),
-                );
+                ];
             }
         }
 

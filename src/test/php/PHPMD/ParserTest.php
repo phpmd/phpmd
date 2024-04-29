@@ -28,7 +28,7 @@ use Symfony\Component\DependencyInjection\Container;
  *
  * @covers \PHPMD\Parser
  */
-class ParserTest extends AbstractTest
+class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
@@ -136,9 +136,9 @@ class ParserTest extends AbstractTest
         $pdepend = $this->getPHPDependMock();
         $pdepend->expects($this->once())
             ->method('getExceptions')
-            ->will($this->returnValue(array(
+            ->will($this->returnValue([
                 new InvalidStateException(42, __FILE__, 'foo'),
-            )));
+            ]));
 
         $parser = new Parser($pdepend);
         $parser->parse($report);
@@ -152,15 +152,15 @@ class ParserTest extends AbstractTest
     private function getPHPDependMock()
     {
         $container = new Container();
-        $config = new Configuration((object)array());
+        $config = new Configuration((object)[]);
 
         return $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\Engine')
-                ->setConstructorArgs(array(
+                ->setConstructorArgs([
                     $config,
                     new CacheFactory($config),
                     new AnalyzerFactory($container),
-                ))
+                ]),
         );
     }
 
@@ -173,20 +173,20 @@ class ParserTest extends AbstractTest
     {
         $class = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $class->expects($this->any())
             ->method('getCompilationUnit')
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
         $class->expects($this->any())
             ->method('getConstants')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $class->expects($this->any())
             ->method('getProperties')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $class->expects($this->any())
             ->method('getMethods')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
 
         return $class;
     }
@@ -201,7 +201,7 @@ class ParserTest extends AbstractTest
     {
         $function = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\Source\AST\ASTFunction')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $function->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
@@ -220,7 +220,7 @@ class ParserTest extends AbstractTest
     {
         $method = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\Source\AST\ASTMethod')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $method->expects($this->atLeastOnce())
             ->method('getCompilationUnit')
@@ -239,7 +239,7 @@ class ParserTest extends AbstractTest
     {
         $file = $this->getMockFromBuilder(
             $this->getMockBuilder('PDepend\Source\AST\ASTCompilationUnit')
-                ->setConstructorArgs(array(null))
+                ->setConstructorArgs([null])
         );
         $file->expects($this->any())
             ->method('getFileName')

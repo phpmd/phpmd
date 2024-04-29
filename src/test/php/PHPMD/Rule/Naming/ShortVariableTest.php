@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the really short variable, parameter and property name rule.
  *
  * @covers \PHPMD\Rule\Naming\ShortVariable
  */
-class ShortVariableTest extends AbstractTest
+class ShortVariableTest extends AbstractTestCase
 {
 
     /**
@@ -382,11 +382,11 @@ class ShortVariableTest extends AbstractTest
         }
     }
 
-    public function provideClassWithShortForeachVariables()
+    public static function provideClassWithShortForeachVariables(): array
     {
-        return array(
-            array(true, 2),
-            array(false, 5),
-        );
+        return [
+            [true, 2],
+            [false, 5],
+        ];
     }
 }

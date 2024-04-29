@@ -16,14 +16,14 @@ namespace PHPMD\Rule\Controversial;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Node\ClassNode;
 
 /**
  * Test case for the camel case class name rule.
  * @covers \PHPMD\Rule\Controversial\CamelCaseClassName
  */
-class CamelCaseClassNameTest extends AbstractTest
+class CamelCaseClassNameTest extends AbstractTestCase
 {
     /**
      * @return void

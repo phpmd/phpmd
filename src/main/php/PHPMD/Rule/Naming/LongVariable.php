@@ -51,7 +51,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var array(string=>boolean)
      */
-    protected $processedVariables = array();
+    protected $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -127,7 +127,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($variableName, $threshold));
+        $this->addViolation($node, [$variableName, $threshold]);
     }
 
     /**
@@ -170,7 +170,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     protected function resetProcessed()
     {
-        $this->processedVariables = array();
+        $this->processedVariables = [];
     }
 
     /**

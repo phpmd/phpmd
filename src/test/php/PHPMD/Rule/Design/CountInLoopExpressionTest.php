@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Count In Loop Expression Test
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class CountInLoopExpressionTest extends AbstractTest
+class CountInLoopExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToAllTypesOfLoops

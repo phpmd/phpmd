@@ -29,7 +29,7 @@ class WriterStub extends AbstractWriter
      *
      * @var array
      */
-    public $chunks = array();
+    public $chunks = [];
 
     /**
      * Writes a data string to the concrete output.

@@ -45,9 +45,9 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
             if (!$this->isValid($propertyName)) {
                 $this->addViolation(
                     $node,
-                    array(
+                    [
                         $propertyName,
-                    )
+                    ]
                 );
             }
         }

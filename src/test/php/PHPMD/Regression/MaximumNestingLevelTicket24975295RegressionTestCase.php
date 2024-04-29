@@ -31,7 +31,7 @@ use PHPMD\Writer\StreamWriter;
  *
  * @covers \stdClass
  */
-class MaximumNestingLevelTicket24975295Test extends AbstractTest
+class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
@@ -46,7 +46,7 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
 
         $inputs = self::createCodeResourceUriForTest();
         $rules = 'unusedcode';
-        $renderers = array($renderer);
+        $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
 

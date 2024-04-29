@@ -17,10 +17,12 @@
 
 namespace PHPMD\Regression;
 
+use PHPMD\AbstractTestCase;
+
 /**
  * Regression test for issue 001.
  */
-abstract class AbstractTest extends \PHPMD\AbstractTest
+abstract class AbstractRegressionTestCase extends AbstractTestCase
 {
     /**
      * Creates a full filename for a test content in the <em>_files</b> directory.

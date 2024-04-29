@@ -43,7 +43,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @var array(string)
      */
-    protected $images = array();
+    protected $images = [];
 
     /**
      * This method checks that all local variables within the given function or
@@ -54,7 +54,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     public function apply(AbstractNode $node)
     {
-        $this->images = array();
+        $this->images = [];
 
         if ($node instanceof MethodNode) {
             $this->collectProperties($this->getNode($node->getNode()->getParent()));
@@ -76,7 +76,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable)) {
                 $this->addVariableDefinition($variable);
             } elseif (!$this->checkVariableDefined($variable, $node)) {
-                $this->addViolation($variable, array($this->getVariableImage($variable)));
+                $this->addViolation($variable, [$this->getVariableImage($variable)]);
             }
         }
     }

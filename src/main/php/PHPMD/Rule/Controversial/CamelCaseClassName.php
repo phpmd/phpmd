@@ -50,9 +50,9 @@ class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAw
         if (!preg_match($pattern, $node->getName())) {
             $this->addViolation(
                 $node,
-                array(
+                [
                     $node->getName(),
-                )
+                ]
             );
         }
     }
