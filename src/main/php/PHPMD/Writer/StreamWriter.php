@@ -47,7 +47,7 @@ class StreamWriter extends AbstractWriter
         }
         $dirName = dirname($streamResourceOrUri);
         if (file_exists($dirName) === false) {
-            mkdir($dirName, 0777, true);
+            mkdir($dirName, 0o777, true);
         }
         if (file_exists($dirName) === false) {
             $message = 'Cannot find output directory "' . $dirName . '".';
