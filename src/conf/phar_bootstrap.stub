@@ -22,7 +22,7 @@
 define('PHP_PMD_RELEASE', 'phar');
 
 // Disable deprecations as they are not actionable by end users
-@set_error_handler(E_ALL ^ (E_USER_DEPRECATED | E_DEPRECATED));
+@set_error_handler(null, E_ALL ^ (E_USER_DEPRECATED | E_DEPRECATED));
 
 Phar::mapPhar('${archive.alias}');
 
