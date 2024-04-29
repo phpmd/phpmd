@@ -47,7 +47,7 @@ class MissingImportTest extends AbstractTestCase
      */
     public function testRuleAppliesTo($file)
     {
-        $expectedInvokes = strpos($file, 'testRuleAppliesTwice') !== false
+        $expectedInvokes = str_contains($file, 'testRuleAppliesTwice')
             ? 2
             : static::ONE_VIOLATION;
         $this->expectRuleHasViolationsForFile($this->getRule(), $expectedInvokes, $file);
