@@ -380,5 +380,5 @@ abstract class AbstractRule implements Rule
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    abstract public function apply(AbstractNode $node);
+    abstract public function apply(AbstractNode $node): void;
 }

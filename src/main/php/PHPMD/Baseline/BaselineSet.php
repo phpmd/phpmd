@@ -7,7 +7,7 @@ class BaselineSet
     /** @var array<string, ViolationBaseline[]> */
     private $violations = [];
 
-    public function addEntry(ViolationBaseline $entry)
+    public function addEntry(ViolationBaseline $entry): void
     {
         $this->violations[$entry->getRuleName()][] = $entry;
     }

@@ -42,7 +42,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($this->isAbstractMethod($node)) {
             return;
@@ -157,7 +157,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function collectParameters(AbstractNode $node)
+    protected function collectParameters(AbstractNode $node): void
     {
         // First collect the formal parameters containers
         foreach ($node->findChildrenOfType('FormalParameters') as $parameters) {
@@ -178,7 +178,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function removeUsedParameters(AbstractNode $node)
+    protected function removeUsedParameters(AbstractNode $node): void
     {
         $this->removeRegularVariables($node);
         $this->removeCompoundVariables($node);
@@ -192,7 +192,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
      * @return void
      */
-    protected function removeRegularVariables(AbstractNode $node)
+    protected function removeRegularVariables(AbstractNode $node): void
     {
         $variables = $node->findChildrenOfTypeVariable();
 
@@ -222,7 +222,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.
      * @return void
      */
-    protected function removeCompoundVariables(AbstractNode $node)
+    protected function removeCompoundVariables(AbstractNode $node): void
     {
         $compoundVariables = $node->findChildrenOfType('CompoundVariable');
 
@@ -247,7 +247,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node The node to remove the referenced variables from.
      * @return void
      */
-    protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node)
+    protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node): void
     {
         $functionCalls = $node->findChildrenOfType('FunctionPostfix');
 
@@ -270,7 +270,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * @param \PHPMD\AbstractNode $node The node to remove the property promotion parameters from.
      * @return void
      */
-    protected function removePropertyPromotionVariables(AbstractNode $node)
+    protected function removePropertyPromotionVariables(AbstractNode $node): void
     {
         if (! $node instanceof MethodNode) {
             return;

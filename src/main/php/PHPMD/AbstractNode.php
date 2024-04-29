@@ -287,7 +287,7 @@ abstract class AbstractNode
      * @param array<string, mixed> $metrics The collected node metrics.
      * @return void
      */
-    public function setMetrics(array $metrics)
+    public function setMetrics(array $metrics): void
     {
         if ($this->metrics === null) {
             $this->metrics = $metrics;

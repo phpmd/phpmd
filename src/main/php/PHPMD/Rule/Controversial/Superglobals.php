@@ -56,7 +56,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (in_array($variable->getImage(), $this->superglobals)) {

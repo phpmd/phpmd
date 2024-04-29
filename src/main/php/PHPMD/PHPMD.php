@@ -130,7 +130,7 @@ class PHPMD
      * @param array<string> $fileExtensions Extensions without leading dot.
      * @return void
      */
-    public function setFileExtensions(array $fileExtensions)
+    public function setFileExtensions(array $fileExtensions): void
     {
         $this->fileExtensions = $fileExtensions;
     }
@@ -166,7 +166,7 @@ class PHPMD
      * @return void
      * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
      */
-    public function setIgnorePattern(array $ignorePatterns)
+    public function setIgnorePattern(array $ignorePatterns): void
     {
         $this->addIgnorePatterns($ignorePatterns);
     }
@@ -224,7 +224,7 @@ class PHPMD
      * @param array $options Additional backend or PHPMD options.
      * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
@@ -247,7 +247,7 @@ class PHPMD
         array $renderers,
         array $ruleSetList,
         Report $report
-    ) {
+    ): void {
         // Merge parsed excludes
         $this->addIgnorePatterns($ignorePattern);
 

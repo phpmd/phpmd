@@ -71,7 +71,7 @@ class RuleSetFactory
      * @return void
      * @since 1.2.0
      */
-    public function setStrict()
+    public function setStrict(): void
     {
         $this->strict = true;
     }
@@ -82,7 +82,7 @@ class RuleSetFactory
      * @param integer $minimumPriority The minimum priority value.
      * @return void
      */
-    public function setMinimumPriority($minimumPriority)
+    public function setMinimumPriority($minimumPriority): void
     {
         $this->minimumPriority = $minimumPriority;
     }
@@ -93,7 +93,7 @@ class RuleSetFactory
      * @param integer $maximumPriority The maximum priority value.
      * @return void
      */
-    public function setMaximumPriority($maximumPriority)
+    public function setMaximumPriority($maximumPriority): void
     {
         $this->maximumPriority = $maximumPriority;
     }
@@ -246,7 +246,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $node
      * @return void
      */
-    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node)
+    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node): void
     {
         $ref = (string)$node['ref'];
 
@@ -273,7 +273,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $ruleSetNode
      * @return void
      */
-    private function parseRuleSetReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleSetNode)
+    private function parseRuleSetReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleSetNode): void
     {
         $rules = $this->parseRuleSetReference($ruleSetNode);
         foreach ($rules as $rule) {
@@ -329,7 +329,7 @@ class RuleSetFactory
      * @throws RuleClassFileNotFoundException
      * @throws RuleClassNotFoundException
      */
-    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
+    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode): void
     {
         $fileName = '';
 
@@ -404,7 +404,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $ruleNode
      * @return void
      */
-    private function parseRuleReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
+    private function parseRuleReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode): void
     {
         $ref = (string)$ruleNode['ref'];
 
@@ -463,7 +463,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $propertiesNode
      * @return void
      */
-    private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode)
+    private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode): void
     {
         foreach ($propertiesNode->children() as $node) {
             if ($node->getName() === 'property') {
@@ -479,7 +479,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $node
      * @return void
      */
-    private function addProperty(Rule $rule, \SimpleXMLElement $node)
+    private function addProperty(Rule $rule, \SimpleXMLElement $node): void
     {
         $name = trim($node['name']);
         $value = trim($this->getPropertyValue($node));

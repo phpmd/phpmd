@@ -84,7 +84,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    public function start()
+    public function start(): void
     {
         $writer = $this->getWriter();
 
@@ -331,7 +331,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
 
@@ -427,7 +427,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         $writer = $this->getWriter();
         $writer->write('</div></body></html>');
@@ -474,7 +474,7 @@ class HTMLRenderer extends AbstractRenderer
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
             $prepared = self::$descHighlightRules;
-            array_walk($prepared, function (&$value, $key) {
+            array_walk($prepared, function (&$value, $key): void {
                 $value = "(?<{$key}>{$value['regex']})";
             });
 
@@ -511,7 +511,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    protected function writeTable($title, $itemsTitle, $items)
+    protected function writeTable($title, $itemsTitle, $items): void
     {
         if (!$items) {
             return;

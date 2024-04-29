@@ -15,9 +15,8 @@ class TestOutput extends Output
 
     /**
      * @param string $message
-     * @return void
      */
-    protected function doWrite($message)
+    protected function doWrite($message): void
     {
         fwrite($this->stream, $message);
     }

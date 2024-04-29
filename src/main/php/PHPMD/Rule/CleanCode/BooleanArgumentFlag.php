@@ -45,7 +45,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $name = $node->getName();
 
@@ -98,7 +98,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         return $this->exceptions;
     }
 
-    private function scanFormalParameters(AbstractNode $node)
+    private function scanFormalParameters(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('FormalParameter') as $param) {
             $declarator = $param->getFirstChildOfType('VariableDeclarator');

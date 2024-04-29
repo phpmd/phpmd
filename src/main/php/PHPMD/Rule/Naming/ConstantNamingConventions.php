@@ -37,7 +37,7 @@ class ConstantNamingConventions extends AbstractRule implements ClassAware, Inte
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('ConstantDeclarator') as $declarator) {
             if ($declarator->getImage() !== strtoupper($declarator->getImage())) {

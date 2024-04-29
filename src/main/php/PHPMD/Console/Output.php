@@ -22,7 +22,7 @@ abstract class Output implements OutputInterface
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
      * @return void
      */
-    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL)
+    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL): void
     {
         if (is_array($messages) === false) {
             $messages = [$messages];
@@ -50,7 +50,7 @@ abstract class Output implements OutputInterface
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
      * @return void
      */
-    public function writeln($messages, $options = self::VERBOSITY_NORMAL)
+    public function writeln($messages, $options = self::VERBOSITY_NORMAL): void
     {
         $this->write($messages, true, $options);
     }
@@ -59,7 +59,7 @@ abstract class Output implements OutputInterface
      * @param int $level
      * @return void
      */
-    public function setVerbosity($level)
+    public function setVerbosity($level): void
     {
         $this->verbosity = $level;
     }
@@ -76,5 +76,5 @@ abstract class Output implements OutputInterface
      * @param string $message
      * @return void
      */
-    abstract protected function doWrite($message);
+    abstract protected function doWrite($message): void;
 }

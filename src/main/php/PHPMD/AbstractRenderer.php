@@ -45,7 +45,7 @@ abstract class AbstractRenderer
      * @param \PHPMD\AbstractWriter $writer
      * @return void
      */
-    public function setWriter(AbstractWriter $writer)
+    public function setWriter(AbstractWriter $writer): void
     {
         $this->writer = $writer;
     }
@@ -56,7 +56,7 @@ abstract class AbstractRenderer
      *
      * @return void
      */
-    public function start()
+    public function start(): void
     {
         // Just a hook
     }
@@ -68,7 +68,7 @@ abstract class AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    abstract public function renderReport(Report $report);
+    abstract public function renderReport(Report $report): void;
 
     /**
      * This method will be called the engine has finished the report processing
@@ -76,7 +76,7 @@ abstract class AbstractRenderer
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         // Just a hook
     }

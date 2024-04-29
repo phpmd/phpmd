@@ -70,7 +70,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
             $this->applyOnClassMethods($node);
@@ -97,7 +97,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @param AbstractNode $loop Loop statement to look against
      */
-    protected function findViolations(AbstractNode $loop)
+    protected function findViolations(AbstractNode $loop): void
     {
         foreach ($loop->findChildrenOfType('Expression') as $expression) {
             if ($this->isDirectChild($loop, $expression)) {

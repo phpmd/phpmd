@@ -33,7 +33,7 @@ class CyclomaticComplexity extends AbstractRule implements FunctionAware, Method
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('reportLevel');
         $ccn = $node->getMetric('ccn2');

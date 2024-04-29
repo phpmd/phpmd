@@ -54,7 +54,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $variables = [];
 

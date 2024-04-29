@@ -21,7 +21,7 @@ interface OutputInterface
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
      * @return void
      */
-    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL);
+    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL): void;
 
     /**
      * @param string|string[] $messages
@@ -29,13 +29,13 @@ interface OutputInterface
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
      * @return void
      */
-    public function writeln($messages, $options = self::VERBOSITY_NORMAL);
+    public function writeln($messages, $options = self::VERBOSITY_NORMAL): void;
 
     /**
      * @param int $level
      * @return void
      */
-    public function setVerbosity($level);
+    public function setVerbosity($level): void;
 
     /**
      * @return int
