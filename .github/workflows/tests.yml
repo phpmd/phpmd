@@ -48,3 +48,7 @@ jobs:
 
       - name: Execute Unit Tests
         run: vendor/bin/phpunit
+
+      - name: Run PHPStan
+        if: matrix.php != '8.4'
+        run: vendor/bin/phpstan
