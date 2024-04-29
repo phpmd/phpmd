@@ -318,7 +318,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             $message = '  - line '.$violation->getBeginLine();
 
             if ($node) {
-                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
+                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', $node::class);
                 $message .= ' on '.$type.' '.$node->getImage();
             }
 

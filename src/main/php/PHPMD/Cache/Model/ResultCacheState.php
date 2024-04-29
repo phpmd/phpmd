@@ -156,7 +156,7 @@ class ResultCacheState
     {
         foreach ($ruleSetList as $ruleSet) {
             foreach ($ruleSet->getRules() as $rule) {
-                if (get_class($rule) === $ruleClassName) {
+                if ($rule::class === $ruleClassName) {
                     return $rule;
                 }
             }
