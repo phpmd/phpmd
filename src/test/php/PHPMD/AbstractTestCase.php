@@ -48,13 +48,13 @@ use Traversable;
 abstract class AbstractTestCase extends AbstractStaticTestCase
 {
     /** @var int At least one violation is expected */
-    const AL_LEAST_ONE_VIOLATION = -1;
+    protected const AL_LEAST_ONE_VIOLATION = -1;
 
     /** @var int No violation is expected */
-    const NO_VIOLATION = 0;
+    protected const NO_VIOLATION = 0;
 
     /** @var int One violation is expected */
-    const ONE_VIOLATION = 1;
+    protected const ONE_VIOLATION = 1;
 
     /**
      * Get a list of files that should trigger a rule violation.

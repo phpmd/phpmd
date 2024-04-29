@@ -46,7 +46,7 @@ class CommandLineOptions
     /**
      * Error code for invalid input
      */
-    const INPUT_ERROR = 23;
+    private const INPUT_ERROR = 23;
 
     /**
      * The minimum rule priority.

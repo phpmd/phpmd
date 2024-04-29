@@ -27,12 +27,12 @@ interface Rule
     /**
      * The default lowest rule priority.
      */
-    const LOWEST_PRIORITY = 5;
+    public const LOWEST_PRIORITY = 5;
 
     /**
      * The default highest rule priority.
      */
-    const HIGHEST_PRIORITY = 1;
+    public const HIGHEST_PRIORITY = 1;
 
     /**
      * Returns the name for this rule instance.

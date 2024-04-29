@@ -30,13 +30,13 @@ use SplFileObject;
  */
 class HTMLRenderer extends AbstractRenderer
 {
-    const CATEGORY_PRIORITY = 'category_priority';
+    private const CATEGORY_PRIORITY = 'category_priority';
 
-    const CATEGORY_NAMESPACE = 'category_namespace';
+    private const CATEGORY_NAMESPACE = 'category_namespace';
 
-    const CATEGORY_RULESET = 'category_ruleset';
+    private const CATEGORY_RULESET = 'category_ruleset';
 
-    const CATEGORY_RULE = 'category_rule';
+    private const CATEGORY_RULE = 'category_rule';
 
     protected static $priorityTitles = [
         1 => 'Top (1)',

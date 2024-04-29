@@ -27,7 +27,7 @@ class PHPMD
     /**
      * The current PHPMD version.
      */
-    const VERSION = '@package_version@';
+    public const VERSION = '@package_version@';
 
     /**
      * This property will be set to <b>true</b> when an error
