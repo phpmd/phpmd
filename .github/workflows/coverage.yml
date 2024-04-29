@@ -45,7 +45,7 @@ jobs:
         run: composer update --prefer-dist --no-progress --${{ matrix.dependency-version }}
 
       - name: Execute Unit Tests
-        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        run: vendor/bin/paratest --coverage-text --coverage-clover=coverage.xml
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v3
