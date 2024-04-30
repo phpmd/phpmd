@@ -421,7 +421,7 @@ class CommandLineOptions
      * Returns the output filename for a generated report or <b>null</b> when
      * the report should be displayed in STDOUT.
      *
-     * @return string
+     * @return string|null
      */
     public function getReportFile()
     {
@@ -432,7 +432,7 @@ class CommandLineOptions
      * Returns the output filename for the errors or <b>null</b> when
      * the report should be displayed in STDERR.
      *
-     * @return string
+     * @return string|null
      */
     public function getErrorFile()
     {
@@ -494,7 +494,7 @@ class CommandLineOptions
      * Returns the file name of a supplied code coverage report or <b>NULL</b>
      * if the user has not supplied the --coverage option.
      *
-     * @return string
+     * @return string|null
      */
     public function getCoverageReport()
     {
@@ -505,7 +505,7 @@ class CommandLineOptions
      * Returns a string of comma-separated extensions for valid php source code
      * filenames or <b>null</b> when this argument was not set.
      *
-     * @return string
+     * @return string|null
      */
     public function getExtensions()
     {
@@ -516,7 +516,7 @@ class CommandLineOptions
      * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
      *
-     * @return string
+     * @return string|null
      */
     public function getIgnore()
     {

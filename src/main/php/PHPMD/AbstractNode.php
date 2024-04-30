@@ -76,7 +76,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode
+     * @return ASTNode|null
      */
     public function getParent()
     {
@@ -315,7 +315,7 @@ abstract class AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     abstract public function getParentName();
 

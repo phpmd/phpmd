@@ -28,7 +28,7 @@ class StreamWriter extends AbstractWriter
     /**
      * The stream resource handle
      *
-     * @var resource
+     * @var ?resource
      */
     private $stream = null;
 
