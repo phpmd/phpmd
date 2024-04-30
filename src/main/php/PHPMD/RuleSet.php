@@ -20,6 +20,18 @@ namespace PHPMD;
 use ArrayIterator;
 use IteratorAggregate;
 use PHPMD\Node\AbstractTypeNode;
+use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\MethodNode;
+use PHPMD\Node\TraitNode;
+use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * This class is a collection of concrete source analysis rules.
@@ -59,12 +71,12 @@ class RuleSet implements IteratorAggregate
      * @var array<class-string, class-string<AbstractTypeNode>>
      */
     private array $applyTo = [
-        'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
-        'PHPMD\\Rule\\TraitAware' => 'PHPMD\\Node\\TraitNode',
-        'PHPMD\\Rule\\EnumAware' => 'PHPMD\\Node\\EnumNode',
-        'PHPMD\\Rule\\FunctionAware' => 'PHPMD\\Node\\FunctionNode',
-        'PHPMD\\Rule\\InterfaceAware' => 'PHPMD\\Node\\InterfaceNode',
-        'PHPMD\\Rule\\MethodAware' => 'PHPMD\\Node\\MethodNode',
+        ClassAware::class => ClassNode::class,
+        TraitAware::class => TraitNode::class,
+        EnumAware::class => EnumNode::class,
+        FunctionAware::class => FunctionNode::class,
+        InterfaceAware::class => InterfaceNode::class,
+        MethodAware::class => MethodNode::class,
     ];
 
     /**
@@ -73,12 +85,12 @@ class RuleSet implements IteratorAggregate
      * @var array<class-string<AbstractTypeNode>, array<int, Rule>>
      */
     private $rules = [
-        'PHPMD\\Node\\ClassNode' => [],
-        'PHPMD\\Node\\TraitNode' => [],
-        'PHPMD\\Node\\EnumNode' => [],
-        'PHPMD\\Node\\FunctionNode' => [],
-        'PHPMD\\Node\\InterfaceNode' => [],
-        'PHPMD\\Node\\MethodNode' => [],
+        ClassNode::class => [],
+        TraitNode::class => [],
+        EnumNode::class => [],
+        FunctionNode::class => [],
+        InterfaceNode::class => [],
+        MethodNode::class => [],
     ];
 
     /**
