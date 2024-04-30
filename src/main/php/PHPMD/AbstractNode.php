@@ -69,7 +69,7 @@ abstract class AbstractNode
             );
         }
 
-        return call_user_func_array([$node, $name], $args);
+        return $node->$name(...$args);
     }
 
     /**

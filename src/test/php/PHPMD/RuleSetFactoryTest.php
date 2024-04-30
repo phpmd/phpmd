@@ -746,12 +746,11 @@ class RuleSetFactoryTest extends AbstractTestCase
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
      */
-    private function createRuleSetsFromAbsoluteFiles($file)
+    private function createRuleSetsFromAbsoluteFiles(string ...$files)
     {
-        $files = (1 === func_num_args() ? [$file] : func_get_args());
-        $files = array_map([__CLASS__, 'createFileUri'], $files);
+        $files = array_map(static::createFileUri(...), $files);
 
-        return call_user_func_array([$this, 'createRuleSetsFromFiles'], $files);
+        return $this->createRuleSetsFromFiles(...$files);
     }
 
     /**
