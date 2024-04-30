@@ -39,7 +39,7 @@ class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAw
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $pattern = '/^[A-Z][a-zA-Z0-9]*$/';
         if ($this->getBooleanProperty('camelcase-abbreviations')) {

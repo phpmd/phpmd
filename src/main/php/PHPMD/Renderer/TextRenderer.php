@@ -42,7 +42,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
      * @param \PHPMD\Report $report
      * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $longestLocationLength = 0;
@@ -92,12 +92,12 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         }
     }
 
-    public function setVerbosityLevel($level)
+    public function setVerbosityLevel($level): void
     {
         $this->verbosityLevel = (int)$level;
     }
 
-    public function setColored($colored)
+    public function setColored($colored): void
     {
         $this->colored = $colored;
     }

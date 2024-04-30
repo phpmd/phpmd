@@ -101,7 +101,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initInput(Engine $pdepend, PHPMD $phpmd)
+    private function initInput(Engine $pdepend, PHPMD $phpmd): void
     {
         foreach (explode(',', $phpmd->getInput()) as $path) {
             $trimmedPath = trim($path);
@@ -120,7 +120,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initIgnores(Engine $pdepend, PHPMD $phpmd)
+    private function initIgnores(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getIgnorePatterns()) > 0) {
             $pdepend->addFileFilter(
@@ -136,7 +136,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initExtensions(Engine $pdepend, PHPMD $phpmd)
+    private function initExtensions(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(
@@ -148,7 +148,7 @@ class ParserFactory
     /**
      * Cache result hook to filter cached files
      */
-    private function initResultCache(Engine $pdepend, PHPMD $phpmd)
+    private function initResultCache(Engine $pdepend, PHPMD $phpmd): void
     {
         $resultCache = $phpmd->getResultCache();
         if ($resultCache !== null) {
@@ -163,7 +163,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initOptions(Engine $pdepend, PHPMD $phpmd)
+    private function initOptions(Engine $pdepend, PHPMD $phpmd): void
     {
         $options = [];
         foreach (array_filter($phpmd->getOptions()) as $name => $value) {

@@ -17,7 +17,7 @@ class ResultCacheWriter
         $this->filePath = $filePath;
     }
 
-    public function write(ResultCacheState $state)
+    public function write(ResultCacheState $state): void
     {
         $output = "<?php \n\nreturn ";
         $output .= var_export($state->toArray(), true);

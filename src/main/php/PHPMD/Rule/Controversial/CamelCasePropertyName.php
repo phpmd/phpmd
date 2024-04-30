@@ -37,7 +37,7 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->getProperties() as $property) {
             $propertyName = $property->getName();

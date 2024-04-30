@@ -47,7 +47,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
@@ -69,7 +69,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode $node
      * @return void
      */
-    protected function applyClass(AbstractNode $node)
+    protected function applyClass(AbstractNode $node): void
     {
         $fields = $node->findChildrenOfType('FieldDeclaration');
         foreach ($fields as $field) {
@@ -90,7 +90,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode $node
      * @return void
      */
-    protected function applyNonClass(AbstractNode $node)
+    protected function applyNonClass(AbstractNode $node): void
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
         foreach ($declarators as $declarator) {
@@ -111,7 +111,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkNodeImage(AbstractNode $node)
+    protected function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -125,7 +125,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkMinimumLength(AbstractNode $node)
+    protected function checkMinimumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
 
@@ -257,7 +257,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @return void
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
         $this->processedVariables = [];
     }
@@ -268,7 +268,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function addProcessed(AbstractNode $node)
+    protected function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }

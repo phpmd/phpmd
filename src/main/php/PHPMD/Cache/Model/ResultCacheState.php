@@ -49,7 +49,7 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function setViolations($filePath, array $violations)
+    public function setViolations($filePath, array $violations): void
     {
         $this->state['files'][$filePath]['violations'] = $violations;
     }
@@ -57,7 +57,7 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function addRuleViolation($filePath, RuleViolation $violation)
+    public function addRuleViolation($filePath, RuleViolation $violation): void
     {
         $this->state['files'][$filePath]['violations'][] = [
             'rule'          => get_class($violation->getRule()),

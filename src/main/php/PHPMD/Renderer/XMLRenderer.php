@@ -40,7 +40,7 @@ class XMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    public function start()
+    public function start(): void
     {
         $this->getWriter()->write('<?xml version="1.0" encoding="UTF-8" ?>');
         $this->getWriter()->write(PHP_EOL);
@@ -53,7 +53,7 @@ class XMLRenderer extends AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $writer->write('<pmd version="' . PHPMD::VERSION . '" ');
@@ -120,7 +120,7 @@ class XMLRenderer extends AbstractRenderer
      * @param string $value The attribute value.
      * @return void
      */
-    protected function maybeAdd($attr, $value)
+    protected function maybeAdd($attr, $value): void
     {
         if ($value === null || trim($value) === '') {
             return;

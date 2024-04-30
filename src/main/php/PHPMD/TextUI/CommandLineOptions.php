@@ -897,7 +897,7 @@ class CommandLineOptions
      * @param string $newName
      * @return void
      */
-    protected function logDeprecated($deprecatedName, $newName)
+    protected function logDeprecated($deprecatedName, $newName): void
     {
         $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
@@ -932,7 +932,7 @@ class CommandLineOptions
      *
      * @throws InvalidArgumentException if a boolean option has a value (is followed by equal)
      */
-    private function refuseValue(array $equalChunk)
+    private function refuseValue(array $equalChunk): void
     {
         if (count($equalChunk) > 1) {
             throw new InvalidArgumentException($equalChunk[0] . ' option does not accept a value');

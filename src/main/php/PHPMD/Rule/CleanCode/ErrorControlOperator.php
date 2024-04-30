@@ -39,7 +39,7 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {

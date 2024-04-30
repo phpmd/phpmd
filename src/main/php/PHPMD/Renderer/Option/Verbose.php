@@ -9,5 +9,5 @@ interface Verbose
      *
      * @return void
      */
-    public function setVerbosityLevel($level);
+    public function setVerbosityLevel($level): void;
 }

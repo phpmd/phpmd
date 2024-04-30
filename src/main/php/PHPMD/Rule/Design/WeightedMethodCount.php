@@ -36,7 +36,7 @@ class WeightedMethodCount extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $actual = $node->getMetric('wmc');

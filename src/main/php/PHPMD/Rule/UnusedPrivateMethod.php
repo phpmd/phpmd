@@ -37,7 +37,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param AbstractNode $class
      * @return void
      */
-    public function apply(AbstractNode $class)
+    public function apply(AbstractNode $class): void
     {
         /** @var ClassNode $node */
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {

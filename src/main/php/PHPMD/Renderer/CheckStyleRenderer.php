@@ -45,7 +45,7 @@ class CheckStyleRenderer extends XMLRenderer
      *
      * @param \PHPMD\Report $report
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $writer->write('<checkstyle>');

@@ -69,7 +69,7 @@ class Report
      * @param \PHPMD\RuleViolation $violation
      * @return void
      */
-    public function addRuleViolation(RuleViolation $violation)
+    public function addRuleViolation(RuleViolation $violation): void
     {
         if ($this->baselineValidator !== null && $this->baselineValidator->isBaselined($violation)) {
             return;
@@ -129,7 +129,7 @@ class Report
      * @return void
      * @since 1.2.1
      */
-    public function addError(ProcessingError $error)
+    public function addError(ProcessingError $error): void
     {
         $this->errors[] = $error;
     }
@@ -163,7 +163,7 @@ class Report
      *
      * @return void
      */
-    public function start()
+    public function start(): void
     {
         $this->startTime = microtime(true) * 1000.0;
     }
@@ -173,7 +173,7 @@ class Report
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         $this->endTime = microtime(true) * 1000.0;
     }

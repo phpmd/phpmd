@@ -152,5 +152,5 @@ interface Rule
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node);
+    public function apply(AbstractNode $node): void;
 }

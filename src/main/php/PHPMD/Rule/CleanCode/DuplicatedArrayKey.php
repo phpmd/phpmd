@@ -42,7 +42,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('Array') as $arrayNode) {
             /** @var ASTNode $arrayNode */
@@ -57,7 +57,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param ASTNode $node Array node.
      * @return void
      */
-    protected function checkForDuplicatedArrayKeys(ASTNode $node)
+    protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
         $keys = [];
         /** @var ASTArrayElement $arrayElement */

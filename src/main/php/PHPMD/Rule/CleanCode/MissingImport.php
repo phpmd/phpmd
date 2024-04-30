@@ -41,7 +41,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      * @param AbstractNode $node The node to check upon.
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $ignoreGlobal = $this->getBooleanProperty('ignore-global');
 

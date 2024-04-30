@@ -9,5 +9,5 @@ interface Color
      *
      * @return void
      */
-    public function setColored($colored);
+    public function setColored($colored): void;
 }

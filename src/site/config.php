@@ -20,7 +20,7 @@ class PhpMdEnvironment extends Environment
         return $this->baseHref;
     }
 
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 

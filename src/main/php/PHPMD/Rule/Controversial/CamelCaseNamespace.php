@@ -30,7 +30,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
     /** @var array<string, int>|null */
     protected $exceptions;
 
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $pattern = '/^[A-Z][a-zA-Z0-9]*$/';
         if ($this->getBooleanProperty('camelcase-abbreviations', false)) {

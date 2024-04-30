@@ -33,7 +33,7 @@ class ArgumentsValidator
      *
      * @throws InvalidArgumentException if the given $value cannot be used as a value for the argument $name
      */
-    public function validate($name, $value)
+    public function validate($name, $value): void
     {
         if (!$this->hasImplicitArguments) {
             return;

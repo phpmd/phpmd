@@ -29,7 +29,7 @@ class GitLabRenderer extends AbstractRenderer
     /**
      * {@inheritDoc}
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $data = $this->addViolationsToReport($report);
         $data = $this->addErrorsToReport($report, $data);

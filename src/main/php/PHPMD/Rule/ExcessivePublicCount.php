@@ -33,7 +33,7 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAwar
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $cis = $node->getMetric('cis');

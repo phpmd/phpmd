@@ -33,7 +33,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $nocc = $node->getMetric('nocc');
         $threshold = $this->getIntProperty('minimum');

@@ -37,7 +37,7 @@ class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
             $scope = $catchBlock->getFirstChildOfType('ScopeStatement');

@@ -74,7 +74,7 @@ class StreamWriter extends AbstractWriter
      * @param string $data
      * @return void
      */
-    public function write($data)
+    public function write($data): void
     {
         fwrite($this->stream, $data);
     }

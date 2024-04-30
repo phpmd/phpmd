@@ -37,7 +37,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->getParameters() as $parameter) {
             if (!$this->isValid($parameter->getName())) {
