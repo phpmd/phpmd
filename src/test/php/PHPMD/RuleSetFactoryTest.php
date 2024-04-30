@@ -801,9 +801,9 @@ class RuleSetFactoryTest extends AbstractTestCase
             ],
         ];
         $root = vfsStream::setup('root', null, $structure);
-        $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(000);
+        $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(0o000);
         $root->getChild('dir3/' . self::DIR_UNDER_TESTS)->chown(vfsStream::OWNER_ROOT)->chgrp(vfsStream::GROUP_ROOT);
-        $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(000);
+        $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(0o000);
 
         return [
             $root->url(),
