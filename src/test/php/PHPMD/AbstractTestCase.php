@@ -291,7 +291,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         return basename($file)." failed:\n".
             "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
             "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
-            ($actualInvokes > 0
+            (
+                $actualInvokes > 0
                 ? ":\n".$this->getViolationsSummary($violations)
                 : '.'
             );

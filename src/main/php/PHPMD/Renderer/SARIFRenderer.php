@@ -142,7 +142,7 @@ class SARIFRenderer extends JSONRenderer
                                 'endLine' => $violation->getEndLine(),
                             ],
                         ],
-                    ]
+                    ],
                 ],
             ];
         }
@@ -175,7 +175,7 @@ class SARIFRenderer extends JSONRenderer
                             'physicalLocation' => [
                                 'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
                             ],
-                        ]
+                        ],
                     ],
                 ];
             }

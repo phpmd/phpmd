@@ -27,7 +27,7 @@ class ResultCacheKeyTest extends AbstractTestCase
             'baselineHash' => 'baselineHash',
             'rules'        => ['rule A' => 'hash1'],
             'composer'     => ['composer.json' => 'hash2'],
-            'phpVersion'   => 12345
+            'phpVersion'   => 12345,
         ];
 
         static::assertSame($expected, $key->toArray());

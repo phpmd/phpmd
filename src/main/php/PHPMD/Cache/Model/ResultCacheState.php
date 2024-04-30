@@ -69,7 +69,7 @@ class ResultCacheState
             'endLine'       => $violation->getEndLine(),
             'description'   => $violation->getDescription(),
             'args'          => $violation->getArgs(),
-            'metric'        => $violation->getMetric()
+            'metric'        => $violation->getMetric(),
         ];
     }
 
@@ -143,7 +143,7 @@ class ResultCacheState
     {
         return [
             'key'   => $this->cacheKey->toArray(),
-            'state' => $this->state
+            'state' => $this->state,
         ];
     }
 

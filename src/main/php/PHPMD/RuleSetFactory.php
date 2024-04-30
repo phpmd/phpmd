@@ -385,7 +385,7 @@ class RuleSetFactory
             } elseif ($node->getName() === 'example') {
                 $rule->addExample((string)$node);
             } elseif ($node->getName() === 'priority') {
-                $rule->setPriority((integer)$node);
+                $rule->setPriority((int)$node);
             } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
@@ -434,7 +434,7 @@ class RuleSetFactory
             } elseif ($node->getName() === 'example') {
                 $rule->addExample((string)$node);
             } elseif ($node->getName() === 'priority') {
-                $rule->setPriority((integer)$node);
+                $rule->setPriority((int)$node);
             } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
