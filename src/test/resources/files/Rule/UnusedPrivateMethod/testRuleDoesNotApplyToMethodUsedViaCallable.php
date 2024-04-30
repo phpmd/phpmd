@@ -24,6 +24,6 @@ class testRuleDoesNotApplyToMethodUsedViaCallable
 
     public function allOfThoseWontMakeItUsed()
     {
-        array_map(array($this, 'foo'), array(1));
+        array_map([$this, 'foo'], [1]);
     }
 }

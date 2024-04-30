@@ -40,7 +40,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
 
         $exceptions     = $this->getExceptionsList();
         $fullNamespace  = $node->getNamespaceName();
-        $namespaceNames = $fullNamespace === '' ? array() : explode('\\', $fullNamespace);
+        $namespaceNames = $fullNamespace === '' ? [] : explode('\\', $fullNamespace);
 
         foreach ($namespaceNames as $namespaceName) {
             if (isset($exceptions[$namespaceName])) {
@@ -48,7 +48,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
             }
 
             if (!preg_match($pattern, $namespaceName)) {
-                $this->addViolation($node, array($namespaceName, $fullNamespace));
+                $this->addViolation($node, [$namespaceName, $fullNamespace]);
             }
         }
     }
