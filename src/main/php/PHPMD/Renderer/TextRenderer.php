@@ -62,7 +62,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         }
 
         foreach ($violations as $data) {
-            list($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength) = $data;
+            [$violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength] = $data;
 
             if ($this->verbosityLevel < OutputInterface::VERBOSITY_VERBOSE) {
                 $writer->write($location);
