@@ -162,7 +162,7 @@ abstract class AbstractStaticTestCase extends TestCase
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
-        if ($removeDynamicValues === true) {
+        if ($removeDynamicValues) {
             if (isset($actual['timestamp'])) {
                 $actual['timestamp'] = '';
             }

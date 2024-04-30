@@ -109,7 +109,7 @@ class RuleSetFactory
         $ruleSets = [];
 
         $ruleSetFileName = strtok($ruleSetFileNames, ',');
-        while ($ruleSetFileName !== false) {
+        while ($ruleSetFileName) {
             $ruleSets[] = $this->createSingleRuleSet($ruleSetFileName);
 
             $ruleSetFileName = strtok(',');
@@ -197,7 +197,7 @@ class RuleSetFactory
         $libxml = libxml_use_internal_errors(true);
 
         $xml = simplexml_load_string(file_get_contents($fileName));
-        if ($xml === false) {
+        if (!$xml) {
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
@@ -353,16 +353,16 @@ class RuleSetFactory
             $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
         }
 
-        if (class_exists($className) === false) {
+        if (!class_exists($className)) {
             $handle = @fopen($fileName, 'r', true);
-            if ($handle === false) {
+            if (!$handle) {
                 throw new RuleClassFileNotFoundException($className);
             }
             fclose($handle);
 
             include_once $fileName;
 
-            if (class_exists($className) === false) {
+            if (!class_exists($className)) {
                 throw new RuleClassNotFoundException($className);
             }
         }
@@ -526,7 +526,7 @@ class RuleSetFactory
             $libxml = libxml_use_internal_errors(true);
 
             $xml = simplexml_load_string(file_get_contents($ruleSetFileName));
-            if ($xml === false) {
+            if (!$xml) {
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
 

@@ -20,7 +20,7 @@ class BaselineSet
      */
     public function contains($ruleName, $fileName, $methodName)
     {
-        if (isset($this->violations[$ruleName]) === false) {
+        if (!isset($this->violations[$ruleName])) {
             return false;
         }
 

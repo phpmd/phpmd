@@ -794,7 +794,7 @@ class CommandLineOptions
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
 
         $fileHandle = @fopen($fileName, 'r', true);
-        if (is_resource($fileHandle) === false) {
+        if (!is_resource($fileHandle)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',

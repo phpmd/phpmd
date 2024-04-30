@@ -67,7 +67,7 @@ class ResultCacheKeyFactory
      */
     private function getBaselineHash()
     {
-        if ($this->baselineFile === null || file_exists($this->baselineFile) === false) {
+        if (!$this->baselineFile || !file_exists($this->baselineFile)) {
             return null;
         }
 

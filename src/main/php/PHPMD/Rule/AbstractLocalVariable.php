@@ -75,7 +75,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isLocal(ASTNode $variable)
     {
-        return (false === $variable->isThis()
+        return (!$variable->isThis()
             && $this->isNotSuperGlobal($variable)
             && $this->isRegularVariable($variable)
         );
@@ -140,7 +140,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
     {
-        if (false === $this->isWrappedByIndexExpression($node)) {
+        if (!$this->isWrappedByIndexExpression($node)) {
             return $node;
         }
 

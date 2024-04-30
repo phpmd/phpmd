@@ -39,7 +39,7 @@ class BaselineValidator
 
         // update baseline: violation _can_ be baselined if it was already in the BaselineSet
         if ($this->baselineMode === BaselineMode::UPDATE) {
-            return $contains === false;
+            return !$contains;
         }
 
         return false;

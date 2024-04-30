@@ -32,7 +32,7 @@ class ResultCacheEngineFactory
      */
     public function create($basePath, CommandLineOptions $options, array $ruleSetList)
     {
-        if ($options->isCacheEnabled() === false) {
+        if (!$options->isCacheEnabled()) {
             $this->output->writeln('ResultCache is not enabled.', OutputInterface::VERBOSITY_VERY_VERBOSE);
             return null;
         }
@@ -50,7 +50,7 @@ class ResultCacheEngineFactory
         }
 
         // the cache key doesn't match the stored cache key. Invalidate cache
-        if ($state !== null && $state->getCacheKey()->isEqualTo($cacheKey) === false) {
+        if ($state && !$state->getCacheKey()->isEqualTo($cacheKey)) {
             $this->output->writeln(
                 'ResultCache is enabled, but the cache metadata doesn\'t match.',
                 OutputInterface::VERBOSITY_VERY_VERBOSE
