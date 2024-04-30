@@ -57,7 +57,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         $this->images = [];
 
         if ($node instanceof MethodNode) {
-            $this->collectProperties($this->getNode($node->getNode()->getParent()));
+            $this->collectProperties($node->getNode()->getParent());
         }
 
         $this->collect($node);

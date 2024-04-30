@@ -34,6 +34,7 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
+use PDepend\Metrics\AnalyzerNodeAware;
 
 /**
  * Simple wrapper around the php depend engine.
@@ -130,11 +131,16 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return void
      */
-    public function log(Analyzer $analyzer): void
+    public function log(Analyzer $analyzer): bool
     {
+        if (!$analyzer instanceof AnalyzerNodeAware) {
+            return false;
+        }
+
         $this->analyzers[] = $analyzer;
+
+        return true;
     }
 
     /**
