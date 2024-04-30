@@ -75,7 +75,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
                     function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
                                 break;
                             }
@@ -119,7 +119,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
                     function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
                                 break;
                             }

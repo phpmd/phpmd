@@ -198,7 +198,7 @@ abstract class AbstractStaticTestCase extends TestCase
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 
-        if (false === strpos(get_include_path(), self::$filesDirectory)) {
+        if (!str_contains(get_include_path(), self::$filesDirectory)) {
             set_include_path(
                 sprintf(
                     '%s%s%s%s%s',
@@ -267,7 +267,7 @@ abstract class AbstractStaticTestCase extends TestCase
     protected static function getCallingTestCase()
     {
         foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
+            if (str_starts_with($frame['function'], 'test')) {
                 return $frame;
             }
         }
