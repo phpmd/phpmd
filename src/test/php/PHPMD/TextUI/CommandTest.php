@@ -222,7 +222,7 @@ class CommandTest extends AbstractTestCase
     {
         return [
             ['--suffixes', '.class.php'],
-            ['--exclude', 'ccn_,npath_,parse_error'],
+            ['--exclude', 'ccn_,*npath_,*parse_error'],
         ];
     }
 
