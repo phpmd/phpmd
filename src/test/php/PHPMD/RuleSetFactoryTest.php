@@ -18,6 +18,9 @@
 namespace PHPMD;
 
 use org\bovigo\vfs\vfsStream;
+use PHPMD\Exception\RuleClassFileNotFoundException;
+use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
 
 /**
@@ -558,7 +561,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * identifier.
      *
      * @return void
-     * @covers \PHPMD\RuleSetNotFoundException
+     * @covers \PHPMD\Exception\RuleSetNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
     {
@@ -574,7 +577,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * for the configured rule does not exist.
      *
      * @return void
-     * @covers \PHPMD\RuleClassFileNotFoundException
+     * @covers \PHPMD\Exception\RuleClassFileNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
@@ -593,7 +596,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * cannot be found.
      *
      * @return void
-     * @covers \PHPMD\RuleClassNotFoundException
+     * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
@@ -611,7 +614,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * cannot be found.
      *
      * @return void
-     * @covers \PHPMD\RuleClassNotFoundException
+     * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
     {
