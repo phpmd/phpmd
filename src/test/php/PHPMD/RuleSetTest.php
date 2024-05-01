@@ -24,6 +24,7 @@ use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
+use PHPMD\RuleByNameNotFoundException;
 use PHPMD\Rule\CleanCode\ElseExpression;
 use PHPMD\Stubs\RuleStub;
 
@@ -38,10 +39,11 @@ class RuleSetTest extends AbstractTestCase
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
      *
      * @return void
-     * @expectedException \PHPMD\RuleByNameNotFoundException
      */
     public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists()
     {
+        self::expectException(RuleByNameNotFoundException::class);
+
         $ruleSet = $this->createRuleSetFixture();
         $this->assertNull($ruleSet->getRuleByName(__FUNCTION__));
     }
