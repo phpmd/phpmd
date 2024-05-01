@@ -25,6 +25,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * Check if static access is used in a method.
@@ -34,6 +35,13 @@ use PHPMD\Rule\MethodAware;
  */
 class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 {
+    /**
+     * Temporary cache of configured exceptions.
+     *
+     * @var ExceptionsList|null
+     */
+    protected $exceptions;
+
     /**
      * Method checks for use of static access and warns about it.
      *
@@ -56,17 +64,12 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $className = $methodCall->getChild(0)->getNode()->getImage();
-            if ($this->isExcludedFromAnalysis($className, $exceptions)) {
+            if ($exceptions->contains($className)) {
                 continue;
             }
 
             $this->addViolation($methodCall, [$className, $node->getName()]);
         }
-    }
-
-    protected function isExcludedFromAnalysis($className, $exceptions)
-    {
-        return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
     }
 
     protected function isStaticMethodCall(AbstractNode $methodCall)
@@ -103,23 +106,16 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     }
 
     /**
-     * Gets array of exceptions from property
+     * Gets exceptions from property
      *
-     * @return array
+     * @return ExceptionsList
      */
     protected function getExceptionsList()
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
+        if ($this->exceptions === null) {
+            $this->exceptions = new ExceptionsList($this, '\\');
         }
 
-        return array_map(
-            function ($className) {
-                return trim($className, " \t\n\r\0\x0B\\");
-            },
-            explode(',', $exceptions)
-        );
+        return $this->exceptions;
     }
 }

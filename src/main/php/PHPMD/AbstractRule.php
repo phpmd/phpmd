@@ -25,7 +25,7 @@ use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
 
 /**
- * This is the abstract base class for pmd rules.
+ * This is the abstract base class for PHPMD rules.
  *
  * @SuppressWarnings(PHPMD)
  */

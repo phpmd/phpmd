@@ -146,6 +146,20 @@ interface Rule
     public function getIntProperty(string $name): int;
 
     /**
+     * Returns the raw string value of a configured property
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "exceptions".
+     * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return string The raw string value of a configured property.
+     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * no non-null default value to fall back was given.
+     */
+    public function getStringProperty(string $name, ?string $default = null): string;
+
+    /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
      *
