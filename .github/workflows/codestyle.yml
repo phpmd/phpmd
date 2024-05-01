@@ -7,6 +7,7 @@ on:
       - '**.php'
       - 'composer.json'
       - 'phpcs.xml.dist'
+      - '.php-cs-fixer.php'
       - '.github/workflows/codestyle.yml'
   pull_request:
     branches: [ '*' ]
@@ -14,6 +15,7 @@ on:
       - '**.php'
       - 'composer.json'
       - 'phpcs.xml.dist'
+      - '.php-cs-fixer.php'
       - '.github/workflows/codestyle.yml'
 
 jobs:
@@ -25,33 +27,39 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.3]
-        dependency-version: [prefer-stable]
+          php: [8.1]
 
     name: Codestyle check
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-          tools: composer:v2
+          tools: composer:v2, cs2pr
 
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
         with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
+          path: |
+            vendor
+            .php-cs-fixer.cache
+          key: ${{ runner.os }}-codestyle-${{ matrix.php }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
+            ${{ runner.os }}-codestyle
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
       - name: Run PHPCS for the codestyle
         run: vendor/bin/phpcs
+
+      - name: Run PHP Coding Standards Fixer
+        run: |
+          vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
+          vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
