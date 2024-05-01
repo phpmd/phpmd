@@ -99,7 +99,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         }
         // non-associative - key name equals to its index
         if ($childCount === 0) {
-            $node->setImage((string)$index);
+            $node->setImage((string) $index);
 
             return $node;
         }

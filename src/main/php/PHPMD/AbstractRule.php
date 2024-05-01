@@ -314,7 +314,7 @@ abstract class AbstractRule implements Rule
      */
     public function getIntProperty(string $name, ?int $default = null): int
     {
-        return (int)$this->getProperty($name, $default);
+        return (int) $this->getProperty($name, $default);
     }
 
     /**
@@ -331,7 +331,7 @@ abstract class AbstractRule implements Rule
      */
     public function getStringProperty(string $name, ?string $default = null): string
     {
-        return (string)$this->getProperty($name, $default);
+        return (string) $this->getProperty($name, $default);
     }
 
     public function setStrict(bool $strict): void

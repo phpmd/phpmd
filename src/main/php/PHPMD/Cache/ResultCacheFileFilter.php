@@ -59,7 +59,7 @@ class ResultCacheFileFilter implements Filter
 
         // Determine file hash. Either `timestamp` or `content`
         if ($this->strategy === 'timestamp') {
-            $hash = (string)filemtime($absolute);
+            $hash = (string) filemtime($absolute);
         } else {
             $hash = sha1_file($absolute);
         }
