@@ -45,6 +45,14 @@
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
 
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
+        <severity>0</severity>
+    </rule>
+
     <!-- Sniffs from Slevomat standard -->
 
     <!-- Functional - improving the safety and behaviour of code -->
