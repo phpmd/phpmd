@@ -50,7 +50,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
             }
             $fragment = strtolower($fragment);
             $fragment = trim($fragment, "\\");
-            if (false === in_array($fragment, $this->getSuspectImages())) {
+            if (!in_array($fragment, $this->getSuspectImages())) {
                 continue;
             }
 

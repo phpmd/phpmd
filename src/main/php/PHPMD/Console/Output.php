@@ -24,7 +24,7 @@ abstract class Output implements OutputInterface
      */
     public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL): void
     {
-        if (is_array($messages) === false) {
+        if (!is_array($messages)) {
             $messages = [$messages];
         }
 

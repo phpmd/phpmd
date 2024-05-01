@@ -195,7 +195,7 @@ class RuleSet implements IteratorAggregate
         $result = [];
         foreach ($this->rules as $rules) {
             foreach ($rules as $rule) {
-                if (in_array($rule, $result, true) === false) {
+                if (!in_array($rule, $result, true)) {
                     $result[] = $rule;
                 }
             }

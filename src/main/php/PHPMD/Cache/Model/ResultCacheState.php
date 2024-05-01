@@ -39,7 +39,7 @@ class ResultCacheState
      */
     public function getViolations($filePath)
     {
-        if (isset($this->state['files'][$filePath]['violations']) === false) {
+        if (!isset($this->state['files'][$filePath]['violations'])) {
             return [];
         }
 
@@ -79,14 +79,14 @@ class ResultCacheState
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
-        if (isset($this->state['files']) === false) {
+        if (!isset($this->state['files'])) {
             return [];
         }
 
         $ruleViolations = [];
 
         foreach ($this->state['files'] as $filePath => $violations) {
-            if (isset($violations['violations']) === false) {
+            if (!isset($violations['violations'])) {
                 continue;
             }
             foreach ($violations['violations'] as $violation) {
@@ -120,7 +120,7 @@ class ResultCacheState
      */
     public function isFileModified($filePath, $hash)
     {
-        if (isset($this->state['files'][$filePath]['hash']) === false) {
+        if (!isset($this->state['files'][$filePath]['hash'])) {
             return true;
         }
 

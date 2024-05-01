@@ -13,12 +13,12 @@ class ResultCacheStateFactory
      */
     public function fromFile($filePath)
     {
-        if (file_exists($filePath) === false) {
+        if (!file_exists($filePath)) {
             return null;
         }
 
         $resultCache = require $filePath;
-        if (isset($resultCache['state'], $resultCache['key']) === false) {
+        if (!isset($resultCache['state'], $resultCache['key'])) {
             return null;
         }
 
@@ -35,11 +35,11 @@ class ResultCacheStateFactory
      */
     private function createCacheKey(array $data)
     {
-        if (array_key_exists('strict', $data) === false ||
-            array_key_exists('baselineHash', $data) === false ||
-            array_key_exists('rules', $data) === false ||
-            array_key_exists('composer', $data) === false ||
-            array_key_exists('phpVersion', $data) === false
+        if (!array_key_exists('strict', $data) ||
+            !array_key_exists('baselineHash', $data) ||
+            !array_key_exists('rules', $data) ||
+            !array_key_exists('composer', $data) ||
+            !array_key_exists('phpVersion', $data)
         ) {
             return null;
         }

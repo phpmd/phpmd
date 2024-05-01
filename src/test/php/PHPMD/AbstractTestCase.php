@@ -706,7 +706,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     private function parseSource($sourceFile)
     {
-        if (file_exists($sourceFile) === false) {
+        if (!file_exists($sourceFile)) {
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 

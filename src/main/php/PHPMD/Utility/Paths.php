@@ -48,7 +48,7 @@ class Paths
     public static function getRealPath($path)
     {
         $absolutePath = realpath($path);
-        if ($absolutePath === false) {
+        if (!$absolutePath) {
             throw new RuntimeException('Unable to determine the realpath for: ' . $path);
         }
 

@@ -75,7 +75,7 @@ class RuleViolation
         $this->metric = $metric;
         $this->nodeInfo = $nodeInfo;
 
-        if (is_array($violationMessage) === true) {
+        if (is_array($violationMessage)) {
             $search = [];
             $replace = [];
             foreach ($violationMessage['args'] as $index => $value) {
