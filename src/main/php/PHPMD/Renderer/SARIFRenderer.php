@@ -19,7 +19,6 @@ namespace PHPMD\Renderer;
 
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\Renderer\JSONRenderer;
 use PHPMD\RuleViolation;
 
 /**

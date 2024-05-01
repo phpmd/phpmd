@@ -35,9 +35,6 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
     /**
      * This method checks if a given function or method contains an eval-expression
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

@@ -37,9 +37,6 @@ class TooManyMethods extends AbstractRule implements ClassAware
     /**
      * This method checks the number of methods with in a given class and checks
      * this number against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -68,8 +65,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
     /**
      * Counts all methods within the given class/interface node.
      *
-     * @param \PHPMD\Node\AbstractTypeNode $node
-     * @return integer
+     * @return int
      */
     protected function countMethods(AbstractTypeNode $node)
     {

@@ -29,9 +29,6 @@ class GitHubRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
     public function renderReport(Report $report): void
     {

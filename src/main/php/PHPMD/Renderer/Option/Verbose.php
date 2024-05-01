@@ -6,8 +6,6 @@ interface Verbose
 {
     /**
      * @param int $level
-     *
-     * @return void
      */
     public function setVerbosityLevel($level): void;
 }

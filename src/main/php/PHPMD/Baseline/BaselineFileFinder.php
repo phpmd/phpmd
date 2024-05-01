@@ -46,8 +46,8 @@ class BaselineFileFinder
     /**
      * Find the violation baseline file
      *
-     * @return string|null
      * @throws RuntimeException
+     * @return string|null
      */
     public function find()
     {
@@ -83,8 +83,8 @@ class BaselineFileFinder
     /**
      * @param string $message
      *
-     * @return null
      * @throws RuntimeException
+     * @return null
      */
     private function nullOrThrow($message)
     {

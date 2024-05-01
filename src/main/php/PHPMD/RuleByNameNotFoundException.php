@@ -17,10 +17,12 @@
 
 namespace PHPMD;
 
+use RuntimeException;
+
 /**
  * When a configured rule was not found by name
  */
-class RuleByNameNotFoundException extends \RuntimeException
+class RuleByNameNotFoundException extends RuntimeException
 {
     /**
      * Constructs a new RuleByNameNotFoundException.

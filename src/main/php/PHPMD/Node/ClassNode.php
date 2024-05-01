@@ -28,8 +28,6 @@ class ClassNode extends AbstractTypeNode
 {
     /**
      * Constructs a new class wrapper node.
-     *
-     * @param \PDepend\Source\AST\ASTClass $node
      */
     public function __construct(ASTClass $node)
     {

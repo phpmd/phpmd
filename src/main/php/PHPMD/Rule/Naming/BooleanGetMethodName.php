@@ -32,13 +32,10 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Extracts all variable and variable declarator nodes from the given node
      * and checks the variable name length against the configured minimum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
-        /** @var $node MethodNode */
+        /** @var MethodNode $node */
         if ($this->isBooleanGetMethod($node)) {
             $this->addViolation($node, [$node->getImage()]);
         }
@@ -48,8 +45,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the given method matches all criteria to be an invalid
      * boolean get method.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isBooleanGetMethod(MethodNode $node)
     {
@@ -61,8 +57,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     /**
      * Tests if the given method starts with <b>get</b> or <b>_get</b>.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isGetterMethodName(MethodNode $node)
     {
@@ -72,8 +67,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     /**
      * Tests if the given method is declared with return type boolean.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isReturnTypeBoolean(MethodNode $node)
     {
@@ -89,8 +83,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the property <b>$checkParameterizedMethods</b> is set to <b>true</b>
      * or has no parameters.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isParameterizedOrIgnored(MethodNode $node)
     {

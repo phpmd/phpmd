@@ -26,8 +26,6 @@ class EnumNode extends AbstractTypeNode
 {
     /**
      * Constructs a new class wrapper node.
-     *
-     * @param \PDepend\Source\AST\ASTEnum $node
      */
     public function __construct(ASTEnum $node)
     {

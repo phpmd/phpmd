@@ -39,9 +39,6 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      * Extracts all variable and variable declarator nodes from the given node
      * and checks the variable name length against the configured minimum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

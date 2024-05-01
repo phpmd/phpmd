@@ -38,9 +38,6 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -74,8 +71,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Returns <b>true</b> when the given node is an abstract method.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isAbstractMethod(AbstractNode $node)
     {
@@ -90,8 +86,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
      * {@inheritdoc} annotation.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isInheritedSignature(AbstractNode $node)
     {
@@ -107,8 +102,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Returns <b>true</b> when the given node is a magic method signature
      *
-     * @param AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isMagicMethod(AbstractNode $node)
     {
@@ -137,8 +131,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Tests if the given <b>$node</b> is a method and if this method is also
      * the initial declaration.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      * @since 1.2.1
      */
     protected function isNotDeclaration(AbstractNode $node)
@@ -153,9 +146,6 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * This method extracts all parameters for the given function or method node
      * and it stores the parameter images in the <b>$_images</b> property.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     protected function collectParameters(AbstractNode $node): void
     {
@@ -174,9 +164,6 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * This method collects all local variables in the body of the currently
      * analyzed method or function and removes those parameters that are
      * referenced by one of the collected variables.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     protected function removeUsedParameters(AbstractNode $node): void
     {
@@ -189,15 +176,14 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Removes all the regular variables from a given node
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
-     * @return void
+     * @param AbstractNode $node The node to remove the regular variables from.
      */
     protected function removeRegularVariables(AbstractNode $node): void
     {
         $variables = $node->findChildrenOfTypeVariable();
 
         foreach ($variables as $variable) {
-            /** @var $variable ASTNode */
+            /** @var ASTNode $variable */
             if ($this->isRegularVariable($variable)) {
                 unset($this->nodes[$variable->getImage()]);
             }
@@ -219,8 +205,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * // ------
      * </code>
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.
-     * @return void
+     * @param AbstractNode $node The node to remove the compound variables from.
      */
     protected function removeCompoundVariables(AbstractNode $node): void
     {
@@ -244,8 +229,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      *
      * If the given method calls func_get_args() then all parameters are automatically referenced.
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the referenced variables from.
-     * @return void
+     * @param AbstractNode $node The node to remove the referenced variables from.
      */
     protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node): void
     {
@@ -267,8 +251,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Removes all the property promotion parameters from a given node
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the property promotion parameters from.
-     * @return void
+     * @param AbstractNode $node The node to remove the property promotion parameters from.
      */
     protected function removePropertyPromotionVariables(AbstractNode $node): void
     {

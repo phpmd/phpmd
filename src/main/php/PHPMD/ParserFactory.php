@@ -21,7 +21,6 @@ use PDepend\Application;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
-use PHPMD\Cache\CacheFileFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
@@ -46,8 +45,7 @@ class ParserFactory
     /**
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
      *
-     * @param \PHPMD\PHPMD $phpmd
-     * @return \PHPMD\Parser
+     * @return Parser
      */
     public function create(PHPMD $phpmd)
     {
@@ -60,7 +58,7 @@ class ParserFactory
     /**
      * Creates a clean php depend instance with some base settings.
      *
-     * @return \PDepend\Engine
+     * @return Engine
      */
     private function createInstance()
     {
@@ -79,9 +77,7 @@ class ParserFactory
     /**
      * Configures the given PDepend\Engine instance based on some user settings.
      *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return \PDepend\Engine
+     * @return Engine
      */
     private function init(Engine $pdepend, PHPMD $phpmd)
     {
@@ -96,10 +92,6 @@ class ParserFactory
 
     /**
      * Configures the input source.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
     private function initInput(Engine $pdepend, PHPMD $phpmd): void
     {
@@ -115,10 +107,6 @@ class ParserFactory
 
     /**
      * Initializes the ignored files and path's.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
     private function initIgnores(Engine $pdepend, PHPMD $phpmd): void
     {
@@ -131,10 +119,6 @@ class ParserFactory
 
     /**
      * Initializes the accepted php source file extensions.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
     private function initExtensions(Engine $pdepend, PHPMD $phpmd): void
     {
@@ -158,10 +142,6 @@ class ParserFactory
 
     /**
      * Initializes additional options for pdepend.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
     private function initOptions(Engine $pdepend, PHPMD $phpmd): void
     {

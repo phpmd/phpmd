@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;
@@ -25,7 +26,6 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use PDepend\Source\AST\ASTArrayElement;
 
 /**
  * Duplicated Array Key Rule
@@ -39,9 +39,6 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
 {
     /**
      * Retrieves all arrays from single node and performs comparison logic on it
-     *
-     * @param AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -55,7 +52,6 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * with duplicated entries for any key and emits a rule violation if so.
      *
      * @param ASTNode $node Array node.
-     * @return void
      */
     protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
@@ -117,7 +113,6 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     /**
      * Cleans string literals and casts boolean and null values as PHP engine does
      *
-     * @param PDependASTNode $key
      * @return string
      */
     protected function castStringFromLiteral(PDependASTNode $key)

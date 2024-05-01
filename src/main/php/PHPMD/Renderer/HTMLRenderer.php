@@ -81,8 +81,6 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
-     *
-     * @return void
      */
     public function start(): void
     {
@@ -327,9 +325,6 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
     public function renderReport(Report $report): void
     {
@@ -424,8 +419,6 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called the engine has finished the report processing
      * for all registered renderers.
-     *
-     * @return void
      */
     public function end(): void
     {
@@ -508,8 +501,6 @@ class HTMLRenderer extends AbstractRenderer
 
     /**
      * Render a pretty informational table and send the HTML to the writer.
-     *
-     * @return void
      */
     protected function writeTable($title, $itemsTitle, $items): void
     {

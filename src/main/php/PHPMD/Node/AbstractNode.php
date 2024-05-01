@@ -31,7 +31,7 @@ abstract class AbstractNode extends \PHPMD\AbstractNode
     /**
      * Annotations associated with node instance.
      *
-     * @var \PHPMD\Node\Annotations
+     * @var Annotations
      */
     private $annotations = null;
 
@@ -39,8 +39,7 @@ abstract class AbstractNode extends \PHPMD\AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {

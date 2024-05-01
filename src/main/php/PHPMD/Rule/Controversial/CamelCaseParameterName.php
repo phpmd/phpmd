@@ -19,10 +19,10 @@ namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Rule\FunctionAware;
-use PHPMD\Rule\MethodAware;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\MethodAware;
 
 /**
  * This rule class detects parameters not named in camelCase.
@@ -35,9 +35,6 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     /**
      * This method checks if a parameter is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

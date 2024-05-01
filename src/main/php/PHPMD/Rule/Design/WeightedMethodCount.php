@@ -32,9 +32,6 @@ class WeightedMethodCount extends AbstractRule implements ClassAware
     /**
      * This method checks the weighted method count for the given class against
      * a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

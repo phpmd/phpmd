@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PHPMD\Node;
 
 class NodeInfo

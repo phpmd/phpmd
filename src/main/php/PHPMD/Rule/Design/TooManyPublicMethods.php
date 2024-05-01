@@ -37,9 +37,6 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
     /**
      * This method checks the number of public methods with in a given class and checks
      * this number against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -73,8 +70,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
     /**
      * Counts public methods within the given class/interface node.
      *
-     * @param \PHPMD\Node\AbstractTypeNode $node
-     * @return integer
+     * @return int
      */
     protected function countMethods(AbstractTypeNode $node)
     {

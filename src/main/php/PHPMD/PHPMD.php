@@ -33,7 +33,7 @@ class PHPMD
      * This property will be set to <b>true</b> when an error
      * was found in the processed source code.
      *
-     * @var boolean
+     * @var bool
      * @since 2.10.0
      */
     private $errors = false;
@@ -66,7 +66,7 @@ class PHPMD
      * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
-     * @var boolean
+     * @var bool
      * @since 0.2.5
      */
     private $violations = false;
@@ -83,7 +83,7 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains errors.
      *
-     * @return boolean
+     * @return bool
      * @since 2.10.0
      */
     public function hasErrors()
@@ -95,7 +95,7 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains violations.
      *
-     * @return boolean
+     * @return bool
      * @since 0.2.5
      */
     public function hasViolations()
@@ -128,7 +128,6 @@ class PHPMD
      * Sets a list of filename extensions for valid php source code files.
      *
      * @param array<string> $fileExtensions Extensions without leading dot.
-     * @return void
      */
     public function setFileExtensions(array $fileExtensions): void
     {
@@ -197,7 +196,6 @@ class PHPMD
      * Sets additional options for PHPMD or one of it's parser backends.
      *
      * @param array $options Additional backend or PHPMD options.
-     * @return void
      */
     public function setOptions(array $options): void
     {
@@ -213,8 +211,6 @@ class PHPMD
      * @param array|null                $ignorePattern
      * @param \PHPMD\AbstractRenderer[] $renderers
      * @param \PHPMD\RuleSet[]          $ruleSetList
-     * @param \PHPMD\Report             $report
-     * @return void
      */
     public function processFiles(
         $inputPath,

@@ -66,9 +66,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
 
     /**
      * Gets a list of loops in a node and iterates over them
-     *
-     * @param AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -123,8 +120,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks whether node in a direct child of the loop
      *
-     * @param AbstractNode $loop
-     * @param ASTNode $expression
      * @return bool
      */
     protected function isDirectChild(AbstractNode $loop, ASTNode $expression)
@@ -143,7 +138,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * Example hash:
      * 22:22:10:15:PHPMD\count
      *
-     * @param AbstractASTNode $node
      * @return string
      */
     protected function getHash(AbstractASTNode $node)
@@ -161,7 +155,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks the given function against the list of unwanted functions
      *
-     * @param ASTNode $function
      * @return bool
      */
     protected function isUnwantedFunction(ASTNode $function)

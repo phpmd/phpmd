@@ -26,8 +26,6 @@ class TraitNode extends AbstractTypeNode
 {
     /**
      * Constructs a new interface wrapper instance.
-     *
-     * @param \PDepend\Source\AST\ASTTrait $node
      */
     public function __construct(ASTTrait $node)
     {

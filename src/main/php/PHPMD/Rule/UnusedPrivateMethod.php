@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule;
 
-use PDepend\Source\AST\ASTMethodPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -33,9 +32,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
-     *
-     * @param AbstractNode $class
-     * @return void
      */
     public function apply(AbstractNode $class): void
     {
@@ -48,7 +44,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method collects all methods in the given class that are declared
      * as private and are not used in the same class' context.
      *
-     * @param ClassNode $class
      * @return array<string, MethodNode>
      */
     protected function collectUnusedPrivateMethods(ClassNode $class)
@@ -61,7 +56,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * Collects all private methods declared in the given class node.
      *
-     * @param ClassNode $class
      * @return AbstractNode[]
      */
     protected function collectPrivateMethods(ClassNode $class)
@@ -81,9 +75,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
      *
-     * @param ClassNode $class
-     * @param MethodNode $method
-     * @return boolean
+     * @return bool
      */
     protected function acceptMethod(ClassNode $class, MethodNode $method)
     {
@@ -100,7 +92,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * This method removes all used methods from the given methods array.
      *
-     * @param ClassNode $class
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
      */
@@ -115,7 +106,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * $this->privateMethod() makes "privateMethod" marked as used as an explicit call.
      *
-     * @param ClassNode $class
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
      */
@@ -133,7 +123,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * [$this 'privateMethod'] makes "privateMethod" marked as used as very likely to be used as a callable value.
      *
-     * @param ClassNode $class
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
      */
@@ -157,7 +146,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Return represented method name if the given element is a 2-items array
      * and that the second one is a literal static string.
      *
-     * @param AbstractNode $parent
      * @return string|null
      */
     protected function getMethodNameFromArraySecondElement(AbstractNode $parent)
@@ -183,9 +171,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param ClassNode $class
-     * @param ASTNode $postfix
-     * @return boolean
+     * @return bool
      */
     protected function isClassScope(ClassNode $class, ASTNode $postfix)
     {

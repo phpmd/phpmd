@@ -31,9 +31,6 @@ class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
     /**
      * This method checks the acyclic complexity for the given node against a
      * configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

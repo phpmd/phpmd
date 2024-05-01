@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
@@ -47,7 +46,6 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * that use assignment instead of comparison.
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -62,7 +60,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * Extracts if and elseif statements from method/function body
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return array<int, ASTNode<ASTIfStatement>|ASTNode<ASTElseIfStatement>>
+     * @return array<int, ASTNode<ASTElseIfStatement>|ASTNode<ASTIfStatement>>
      */
     protected function getStatements(AbstractNode $node)
     {
@@ -75,7 +73,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all expression from statements array
      *
-     * @param array<int, ASTNode<ASTIfStatement>|ASTNode<ASTElseIfStatement>> $statements Array of if and elseif clauses
+     * @param array<int, ASTNode<ASTElseIfStatement>|ASTNode<ASTIfStatement>> $statements Array of if and elseif clauses
      * @return array<int, ASTNode<ASTExpression>>
      */
     protected function getExpressions(array $statements)

@@ -29,9 +29,6 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAwar
     /**
      * This method checks the number of public fields and methods in the given
      * class and checks that value against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

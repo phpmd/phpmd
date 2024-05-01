@@ -29,9 +29,6 @@ class TooManyFields extends AbstractRule implements ClassAware
     /**
      * This method checks the number of methods with in a given class and checks
      * this number against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

@@ -51,14 +51,14 @@ class CommandLineOptions
     /**
      * The minimum rule priority.
      *
-     * @var integer
+     * @var int
      */
     protected $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
      * The maximum rule priority.
      *
-     * @var integer
+     * @var int
      */
     protected $maximumPriority = Rule::HIGHEST_PRIORITY;
 
@@ -137,14 +137,14 @@ class CommandLineOptions
     /**
      * Should the shell show the current phpmd version?
      *
-     * @var boolean
+     * @var bool
      */
     protected $version = false;
 
     /**
      * Should PHPMD run in strict mode?
      *
-     * @var boolean
+     * @var bool
      * @since 1.2.0
      */
     protected $strict = false;
@@ -155,7 +155,7 @@ class CommandLineOptions
     /**
      * Should PHPMD exit without error code even if error is found?
      *
-     * @var boolean
+     * @var bool
      * @since 2.10.0
      */
     protected $ignoreErrorsOnExit = false;
@@ -163,7 +163,7 @@ class CommandLineOptions
     /**
      * Should PHPMD exit without error code even if violation is found?
      *
-     * @var boolean
+     * @var bool
      */
     protected $ignoreViolationsOnExit = false;
 
@@ -473,7 +473,7 @@ class CommandLineOptions
     /**
      * Returns the minimum rule priority.
      *
-     * @return integer
+     * @return int
      */
     public function getMinimumPriority()
     {
@@ -483,7 +483,7 @@ class CommandLineOptions
     /**
      * Returns the maximum rule priority.
      *
-     * @return integer
+     * @return int
      */
     public function getMaximumPriority()
     {
@@ -526,7 +526,7 @@ class CommandLineOptions
     /**
      * Was the <b>--version</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasVersion()
     {
@@ -536,7 +536,7 @@ class CommandLineOptions
     /**
      * Was the <b>--strict</b> option passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      * @since 1.2.0
      */
     public function hasStrict()
@@ -610,7 +610,7 @@ class CommandLineOptions
     /**
      * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      * @since 2.10.0
      */
     public function ignoreErrorsOnExit()
@@ -621,7 +621,7 @@ class CommandLineOptions
     /**
      * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      */
     public function ignoreViolationsOnExit()
     {
@@ -650,8 +650,8 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
-     * @return \PHPMD\AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
+     * @return \PHPMD\AbstractRenderer
      */
     public function createRenderer($reportFormat = null)
     {
@@ -670,8 +670,8 @@ class CommandLineOptions
 
     /**
      * @param string $reportFormat
-     * @return \PHPMD\AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
+     * @return \PHPMD\AbstractRenderer
      */
     protected function createRendererWithoutOptions($reportFormat = null)
     {
@@ -702,7 +702,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\XMLRenderer
+     * @return XMLRenderer
      */
     protected function createXmlRenderer()
     {
@@ -710,7 +710,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\TextRenderer
+     * @return TextRenderer
      */
     protected function createTextRenderer()
     {
@@ -718,7 +718,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\AnsiRenderer
+     * @return AnsiRenderer
      */
     protected function createAnsiRenderer()
     {
@@ -726,7 +726,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\GitLabRenderer
+     * @return GitLabRenderer
      */
     protected function createGitLabRenderer()
     {
@@ -734,7 +734,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\GitHubRenderer
+     * @return GitHubRenderer
      */
     protected function createGitHubRenderer()
     {
@@ -742,7 +742,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\HTMLRenderer
+     * @return HTMLRenderer
      */
     protected function createHtmlRenderer()
     {
@@ -750,7 +750,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\JSONRenderer
+     * @return JSONRenderer
      */
     protected function createJsonRenderer()
     {
@@ -758,7 +758,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\CheckStyleRenderer
+     * @return CheckStyleRenderer
      */
     protected function createCheckStyleRenderer()
     {
@@ -766,7 +766,7 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\Renderer\SARIFRenderer
+     * @return SARIFRenderer
      */
     protected function createSarifRenderer()
     {
@@ -774,8 +774,8 @@ class CommandLineOptions
     }
 
     /**
-     * @return \PHPMD\AbstractRenderer
      * @throws InvalidArgumentException
+     * @return \PHPMD\AbstractRenderer
      */
     protected function createCustomRenderer()
     {
@@ -895,7 +895,6 @@ class CommandLineOptions
      *
      * @param string $deprecatedName
      * @param string $newName
-     * @return void
      */
     protected function logDeprecated($deprecatedName, $newName): void
     {
@@ -913,8 +912,8 @@ class CommandLineOptions
      * exception.
      *
      * @param string $inputFile Specified input file name.
-     * @return string
      * @throws InvalidArgumentException If the specified input file does not exist.
+     * @return string
      * @since 1.1.0
      */
     protected function readInputFile($inputFile)

@@ -19,10 +19,10 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Rule\FunctionAware;
-use PHPMD\Rule\MethodAware;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\MethodAware;
 
 /**
  * This rule class checks for excessive long function and method parameter lists.
@@ -32,9 +32,6 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
     /**
      * This method checks the number of arguments for the given function or method
      * node against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

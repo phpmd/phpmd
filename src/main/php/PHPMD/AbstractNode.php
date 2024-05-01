@@ -19,8 +19,8 @@ namespace PHPMD;
 
 use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTArtifact;
-use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\Node\ASTNode;
 
 /**
@@ -60,7 +60,6 @@ abstract class AbstractNode
      * to the underlying PDepend AST node.
      *
      * @param string $name
-     * @param array $args
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
@@ -95,7 +94,7 @@ abstract class AbstractNode
     /**
      * Returns a child node at the given index.
      *
-     * @param integer $index The child offset.
+     * @param int $index The child offset.
      * @return AbstractNode
      */
     public function getChild($index)
@@ -220,7 +219,7 @@ abstract class AbstractNode
     /**
      * Returns the begin line for this node in the php source code file.
      *
-     * @return integer
+     * @return int
      */
     public function getBeginLine()
     {
@@ -230,7 +229,7 @@ abstract class AbstractNode
     /**
      * Returns the end line for this node in the php source code file.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {
@@ -295,7 +294,6 @@ abstract class AbstractNode
      * This method will set the metrics for this node.
      *
      * @param array<string, mixed> $metrics The collected node metrics.
-     * @return void
      */
     public function setMetrics(array $metrics): void
     {
@@ -308,8 +306,7 @@ abstract class AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     abstract public function hasSuppressWarningsAnnotationFor(Rule $rule);
 

@@ -71,7 +71,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * a static object property or something similar.
      *
      * @param \PHPMD\Node\ASTNode<\PDepend\Source\AST\ASTVariable> $variable The variable to check.
-     * @return boolean
+     * @return bool
      */
     protected function isLocal(ASTNode $variable)
     {
@@ -85,8 +85,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable represents one of the PHP super globals
      * that are available in scopes.
      *
-     * @param \PHPMD\AbstractNode $variable
-     * @return boolean
+     * @return bool
      */
     protected function isSuperGlobal(AbstractNode $variable)
     {
@@ -97,8 +96,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable does not represent one of the PHP super globals
      * that are available in scopes.
      *
-     * @param \PHPMD\AbstractNode $variable
-     * @return boolean
+     * @return bool
      */
     protected function isNotSuperGlobal(AbstractNode $variable)
     {
@@ -109,8 +107,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node is a regular variable an not property
      * or method postfix.
      *
-     * @param \PHPMD\Node\ASTNode $variable
-     * @return boolean
+     * @return bool
      */
     protected function isRegularVariable(ASTNode $variable)
     {
@@ -136,8 +133,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Removes all index expressions that are wrapped around the given node
      * instance.
      *
-     * @param \PHPMD\Node\ASTNode $node
-     * @return \PHPMD\Node\ASTNode
+     * @return ASTNode
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
     {
@@ -156,8 +152,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Tests if the given variable node os part of an index expression.
      *
-     * @param \PHPMD\Node\ASTNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isWrappedByIndexExpression(ASTNode $node)
     {
@@ -170,9 +165,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * PHP is case insensitive so we should compare function names case
      * insensitive.
      *
-     * @param \PHPMD\AbstractNode $node
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     protected function isFunctionNameEqual(AbstractNode $node, $name)
     {
@@ -183,9 +177,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * AST puts namespace prefix to global functions called from a namespace.
      * This method checks if the last part of function fully qualified name is equal to $name
      *
-     * @param \PHPMD\AbstractNode $node
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     protected function isFunctionNameEndingWith(AbstractNode $node, $name)
     {
@@ -199,7 +192,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Prefix self:: and static:: properties with "::".
      *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @return string
      */
     protected function getVariableImage($variable)
@@ -240,7 +233,6 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Or return the input as is if it's not an ASTNode PHPMD node.
      *
-     * @param mixed $node
      * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
      */
     protected function getNode($node)
@@ -282,7 +274,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Return true if the given variable is passed by reference in a native PHP function.
      *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @return bool
      */
     protected function isPassedByReference($variable)
@@ -338,7 +330,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * same variable and won't overlap in a storage keyed by image as first one
      * image is "$foo", second one is "::$foo".
      *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @return string
      */
     private function prependMemberPrimaryPrefix($image, $variable)
@@ -372,7 +364,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * }
      * ```
      *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
+     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @param string $image
      * @return bool
      */

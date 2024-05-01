@@ -37,8 +37,6 @@ class XMLRenderer extends AbstractRenderer
     /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
-     *
-     * @return void
      */
     public function start(): void
     {
@@ -49,9 +47,6 @@ class XMLRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
     public function renderReport(Report $report): void
     {
@@ -118,7 +113,6 @@ class XMLRenderer extends AbstractRenderer
      *
      * @param string $attr The xml attribute name.
      * @param string $value The attribute value.
-     * @return void
      */
     protected function maybeAdd($attr, $value): void
     {
