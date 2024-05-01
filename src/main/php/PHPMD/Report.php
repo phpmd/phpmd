@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use ArrayIterator;
+use Iterator;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
@@ -65,9 +66,6 @@ class Report
 
     /**
      * Adds a rule violation to this report.
-     *
-     * @param \PHPMD\RuleViolation $violation
-     * @return void
      */
     public function addRuleViolation(RuleViolation $violation): void
     {
@@ -91,7 +89,7 @@ class Report
     /**
      * Returns <b>true</b> when this report does not contain any errors.
      *
-     * @return boolean
+     * @return bool
      * @since 0.2.5
      */
     public function isEmpty()
@@ -125,8 +123,6 @@ class Report
     /**
      * Adds a processing error that occurred while parsing the source.
      *
-     * @param \PHPMD\ProcessingError $error
-     * @return void
      * @since 1.2.1
      */
     public function addError(ProcessingError $error): void
@@ -138,7 +134,7 @@ class Report
      * Returns <b>true</b> when the report contains at least one processing
      * error. Otherwise this method will return <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      * @since 1.2.1
      */
     public function hasErrors()
@@ -150,7 +146,7 @@ class Report
      * Returns an iterator with all {@link \PHPMD\ProcessingError} that were
      * added to this report.
      *
-     * @return \Iterator
+     * @return Iterator
      * @since 1.2.1
      */
     public function getErrors()
@@ -160,8 +156,6 @@ class Report
 
     /**
      * Starts the time tracking of this report instance.
-     *
-     * @return void
      */
     public function start(): void
     {
@@ -170,8 +164,6 @@ class Report
 
     /**
      * Stops the time tracking of this report instance.
-     *
-     * @return void
      */
     public function end(): void
     {

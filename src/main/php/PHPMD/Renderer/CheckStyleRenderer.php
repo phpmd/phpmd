@@ -2,9 +2,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\Renderer\XMLRenderer;
 
 /**
  * This class will render a Java-checkstyle compatible xml-report.
@@ -28,7 +26,7 @@ class CheckStyleRenderer extends XMLRenderer
      * - priority 2 maps to warning level severity
      * - priority > 2 maps to info level severity
      *
-     * @param integer $priority priority of the broken rule
+     * @param int $priority priority of the broken rule
      * @return string either error, warning or info
      */
     protected function mapPriorityToSeverity($priority)
@@ -42,8 +40,6 @@ class CheckStyleRenderer extends XMLRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
      */
     public function renderReport(Report $report): void
     {

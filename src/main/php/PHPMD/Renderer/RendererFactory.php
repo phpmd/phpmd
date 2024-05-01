@@ -8,8 +8,8 @@ use RuntimeException;
 class RendererFactory
 {
     /**
-     * @return BaselineRenderer
      * @throws RuntimeException
+     * @return BaselineRenderer
      */
     public static function createBaselineRenderer(StreamWriter $writer)
     {

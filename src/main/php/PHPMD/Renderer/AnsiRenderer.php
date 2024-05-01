@@ -13,10 +13,6 @@ use PHPMD\RuleViolation;
 class AnsiRenderer extends AbstractRenderer
 {
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
     public function renderReport(Report $report): void
     {
         $this->writeViolationsReport($report);
@@ -24,10 +20,6 @@ class AnsiRenderer extends AbstractRenderer
         $this->writeReportSummary($report);
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
     private function writeViolationsReport(Report $report): void
     {
         if ($report->isEmpty()) {
@@ -51,7 +43,6 @@ class AnsiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param \PHPMD\Report $report
      * @return int|null
      */
     private function getMaxLineNumberLength(Report $report)
@@ -66,10 +57,6 @@ class AnsiRenderer extends AbstractRenderer
         return $maxLength;
     }
 
-    /**
-     * @param \PHPMD\RuleViolation $violation
-     * @return void
-     */
     private function writeViolationFileHeader(RuleViolation $violation): void
     {
         $fileHeader = sprintf(
@@ -83,9 +70,7 @@ class AnsiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param \PHPMD\RuleViolation $violation
      * @param int $padding
-     * @return void
      */
     private function writeViolationLine(RuleViolation $violation, $padding): void
     {
@@ -96,10 +81,6 @@ class AnsiRenderer extends AbstractRenderer
         ));
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
     private function writeErrorsReport(Report $report): void
     {
         if (!$report->hasErrors()) {
@@ -125,10 +106,6 @@ class AnsiRenderer extends AbstractRenderer
         }
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
     private function writeReportSummary(Report $report): void
     {
         $this->getWriter()->write(

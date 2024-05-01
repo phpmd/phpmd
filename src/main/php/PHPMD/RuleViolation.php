@@ -28,7 +28,7 @@ class RuleViolation
     /**
      * The rule that causes this violation.
      *
-     * @var \PHPMD\Rule
+     * @var Rule
      */
     private $rule;
 
@@ -64,9 +64,7 @@ class RuleViolation
     /**
      * Constructs a new rule violation instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @param NodeInfo $nodeInfo
-     * @param string|array $violationMessage
+     * @param array|string $violationMessage
      * @param ?numeric $metric
      */
     public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
@@ -93,7 +91,7 @@ class RuleViolation
     /**
      * Returns the rule that causes this violation.
      *
-     * @return \PHPMD\Rule
+     * @return Rule
      */
     public function getRule()
     {
@@ -144,7 +142,7 @@ class RuleViolation
     /**
      * Returns the first line of the node that causes this rule violation.
      *
-     * @return integer
+     * @return int
      */
     public function getBeginLine()
     {
@@ -154,7 +152,7 @@ class RuleViolation
     /**
      * Returns the last line of the node that causes this rule violation.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {

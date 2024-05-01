@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use OutOfBoundsException;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -209,7 +210,7 @@ abstract class AbstractRule implements Rule
     /**
      * Set the priority of this rule.
      *
-     * @param integer $priority The rule priority
+     * @param int $priority The rule priority
      */
     public function setPriority(int $priority): void
     {
@@ -266,9 +267,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param mixed $default An optional default value to fall back instead of throwing an exception.
-     * @return mixed The value of a configured property.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
+     * @return mixed The value of a configured property.
      */
     protected function getProperty(string $name, mixed $default = null): mixed
     {
@@ -280,7 +281,7 @@ abstract class AbstractRule implements Rule
             return $default;
         }
 
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+        throw new OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
     /**
@@ -291,9 +292,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param bool|null $default An optional default value to fall back instead of throwing an exception.
-     * @return bool The value of a configured property as a boolean.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
+     * @return bool The value of a configured property as a boolean.
      */
     public function getBooleanProperty(string $name, ?bool $default = null): bool
     {
@@ -308,9 +309,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "minimum".
      * @param int|null $default An optional default value to fall back instead of throwing an exception.
-     * @return int The value of a configured property as an integer.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
+     * @return int The value of a configured property as an integer.
      */
     public function getIntProperty(string $name, ?int $default = null): int
     {
@@ -325,9 +326,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "exceptions".
      * @param string|null $default An optional default value to fall back instead of throwing an exception.
-     * @return string The raw string value of a configured property.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
+     * @return string The raw string value of a configured property.
      */
     public function getStringProperty(string $name, ?string $default = null): string
     {
@@ -360,7 +361,7 @@ abstract class AbstractRule implements Rule
     /**
      * Apply the current rule on each method of a class node.
      *
-     * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node class node containing methods.
+     * @param ClassNode|EnumNode|InterfaceNode|TraitNode $node class node containing methods.
      */
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
@@ -376,9 +377,6 @@ abstract class AbstractRule implements Rule
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     abstract public function apply(AbstractNode $node): void;
 }

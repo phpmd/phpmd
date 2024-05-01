@@ -77,8 +77,8 @@ class Strings
      * @param string $listAsString The string to split.
      * @param string $separator The separator to split the string with, similar to explode.
      * @param string $trim Extra character to be trimmed off of each value.
-     * @return array The list of trimmed and filtered parts of the string.
      * @throws InvalidArgumentException When the separator is an empty string.
+     * @return array The list of trimmed and filtered parts of the string.
      */
     public static function splitToList($listAsString, $separator = ',', $trim = '')
     {

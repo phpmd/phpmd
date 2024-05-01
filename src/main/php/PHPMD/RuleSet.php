@@ -105,7 +105,6 @@ class RuleSet implements IteratorAggregate
      * Sets the file name where the definition of this rule-set comes from.
      *
      * @param string $fileName The file name.
-     * @return void
      */
     public function setFileName(string $fileName): void
     {
@@ -124,7 +123,6 @@ class RuleSet implements IteratorAggregate
      * Sets the name of this rule-set.
      *
      * @param string $name The name of this rule-set.
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -133,8 +131,6 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns the description text for this rule-set instance.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -247,7 +243,7 @@ class RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->rules[$className] as $rule) {
-            /** @var $rule Rule */
+            /** @var Rule $rule */
             if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->strict) {
                 continue;
             }

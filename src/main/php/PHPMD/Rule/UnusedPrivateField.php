@@ -39,9 +39,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * This method checks that all private class properties are at least accessed
      * by one method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -55,7 +52,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method collects all private fields that aren't used by any class
      * method.
      *
-     * @param \PHPMD\Node\ClassNode $class
      * @return \PHPMD\AbstractNode[]
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
@@ -71,9 +67,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * This method collects all private fields in the given class and stores
      * them in the <b>$_fields</b> property.
-     *
-     * @param \PHPMD\Node\ClassNode $class
-     * @return void
      */
     protected function collectPrivateFields(ClassNode $class): void
     {
@@ -87,9 +80,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * This method extracts all variable declarators from the given field
      * declaration and stores them in the <b>$_fields</b> property.
-     *
-     * @param \PHPMD\Node\ASTNode $declaration
-     * @return void
      */
     protected function collectPrivateField(ASTNode $declaration): void
     {
@@ -103,9 +93,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method extracts all property postfix nodes from the given class and
      * removes all fields from the <b>$_fields</b> property that are accessed by
      * one of the postfix nodes.
-     *
-     * @param \PHPMD\Node\ClassNode $class
-     * @return void
      */
     protected function removeUsedFields(ClassNode $class): void
     {
@@ -119,9 +106,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * This method removes the field from the <b>$_fields</b> property that is
      * accessed through the given property postfix node.
-     *
-     * @param \PHPMD\Node\ASTNode $postfix
-     * @return void
      */
     protected function removeUsedField(ASTNode $postfix): void
     {
@@ -142,8 +126,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * Checks if the given node is a valid property node.
      *
-     * @param \PHPMD\Node\ASTNode $node
-     * @return boolean
+     * @return bool
      * @since 0.2.6
      */
     protected function isValidPropertyNode(ASTNode $node = null)
@@ -170,9 +153,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method checks that the given property postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param \PHPMD\Node\ClassNode $class
-     * @param \PHPMD\Node\ASTNode $postfix
-     * @return boolean
+     * @return bool
      */
     protected function isInScopeOfClass(ClassNode $class, ASTNode $postfix)
     {
@@ -190,7 +171,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * Looks for owner of the given variable.
      *
      * @param \PHPMD\Node\ASTNode<\PDepend\Source\AST\ASTPropertyPostfix> $postfix
-     * @return \PHPMD\AbstractNode
+     * @return AbstractNode
      */
     protected function getOwner(ASTNode $postfix)
     {

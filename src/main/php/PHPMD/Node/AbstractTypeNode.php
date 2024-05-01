@@ -29,14 +29,12 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 abstract class AbstractTypeNode extends AbstractNode
 {
     /**
-     * @var \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @var AbstractASTClassOrInterface
      */
     private $node;
 
     /**
      * Constructs a new generic class or interface node.
-     *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $node
      */
     public function __construct(AbstractASTClassOrInterface $node)
     {
@@ -80,7 +78,7 @@ abstract class AbstractTypeNode extends AbstractNode
     /**
      * Returns the number of constants declared in this type.
      *
-     * @return integer
+     * @return int
      */
     public function getConstantCount()
     {

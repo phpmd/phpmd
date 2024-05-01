@@ -44,9 +44,6 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 
     /**
      * Method checks for use of static access and warns about it.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

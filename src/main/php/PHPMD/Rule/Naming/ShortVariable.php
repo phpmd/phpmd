@@ -51,9 +51,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -73,9 +70,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
     protected function applyClass(AbstractNode $node): void
     {
@@ -94,9 +88,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
     protected function applyNonClass(AbstractNode $node): void
     {
@@ -115,9 +106,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the variable name of the given node is greater/equal to the
      * configured threshold or if the given node is an allowed context.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     protected function checkNodeImage(AbstractNode $node): void
     {
@@ -129,9 +117,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Template method that performs the real node image check.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     protected function checkMinimumLength(AbstractNode $node): void
     {
@@ -173,8 +158,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * moment these contexts are the init section of a for-loop and short
      * variable names in catch-statements.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
@@ -192,8 +176,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if a short name is initialized within a foreach loop statement
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isInitializedInLoop(AbstractNode $node)
     {
@@ -218,7 +201,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Returns an array of parent nodes of the specified type
      *
-     * @param \PHPMD\AbstractNode $node
      * @return array
      */
     protected function getParentsOfType(AbstractNode $node, $type)
@@ -241,9 +223,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks if the given node is a direct or indirect child of a node with
      * the given type.
      *
-     * @param \PHPMD\AbstractNode $node
      * @param string $type
-     * @return boolean
+     * @return bool
      */
     protected function isChildOf(AbstractNode $node, $type)
     {
@@ -260,8 +241,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Resets the already processed nodes.
-     *
-     * @return void
      */
     protected function resetProcessed(): void
     {
@@ -270,9 +249,6 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Flags the given node as already processed.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     protected function addProcessed(AbstractNode $node): void
     {
@@ -282,8 +258,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the given node was already processed.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @return bool
      */
     protected function isNotProcessed(AbstractNode $node)
     {

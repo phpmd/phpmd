@@ -26,8 +26,6 @@ class InterfaceNode extends AbstractTypeNode
 {
     /**
      * Constructs a new interface wrapper instance.
-     *
-     * @param \PDepend\Source\AST\ASTInterface $node
      */
     public function __construct(ASTInterface $node)
     {

@@ -29,9 +29,6 @@ class LongClass extends AbstractRule implements ClassAware
     /**
      * This method checks the length of the given class node against a configured
      * threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

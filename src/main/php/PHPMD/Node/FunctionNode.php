@@ -28,8 +28,6 @@ class FunctionNode extends AbstractCallableNode
 {
     /**
      * Constructs a new function wrapper.
-     *
-     * @param \PDepend\Source\AST\ASTFunction $node
      */
     public function __construct(ASTFunction $node)
     {

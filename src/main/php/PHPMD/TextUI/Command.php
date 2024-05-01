@@ -69,9 +69,7 @@ class Command
      * <b>--ignore-errors-on-exit</b> will result to a <b>EXIT_SUCCESS</b>
      * even if any violation or error is found.
      *
-     * @param \PHPMD\TextUI\CommandLineOptions $opts
-     * @param \PHPMD\RuleSetFactory            $ruleSetFactory
-     * @return integer
+     * @return int
      */
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
     {
@@ -201,7 +199,7 @@ class Command
      * value can be used as exit code.
      *
      * @param string[] $args The raw command line arguments array.
-     * @return integer
+     * @return int
      */
     public static function main(array $args)
     {

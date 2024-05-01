@@ -48,9 +48,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * This method checks that all local variables within the given function or
      * method are used at least one time.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {
@@ -83,8 +80,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect variables defined inside a PHPMD entry node (such as MethodNode).
-     *
-     * @param AbstractNode $node
      */
     protected function collect(AbstractNode $node): void
     {
@@ -115,7 +110,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Stores the given literal node in an global of found variables.
      *
      * @param \PHPMD\Node\AbstractNode $node
-     * @return void
      */
     protected function collectGlobalStatements(AbstractNode $node): void
     {
@@ -126,9 +120,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an catch of found variables.
-     *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @return void
      */
     protected function collectExceptionCatches(AbstractCallableNode $node): void
     {
@@ -141,9 +132,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal list of found variables.
-     *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @return void
      */
     protected function collectListExpressions(AbstractCallableNode $node): void
     {
@@ -154,9 +142,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal foreach of found variables.
-     *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @return void
      */
     protected function collectForeachStatements(AbstractCallableNode $node): void
     {
@@ -179,9 +164,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal closure of found variables.
-     *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @return void
      */
     protected function collectClosureParameters(AbstractCallableNode $node): void
     {
@@ -195,8 +177,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * Check if the given variable was defined in the current context before usage.
      *
-     * @param \PHPMD\Node\ASTNode $variable
-     * @param \PHPMD\Node\AbstractCallableNode $parentNode
      * @return bool
      */
     protected function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
@@ -210,7 +190,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Collect parameter names of method/function.
      *
      * @param \PHPMD\Node\AbstractNode $node
-     * @return void
      */
     protected function collectParameters(AbstractNode $node): void
     {
@@ -227,9 +206,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect assignments of variables.
-     *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @return void
      */
     protected function collectAssignments(AbstractCallableNode $node): void
     {
@@ -257,7 +233,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Collect postfix property.
      *
      * @param \PHPMD\Node\AbstractNode $node
-     * @return void
      */
     protected function collectPropertyPostfix(AbstractNode $node): void
     {
@@ -271,8 +246,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * Add the variable to images.
      *
-     * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
-     * @return void
+     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      */
     protected function addVariableDefinition($variable): void
     {
@@ -286,10 +260,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * Checks if a short name is acceptable in the current context.
      *
-     * @param \PHPMD\Node\AbstractCallableNode $node
-     * @param \PHPMD\Node\ASTNode $variable
-     *
-     * @return boolean
+     * @return bool
      */
     protected function isNameAllowedInContext(AbstractCallableNode $node, ASTNode $variable)
     {

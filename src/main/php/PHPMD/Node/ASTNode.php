@@ -52,8 +52,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      * @SuppressWarnings("PMD.UnusedFormalParameter")
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */

@@ -58,8 +58,7 @@ class Annotation
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     public function suppresses(Rule $rule)
     {
@@ -73,8 +72,7 @@ class Annotation
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     private function isSuppressed(Rule $rule)
     {

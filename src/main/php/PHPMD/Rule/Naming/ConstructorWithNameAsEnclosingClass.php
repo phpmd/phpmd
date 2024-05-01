@@ -33,9 +33,6 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
     /**
      * Is method has the same name as the enclosing class
      * (php4 style constructor).
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

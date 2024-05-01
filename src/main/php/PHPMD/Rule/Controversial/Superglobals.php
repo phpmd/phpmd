@@ -52,9 +52,6 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
     /**
      * This method checks if a superglobal is used
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

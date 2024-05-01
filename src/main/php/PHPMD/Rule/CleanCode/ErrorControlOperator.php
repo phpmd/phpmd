@@ -19,7 +19,6 @@ namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -35,9 +34,6 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
 {
     /**
      * Loops trough all class or function nodes and looks for '@' sign.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

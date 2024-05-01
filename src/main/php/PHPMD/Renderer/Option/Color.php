@@ -6,8 +6,6 @@ interface Color
 {
     /**
      * @param bool $colored
-     *
-     * @return void
      */
     public function setColored($colored): void;
 }

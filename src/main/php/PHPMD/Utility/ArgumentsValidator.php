@@ -3,7 +3,6 @@
 namespace PHPMD\Utility;
 
 use InvalidArgumentException;
-use RuntimeException;
 
 class ArgumentsValidator
 {
@@ -28,8 +27,6 @@ class ArgumentsValidator
      *
      * @param string $name
      * @param string $value
-     *
-     * @return void
      *
      * @throws InvalidArgumentException if the given $value cannot be used as a value for the argument $name
      */

@@ -35,9 +35,6 @@ class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAw
     /**
      * This method checks if a class is not named in CamelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
     public function apply(AbstractNode $node): void
     {

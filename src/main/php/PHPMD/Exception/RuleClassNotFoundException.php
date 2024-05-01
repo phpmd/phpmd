@@ -17,10 +17,12 @@
 
 namespace PHPMD\Exception;
 
+use RuntimeException;
+
 /**
  * When a configured rule class does not exist.
  */
-class RuleClassNotFoundException extends \RuntimeException
+class RuleClassNotFoundException extends RuntimeException
 {
     /**
      * Constructs a new class not found exception.

@@ -30,8 +30,6 @@ abstract class AbstractCallableNode extends AbstractNode
 {
     /**
      * Constructs a new callable wrapper.
-     *
-     * @param \PDepend\Source\AST\AbstractASTCallable $node
      */
     public function __construct(AbstractASTCallable $node)
     {
@@ -41,7 +39,7 @@ abstract class AbstractCallableNode extends AbstractNode
     /**
      * Returns the number of parameters in the callable signature.
      *
-     * @return integer
+     * @return int
      */
     public function getParameterCount()
     {
