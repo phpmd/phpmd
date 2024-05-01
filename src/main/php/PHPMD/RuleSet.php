@@ -173,9 +173,12 @@ class RuleSet implements IteratorAggregate
     }
 
     /**
-     * This method returns a rule by its name or <b>null</b> if it doesn't exist.
+     * This method returns a rule by its name or throws an exception
+     *
+     * @param string $name The name of the rule to get.
+     * @throws RuleByNameNotFoundException When the rule could not be found.
      */
-    public function getRuleByName(string $name): ?Rule
+    public function getRuleByName(string $name): Rule
     {
         foreach ($this->getRules() as $rule) {
             if ($rule->getName() === $name) {
@@ -183,7 +186,7 @@ class RuleSet implements IteratorAggregate
             }
         }
 
-        return null;
+        throw new RuleByNameNotFoundException($name);
     }
 
     /**
