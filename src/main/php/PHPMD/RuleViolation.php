@@ -57,7 +57,7 @@ class RuleViolation
     /**
      * The raw metric value which caused this rule violation.
      *
-     * @var mixed
+     * @var ?numeric
      */
     private $metric;
 
@@ -67,7 +67,7 @@ class RuleViolation
      * @param \PHPMD\Rule $rule
      * @param NodeInfo $nodeInfo
      * @param string|array $violationMessage
-     * @param mixed $metric
+     * @param ?numeric $metric
      */
     public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
     {
