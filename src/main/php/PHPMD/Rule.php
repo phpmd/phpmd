@@ -157,7 +157,7 @@ interface Rule
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no non-null default value to fall back was given.
      */
-    public function getStringProperty($name, $default = null);
+    public function getStringProperty(string $name, ?string $default = null): string;
 
     /**
      * This method should implement the violation analysis algorithm of concrete
