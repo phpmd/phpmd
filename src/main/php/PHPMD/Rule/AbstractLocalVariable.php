@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -196,7 +197,8 @@ abstract class AbstractLocalVariable extends AbstractRule
 
         $previousChildImage = $postfix->getChild(0)->getImage();
 
-        if ($postfix instanceof ASTMemberPrimaryPrefix &&
+        if (
+            $postfix instanceof ASTMemberPrimaryPrefix &&
             in_array($previousChildImage, $this->selfReferences, true)
         ) {
             return $previousChildImage;

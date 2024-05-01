@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -161,9 +162,11 @@ final class Command
             return ExitCode::Error;
         }
 
-        if ($phpmd->hasViolations()
+        if (
+            $phpmd->hasViolations()
             && !$opts->ignoreViolationsOnExit()
-            && $opts->generateBaseline() === BaselineMode::None) {
+            && $opts->generateBaseline() === BaselineMode::None
+        ) {
             return ExitCode::Violation;
         }
 

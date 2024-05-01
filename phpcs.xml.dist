@@ -10,7 +10,6 @@
     <arg name="extensions" value="php"/>
 
     <!-- General sniffs -->
-    <rule ref="Generic.Files.LineLength"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
@@ -33,16 +32,9 @@
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
-    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
-        <properties>
-            <property name="equalsSpacing" value="1"/>
-        </properties>
-    </rule>
 
     <!-- PSR-2 base standard -->
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
 
     <rule ref="PSR2">
         <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>

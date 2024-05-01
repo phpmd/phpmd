@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -178,7 +179,8 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         if ($parent->isInstanceOf(ASTArrayElement::class)) {
             $array = $parent->getParent();
 
-            if ($array?->isInstanceOf(ASTArray::class)
+            if (
+                $array?->isInstanceOf(ASTArray::class)
                 && count($array->getChildren()) === 2
             ) {
                 $secondElement = $array->getChild(1)->getChild(0);
