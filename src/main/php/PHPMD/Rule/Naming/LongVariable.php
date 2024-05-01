@@ -51,7 +51,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var array(string=>boolean)
      */
-    protected $processedVariables = array();
+    protected $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -61,7 +61,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
@@ -97,7 +97,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkNodeImage(AbstractNode $node)
+    protected function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -112,7 +112,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @return void
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    protected function checkMaximumLength(AbstractNode $node)
+    protected function checkMaximumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
@@ -127,7 +127,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($variableName, $threshold));
+        $this->addViolation($node, [$variableName, $threshold]);
     }
 
     /**
@@ -168,9 +168,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @return void
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
-        $this->processedVariables = array();
+        $this->processedVariables = [];
     }
 
     /**
@@ -179,7 +179,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function addProcessed(AbstractNode $node)
+    protected function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }

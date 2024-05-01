@@ -45,7 +45,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $name = $node->getName();
 
@@ -57,7 +57,8 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
             }
         }
 
-        $parent = $node->getNode()->getParent();
+        $currNode = $node->getNode();
+        $parent = is_callable([$currNode, 'getParent']) ? $currNode->getParent() : null;
 
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
@@ -72,7 +73,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
 
     protected function isBooleanValue(ASTValue $value = null)
     {
-        return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
+        return $value?->isValueAvailable() && is_bool($value->getValue());
     }
 
     /**
@@ -89,17 +90,17 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         return $this->exceptions;
     }
 
-    private function scanFormalParameters(AbstractNode $node)
+    private function scanFormalParameters(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('FormalParameter') as $param) {
             $declarator = $param->getFirstChildOfType('VariableDeclarator');
             $value = $declarator->getValue();
 
-            if (false === $this->isBooleanValue($value)) {
+            if (!$this->isBooleanValue($value)) {
                 continue;
             }
 
-            $this->addViolation($param, array($node->getImage(), $declarator->getImage()));
+            $this->addViolation($param, [$node->getImage(), $declarator->getImage()]);
         }
     }
 }

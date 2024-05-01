@@ -18,12 +18,12 @@
 namespace PHPMD;
 
 use Closure;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Abstract base class for PHPMD test cases.
  */
-abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
+abstract class AbstractStaticTestCase extends TestCase
 {
     /**
      * Directory with test files.
@@ -44,7 +44,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @var array(string)
      */
-    private static $tempFiles = array();
+    private static $tempFiles = [];
 
     /**
      * Return to original working directory if changed.
@@ -73,7 +73,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
             unlink($tempFile);
         }
 
-        self::$tempFiles = array();
+        self::$tempFiles = [];
     }
 
     /**
@@ -98,7 +98,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     protected static function getValuesAsArrays($values)
     {
         return array_map(function ($value) {
-            return array($value);
+            return [$value];
         }, $values);
     }
 
@@ -162,7 +162,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
-        if ($removeDynamicValues === true) {
+        if ($removeDynamicValues) {
             if (isset($actual['timestamp'])) {
                 $actual['timestamp'] = '';
             }
@@ -194,11 +194,11 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
 
-        if (false === strpos(get_include_path(), self::$filesDirectory)) {
+        if (!str_contains(get_include_path(), self::$filesDirectory)) {
             set_include_path(
                 sprintf(
                     '%s%s%s%s%s',
@@ -267,7 +267,7 @@ abstract class AbstractStaticTest extends PHPUnit_Framework_TestCase
     protected static function getCallingTestCase()
     {
         foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
+            if (str_starts_with($frame['function'], 'test')) {
                 return $frame;
             }
         }

@@ -43,7 +43,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $classOrInterfaceName = $node->getName();
@@ -55,7 +55,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
             return;
         }
 
-        $this->addViolation($node, array($classOrInterfaceName, $threshold));
+        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
     }
 
     /**

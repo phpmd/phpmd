@@ -24,7 +24,7 @@ namespace PHPMD;
  *
  * @covers \PHPMD\ProcessingError
  */
-class ProcessingErrorTest extends AbstractTest
+class ProcessingErrorTest extends AbstractTestCase
 {
     /**
      * testGetMessageReturnsTheExpectedValue
@@ -54,25 +54,23 @@ class ProcessingErrorTest extends AbstractTest
     /**
      * Data provider that returns common exception messages used by PHP_Depend's
      * parser.
-     *
-     * @return array
      */
-    public function getParserExceptionMessages()
+    public static function getParserExceptionMessages(): array
     {
-        return array(
-            array(
+        return [
+            [
                 'The parser has reached an invalid state near line "42" in file ' .
                 '"/tmp/foo.php". Please check the following conditions: message',
-            ),
-            array(
+            ],
+            [
                 'Unexpected token: >, line: 42, col: 23, file: /tmp/foo.php.',
-            ),
-            array(
+            ],
+            [
                 'Unexpected end of token stream in file: /tmp/foo.php.',
-            ),
-            array(
+            ],
+            [
                 'Missing default value on line: 42, col: 23, file: /tmp/foo.php.',
-            ),
-        );
+            ],
+        ];
     }
 }

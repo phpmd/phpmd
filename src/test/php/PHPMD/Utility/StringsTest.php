@@ -17,15 +17,15 @@
 
 namespace PHPMD\Utility;
 
-use PHPMD\AbstractTest;
-use PHPMD\Utility\Strings;
+use InvalidArgumentException;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test cases for the Strings utility class.
  *
  * @coversDefaultClass  \PHPMD\Utility\Strings
  */
-class StringsTest extends AbstractTest
+class StringsTest extends AbstractTestCase
 {
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string
@@ -34,7 +34,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesEmptyString()
     {
-        static::assertSame(0, Strings::lengthWithoutSuffixes('', array()));
+        static::assertSame(0, Strings::lengthWithoutSuffixes('', []));
     }
 
     /**
@@ -44,7 +44,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix()
     {
-        static::assertSame(0, Strings::lengthWithoutSuffixes('', array('Foo', 'Bar')));
+        static::assertSame(0, Strings::lengthWithoutSuffixes('', ['Foo', 'Bar']));
     }
 
     /**
@@ -54,7 +54,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch()
     {
-        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', array('Foo', 'Bar')));
+        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', ['Foo', 'Bar']));
     }
 
     /**
@@ -64,7 +64,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch()
     {
-        static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', array('Foo', 'Bar')));
+        static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', ['Foo', 'Bar']));
     }
 
     /**
@@ -74,7 +74,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce()
     {
-        static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', array('Foo', 'Bar')));
+        static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', ['Foo', 'Bar']));
     }
 
     /**
@@ -84,7 +84,7 @@ class StringsTest extends AbstractTest
      */
     public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract()
     {
-        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
+        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
     }
 
     /**
@@ -94,8 +94,8 @@ class StringsTest extends AbstractTest
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract()
     {
-        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', array('Foo', 'Bar')));
-        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', array('Foo', 'Bar')));
+        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
+        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', ['Foo', 'Bar']));
     }
 
     /**
@@ -105,8 +105,8 @@ class StringsTest extends AbstractTest
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder()
     {
-        $prefixes = array('Foo', 'Bar');
-        $suffixes = array('Foo', 'FooUnit');
+        $prefixes = ['Foo', 'Bar'];
+        $suffixes = ['Foo', 'FooUnit'];
         $length = Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', $suffixes, $prefixes);
         static::assertSame(8, $length);
     }
@@ -114,12 +114,14 @@ class StringsTest extends AbstractTest
     /**
      * Tests the splitToList() method with an empty separator
      *
-     * @expectedException \InvalidArgumentException
-     *
      * @return void
      */
     public function testSplitToListEmptySeparatorThrowsException()
     {
+        self::expectExceptionObject(new InvalidArgumentException(
+            "Separator can't be empty string",
+        ));
+
         Strings::splitToList('UnitTest', '');
     }
 
@@ -130,7 +132,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListEmptyString()
     {
-        static::assertSame(array(), Strings::splitToList('', ','));
+        static::assertSame([], Strings::splitToList('', ','));
     }
 
     /**
@@ -140,7 +142,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListStringWithoutMatchingSeparator()
     {
-        static::assertSame(array('UnitTest'), Strings::splitToList('UnitTest', ','));
+        static::assertSame(['UnitTest'], Strings::splitToList('UnitTest', ','));
     }
 
     /**
@@ -150,7 +152,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListStringWithMatchingSeparator()
     {
-        static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit,Test', ','));
+        static::assertSame(['Unit', 'Test'], Strings::splitToList('Unit,Test', ','));
     }
 
     /**
@@ -160,7 +162,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListStringTrimsLeadingAndTrailingWhitespace()
     {
-        static::assertSame(array('Unit', 'Test'), Strings::splitToList('Unit , Test', ','));
+        static::assertSame(['Unit', 'Test'], Strings::splitToList('Unit , Test', ','));
     }
 
     /**
@@ -170,7 +172,7 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListStringRemoveEmptyStringValues()
     {
-        static::assertSame(array('Foo'), Strings::splitToList('Foo,,,', ','));
+        static::assertSame(['Foo'], Strings::splitToList('Foo,,,', ','));
     }
 
     /**
@@ -180,6 +182,6 @@ class StringsTest extends AbstractTest
      */
     public function testSplitToListStringShouldNotRemoveAZeroValue()
     {
-        static::assertSame(array('0', '1', '2'), Strings::splitToList('0,1,2', ','));
+        static::assertSame(['0', '1', '2'], Strings::splitToList('0,1,2', ','));
     }
 }

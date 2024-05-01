@@ -27,7 +27,7 @@ class RuleSetNotFoundException extends \RuntimeException
      *
      * @param string $ruleSet The rule-set identifier or file name.
      */
-    public function __construct($ruleSet)
+    public function __construct(string $ruleSet)
     {
         parent::__construct('Cannot find specified rule-set "' . $ruleSet . '".');
     }

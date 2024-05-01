@@ -2,13 +2,13 @@
 
 namespace PHPMD\Console;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass  \PHPMD\Console\Output
  * @covers ::__construct
  */
-class OutputTest extends AbstractTest
+class OutputTest extends AbstractTestCase
 {
     /** @var TestOutput */
     private $output;
@@ -16,7 +16,7 @@ class OutputTest extends AbstractTest
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->output = new TestOutput();
@@ -55,7 +55,7 @@ class OutputTest extends AbstractTest
     public function testWriteMultiMessageWithNewline()
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this->output->write(array("foo", "bar"), true, OutputInterface::VERBOSITY_VERBOSE);
+        $this->output->write(["foo", "bar"], true, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame("foo\nbar\n", $this->output->getOutput());
     }
@@ -81,33 +81,33 @@ class OutputTest extends AbstractTest
 
     public static function verbosityProvider()
     {
-        return array(
-            array(
+        return [
+            [
                 Output::VERBOSITY_QUIET,
                 '2',
-                '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed'
-            ),
-            array(
+                '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed',
+            ],
+            [
                 Output::VERBOSITY_NORMAL,
                 '123',
-                '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity'
-            ),
-            array(
+                '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity',
+            ],
+            [
                 Output::VERBOSITY_VERBOSE,
                 '1234',
-                '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity'
-            ),
-            array(
+                '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity',
+            ],
+            [
                 Output::VERBOSITY_VERY_VERBOSE,
                 '12345',
-                '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity'
-            ),
-            array(
+                '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity',
+            ],
+            [
                 Output::VERBOSITY_DEBUG,
                 '123456',
-                '->write() in DEBUG mode outputs everything'
-            ),
-        );
+                '->write() in DEBUG mode outputs everything',
+            ],
+        ];
     }
 
     /**

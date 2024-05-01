@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the really long variable, parameter and property name rule.
  *
- * @covers PHPMD\Rule\Naming\LongVariable
+ * @covers \PHPMD\Rule\Naming\LongVariable
  */
-class LongVariableTest extends AbstractTest
+class LongVariableTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold

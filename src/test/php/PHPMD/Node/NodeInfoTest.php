@@ -2,12 +2,12 @@
 
 namespace PHPMD\Node;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Node\NodeInfo
  */
-class NodeInfoTest extends AbstractTest
+class NodeInfoTest extends AbstractTestCase
 {
     /**
      * @covers ::__construct

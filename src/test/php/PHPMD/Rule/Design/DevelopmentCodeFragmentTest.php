@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DevelopmentCodeFragment} class.
@@ -27,7 +27,7 @@ use PHPMD\AbstractTest;
  *
  * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
  */
-class DevelopmentCodeFragmentTest extends AbstractTest
+class DevelopmentCodeFragmentTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutSuspectFunctionCall

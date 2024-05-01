@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\CouplingBetweenObjects} class.
@@ -25,7 +25,7 @@ use PHPMD\AbstractTest;
  * @link https://www.pivotaltracker.com/story/show/10474987
  * @covers \PHPMD\Rule\Design\CouplingBetweenObjects
  */
-class CouplingBetweenObjectsTest extends AbstractTest
+class CouplingBetweenObjectsTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithCboLessThanThreshold

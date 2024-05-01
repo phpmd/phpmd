@@ -41,7 +41,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
@@ -56,12 +56,12 @@ class TooManyMethods extends AbstractRule implements ClassAware
         }
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $nom,
                 $threshold,
-            )
+            ]
         );
     }
 

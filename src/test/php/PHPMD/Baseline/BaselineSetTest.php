@@ -2,12 +2,12 @@
 
 namespace PHPMD\Baseline;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineSet
  */
-class BaselineSetTest extends AbstractTest
+class BaselineSetTest extends AbstractTestCase
 {
     /**
      * @covers ::addEntry

@@ -2,13 +2,13 @@
 
 namespace PHPMD\Node;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Node\NodeInfoFactory
  */
-class NodeInfoFactoryTest extends AbstractTest
+class NodeInfoFactoryTest extends AbstractTestCase
 {
     /**
      * @covers ::fromNode

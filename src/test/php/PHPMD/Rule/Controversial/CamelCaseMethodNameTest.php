@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case method name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseMethodName
  */
-class CamelCaseMethodNameTest extends AbstractTest
+class CamelCaseMethodNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid method name.
@@ -38,6 +38,42 @@ class CamelCaseMethodNameTest extends AbstractTest
 
         $rule = new CamelCaseMethodName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * Tests that the rule does apply for method name
+     * with all caps abbreviation.
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForMethodNameWithAllCapsAbbreviation()
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * Tests that the rule does not apply for method name
+     * with camelcase abbreviation.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForMethodNameWithCamelcaseAbbreviation()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
         $rule->addProperty('allow-underscore', 'false');
         $rule->addProperty('allow-underscore-test', 'false');
         $rule->apply($this->getMethod());

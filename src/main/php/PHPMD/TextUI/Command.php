@@ -17,6 +17,7 @@
 
 namespace PHPMD\TextUI;
 
+use Exception;
 use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
@@ -25,6 +26,7 @@ use PHPMD\Cache\ResultCacheEngineFactory;
 use PHPMD\Cache\ResultCacheKeyFactory;
 use PHPMD\Cache\ResultCacheStateFactory;
 use PHPMD\Console\Output;
+use PHPMD\Console\OutputInterface;
 use PHPMD\Console\StreamOutput;
 use PHPMD\PHPMD;
 use PHPMD\Renderer\RendererFactory;
@@ -80,13 +82,13 @@ class Command
         }
 
         // Create a report stream
-        $stream = $opts->getReportFile() ? $opts->getReportFile() : STDOUT;
+        $stream = $opts->getReportFile() ?: STDOUT;
 
         // Create renderer and configure output
         $renderer = $opts->createRenderer();
         $renderer->setWriter(new StreamWriter($stream));
 
-        $renderers = array($renderer);
+        $renderers = [$renderer];
 
         foreach ($opts->getReportFiles() as $reportFormat => $reportFile) {
             $reportRenderer = $opts->createRenderer($reportFormat);
@@ -101,11 +103,11 @@ class Command
         $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
-            $renderers = array(RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find())));
+            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find()))];
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
             $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-            $renderers    = array(RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile)));
+            $renderers    = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
             $report       = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
         } else {
             // try to locate a baseline file and read it
@@ -126,9 +128,9 @@ class Command
         $phpmd = new PHPMD();
         $phpmd->setOptions(
             array_filter(
-                array(
+                [
                     'coverage' => $opts->getCoverageReport(),
-                )
+                ]
             )
         );
 
@@ -203,15 +205,32 @@ class Command
      */
     public static function main(array $args)
     {
+        $options = null;
+
         try {
             $ruleSetFactory = new RuleSetFactory();
             $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $output         = new StreamOutput(STDERR, $options->getVerbosity());
-            $command        = new Command($output);
+            $errorFile      = $options->getErrorFile();
+            $errorStream    = new StreamWriter($errorFile ?: STDERR);
+            $output         = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
+            $command        = new self($output);
+
+            foreach ($options->getDeprecations() as $deprecation) {
+                $output->write($deprecation . PHP_EOL . PHP_EOL);
+            }
 
             $exitCode = $command->run($options, $ruleSetFactory);
-        } catch (\Exception $e) {
-            fwrite(STDERR, $e->getMessage() . PHP_EOL);
+            unset($errorStream);
+        } catch (Exception $e) {
+            $file = $options ? $options->getErrorFile() : null;
+            $writer = new StreamWriter($file ?: STDERR);
+            $writer->write($e->getMessage() . PHP_EOL);
+
+            if ($options && $options->getVerbosity() >= OutputInterface::VERBOSITY_DEBUG) {
+                $writer->write($e->getFile() . ':' . $e->getLine() . PHP_EOL);
+                $writer->write($e->getTraceAsString() . PHP_EOL);
+            }
+
             $exitCode = self::EXIT_EXCEPTION;
         }
 

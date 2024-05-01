@@ -43,14 +43,14 @@ class PHPMD
      *
      * @var array(string)
      */
-    private $fileExtensions = array('php', 'php3', 'php4', 'php5', 'inc');
+    private $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
 
     /**
      * List of exclude directory patterns.
      *
      * @var array(string)
      */
-    private $ignorePatterns = array('.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS');
+    private $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
 
     /**
      * The input source file or directory.
@@ -77,7 +77,7 @@ class PHPMD
      * @var array
      * @since 1.2.0
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * This method will return <b>true</b> when the processed source code
@@ -130,7 +130,7 @@ class PHPMD
      * @param array<string> $fileExtensions Extensions without leading dot.
      * @return void
      */
-    public function setFileExtensions(array $fileExtensions)
+    public function setFileExtensions(array $fileExtensions): void
     {
         $this->fileExtensions = $fileExtensions;
     }
@@ -166,7 +166,7 @@ class PHPMD
      * @return void
      * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
      */
-    public function setIgnorePattern(array $ignorePatterns)
+    public function setIgnorePattern(array $ignorePatterns): void
     {
         $this->addIgnorePatterns($ignorePatterns);
     }
@@ -224,7 +224,7 @@ class PHPMD
      * @param array $options Additional backend or PHPMD options.
      * @return void
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
@@ -247,7 +247,7 @@ class PHPMD
         array $renderers,
         array $ruleSetList,
         Report $report
-    ) {
+    ): void {
         // Merge parsed excludes
         $this->addIgnorePatterns($ignorePattern);
 

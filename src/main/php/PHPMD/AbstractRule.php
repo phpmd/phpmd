@@ -33,80 +33,67 @@ abstract class AbstractRule implements Rule
 {
     /**
      * The name for this rule instance.
-     *
-     * @var string $_name
      */
-    private $name = '';
+    private string $name = '';
 
     /**
      * The violation message text for this rule.
-     *
-     * @var string
      */
-    private $message = '';
+    private string $message = '';
 
     /**
      * The version since when this rule is available.
-     *
-     * @var string
      */
-    private $since = null;
+    private ?string $since = null;
 
     /**
      * An url will external information for this rule.
-     *
-     * @var string
      */
-    private $externalInfoUrl = '';
+    private string $externalInfoUrl = '';
 
     /**
      * An optional description for this rule.
-     *
-     * @var string
      */
-    private $description = '';
+    private string $description = '';
 
     /**
      * A list of code examples for this rule.
      *
-     * @var array(string)
+     * @var array<string>
      */
-    private $examples = array();
+    private array $examples = [];
 
     /**
      * The name of the parent rule-set instance.
-     *
-     * @var string
      */
-    private $ruleSetName = '';
+    private string $ruleSetName = '';
 
     /**
      * The priority of this rule.
-     *
-     * @var integer
      */
-    private $priority = self::LOWEST_PRIORITY;
+    private int $priority = self::LOWEST_PRIORITY;
 
     /**
      * Configuration properties for this rule instance.
      *
-     * @var array(string=>string)
+     * @var array<string, string>
      */
-    private $properties = array();
+    private array $properties = [];
 
     /**
      * The report for object for this rule.
-     *
-     * @var \PHPMD\Report
      */
-    private $report = null;
+    private ?Report $report = null;
+
+    /**
+     * Should this rule force the strict mode.
+     */
+    private bool $strict = false;
 
     /**
      * Returns the name for this rule instance.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -115,19 +102,16 @@ abstract class AbstractRule implements Rule
      * Sets the name for this rule instance.
      *
      * @param string $name The rule name.
-     * @return void
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Returns the version since when this rule is available or <b>null</b>.
-     *
-     * @return string
      */
-    public function getSince()
+    public function getSince(): ?string
     {
         return $this->since;
     }
@@ -136,40 +120,32 @@ abstract class AbstractRule implements Rule
      * Sets the version since when this rule is available.
      *
      * @param string $since The version number.
-     * @return void
      */
-    public function setSince($since)
+    public function setSince(?string $since): void
     {
         $this->since = $since;
     }
 
     /**
      * Returns the violation message text for this rule.
-     *
-     * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
     /**
      * Sets the violation message text for this rule.
-     *
-     * @param string $message The violation message
-     * @return void
      */
-    public function setMessage($message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
     /**
      * Returns an url will external information for this rule.
-     *
-     * @return string
      */
-    public function getExternalInfoUrl()
+    public function getExternalInfoUrl(): string
     {
         return $this->externalInfoUrl;
     }
@@ -178,19 +154,16 @@ abstract class AbstractRule implements Rule
      * Sets an url will external information for this rule.
      *
      * @param string $externalInfoUrl The info url.
-     * @return void
      */
-    public function setExternalInfoUrl($externalInfoUrl)
+    public function setExternalInfoUrl(string $externalInfoUrl): void
     {
         $this->externalInfoUrl = $externalInfoUrl;
     }
 
     /**
      * Returns the description text for this rule instance.
-     *
-     * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -199,9 +172,8 @@ abstract class AbstractRule implements Rule
      * Sets the description text for this rule instance.
      *
      * @param string $description The description text.
-     * @return void
      */
-    public function setDescription($description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -211,7 +183,7 @@ abstract class AbstractRule implements Rule
      *
      * @return string[]
      */
-    public function getExamples()
+    public function getExamples(): array
     {
         return $this->examples;
     }
@@ -220,19 +192,16 @@ abstract class AbstractRule implements Rule
      * Adds a code example for this rule.
      *
      * @param string $example The code example.
-     * @return void
      */
-    public function addExample($example)
+    public function addExample(string $example): void
     {
         $this->examples[] = $example;
     }
 
     /**
      * Returns the priority of this rule.
-     *
-     * @return integer
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->priority;
     }
@@ -241,19 +210,16 @@ abstract class AbstractRule implements Rule
      * Set the priority of this rule.
      *
      * @param integer $priority The rule priority
-     * @return void
      */
-    public function setPriority($priority)
+    public function setPriority(int $priority): void
     {
         $this->priority = $priority;
     }
 
     /**
      * Returns the name of the parent rule-set instance.
-     *
-     * @return string
      */
-    public function getRuleSetName()
+    public function getRuleSetName(): string
     {
         return $this->ruleSetName;
     }
@@ -262,42 +228,32 @@ abstract class AbstractRule implements Rule
      * Sets the name of the parent rule set instance.
      *
      * @param string $ruleSetName The rule-set name.
-     * @return void
      */
-    public function setRuleSetName($ruleSetName)
+    public function setRuleSetName(string $ruleSetName): void
     {
         $this->ruleSetName = $ruleSetName;
     }
 
     /**
      * Returns the violation report for this rule.
-     *
-     * @return \PHPMD\Report
      */
-    public function getReport()
+    public function getReport(): ?Report
     {
         return $this->report;
     }
 
     /**
      * Sets the violation report for this rule.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function setReport(Report $report)
+    public function setReport(?Report $report): void
     {
         $this->report = $report;
     }
 
     /**
      * Adds a configuration property to this rule instance.
-     *
-     * @param string $name
-     * @param string $value
-     * @return void
      */
-    public function addProperty($name, $value)
+    public function addProperty(string $name, string $value): void
     {
         $this->properties[$name] = $value;
     }
@@ -314,7 +270,7 @@ abstract class AbstractRule implements Rule
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    protected function getProperty($name, $default = null)
+    protected function getProperty(string $name, mixed $default = null): mixed
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
@@ -334,14 +290,14 @@ abstract class AbstractRule implements Rule
      * and no default value to fall back was given.
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
-     * @param bool $default An optional default value to fall back instead of throwing an exception.
+     * @param bool|null $default An optional default value to fall back instead of throwing an exception.
      * @return bool The value of a configured property as a boolean.
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    public function getBooleanProperty($name, $default = null)
+    public function getBooleanProperty(string $name, ?bool $default = null): bool
     {
-        return in_array($this->getProperty($name, $default), array('true', 'on', 1), false);
+        return in_array($this->getProperty($name, $default), ['true', 'on', 1], false);
     }
 
     /**
@@ -351,12 +307,12 @@ abstract class AbstractRule implements Rule
      * and no default value to fall back was given.
      *
      * @param string $name The name of the property, e.g. "minimum".
-     * @param int $default An optional default value to fall back instead of throwing an exception.
+     * @param int|null $default An optional default value to fall back instead of throwing an exception.
      * @return int The value of a configured property as an integer.
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    public function getIntProperty($name, $default = null)
+    public function getIntProperty(string $name, ?int $default = null): int
     {
         return (int)$this->getProperty($name, $default);
     }
@@ -373,29 +329,29 @@ abstract class AbstractRule implements Rule
      * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    public function getStringProperty($name, $default = null)
+    public function getStringProperty(string $name, ?string $default = null): string
     {
         return (string)$this->getProperty($name, $default);
+    }
+
+    public function setStrict(bool $strict): void
+    {
+        $this->strict = $strict;
     }
 
     /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @param array $args
-     * @param mixed $metric
-     * @return void
      */
     protected function addViolation(
         AbstractNode $node,
-        array $args = array(),
-        $metric = null
-    ) {
-        $message = array(
+        array $args = [],
+        mixed $metric = null
+    ): void {
+        $message = [
             'message' => $this->message,
             'args' => $args,
-        );
+        ];
 
         $ruleViolation = new RuleViolation($this, NodeInfoFactory::fromNode($node), $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
@@ -406,10 +362,10 @@ abstract class AbstractRule implements Rule
      *
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node class node containing methods.
      */
-    protected function applyOnClassMethods(AbstractTypeNode $node)
+    protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
         foreach ($node->getMethods() as $method) {
-            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+            if (!$this->strict && $method->hasSuppressWarningsAnnotationFor($this)) {
                 continue;
             }
 
@@ -424,5 +380,5 @@ abstract class AbstractRule implements Rule
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    abstract public function apply(AbstractNode $node);
+    abstract public function apply(AbstractNode $node): void;
 }

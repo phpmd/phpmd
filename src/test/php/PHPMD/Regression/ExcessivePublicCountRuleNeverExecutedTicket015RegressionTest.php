@@ -22,10 +22,8 @@ use PHPMD\RuleSet;
 
 /**
  * Regression test for issue 015.
- *
- * @covers stdClass
  */
-class ExcessivePublicCountRuleNeverExecutedTicket015Test extends AbstractTest
+class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testRuleSetInvokesRuleForClassInstance
@@ -38,7 +36,7 @@ class ExcessivePublicCountRuleNeverExecutedTicket015Test extends AbstractTest
         $rule->addProperty('minimum', 3);
 
         $class = $this->getClass();
-        $class->setMetrics(array('cis' => 4));
+        $class->setMetrics(['cis' => 4]);
 
         $ruleSet = new RuleSet();
         $ruleSet->addRule($rule);

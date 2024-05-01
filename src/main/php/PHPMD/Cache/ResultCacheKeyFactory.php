@@ -49,7 +49,7 @@ class ResultCacheKeyFactory
      */
     private function createRuleHashes(array $ruleSetList)
     {
-        $result = array();
+        $result = [];
         foreach ($ruleSetList as $ruleSet) {
             /** @var AbstractRule $rule */
             foreach ($ruleSet->getRules() as $rule) {
@@ -67,7 +67,7 @@ class ResultCacheKeyFactory
      */
     private function getBaselineHash()
     {
-        if ($this->baselineFile === null || file_exists($this->baselineFile) === false) {
+        if (!$this->baselineFile || !file_exists($this->baselineFile)) {
             return null;
         }
 
@@ -80,8 +80,8 @@ class ResultCacheKeyFactory
     private function getComposerHashes()
     {
         // read sha1 hash of composer.json and lock from current base directory
-        $result = array();
-        foreach (array('composer.json', 'composer.lock') as $file) {
+        $result = [];
+        foreach (['composer.json', 'composer.lock'] as $file) {
             $filePath = Paths::concat($this->basePath, $file);
             if (file_exists($filePath)) {
                 $result[$file] = sha1_file($filePath);

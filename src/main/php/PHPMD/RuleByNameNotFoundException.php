@@ -15,26 +15,20 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Regression;
-
-use PHPMD\Rule\UnusedLocalVariable;
+namespace PHPMD;
 
 /**
- * Regression test for issue 019.
- *
- * @covers \stdClass
+ * When a configured rule was not found by name
  */
-class SuperGlobalsFlaggedAsUnusedTicket019Test extends AbstractTest
+class RuleByNameNotFoundException extends \RuntimeException
 {
     /**
-     * testRuleDoesNotApplyToAnySuperGlobalVariable
+     * Constructs a new RuleByNameNotFoundException.
      *
-     * @return void
+     * @param string $ruleName The name of the rule that was not found.
      */
-    public function testRuleDoesNotApplyToAnySuperGlobalVariable()
+    public function __construct($ruleName)
     {
-        $rule = new UnusedLocalVariable();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        parent::__construct('Cannot find rule by name: ' . $ruleName);
     }
 }

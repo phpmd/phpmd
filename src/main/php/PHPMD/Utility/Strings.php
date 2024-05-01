@@ -33,7 +33,7 @@ class Strings
      */
     public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes)
     {
-        return static::lengthWithoutPrefixesAndSuffixes($stringName, array(), $subtractSuffixes);
+        return static::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
     }
 
     /**

@@ -29,7 +29,7 @@ use PHPMD\Rule\MethodAware;
  */
 class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
-    protected $ignoredMethods = array(
+    protected $ignoredMethods = [
         '__construct',
         '__destruct',
         '__set',
@@ -47,7 +47,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
         '__debugInfo',
         '__serialize',
         '__unserialize',
-    );
+    ];
 
     /**
      * This method checks if a method is not named in camelCase
@@ -56,16 +56,16 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $methodName = $node->getName();
         if (!in_array($methodName, $this->ignoredMethods)) {
             if (!$this->isValid($methodName)) {
                 $this->addViolation(
                     $node,
-                    array(
+                    [
                         $methodName,
-                    )
+                    ]
                 );
             }
         }
@@ -73,7 +73,13 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
 
     protected function isValid($methodName)
     {
-        if ($this->getBooleanProperty('allow-underscore-test') && strpos($methodName, 'test') === 0) {
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $methodName) === 1) {
+            return false;
+        }
+
+        if ($this->getBooleanProperty('allow-underscore-test') && str_starts_with($methodName, 'test')) {
             return preg_match('/^test[a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/', $methodName);
         }
 

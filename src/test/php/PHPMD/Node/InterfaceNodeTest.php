@@ -19,7 +19,7 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the interface node implementation.
@@ -27,7 +27,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Node\InterfaceNode
  * @covers \PHPMD\Node\AbstractTypeNode
  */
-class InterfaceNodeTest extends AbstractTest
+class InterfaceNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue

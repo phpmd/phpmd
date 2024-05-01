@@ -22,6 +22,6 @@ function testRuleAppliesToFunctionWithNotImportedDependencies()
     $a = new \stdClass();
 
     // Using an array value as a classname can break the code, as the node will not be an ASTClass*
-    $classes = array('\stdClass');
+    $classes = ['\stdClass'];
     $b = new $classes[0];
 }

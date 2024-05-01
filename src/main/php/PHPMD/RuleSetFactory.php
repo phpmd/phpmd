@@ -71,7 +71,7 @@ class RuleSetFactory
      * @return void
      * @since 1.2.0
      */
-    public function setStrict()
+    public function setStrict(): void
     {
         $this->strict = true;
     }
@@ -82,7 +82,7 @@ class RuleSetFactory
      * @param integer $minimumPriority The minimum priority value.
      * @return void
      */
-    public function setMinimumPriority($minimumPriority)
+    public function setMinimumPriority($minimumPriority): void
     {
         $this->minimumPriority = $minimumPriority;
     }
@@ -93,7 +93,7 @@ class RuleSetFactory
      * @param integer $maximumPriority The maximum priority value.
      * @return void
      */
-    public function setMaximumPriority($maximumPriority)
+    public function setMaximumPriority($maximumPriority): void
     {
         $this->maximumPriority = $maximumPriority;
     }
@@ -106,10 +106,10 @@ class RuleSetFactory
      */
     public function createRuleSets($ruleSetFileNames)
     {
-        $ruleSets = array();
+        $ruleSets = [];
 
         $ruleSetFileName = strtok($ruleSetFileNames, ',');
-        while ($ruleSetFileName !== false) {
+        while ($ruleSetFileName) {
             $ruleSets[] = $this->createSingleRuleSet($ruleSetFileName);
 
             $ruleSetFileName = strtok(',');
@@ -171,10 +171,10 @@ class RuleSetFactory
      */
     private static function listRuleSetsInDirectory($directory)
     {
-        $ruleSets = array();
+        $ruleSets = [];
         if (is_dir($directory)) {
             foreach (scandir($directory) as $file) {
-                $matches = array();
+                $matches = [];
                 if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
                     $ruleSets[] = $matches[1];
                 }
@@ -197,7 +197,7 @@ class RuleSetFactory
         $libxml = libxml_use_internal_errors(true);
 
         $xml = simplexml_load_string(file_get_contents($fileName));
-        if ($xml === false) {
+        if (!$xml) {
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
 
@@ -246,7 +246,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $node
      * @return void
      */
-    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node)
+    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement $node): void
     {
         $ref = (string)$node['ref'];
 
@@ -273,7 +273,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $ruleSetNode
      * @return void
      */
-    private function parseRuleSetReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleSetNode)
+    private function parseRuleSetReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleSetNode): void
     {
         $rules = $this->parseRuleSetReference($ruleSetNode);
         foreach ($rules as $rule) {
@@ -329,7 +329,7 @@ class RuleSetFactory
      * @throws RuleClassFileNotFoundException
      * @throws RuleClassNotFoundException
      */
-    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
+    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode): void
     {
         $fileName = '';
 
@@ -350,19 +350,19 @@ class RuleSetFactory
         }
 
         if (!is_readable($fileName)) {
-            $fileName = str_replace(array('\\', '_'), '/', $className) . '.php';
+            $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
         }
 
-        if (class_exists($className) === false) {
+        if (!class_exists($className)) {
             $handle = @fopen($fileName, 'r', true);
-            if ($handle === false) {
+            if (!$handle) {
                 throw new RuleClassFileNotFoundException($className);
             }
             fclose($handle);
 
             include_once $fileName;
 
-            if (class_exists($className) === false) {
+            if (!class_exists($className)) {
                 throw new RuleClassNotFoundException($className);
             }
         }
@@ -385,7 +385,7 @@ class RuleSetFactory
             } elseif ($node->getName() === 'example') {
                 $rule->addExample((string)$node);
             } elseif ($node->getName() === 'priority') {
-                $rule->setPriority((integer)$node);
+                $rule->setPriority((int)$node);
             } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
@@ -404,7 +404,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $ruleNode
      * @return void
      */
-    private function parseRuleReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode)
+    private function parseRuleReferenceNode(RuleSet $ruleSet, \SimpleXMLElement $ruleNode): void
     {
         $ref = (string)$ruleNode['ref'];
 
@@ -434,7 +434,7 @@ class RuleSetFactory
             } elseif ($node->getName() === 'example') {
                 $rule->addExample((string)$node);
             } elseif ($node->getName() === 'priority') {
-                $rule->setPriority((integer)$node);
+                $rule->setPriority((int)$node);
             } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
@@ -463,7 +463,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $propertiesNode
      * @return void
      */
-    private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode)
+    private function parsePropertiesNode(Rule $rule, \SimpleXMLElement $propertiesNode): void
     {
         foreach ($propertiesNode->children() as $node) {
             if ($node->getName() === 'property') {
@@ -479,7 +479,7 @@ class RuleSetFactory
      * @param \SimpleXMLElement $node
      * @return void
      */
-    private function addProperty(Rule $rule, \SimpleXMLElement $node)
+    private function addProperty(Rule $rule, \SimpleXMLElement $node): void
     {
         $name = trim($node['name']);
         $value = trim($this->getPropertyValue($node));
@@ -518,7 +518,7 @@ class RuleSetFactory
      */
     public function getIgnorePattern($fileName)
     {
-        $excludes = array();
+        $excludes = [];
         foreach (array_map('trim', explode(',', $fileName)) as $ruleSetFileName) {
             $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
 
@@ -526,7 +526,7 @@ class RuleSetFactory
             $libxml = libxml_use_internal_errors(true);
 
             $xml = simplexml_load_string(file_get_contents($ruleSetFileName));
-            if ($xml === false) {
+            if (!$xml) {
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
 
@@ -565,16 +565,16 @@ class RuleSetFactory
      */
     private function filePaths($fileName)
     {
-        $filePathParts = array(
-            array($fileName),
-            array($this->location, $fileName),
-            array($this->location, 'rulesets', $fileName . '.xml'),
-            array(getcwd(), 'rulesets', $fileName . '.xml'),
-        );
+        $filePathParts = [
+            [$fileName],
+            [$this->location, $fileName],
+            [$this->location, 'rulesets', $fileName . '.xml'],
+            [getcwd(), 'rulesets', $fileName . '.xml'],
+        ];
 
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $includePath) {
-            $filePathParts[] = array($includePath, $fileName);
-            $filePathParts[] = array($includePath, $fileName . '.xml');
+            $filePathParts[] = [$includePath, $fileName];
+            $filePathParts[] = [$includePath, $fileName . '.xml'];
         }
 
         return array_map('implode', array_fill(0, count($filePathParts), DIRECTORY_SEPARATOR), $filePathParts);

@@ -36,7 +36,7 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;

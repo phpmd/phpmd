@@ -2,13 +2,13 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Writer\StreamWriter;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\RendererFactory
  */
-class RendererFactoryTest extends AbstractTest
+class RendererFactoryTest extends AbstractTestCase
 {
     /**
      * @covers ::createBaselineRenderer

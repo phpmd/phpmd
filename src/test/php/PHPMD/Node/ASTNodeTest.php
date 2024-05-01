@@ -17,14 +17,14 @@
 
 namespace PHPMD\Node;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Node\ASTNode} class.
  *
  * @covers \PHPMD\Node\ASTNode
  */
-class ASTNodeTest extends AbstractTest
+class ASTNodeTest extends AbstractTestCase
 {
     /**
      * testGetImageDelegatesToGetImageMethodOfWrappedNode

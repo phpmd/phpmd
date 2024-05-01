@@ -33,7 +33,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @var array(string)
      */
-    protected $images = array();
+    protected $images = [];
 
     /**
      * Temporary cache of configured exceptions.
@@ -49,9 +49,9 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        $this->images = array();
+        $this->images = [];
 
         /** @var $node AbstractCallableNode */
         $this->collectVariables($node);
@@ -100,7 +100,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function removeParameters(AbstractCallableNode $node)
+    protected function removeParameters(AbstractCallableNode $node): void
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType('FormalParameters');
@@ -122,7 +122,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectVariables(AbstractCallableNode $node)
+    protected function collectVariables(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isLocal($variable)) {
@@ -154,7 +154,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\ASTNode $node
      * @return void
      */
-    protected function collectCompoundVariableInString(ASTNode $node)
+    protected function collectCompoundVariableInString(ASTNode $node): void
     {
         $parentNode = $node->getParent()->getNode();
         $candidateParentNodes = $node->getParentsOfType('PDepend\Source\AST\ASTString');
@@ -177,7 +177,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\ASTNode $node
      * @return void
      */
-    protected function collectVariable(ASTNode $node)
+    protected function collectVariable(ASTNode $node): void
     {
         $this->storeImage($this->getVariableImage($node), $node);
     }
@@ -189,10 +189,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\ASTNode $node the node being stored
      * @return void
      */
-    protected function storeImage($imageName, ASTNode $node)
+    protected function storeImage($imageName, ASTNode $node): void
     {
         if (!isset($this->images[$imageName])) {
-            $this->images[$imageName] = array();
+            $this->images[$imageName] = [];
         }
 
         $this->images[$imageName][] = $node;
@@ -204,12 +204,12 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param \PHPMD\Node\ASTNode $node
      * @return void
      */
-    protected function collectLiteral(ASTNode $node)
+    protected function collectLiteral(ASTNode $node): void
     {
         $variable = '$' . trim($node->getImage(), '\'"');
 
         if (!isset($this->images[$variable])) {
-            $this->images[$variable] = array();
+            $this->images[$variable] = [];
         }
 
         $this->images[$variable][] = $node;
@@ -221,7 +221,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param ASTNode $node
      * @return void
      */
-    protected function doCheckNodeImage(ASTNode $node)
+    protected function doCheckNodeImage(ASTNode $node): void
     {
         if ($this->isNameAllowedInContext($node)) {
             return;
@@ -244,7 +244,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             return;
         }
 
-        $this->addViolation($node, array($image));
+        $this->addViolation($node, [$image]);
     }
 
     /**

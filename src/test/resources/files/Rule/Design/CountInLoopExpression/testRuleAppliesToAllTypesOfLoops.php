@@ -21,7 +21,7 @@ class testRuleAppliesToAllTypesOfLoops
 {
     public function testRuleAppliesToAllTypesOfLoops()
     {
-        $arr = array(0, 1, 2, 3, 4, 5);
+        $arr = [0, 1, 2, 3, 4, 5];
         for ($i = 0; count($arr) < 0; $i++) {
             $foo = $arr[0] % 0;
         }

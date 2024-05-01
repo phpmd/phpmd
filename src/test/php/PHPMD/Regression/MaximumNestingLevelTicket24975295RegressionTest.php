@@ -28,10 +28,8 @@ use PHPMD\Writer\StreamWriter;
  *
  * @link https://www.pivotaltracker.com/story/show/24975295
  * @since 1.3.1
- *
- * @covers \stdClass
  */
-class MaximumNestingLevelTicket24975295Test extends AbstractTest
+class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
@@ -46,7 +44,7 @@ class MaximumNestingLevelTicket24975295Test extends AbstractTest
 
         $inputs = self::createCodeResourceUriForTest();
         $rules = 'unusedcode';
-        $renderers = array($renderer);
+        $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
 

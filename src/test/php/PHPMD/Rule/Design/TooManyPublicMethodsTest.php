@@ -19,7 +19,7 @@ namespace PHPMD\Rule\Design;
 
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\State;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Node\MethodNode;
 use PHPMD\Report;
 
@@ -28,7 +28,7 @@ use PHPMD\Report;
  *
  * @covers \PHPMD\Rule\Design\TooManyPublicMethods
  */
-class TooManyPublicMethodsTest extends AbstractTest
+class TooManyPublicMethodsTest extends AbstractTestCase
 {
     /**
      * @return void
@@ -75,7 +75,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'getClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
 
     /**
@@ -87,7 +87,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'setClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
 
     /**
@@ -99,7 +99,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'injectClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
 
     /**
@@ -111,7 +111,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(3, array('foo', 'bar'), array('baz', 'bah')));
+        $rule->apply($this->createClassMock(3, ['foo', 'bar'], ['baz', 'bah']));
     }
 
     /**
@@ -123,7 +123,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'getClass', 'setClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'getClass', 'setClass']));
     }
 
     /**
@@ -135,7 +135,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'hasClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
 
     /**
@@ -147,7 +147,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'isClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
 
     /**
@@ -159,7 +159,7 @@ class TooManyPublicMethodsTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maxmethods', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
-        $rule->apply($this->createClassMock(2, array('invoke', 'withClass')));
+        $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
 
     public function testRuleApplyToBasicClass()
@@ -186,15 +186,15 @@ class TooManyPublicMethodsTest extends AbstractTest
      * @param array|null $privateMethods
      * @return \PHPMD\Node\ClassNode
      */
-    private function createClassMock($numberOfMethods, array $publicMethods = array(), array $privateMethods = array())
+    private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = [])
     {
         $class = $this->getClassMock('npm', $numberOfMethods);
 
         $class->expects($this->any())
             ->method('getMethods')
             ->will($this->returnValue(array_merge(
-                array_map(array($this, 'createPublicMethod'), $publicMethods),
-                array_map(array($this, 'createPrivateMethod'), $privateMethods)
+                array_map([$this, 'createPublicMethod'], $publicMethods),
+                array_map([$this, 'createPrivateMethod'], $privateMethods)
             )));
 
         return $class;

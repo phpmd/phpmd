@@ -43,7 +43,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $name = $node->getName();
@@ -62,11 +62,11 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
 
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getParentName(),
                 $node->getName(),
                 $threshold,
-            )
+            ]
         );
     }
 

@@ -17,22 +17,22 @@
 
 function testRuleAppliesCorrectlyWithNestedArrays()
 {
-    return array(
+    return [
         'foo' => 40,
         'foo' => 42,
-        'foo' => array(
+        'foo' => [
             'foo' => 43,
-            array(
+            [
                 'foo' => 44,
-                array(
+                [
                     'foo' => 45,
                     'foo' => 46,
-                ),
-            ),
-        ),
-        array(
+                ],
+            ],
+        ],
+        [
             'foo' => 47,
             'foo' => 49,
-        ),
-    );
+        ],
+    ];
 }

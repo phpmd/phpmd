@@ -19,7 +19,7 @@ class StreamOutput extends Output
     /**
      * @inheritDoc
      */
-    protected function doWrite($message)
+    protected function doWrite($message): void
     {
         fwrite($this->stream, $message);
     }

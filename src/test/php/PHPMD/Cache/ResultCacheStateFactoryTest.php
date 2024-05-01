@@ -2,18 +2,18 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheStateFactory
  */
-class ResultCacheStateFactoryTest extends AbstractTest
+class ResultCacheStateFactoryTest extends AbstractTestCase
 {
     /** @var ResultCacheStateFactory */
     private $factory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new ResultCacheStateFactory();
     }
@@ -59,8 +59,8 @@ class ResultCacheStateFactoryTest extends AbstractTest
         $expectedKey = new ResultCacheKey(
             false,
             'baseline',
-            array('rule' => 'hash'),
-            array('composer.json' => 'hash1', 'composer.lock' => 'hash2'),
+            ['rule' => 'hash'],
+            ['composer.json' => 'hash1', 'composer.lock' => 'hash2'],
             70000
         );
         $cacheKey    = $state->getCacheKey();
@@ -69,6 +69,27 @@ class ResultCacheStateFactoryTest extends AbstractTest
         // assert file state
         static::assertFalse($state->isFileModified('file1', 'file1-hash'));
         static::assertTrue($state->isFileModified('file2', 'file1-hash'));
-        static::assertSame(array('violations'), $state->getViolations('file2'));
+        static::assertSame(['violations'], $state->getViolations('file2'));
+    }
+
+    /**
+     * @covers ::fromFile
+     * @covers ::createCacheKey
+     */
+    public function testFromFileWithCacheWithoutBaselineOrComposer()
+    {
+        $state = $this->factory->fromFile(static::createResourceUriForTest('.minimal-cache.php'));
+        static::assertNotNull($state);
+
+        // assert cache key
+        $expectedKey = new ResultCacheKey(
+            false,
+            null,
+            ['rule' => 'hash'],
+            [],
+            70000
+        );
+        $cacheKey    = $state->getCacheKey();
+        static::assertEquals($expectedKey, $cacheKey);
     }
 }

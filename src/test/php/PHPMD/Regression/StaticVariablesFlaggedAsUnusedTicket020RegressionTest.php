@@ -17,27 +17,22 @@
 
 namespace PHPMD\Regression;
 
-use PHPMD\Rule\UnusedPrivateMethod;
-use PHPMD\RuleSet;
+use PHPMD\Rule\UnusedLocalVariable;
 
 /**
- * Regression test for issue 036.
- *
- * @covers stdClass
+ * Regression test for issue 020.
  */
-class SuppressWarningsNotAppliesToUnusedPrivateMethod036Test extends AbstractTest
+class StaticVariablesFlaggedAsUnusedTicket020RegressionTest extends AbstractRegressionTestCase
 {
     /**
-     * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
+     * testRuleDoesNotApplyToAnySuperGlobalVariable
      *
      * @return void
      */
-    public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation()
+    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
     {
-        $ruleSet = new RuleSet();
-        $ruleSet->addRule(new UnusedPrivateMethod());
-        $ruleSet->setReport($this->getReportWithNoViolation());
-
-        $ruleSet->apply($this->getClass());
+        $rule = new UnusedLocalVariable();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
     }
 }

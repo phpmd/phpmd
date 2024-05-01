@@ -69,14 +69,14 @@ abstract class AbstractNode
             );
         }
 
-        return call_user_func_array(array($node, $name), $args);
+        return $node->$name(...$args);
     }
 
     /**
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode
+     * @return ASTNode|null
      */
     public function getParent()
     {
@@ -131,7 +131,7 @@ abstract class AbstractNode
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
-        $nodes = array();
+        $nodes = [];
 
         foreach ($children as $child) {
             $nodes[] = new ASTNode($child, $this->getFileName());
@@ -151,7 +151,7 @@ abstract class AbstractNode
     {
         $children = $this->node->findChildrenOfType('PDepend\Source\AST\AST' . $type);
 
-        $nodes = array();
+        $nodes = [];
 
         foreach ($children as $child) {
             foreach ($child->getChildren() as $subChild) {
@@ -200,7 +200,7 @@ abstract class AbstractNode
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -287,7 +287,7 @@ abstract class AbstractNode
      * @param array<string, mixed> $metrics The collected node metrics.
      * @return void
      */
-    public function setMetrics(array $metrics)
+    public function setMetrics(array $metrics): void
     {
         if ($this->metrics === null) {
             $this->metrics = $metrics;
@@ -315,7 +315,7 @@ abstract class AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     abstract public function getParentName();
 

@@ -26,7 +26,7 @@ use PHPMD\RuleSetFactory;
  *
  * @link https://github.com/phpmd/phpmd/issues/409
  */
-class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTest
+class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends AbstractRegressionTestCase
 {
     /**
      * @var string Beginning of the violation message
@@ -41,12 +41,12 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
     /**
      * Sets up the renderer mock
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->renderer = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
                 ->disableOriginalConstructor()
-                ->setMethods(array('renderReport', 'start', 'end'))
+                ->onlyMethods(['renderReport', 'start', 'end'])
         );
     }
 
@@ -75,7 +75,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
                     function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
                                 break;
                             }
@@ -89,7 +89,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
             $ruleSetFactory->getIgnorePattern('codesize'),
-            array($this->renderer),
+            [$this->renderer],
             $ruleSetFactory->createRuleSets('codesize'),
             new Report()
         );
@@ -119,7 +119,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
                     function (Report $report) use ($self) {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
                                 break;
                             }
@@ -132,7 +132,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsTest extends AbstractTe
         $phpmd->processFiles(
             __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
             $ruleSetFactory->getIgnorePattern('codesize'),
-            array($this->renderer),
+            [$this->renderer],
             $ruleSetFactory->createRuleSets('codesize'),
             new Report()
         );

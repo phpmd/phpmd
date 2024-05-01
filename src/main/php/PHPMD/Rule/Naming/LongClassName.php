@@ -51,7 +51,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $classOrInterfaceName = $node->getName();
@@ -64,7 +64,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
         if ($length <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($classOrInterfaceName, $threshold));
+        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
     }
 
     /**

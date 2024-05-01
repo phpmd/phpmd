@@ -2,13 +2,11 @@ name: Generate phar
 
 on:
   push:
-    tags:
-      - "*"
-    branches:
-      - "*"
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
   release:
-    types:
-      - created
+    types: [ 'created', 'published' ]
 
 jobs:
   php-tests:
@@ -19,8 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        php: [5.4]
-        dependency-version: [prefer-stable]
+        php: [ '8.1' ]
+        dependency-version: [ 'prefer-stable' ]
 
     name: Release phar
 
@@ -50,17 +48,27 @@ jobs:
       - name: Git submodules
         run: git submodule update --init
 
-      - name: Fix PHP compatibility
-        run: php src/phar/compatibility.php
-
       - name: Ant
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
 
       - name: Sign phar
+        if: github.repository == 'phpmd/phpmd' && github.event_name == 'release'
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
+          if [ "$SECRET_KEY" = "" ]
+          then
+            echo "Missing SECRET_KEY";
+          else
+            echo "Writing SECRET_KEY keys.asc";
+          fi
+          if [ "$PASSPHRASE" = "" ]
+          then
+            echo "Missing PASSPHRASE";
+          else
+            echo "Unlocking key using PASSPHRASE";
+          fi
           echo "$SECRET_KEY" > keys.asc;
           echo "$PASSPHRASE" | gpg --batch --import keys.asc;
           sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@phpmd.org --batch --detach-sign --output phpmd.phar.asc phpmd.phar";

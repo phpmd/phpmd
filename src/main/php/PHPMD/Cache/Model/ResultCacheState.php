@@ -19,7 +19,7 @@ class ResultCacheState
     /**
      * @param array{files: array<string, array{hash: string, violations: array}>} $state
      */
-    public function __construct(ResultCacheKey $cacheKey, $state = array())
+    public function __construct(ResultCacheKey $cacheKey, $state = [])
     {
         $this->cacheKey = $cacheKey;
         $this->state    = $state;
@@ -39,8 +39,8 @@ class ResultCacheState
      */
     public function getViolations($filePath)
     {
-        if (isset($this->state['files'][$filePath]['violations']) === false) {
-            return array();
+        if (!isset($this->state['files'][$filePath]['violations'])) {
+            return [];
         }
 
         return $this->state['files'][$filePath]['violations'];
@@ -49,7 +49,7 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function setViolations($filePath, array $violations)
+    public function setViolations($filePath, array $violations): void
     {
         $this->state['files'][$filePath]['violations'] = $violations;
     }
@@ -57,9 +57,9 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function addRuleViolation($filePath, RuleViolation $violation)
+    public function addRuleViolation($filePath, RuleViolation $violation): void
     {
-        $this->state['files'][$filePath]['violations'][] = array(
+        $this->state['files'][$filePath]['violations'][] = [
             'rule'          => get_class($violation->getRule()),
             'namespaceName' => $violation->getNamespaceName(),
             'className'     => $violation->getClassName(),
@@ -69,8 +69,8 @@ class ResultCacheState
             'endLine'       => $violation->getEndLine(),
             'description'   => $violation->getDescription(),
             'args'          => $violation->getArgs(),
-            'metric'        => $violation->getMetric()
-        );
+            'metric'        => $violation->getMetric(),
+        ];
     }
 
     /**
@@ -79,14 +79,14 @@ class ResultCacheState
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
-        if (isset($this->state['files']) === false) {
-            return array();
+        if (!isset($this->state['files'])) {
+            return [];
         }
 
-        $ruleViolations = array();
+        $ruleViolations = [];
 
         foreach ($this->state['files'] as $filePath => $violations) {
-            if (isset($violations['violations']) === false) {
+            if (!isset($violations['violations'])) {
                 continue;
             }
             foreach ($violations['violations'] as $violation) {
@@ -104,7 +104,7 @@ class ResultCacheState
                 if ($violation['args'] === null) {
                     $violationMessage = $violation['description'];
                 } else {
-                    $violationMessage = array('args' => $violation['args'], 'message' => $violation['description']);
+                    $violationMessage = ['args' => $violation['args'], 'message' => $violation['description']];
                 }
                 $ruleViolations[] = new RuleViolation($rule, $nodeInfo, $violationMessage, $violation['metric']);
             }
@@ -120,7 +120,7 @@ class ResultCacheState
      */
     public function isFileModified($filePath, $hash)
     {
-        if (isset($this->state['files'][$filePath]['hash']) === false) {
+        if (!isset($this->state['files'][$filePath]['hash'])) {
             return true;
         }
 
@@ -141,10 +141,10 @@ class ResultCacheState
      */
     public function toArray()
     {
-        return array(
+        return [
             'key'   => $this->cacheKey->toArray(),
-            'state' => $this->state
-        );
+            'state' => $this->state,
+        ];
     }
 
     /**

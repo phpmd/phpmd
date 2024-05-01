@@ -60,7 +60,7 @@ class BaselineFileFinder
         // find baseline file next to the (first) ruleset
         $ruleSets = explode(',', $this->options->getRuleSets());
         $rulePath = realpath($ruleSets[0]);
-        if ($rulePath === false) {
+        if (!$rulePath) {
             return $this->nullOrThrow(
                 sprintf(
                     'Unable to determine the baseline file location. ' .
@@ -73,7 +73,7 @@ class BaselineFileFinder
 
         // create file path and check for existence
         $baselinePath = dirname($rulePath) . '/' . self::DEFAULT_FILENAME;
-        if ($this->existingFile === true && file_exists($baselinePath) === false) {
+        if ($this->existingFile && !file_exists($baselinePath)) {
             return $this->nullOrThrow('Unable to find the baseline file. Use --baseline-file to specify the filepath');
         }
 
@@ -88,7 +88,7 @@ class BaselineFileFinder
      */
     private function nullOrThrow($message)
     {
-        if ($this->notNull === true) {
+        if ($this->notNull) {
             throw new RuntimeException($message);
         }
         return null;

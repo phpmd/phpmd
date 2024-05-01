@@ -15,26 +15,10 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD\Regression;
-
-use PHPMD\Rule\UnusedLocalVariable;
-
-/**
- * Regression test for issue 020.
- *
- * @covers \stdClass
- */
-class StaticVariablesFlaggedAsUnusedTicket020Test extends AbstractTest
+class testRuleDoesNotApplyIfExcluded
 {
-    /**
-     * testRuleDoesNotApplyToAnySuperGlobalVariable
-     *
-     * @return void
-     */
-    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
+    public function validVariableName()
     {
-        $rule = new UnusedLocalVariable();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getMethod());
+        var_dump($_POST);
     }
 }

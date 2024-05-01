@@ -16,12 +16,12 @@ class BaselineSetFactory
      */
     public static function fromFile($fileName)
     {
-        if (file_exists($fileName) === false) {
+        if (!file_exists($fileName)) {
             throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);
         }
 
         $xml = @simplexml_load_string(file_get_contents($fileName));
-        if ($xml === false) {
+        if (!$xml) {
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
@@ -31,16 +31,16 @@ class BaselineSetFactory
                 continue;
             }
 
-            if (isset($node['rule']) === false) {
+            if (!isset($node['rule'])) {
                 throw new RuntimeException('Missing `rule` attribute in `violation` in ' . $fileName);
             }
 
-            if (isset($node['file']) === false) {
+            if (!isset($node['file'])) {
                 throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
             $methodName = null;
-            if (isset($node['method']) === true && ((string)$node['method']) !== '') {
+            if (isset($node['method']) && ((string)$node['method']) !== '') {
                 $methodName = (string)($node['method']);
             }
 

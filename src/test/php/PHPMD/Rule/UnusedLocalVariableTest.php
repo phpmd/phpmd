@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the unused local variable rule.
@@ -25,7 +25,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Rule\UnusedLocalVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
  */
-class UnusedLocalVariableTest extends AbstractTest
+class UnusedLocalVariableTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.

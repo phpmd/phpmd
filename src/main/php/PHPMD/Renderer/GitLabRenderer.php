@@ -29,7 +29,7 @@ class GitLabRenderer extends AbstractRenderer
     /**
      * {@inheritDoc}
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $data = $this->addViolationsToReport($report);
         $data = $this->addErrorsToReport($report, $data);
@@ -49,32 +49,32 @@ class GitLabRenderer extends AbstractRenderer
      */
     protected function addViolationsToReport(Report $report)
     {
-        $data = array();
+        $data = [];
 
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
-            $violationResult = array(
+            $violationResult = [
                 'type' => 'issue',
                 'categories' =>
-                    array(
+                    [
                         'Style',
                         'PHP',
-                    ),
+                    ],
                 'check_name' => $violation->getRule()->getName(),
                 'fingerprint' => $violation->getFileName().':'.$violation->getBeginLine().':'.$violation->getRule(
                 )->getName(),
                 'description' => $violation->getDescription(),
                 'severity' => 'minor',
                 'location' =>
-                    array(
+                    [
                         'path' => $violation->getFileName(),
                         'lines' =>
-                            array(
+                            [
                                 'begin' => $violation->getBeginLine(),
                                 'end' => $violation->getEndLine(),
-                            ),
-                    ),
-            );
+                            ],
+                    ],
+            ];
 
             $data[] = $violationResult;
         }
@@ -95,19 +95,19 @@ class GitLabRenderer extends AbstractRenderer
         $errors = $report->getErrors();
         if ($errors) {
             foreach ($errors as $error) {
-                $errorResult = array(
+                $errorResult = [
                     'description' => $error->getMessage(),
                     'fingerprint' => $error->getFile().':0:MajorErrorInFile',
                     'severity' => 'major',
                     'location' =>
-                        array(
+                        [
                             'path' => $error->getFile(),
                             'lines' =>
-                                array(
+                                [
                                     'begin' => 0,
-                                ),
-                        ),
-                );
+                                ],
+                        ],
+                ];
 
                 $data[] = $errorResult;
             }

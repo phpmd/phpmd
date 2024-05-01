@@ -48,14 +48,14 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @var array
      */
-    protected $unwantedFunctions = array('count', 'sizeof');
+    protected $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
      * @var array
      */
-    protected $processedFunctions = array();
+    protected $processedFunctions = [];
 
     /**
      * Functions in classes tends to be name-spaced
@@ -70,10 +70,12 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
-            return $this->applyOnClassMethods($node);
+            $this->applyOnClassMethods($node);
+
+            return;
         }
 
         $this->currentNamespace = $node->getNamespaceName() . '\\';
@@ -95,7 +97,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @param AbstractNode $loop Loop statement to look against
      */
-    protected function findViolations(AbstractNode $loop)
+    protected function findViolations(AbstractNode $loop): void
     {
         foreach ($loop->findChildrenOfType('Expression') as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
@@ -112,7 +114,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
                     continue;
                 }
 
-                $this->addViolation($loop, array($function->getImage(), $loop->getImage()));
+                $this->addViolation($loop, [$function->getImage(), $loop->getImage()]);
                 $this->processedFunctions[$hash] = true;
             }
         }

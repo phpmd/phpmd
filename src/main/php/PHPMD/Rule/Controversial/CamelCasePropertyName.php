@@ -37,26 +37,34 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        $allowUnderscore = $this->getBooleanProperty('allow-underscore');
-
-        $pattern = '/^\$[a-z][a-zA-Z0-9]*$/';
-        if ($allowUnderscore === true) {
-            $pattern = '/^\$[_]?[a-z][a-zA-Z0-9]*$/';
-        }
-
         foreach ($node->getProperties() as $property) {
             $propertyName = $property->getName();
 
-            if (!preg_match($pattern, $propertyName)) {
+            if (!$this->isValid($propertyName)) {
                 $this->addViolation(
                     $node,
-                    array(
+                    [
                         $propertyName,
-                    )
+                    ]
                 );
             }
         }
+    }
+
+    private function isValid($propertyName)
+    {
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $propertyName) === 1) {
+            return false;
+        }
+
+        if ($this->getBooleanProperty('allow-underscore')) {
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $propertyName);
+        }
+
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $propertyName);
     }
 }

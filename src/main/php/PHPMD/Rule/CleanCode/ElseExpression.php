@@ -38,20 +38,20 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('ScopeStatement') as $scope) {
             $parent = $scope->getParent();
 
-            if (false === $this->isIfOrElseIfStatement($parent)) {
+            if (!$this->isIfOrElseIfStatement($parent)) {
                 continue;
             }
 
-            if (false === $this->isElseScope($scope, $parent)) {
+            if (!$this->isElseScope($scope, $parent)) {
                 continue;
             }
 
-            $this->addViolation($scope, array($node->getImage()));
+            $this->addViolation($scope, [$node->getImage()]);
         }
     }
 

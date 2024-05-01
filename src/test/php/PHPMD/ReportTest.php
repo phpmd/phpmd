@@ -27,7 +27,7 @@ use PHPMD\Baseline\ViolationBaseline;
  *
  * @covers \PHPMD\Report
  */
-class ReportTest extends AbstractTest
+class ReportTest extends AbstractTestCase
 {
     /**
      * Tests that the report returns a linear/sorted list of all rule violation
@@ -45,12 +45,12 @@ class ReportTest extends AbstractTest
         $report->addRuleViolation($this->getRuleViolationMock('foo.txt'));
         $report->addRuleViolation($this->getRuleViolationMock('bar.txt'));
 
-        $actual = array();
+        $actual = [];
         foreach ($report->getRuleViolations() as $violation) {
             $actual[] = $violation->getFileName();
         }
 
-        $expected = array('bar.txt', 'bar.txt', 'foo.txt', 'foo.txt', 'foo.txt');
+        $expected = ['bar.txt', 'bar.txt', 'foo.txt', 'foo.txt', 'foo.txt'];
 
         $this->assertSame($expected, $actual);
     }
@@ -71,23 +71,23 @@ class ReportTest extends AbstractTest
         $report->addRuleViolation($this->getRuleViolationMock('bar.txt', 2, 3));
         $report->addRuleViolation($this->getRuleViolationMock('bar.txt', 1, 2));
 
-        $actual = array();
+        $actual = [];
         foreach ($report->getRuleViolations() as $violation) {
-            $actual[] = array(
+            $actual[] = [
                 $violation->getFileName(),
                 $violation->getBeginLine(),
                 $violation->getEndLine(),
-            );
+            ];
         }
 
-        $expected = array(
-            array('bar.txt', 1, 2),
-            array('bar.txt', 2, 3),
-            array('foo.txt', 1, 2),
-            array('foo.txt', 2, 3),
-            array('foo.txt', 3, 6),
-            array('foo.txt', 4, 5),
-        );
+        $expected = [
+            ['bar.txt', 1, 2],
+            ['bar.txt', 2, 3],
+            ['foo.txt', 1, 2],
+            ['foo.txt', 2, 3],
+            ['foo.txt', 3, 6],
+            ['foo.txt', 4, 5],
+        ];
 
         $this->assertSame($expected, $actual);
     }

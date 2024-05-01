@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the constructor name rule.
  *
- * @covers PHPMD\Rule\Naming\ConstantNamingConventions
+ * @covers \PHPMD\Rule\Naming\ConstantNamingConventions
  */
-class ConstantNamingConventionsTest extends AbstractTest
+class ConstantNamingConventionsTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToClassConstantWithLowerCaseCharacters

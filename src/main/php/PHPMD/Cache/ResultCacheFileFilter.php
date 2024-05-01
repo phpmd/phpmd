@@ -23,7 +23,7 @@ class ResultCacheFileFilter implements Filter
     private $basePath;
 
     /** @var array<string, bool> */
-    private $fileIsModified = array();
+    private $fileIsModified = [];
 
     /** @var OutputInterface */
     private $output;
@@ -72,7 +72,7 @@ class ResultCacheFileFilter implements Filter
         }
 
         $this->newState->setFileState($filePath, $hash);
-        if ($isModified === false) {
+        if (!$isModified) {
             // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
         }

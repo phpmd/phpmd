@@ -17,9 +17,9 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
-class ElseExpressionTest extends AbstractTest
+class ElseExpressionTest extends AbstractTestCase
 {
     public function testRuleNotAppliesToMethodWithoutElseExpression()
     {
