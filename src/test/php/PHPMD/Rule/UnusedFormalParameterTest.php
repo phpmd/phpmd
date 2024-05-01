@@ -17,7 +17,7 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the unused formal parameter rule.
@@ -25,7 +25,7 @@ use PHPMD\AbstractTest;
  * @covers \PHPMD\Rule\UnusedFormalParameter
  * @covers \PHPMD\Rule\AbstractLocalVariable
  */
-class UnusedFormalParameterTest extends AbstractTest
+class UnusedFormalParameterTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionUnusedFormalParameter
@@ -57,6 +57,18 @@ class UnusedFormalParameterTest extends AbstractTest
      * @return void
      */
     public function testRuleAppliesToMethodUnusedFormalParameter()
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToEnumMethodUnusedFormalParameter
+     *
+     * @return void
+     */
+    public function testRuleAppliesToEnumMethodUnusedFormalParameter()
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());

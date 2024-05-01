@@ -43,7 +43,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @var array(string)
      */
-    protected $images = array();
+    protected $images = [];
 
     /**
      * This method checks that all local variables within the given function or
@@ -52,9 +52,9 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        $this->images = array();
+        $this->images = [];
 
         if ($node instanceof MethodNode) {
             $this->collectProperties($this->getNode($node->getNode()->getParent()));
@@ -76,7 +76,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable)) {
                 $this->addVariableDefinition($variable);
             } elseif (!$this->checkVariableDefined($variable, $node)) {
-                $this->addViolation($variable, array($this->getVariableImage($variable)));
+                $this->addViolation($variable, [$this->getVariableImage($variable)]);
             }
         }
     }
@@ -86,7 +86,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @param AbstractNode $node
      */
-    protected function collect(AbstractNode $node)
+    protected function collect(AbstractNode $node): void
     {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
@@ -98,7 +98,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         $this->collectGlobalStatements($node);
     }
 
-    protected function collectProperties($node)
+    protected function collectProperties($node): void
     {
         if (!($node instanceof ASTClass)) {
             return;
@@ -117,7 +117,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractNode $node
      * @return void
      */
-    protected function collectGlobalStatements(AbstractNode $node)
+    protected function collectGlobalStatements(AbstractNode $node): void
     {
         foreach ($node->findChildrenWithParentType('GlobalStatement') as $variable) {
             $this->addVariableDefinition($variable);
@@ -130,7 +130,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectExceptionCatches(AbstractCallableNode $node)
+    protected function collectExceptionCatches(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType('CatchStatement') as $child) {
             if ($child instanceof ASTVariable) {
@@ -145,7 +145,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectListExpressions(AbstractCallableNode $node)
+    protected function collectListExpressions(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType('ListExpression') as $variable) {
             $this->addVariableDefinition($variable);
@@ -158,7 +158,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectForeachStatements(AbstractCallableNode $node)
+    protected function collectForeachStatements(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType('ForeachStatement') as $child) {
             if ($child instanceof ASTVariable) {
@@ -183,7 +183,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectClosureParameters(AbstractCallableNode $node)
+    protected function collectClosureParameters(AbstractCallableNode $node): void
     {
         $closures = $node->findChildrenOfType('Closure');
 
@@ -212,7 +212,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractNode $node
      * @return void
      */
-    protected function collectParameters(AbstractNode $node)
+    protected function collectParameters(AbstractNode $node): void
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType('FormalParameters');
@@ -231,7 +231,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractCallableNode $node
      * @return void
      */
-    protected function collectAssignments(AbstractCallableNode $node)
+    protected function collectAssignments(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenOfType('AssignmentExpression') as $assignment) {
             $variable = $assignment->getChild(0);
@@ -259,7 +259,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param \PHPMD\Node\AbstractNode $node
      * @return void
      */
-    protected function collectPropertyPostfix(AbstractNode $node)
+    protected function collectPropertyPostfix(AbstractNode $node): void
     {
         foreach ($node->findChildrenWithParentType('PropertyPostfix') as $child) {
             if ($child instanceof ASTVariable) {
@@ -274,7 +274,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param ASTVariable|ASTPropertyPostfix|ASTVariableDeclarator $variable
      * @return void
      */
-    protected function addVariableDefinition($variable)
+    protected function addVariableDefinition($variable): void
     {
         $image = $this->getVariableImage($variable);
 

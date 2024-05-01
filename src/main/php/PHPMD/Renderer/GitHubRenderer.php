@@ -33,7 +33,7 @@ class GitHubRenderer extends AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
 

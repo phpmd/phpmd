@@ -22,12 +22,13 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * This rule class will detect variables, parameters and properties with short
  * names.
  */
-class ShortVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class ShortVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
     /**
      * Temporary map holding variables that were already processed in the
@@ -35,7 +36,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @var array(string=>boolean)
      */
-    protected $processedVariables = array();
+    protected $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -46,7 +47,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
@@ -68,7 +69,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode $node
      * @return void
      */
-    protected function applyClass(AbstractNode $node)
+    protected function applyClass(AbstractNode $node): void
     {
         $fields = $node->findChildrenOfType('FieldDeclaration');
         foreach ($fields as $field) {
@@ -89,7 +90,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode $node
      * @return void
      */
-    protected function applyNonClass(AbstractNode $node)
+    protected function applyNonClass(AbstractNode $node): void
     {
         $declarators = $node->findChildrenOfType('VariableDeclarator');
         foreach ($declarators as $declarator) {
@@ -110,7 +111,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkNodeImage(AbstractNode $node)
+    protected function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -124,7 +125,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkMinimumLength(AbstractNode $node)
+    protected function checkMinimumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
 
@@ -142,7 +143,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $this->addViolation($node, array($node->getImage(), $threshold));
+        $this->addViolation($node, [$node->getImage(), $threshold]);
     }
 
     /**
@@ -194,7 +195,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return false;
         }
 
-        $exceptionVariables = array();
+        $exceptionVariables = [];
 
         $parentForeaches = $this->getParentsOfType($node, 'ForeachStatement');
         foreach ($parentForeaches as $foreach) {
@@ -216,7 +217,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function getParentsOfType(AbstractNode $node, $type)
     {
-        $parents = array();
+        $parents = [];
 
         $parent = $node->getParent();
 
@@ -256,9 +257,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @return void
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
-        $this->processedVariables = array();
+        $this->processedVariables = [];
     }
 
     /**
@@ -267,7 +268,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function addProcessed(AbstractNode $node)
+    protected function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }

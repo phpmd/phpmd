@@ -31,6 +31,34 @@ Example: ::
   class class_name {
   }
 
++-----------------------------------+---------------+---------------------------------------------------------+
+| Name                              | Default Value | Description                                             |
++===================================+===============+=========================================================+
+| camelcase-abbreviations           | false         | Name should be CamelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
+
+CamelCaseNamespace
+==================
+
+Since: PHPMD 2.16
+
+A rule to use CamelCase notation to name namespaces.
+
+Example: ::
+
+  use example\name_space;
+
+  class class_name {
+  }
+
++-----------------------------------+---------------+---------------------------------------------------------+
+| Name                              | Default Value | Description                                             |
++===================================+===============+=========================================================+
+| camelcase-abbreviations           | false         | Name should be CamelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
+| exceptions                        |               | Comma-separated class name list of exceptions.          |
++-----------------------------------+---------------+---------------------------------------------------------+
+
 CamelCasePropertyName
 =====================
 
@@ -52,6 +80,8 @@ This rule has the following properties:
 | allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
 +-----------------------------------+---------------+---------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
++-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
 +-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseMethodName
@@ -77,6 +107,8 @@ This rule has the following properties:
 +-----------------------------------+---------------+---------------------------------------------------------+
 | allow-underscore-test             | false         | Is it allowed to have underscores in test method names. |
 +-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseParameterName
 ======================
@@ -98,6 +130,8 @@ This rule has the following properties:
 | Name                              | Default Value | Description                                             |
 +===================================+===============+=========================================================+
 | allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
++-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
 +-----------------------------------+---------------+---------------------------------------------------------+
 
 CamelCaseVariableName
@@ -122,6 +156,8 @@ This rule has the following properties:
 +===================================+===============+=========================================================+
 | allow-underscore                  | false         | Allow an optional, single underscore at the beginning.  |
 +-----------------------------------+---------------+---------------------------------------------------------+
+| camelcase-abbreviations           | false         | Name should be camelCase including abbreviations.       |
++-----------------------------------+---------------+---------------------------------------------------------+
 
 Remark
 ======
@@ -129,4 +165,3 @@ Remark
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        

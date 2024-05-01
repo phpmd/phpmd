@@ -24,7 +24,10 @@ or method.
             ]]>
         </description>
         <priority>1</priority>
-        <properties />
+        <properties>
+            <property name="exceptions" description="Comma-separated class name list of exceptions" value=""/>
+            <property name="ignorepattern" description="Ignore methods matching this regex. Example: /^(__construct|get.*Filtered)$/" value=""/>
+        </properties>
         <example>
             <![CDATA[
 class Foo {
@@ -83,7 +86,7 @@ operand could result in zero, null or an empty string and the like.
             ]]>
         </description>
         <priority>1</priority>
-        <properties></properties>
+        <properties/>
         <example>
             <![CDATA[
 class Foo

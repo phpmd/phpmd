@@ -22,7 +22,11 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\TraitNode;
 use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * Count In Loop Expression Rule
@@ -37,21 +41,21 @@ use PHPMD\Rule\ClassAware;
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class CountInLoopExpression extends AbstractRule implements ClassAware
+class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAware, EnumAware
 {
     /**
      * List of functions to search against
      *
      * @var array
      */
-    protected $unwantedFunctions = array('count', 'sizeof');
+    protected $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
      * @var array
      */
-    protected $processedFunctions = array();
+    protected $processedFunctions = [];
 
     /**
      * Functions in classes tends to be name-spaced
@@ -66,10 +70,12 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        if ($node instanceof ClassNode) {
-            return $this->applyOnClassMethods($node);
+        if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
+            $this->applyOnClassMethods($node);
+
+            return;
         }
 
         $this->currentNamespace = $node->getNamespaceName() . '\\';
@@ -91,7 +97,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
      *
      * @param AbstractNode $loop Loop statement to look against
      */
-    protected function findViolations(AbstractNode $loop)
+    protected function findViolations(AbstractNode $loop): void
     {
         foreach ($loop->findChildrenOfType('Expression') as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
@@ -108,7 +114,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware
                     continue;
                 }
 
-                $this->addViolation($loop, array($function->getImage(), $loop->getImage()));
+                $this->addViolation($loop, [$function->getImage(), $loop->getImage()]);
                 $this->processedFunctions[$hash] = true;
             }
         }

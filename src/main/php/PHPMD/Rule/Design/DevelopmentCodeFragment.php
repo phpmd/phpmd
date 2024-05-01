@@ -39,7 +39,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $ignoreNS = $this->getBooleanProperty('ignore-namespaces');
         $namespace = $node->getNamespaceName();
@@ -50,7 +50,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
             }
             $fragment = strtolower($fragment);
             $fragment = trim($fragment, "\\");
-            if (false === in_array($fragment, $this->getSuspectImages())) {
+            if (!in_array($fragment, $this->getSuspectImages())) {
                 continue;
             }
 
@@ -59,7 +59,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 $image = sprintf('%s::%s', $node->getParentName(), $node->getImage());
             }
 
-            $this->addViolation($postfix, array($node->getType(), $image, $fragment));
+            $this->addViolation($postfix, [$node->getType(), $image, $fragment]);
         }
     }
 

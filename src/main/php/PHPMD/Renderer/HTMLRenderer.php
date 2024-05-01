@@ -38,31 +38,45 @@ class HTMLRenderer extends AbstractRenderer
 
     const CATEGORY_RULE = 'category_rule';
 
-    protected static $priorityTitles = array(
+    protected static $priorityTitles = [
         1 => 'Top (1)',
         2 => 'High (2)',
         3 => 'Moderate (3)',
         4 => 'Low (4)',
         5 => 'Lowest (5)',
-    );
+    ];
 
     // Used in self::colorize() method.
-    protected static $descHighlightRules = array(
-        'method' => array( // Method names.
+    protected static $descHighlightRules = [
+        'method' => [ // Method names.
             'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
             'css-class' => 'hlt-method',
-        ),
-        'quoted' => array( // Quoted strings.
+        ],
+        'quoted' => [ // Quoted strings.
             'regex' => '(["\'][^\'"]+["\'])',
             'css-class' => 'hlt-quoted',
-        ),
-        'variable' => array( // Variables.
+        ],
+        'variable' => [ // Variables.
             'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
             'css-class' => 'hlt-variable',
-        ),
-    );
+        ],
+    ];
 
     protected static $compiledHighlightRegex = null;
+
+    /**
+     * Specify how many extra lines are added to a code snippet
+     * By default 2
+     * @var int
+     */
+    protected $extraLineInExcerpt = 2;
+
+    public function __construct($extraLineInExcerpt = null)
+    {
+        if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
+            $this->extraLineInExcerpt = $extraLineInExcerpt;
+        }
+    }
 
     /**
      * This method will be called on all renderers before the engine starts the
@@ -70,7 +84,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    public function start()
+    public function start(): void
     {
         $writer = $this->getWriter();
 
@@ -317,7 +331,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param \PHPMD\Report $report
      * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
 
@@ -362,7 +376,7 @@ class HTMLRenderer extends AbstractRenderer
             $excerpt = self::getLineExcerpt(
                 $violation->getFileName(),
                 $violation->getBeginLine(),
-                2
+                $this->extraLineInExcerpt
             );
 
             foreach ($excerpt as $line => $code) {
@@ -413,7 +427,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    public function end()
+    public function end(): void
     {
         $writer = $this->getWriter();
         $writer->write('</div></body></html>');
@@ -428,7 +442,7 @@ class HTMLRenderer extends AbstractRenderer
     protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
     {
         if (!is_readable($file)) {
-            return array();
+            return [];
         }
 
         $file = new SplFileObject($file);
@@ -436,7 +450,7 @@ class HTMLRenderer extends AbstractRenderer
         // We have to subtract 1 to extract correct lines via SplFileObject.
         $line = max($lineNumber - 1 - $extra, 0);
 
-        $result = array();
+        $result = [];
 
         if (!$file->eof()) {
             $file->seek($line);
@@ -460,7 +474,7 @@ class HTMLRenderer extends AbstractRenderer
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
             $prepared = self::$descHighlightRules;
-            array_walk($prepared, function (&$value, $key) {
+            array_walk($prepared, function (&$value, $key): void {
                 $value = "(?<{$key}>{$value['regex']})";
             });
 
@@ -487,7 +501,7 @@ class HTMLRenderer extends AbstractRenderer
     protected static function highlightFile($path)
     {
         $file = substr(strrchr($path, "/"), 1);
-        $dir = str_replace($file, null, $path);
+        $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';
     }
@@ -497,7 +511,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @return void
      */
-    protected function writeTable($title, $itemsTitle, $items)
+    protected function writeTable($title, $itemsTitle, $items): void
     {
         if (!$items) {
             return;
@@ -511,7 +525,7 @@ class HTMLRenderer extends AbstractRenderer
         $sum = array_sum($items);
 
         foreach ($items as $name => $count) {
-            // Calculate chart/bar's percentage width relative to the highest occuring item.
+            // Calculate chart/bar's percentage width relative to the highest occurring item.
             $width = $max !== 0 ? $count / $max * 100 : 0; // Avoid division by zero.
 
             $bar = sprintf(
@@ -540,12 +554,12 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected static function sumUpViolations($violations)
     {
-        $result = array(
-            self::CATEGORY_PRIORITY => array(),
-            self::CATEGORY_NAMESPACE => array(),
-            self::CATEGORY_RULESET => array(),
-            self::CATEGORY_RULE => array(),
-        );
+        $result = [
+            self::CATEGORY_PRIORITY => [],
+            self::CATEGORY_NAMESPACE => [],
+            self::CATEGORY_RULESET => [],
+            self::CATEGORY_RULE => [],
+        ];
 
         foreach ($violations as $v) {
             // We use "ref" reference to make things somewhat easier to read.

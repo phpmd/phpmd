@@ -22,14 +22,22 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
+    /**
+     * Temporary cache of configured prefixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractPrefixes;
+
     /**
      * Temporary cache of configured suffixes to subtract
      *
@@ -43,7 +51,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var array(string=>boolean)
      */
-    protected $processedVariables = array();
+    protected $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -53,7 +61,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
@@ -89,7 +97,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function checkNodeImage(AbstractNode $node)
+    protected function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -104,18 +112,22 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @return void
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    protected function checkMaximumLength(AbstractNode $node)
+    protected function checkMaximumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
-        $lengthWithoutDollarSign = Strings::lengthWithoutSuffixes($variableName, $this->getSubtractSuffixList()) - 1;
+        $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
+            \ltrim($variableName, '$'),
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
         if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, array($variableName, $threshold));
+        $this->addViolation($node, [$variableName, $threshold]);
     }
 
     /**
@@ -156,9 +168,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @return void
      */
-    protected function resetProcessed()
+    protected function resetProcessed(): void
     {
-        $this->processedVariables = array();
+        $this->processedVariables = [];
     }
 
     /**
@@ -167,7 +179,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    protected function addProcessed(AbstractNode $node)
+    protected function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }
@@ -181,6 +193,20 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractPrefixList()
+    {
+        if ($this->subtractPrefixes === null) {
+            $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
+        }
+
+        return $this->subtractPrefixes;
     }
 
     /**

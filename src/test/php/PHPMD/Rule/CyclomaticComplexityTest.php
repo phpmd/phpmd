@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the cyclomatic complexity violation rule.
  *
  * @covers \PHPMD\Rule\CyclomaticComplexity
  */
-class CyclomaticComplexityTest extends AbstractTest
+class CyclomaticComplexityTest extends AbstractTestCase
 {
     /**
      * Tests that the rule applies for a value greater than the configured

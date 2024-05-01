@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Design;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DepthOfInheritance} class.
  *
  * @covers \PHPMD\Rule\Design\DepthOfInheritance
  */
-class DepthOfInheritanceTest extends AbstractTest
+class DepthOfInheritanceTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold

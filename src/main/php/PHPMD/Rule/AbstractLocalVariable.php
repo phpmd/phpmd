@@ -40,7 +40,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * @var array Self reference class names.
      */
-    protected $selfReferences = array('self', 'static');
+    protected $selfReferences = ['self', 'static'];
 
     /**
      * PHP super globals that are available in all php scopes, so that they
@@ -49,7 +49,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array(string=>boolean)
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    protected static $superGlobals = array(
+    protected static $superGlobals = [
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
@@ -64,7 +64,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         '$HTTP_RAW_POST_DATA' => true,
         '$php_errormsg' => true,
         '$http_response_header' => true,
-    );
+    ];
 
     /**
      * Tests if the given variable node represents a local variable or if it is
@@ -75,7 +75,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isLocal(ASTNode $variable)
     {
-        return (false === $variable->isThis()
+        return (!$variable->isThis()
             && $this->isNotSuperGlobal($variable)
             && $this->isRegularVariable($variable)
         );
@@ -140,7 +140,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
     {
-        if (false === $this->isWrappedByIndexExpression($node)) {
+        if (!$this->isWrappedByIndexExpression($node)) {
             return $node;
         }
 
@@ -288,12 +288,17 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         $parent = $this->getNode($variable->getParent());
 
-        if (!($parent && $parent instanceof ASTArguments)) {
+        if (!($parent instanceof ASTArguments)) {
             return false;
         }
 
         $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
-        $function = $this->getNode($parent->getParent());
+        $parentParent = $parent->getParent();
+        if ($parentParent === null) {
+            return false;
+        }
+        $function = $this->getNode($parentParent);
+
         $functionParent = $this->getNode($function->getParent());
         $functionName = $function->getImage();
 

@@ -17,7 +17,7 @@
 
 class testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty
 {
-    protected $foo = array(array(1 => 42));
+    protected $foo = [[1 => 42]];
 
     public function testRuleAppliesToLocalVariableWithSameNameAsStaticArrayProperty()
     {

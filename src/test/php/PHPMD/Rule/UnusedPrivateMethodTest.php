@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the unused private method rule.
  *
  * @covers \PHPMD\Rule\UnusedPrivateMethod
  */
-class UnusedPrivateMethodTest extends AbstractTest
+class UnusedPrivateMethodTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToUnusedPrivateMethod
@@ -117,6 +117,18 @@ class UnusedPrivateMethodTest extends AbstractTest
     {
         $rule = new UnusedPrivateMethod();
         $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleDoesNotApplyToMethodUsedViaCallable
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToMethodUsedViaCallable()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 

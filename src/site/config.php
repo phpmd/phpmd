@@ -6,7 +6,7 @@ use Gregwar\RST\Parser;
 
 class PhpMdEnvironment extends Environment
 {
-    public static $letters = array('=', '-', '`', '~', '*', '^', '"');
+    public static $letters = ['=', '-', '`', '~', '*', '^', '"'];
 
     /**
      * @var string
@@ -20,7 +20,7 @@ class PhpMdEnvironment extends Environment
         return $this->baseHref;
     }
 
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 

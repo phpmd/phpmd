@@ -19,10 +19,10 @@ class BaselineRenderer extends AbstractRenderer
         $this->basePath = $basePath;
     }
 
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         // keep track of which violations have been written, to avoid duplicates in the baseline
-        $registered = array();
+        $registered = [];
 
         $writer = $this->getWriter();
         $writer->write('<?xml version="1.0"?>' . PHP_EOL);

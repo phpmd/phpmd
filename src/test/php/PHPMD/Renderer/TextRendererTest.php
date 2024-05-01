@@ -18,7 +18,8 @@
 namespace PHPMD\Renderer;
 
 use ArrayIterator;
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
+use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
@@ -28,7 +29,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\TextRenderer
  */
-class TextRendererTest extends AbstractTest
+class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
@@ -43,11 +44,11 @@ class TextRendererTest extends AbstractTest
         $rule->setName('LongerNamedRule');
         $rule->setDescription('An other description for this rule');
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
             $this->getRuleViolationMock('/foo-biz.php', 2),
             $this->getRuleViolationMock('/foo.php', 34),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -55,7 +56,7 @@ class TextRendererTest extends AbstractTest
             ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
@@ -73,6 +74,82 @@ class TextRendererTest extends AbstractTest
     }
 
     /**
+     * @return void
+     */
+    public function testRendererSupportVerbose()
+    {
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $rule = new RuleStub();
+        $rule->setName('LongerNamedRule');
+        $rule->setDescription('An other description for this rule');
+
+        $renderer = new TextRenderer();
+        $renderer->setWriter($writer);
+        $renderer->setVerbosityLevel(OutputInterface::VERBOSITY_VERBOSE);
+
+        $violations = [
+            $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
+        ];
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator([])));
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            'LongerNamedRule  An other description for this rule' . PHP_EOL .
+            '📁 in /bar.php on line 1' . PHP_EOL .
+            '🔗 testruleset.xml https://phpmd.org/rules/testruleset.html#longernamedrule' . PHP_EOL . PHP_EOL,
+            $writer->getData()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRendererSupportColor()
+    {
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $rule = new RuleStub();
+        $rule->setName('LongerNamedRule');
+        $rule->setDescription('An other description for this rule');
+
+        $renderer = new TextRenderer();
+        $renderer->setWriter($writer);
+        $renderer->setColored(true);
+
+        $violations = [
+            $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
+        ];
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator([])));
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            "/bar.php:1  \033[33mLongerNamedRule\033[0m  \033[31mAn other description for this rule\033[0m" . PHP_EOL,
+            $writer->getData()
+        );
+    }
+
+    /**
      * testRendererAddsProcessingErrorsToTextReport
      *
      * @return void
@@ -82,16 +159,16 @@ class TextRendererTest extends AbstractTest
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $errors = array(
+        $errors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "/tmp/baz.php".'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator(array())));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new ArrayIterator($errors)));

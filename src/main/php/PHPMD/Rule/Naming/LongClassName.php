@@ -20,14 +20,24 @@ namespace PHPMD\Rule\Naming;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
- * This rule checks if an interface or class name exceeds the configured length excluding certain configured suffixes
+ * This rule checks if an interface or class name exceeds the configured length
+ * excluding certain configured prefixes and suffixes
  */
-class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
+class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
 {
+    /**
+     * Temporary cache of configured prefixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractPrefixes;
+
     /**
      * Temporary cache of configured suffixes to subtract
      *
@@ -41,14 +51,37 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $classOrInterfaceName = $node->getName();
-        if (Strings::lengthWithoutSuffixes($classOrInterfaceName, $this->getSubtractSuffixList()) <= $threshold) {
+        $length = Strings::lengthWithoutPrefixesAndSuffixes(
+            $classOrInterfaceName,
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
+
+        if ($length <= $threshold) {
             return;
         }
-        $this->addViolation($node, array($classOrInterfaceName, $threshold));
+        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
+    }
+
+    /**
+     * Gets array of prefixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractPrefixList()
+    {
+        if ($this->subtractPrefixes === null) {
+            $this->subtractPrefixes = Strings::splitToList(
+                $this->getStringProperty('subtract-prefixes', ''),
+                ','
+            );
+        }
+
+        return $this->subtractPrefixes;
     }
 
     /**

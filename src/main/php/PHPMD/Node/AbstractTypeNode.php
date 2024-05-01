@@ -49,7 +49,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getMethods()
     {
-        $methods = array();
+        $methods = [];
         foreach ($this->node->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
@@ -65,7 +65,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getMethodNames()
     {
-        $names = array();
+        $names = [];
         foreach ($this->node->getMethods() as $method) {
             $names[] = $method->getName();
         }
@@ -97,7 +97,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {

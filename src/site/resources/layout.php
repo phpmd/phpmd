@@ -57,13 +57,16 @@
         <a href="https://twitter.com/php_pmd" title="Follow on Twitter" class="twitter-follow" target="_blank">
             <i></i> Follow @PHP_PMD
         </a>
+        <a rel="me" href="https://phpc.social/@phpmd" title="Follow on Mastodon" class="mastodon-follow" target="_blank">
+            <i></i> Follow @phpmd@phpc.social
+        </a>
     </span>
 </div>
 
 <div id="formats">
     <?php
 
-    $uri = $uri ?? '';
+    $uri ??= '';
     $sourceUri = ltrim(substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
 
     ?>

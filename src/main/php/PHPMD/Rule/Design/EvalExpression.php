@@ -34,10 +34,10 @@ class EvalExpression extends AbstractRule implements MethodAware, FunctionAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('EvalExpression') as $eval) {
-            $this->addViolation($eval, array($node->getType(), $node->getName()));
+            $this->addViolation($eval, [$node->getType(), $node->getName()]);
         }
     }
 }

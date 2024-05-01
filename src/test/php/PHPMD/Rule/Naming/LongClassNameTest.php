@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test cases for LongClassName.
  *
  * @coversDefaultClass  \PHPMD\Rule\Naming\LongClassName
  */
-class LongClassNameTest extends AbstractTest
+class LongClassNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply to class name length (43) below threshold (44)
@@ -79,6 +79,32 @@ class LongClassNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule applies to trait name length (40) above threshold (39)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToTraitNameAboveThreshold()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 39);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getTrait());
+    }
+
+    /**
+     * Tests that the rule applies to enum name length (39) above threshold (38)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToEnumNameAboveThreshold()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 38);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getEnum());
+    }
+
+    /**
      * Tests that the rule does not apply to class name length (69) below threshold (60)
      * with configured suffix length (9)
      *
@@ -119,6 +145,21 @@ class LongClassNameTest extends AbstractTest
         $rule->addProperty('maximum', 54);
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule applies to class name length (43) below threshold (40)
+     * not matching configured prefix length (15)
+     *
+     * @return void
+     */
+    public function testRuleAppliesToClassNameWithPrefixMatched()
+    {
+        $rule = new LongClassName();
+        $rule->addProperty('maximum', 45);
+        $rule->addProperty('subtract-prefixes', 'testRule,testRuleApplies');
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 }

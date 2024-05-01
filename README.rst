@@ -16,11 +16,11 @@ https://phpmd.org
 .. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
    :target: https://ci.appveyor.com/project/phpmd/phpmd
    :alt: AppVeyor Build Status
-   
-.. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE 
+
+.. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE
    :target: https://codecov.io/gh/phpmd/phpmd
    :alt: Codecov Status
- 
+
 .. image:: https://scrutinizer-ci.com/g/phpmd/phpmd/badges/build.png?b=master
    :target: https://scrutinizer-ci.com/g/phpmd/phpmd/build-status/master
    :alt: Scrutinizer Build Status
@@ -49,7 +49,7 @@ See https://phpmd.org/download/index.html
 Command line usage
 ------------------
 
-Type ``phpmd [filename|directory] [report format] [ruleset file]``, i.e: ::
+Type ``phpmd [filename|directory[,filename|directory[,...]]] [report format] [ruleset file]``, i.e: ::
 
   mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
 
@@ -95,8 +95,8 @@ The xml report would like like this:
     </file>
   </pmd>
 
-You can pass a file name or a directory name containing PHP source
-code to PHPMD.
+You can pass a comma-separated string with list of file names
+or a directory names, containing PHP source code to PHPMD.
 
 The `PHPMD Phar distribution`__ includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
@@ -117,6 +117,13 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
+  - ``--verbose, -v, -vv, -vvv`` - The output verbosity level. Will print more information
+    what is being processed or cached. Will be send to ``STDERR`` to not interfere
+    with report output. ``text`` output will also have under each error a link
+    to the documentation of the rule and format the location in a way that most
+    IDEs will convert into a link to open the file at the line of the error
+    when clicked.
+
   - ``--minimumpriority`` - The rule priority threshold; rules with lower
     priority than they will not be used.
 
@@ -136,6 +143,15 @@ Command line options
   - ``--ignore-violations-on-exit`` - will exit with a zero code, even if any
     violations are found.
 
+  - ``--cache`` - will enable the result cache. Will default to ``.phpmd.result-cache.php`` in the
+    current working directory.
+
+  - ``--cache-file`` - in cooperation with ``--cache`` will override the default result cache file path of
+    ``.phpmd.result-cache.php`` to the given file path.
+
+  - ``--cache-strategy`` - sets the caching strategy to determine if a file is still fresh. Either
+    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
     working directory.
@@ -144,11 +160,26 @@ Command line options
     that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
     to the current working directory.
 
-  - ``--baseline-file`` - the filepath to a custom baseline xml file.
+  - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
+    default to ``phpmd.baseline.xml``
+
+  - ``--color`` - enable color in output, for instance text renderer
+    will show rule name in yellow and error description in red.
+  - ``--extra-line-in-excerpt`` - specify how many extra lines are added to a code snippet in html format
 
   An example command line: ::
 
-    phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
+    phpmd PHP/Depend/DbusUI xml codesize --reportfile "phpmd.xml" --suffixes "php,phtml"
+
+  Options can be before or after arguments. They can be separated from their value either with a space or an equal (``=``) sign.
+  Thus, the following syntax is equivalent to the previous one: ::
+
+    phpmd --reportfile="phpmd.xml" --suffixes="php,phtml" PHP/Depend/DbusUI xml codesize
+
+  Strings starting with ``-`` will be recognized as option names. If you have arguments starting with ``-``, set options
+  first, then use ``--`` to mark the explicit start or the arguments list: ::
+
+    phpmd --reportfile "phpmd.xml" --suffixes "php,phtml" -- -foo/Folder xml codesize
 
 Using multiple rule sets
 ````````````````````````
@@ -178,10 +209,24 @@ that will check the source code.
 Using multiple source files and folders
 ```````````````````````````````````````
 
-PHPMD also allowes you to specify multiple source directories in case you want
+PHPMD also allows you to specify multiple source directories in case you want
 to create one output for certain parts of your code ::
 
  ~ $ phpmd /path/to/code,index.php,/another/place/with/code text codesize
+
+Or use glob pattern: ::
+
+  ~ $ phpmd src/main/php/*/*/*{Renderer,Node}.php text my/rules.xml
+
+Scan input
+``````````
+
+PHPMD can also read the standard input `stdin`: ::
+
+  ~ $ cat src/MyService.php | phpmd - text my/rules.xml
+
+So the PHP code to be scanned may be generated by an other program
+not necessarily to be store in file.
 
 Exit codes
 ----------

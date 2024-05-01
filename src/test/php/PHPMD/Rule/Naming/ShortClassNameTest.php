@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test cases for ShortClassName rule
  *
  * @coversDefaultClass \PHPMD\Rule\Naming\ShortClassName
  */
-class ShortClassNameTest extends AbstractTest
+class ShortClassNameTest extends AbstractTestCase
 {
     /**
      * Tests that rule does not apply to class name length (43) above threshold (43)

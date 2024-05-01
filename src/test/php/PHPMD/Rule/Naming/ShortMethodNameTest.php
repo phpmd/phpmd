@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the very short method and function name rule.
  *
- * @covers PHPMD\Rule\Naming\ShortMethodName
+ * @covers \PHPMD\Rule\Naming\ShortMethodName
  */
-class ShortMethodNameTest extends AbstractTest
+class ShortMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionWithNameShorterThanThreshold
@@ -132,11 +132,19 @@ class ShortMethodNameTest extends AbstractTest
      * @link https://github.com/phpmd/phpmd/issues/80
      * @link https://github.com/phpmd/phpmd/issues/270
      */
-    public function testRuleAlsoWorksWithoutExceptionListConfigured()
+    public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock()
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', 100);
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethodMock());
+    }
+
+    public function testRuleAppliesAlsoWithoutExceptionListConfigured()
+    {
+        $rule = new ShortMethodName();
+        $rule->addProperty('minimum', 100);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
     }
 }

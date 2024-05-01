@@ -17,9 +17,9 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
-class IfStatementAssignmentTest extends AbstractTest
+class IfStatementAssignmentTest extends AbstractTestCase
 {
     public function testRuleNotAppliesInsideClosure()
     {

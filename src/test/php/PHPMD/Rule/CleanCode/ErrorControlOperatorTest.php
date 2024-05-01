@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Error Control Operator Test
  *
  * @coversDefaultClass \PHPMD\Rule\CleanCode\ErrorControlOperator
  */
-class ErrorControlOperatorTest extends AbstractTest
+class ErrorControlOperatorTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply to unary operators in functions

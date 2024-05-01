@@ -35,7 +35,7 @@ class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $npath = $node->getMetric('npath');
@@ -45,12 +45,12 @@ class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
 
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $npath,
                 $threshold,
-            )
+            ]
         );
     }
 }

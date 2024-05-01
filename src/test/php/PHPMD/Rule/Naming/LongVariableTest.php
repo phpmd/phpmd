@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Naming;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the really long variable, parameter and property name rule.
  *
- * @covers PHPMD\Rule\Naming\LongVariable
+ * @covers \PHPMD\Rule\Naming\LongVariable
  */
-class LongVariableTest extends AbstractTest
+class LongVariableTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
@@ -366,6 +366,20 @@ class LongVariableTest extends AbstractTest
         $rule->addProperty('maximum', 20);
         $rule->addProperty('subtract-suffixes', ',');
         $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesToVariableNameFollowingHungarianNotation
+     *
+     * @return void
+     */
+    public function testRuleAppliesToVariableNameFollowingHungarianNotation()
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', 12);
+        $rule->addProperty('subtract-prefixes', 'arru8');
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 }

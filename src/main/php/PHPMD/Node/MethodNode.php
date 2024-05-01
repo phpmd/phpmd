@@ -17,6 +17,7 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTTrait;
@@ -55,7 +56,7 @@ class MethodNode extends AbstractCallableNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {
@@ -120,6 +121,10 @@ class MethodNode extends AbstractCallableNode
 
         if ($parentNode instanceof ASTClass) {
             return new ClassNode($parentNode);
+        }
+
+        if ($parentNode instanceof ASTEnum) {
+            return new EnumNode($parentNode);
         }
 
         return new InterfaceNode($parentNode);

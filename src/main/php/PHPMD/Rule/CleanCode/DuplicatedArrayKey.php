@@ -42,7 +42,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfType('Array') as $arrayNode) {
             /** @var ASTNode $arrayNode */
@@ -57,9 +57,9 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param ASTNode $node Array node.
      * @return void
      */
-    protected function checkForDuplicatedArrayKeys(ASTNode $node)
+    protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
-        $keys = array();
+        $keys = [];
         /** @var ASTArrayElement $arrayElement */
         foreach ($node->getChildren() as $index => $arrayElement) {
             $arrayElement = $this->normalizeKey($arrayElement, $index);
@@ -70,7 +70,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
 
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
-                $this->addViolation($node, array($key, $arrayElement->getStartLine()));
+                $this->addViolation($node, [$key, $arrayElement->getStartLine()]);
                 continue;
             }
             $keys[$key] = $arrayElement;
@@ -88,7 +88,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      *
      * @param AbstractASTNode $node Array key to evaluate.
      * @param int $index Fallback in case of non-associative arrays
-     * @return AbstractASTNode Key name
+     * @return ?AbstractASTNode Key name
      */
     protected function normalizeKey(AbstractASTNode $node, $index)
     {

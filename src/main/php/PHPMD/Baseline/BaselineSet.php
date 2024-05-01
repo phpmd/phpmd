@@ -5,9 +5,9 @@ namespace PHPMD\Baseline;
 class BaselineSet
 {
     /** @var array<string, ViolationBaseline[]> */
-    private $violations = array();
+    private $violations = [];
 
-    public function addEntry(ViolationBaseline $entry)
+    public function addEntry(ViolationBaseline $entry): void
     {
         $this->violations[$entry->getRuleName()][] = $entry;
     }
@@ -20,7 +20,7 @@ class BaselineSet
      */
     public function contains($ruleName, $fileName, $methodName)
     {
-        if (isset($this->violations[$ruleName]) === false) {
+        if (!isset($this->violations[$ruleName])) {
             return false;
         }
 

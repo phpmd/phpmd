@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
@@ -27,7 +27,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\SARIFRenderer
  */
-class SARIFRendererTest extends AbstractTest
+class SARIFRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
@@ -46,13 +46,13 @@ class SARIFRendererTest extends AbstractTest
         $complexRuleViolationMock = $this->getRuleViolationMock(getcwd() . '/src/foobar.php', 23, 42, $rule);
         $complexRuleViolationMock
             ->method('getArgs')
-            ->willReturn(array(123, 3.2, 'awesomeFunction()'));
+            ->willReturn([123, 3.2, 'awesomeFunction()']);
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php'),
             $this->getRuleViolationMock('/foo.php'),
             $complexRuleViolationMock,
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
@@ -60,7 +60,7 @@ class SARIFRendererTest extends AbstractTest
             ->will($this->returnValue(new \ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -68,14 +68,16 @@ class SARIFRendererTest extends AbstractTest
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+        $actual = json_decode($writer->getData(), true);
+        $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
+        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        $this->assertJsonEquals(
-            $writer->getData(),
-            'renderer/sarif_renderer_expected.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+        $this->assertSame(
+            json_encode($actual, $flags),
+            json_encode(json_decode(file_get_contents(
+                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif'
+            )), $flags)
         );
     }
 
@@ -88,17 +90,17 @@ class SARIFRendererTest extends AbstractTest
     {
         $writer = new WriterStub();
 
-        $processingErrors = array(
+        $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
             new ProcessingError('Failed for file "/tmp/bar.php".'),
             new ProcessingError('Failed for file "' . static::createFileUri('foobar.php') . '".'),
             new ProcessingError('Cannot read file "/tmp/foo.php". Permission denied.'),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator(array())));
+            ->will($this->returnValue(new \ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
             ->will($this->returnValue(new \ArrayIterator($processingErrors)));
@@ -109,14 +111,20 @@ class SARIFRendererTest extends AbstractTest
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+        $data = strtr($writer->getData(), [
+            substr(json_encode(realpath(__DIR__ . '/../../../resources/files')), 1, -1) => '#{rootDirectory}',
+            'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
+        ]);
+        $actual = json_decode($data, true);
+        $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
+        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        $this->assertJsonEquals(
-            $writer->getData(),
-            'renderer/sarif_renderer_processing_errors.sarif',
-            function ($actual) {
-                $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
-                return $actual;
-            }
+        $this->assertSame(
+            json_encode($actual, $flags),
+            json_encode(json_decode(file_get_contents(
+                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
+            )), $flags)
         );
     }
 }

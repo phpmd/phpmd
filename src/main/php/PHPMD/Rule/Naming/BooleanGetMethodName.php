@@ -36,11 +36,11 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         /** @var $node MethodNode */
         if ($this->isBooleanGetMethod($node)) {
-            $this->addViolation($node, array($node->getImage()));
+            $this->addViolation($node, [$node->getImage()]);
         }
     }
 

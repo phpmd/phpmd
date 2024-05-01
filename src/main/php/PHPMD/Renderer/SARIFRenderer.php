@@ -34,30 +34,30 @@ class SARIFRenderer extends JSONRenderer
      */
     protected function initReportData()
     {
-        $data = array(
+        $data = [
             'version' => '2.1.0',
             '$schema' =>
                 'https://raw.githubusercontent.com/oasis-tcs/' .
                 'sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
-            'runs' => array(
-                array(
-                    'tool' => array(
-                        'driver' => array(
+            'runs' => [
+                [
+                    'tool' => [
+                        'driver' => [
                             'name' => 'PHPMD',
                             'informationUri' => 'https://phpmd.org',
                             'version' => PHPMD::VERSION,
-                            'rules' => array(),
-                        ),
-                    ),
-                    'originalUriBaseIds' => array(
-                        'WORKINGDIR' => array(
+                            'rules' => [],
+                        ],
+                    ],
+                    'originalUriBaseIds' => [
+                        'WORKINGDIR' => [
                             'uri' => static::pathToUri(getcwd()) . '/',
-                        ),
-                    ),
-                    'results' => array(),
-                ),
-            ),
-        );
+                        ],
+                    ],
+                    'results' => [],
+                ],
+            ],
+        ];
 
         return $data;
     }
@@ -71,9 +71,9 @@ class SARIFRenderer extends JSONRenderer
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
-        $rules = array();
-        $results = array();
-        $ruleIndices = array();
+        $rules = [];
+        $results = [];
+        $ruleIndices = [];
 
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
@@ -83,26 +83,26 @@ class SARIFRenderer extends JSONRenderer
             if (!isset($ruleIndices[$ruleRef])) {
                 $ruleIndices[$ruleRef] = count($rules);
 
-                $ruleData = array(
+                $ruleData = [
                     'id' => $ruleRef,
                     'name' => $rule->getName(),
-                    'shortDescription' => array(
+                    'shortDescription' => [
                         'text' => $rule->getRuleSetName() . ': ' . $rule->getName(),
-                    ),
-                    'messageStrings' => array(
-                        'default' => array(
+                    ],
+                    'messageStrings' => [
+                        'default' => [
                             'text' => trim($rule->getMessage()),
-                        ),
-                    ),
-                    'help' => array(
+                        ],
+                    ],
+                    'help' => [
                         'text' => trim(str_replace("\n", ' ', $rule->getDescription())),
-                    ),
+                    ],
                     'helpUri' => $rule->getExternalInfoUrl(),
-                    'properties' => array(
+                    'properties' => [
                         'ruleSet' => $rule->getRuleSetName(),
                         'priority' => $rule->getPriority(),
-                    ),
-                );
+                    ],
+                ];
 
                 $examples = $rule->getExamples();
                 if (!empty($examples)) {
@@ -122,29 +122,29 @@ class SARIFRenderer extends JSONRenderer
 
             $arguments = $violation->getArgs();
             if ($arguments === null) {
-                $arguments = array();
+                $arguments = [];
             }
 
-            $results[] = array(
+            $results[] = [
                 'ruleId' => $ruleRef,
                 'ruleIndex' => $ruleIndices[$ruleRef],
-                'message' => array(
+                'message' => [
                     'id' => 'default',
                     'arguments' => array_map('strval', $arguments),
                     'text' => $violation->getDescription(),
-                ),
-                'locations' => array(
-                    array(
-                        'physicalLocation' => array(
+                ],
+                'locations' => [
+                    [
+                        'physicalLocation' => [
                             'artifactLocation' => static::pathToArtifactLocation($violation->getFileName()),
-                            'region' => array(
+                            'region' => [
                                 'startLine' => $violation->getBeginLine(),
                                 'endLine' => $violation->getEndLine(),
-                            ),
-                        ),
-                    )
-                ),
-            );
+                            ],
+                        ],
+                    ],
+                ],
+            ];
         }
 
         $data['runs'][0]['tool']['driver']['rules'] = $rules;
@@ -165,19 +165,19 @@ class SARIFRenderer extends JSONRenderer
         $errors = $report->getErrors();
         if ($errors) {
             foreach ($errors as $error) {
-                $data['runs'][0]['results'][] = array(
+                $data['runs'][0]['results'][] = [
                     'level' => 'error',
-                    'message' => array(
+                    'message' => [
                         'text' => $error->getMessage(),
-                    ),
-                    'locations' => array(
-                        array(
-                            'physicalLocation' => array(
+                    ],
+                    'locations' => [
+                        [
+                            'physicalLocation' => [
                                 'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
-                            ),
-                        )
-                    ),
-                );
+                            ],
+                        ],
+                    ],
+                ];
             }
         }
 
@@ -197,16 +197,16 @@ class SARIFRenderer extends JSONRenderer
         $workingDir = getcwd();
         if (substr($path, 0, strlen($workingDir)) === $workingDir) {
             // relative path
-            return array(
+            return [
                 'uri' => substr($path, strlen($workingDir) + 1),
                 'uriBaseId' => 'WORKINGDIR',
-            );
+            ];
         }
-        
+
         // absolute path with protocol
-        return array(
+        return [
             'uri' => static::pathToUri($path),
-        );
+        ];
     }
 
     /**

@@ -33,7 +33,7 @@ class LongClass extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
 
@@ -49,6 +49,6 @@ class LongClass extends AbstractRule implements ClassAware
             return;
         }
 
-        $this->addViolation($node, array($node->getName(), $loc, $threshold));
+        $this->addViolation($node, [$node->getName(), $loc, $threshold]);
     }
 }

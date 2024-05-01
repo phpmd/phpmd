@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * MissingImport Tests
  *
  * @coversDefaultClass \PHPMD\Rule\CleanCode\MissingImport
  */
-class MissingImportTest extends AbstractTest
+class MissingImportTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.
@@ -47,7 +47,7 @@ class MissingImportTest extends AbstractTest
      */
     public function testRuleAppliesTo($file)
     {
-        $expectedInvokes = strpos($file, 'testRuleAppliesTwice') !== false
+        $expectedInvokes = str_contains($file, 'testRuleAppliesTwice')
             ? 2
             : static::ONE_VIOLATION;
         $this->expectRuleHasViolationsForFile($this->getRule(), $expectedInvokes, $file);

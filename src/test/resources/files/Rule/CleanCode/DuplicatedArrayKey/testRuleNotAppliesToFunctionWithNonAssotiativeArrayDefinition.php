@@ -17,9 +17,9 @@
 
 function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
 {
-    return array(
+    return [
         42,
         43,
         43,
-    );
+    ];
 }

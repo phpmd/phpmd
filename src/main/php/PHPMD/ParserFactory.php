@@ -21,6 +21,7 @@ use PDepend\Application;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
+use PHPMD\Cache\CacheFileFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
@@ -38,9 +39,9 @@ class ParserFactory
      *
      * @var array
      */
-    private $phpmd2pdepend = array(
+    private $phpmd2pdepend = [
         'coverage' => 'coverage-report',
-    );
+    ];
 
     /**
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
@@ -88,6 +89,7 @@ class ParserFactory
         $this->initInput($pdepend, $phpmd);
         $this->initIgnores($pdepend, $phpmd);
         $this->initExtensions($pdepend, $phpmd);
+        $this->initResultCache($pdepend, $phpmd);
 
         return $pdepend;
     }
@@ -99,7 +101,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initInput(Engine $pdepend, PHPMD $phpmd)
+    private function initInput(Engine $pdepend, PHPMD $phpmd): void
     {
         foreach (explode(',', $phpmd->getInput()) as $path) {
             $trimmedPath = trim($path);
@@ -118,7 +120,7 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initIgnores(Engine $pdepend, PHPMD $phpmd)
+    private function initIgnores(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getIgnorePatterns()) > 0) {
             $pdepend->addFileFilter(
@@ -134,12 +136,23 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initExtensions(Engine $pdepend, PHPMD $phpmd)
+    private function initExtensions(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(
                 new ExtensionFilter($phpmd->getFileExtensions())
             );
+        }
+    }
+
+    /**
+     * Cache result hook to filter cached files
+     */
+    private function initResultCache(Engine $pdepend, PHPMD $phpmd): void
+    {
+        $resultCache = $phpmd->getResultCache();
+        if ($resultCache !== null) {
+            $pdepend->addFileFilter($resultCache->getFileFilter());
         }
     }
 
@@ -150,9 +163,9 @@ class ParserFactory
      * @param \PHPMD\PHPMD $phpmd
      * @return void
      */
-    private function initOptions(Engine $pdepend, PHPMD $phpmd)
+    private function initOptions(Engine $pdepend, PHPMD $phpmd): void
     {
-        $options = array();
+        $options = [];
         foreach (array_filter($phpmd->getOptions()) as $name => $value) {
             if (isset($this->phpmd2pdepend[$name])) {
                 $options[$this->phpmd2pdepend[$name]] = $value;

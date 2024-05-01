@@ -35,12 +35,12 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $cbo = $node->getMetric('cbo');
         $threshold = $this->getIntProperty('maximum');
         if ($cbo >= $threshold) {
-            $this->addViolation($node, array($node->getName(), $cbo, $threshold));
+            $this->addViolation($node, [$node->getName(), $cbo, $threshold]);
         }
     }
 }

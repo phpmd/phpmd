@@ -78,7 +78,7 @@ class Annotation
      */
     private function isSuppressed(Rule $rule)
     {
-        if (in_array($this->value, array('PHPMD', 'PMD'))) {
+        if (in_array($this->value, ['PHPMD', 'PMD'])) {
             return true;
         } elseif (preg_match(
             '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',

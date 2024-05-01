@@ -17,14 +17,14 @@
 
 namespace PHPMD\Rule\Controversial;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case variable name rule.
  *
  * @covers \PHPMD\Rule\Controversial\CamelCaseVariableName
  */
-class CamelCaseVariableNameTest extends AbstractTest
+class CamelCaseVariableNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid variable name
@@ -37,6 +37,40 @@ class CamelCaseVariableNameTest extends AbstractTest
 
         $rule = new CamelCaseVariableName();
         $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does apply for variable name
+     * with all caps abbreviation.
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviation()
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does not apply for variable name
+     * with camelcase abbreviation.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviation()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
         $rule->addProperty('allow-underscore', 'false');
         $rule->apply($this->getClass());
     }
@@ -78,6 +112,21 @@ class CamelCaseVariableNameTest extends AbstractTest
      * @return void
      */
     public function testRuleDoesNotApplyForStaticVariableAccess()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does NOT apply if name allowed by config
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyIfExcluded()
     {
         $report = $this->getReportWithNoViolation();
 

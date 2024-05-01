@@ -33,7 +33,7 @@ class TooManyFields extends AbstractRule implements ClassAware
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maxfields');
         $vars = $node->getMetric('vars');
@@ -42,12 +42,12 @@ class TooManyFields extends AbstractRule implements ClassAware
         }
         $this->addViolation(
             $node,
-            array(
+            [
                 $node->getType(),
                 $node->getName(),
                 $vars,
                 $threshold,
-            )
+            ]
         );
     }
 }

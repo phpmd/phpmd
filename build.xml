@@ -48,6 +48,8 @@
         <copy todir="${output.dir}/src/main/resources/rulesets">
             <fileset dir="${commons.srcdir.resource}/rulesets" />
         </copy>
+        <copy file="${basedir}/composer.json" todir="${output.dir}/" />
+        <copy file="${basedir}/composer.lock" todir="${output.dir}/" />
     </target>
 
     <!--
@@ -77,7 +79,7 @@
             <arg line="composer.phar" />
             <arg line="config" />
             <arg line="platform.php" />
-            <arg line="5.3.9"/>
+            <arg line="8.1.0"/>
         </exec>
         <exec executable="php" failonerror="true">
             <arg line="composer.phar" />

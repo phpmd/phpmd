@@ -33,7 +33,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     /**
      * @var array
      */
-    protected $exceptions = array(
+    protected $exceptions = [
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',
@@ -45,7 +45,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         '$_SESSION',
         '$_REQUEST',
         '$_ENV',
-    );
+    ];
 
     /**
      * This method checks if a variable is not named in camelCase
@@ -54,16 +54,18 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      * @param \PHPMD\AbstractNode $node
      * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        $variables = [];
+
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable)) {
-                $this->addViolation(
-                    $node,
-                    array(
-                        $variable->getImage(),
-                    )
-                );
+                $variableName = $variable->getImage();
+
+                if (!isset($variables[$variableName])) {
+                    $variables[$variableName] = true;
+                    $this->addViolation($variable, [$variableName]);
+                }
             }
         }
     }
@@ -74,6 +76,12 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
 
         if (in_array($image, $this->exceptions)) {
             return true;
+        }
+
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $image) === 1) {
+            return false;
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {

@@ -17,7 +17,7 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
@@ -26,7 +26,7 @@ use PHPMD\Stubs\WriterStub;
  *
  * @covers \PHPMD\Renderer\HTMLRenderer
  */
-class HTMLRendererTest extends AbstractTest
+class HTMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
@@ -38,25 +38,26 @@ class HTMLRendererTest extends AbstractTest
         // Create a writer instance.
         $writer = new WriterStub();
 
-        $violations = array(
+        $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
             $this->getRuleViolationMock('/foo.php', 2),
             $this->getRuleViolationMock('/foo.php', 3),
-        );
+        ];
 
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
 
-        $renderer = new HTMLRenderer();
+        $extraLineInExcerpt = 2;
+        $renderer = new HTMLRenderer($extraLineInExcerpt);
         $renderer->setWriter($writer);
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
             $writer->getData()
         );

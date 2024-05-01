@@ -17,7 +17,7 @@
 
 namespace PHPMD\TextUI;
 
-use PHPMD\AbstractTest;
+use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Paths;
 
 /**
@@ -25,7 +25,7 @@ use PHPMD\Utility\Paths;
  *
  * @covers \PHPMD\TextUI\Command
  */
-class CommandTest extends AbstractTest
+class CommandTest extends AbstractTestCase
 {
     /**
      * @var resource
@@ -35,7 +35,7 @@ class CommandTest extends AbstractTest
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (is_resource($this->stderrStreamFilter)) {
             stream_filter_remove($this->stderrStreamFilter);
@@ -56,14 +56,14 @@ class CommandTest extends AbstractTest
     {
         $args = array_filter(
             array_merge(
-                array(
+                [
                     __FILE__,
                     self::createFileUri($sourceFile),
                     'html',
                     'codesize',
                     '--reportfile',
                     self::createTempFileUri(),
-                ),
+                ],
                 (array)$options
             )
         );
@@ -72,73 +72,70 @@ class CommandTest extends AbstractTest
         $this->assertEquals($expectedExitCode, $exitCode);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderTestMainWithOption()
+    public static function dataProviderTestMainWithOption(): array
     {
-        return array(
-            array(
+        return [
+            [
                 'source/source_without_violations.php',
                 Command::EXIT_SUCCESS,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_VIOLATION,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source/source_with_npath_violation.php',
                 Command::EXIT_VIOLATION,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_ERROR,
-            ),
-            array(
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_ERROR,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source/source_with_parse_error.php',
                 Command::EXIT_SUCCESS,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_ERROR,
-            ),
-            array(
+            ],
+            [
                 'source',
                 Command::EXIT_ERROR,
-                array('--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-violations-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_VIOLATION,
-                array('--ignore-errors-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit'],
+            ],
+            [
                 'source',
                 Command::EXIT_SUCCESS,
-                array('--ignore-errors-on-exit', '--ignore-violations-on-exit'),
-            ),
-            array(
+                ['--ignore-errors-on-exit', '--ignore-violations-on-exit'],
+            ],
+            [
                 'source/ccn_suppress_function.php',
                 Command::EXIT_VIOLATION,
-                array('--strict'),
-            ),
-            array(
+                ['--strict'],
+            ],
+            [
                 'source/ccn_suppress_function.php',
                 Command::EXIT_SUCCESS,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -146,7 +143,7 @@ class CommandTest extends AbstractTest
      */
     public function testWithMultipleReportFiles()
     {
-        $args = array(
+        $args = [
             __FILE__,
             self::createFileUri('source/source_with_npath_violation.php'),
             'xml',
@@ -165,7 +162,7 @@ class CommandTest extends AbstractTest
             $checkstyle = self::createTempFileUri(),
             '--reportfile-sarif',
             $sarif = self::createTempFileUri(),
-        );
+        ];
 
         Command::main($args);
 
@@ -181,14 +178,14 @@ class CommandTest extends AbstractTest
     {
         $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
         $temp     = self::createTempFileUri();
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $uri,
             'text',
             'naming',
             '--reportfile',
             $temp,
-        ));
+        ]);
 
         $this->assertSame(Command::EXIT_VIOLATION, $exitCode);
         $this->assertSame(
@@ -206,7 +203,7 @@ class CommandTest extends AbstractTest
      */
     public function testWithFilter($option, $value)
     {
-        $args = array(
+        $args = [
             __FILE__,
             self::createFileUri('source/'),
             'text',
@@ -215,28 +212,25 @@ class CommandTest extends AbstractTest
             self::createTempFileUri(),
             $option,
             $value,
-        );
+        ];
 
         $exitCode = Command::main($args);
         $this->assertEquals(Command::EXIT_SUCCESS, $exitCode);
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderWithFilter()
+    public static function dataProviderWithFilter(): array
     {
-        return array(
-            array('--suffixes', '.class.php'),
-            array('--exclude', 'ccn_,npath_,parse_error'),
-        );
+        return [
+            ['--suffixes', '.class.php'],
+            ['--exclude', 'ccn_,npath_,parse_error'],
+        ];
     }
 
     public function testMainGenerateBaseline()
     {
         $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
         $temp     = self::createTempFileUri();
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $uri,
             'text',
@@ -244,11 +238,11 @@ class CommandTest extends AbstractTest
             '--generate-baseline',
             '--baseline-file',
             $temp,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertFileExists($temp);
-        static::assertContains(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
+        static::assertStringContainsString(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
     }
 
     /**
@@ -270,7 +264,7 @@ class CommandTest extends AbstractTest
         copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
         copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 
-        $exitCode = Command::main(array(
+        $exitCode = Command::main([
             __FILE__,
             $sourceTemp,
             'text',
@@ -278,7 +272,7 @@ class CommandTest extends AbstractTest
             '--update-baseline',
             '--baseline-file',
             $baselineTemp,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
         static::assertXmlStringEqualsXmlString(
@@ -291,14 +285,14 @@ class CommandTest extends AbstractTest
     {
         $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
-        $exitCode     = Command::main(array(
+        $exitCode     = Command::main([
             __FILE__,
             $sourceFile,
             'text',
             'naming',
             '--baseline-file',
             $baselineFile,
-        ));
+        ]);
 
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
     }
@@ -310,17 +304,99 @@ class CommandTest extends AbstractTest
         $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
                 "''",
                 'naming',
-            )
+            ]
         );
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Can\'t find the custom report class: ',
             StreamFilter::$streamHandle
+        );
+    }
+
+    public function testMainWritesExceptionMessageToErrorFileIfSpecified()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            [
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+            ]
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
+
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            [
+                __FILE__,
+                self::createFileUri('source/source_with_npath_violation.php'),
+                "''",
+                'naming',
+                '--error-file',
+                $file,
+                '-vvv',
+            ]
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
+        $this->assertMatchesRegularExpression(
+            '`' . preg_quote(str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:'
+            ), '`') . '\d+' . PHP_EOL . '`',
+            $errors
+        );
+        $this->assertMatchesRegularExpression(
+            '`' . preg_quote(str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                'src/main/php/PHPMD/TextUI/CommandLineOptions.php'
+            ), '`') . '\(\d+\): PHPMD\\\\TextUI\\\\CommandLineOptions->createCustomRenderer\(\)`',
+            $errors
+        );
+    }
+
+    public function testOutputDeprecation()
+    {
+        $file = tempnam(sys_get_temp_dir(), 'err');
+
+        Command::main(
+            [
+                __FILE__,
+                __FILE__,
+                'text',
+                'naming',
+                '--ignore',
+                'foobar',
+                '--error-file',
+                $file,
+            ]
+        );
+
+        $errors = (string)file_get_contents($file);
+        unlink($file);
+
+        $this->assertSame(
+            'The --ignore option is deprecated, please use --exclude instead.' . PHP_EOL . PHP_EOL,
+            $errors
         );
     }
 
@@ -331,10 +407,10 @@ class CommandTest extends AbstractTest
         $this->stderrStreamFilter = stream_filter_prepend(STDOUT, 'stderr_stream');
 
         Command::main(
-            array(
+            [
                 __FILE__,
                 '--version',
-            )
+            ]
         );
 
         $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
