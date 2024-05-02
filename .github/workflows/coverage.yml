@@ -39,7 +39,6 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-${{ matrix.php }}-
 
       - name: Cache test packages
         id: composer-test-cache
@@ -47,7 +46,6 @@ jobs:
         with:
           path: src/test/vendor
           key: ${{ runner.os }}-coverage-test-${{ matrix.php }}-${{ hashFiles('src/test/composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-test-${{ matrix.php }}-
 
       - name: Upgrade PHPUnit
         run: |
