@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
@@ -42,7 +43,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTArray') as $arrayNode) {
+        foreach ($node->findChildrenOfType(ASTArray::class) as $arrayNode) {
             $this->checkForDuplicatedArrayKeys($arrayNode);
         }
     }

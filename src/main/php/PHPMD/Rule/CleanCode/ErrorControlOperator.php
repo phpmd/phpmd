@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTUnaryExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -37,7 +38,7 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTUnaryExpression') as $unaryExpression) {
+        foreach ($node->findChildrenOfType(ASTUnaryExpression::class) as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {
                 $this->addViolation($node, [$unaryExpression->getBeginLine()]);
             }

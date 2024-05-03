@@ -17,16 +17,18 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PHPMD\AbstractNode;
 use PHPMD\Rule;
 
 /**
  * Wrapper around a PHP_Depend ast node.
  *
- * @template TNode of \PDepend\Source\AST\ASTNode
+ * @template TNode of PDependNode
  *
- * @extends \PHPMD\AbstractNode<TNode>
+ * @extends AbstractNode<TNode>
  */
-class ASTNode extends \PHPMD\AbstractNode
+class ASTNode extends AbstractNode
 {
     /**
      * The source file of this node.
@@ -41,7 +43,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * @param TNode $node
      * @param string $fileName
      */
-    public function __construct(\PDepend\Source\AST\ASTNode $node, $fileName)
+    public function __construct(PDependNode $node, $fileName)
     {
         parent::__construct($node);
 

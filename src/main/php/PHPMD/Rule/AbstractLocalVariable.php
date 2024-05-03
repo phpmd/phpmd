@@ -19,9 +19,12 @@ namespace PHPMD\Rule;
 
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
@@ -70,7 +73,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node represents a local variable or if it is
      * a static object property or something similar.
      *
-     * @param \PHPMD\Node\ASTNode<\PDepend\Source\AST\ASTVariable> $variable The variable to check.
+     * @param ASTNode<ASTVariable> $variable The variable to check.
      * @return bool
      */
     protected function isLocal(ASTNode $variable)
@@ -114,7 +117,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
-        if ($parent->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
+        if ($parent->isInstanceOf(ASTPropertyPostfix::class)) {
             $primaryPrefix = $parent->getParent();
             $primaryPrefixParent = $primaryPrefix->getParent();
             if ($primaryPrefixParent->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
@@ -156,8 +159,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isWrappedByIndexExpression(ASTNode $node)
     {
-        return ($node->getParent()->isInstanceOf('PDepend\Source\AST\ASTArrayIndexExpression')
-            || $node->getParent()->isInstanceOf('PDepend\Source\AST\ASTStringIndexExpression')
+        return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
+            || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)
         );
     }
 
@@ -233,7 +236,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Or return the input as is if it's not an ASTNode PHPMD node.
      *
-     * @return \PDepend\Source\AST\ASTArtifact|\PDepend\Source\AST\ASTNode
+     * @return ASTArtifact|PDependNode
      */
     protected function getNode($node)
     {

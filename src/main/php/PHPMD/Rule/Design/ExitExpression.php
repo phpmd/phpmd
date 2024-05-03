@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTExitExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -33,7 +34,7 @@ class ExitExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTExitExpression') as $exit) {
+        foreach ($node->findChildrenOfType(ASTExitExpression::class) as $exit) {
             $this->addViolation($exit, [$node->getType(), $node->getName()]);
         }
     }

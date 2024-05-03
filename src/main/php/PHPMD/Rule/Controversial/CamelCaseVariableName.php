@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use PDepend\Source\AST\ASTPropertyPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -91,7 +92,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
             return true;
         }
 
-        if ($variable->getParent()->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
+        if ($variable->getParent()->isInstanceOf(ASTPropertyPostfix::class)) {
             return true;
         }
 

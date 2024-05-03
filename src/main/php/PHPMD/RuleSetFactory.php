@@ -100,7 +100,7 @@ class RuleSetFactory
      * Creates an array of rule-set instances for the given argument.
      *
      * @param string $ruleSetFileNames Comma-separated string of rule-set filenames or identifier.
-     * @return \PHPMD\RuleSet[]
+     * @return RuleSet[]
      */
     public function createRuleSets($ruleSetFileNames)
     {
@@ -351,7 +351,7 @@ class RuleSetFactory
             }
         }
 
-        /* @var $rule \PHPMD\Rule */
+        /* @var RuleSet $rule */
         $rule = new $className();
         $rule->setName((string) $ruleNode['name']);
         $rule->setMessage((string) $ruleNode['message']);

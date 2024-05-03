@@ -18,6 +18,11 @@
 namespace PHPMD\Rule\Design;
 
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTDoWhileStatement;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTForStatement;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -77,9 +82,9 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
 
         $this->currentNamespace = $node->getNamespaceName() . '\\';
         $loops = array_merge(
-            $node->findChildrenOfType('PDepend\Source\AST\ASTForStatement'),
-            $node->findChildrenOfType('PDepend\Source\AST\ASTWhileStatement'),
-            $node->findChildrenOfType('PDepend\Source\AST\ASTDoWhileStatement')
+            $node->findChildrenOfType(ASTForStatement::class),
+            $node->findChildrenOfType(ASTWhileStatement::class),
+            $node->findChildrenOfType(ASTDoWhileStatement::class)
         );
 
         /** @var AbstractNode $loop */
@@ -96,12 +101,12 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      */
     protected function findViolations(AbstractNode $loop): void
     {
-        foreach ($loop->findChildrenOfType('PDepend\Source\AST\ASTExpression') as $expression) {
+        foreach ($loop->findChildrenOfType(ASTExpression::class) as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
                 continue;
             }
 
-            foreach ($expression->findChildrenOfType('PDepend\Source\AST\ASTFunctionPostfix') as $function) {
+            foreach ($expression->findChildrenOfType(ASTFunctionPostfix::class) as $function) {
                 if (!$this->isUnwantedFunction($function)) {
                     continue;
                 }

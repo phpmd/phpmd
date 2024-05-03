@@ -17,6 +17,9 @@
 
 namespace PHPMD\Rule\Naming;
 
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -63,9 +66,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('PDepend\Source\AST\ASTFieldDeclaration');
+            $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
             foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
+                $declarators = $field->findChildrenOfType(ASTVariableDeclarator::class);
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
@@ -74,7 +77,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
 
             return;
         }
-        $declarators = $node->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
+        $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($declarators as $declarator) {
             $this->checkNodeImage($declarator);
         }
@@ -130,7 +133,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
-        return $this->isChildOf($node, 'PDepend\Source\AST\ASTMemberPrimaryPrefix');
+        return $this->isChildOf($node, ASTMemberPrimaryPrefix::class);
     }
 
     /**

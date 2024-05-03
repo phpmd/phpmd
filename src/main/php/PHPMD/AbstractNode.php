@@ -19,6 +19,8 @@ namespace PHPMD;
 
 use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\Node\ASTNode;
@@ -27,7 +29,7 @@ use PHPMD\Node\ASTNode;
  * This is an abstract base class for PHPMD code nodes, it is just a wrapper
  * around PDepend's object model.
  *
- * @template TNode of \PDepend\Source\AST\ASTArtifact|PDependNode
+ * @template TNode of ASTArtifact|PDependNode
  *
  * @mixin TNode
  */
@@ -153,7 +155,7 @@ abstract class AbstractNode
      * the current node.
      *
      * @param class-string<PDependNode> $type The searched child type.
-     * @return array<int, \PDepend\Source\AST\AbstractASTNode|\PDepend\Source\AST\ASTArtifact>
+     * @return array<int, AbstractASTNode|ASTArtifact>
      */
     public function findChildrenWithParentType($type)
     {
@@ -178,7 +180,7 @@ abstract class AbstractNode
      */
     public function findChildrenOfTypeVariable()
     {
-        return $this->findChildrenOfType('PDepend\Source\AST\ASTVariable');
+        return $this->findChildrenOfType(ASTVariable::class);
     }
 
     /**

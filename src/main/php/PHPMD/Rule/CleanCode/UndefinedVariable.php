@@ -18,8 +18,16 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTForeachStatement;
+use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTGlobalStatement;
+use PDepend\Source\AST\ASTListExpression;
 use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -35,6 +43,8 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule collects all undefined variables within a given function or method
  * that are used by any code in the analyzed source artifact.
+ *
+ * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
 class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
@@ -59,7 +69,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
         $this->collect($node);
 
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTClass') as $class) {
+        foreach ($node->findChildrenOfType(ASTClass::class) as $class) {
             /** @var ASTClass $class */
 
             $this->collectProperties($class);
@@ -108,12 +118,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an global of found variables.
-     *
-     * @param \PHPMD\Node\AbstractNode $node
      */
     protected function collectGlobalStatements(AbstractNode $node): void
     {
-        foreach ($node->findChildrenWithParentType('PDepend\Source\AST\ASTGlobalStatement') as $variable) {
+        foreach ($node->findChildrenWithParentType(ASTGlobalStatement::class) as $variable) {
             $this->addVariableDefinition($variable);
         }
     }
@@ -123,7 +131,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectExceptionCatches(AbstractCallableNode $node): void
     {
-        foreach ($node->findChildrenWithParentType('PDepend\Source\AST\ASTCatchStatement') as $child) {
+        foreach ($node->findChildrenWithParentType(ASTCatchStatement::class) as $child) {
             if ($child instanceof ASTVariable) {
                 $this->addVariableDefinition($child);
             }
@@ -135,7 +143,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectListExpressions(AbstractCallableNode $node): void
     {
-        foreach ($node->findChildrenWithParentType('PDepend\Source\AST\ASTListExpression') as $variable) {
+        foreach ($node->findChildrenWithParentType(ASTListExpression::class) as $variable) {
             $this->addVariableDefinition($variable);
         }
     }
@@ -145,7 +153,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectForeachStatements(AbstractCallableNode $node): void
     {
-        foreach ($node->findChildrenWithParentType('PDepend\Source\AST\ASTForeachStatement') as $child) {
+        foreach ($node->findChildrenWithParentType(ASTForeachStatement::class) as $child) {
             if ($child instanceof ASTVariable) {
                 $this->addVariableDefinition($child);
             }
@@ -167,7 +175,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectClosureParameters(AbstractCallableNode $node): void
     {
-        $closures = $node->findChildrenOfType('PDepend\Source\AST\ASTClosure');
+        $closures = $node->findChildrenOfType(ASTClosure::class);
 
         foreach ($closures as $closure) {
             $this->collectParameters($closure);
@@ -188,16 +196,14 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect parameter names of method/function.
-     *
-     * @param \PHPMD\Node\AbstractNode $node
      */
     protected function collectParameters(AbstractNode $node): void
     {
         // Get formal parameter container
-        $parameters = $node->getFirstChildOfType('PDepend\Source\AST\ASTFormalParameters');
+        $parameters = $node->getFirstChildOfType(ASTFormalParameters::class);
 
         // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
+        $declarators = $parameters->findChildrenOfType(ASTVariableDeclarator::class);
 
         foreach ($declarators as $declarator) {
             $this->addVariableDefinition($declarator);
@@ -209,7 +215,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     protected function collectAssignments(AbstractCallableNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTAssignmentExpression') as $assignment) {
+        foreach ($node->findChildrenOfType(ASTAssignmentExpression::class) as $assignment) {
             $variable = $assignment->getChild(0);
 
             if ($variable->getNode() instanceof ASTArray) {
@@ -223,7 +229,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
             $this->addVariableDefinition($variable);
         }
 
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTStaticVariableDeclaration') as $static) {
+        foreach ($node->findChildrenOfType(ASTStaticVariableDeclaration::class) as $static) {
             $variable = $static->getChild(0);
             $this->addVariableDefinition($variable);
         }
@@ -231,12 +237,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect postfix property.
-     *
-     * @param \PHPMD\Node\AbstractNode $node
      */
     protected function collectPropertyPostfix(AbstractNode $node): void
     {
-        foreach ($node->findChildrenWithParentType('PDepend\Source\AST\ASTPropertyPostfix') as $child) {
+        foreach ($node->findChildrenWithParentType(ASTPropertyPostfix::class) as $child) {
             if ($child instanceof ASTVariable) {
                 $this->addVariableDefinition($child);
             }

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Naming;
 
+use PDepend\Source\AST\ASTConstantDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -36,7 +37,7 @@ class ConstantNamingConventions extends AbstractRule implements ClassAware, Inte
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTConstantDeclarator') as $declarator) {
+        foreach ($node->findChildrenOfType(ASTConstantDeclarator::class) as $declarator) {
             if ($declarator->getImage() !== strtoupper($declarator->getImage())) {
                 $this->addViolation($declarator, [$declarator->getImage()]);
             }

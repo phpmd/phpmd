@@ -17,6 +17,12 @@
 
 namespace PHPMD\Rule\Naming;
 
+use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTForeachStatement;
+use PDepend\Source\AST\ASTForInit;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -73,9 +79,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function applyClass(AbstractNode $node): void
     {
-        $fields = $node->findChildrenOfType('PDepend\Source\AST\ASTFieldDeclaration');
+        $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
         foreach ($fields as $field) {
-            $declarators = $field->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
+            $declarators = $field->findChildrenOfType(ASTVariableDeclarator::class);
             foreach ($declarators as $declarator) {
                 $this->checkNodeImage($declarator);
             }
@@ -91,7 +97,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function applyNonClass(AbstractNode $node): void
     {
-        $declarators = $node->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
+        $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($declarators as $declarator) {
             $this->checkNodeImage($declarator);
         }
@@ -164,13 +170,13 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     {
         $parent = $node->getParent();
 
-        if ($parent && $parent->isInstanceOf('PDepend\Source\AST\ASTForeachStatement')) {
+        if ($parent && $parent->isInstanceOf(ASTForeachStatement::class)) {
             return $this->isInitializedInLoop($node);
         }
 
-        return $this->isChildOf($node, 'PDepend\Source\AST\ASTCatchStatement')
-            || $this->isChildOf($node, 'PDepend\Source\AST\ASTForInit')
-            || $this->isChildOf($node, 'PDepend\Source\AST\ASTMemberPrimaryPrefix');
+        return $this->isChildOf($node, ASTCatchStatement::class)
+            || $this->isChildOf($node, ASTForInit::class)
+            || $this->isChildOf($node, ASTMemberPrimaryPrefix::class);
     }
 
     /**
@@ -186,7 +192,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
         $exceptionVariables = [];
 
-        $parentForeaches = $this->getParentsOfType($node, 'PDepend\Source\AST\ASTForeachStatement');
+        $parentForeaches = $this->getParentsOfType($node, ASTForeachStatement::class);
         foreach ($parentForeaches as $foreach) {
             foreach ($foreach->getChildren() as $foreachChild) {
                 $exceptionVariables[] = $foreachChild->getImage();

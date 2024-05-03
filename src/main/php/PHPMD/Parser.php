@@ -21,6 +21,7 @@ use PDepend\Engine;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTEnum;
@@ -44,14 +45,14 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * The analysing rule-set instance.
      *
-     * @var \PHPMD\RuleSet[]
+     * @var RuleSet[]
      */
     private $ruleSets = [];
 
     /**
      * The metric containing analyzer instances.
      *
-     * @var \PDepend\Metrics\AnalyzerNodeAware[]
+     * @var AnalyzerNodeAware[]
      */
     private $analyzers = [];
 
@@ -137,7 +138,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Closes the logger process and writes the output file.
      *
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
+     * @throws NoLogOutputException If the no log target exists.
      */
     public function close(): void
     {

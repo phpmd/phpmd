@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
@@ -116,7 +117,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     protected function addViolations(AbstractNode $node, array $assignments): void
     {
         $processesViolations = [];
-        /** @var \PDepend\Source\AST\AbstractASTNode $assignment */
+        /** @var AbstractASTNode $assignment */
         foreach ($assignments as $assignment) {
             if (null === $assignment || $assignment->getImage() !== '=') {
                 continue;

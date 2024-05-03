@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTFunctionPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -40,7 +41,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
     {
         $ignoreNS = $this->getBooleanProperty('ignore-namespaces');
         $namespace = $node->getNamespaceName();
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFunctionPostfix') as $postfix) {
+        foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $postfix) {
             $fragment = $postfix->getImage();
             if ($ignoreNS) {
                 $fragment = str_replace("{$namespace}\\", "", $fragment);

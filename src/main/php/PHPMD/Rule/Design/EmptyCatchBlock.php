@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -36,8 +38,8 @@ class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTCatchStatement') as $catchBlock) {
-            $scope = $catchBlock->getFirstChildOfType('PDepend\Source\AST\ASTScopeStatement');
+        foreach ($node->findChildrenOfType(ASTCatchStatement::class) as $catchBlock) {
+            $scope = $catchBlock->getFirstChildOfType(ASTScopeStatement::class);
             if (count($scope->getChildren()) === 0) {
                 $this->addViolation($catchBlock, [$node->getName()]);
             }

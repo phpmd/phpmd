@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
+use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
@@ -651,7 +652,7 @@ class CommandLineOptions
      *
      * @param string $reportFormat
      * @throws InvalidArgumentException When the specified renderer does not exist.
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      */
     public function createRenderer($reportFormat = null)
     {
@@ -671,7 +672,7 @@ class CommandLineOptions
     /**
      * @param string $reportFormat
      * @throws InvalidArgumentException When the specified renderer does not exist.
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      */
     protected function createRendererWithoutOptions($reportFormat = null)
     {
@@ -775,7 +776,7 @@ class CommandLineOptions
 
     /**
      * @throws InvalidArgumentException
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      */
     protected function createCustomRenderer()
     {

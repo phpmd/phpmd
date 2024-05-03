@@ -3,6 +3,7 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
+use PHPMD\ProcessingError;
 use PHPMD\Report;
 use PHPMD\RuleViolation;
 
@@ -87,7 +88,7 @@ class AnsiRenderer extends AbstractRenderer
             return;
         }
 
-        /** @var \PHPMD\ProcessingError $error */
+        /** @var ProcessingError $error */
         foreach ($report->getErrors() as $error) {
             $errorHeader = sprintf(
                 "\e[33mERROR\e[0m while parsing %s",

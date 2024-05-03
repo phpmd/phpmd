@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -37,7 +38,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTScopeStatement') as $scope) {
+        foreach ($node->findChildrenOfType(ASTScopeStatement::class) as $scope) {
             $parent = $scope->getParent();
 
             if (!$this->isIfOrElseIfStatement($parent)) {

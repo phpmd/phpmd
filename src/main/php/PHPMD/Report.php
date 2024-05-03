@@ -100,7 +100,7 @@ class Report
     /**
      * Returns an iterator with all occurred rule violations.
      *
-     * @return ArrayIterator<int, \PHPMD\RuleViolation>
+     * @return ArrayIterator<int, RuleViolation>
      */
     public function getRuleViolations()
     {
