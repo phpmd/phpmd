@@ -5,9 +5,9 @@ name: Composer test script
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
 
 jobs:
   tests:
@@ -40,8 +40,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-composer-${{ matrix.setup }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'

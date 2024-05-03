@@ -6,9 +6,9 @@ name: Tests
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
 
 jobs:
   php-tests:
@@ -48,7 +48,6 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-
 
       - name: Cache test packages
         id: composer-test-cache
@@ -56,7 +55,6 @@ jobs:
         with:
           path: src/test/vendor
           key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
-          restore-keys: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-
 
       - name: Upgrade PHPUnit
         if: matrix.php >= 7.2

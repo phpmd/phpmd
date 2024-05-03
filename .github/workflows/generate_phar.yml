@@ -2,9 +2,9 @@ name: Generate phar
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
   release:
     types:
       - created
@@ -56,7 +56,7 @@ jobs:
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
 
       - name: Sign phar
-        if: github.repository == 'phpmd/phpmd'
+        if: github.repository == 'phpmd/phpmd' && github.event_name == 'release'
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}

@@ -88,7 +88,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      *
      * @param AbstractASTNode $node Array key to evaluate.
      * @param int $index Fallback in case of non-associative arrays
-     * @return AbstractASTNode Key name
+     * @return ?AbstractASTNode Key name
      */
     protected function normalizeKey(AbstractASTNode $node, $index)
     {

@@ -7,9 +7,9 @@ name: Symfony
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
 
 jobs:
   tests:
@@ -42,16 +42,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-${{ hashFiles('composer.json') }}
 
       - name: Cache test packages
         id: composer-test-cache
         uses: actions/cache@v3
         with:
           path: src/test/vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-${{ hashFiles('src/test/composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-
+          key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-test-${{ matrix.symfony }}-${{ hashFiles('src/test/composer.json') }}
 
       - name: Set Symfony version
         run: |

@@ -2,11 +2,9 @@ name: Coverage
 
 on:
   push:
-    branches:
-      - "*"
+    branches: [ 'master', '2.x', '3.x' ]
   pull_request:
-    branches:
-      - "*"
+    branches: [ '*' ]
 
 jobs:
   php-tests:
@@ -39,7 +37,6 @@ jobs:
         with:
           path: vendor
           key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-${{ matrix.php }}-
 
       - name: Cache test packages
         id: composer-test-cache
@@ -47,7 +44,6 @@ jobs:
         with:
           path: src/test/vendor
           key: ${{ runner.os }}-coverage-test-${{ matrix.php }}-${{ hashFiles('src/test/composer.json') }}
-          restore-keys: ${{ runner.os }}-coverage-test-${{ matrix.php }}-
 
       - name: Upgrade PHPUnit
         run: |
@@ -69,6 +65,8 @@ jobs:
         run: src/test/vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
 
       - name: Archive code coverage results
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
+          disable_search: true
+          token: ${{ secrets.CODECOV_TOKEN }}
