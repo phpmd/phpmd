@@ -47,7 +47,7 @@ class AnnotationsTest extends AbstractTestCase
         $class = $this->getClassMock();
         $class->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('getDocComment'))
+            ->with($this->equalTo('getComment'))
             ->will(
                 $this->returnValue(
                     '/**
@@ -72,7 +72,7 @@ class AnnotationsTest extends AbstractTestCase
         $class = $this->getClassMock();
         $class->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('getDocComment'))
+            ->with($this->equalTo('getComment'))
             ->will($this->returnValue('/** @SuppressWarnings("PMD") */'));
 
         $annotations = new Annotations($class);
@@ -89,7 +89,7 @@ class AnnotationsTest extends AbstractTestCase
         $class = $this->getClassMock();
         $class->expects($this->once())
             ->method('__call')
-            ->with($this->equalTo('getDocComment'))
+            ->with($this->equalTo('getComment'))
             ->will(
                 $this->returnValue(
                     '/**

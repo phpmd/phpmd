@@ -48,7 +48,7 @@ class ResultCacheFileFilter implements Filter
      * @inheritDoc
      * @return bool `true` will inspect the file, when `false` the file will be filtered out.
      */
-    public function accept($relative, $absolute)
+    public function accept($relative, $absolute): bool
     {
         $filePath = Paths::getRelativePath($this->basePath, $absolute);
 

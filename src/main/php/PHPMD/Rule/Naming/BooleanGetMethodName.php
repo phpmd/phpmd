@@ -77,7 +77,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      */
     protected function isReturnTypeBoolean(MethodNode $node)
     {
-        $comment = $node->getDocComment();
+        $comment = $node->getComment();
         if ($comment === null) {
             return false;
         }

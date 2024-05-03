@@ -224,14 +224,13 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected function getNodeForTestFile($file)
     {
         $source = $this->parseSource($file);
-        $class = $source
-            ->getTypes()
-            ->current();
+        $type = $source
+            ->getTypes();
         $nodeClassName = 'PHPMD\\Node\\FunctionNode';
         $getter = 'getFunctions';
 
-        if ($class) {
-            $source = $class;
+        if ($type->count()) {
+            $source = $type->current();
             $nodeClassName = 'PHPMD\\Node\\MethodNode';
             $getter = 'getMethods';
         }

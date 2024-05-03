@@ -46,7 +46,7 @@ class Annotations
      */
     public function __construct(\PHPMD\AbstractNode $node)
     {
-        $comment = $node->getDocComment();
+        $comment = $node->getComment();
         if ($comment === null) {
             return;
         }
