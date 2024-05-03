@@ -17,16 +17,18 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTArtifact;
+use PHPMD\AbstractNode as BaseNode;
 use PHPMD\Rule;
 
 /**
  * Abstract base class for all code nodes.
  *
- * @template TNode of \PDepend\Source\AST\ASTArtifact
+ * @template TNode of ASTArtifact
  *
- * @extends \PHPMD\AbstractNode<TNode>
+ * @extends BaseNode<TNode>
  */
-abstract class AbstractNode extends \PHPMD\AbstractNode
+abstract class AbstractNode extends BaseNode
 {
     /**
      * Annotations associated with node instance.

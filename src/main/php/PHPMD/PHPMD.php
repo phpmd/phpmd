@@ -207,10 +207,10 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string                    $inputPath
-     * @param array|null                $ignorePattern
-     * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSet[]          $ruleSetList
+     * @param string             $inputPath
+     * @param array|null         $ignorePattern
+     * @param AbstractRenderer[] $renderers
+     * @param RuleSet[]          $ruleSetList
      */
     public function processFiles(
         $inputPath,

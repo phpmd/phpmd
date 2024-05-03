@@ -18,7 +18,9 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -89,8 +91,8 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
 
     private function scanFormalParameters(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFormalParameter') as $param) {
-            $declarator = $param->getFirstChildOfType('PDepend\Source\AST\ASTVariableDeclarator');
+        foreach ($node->findChildrenOfType(ASTFormalParameter::class) as $param) {
+            $declarator = $param->getFirstChildOfType(ASTVariableDeclarator::class);
             $value = $declarator->getValue();
 
             if (!$this->isBooleanValue($value)) {

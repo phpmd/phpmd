@@ -18,11 +18,12 @@
 namespace PHPMD\Node;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTArtifact;
 
 /**
  * Abstract base class for classes and interfaces.
  *
- * @template TNode of \PDepend\Source\AST\ASTArtifact
+ * @template TNode of ASTArtifact
  *
  * @extends AbstractNode<TNode>
  */
@@ -47,7 +48,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns an <b>array</b> with all methods defined in the context class or
      * interface.
      *
-     * @return \PHPMD\Node\MethodNode[]
+     * @return MethodNode[]
      */
     public function getMethods()
     {

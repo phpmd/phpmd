@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTParentReference;
 use PDepend\Source\AST\ASTSelfReference;
@@ -49,7 +50,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     {
         $ignoreRegexp = trim($this->getStringProperty('ignorepattern', ''));
         $exceptions = $this->getExceptionsList();
-        $nodes = $node->findChildrenOfType('PDepend\Source\AST\ASTMemberPrimaryPrefix');
+        $nodes = $node->findChildrenOfType(ASTMemberPrimaryPrefix::class);
 
         foreach ($nodes as $methodCall) {
             if ($this->isMethodIgnored($methodCall, $ignoreRegexp)) {
@@ -97,7 +98,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             return false;
         }
 
-        $methodName = $methodCall->getFirstChildOfType('PDepend\Source\AST\ASTMethodPostfix');
+        $methodName = $methodCall->getFirstChildOfType(ASTMethodPostfix::class);
 
         return $methodName !== null && preg_match($ignorePattern, $methodName->getName()) === 1;
     }

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTAllocationExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -44,7 +45,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     {
         $ignoreGlobal = $this->getBooleanProperty('ignore-global');
 
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTAllocationExpression') as $allocationNode) {
+        foreach ($node->findChildrenOfType(ASTAllocationExpression::class) as $allocationNode) {
             $classNode = $allocationNode->getChild(0);
             if (!$classNode instanceof ASTNode) {
                 continue;

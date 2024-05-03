@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTEvalExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -33,7 +34,7 @@ class EvalExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTEvalExpression') as $eval) {
+        foreach ($node->findChildrenOfType(ASTEvalExpression::class) as $eval) {
             $this->addViolation($eval, [$node->getType(), $node->getName()]);
         }
     }

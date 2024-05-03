@@ -17,6 +17,13 @@
 
 namespace PHPMD\Rule;
 
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTStaticReference;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -111,7 +118,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function removeExplicitCalls(ClassNode $class, array $methods)
     {
-        foreach ($class->findChildrenOfType('PDepend\Source\AST\ASTMethodPostfix') as $postfix) {
+        foreach ($class->findChildrenOfType(ASTMethodPostfix::class) as $postfix) {
             if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
             }
@@ -128,7 +135,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
     {
-        foreach ($class->findChildrenOfType('PDepend\Source\AST\ASTVariable') as $variable) {
+        foreach ($class->findChildrenOfType(ASTVariable::class) as $variable) {
             $parent = $variable->getParent();
             if ($parent && $this->isClassScope($class, $variable) && $variable->getImage() === '$this') {
                 $method = $this->getMethodNameFromArraySecondElement($parent);
@@ -150,15 +157,15 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     protected function getMethodNameFromArraySecondElement(AbstractNode $parent)
     {
-        if ($parent->isInstanceOf('PDepend\Source\AST\ASTArrayElement')) {
+        if ($parent->isInstanceOf(ASTArrayElement::class)) {
             $array = $parent->getParent();
 
-            if ($array?->isInstanceOf('PDepend\Source\AST\ASTArray')
+            if ($array?->isInstanceOf(ASTArray::class)
                 && count($array->getChildren()) === 2
             ) {
                 $secondElement = $array->getChild(1)->getChild(0);
 
-                if ($secondElement->isInstanceOf('PDepend\Source\AST\ASTLiteral')) {
+                if ($secondElement->isInstanceOf(ASTLiteral::class)) {
                     return substr($secondElement->getImage(), 1, -1);
                 }
             }
@@ -178,9 +185,9 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
         $owner = $postfix->getParent()->getChild(0);
 
         return (
-            $owner->isInstanceOf('PDepend\Source\AST\ASTMethodPostfix') ||
-            $owner->isInstanceOf('PDepend\Source\AST\ASTSelfReference') ||
-            $owner->isInstanceOf('PDepend\Source\AST\ASTStaticReference') ||
+            $owner->isInstanceOf(ASTMethodPostfix::class) ||
+            $owner->isInstanceOf(ASTSelfReference::class) ||
+            $owner->isInstanceOf(ASTStaticReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
