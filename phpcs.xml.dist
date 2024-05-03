@@ -20,7 +20,6 @@
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
-    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>

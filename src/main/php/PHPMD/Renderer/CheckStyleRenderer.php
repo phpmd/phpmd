@@ -37,7 +37,7 @@ class CheckStyleRenderer extends XMLRenderer
             return 'info';
         }
 
-        return (int)$priority === 2 ? 'warning' : 'error';
+        return (int) $priority === 2 ? 'warning' : 'error';
     }
     /**
      * This method will be called when the engine has finished the source analysis
