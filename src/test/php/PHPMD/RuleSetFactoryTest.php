@@ -32,7 +32,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      *
      * @var string
      */
-    const DIR_UNDER_TESTS = 'designăôü0汉字';
+    private const DIR_UNDER_TESTS = 'designăôü0汉字';
 
     /**
      * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets

@@ -29,10 +29,10 @@ use PHPMD\Cache\CacheFileFilter;
 class ParserFactory
 {
     /** @var string The default config file name */
-    const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';
+    private const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';
 
     /** @var string The distribution config file name */
-    const PDEPEND_CONFIG_FILE_NAME_DIST = '/pdepend.xml.dist';
+    private const PDEPEND_CONFIG_FILE_NAME_DIST = '/pdepend.xml.dist';
 
     /**
      * Mapping between phpmd option names and those used by pdepend.

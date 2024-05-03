@@ -27,7 +27,7 @@ class Annotation
     /**
      * Name of the suppress warnings annotation.
      */
-    const SUPPRESS_ANNOTATION = 'suppressWarnings';
+    private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
     /**
      * The annotation name.

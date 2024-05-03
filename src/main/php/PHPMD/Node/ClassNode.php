@@ -25,11 +25,6 @@ use PDepend\Source\AST\ASTClass;
 class ClassNode extends AbstractTypeNode
 {
     /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Constructs a new class wrapper node.
      *
      * @param \PDepend\Source\AST\ASTClass $node
