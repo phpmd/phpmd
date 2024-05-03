@@ -225,7 +225,7 @@ class RuleSet implements IteratorAggregate
     public function apply(AbstractNode $node): void
     {
         // Current node type
-        $className = get_class($node);
+        $className = $node::class;
 
         // Check for valid node type
         if (!isset($this->rules[$className])) {

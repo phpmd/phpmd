@@ -53,7 +53,7 @@ class ResultCacheKeyFactory
         foreach ($ruleSetList as $ruleSet) {
             /** @var AbstractRule $rule */
             foreach ($ruleSet->getRules() as $rule) {
-                $result[get_class($rule)] = hash('sha1', serialize($rule));
+                $result[$rule::class] = hash('sha1', serialize($rule));
             }
         }
 
