@@ -25,11 +25,6 @@ use PDepend\Source\AST\ASTEnum;
 class EnumNode extends AbstractTypeNode
 {
     /**
-     * The type of this enum.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
      * Constructs a new class wrapper node.
      *
      * @param \PDepend\Source\AST\ASTEnum $node

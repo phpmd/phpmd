@@ -77,8 +77,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     protected function collectPrivateFields(ClassNode $class): void
     {
-        foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
-            /** @var ASTNode $declaration */
+        foreach ($class->findChildrenOfType('PDepend\Source\AST\ASTFieldDeclaration') as $declaration) {
             if ($declaration->isPrivate()) {
                 $this->collectPrivateField($declaration);
             }
@@ -94,7 +93,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     protected function collectPrivateField(ASTNode $declaration): void
     {
-        $fields = $declaration->findChildrenOfType('VariableDeclarator');
+        $fields = $declaration->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
         foreach ($fields as $field) {
             $this->fields[$field->getImage()] = $field;
         }
@@ -110,8 +109,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     protected function removeUsedFields(ClassNode $class): void
     {
-        foreach ($class->findChildrenOfType('PropertyPostfix') as $postfix) {
-            /** @var $postfix ASTNode */
+        foreach ($class->findChildrenOfType('PDepend\Source\AST\ASTPropertyPostfix') as $postfix) {
             if ($this->isInScopeOfClass($class, $postfix)) {
                 $this->removeUsedField($postfix);
             }
@@ -128,11 +126,12 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     protected function removeUsedField(ASTNode $postfix): void
     {
         $image = '$';
-        $child = $postfix->getFirstChildOfType('Identifier');
+        $child = $postfix->getFirstChildOfType('PDepend\Source\AST\ASTIdentifier');
 
-        if ($postfix->getParent()->isStatic()) {
+        $parent = $postfix->getParent();
+        if ($parent->isInstanceOf('PDepend\Source\AST\ASTMemberPrimaryPrefix') && $parent->isStatic()) {
             $image = '';
-            $child = $postfix->getFirstChildOfType('Variable');
+            $child = $postfix->getFirstChildOfType('PDepend\Source\AST\ASTVariable');
         }
 
         if ($this->isValidPropertyNode($child)) {
@@ -154,8 +153,8 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
         }
 
         $parent = $node->getParent();
-        while (!$parent->isInstanceOf('PropertyPostfix')) {
-            if ($parent->isInstanceOf('CompoundVariable')) {
+        while (!$parent->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
+            if ($parent->isInstanceOf('PDepend\Source\AST\ASTCompoundVariable')) {
                 return false;
             }
             $parent = $parent->getParent();
@@ -180,8 +179,8 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
         $owner = $this->getOwner($postfix);
 
         return (
-            $owner->isInstanceOf('SelfReference') ||
-            $owner->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf('PDepend\Source\AST\ASTSelfReference') ||
+            $owner->isInstanceOf('PDepend\Source\AST\ASTStaticReference') ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
@@ -196,11 +195,11 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     protected function getOwner(ASTNode $postfix)
     {
         $owner = $postfix->getParent()->getChild(0);
-        if ($owner->isInstanceOf('PropertyPostfix')) {
+        if ($owner->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
             $owner = $owner->getParent()->getParent()->getChild(0);
         }
 
-        if ($owner->getParent()->isInstanceOf('ArrayIndexExpression')) {
+        if ($owner->getParent()->isInstanceOf('PDepend\Source\AST\ASTArrayIndexExpression')) {
             $owner = $owner->getParent()->getParent()->getChild(0);
         }
 

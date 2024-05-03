@@ -39,8 +39,8 @@ class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
-            $scope = $catchBlock->getFirstChildOfType('ScopeStatement');
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTCatchStatement') as $catchBlock) {
+            $scope = $catchBlock->getFirstChildOfType('PDepend\Source\AST\ASTScopeStatement');
             if (count($scope->getChildren()) === 0) {
                 $this->addViolation($catchBlock, [$node->getName()]);
             }

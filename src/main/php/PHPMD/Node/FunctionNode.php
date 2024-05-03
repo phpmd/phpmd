@@ -21,6 +21,8 @@ use PDepend\Source\AST\ASTFunction;
 
 /**
  * Wrapper around a PDepend function node.
+ *
+ * @extends AbstractCallableNode<ASTFunction>
  */
 class FunctionNode extends AbstractCallableNode
 {

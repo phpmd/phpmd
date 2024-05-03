@@ -160,9 +160,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     protected function collectParameters(AbstractNode $node): void
     {
         // First collect the formal parameters containers
-        foreach ($node->findChildrenOfType('FormalParameters') as $parameters) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFormalParameters') as $parameters) {
             // Now get all declarators in the formal parameters container
-            $declarators = $parameters->findChildrenOfType('VariableDeclarator');
+            $declarators = $parameters->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
 
             foreach ($declarators as $declarator) {
                 $this->nodes[$declarator->getImage()] = $declarator;
@@ -224,12 +224,12 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     protected function removeCompoundVariables(AbstractNode $node): void
     {
-        $compoundVariables = $node->findChildrenOfType('CompoundVariable');
+        $compoundVariables = $node->findChildrenOfType('PDepend\Source\AST\ASTCompoundVariable');
 
         foreach ($compoundVariables as $compoundVariable) {
             $variablePrefix = $compoundVariable->getImage();
 
-            foreach ($compoundVariable->findChildrenOfType('Expression') as $child) {
+            foreach ($compoundVariable->findChildrenOfType('PDepend\Source\AST\ASTExpression') as $child) {
                 $variableImage = $variablePrefix . $child->getImage();
 
                 if (isset($this->nodes[$variableImage])) {
@@ -249,7 +249,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      */
     protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node): void
     {
-        $functionCalls = $node->findChildrenOfType('FunctionPostfix');
+        $functionCalls = $node->findChildrenOfType('PDepend\Source\AST\ASTFunctionPostfix');
 
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
@@ -257,7 +257,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             }
 
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
-                foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
+                foreach ($functionCall->findChildrenOfType('PDepend\Source\AST\ASTLiteral') as $literal) {
                     unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
                 }
             }
@@ -279,10 +279,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             return;
         }
 
-        /** @var ASTFormalParameter&ASTNode $parameter */
-        foreach ($node->findChildrenOfType('FormalParameter') as $parameter) {
+        /** @var ASTFormalParameter $parameter */
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFormalParameter') as $parameter) {
             if ($parameter->isPromoted()) {
-                $variable = $parameter->getFirstChildOfType('VariableDeclarator');
+                $variable = $parameter->getFirstChildOfType('PDepend\Source\AST\ASTVariableDeclarator');
                 if ($variable !== null) {
                     unset($this->nodes[$variable->getImage()]);
                 }

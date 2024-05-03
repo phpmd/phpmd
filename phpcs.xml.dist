@@ -20,7 +20,6 @@
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
-    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
@@ -44,6 +43,14 @@
 
     <!-- PSR-2 base standard -->
     <rule ref="PSR2"/>
+
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
+        <severity>0</severity>
+    </rule>
 
     <!-- Sniffs from Slevomat standard -->
 

@@ -40,11 +40,11 @@ class BaselineSetFactory
             }
 
             $methodName = null;
-            if (isset($node['method']) && ((string)$node['method']) !== '') {
-                $methodName = (string)($node['method']);
+            if (isset($node['method']) && ((string) $node['method']) !== '') {
+                $methodName = (string) ($node['method']);
             }
 
-            $baselineSet->addEntry(new ViolationBaseline((string)$node['rule'], (string)$node['file'], $methodName));
+            $baselineSet->addEntry(new ViolationBaseline((string) $node['rule'], (string) $node['file'], $methodName));
         }
 
         return $baselineSet;

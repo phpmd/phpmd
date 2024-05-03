@@ -13,11 +13,11 @@ class ResultCacheState
     /** @var ResultCacheKey */
     private $cacheKey;
 
-    /** @var array{files: array<string, array{hash: string, violations: array}>} */
+    /** @var array{files?: array<string, array{hash: string, violations?: array}>} */
     private $state;
 
     /**
-     * @param array{files: array<string, array{hash: string, violations: array}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: array}>} $state
      */
     public function __construct(ResultCacheKey $cacheKey, $state = [])
     {
@@ -156,7 +156,7 @@ class ResultCacheState
     {
         foreach ($ruleSetList as $ruleSet) {
             foreach ($ruleSet->getRules() as $rule) {
-                if (get_class($rule) === $ruleClassName) {
+                if ($rule::class === $ruleClassName) {
                     return $rule;
                 }
             }

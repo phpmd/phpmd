@@ -66,9 +66,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('FieldDeclaration');
+            $fields = $node->findChildrenOfType('PDepend\Source\AST\ASTFieldDeclaration');
             foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('VariableDeclarator');
+                $declarators = $field->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
@@ -77,7 +77,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
 
             return;
         }
-        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        $declarators = $node->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
         foreach ($declarators as $declarator) {
             $this->checkNodeImage($declarator);
         }
@@ -139,7 +139,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
-        return $this->isChildOf($node, 'MemberPrimaryPrefix');
+        return $this->isChildOf($node, 'PDepend\Source\AST\ASTMemberPrimaryPrefix');
     }
 
     /**

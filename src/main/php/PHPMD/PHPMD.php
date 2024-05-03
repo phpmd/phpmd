@@ -27,7 +27,7 @@ class PHPMD
     /**
      * The current PHPMD version.
      */
-    const VERSION = '@package_version@';
+    public const VERSION = '@package_version@';
 
     /**
      * This property will be set to <b>true</b> when an error
@@ -136,18 +136,6 @@ class PHPMD
     }
 
     /**
-     * Returns an array with string patterns that mark a file path as invalid.
-     *
-     * @return string[]
-     * @since      0.2.0
-     * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
-     */
-    public function getIgnorePattern()
-    {
-        return $this->getIgnorePatterns();
-    }
-
-    /**
      * Returns an array with string patterns that mark a file path invalid.
      *
      * @return string[]
@@ -156,19 +144,6 @@ class PHPMD
     public function getIgnorePatterns()
     {
         return $this->ignorePatterns;
-    }
-
-    /**
-     * Sets a list of ignore patterns that is used to exclude directories from
-     * the source analysis.
-     *
-     * @param array<string> $ignorePatterns List of ignore patterns.
-     * @return void
-     * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
-     */
-    public function setIgnorePattern(array $ignorePatterns): void
-    {
-        $this->addIgnorePatterns($ignorePatterns);
     }
 
     /**

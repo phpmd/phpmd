@@ -25,6 +25,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PDepend\Source\AST\ASTArrayElement;
 
 /**
  * Duplicated Array Key Rule
@@ -44,8 +45,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('Array') as $arrayNode) {
-            /** @var ASTNode $arrayNode */
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTArray') as $arrayNode) {
             $this->checkForDuplicatedArrayKeys($arrayNode);
         }
     }
@@ -99,7 +99,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         }
         // non-associative - key name equals to its index
         if ($childCount === 0) {
-            $node->setImage((string)$index);
+            $node->setImage((string) $index);
 
             return $node;
         }

@@ -20,6 +20,4 @@ namespace PHPMD\Rule;
 /**
  * This interface is used to mark a rule implementation as class aware.
  */
-interface ClassAware
-{
-}
+interface ClassAware {}

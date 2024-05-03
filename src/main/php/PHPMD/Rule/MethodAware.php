@@ -20,6 +20,4 @@ namespace PHPMD\Rule;
 /**
  * This interface marks a rule implementation as method aware,
  */
-interface MethodAware
-{
-}
+interface MethodAware {}

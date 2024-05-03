@@ -46,7 +46,7 @@ class CommandLineOptions
     /**
      * Error code for invalid input
      */
-    const INPUT_ERROR = 23;
+    private const INPUT_ERROR = 23;
 
     /**
      * The minimum rule priority.
@@ -267,12 +267,12 @@ class CommandLineOptions
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
-                    $this->minimumPriority = (int)$this->readValue($equalChunk, $args);
+                    $this->minimumPriority = (int) $this->readValue($equalChunk, $args);
                     break;
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
-                    $this->maximumPriority = (int)$this->readValue($equalChunk, $args);
+                    $this->maximumPriority = (int) $this->readValue($equalChunk, $args);
                     break;
                 case '--report-file':
                 case '--reportfile':
@@ -363,7 +363,7 @@ class CommandLineOptions
                     $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
                     break;
                 case '--extra-line-in-excerpt':
-                    $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
+                    $this->extraLineInExcerpt = (int) $this->readValue($equalChunk, $args);
                     break;
                 default:
                     $hasImplicitArguments = true;
@@ -378,10 +378,10 @@ class CommandLineOptions
 
         $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
 
-        $this->ruleSets = (string)array_pop($arguments);
+        $this->ruleSets = (string) array_pop($arguments);
         $validator->validate('ruleset', $this->ruleSets);
 
-        $this->reportFormat = (string)array_pop($arguments);
+        $this->reportFormat = (string) array_pop($arguments);
         $validator->validate('report format', $this->reportFormat);
 
         $this->inputPath = implode(',', $arguments);

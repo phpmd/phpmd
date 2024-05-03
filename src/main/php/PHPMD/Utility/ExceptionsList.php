@@ -20,8 +20,8 @@ namespace PHPMD\Utility;
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
+use OutOfBoundsException;
 use PHPMD\Rule;
-use ReturnTypeWillChange;
 use RuntimeException;
 
 class ExceptionsList implements IteratorAggregate, ArrayAccess
@@ -29,48 +29,33 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
     /**
      * Temporary cache of configured exceptions. Have name as key
      *
-     * @var array<string, int>|null
+     * @var array<string, int>
      */
-    protected $exceptions;
+    protected array $exceptions;
 
     /**
      * Rule to which the exception list apply.
-     *
-     * @var Rule
      */
-    protected $rule;
+    protected Rule $rule;
 
     /**
      * Extra characters to be trimmed with whitespace at beginning and ending of each exception.
-     *
-     * @var string
      */
-    protected $trim;
+    protected string $trim;
 
     /**
      * Separator used to join exception in the property string.
-     *
-     * @var string
      */
-    protected $separator;
+    protected string $separator;
 
-    /**
-     * @param Rule $rule
-     * @param string $trim
-     * @param string $separator
-     */
-    public function __construct(Rule $rule, $trim = '', $separator = ',')
+    public function __construct(Rule $rule, string $trim = '', string $separator = ',')
     {
         $this->rule = $rule;
         $this->trim = $trim;
         $this->separator = $separator;
     }
 
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    public function contains($value)
+    public function contains(string $value): bool
     {
         $exceptions = $this->getExceptionsList();
 
@@ -82,9 +67,9 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
      *
      * @return array<string, int>
      */
-    protected function getExceptionsList()
+    protected function getExceptionsList(): array
     {
-        if ($this->exceptions === null) {
+        if (!isset($this->exceptions)) {
             $this->exceptions = array_flip(
                 Strings::splitToList(
                     $this->rule->getStringProperty('exceptions', ''),
@@ -97,36 +82,45 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return $this->exceptions;
     }
 
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
         $keys = array_keys($this->getExceptionsList());
 
         return new ArrayIterator(array_combine($keys, $keys));
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->contains($offset);
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    /**
+     * @throws OutOfBoundsException
+     */
+    public function offsetGet($offset): int
     {
         $exceptions = $this->getExceptionsList();
+        $value = $exceptions[Strings::trim($offset, $this->trim)] ?? null;
 
-        return $exceptions[Strings::trim($offset, $this->trim)];
+        if ($value === null) {
+            throw new OutOfBoundsException('Exception "' . $offset . '" offset does not exist.');
+        }
+
+        return $value;
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    /**
+     * @throws RuntimeException
+     */
+    public function offsetSet($offset, $value): void
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');
     }
 
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    /**
+     * @throws RuntimeException
+     */
+    public function offsetUnset($offset): void
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');
     }

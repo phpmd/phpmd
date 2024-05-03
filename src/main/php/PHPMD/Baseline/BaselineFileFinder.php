@@ -7,7 +7,7 @@ use RuntimeException;
 
 class BaselineFileFinder
 {
-    const DEFAULT_FILENAME = 'phpmd.baseline.xml';
+    private const DEFAULT_FILENAME = 'phpmd.baseline.xml';
 
     /** @var CommandLineOptions */
     private $options;

@@ -21,6 +21,7 @@ use PDepend\Source\AST\ASTTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
 
 /**
@@ -38,6 +39,9 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof MethodNode) {
+            return;
+        }
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;
         }

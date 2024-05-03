@@ -31,7 +31,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
     /**
      * @var string Beginning of the violation message
      */
-    const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
+    private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|\PHPMD\Renderer\TextRenderer

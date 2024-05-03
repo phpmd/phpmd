@@ -21,6 +21,8 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\MethodNode;
 
 /**
  * This rule class detects parameters not named in camelCase.
@@ -39,6 +41,10 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof FunctionNode && !$node instanceof MethodNode) {
+            return;
+        }
+
         foreach ($node->getParameters() as $parameter) {
             if (!$this->isValid($parameter->getName())) {
                 $this->addViolation(
