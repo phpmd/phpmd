@@ -88,10 +88,10 @@ class Strings
 
         return array_filter(
             array_map(
-                fn ($value) => Strings::trim($value, $trim),
+                static fn ($value) => Strings::trim($value, $trim),
                 explode($separator, $listAsString)
             ),
-            fn ($value) => $value !== ''
+            static fn ($value) => $value !== ''
         );
     }
 
