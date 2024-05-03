@@ -52,7 +52,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     {
         $ignoreRegexp = trim($this->getStringProperty('ignorepattern', ''));
         $exceptions = $this->getExceptionsList();
-        $nodes = $node->findChildrenOfType('MemberPrimaryPrefix');
+        $nodes = $node->findChildrenOfType('PDepend\Source\AST\ASTMemberPrimaryPrefix');
 
         foreach ($nodes as $methodCall) {
             if ($this->isMethodIgnored($methodCall, $ignoreRegexp)) {
@@ -100,7 +100,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             return false;
         }
 
-        $methodName = $methodCall->getFirstChildOfType('MethodPostfix');
+        $methodName = $methodCall->getFirstChildOfType('PDepend\Source\AST\ASTMethodPostfix');
 
         return $methodName !== null && preg_match($ignorePattern, $methodName->getName()) === 1;
     }

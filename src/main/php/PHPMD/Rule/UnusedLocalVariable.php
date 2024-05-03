@@ -80,7 +80,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         foreach ($nodes as $node) {
             $parent = $node->getParent();
 
-            if (!$parent->isInstanceOf('AssignmentExpression')) {
+            if (!$parent->isInstanceOf('PDepend\Source\AST\ASTAssignmentExpression')) {
                 return true;
             }
 
@@ -103,10 +103,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     protected function removeParameters(AbstractCallableNode $node): void
     {
         // Get formal parameter container
-        $parameters = $node->getFirstChildOfType('FormalParameters');
+        $parameters = $node->getFirstChildOfType('PDepend\Source\AST\ASTFormalParameters');
 
         // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType('VariableDeclarator');
+        $declarators = $parameters->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
 
         foreach ($declarators as $declarator) {
             unset($this->images[$this->getVariableImage($declarator)]);
@@ -130,18 +130,17 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
             }
         }
 
-        foreach ($node->findChildrenOfType('CompoundVariable') as $variable) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTCompoundVariable') as $variable) {
             $this->collectCompoundVariableInString($variable);
         }
 
-        foreach ($node->findChildrenOfType('VariableDeclarator') as $variable) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator') as $variable) {
             $this->collectVariable($variable);
         }
 
-        foreach ($node->findChildrenOfType('FunctionPostfix') as $func) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFunctionPostfix') as $func) {
             if ($this->isFunctionNameEndingWith($func, 'compact')) {
-                foreach ($func->findChildrenOfType('Literal') as $literal) {
-                    /** @var $literal ASTNode */
+                foreach ($func->findChildrenOfType('PDepend\Source\AST\ASTLiteral') as $literal) {
                     $this->collectLiteral($literal);
                 }
             }
@@ -162,7 +161,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         if (in_array($parentNode, $candidateParentNodes)) {
             $variablePrefix = $node->getImage();
 
-            foreach ($node->findChildrenOfType('Expression') as $child) {
+            foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTExpression') as $child) {
                 $variableName = $this->getVariableImage($child);
                 $variableImage = $variablePrefix . $variableName;
 
@@ -240,7 +239,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $parent = $node->getParent();
 
         // ASTFormalParameter should be handled by the UnusedFormalParameter rule
-        if ($parent && $parent->isInstanceOf('FormalParameter')) {
+        if ($parent && $parent->isInstanceOf('PDepend\Source\AST\ASTFormalParameter')) {
             return;
         }
 
@@ -257,7 +256,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
-        return $this->isChildOf($node, 'CatchStatement');
+        return $this->isChildOf($node, 'PDepend\Source\AST\ASTCatchStatement');
     }
 
     /**
@@ -270,7 +269,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      */
     protected function isUnusedForeachVariableAllowed(ASTNode $variable)
     {
-        $isForeachVariable = $this->isChildOf($variable, 'ForeachStatement');
+        $isForeachVariable = $this->isChildOf($variable, 'PDepend\Source\AST\ASTForeachStatement');
 
         if (!$isForeachVariable) {
             return false;

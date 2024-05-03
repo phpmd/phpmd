@@ -38,7 +38,7 @@ class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('GotoStatement') as $goto) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTGotoStatement') as $goto) {
             $this->addViolation($goto, [$node->getType(), $node->getName()]);
         }
     }

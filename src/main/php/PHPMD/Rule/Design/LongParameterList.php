@@ -21,6 +21,8 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\MethodNode;
 
 /**
  * This rule class checks for excessive long function and method parameter lists.
@@ -36,6 +38,10 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof FunctionNode && !$node instanceof MethodNode) {
+            return;
+        }
+
         $threshold = $this->getIntProperty('minimum');
         $count = $node->getParameterCount();
         if ($count < $threshold) {

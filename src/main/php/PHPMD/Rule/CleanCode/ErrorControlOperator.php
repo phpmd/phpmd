@@ -41,7 +41,7 @@ class ErrorControlOperator extends AbstractRule implements MethodAware, Function
      */
     public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTUnaryExpression') as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {
                 $this->addViolation($node, [$unaryExpression->getBeginLine()]);
             }

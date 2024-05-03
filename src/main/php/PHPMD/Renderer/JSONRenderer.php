@@ -20,6 +20,7 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
+use PHPMD\RuleViolation;
 
 /**
  * This class will render a JSON report.

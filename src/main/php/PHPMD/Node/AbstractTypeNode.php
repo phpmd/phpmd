@@ -21,6 +21,10 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 
 /**
  * Abstract base class for classes and interfaces.
+ *
+ * @template TNode of \PDepend\Source\AST\ASTArtifact
+ *
+ * @extends AbstractNode<TNode>
  */
 abstract class AbstractTypeNode extends AbstractNode
 {

@@ -21,6 +21,10 @@ use PHPMD\Rule;
 
 /**
  * Wrapper around a PHP_Depend ast node.
+ *
+ * @template TNode of \PDepend\Source\AST\ASTNode
+ *
+ * @extends \PHPMD\AbstractNode<TNode>
  */
 class ASTNode extends \PHPMD\AbstractNode
 {
@@ -34,7 +38,7 @@ class ASTNode extends \PHPMD\AbstractNode
     /**
      * Constructs a new ast node instance.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
+     * @param TNode $node
      * @param string $fileName
      */
     public function __construct(\PDepend\Source\AST\ASTNode $node, $fileName)

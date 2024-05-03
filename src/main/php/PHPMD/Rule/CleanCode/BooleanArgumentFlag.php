@@ -92,8 +92,8 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
 
     private function scanFormalParameters(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('FormalParameter') as $param) {
-            $declarator = $param->getFirstChildOfType('VariableDeclarator');
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTFormalParameter') as $param) {
+            $declarator = $param->getFirstChildOfType('PDepend\Source\AST\ASTVariableDeclarator');
             $value = $declarator->getValue();
 
             if (!$this->isBooleanValue($value)) {

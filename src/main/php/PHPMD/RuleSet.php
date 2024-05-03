@@ -19,6 +19,7 @@ namespace PHPMD;
 
 use ArrayIterator;
 use IteratorAggregate;
+use PHPMD\Node\AbstractTypeNode;
 
 /**
  * This class is a collection of concrete source analysis rules.
@@ -55,7 +56,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Mapping between marker interfaces and concrete context code node classes.
      *
-     * @var array(string=>string)
+     * @var array<class-string, class-string<AbstractTypeNode>>
      */
     private array $applyTo = [
         'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
@@ -69,7 +70,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Mapping of rules that apply to a concrete code node type.
      *
-     * @var array(string=>array)
+     * @var array<class-string<AbstractTypeNode>, array<int, Rule>>
      */
     private $rules = [
         'PHPMD\\Node\\ClassNode' => [],

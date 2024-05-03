@@ -45,12 +45,11 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     {
         $ignoreGlobal = $this->getBooleanProperty('ignore-global');
 
-        foreach ($node->findChildrenOfType('AllocationExpression') as $allocationNode) {
-            if (!$allocationNode) {
+        foreach ($node->findChildrenOfType('PDepend\Source\AST\ASTAllocationExpression') as $allocationNode) {
+            $classNode = $allocationNode->getChild(0);
+            if (!$classNode instanceof ASTNode) {
                 continue;
             }
-
-            $classNode = $allocationNode->getChild(0);
 
             if ($this->isSelfReference($classNode)) {
                 continue;

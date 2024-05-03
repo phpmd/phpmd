@@ -20,6 +20,7 @@ namespace PHPMD\Renderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\RuleViolation;
 
 /**
  * This class will render a SARIF (Static Analysis

@@ -21,6 +21,10 @@ use PHPMD\Rule;
 
 /**
  * Abstract base class for all code nodes.
+ *
+ * @template TNode of \PDepend\Source\AST\ASTArtifact
+ *
+ * @extends \PHPMD\AbstractNode<TNode>
  */
 abstract class AbstractNode extends \PHPMD\AbstractNode
 {

@@ -79,9 +79,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function applyClass(AbstractNode $node): void
     {
-        $fields = $node->findChildrenOfType('FieldDeclaration');
+        $fields = $node->findChildrenOfType('PDepend\Source\AST\ASTFieldDeclaration');
         foreach ($fields as $field) {
-            $declarators = $field->findChildrenOfType('VariableDeclarator');
+            $declarators = $field->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
             foreach ($declarators as $declarator) {
                 $this->checkNodeImage($declarator);
             }
@@ -100,7 +100,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function applyNonClass(AbstractNode $node): void
     {
-        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        $declarators = $node->findChildrenOfType('PDepend\Source\AST\ASTVariableDeclarator');
         foreach ($declarators as $declarator) {
             $this->checkNodeImage($declarator);
         }
@@ -180,13 +180,13 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     {
         $parent = $node->getParent();
 
-        if ($parent && $parent->isInstanceOf('ForeachStatement')) {
+        if ($parent && $parent->isInstanceOf('PDepend\Source\AST\ASTForeachStatement')) {
             return $this->isInitializedInLoop($node);
         }
 
-        return $this->isChildOf($node, 'CatchStatement')
-            || $this->isChildOf($node, 'ForInit')
-            || $this->isChildOf($node, 'MemberPrimaryPrefix');
+        return $this->isChildOf($node, 'PDepend\Source\AST\ASTCatchStatement')
+            || $this->isChildOf($node, 'PDepend\Source\AST\ASTForInit')
+            || $this->isChildOf($node, 'PDepend\Source\AST\ASTMemberPrimaryPrefix');
     }
 
     /**
@@ -203,7 +203,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
         $exceptionVariables = [];
 
-        $parentForeaches = $this->getParentsOfType($node, 'ForeachStatement');
+        $parentForeaches = $this->getParentsOfType($node, 'PDepend\Source\AST\ASTForeachStatement');
         foreach ($parentForeaches as $foreach) {
             foreach ($foreach->getChildren() as $foreachChild) {
                 $exceptionVariables[] = $foreachChild->getImage();

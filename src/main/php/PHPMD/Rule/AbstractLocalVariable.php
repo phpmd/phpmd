@@ -70,7 +70,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node represents a local variable or if it is
      * a static object property or something similar.
      *
-     * @param \PHPMD\Node\ASTNode $variable The variable to check.
+     * @param \PHPMD\Node\ASTNode<\PDepend\Source\AST\ASTVariable> $variable The variable to check.
      * @return boolean
      */
     protected function isLocal(ASTNode $variable)
@@ -117,14 +117,15 @@ abstract class AbstractLocalVariable extends AbstractRule
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
-        if ($parent->isInstanceOf('PropertyPostfix')) {
+        if ($parent->isInstanceOf('PDepend\Source\AST\ASTPropertyPostfix')) {
             $primaryPrefix = $parent->getParent();
-            if ($primaryPrefix->getParent()->isInstanceOf('MemberPrimaryPrefix')) {
-                return !$primaryPrefix->getParent()->isStatic();
+            $primaryPrefixParent = $primaryPrefix->getParent();
+            if ($primaryPrefixParent->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
+                return !$primaryPrefixParent->isStatic();
             }
 
             return ($parent->getChild(0)->getNode() !== $node->getNode()
-                || !$primaryPrefix->isStatic()
+                || ($primaryPrefix->isInstanceOf(ASTMemberPrimaryPrefix::class) && !$primaryPrefix->isStatic())
             );
         }
 
@@ -160,8 +161,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function isWrappedByIndexExpression(ASTNode $node)
     {
-        return ($node->getParent()->isInstanceOf('ArrayIndexExpression')
-            || $node->getParent()->isInstanceOf('StringIndexExpression')
+        return ($node->getParent()->isInstanceOf('PDepend\Source\AST\ASTArrayIndexExpression')
+            || $node->getParent()->isInstanceOf('PDepend\Source\AST\ASTStringIndexExpression')
         );
     }
 
