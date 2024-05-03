@@ -45,7 +45,9 @@ class ResultCacheFileFilter implements Filter
 
     /**
      * Stage 1: A hook to allow filtering out certain files from inspection by pdepend.
+     *
      * @inheritDoc
+     *
      * @return bool `true` will inspect the file, when `false` the file will be filtered out.
      */
     public function accept($relative, $absolute): bool

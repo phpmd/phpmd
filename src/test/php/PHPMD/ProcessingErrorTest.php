@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -21,6 +22,7 @@ namespace PHPMD;
  * Test case for the processing error class.
  *
  * @covers \PHPMD\ProcessingError
+ *
  * @since 1.2.1
  */
 class ProcessingErrorTest extends AbstractTestCase
@@ -41,7 +43,9 @@ class ProcessingErrorTest extends AbstractTestCase
      * a given exception message,
      *
      * @param string $message The original exception message
+     *
      * @return void
+     *
      * @dataProvider getParserExceptionMessages
      */
     public function testGetFileReturnsExpectedFileName($message)

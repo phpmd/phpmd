@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -188,6 +189,7 @@ class RuleSet implements IteratorAggregate
      * This method returns a rule by its name or throws an exception
      *
      * @param string $name The name of the rule to get.
+     *
      * @throws RuleByNameNotFoundException When the rule could not be found.
      */
     public function getRuleByName(string $name): Rule

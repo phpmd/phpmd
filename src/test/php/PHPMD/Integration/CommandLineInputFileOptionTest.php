@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -31,6 +32,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
      * testReportContainsExpectedRuleViolationWarning
      *
      * @return void
+     *
      * @outputBuffering enabled
      */
     public function testReportContainsExpectedRuleViolationWarning()
@@ -45,6 +47,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
      * testReportNotContainsRuleViolationWarningForFileNotInList
      *
      * @return void
+     *
      * @outputBuffering enabled
      */
     public function testReportNotContainsRuleViolationWarningForFileNotInList()

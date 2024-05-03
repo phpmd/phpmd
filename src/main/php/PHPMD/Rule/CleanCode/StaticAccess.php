@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -100,6 +101,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 
     /**
      * @param string $ignorePattern
+     *
      * @return bool
      */
     protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)

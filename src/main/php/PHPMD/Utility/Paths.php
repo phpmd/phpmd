@@ -11,6 +11,7 @@ class Paths
      *
      * @param string $basePath
      * @param string $filePath
+     *
      * @return string
      */
     public static function getRelativePath($basePath, $filePath)
@@ -32,6 +33,7 @@ class Paths
      *
      * @param string $pathA
      * @param string $pathB
+     *
      * @return string
      */
     public static function concat($pathA, $pathB)
@@ -41,8 +43,11 @@ class Paths
 
     /**
      * Get the realpath of the given path or exception on failure
+     *
      * @param string $path
+     *
      * @return string
+     *
      * @throws RuntimeException
      */
     public static function getRealPath($path)

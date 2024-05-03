@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -43,7 +44,9 @@ class BooleanArgumentFlagTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
+     *
      * @return void
+     *
      * @dataProvider getApplyingCases
      */
     public function testRuleAppliesTo($file)
@@ -55,7 +58,9 @@ class BooleanArgumentFlagTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
+     *
      * @return void
+     *
      * @dataProvider getNotApplyingCases
      */
     public function testRuleDoesNotApplyTo($file)

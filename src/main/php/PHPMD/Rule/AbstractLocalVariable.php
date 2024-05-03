@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -51,6 +52,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * can never be unused local variables.
      *
      * @var array(string=>boolean)
+     *
      * @link http://php.net/manual/en/reserved.variables.php
      */
     protected static $superGlobals = [
@@ -75,7 +77,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * a static object property or something similar.
      *
      * @param ASTNode<ASTVariable> $variable The variable to check.
+     *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isLocal(ASTNode $variable)
@@ -113,6 +117,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * or method postfix.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isRegularVariable(ASTNode $variable)
@@ -140,6 +145,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * instance.
      *
      * @return ASTNode
+     *
      * @throws OutOfBoundsException
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
@@ -173,6 +179,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * insensitive.
      *
      * @param string $name
+     *
      * @return bool
      */
     protected function isFunctionNameEqual(AbstractNode $node, $name)
@@ -185,6 +192,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * This method checks if the last part of function fully qualified name is equal to $name
      *
      * @param string $name
+     *
      * @return bool
      */
     protected function isFunctionNameEndingWith(AbstractNode $node, $name)
@@ -200,7 +208,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Prefix self:: and static:: properties with "::".
      *
      * @param AbstractNode|PDependNode $variable
+     *
      * @return string
+     *
      * @throws OutOfBoundsException
      */
     protected function getVariableImage($variable)
@@ -262,7 +272,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Reflect function trying as namespaced function first, then global function.
      *
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
+     *
      * @param string $functionName
+     *
      * @return ReflectionFunction|null
      */
     private function getReflectionFunctionByName($functionName)
@@ -289,6 +301,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Return true if the given variable is passed by reference in a native PHP function.
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     *
      * @return bool
      */
     protected function isPassedByReference($variable)
@@ -345,7 +358,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * image is "$foo", second one is "::$foo".
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     *
      * @return string
+     *
      * @throws OutOfBoundsException
      */
     private function prependMemberPrimaryPrefix($image, $variable)
@@ -379,7 +394,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * ```
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
-     * @param string $image
+     * @param string                                               $image
+     *
      * @return bool
      */
     private function isFieldDeclaration($variable, $image = '$')

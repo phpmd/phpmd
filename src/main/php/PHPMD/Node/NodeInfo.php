@@ -8,6 +8,7 @@ class NodeInfo
      * The full filepath of this violation
      *
      * @readonly
+     *
      * @var string|null
      */
     public $fileName;
@@ -16,6 +17,7 @@ class NodeInfo
      * Namespace of the owning/context class or interface of this violation.
      *
      * @readonly
+     *
      * @var string
      */
     public $namespaceName;
@@ -24,6 +26,7 @@ class NodeInfo
      * Name of the owning/context class or interface of this violation.
      *
      * @readonly
+     *
      * @var string|null
      */
     public $className;
@@ -33,6 +36,7 @@ class NodeInfo
      * context.
      *
      * @readonly
+     *
      * @var string|null
      */
     public $methodName;
@@ -42,6 +46,7 @@ class NodeInfo
      * context.
      *
      * @readonly
+     *
      * @var string|null
      */
     public $functionName;
@@ -50,6 +55,7 @@ class NodeInfo
      * The start line number of this violation
      *
      * @readonly
+     *
      * @var int
      */
     public $beginLine;
@@ -58,18 +64,19 @@ class NodeInfo
      * The end line number of this violation
      *
      * @readonly
+     *
      * @var int
      */
     public $endLine;
 
     /**
      * @param string|null $fileName
-     * @param string $namespaceName
+     * @param string      $namespaceName
      * @param string|null $className
      * @param string|null $methodName
      * @param string|null $functionName
-     * @param int $beginLine
-     * @param int $endLine
+     * @param int         $beginLine
+     * @param int         $endLine
      */
     public function __construct(
         $fileName,

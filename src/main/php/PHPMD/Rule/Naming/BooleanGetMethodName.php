@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -47,6 +48,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * boolean get method.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isBooleanGetMethod(MethodNode $node)
@@ -86,6 +88,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * or has no parameters.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isParameterizedOrIgnored(MethodNode $node)

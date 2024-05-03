@@ -25,6 +25,7 @@ class BaselineFileFinder
 
     /**
      * The baseline filepath should point to an existing file (or null)
+     *
      * @return $this
      */
     public function existingFile()
@@ -35,6 +36,7 @@ class BaselineFileFinder
 
     /**
      * if true, the finder `must` find a file path, but doesn't necessarily exist
+     *
      * @return $this
      */
     public function notNull()
@@ -47,6 +49,7 @@ class BaselineFileFinder
      * Find the violation baseline file
      *
      * @return string|null
+     *
      * @throws RuntimeException
      */
     public function find()
@@ -84,6 +87,7 @@ class BaselineFileFinder
      * @param string $message
      *
      * @return null
+     *
      * @throws RuntimeException
      */
     private function nullOrThrow($message)

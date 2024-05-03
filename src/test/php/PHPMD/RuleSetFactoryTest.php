@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -564,6 +565,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * identifier.
      *
      * @return void
+     *
      * @covers \PHPMD\Exception\RuleSetNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier()
@@ -580,6 +582,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * for the configured rule does not exist.
      *
      * @return void
+     *
      * @covers \PHPMD\Exception\RuleClassFileNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
@@ -599,6 +602,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * cannot be found.
      *
      * @return void
+     *
      * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
@@ -617,6 +621,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * cannot be found.
      *
      * @return void
+     *
      * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile()
@@ -652,6 +657,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * reference-by-includepath and explicit-classfile-declaration works.
      *
      * @return void
+     *
      * @throws Exception
      */
     public function testAddPHPIncludePath()
@@ -685,6 +691,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Checks if PHPMD doesn't treat directories named as code rule as files
      *
      * @return void
+     *
      * @link https://github.com/phpmd/phpmd/issues/47
      */
     public function testIfGettingRuleFilePathExcludeUnreadablePaths()
@@ -717,7 +724,9 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Checks the ruleset XML files provided with PHPMD all provide externalInfoUrls
      *
      * @param string $file The path to the ruleset xml to test
+     *
      * @return void
+     *
      * @dataProvider getDefaultRuleSets
      */
     public function testDefaultRuleSetsProvideExternalInfoUrls($file)
@@ -749,7 +758,8 @@ class RuleSetFactoryTest extends AbstractTestCase
      * class.
      *
      * @param string $files At least one rule configuration file name. You can
-     *        also pass multiple parameters with ruleset configuration files.
+     *                      also pass multiple parameters with ruleset configuration files.
+     *
      * @return \PHPMD\RuleSet[]
      */
     private function createRuleSetsFromAbsoluteFiles(string ...$files)
@@ -764,8 +774,10 @@ class RuleSetFactoryTest extends AbstractTestCase
      * class.
      *
      * @param string $file At least one rule configuration file name. You can
-     *        also pass multiple parameters with ruleset configuration files.
+     *                     also pass multiple parameters with ruleset configuration files.
+     *
      * @return \PHPMD\RuleSet[]
+     *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     private function createRuleSetsFromFiles($file)

@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Writer\StreamWriter
+ *
  * @covers ::__construct
  */
 class StreamWriterTest extends TestCase

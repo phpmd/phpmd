@@ -8,6 +8,7 @@ use RuntimeException;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineFileFinder
+ *
  * @covers ::__construct
  */
 class BaselineFileFinderTest extends AbstractTestCase

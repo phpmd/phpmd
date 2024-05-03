@@ -6,6 +6,7 @@ use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheKey
+ *
  * @covers ::__construct
  */
 class ResultCacheKeyTest extends AbstractTestCase

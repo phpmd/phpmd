@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -30,6 +31,7 @@ class RuleTest extends AbstractTestCase
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -46,6 +48,7 @@ class RuleTest extends AbstractTestCase
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -62,6 +65,7 @@ class RuleTest extends AbstractTestCase
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -78,6 +82,7 @@ class RuleTest extends AbstractTestCase
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -94,6 +99,7 @@ class RuleTest extends AbstractTestCase
      * Tests the getBooleanProperty method with a fallback value
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -109,6 +115,7 @@ class RuleTest extends AbstractTestCase
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
      * @return void
+     *
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -125,6 +132,7 @@ class RuleTest extends AbstractTestCase
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
+     *
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -141,6 +149,7 @@ class RuleTest extends AbstractTestCase
      * Tests the getIntProperty method with a fallback value
      *
      * @return void
+     *
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -156,6 +165,7 @@ class RuleTest extends AbstractTestCase
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
+     *
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -172,6 +182,7 @@ class RuleTest extends AbstractTestCase
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
+     *
      * @covers ::getStringProperty
      * @covers ::getProperty
      */
@@ -188,6 +199,7 @@ class RuleTest extends AbstractTestCase
      * testGetStringPropertyReturnsStringValue
      *
      * @return void
+     *
      * @covers ::getStringProperty
      * @covers ::getProperty
      */
@@ -204,6 +216,7 @@ class RuleTest extends AbstractTestCase
      * Tests the getStringProperty method with a fallback value
      *
      * @return void
+     *
      * @covers ::getStringProperty
      * @covers ::getProperty
      */

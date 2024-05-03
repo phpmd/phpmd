@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -275,6 +276,7 @@ class LongVariableTest extends AbstractTestCase
      * testRuleAppliesForLongPrivateProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testRuleAppliesForLongPrivateProperty()
@@ -289,6 +291,7 @@ class LongVariableTest extends AbstractTestCase
      * testRuleAppliesForLongPrivateStaticProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testRuleAppliesForLongPrivateStaticProperty()

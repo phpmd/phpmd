@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -216,7 +217,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first method or function node for a given test file.
      *
      * @param string $file
+     *
      * @return FunctionNode|MethodNode
+     *
      * @since 2.8.3
      */
     protected function getNodeForTestFile($file)
@@ -247,10 +250,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Rethrows the PHPUnit ExpectationFailedException with the base name
      * of the file for better readability.
      *
-     * @param Rule $rule Rule to test.
-     * @param int $expectedInvokes Count of expected invocations.
-     * @param string $file Test file containing a method with the same name to be tested.
+     * @param Rule   $rule            Rule to test.
+     * @param int    $expectedInvokes Count of expected invocations.
+     * @param string $file            Test file containing a method with the same name to be tested.
+     *
      * @return void
+     *
      * @throws ExpectationFailedException
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
@@ -276,9 +281,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Return a human-friendly failure message for a given list of violations and the actual/expected counts.
      *
-     * @param string $file
-     * @param int $expectedInvokes
-     * @param int $actualInvokes
+     * @param string                     $file
+     * @param int                        $expectedInvokes
+     * @param int                        $actualInvokes
      * @param array|iterable|Traversable $violations
      *
      * @return string
@@ -299,6 +304,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return a human-friendly summary for a list of violations.
      *
      * @param array|iterable|Traversable $violations
+     *
      * @return string
      */
     protected function getViolationsSummary($violations)
@@ -327,6 +333,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
+     *
      * @since 1.1.0
      */
     protected static function createCodeResourceUriForTest()
@@ -340,7 +347,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
+     *
      * @return string
+     *
      * @since 1.1.0
      */
     protected static function createResourceUriForTest($localPath)
@@ -354,6 +363,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return URI for a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
+     *
      * @return string
      */
     protected static function createResourceUriForCalledClass($pattern)
@@ -365,6 +375,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return list of files matching a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
+     *
      * @return string[]
      */
     protected static function getFilesForCalledClass($pattern = '*')
@@ -376,7 +387,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked class node instance.
      *
      * @param string $metric
-     * @param int $value
+     * @param int    $value
+     *
      * @return ClassNode
      */
     protected function getClassMock($metric = null, $value = null)
@@ -400,7 +412,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked method node instance.
      *
      * @param string $metric
-     * @param int $value
+     * @param int    $value
+     *
      * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
@@ -412,7 +425,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked function node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed $value The expected metric return value.
+     * @param mixed  $value  The expected metric return value.
+     *
      * @return FunctionNode
      */
     protected function createFunctionMock($metric = null, $value = null)
@@ -429,7 +443,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Initializes the getMetric() method of the given function or method node.
      *
      * @param FunctionNode|MethodNode|PHPUnit_Framework_MockObject_MockObject $mock
-     * @param string $metric
+     * @param string                                                          $metric
+     *
      * @return FunctionNode|MethodNode
      */
     protected function initFunctionOrMethod($mock, $metric, $value)
@@ -450,6 +465,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked report instance.
      *
      * @param int $expectedInvokes Number of expected invokes.
+     *
      * @return PHPUnit_Framework_MockObject_MockObject|Report
      */
     protected function getReportMock($expectedInvokes = -1)
@@ -523,8 +539,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string $expectedClass Optional class name for apply() expected at least once.
-     * @param int|string $count How often should apply() be called?
+     * @param string     $expectedClass Optional class name for apply() expected at least once.
+     * @param int|string $count         How often should apply() be called?
+     *
      * @return MockObject|RuleSet
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
@@ -552,11 +569,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked rule violation instance.
      *
-     * @param string $fileName The filename to use.
-     * @param int $beginLine The begin of violation line number to use.
-     * @param int $endLine The end of violation line number to use.
-     * @param object|null $rule The rule object to use.
+     * @param string      $fileName    The filename to use.
+     * @param int         $beginLine   The begin of violation line number to use.
+     * @param int         $endLine     The end of violation line number to use.
+     * @param object|null $rule        The rule object to use.
      * @param string|null $description The violation description to use.
+     *
      * @return MockObject
      */
     protected function getRuleViolationMock(
@@ -608,6 +626,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param string $file
      * @param string $message
+     *
      * @return MockObject|ProcessingError
      */
     protected function getErrorMock(
@@ -643,10 +662,11 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
-     * @param string $mockBuilder
+     * @param string                $mockBuilder
      * @param ASTFunction|ASTMethod $mock
-     * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed $value The expected metric return value.
+     * @param string                $metric      The metric acronym used by PHP_Depend.
+     * @param mixed                 $value       The expected metric return value.
+     *
      * @return FunctionNode|MethodNode
      */
     private function createFunctionOrMethodMock($mockBuilder, $mock, $metric = null, $value = null)
@@ -665,6 +685,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the PHP_Depend node having the given name.
      *
      * @return PHP_Depend_Code_AbstractItem
+     *
      * @throws ErrorException
      */
     private function getNodeByName(Iterator $nodes, $name)
@@ -681,6 +702,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the PHP_Depend node for the calling test case.
      *
      * @return PHP_Depend_Code_AbstractItem
+     *
      * @throws ErrorException
      */
     private function getNodeForCallingTestCase(Iterator $nodes)
@@ -695,7 +717,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * in that file.
      *
      * @param string $sourceFile
+     *
      * @return ASTNamespace
+     *
      * @throws ErrorException
      */
     private function parseSource($sourceFile)

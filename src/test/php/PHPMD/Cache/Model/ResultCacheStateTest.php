@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheState
+ *
  * @covers ::__construct
  */
 class ResultCacheStateTest extends TestCase

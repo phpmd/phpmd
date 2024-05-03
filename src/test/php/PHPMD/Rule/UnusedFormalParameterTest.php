@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -315,7 +316,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.0
      */
     public function testFuncGetArgsRuleWorksCaseInsensitive()
@@ -329,6 +332,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      * testRuleDoesNotApplyToInheritMethod
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToInheritMethod()
@@ -342,6 +346,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      * testRuleDoesNotApplyToImplementedAbstractMethod
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToImplementedAbstractMethod()
@@ -355,6 +360,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      * testRuleDoesNotApplyToImplementedInterfaceMethod
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToImplementedInterfaceMethod()
@@ -403,7 +409,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.0
      */
     public function testCompactFunctionRuleDoesNotApply()
@@ -415,7 +423,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.0
      */
     public function testCompactFunctionRuleOnlyAppliesToUsedParameters()
@@ -427,7 +437,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.0
      */
     public function testCompactFunctionRuleWorksCaseInsensitive()
@@ -439,7 +451,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleDoesNotApply()
@@ -451,7 +465,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleOnlyAppliesToUsedParameters()
@@ -463,7 +479,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
+     *
      * @return void
+     *
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()

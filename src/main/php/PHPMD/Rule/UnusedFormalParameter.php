@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -140,7 +141,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * the initial declaration.
      *
      * @return bool
+     *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     *
      * @since 1.2.1
      */
     protected function isNotDeclaration(AbstractNode $node)
@@ -188,6 +191,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Removes all the regular variables from a given node
      *
      * @param AbstractNode $node The node to remove the regular variables from.
+     *
      * @throws OutOfBoundsException
      */
     protected function removeRegularVariables(AbstractNode $node): void

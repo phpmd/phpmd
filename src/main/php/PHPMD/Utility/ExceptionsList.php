@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -71,6 +72,7 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
      * Gets array of exceptions from property
      *
      * @return array<string, int>
+     *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */

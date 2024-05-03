@@ -12,6 +12,7 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link      http://phpmd.org/
  */
 
@@ -36,6 +37,7 @@ class PHPMD
      * was found in the processed source code.
      *
      * @var bool
+     *
      * @since 2.10.0
      */
     private $errors = false;
@@ -69,6 +71,7 @@ class PHPMD
      * was found in the processed source code.
      *
      * @var bool
+     *
      * @since 0.2.5
      */
     private $violations = false;
@@ -77,6 +80,7 @@ class PHPMD
      * Additional options for PHPMD or one of it's parser backends.
      *
      * @var array
+     *
      * @since 1.2.0
      */
     private $options = [];
@@ -86,6 +90,7 @@ class PHPMD
      * contains errors.
      *
      * @return bool
+     *
      * @since 2.10.0
      */
     public function hasErrors()
@@ -98,6 +103,7 @@ class PHPMD
      * contains violations.
      *
      * @return bool
+     *
      * @since 0.2.5
      */
     public function hasViolations()
@@ -119,6 +125,7 @@ class PHPMD
      * Returns an array with valid php source file extensions.
      *
      * @return string[]
+     *
      * @since 0.2.0
      */
     public function getFileExtensions()
@@ -140,6 +147,7 @@ class PHPMD
      * Returns an array with string patterns that mark a file path invalid.
      *
      * @return string[]
+     *
      * @since 2.9.0
      */
     public function getIgnorePatterns()
@@ -152,7 +160,9 @@ class PHPMD
      * the source analysis.
      *
      * @param array<string> $ignorePatterns List of ignore patterns.
+     *
      * @return $this
+     *
      * @since 2.9.0
      */
     public function addIgnorePatterns(array $ignorePatterns)
@@ -175,6 +185,7 @@ class PHPMD
 
     /**
      * @param ResultCacheEngine $resultCache
+     *
      * @return $this;
      */
     public function setResultCache($resultCache)

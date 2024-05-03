@@ -12,6 +12,7 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link      http://phpmd.org/
  */
 
@@ -146,6 +147,7 @@ class CommandLineOptions
      * Should PHPMD run in strict mode?
      *
      * @var bool
+     *
      * @since 1.2.0
      */
     protected $strict = false;
@@ -157,6 +159,7 @@ class CommandLineOptions
      * Should PHPMD exit without error code even if error is found?
      *
      * @var bool
+     *
      * @since 2.10.0
      */
     protected $ignoreErrorsOnExit = false;
@@ -177,6 +180,7 @@ class CommandLineOptions
 
     /**
      * Should PHPMD baseline the existing violations and write them to the $baselineFile
+     *
      * @var string allowed modes: NONE, GENERATE or UPDATE
      */
     protected $generateBaseline = BaselineMode::NONE;
@@ -184,24 +188,28 @@ class CommandLineOptions
     /**
      * The baseline source file to read the baseline violations from.
      * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
+     *
      * @var string|null
      */
     protected $baselineFile;
 
     /**
      * Should PHPMD read or write the result cache state from the cache file
+     *
      * @var bool
      */
     protected $cacheEnabled = false;
 
     /**
      * If set the path to read and write the result cache state from and to.
+     *
      * @var string|null
      */
     protected $cacheFile;
 
     /**
      * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
+     *
      * @var string|null
      */
     protected $cacheStrategy;
@@ -215,6 +223,7 @@ class CommandLineOptions
 
     /**
      * Specify how many extra lines are added to a code snippet
+     *
      * @var int|null
      */
     protected $extraLineInExcerpt;
@@ -224,6 +233,7 @@ class CommandLineOptions
      *
      * @param string[] $args
      * @param string[] $availableRuleSets
+     *
      * @throws InvalidArgumentException
      */
     public function __construct(array $args, array $availableRuleSets = [])
@@ -538,6 +548,7 @@ class CommandLineOptions
      * Was the <b>--strict</b> option passed to PHPMD's command line interface?
      *
      * @return bool
+     *
      * @since 1.2.0
      */
     public function hasStrict()
@@ -612,6 +623,7 @@ class CommandLineOptions
      * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
      *
      * @return bool
+     *
      * @since 2.10.0
      */
     public function ignoreErrorsOnExit()
@@ -651,7 +663,9 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
+     *
      * @return AbstractRenderer
+     *
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
@@ -671,7 +685,9 @@ class CommandLineOptions
 
     /**
      * @param string $reportFormat
+     *
      * @return AbstractRenderer
+     *
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     protected function createRendererWithoutOptions($reportFormat = null)
@@ -776,6 +792,7 @@ class CommandLineOptions
 
     /**
      * @return AbstractRenderer
+     *
      * @throws InvalidArgumentException
      */
     protected function createCustomRenderer()
@@ -913,8 +930,11 @@ class CommandLineOptions
      * exception.
      *
      * @param string $inputFile Specified input file name.
+     *
      * @return string
+     *
      * @throws InvalidArgumentException If the specified input file does not exist.
+     *
      * @since 1.1.0
      */
     protected function readInputFile($inputFile)

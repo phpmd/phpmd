@@ -12,6 +12,7 @@
  * @author Lukas Bestle <project-phpmd@lukasbestle.com>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -66,7 +67,8 @@ class SARIFRenderer extends JSONRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array $data The report output to add the violations to.
+     * @param array  $data   The report output to add the violations to.
+     *
      * @return array The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
@@ -157,7 +159,8 @@ class SARIFRenderer extends JSONRenderer
      * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
-     * @param array $data The report output to add the errors to.
+     * @param array  $data   The report output to add the errors to.
+     *
      * @return array The report output with errors, if any.
      */
     protected function addErrorsToReport(Report $report, array $data)
@@ -188,6 +191,7 @@ class SARIFRenderer extends JSONRenderer
      * and returns the result as a SARIF `artifactLocation`
      *
      * @param string $path
+     *
      * @return array
      */
     protected static function pathToArtifactLocation($path)
@@ -211,6 +215,7 @@ class SARIFRenderer extends JSONRenderer
      * Converts an absolute path to a file:// URI
      *
      * @param string $path
+     *
      * @return string
      */
     protected static function pathToUri($path)

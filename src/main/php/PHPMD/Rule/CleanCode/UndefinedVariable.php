@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -199,6 +200,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Check if the given variable was defined in the current context before usage.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
@@ -271,6 +273,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Add the variable to images.
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     *
      * @throws OutOfBoundsException
      */
     protected function addVariableDefinition($variable): void

@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -61,7 +62,8 @@ class JSONRenderer extends AbstractRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array $data The report output to add the violations to.
+     * @param array  $data   The report output to add the violations to.
+     *
      * @return array The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
@@ -95,7 +97,8 @@ class JSONRenderer extends AbstractRenderer
      * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
-     * @param array $data The report output to add the errors to.
+     * @param array  $data   The report output to add the errors to.
+     *
      * @return array The report output with errors, if any.
      */
     protected function addErrorsToReport(Report $report, array $data)

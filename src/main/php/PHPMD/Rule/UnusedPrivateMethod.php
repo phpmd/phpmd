@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -53,6 +54,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * as private and are not used in the same class' context.
      *
      * @return array<string, MethodNode>
+     *
      * @throws OutOfBoundsException
      */
     protected function collectUnusedPrivateMethods(ClassNode $class)
@@ -102,7 +104,9 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method removes all used methods from the given methods array.
      *
      * @param array<string, MethodNode> $methods
+     *
      * @return array<string, MethodNode>
+     *
      * @throws OutOfBoundsException
      */
     protected function removeUsedMethods(ClassNode $class, array $methods)
@@ -117,7 +121,9 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * $this->privateMethod() makes "privateMethod" marked as used as an explicit call.
      *
      * @param array<string, MethodNode> $methods
+     *
      * @return array<string, MethodNode>
+     *
      * @throws OutOfBoundsException
      */
     protected function removeExplicitCalls(ClassNode $class, array $methods)
@@ -135,7 +141,9 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * [$this 'privateMethod'] makes "privateMethod" marked as used as very likely to be used as a callable value.
      *
      * @param array<string, MethodNode> $methods
+     *
      * @return array<string, MethodNode>
+     *
      * @throws OutOfBoundsException
      */
     protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
@@ -159,6 +167,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * and that the second one is a literal static string.
      *
      * @return string|null
+     *
      * @throws OutOfBoundsException
      */
     protected function getMethodNameFromArraySecondElement(AbstractNode $parent)
@@ -185,6 +194,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * instance or static reference to the given class.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isClassScope(ClassNode $class, ASTNode $postfix)

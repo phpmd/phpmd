@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -66,6 +67,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * method.
      *
      * @return AbstractNode[]
+     *
      * @throws OutOfBoundsException
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
@@ -143,6 +145,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * Checks if the given node is a valid property node.
      *
      * @return bool
+     *
      * @since 0.2.6
      */
     protected function isValidPropertyNode(ASTNode $node = null)
@@ -170,6 +173,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * instance or static reference to the given class.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isInScopeOfClass(ClassNode $class, ASTNode $postfix)
@@ -188,7 +192,9 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * Looks for owner of the given variable.
      *
      * @param ASTNode<ASTPropertyPostfix> $postfix
+     *
      * @return AbstractNode
+     *
      * @throws OutOfBoundsException
      */
     protected function getOwner(ASTNode $postfix)

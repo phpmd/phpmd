@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -106,6 +107,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
+     *
      * @since 1.1.0
      */
     protected static function createCodeResourceUriForTest()
@@ -119,6 +121,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Convert [1, 'a', $any] into [[1], ['a'], [$any]].
      *
      * @param mixed $values list of values.
+     *
      * @return array
      */
     protected static function getValuesAsArrays($values)
@@ -130,7 +133,9 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
+     *
      * @return string
+     *
      * @since 1.1.0
      */
     protected static function createResourceUriForTest($localPath)
@@ -143,8 +148,9 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Asserts the actual xml output matches against the expected file.
      *
-     * @param string $actualOutput Generated xml output.
+     * @param string $actualOutput     Generated xml output.
      * @param string $expectedFileName File with expected xml result.
+     *
      * @return void
      */
     public static function assertXmlEquals($actualOutput, $expectedFileName)
@@ -175,8 +181,8 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Asserts the actual JSON output matches against the expected file.
      *
-     * @param string $actualOutput Generated JSON output.
-     * @param string $expectedFileName File with expected JSON result.
+     * @param string       $actualOutput        Generated JSON output.
+     * @param string       $expectedFileName    File with expected JSON result.
      * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
      *
@@ -216,6 +222,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Changes the working directory for a single test.
      *
      * @param string $localPath The temporary working directory.
+     *
      * @return void
      */
     protected static function changeWorkingDirectory($localPath = '')
@@ -232,6 +239,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Creates a full filename for a test content in the <em>_files</b> directory.
      *
      * @param string $localPath
+     *
      * @return string
      */
     protected static function createFileUri($localPath = '')
@@ -243,6 +251,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Creates a file uri for a temporary test file.
      *
      * @param string|null $fileName
+     *
      * @return string
      */
     protected static function createTempFileUri($fileName = null)
@@ -259,6 +268,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the trace frame of the calling test case.
      *
      * @return array
+     *
      * @throws ErrorException
      */
     protected static function getCallingTestCase()

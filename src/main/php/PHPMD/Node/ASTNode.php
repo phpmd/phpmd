@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -40,7 +41,7 @@ class ASTNode extends AbstractNode
     /**
      * Constructs a new ast node instance.
      *
-     * @param TNode $node
+     * @param TNode  $node
      * @param string $fileName
      */
     public function __construct(PDependNode $node, $fileName)
@@ -55,7 +56,9 @@ class ASTNode extends AbstractNode
      * instance.
      *
      * @return bool
+     *
      * @SuppressWarnings("PMD.UnusedFormalParameter")
+     *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)

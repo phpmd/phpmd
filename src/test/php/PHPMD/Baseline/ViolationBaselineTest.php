@@ -23,6 +23,7 @@ class ViolationBaselineTest extends TestCase
      * Test the give file matches the baseline correctly
      *
      * @return void
+     *
      * @covers ::__construct
      * @covers ::matches
      */
@@ -39,6 +40,7 @@ class ViolationBaselineTest extends TestCase
      * Test the give file matches the baseline correctly
      *
      * @return void
+     *
      * @covers ::__construct
      * @covers ::matches
      */

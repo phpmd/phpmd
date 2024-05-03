@@ -28,6 +28,7 @@ class ResultCacheEngineFactory
     /**
      * @param string    $basePath
      * @param RuleSet[] $ruleSetList
+     *
      * @return ResultCacheEngine|null
      */
     public function create($basePath, CommandLineOptions $options, array $ruleSetList)

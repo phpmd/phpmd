@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -30,6 +31,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
      * Tests that the rule does not apply to unary operators in functions
      *
      * @return void
+     *
      * @covers ::apply
      */
     public function testDoesNotApplyToOtherUnaryOperatorsInFunction()
@@ -43,6 +45,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
      * Tests that the rule applies error control operators to functions
      *
      * @return void
+     *
      * @covers ::apply
      */
     public function testAppliesToErrorControlOperatorInFunction()
@@ -56,6 +59,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
      * Tests that the rule applies error control operators to classes and methods
      *
      * @return void
+     *
      * @covers ::apply
      */
     public function testAppliedToClassesAndMethods()

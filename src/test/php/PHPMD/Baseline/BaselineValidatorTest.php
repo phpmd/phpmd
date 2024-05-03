@@ -9,6 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
+ *
  * @covers ::__construct
  */
 class BaselineValidatorTest extends AbstractTestCase
@@ -40,7 +41,9 @@ class BaselineValidatorTest extends AbstractTestCase
      * @param bool   $contains
      * @param string $baselineMode
      * @param bool   $isBaselined
+     *
      * @dataProvider dataProvider
+     *
      * @covers ::isBaselined
      */
     public function testIsBaselined($contains, $baselineMode, $isBaselined)

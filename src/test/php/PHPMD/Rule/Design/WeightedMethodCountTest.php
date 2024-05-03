@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -23,6 +24,7 @@ use PHPMD\AbstractTestCase;
  * Test case for the weighted method count rule.
  *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
+ *
  * @since 0.2.5
  */
 class WeightedMethodCountTest extends AbstractTestCase

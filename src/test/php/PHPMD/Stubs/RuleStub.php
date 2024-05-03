@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -31,7 +32,7 @@ class RuleStub extends AbstractRule implements ClassAware
     /**
      * Constructs a new rule stub instance.
      *
-     * @param string $ruleName The rule name.
+     * @param string $ruleName    The rule name.
      * @param string $ruleSetName The rule-set name.
      */
     public function __construct($ruleName = 'RuleStub', $ruleSetName = 'TestRuleSet')

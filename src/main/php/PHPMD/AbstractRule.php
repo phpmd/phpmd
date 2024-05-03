@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -267,11 +268,13 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
-     * @param string $name The name of the property, e.g. "ignore-whitespace".
-     * @param mixed $default An optional default value to fall back instead of throwing an exception.
+     * @param string $name    The name of the property, e.g. "ignore-whitespace".
+     * @param mixed  $default An optional default value to fall back instead of throwing an exception.
+     *
      * @return mixed The value of a configured property.
+     *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
-     * no default value to fall back was given.
+     *                              no default value to fall back was given.
      */
     protected function getProperty(string $name, mixed $default = null): mixed
     {
@@ -292,11 +295,13 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
-     * @param string $name The name of the property, e.g. "ignore-whitespace".
+     * @param string    $name    The name of the property, e.g. "ignore-whitespace".
      * @param bool|null $default An optional default value to fall back instead of throwing an exception.
+     *
      * @return bool The value of a configured property as a boolean.
+     *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
-     * no default value to fall back was given.
+     *                              no default value to fall back was given.
      */
     public function getBooleanProperty(string $name, ?bool $default = null): bool
     {
@@ -309,11 +314,13 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
-     * @param string $name The name of the property, e.g. "minimum".
+     * @param string   $name    The name of the property, e.g. "minimum".
      * @param int|null $default An optional default value to fall back instead of throwing an exception.
+     *
      * @return int The value of a configured property as an integer.
+     *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
-     * no default value to fall back was given.
+     *                              no default value to fall back was given.
      */
     public function getIntProperty(string $name, ?int $default = null): int
     {
@@ -326,11 +333,13 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
-     * @param string $name The name of the property, e.g. "exceptions".
+     * @param string      $name    The name of the property, e.g. "exceptions".
      * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     *
      * @return string The raw string value of a configured property.
+     *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
-     * no default value to fall back was given.
+     *                              no default value to fall back was given.
      */
     public function getStringProperty(string $name, ?string $default = null): string
     {
@@ -364,6 +373,7 @@ abstract class AbstractRule implements Rule
      * Apply the current rule on each method of a class node.
      *
      * @param ClassNode|EnumNode|InterfaceNode|TraitNode $node class node containing methods.
+     *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException

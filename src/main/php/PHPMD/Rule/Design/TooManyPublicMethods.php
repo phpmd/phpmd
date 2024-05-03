@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -90,6 +91,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      * ignoreRegexp is given to the rule using ignorepattern option.
      *
      * @param string $methodName
+     *
      * @return bool
      */
     private function isIgnoredMethodName($methodName)

@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -159,6 +160,7 @@ class MethodNodeTest extends AbstractTestCase
      * testIsDeclarationReturnsTrueForMethodDeclaration
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsTrueForMethodDeclaration()
@@ -171,6 +173,7 @@ class MethodNodeTest extends AbstractTestCase
      * testIsDeclarationReturnsTrueForMethodDeclarationWithParent
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsTrueForMethodDeclarationWithParent()
@@ -183,6 +186,7 @@ class MethodNodeTest extends AbstractTestCase
      * testIsDeclarationReturnsFalseForInheritMethodDeclaration
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForInheritMethodDeclaration()
@@ -195,6 +199,7 @@ class MethodNodeTest extends AbstractTestCase
      * testIsDeclarationReturnsFalseForImplementedAbstractMethod
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForImplementedAbstractMethod()
@@ -207,6 +212,7 @@ class MethodNodeTest extends AbstractTestCase
      * testIsDeclarationReturnsFalseForImplementedInterfaceMethod
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForImplementedInterfaceMethod()

@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -112,6 +113,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
+     *
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     protected function checkMaximumLength(AbstractNode $node): void
@@ -148,6 +150,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * the given type.
      *
      * @param string $type
+     *
      * @return bool
      */
     protected function isChildOf(AbstractNode $node, $type)
@@ -193,6 +196,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     *
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
@@ -209,6 +213,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     *
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */

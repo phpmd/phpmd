@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -73,6 +74,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      * Check whether a given class node is a self reference
      *
      * @param ASTNode $classNode A class node to check.
+     *
      * @return bool Whether the given class node is a self reference.
      */
     protected function isSelfReference(ASTNode $classNode)
@@ -84,6 +86,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      * Check whether a given class node is in the global namespace
      *
      * @param ASTNode $classNode A class node to check.
+     *
      * @return bool Whether the given class node is in the global namespace.
      */
     protected function isGlobalNamespace(ASTNode $classNode)

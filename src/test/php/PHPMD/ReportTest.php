@@ -12,6 +12,7 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link      http://phpmd.org/
  */
 
@@ -143,6 +144,7 @@ class ReportTest extends AbstractTestCase
      * testHasErrorsReturnsFalseByDefault
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testHasErrorsReturnsFalseByDefault()
@@ -155,6 +157,7 @@ class ReportTest extends AbstractTestCase
      * testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError()
@@ -169,6 +172,7 @@ class ReportTest extends AbstractTestCase
      * testGetErrorsReturnsEmptyIteratorByDefault
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testGetErrorsReturnsEmptyIteratorByDefault()
@@ -181,6 +185,7 @@ class ReportTest extends AbstractTestCase
      * testGetErrorsReturnsPreviousAddedProcessingError
      *
      * @return void
+     *
      * @since 1.2.1
      */
     public function testGetErrorsReturnsPreviousAddedProcessingError()

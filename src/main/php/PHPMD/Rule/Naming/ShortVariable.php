@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -179,6 +180,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * variable names in catch-statements.
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isNameAllowedInContext(AbstractNode $node)
@@ -198,6 +200,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks if a short name is initialized within a foreach loop statement
      *
      * @return bool
+     *
      * @throws OutOfBoundsException
      */
     protected function isInitializedInLoop(AbstractNode $node)
@@ -246,6 +249,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * the given type.
      *
      * @param string $type
+     *
      * @return bool
      */
     protected function isChildOf(AbstractNode $node, $type)

@@ -9,6 +9,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheWriter
+ *
  * @covers ::__construct
  */
 class ResultCacheWriterTest extends AbstractTestCase

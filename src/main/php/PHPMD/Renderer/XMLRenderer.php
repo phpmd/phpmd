@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -111,7 +112,7 @@ class XMLRenderer extends AbstractRenderer
      * This method will write a xml attribute named <b>$attr</b> to the output
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *
-     * @param string $attr The xml attribute name.
+     * @param string  $attr  The xml attribute name.
      * @param ?string $value The attribute value.
      */
     protected function maybeAdd($attr, $value): void

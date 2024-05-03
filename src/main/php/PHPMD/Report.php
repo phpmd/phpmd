@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -52,6 +53,7 @@ class Report
      * Errors that occurred while parsing the source.
      *
      * @var array
+     *
      * @since 1.2.1
      */
     private $errors = [];
@@ -90,6 +92,7 @@ class Report
      * Returns <b>true</b> when this report does not contain any errors.
      *
      * @return bool
+     *
      * @since 0.2.5
      */
     public function isEmpty()
@@ -135,6 +138,7 @@ class Report
      * error. Otherwise this method will return <b>false</b>.
      *
      * @return bool
+     *
      * @since 1.2.1
      */
     public function hasErrors()
@@ -147,6 +151,7 @@ class Report
      * added to this report.
      *
      * @return Iterator
+     *
      * @since 1.2.1
      */
     public function getErrors()

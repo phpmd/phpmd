@@ -13,6 +13,7 @@ use ReflectionProperty;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngineFactory
+ *
  * @covers ::__construct
  */
 class ResultCacheEngineFactoryTest extends AbstractTestCase

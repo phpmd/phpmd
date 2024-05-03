@@ -11,6 +11,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheFileFilter
+ *
  * @covers ::__construct
  */
 class ResultCacheFileFilterTest extends AbstractTestCase

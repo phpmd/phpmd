@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -65,7 +66,7 @@ class RuleViolation
      * Constructs a new rule violation instance.
      *
      * @param array|string $violationMessage
-     * @param ?numeric $metric
+     * @param ?numeric     $metric
      */
     public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
     {

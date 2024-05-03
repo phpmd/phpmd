@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -54,6 +55,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * with duplicated entries for any key and emits a rule violation if so.
      *
      * @param ASTNode $node Array node.
+     *
      * @throws OutOfBoundsException
      */
     protected function checkForDuplicatedArrayKeys(ASTNode $node): void
@@ -85,9 +87,11 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * As current logic doesn't evaluate expressions nor constants,
      * statics, globals, etc. we simply skip them.
      *
-     * @param AbstractASTNode $node Array key to evaluate.
-     * @param int $index Fallback in case of non-associative arrays
+     * @param AbstractASTNode $node  Array key to evaluate.
+     * @param int             $index Fallback in case of non-associative arrays
+     *
      * @return ?AbstractASTNode Key name
+     *
      * @throws OutOfBoundsException
      */
     protected function normalizeKey(AbstractASTNode $node, $index)

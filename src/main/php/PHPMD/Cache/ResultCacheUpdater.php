@@ -26,6 +26,7 @@ class ResultCacheUpdater
 
     /**
      * @param RuleSet[] $ruleSetList
+     *
      * @return ResultCacheState
      */
     public function update(array $ruleSetList, ResultCacheState $state, Report $report)

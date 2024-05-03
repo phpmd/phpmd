@@ -35,6 +35,7 @@ class ResultCacheState
 
     /**
      * @param string $filePath
+     *
      * @return array
      */
     public function getViolations($filePath)
@@ -116,6 +117,7 @@ class ResultCacheState
     /**
      * @param string $filePath
      * @param string $hash
+     *
      * @return bool
      */
     public function isFileModified($filePath, $hash)
@@ -150,6 +152,7 @@ class ResultCacheState
     /**
      * @param string    $ruleClassName
      * @param RuleSet[] $ruleSetList
+     *
      * @return Rule|null
      */
     private static function findRuleIn($ruleClassName, array $ruleSetList)

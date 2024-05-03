@@ -12,6 +12,7 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link      http://phpmd.org/
  */
 
@@ -73,6 +74,7 @@ class Command
      * even if any violation or error is found.
      *
      * @return int
+     *
      * @throws InvalidArgumentException
      * @throws RuntimeException
      * @throws LogicException
@@ -205,7 +207,9 @@ class Command
      * value can be used as exit code.
      *
      * @param string[] $args The raw command line arguments array.
+     *
      * @return int
+     *
      * @throws RuntimeException
      */
     public static function main(array $args)

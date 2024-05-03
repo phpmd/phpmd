@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -48,6 +49,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsInputArgumentToInputProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsInputArgumentToInputProperty()
@@ -60,6 +62,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @since 2.14.0
      */
     public function testVerbose()
@@ -78,6 +81,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @since 2.14.0
      */
     public function testColored()
@@ -96,6 +100,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @since 2.14.0
      */
     public function testStdInDashShortCut()
@@ -108,6 +113,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @since 2.14.0
      */
     public function testMultipleFiles()
@@ -125,6 +131,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsFormatArgumentToReportFormatProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsFormatArgumentToReportFormatProperty()
@@ -139,6 +146,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsRuleSetsArgumentToRuleSetProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsRuleSetsArgumentToRuleSetProperty()
@@ -153,6 +161,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testThrowsExpectedExceptionWhenRequiredArgumentsNotSet
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet()
@@ -253,6 +262,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsInputFileOptionToInputPathProperty
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsInputFileOptionToInputPathProperty()
@@ -269,6 +279,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsFormatArgumentCorrectWhenCalledWithInputFile
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsFormatArgumentCorrectWhenCalledWithInputFile()
@@ -285,6 +296,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile()
@@ -301,6 +313,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testThrowsExpectedExceptionWhenInputFileNotExists
      *
      * @return void
+     *
      * @since 1.1.0
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
@@ -450,6 +463,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testCliOptionsIsStrictReturnsFalseByDefault
      *
      * @return void
+     *
      * @since 1.2.0
      */
     public function testCliOptionsIsStrictReturnsFalseByDefault()
@@ -464,6 +478,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * testCliOptionsAcceptsStrictArgument
      *
      * @return void
+     *
      * @since 1.2.0
      */
     public function testCliOptionsAcceptsStrictArgument()
@@ -706,7 +721,9 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param string $reportFormat
      * @param string $expectedClass
+     *
      * @return void
+     *
      * @dataProvider dataProviderCreateRenderer
      */
     public function testCreateRenderer($reportFormat, $expectedClass)
@@ -762,6 +779,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param string $deprecatedName
      * @param string $newName
+     *
      * @dataProvider dataProviderDeprecatedCliOptions
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result)
@@ -805,6 +823,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @dataProvider dataProviderGetReportFiles
      */
     public function testGetReportFiles(array $options, array $expected)

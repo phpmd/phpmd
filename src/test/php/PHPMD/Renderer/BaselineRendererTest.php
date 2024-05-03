@@ -10,6 +10,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
+ *
  * @covers ::__construct
  */
 class BaselineRendererTest extends AbstractTestCase

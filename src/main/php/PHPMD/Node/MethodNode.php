@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -135,7 +136,9 @@ class MethodNode extends AbstractCallableNode
      * Otherwise this method will return <b>false</b>.
      *
      * @return bool
+     *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     *
      * @since 1.2.1
      */
     public function isDeclaration()

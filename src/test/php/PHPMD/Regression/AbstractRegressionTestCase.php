@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -28,6 +29,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Creates a full filename for a test content in the <em>_files</b> directory.
      *
      * @param string $localPath The local path within the <em>_files</b> dir.
+     *
      * @return string
      */
     protected static function createFileUri($localPath = '')

@@ -9,6 +9,7 @@ use PHPMD\RuleSet;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheKeyFactory
+ *
  * @covers ::__construct
  */
 class ResultCacheKeyFactoryTest extends AbstractTestCase

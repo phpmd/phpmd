@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -21,6 +22,7 @@ use PHPMD\AbstractTestCase;
 
 /**
  * Test case for the camel case namespace rule.
+ *
  * @covers \PHPMD\Rule\Controversial\CamelCaseNamespace
  */
 class CamelCaseNamespaceTest extends AbstractTestCase

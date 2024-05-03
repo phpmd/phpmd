@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -189,8 +190,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
     /**
      * Safely add node to $this->images.
      *
-     * @param string $imageName the name to store the node as
-     * @param ASTNode $node the node being stored
+     * @param string  $imageName the name to store the node as
+     * @param ASTNode $node      the node being stored
      */
     protected function storeImage($imageName, ASTNode $node): void
     {
@@ -265,7 +266,9 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * If it's not a foreach variable, it returns always false.
      *
      * @param ASTNode $variable The variable to check.
+     *
      * @return bool True if allowed, else false.
+     *
      * @throws OutOfBoundsException
      */
     protected function isUnusedForeachVariableAllowed(ASTNode $variable)
@@ -284,6 +287,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * the given type.
      *
      * @param string $type
+     *
      * @return bool
      */
     protected function isChildOf(AbstractNode $node, $type)

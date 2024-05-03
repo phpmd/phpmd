@@ -17,15 +17,15 @@ interface OutputInterface
     /**
      * @param string|string[] $messages
      * @param bool            $newline
-     * @param int             $options A bitmask of options (one of the VERBOSITY constants),
-     *                                 0 is considered the same as self::VERBOSITY_NORMAL
+     * @param int             $options  A bitmask of options (one of the VERBOSITY constants),
+     *                                  0 is considered the same as self::VERBOSITY_NORMAL
      */
     public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL): void;
 
     /**
      * @param string|string[] $messages
-     * @param int             $options A bitmask of options (one of the VERBOSITY constants),
-     *                                 0 is considered the same as self::VERBOSITY_NORMAL
+     * @param int             $options  A bitmask of options (one of the VERBOSITY constants),
+     *                                  0 is considered the same as self::VERBOSITY_NORMAL
      */
     public function writeln($messages, $options = self::VERBOSITY_NORMAL): void;
 

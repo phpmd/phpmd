@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -182,9 +183,10 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     /**
      * Creates a prepared class node mock
      *
-     * @param int $numberOfMethods
+     * @param int        $numberOfMethods
      * @param array|null $publicMethods
      * @param array|null $privateMethods
+     *
      * @return ClassNode
      */
     private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = [])

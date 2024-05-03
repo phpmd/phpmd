@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -26,6 +27,7 @@ use PHPMD\Rule\MethodAware;
  * This rule class detects the usage of superglobals.
  *
  * @author Francis Besset <francis.besset@gmail.com>
+ *
  * @since 1.1.0
  */
 class Superglobals extends AbstractRule implements MethodAware, FunctionAware

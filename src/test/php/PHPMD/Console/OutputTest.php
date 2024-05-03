@@ -6,6 +6,7 @@ use PHPMD\AbstractTestCase;
 
 /**
  * @coversDefaultClass  \PHPMD\Console\Output
+ *
  * @covers ::__construct
  */
 class OutputTest extends AbstractTestCase
@@ -21,6 +22,7 @@ class OutputTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @covers ::getVerbosity
      * @covers ::setVerbosity
      */
@@ -35,6 +37,7 @@ class OutputTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @covers ::write
      */
     public function testWriteSingleMessage()
@@ -47,6 +50,7 @@ class OutputTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @covers ::write
      */
     public function testWriteMultiMessageWithNewline()
@@ -61,7 +65,9 @@ class OutputTest extends AbstractTestCase
      * @param int    $verbosity
      * @param string $expected
      * @param string $msg
+     *
      * @dataProvider verbosityProvider
+     *
      * @covers ::write
      */
     public function testWriteWithVerbosityOption($verbosity, $expected, $msg)
@@ -109,6 +115,7 @@ class OutputTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @covers ::writeln
      */
     public function testWritelnMessage()

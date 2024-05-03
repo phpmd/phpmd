@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -110,6 +111,7 @@ class LongParameterListTest extends AbstractTestCase
      * Returns a mocked method instance.
      *
      * @param int $parameterCount
+     *
      * @return MethodNode
      */
     private function createMethod($parameterCount)
@@ -133,7 +135,8 @@ class LongParameterListTest extends AbstractTestCase
      * Initializes the getParameterCount() method of the given callable.
      *
      * @param FunctionNode|MethodNode $mock
-     * @param int $parameterCount
+     * @param int                     $parameterCount
+     *
      * @return FunctionNode|MethodNode
      */
     private function initFunctionOrMethodMock($mock, $parameterCount)

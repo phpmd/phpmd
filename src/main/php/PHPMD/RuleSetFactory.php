@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -33,6 +34,7 @@ class RuleSetFactory
      * Is the strict mode active?
      *
      * @var bool
+     *
      * @since 1.2.0
      */
     private $strict = false;
@@ -100,7 +102,9 @@ class RuleSetFactory
      * Creates an array of rule-set instances for the given argument.
      *
      * @param string $ruleSetFileNames Comma-separated string of rule-set filenames or identifier.
+     *
      * @return RuleSet[]
+     *
      * @throws RuntimeException
      */
     public function createRuleSets($ruleSetFileNames)
@@ -121,7 +125,9 @@ class RuleSetFactory
      * Creates a single rule-set instance for the given filename or identifier.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
+     *
      * @return RuleSet
+     *
      * @throws RuleSetNotFoundException
      * @throws RuntimeException
      */
@@ -150,7 +156,9 @@ class RuleSetFactory
      * the input when it is already a filename.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
+     *
      * @return string Path to rule set file name
+     *
      * @throws RuleSetNotFoundException Thrown if no readable file found
      */
     private function createRuleSetFileName($ruleSetOrFileName)
@@ -168,6 +176,7 @@ class RuleSetFactory
      * Lists available rule-set identifiers in given directory.
      *
      * @param string $directory The directory to scan for rule-sets.
+     *
      * @return string[]
      */
     private static function listRuleSetsInDirectory($directory)
@@ -189,7 +198,9 @@ class RuleSetFactory
      * This method parses the rule-set definition in the given file.
      *
      * @param string $fileName
+     *
      * @return RuleSet
+     *
      * @throws RuntimeException When loading the XML file fails.
      */
     private function parseRuleSetNode($fileName)
@@ -285,7 +296,9 @@ class RuleSetFactory
      * Parses a rule-set xml file referenced by the given rule-set xml element.
      *
      * @return RuleSet
+     *
      * @throws RuntimeException
+     *
      * @since 0.2.3
      */
     private function parseRuleSetReference(SimpleXMLElement $ruleSetNode)
@@ -302,6 +315,7 @@ class RuleSetFactory
      * reference node.
      *
      * @return bool
+     *
      * @since 0.2.3
      */
     private function isIncluded(Rule $rule, SimpleXMLElement $ruleSetNode)
@@ -480,6 +494,7 @@ class RuleSetFactory
      * contains the value as character data.
      *
      * @return string
+     *
      * @since 0.2.5
      */
     private function getPropertyValue(SimpleXMLElement $propertyNode)
@@ -497,7 +512,9 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
+     *
      * @return array|null
+     *
      * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
@@ -537,6 +554,7 @@ class RuleSetFactory
      * and is readable by current user
      *
      * @param string $filePath File path to check against
+     *
      * @return bool True if file exists and is readable, false otherwise
      */
     private function isReadableFile($filePath)
@@ -548,6 +566,7 @@ class RuleSetFactory
      * Returns list of possible file paths to search against code rules
      *
      * @param string $fileName Rule set file name
+     *
      * @return array Array of possible file locations
      */
     private function filePaths($fileName)

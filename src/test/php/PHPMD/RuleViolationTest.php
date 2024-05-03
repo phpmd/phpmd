@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -23,6 +24,7 @@ use PHPMD\Node\NodeInfo;
  * Test case for the {@link \PHPMD\RuleViolation} class.
  *
  * @covers \PHPMD\RuleViolation
+ *
  * @since 0.2.5
  */
 class RuleViolationTest extends AbstractTestCase

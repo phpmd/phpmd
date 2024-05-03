@@ -23,7 +23,9 @@ class CheckStyleRenderer extends XMLRenderer
      * of the rule that's being broken
      *
      * @param int $priority priority of the broken rule
+     *
      * @return string either error, warning or info
+     *
      * @see https://checkstyle.sourceforge.io/version/4.4/property_types.html#severity
      * - priority 1 maps to error level severity
      * - priority 2 maps to warning level severity

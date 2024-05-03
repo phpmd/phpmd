@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -70,6 +71,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * Gets array of prefixes from property
      *
      * @return string[]
+     *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -89,6 +91,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * Gets array of suffixes from property
      *
      * @return string[]
+     *
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */

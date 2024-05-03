@@ -12,6 +12,7 @@
  * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link      http://phpmd.org/
  */
 
@@ -44,6 +45,7 @@ class CommandTest extends AbstractTestCase
 
     /**
      * @return void
+     *
      * @dataProvider dataProviderTestMainWithOption
      */
     public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, array $options = null)
@@ -192,7 +194,9 @@ class CommandTest extends AbstractTestCase
     /**
      * @param string $option
      * @param string $value
+     *
      * @return void
+     *
      * @dataProvider dataProviderWithFilter
      */
     public function testWithFilter($option, $value)

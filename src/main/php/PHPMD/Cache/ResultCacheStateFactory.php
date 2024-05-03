@@ -9,6 +9,7 @@ class ResultCacheStateFactory
 {
     /**
      * @param string $filePath
+     *
      * @return ResultCacheState|null
      */
     public function fromFile($filePath)

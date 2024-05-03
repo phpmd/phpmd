@@ -16,6 +16,7 @@ class BaselineSet
      * @param string      $ruleName
      * @param string      $fileName
      * @param string|null $methodName
+     *
      * @return bool
      */
     public function contains($ruleName, $fileName, $methodName)

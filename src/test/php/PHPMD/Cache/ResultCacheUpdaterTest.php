@@ -10,6 +10,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater
+ *
  * @covers ::__construct
  */
 class ResultCacheUpdaterTest extends AbstractTestCase

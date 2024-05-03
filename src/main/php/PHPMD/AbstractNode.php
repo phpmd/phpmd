@@ -12,6 +12,7 @@
  * @author Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
  * @license https://opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link http://phpmd.org/
  */
 
@@ -63,8 +64,9 @@ abstract class AbstractNode
      * to the underlying PDepend AST node.
      *
      * @param string $name
+     *
      * @throws BadMethodCallException When the underlying PDepend node
-     *         does not contain a method named <b>$name</b>.
+     *                                does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args): mixed
     {
@@ -98,7 +100,9 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param int $index The child offset.
+     *
      * @return AbstractNode
+     *
      * @throws OutOfBoundsException
      */
     public function getChild($index)
@@ -116,6 +120,7 @@ abstract class AbstractNode
      * @template T of PDependNode
      *
      * @param class-string<T> $type The searched child type.
+     *
      * @return ASTNode<T>|null
      */
     public function getFirstChildOfType($type)
@@ -157,6 +162,7 @@ abstract class AbstractNode
      * the current node.
      *
      * @param class-string<PDependNode> $type The searched child type.
+     *
      * @return array<int, AbstractASTNode|ASTArtifact>
      */
     public function findChildrenWithParentType($type)
@@ -178,6 +184,7 @@ abstract class AbstractNode
      * Searches recursive for all children of this node that are of variable.
      *
      * @return array<int, ASTNode<ASTVariable>>
+     *
      * @todo Cover by a test.
      */
     public function findChildrenOfTypeVariable()
@@ -283,6 +290,7 @@ abstract class AbstractNode
      * <b>null</b> when no such metric exists.
      *
      * @param string $name The metric name or abbreviation.
+     *
      * @return ?numeric $name
      */
     public function getMetric($name)
