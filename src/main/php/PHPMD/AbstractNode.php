@@ -61,11 +61,10 @@ abstract class AbstractNode
      *
      * @param string $name
      * @param array $args
-     * @return mixed
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
-    public function __call($name, array $args)
+    public function __call($name, array $args): mixed
     {
         $node = $this->getNode();
         if (!method_exists($node, $name)) {
@@ -281,7 +280,7 @@ abstract class AbstractNode
      * <b>null</b> when no such metric exists.
      *
      * @param string $name The metric name or abbreviation.
-     * @return mixed
+     * @return ?numeric $name
      */
     public function getMetric($name)
     {
