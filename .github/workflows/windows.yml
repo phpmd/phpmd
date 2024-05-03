@@ -1,0 +1,43 @@
+name: Windows
+
+on:
+  push:
+    branches: [ 'master', '2.x', '3.x' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  php-tests:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [7.1]
+        setup: [ stable ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist
+
+      - name: Execute Unit Tests
+        run: composer test
