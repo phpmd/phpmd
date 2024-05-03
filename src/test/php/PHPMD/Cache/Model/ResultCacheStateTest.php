@@ -69,7 +69,7 @@ class ResultCacheStateTest extends TestCase
 
         $expected = [
             [
-                'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
+                'rule'          => BooleanArgumentFlag::class,
                 'namespaceName' => 'namespace',
                 'className'     => 'className',
                 'methodName'    => 'methodName',
@@ -195,7 +195,7 @@ class ResultCacheStateTest extends TestCase
                         'hash'       => 'hash',
                         'violations' => [
                             [
-                                'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
+                                'rule'          => BooleanArgumentFlag::class,
                                 'namespaceName' => 'namespace',
                                 'className'     => 'className',
                                 'methodName'    => 'methodName',

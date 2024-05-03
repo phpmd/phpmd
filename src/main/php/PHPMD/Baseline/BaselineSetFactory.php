@@ -11,8 +11,8 @@ class BaselineSetFactory
      * the baseline file.
      *
      * @param string $fileName
-     * @throws RuntimeException
      * @return BaselineSet
+     * @throws RuntimeException
      */
     public static function fromFile($fileName)
     {

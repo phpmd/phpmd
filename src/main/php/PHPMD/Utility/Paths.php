@@ -42,8 +42,8 @@ class Paths
     /**
      * Get the realpath of the given path or exception on failure
      * @param string $path
-     * @throws RuntimeException
      * @return string
+     * @throws RuntimeException
      */
     public static function getRealPath($path)
     {

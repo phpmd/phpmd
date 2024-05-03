@@ -17,10 +17,13 @@
 
 namespace PHPMD;
 
+use Exception;
 use org\bovigo\vfs\vfsStream;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\Stubs\ClassFileNotFoundRule;
+use PHPMD\Stubs\ClassNotFoundRule;
 use RuntimeException;
 
 /**
@@ -95,7 +98,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance()
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[0]);
+        $this->assertInstanceOf(RuleSet::class, $ruleSets[0]);
     }
 
     /**
@@ -145,8 +148,8 @@ class RuleSetFactoryTest extends AbstractTestCase
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[0]);
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[1]);
+        $this->assertInstanceOf(RuleSet::class, $ruleSets[0]);
+        $this->assertInstanceOf(RuleSet::class, $ruleSets[1]);
     }
 
     /**
@@ -254,7 +257,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        $this->assertInstanceOf('PHPMD\\AbstractRule', $ruleSets[0]->getRules()->current());
+        $this->assertInstanceOf(AbstractRule::class, $ruleSets[0]->getRules()->current());
     }
 
     /**
@@ -290,7 +293,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1');
 
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSet);
+        $this->assertInstanceOf(RuleSet::class, $ruleSet);
     }
 
     /**
@@ -582,7 +585,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath()
     {
         self::expectExceptionObject(new RuleClassFileNotFoundException(
-            'PHPMD\\Stubs\\ClassFileNotFoundRule',
+            ClassFileNotFoundRule::class,
         ));
 
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
@@ -601,7 +604,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass()
     {
         self::expectExceptionObject(new RuleClassNotFoundException(
-            'PHPMD\\Stubs\\ClassNotFoundRule',
+            ClassNotFoundRule::class,
         ));
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
@@ -649,7 +652,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * reference-by-includepath and explicit-classfile-declaration works.
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testAddPHPIncludePath()
     {
@@ -665,7 +668,7 @@ class RuleSetFactoryTest extends AbstractTestCase
             $expectedIncludePath = "/foo/bar/baz";
             $actualIncludePaths = explode(PATH_SEPARATOR, get_include_path());
             $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             set_include_path($includePathBefore);
             throw $exception;
         }
@@ -702,7 +705,7 @@ class RuleSetFactoryTest extends AbstractTestCase
                 );
             } catch (RuleSetNotFoundException $e) {
                 $ruleSetNotFoundExceptionCount++;
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $runtimeExceptionCount++;
             }
         }
@@ -745,7 +748,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
-     * @param string $file At least one rule configuration file name. You can
+     * @param string $files At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
      */

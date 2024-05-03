@@ -17,19 +17,19 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 {
     /** @var NullOutput */
     private $output;
-    /** @var ResultCacheKey&MockObject */
+    /** @var MockObject&ResultCacheKey */
     private $key;
-    /** @var ResultCacheState&MockObject */
+    /** @var MockObject&ResultCacheState */
     private $state;
 
     protected function setUp(): void
     {
         $this->output = new NullOutput();
         $this->key    = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheKey')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()
         );
         $this->state  = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheState')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
         );
     }
 

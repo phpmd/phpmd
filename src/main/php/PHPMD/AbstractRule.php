@@ -267,9 +267,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param mixed $default An optional default value to fall back instead of throwing an exception.
+     * @return mixed The value of a configured property.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
-     * @return mixed The value of a configured property.
      */
     protected function getProperty(string $name, mixed $default = null): mixed
     {
@@ -292,9 +292,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param bool|null $default An optional default value to fall back instead of throwing an exception.
+     * @return bool The value of a configured property as a boolean.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
-     * @return bool The value of a configured property as a boolean.
      */
     public function getBooleanProperty(string $name, ?bool $default = null): bool
     {
@@ -309,9 +309,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "minimum".
      * @param int|null $default An optional default value to fall back instead of throwing an exception.
+     * @return int The value of a configured property as an integer.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
-     * @return int The value of a configured property as an integer.
      */
     public function getIntProperty(string $name, ?int $default = null): int
     {
@@ -326,9 +326,9 @@ abstract class AbstractRule implements Rule
      *
      * @param string $name The name of the property, e.g. "exceptions".
      * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return string The raw string value of a configured property.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
-     * @return string The raw string value of a configured property.
      */
     public function getStringProperty(string $name, ?string $default = null): string
     {

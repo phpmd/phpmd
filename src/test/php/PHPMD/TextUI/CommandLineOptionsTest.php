@@ -23,7 +23,18 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
+use PHPMD\Renderer\AnsiRenderer;
+use PHPMD\Renderer\CheckStyleRenderer;
+use PHPMD\Renderer\GitHubRenderer;
+use PHPMD\Renderer\GitLabRenderer;
+use PHPMD\Renderer\HtmlRenderer;
+use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\SARIFRenderer;
+use PHPMD\Renderer\TextRenderer;
+use PHPMD\Renderer\XmlRenderer;
 use PHPMD\Rule;
+use PHPMD\Test\Renderer\NamespaceRenderer;
+use PHPMD\Test\Renderer\NotExistsRenderer;
 use ReflectionProperty;
 
 /**
@@ -57,7 +68,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $opts = new CommandLineOptions($args);
         $renbderer = $opts->createRenderer();
 
-        $verbosityExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'verbosityLevel');
+        $verbosityExtractor = new ReflectionProperty(TextRenderer::class, 'verbosityLevel');
         $verbosityExtractor->setAccessible(true);
 
         $verbosityLevel = $verbosityExtractor->getValue($renbderer);
@@ -75,7 +86,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $opts = new CommandLineOptions($args);
         $renderer = $opts->createRenderer();
 
-        $coloredExtractor = new ReflectionProperty('PHPMD\\Renderer\\TextRenderer', 'colored');
+        $coloredExtractor = new ReflectionProperty(TextRenderer::class, 'colored');
         $coloredExtractor->setAccessible(true);
 
         $colored = $coloredExtractor->getValue($renderer);
@@ -709,19 +720,19 @@ class CommandLineOptionsTest extends AbstractTestCase
     public static function dataProviderCreateRenderer(): array
     {
         return [
-            ['html', 'PHPMD\\Renderer\\HtmlRenderer'],
-            ['text', 'PHPMD\\Renderer\\TextRenderer'],
-            ['xml', 'PHPMD\\Renderer\\XmlRenderer'],
-            ['ansi', 'PHPMD\\Renderer\\AnsiRenderer'],
-            ['github', 'PHPMD\\Renderer\\GitHubRenderer'],
-            ['gitlab', 'PHPMD\\Renderer\\GitLabRenderer'],
-            ['json', 'PHPMD\\Renderer\\JSONRenderer'],
-            ['checkstyle', 'PHPMD\\Renderer\\CheckStyleRenderer'],
-            ['sarif', 'PHPMD\\Renderer\\SARIFRenderer'],
+            ['html', HtmlRenderer::class],
+            ['text', TextRenderer::class],
+            ['xml', XmlRenderer::class],
+            ['ansi', AnsiRenderer::class],
+            ['github', GitHubRenderer::class],
+            ['gitlab', GitLabRenderer::class],
+            ['json', JSONRenderer::class],
+            ['checkstyle', CheckStyleRenderer::class],
+            ['sarif', SARIFRenderer::class],
             ['PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'],
-            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
+            [NamespaceRenderer::class, NamespaceRenderer::class],
             /* Test what happens when class already exists. */
-            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
+            [NamespaceRenderer::class, NamespaceRenderer::class],
         ];
     }
 
@@ -744,14 +755,13 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         return [
             [''],
-            ['PHPMD\\Test\\Renderer\\NotExistsRenderer'],
+            [NotExistsRenderer::class],
         ];
     }
 
     /**
      * @param string $deprecatedName
      * @param string $newName
-     * @param Closure $result
      * @dataProvider dataProviderDeprecatedCliOptions
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result)
@@ -794,8 +804,6 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
-     * @param array $options
-     * @param array $expected
      * @return void
      * @dataProvider dataProviderGetReportFiles
      */

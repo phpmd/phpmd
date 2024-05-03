@@ -18,8 +18,10 @@
 namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
+use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Regression test for issue 409.
@@ -34,7 +36,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
     private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\PHPMD\Renderer\TextRenderer
+     * @var PHPUnit_Framework_MockObject_MockObject|TextRenderer
      */
     private $renderer;
 
@@ -44,7 +46,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
     protected function setUp(): void
     {
         $this->renderer = $this->getMockFromBuilder(
-            $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
+            $this->getMockBuilder(TextRenderer::class)
                 ->disableOriginalConstructor()
                 ->onlyMethods(['renderReport', 'start', 'end'])
         );

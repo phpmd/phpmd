@@ -3,6 +3,7 @@
 namespace PHPMD\Baseline;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Rule;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -15,23 +16,23 @@ class BaselineValidatorTest extends AbstractTestCase
     /** @var BaselineSet|MockObject */
     private $baselineSet;
 
-    /** @var RuleViolation|MockObject */
+    /** @var MockObject|RuleViolation */
     private $violation;
 
     protected function setUp(): void
     {
         parent::setUp();
         $rule            = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Rule')->disableOriginalConstructor()
+            $this->getMockBuilder(Rule::class)->disableOriginalConstructor()
         );
         $this->violation = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\RuleViolation')->disableOriginalConstructor()
+            $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()
         );
         $this->violation
             ->method('getRule')
             ->willReturn($rule);
         $this->baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
         );
     }
 

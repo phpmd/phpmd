@@ -3,6 +3,8 @@
 namespace PHPMD\Baseline;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Rule\CleanCode\MissingImport;
+use PHPMD\Rule\CleanCode\UndefinedVariable;
 use RuntimeException;
 
 /**
@@ -19,9 +21,9 @@ class BaselineSetFactoryTest extends AbstractTestCase
         $baseDir  = dirname($filename);
         $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', $baseDir . '/src/foo/bar', null));
+        static::assertTrue($set->contains(MissingImport::class, $baseDir . '/src/foo/bar', null));
         static::assertTrue(
-            $set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', $baseDir . '/src/foo/bar', 'myMethod')
+            $set->contains(UndefinedVariable::class, $baseDir . '/src/foo/bar', 'myMethod')
         );
     }
 
@@ -34,9 +36,9 @@ class BaselineSetFactoryTest extends AbstractTestCase
         $baseDir  = dirname($filename);
         $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('PHPMD\Rule\CleanCode\MissingImport', $baseDir . '/src\\foo/bar', null));
+        static::assertTrue($set->contains(MissingImport::class, $baseDir . '/src\\foo/bar', null));
         static::assertTrue(
-            $set->contains('PHPMD\Rule\CleanCode\UndefinedVariable', $baseDir . '/src\\foo/bar', 'myMethod')
+            $set->contains(UndefinedVariable::class, $baseDir . '/src\\foo/bar', 'myMethod')
         );
     }
 

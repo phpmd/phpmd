@@ -20,10 +20,10 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /** @var CommandLineOptions&MockObject */
     private $options;
 
-    /** @var ResultCacheKeyFactory&MockObject */
+    /** @var MockObject&ResultCacheKeyFactory */
     private $keyFactory;
 
-    /** @var ResultCacheStateFactory&MockObject */
+    /** @var MockObject&ResultCacheStateFactory */
     private $stateFactory;
 
     /** @var ResultCacheUpdater */
@@ -32,13 +32,13 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->options      = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\TextUI\CommandLineOptions')->disableOriginalConstructor()
+            $this->getMockBuilder(CommandLineOptions::class)->disableOriginalConstructor()
         );
         $this->keyFactory   = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheKeyFactory')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheKeyFactory::class)->disableOriginalConstructor()
         );
         $this->stateFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheStateFactory')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheStateFactory::class)->disableOriginalConstructor()
         );
 
         $this->engineFactory = new ResultCacheEngineFactory(new NullOutput(), $this->keyFactory, $this->stateFactory);

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
@@ -47,10 +48,10 @@ class XMLRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
+            ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);
@@ -85,10 +86,10 @@ class XMLRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($processingErrors)));
+            ->will($this->returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);

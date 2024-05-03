@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
@@ -57,10 +58,10 @@ class SARIFRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
+            ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -100,10 +101,10 @@ class SARIFRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($processingErrors)));
+            ->will($this->returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -121,10 +122,10 @@ class SARIFRendererTest extends AbstractTestCase
         $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
         $this->assertSame(
-            json_encode($actual, $flags),
             json_encode(json_decode(file_get_contents(
                 __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
-            )), $flags)
+            )), $flags),
+            json_encode($actual, $flags)
         );
     }
 }

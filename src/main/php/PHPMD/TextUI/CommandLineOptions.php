@@ -651,8 +651,8 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
-     * @throws InvalidArgumentException When the specified renderer does not exist.
      * @return AbstractRenderer
+     * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
     {
@@ -671,8 +671,8 @@ class CommandLineOptions
 
     /**
      * @param string $reportFormat
-     * @throws InvalidArgumentException When the specified renderer does not exist.
      * @return AbstractRenderer
+     * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     protected function createRendererWithoutOptions($reportFormat = null)
     {
@@ -775,8 +775,8 @@ class CommandLineOptions
     }
 
     /**
-     * @throws InvalidArgumentException
      * @return AbstractRenderer
+     * @throws InvalidArgumentException
      */
     protected function createCustomRenderer()
     {
@@ -913,8 +913,8 @@ class CommandLineOptions
      * exception.
      *
      * @param string $inputFile Specified input file name.
-     * @throws InvalidArgumentException If the specified input file does not exist.
      * @return string
+     * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
     protected function readInputFile($inputFile)

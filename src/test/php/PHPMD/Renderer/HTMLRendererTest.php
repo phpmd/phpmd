@@ -17,8 +17,8 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
 
 /**
@@ -47,7 +47,7 @@ class HTMLRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
+            ->will($this->returnValue(new ArrayIterator($violations)));
 
         $extraLineInExcerpt = 2;
         $renderer = new HTMLRenderer($extraLineInExcerpt);

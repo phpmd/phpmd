@@ -20,6 +20,7 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTestCase;
+use Sindelfingen\MyInterface;
 
 /**
  * Test case for the interface node implementation.
@@ -41,7 +42,7 @@ class InterfaceNodeTest extends AbstractTestCase
 
         $node = new InterfaceNode($interface);
 
-        $this->assertSame('Sindelfingen\\MyInterface', $node->getFullQualifiedName());
+        $this->assertSame(MyInterface::class, $node->getFullQualifiedName());
     }
 
     /**

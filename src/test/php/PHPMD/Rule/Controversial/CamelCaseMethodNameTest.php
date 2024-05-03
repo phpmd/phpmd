@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\MethodNode;
 
 /**
  * Test case for the camel case method name rule.
@@ -268,7 +269,7 @@ class CamelCaseMethodNameTest extends AbstractTestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethod()
     {

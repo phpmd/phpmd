@@ -20,8 +20,10 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PHPMD\AbstractRule;
 use PHPMD\AbstractTestCase;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use Sindelfingen\MyClass;
 
 /**
  * Test case for the class node implementation.
@@ -56,7 +58,7 @@ class ClassNodeTest extends AbstractTestCase
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
 
-        $rule = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\\AbstractRule'));
+        $rule = $this->getMockFromBuilder($this->getMockBuilder(AbstractRule::class));
 
         $node = new ClassNode($class);
 
@@ -103,7 +105,7 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        $this->assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
+        $this->assertSame(MyClass::class, $node->getFullQualifiedName());
     }
 
     /**

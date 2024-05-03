@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Stubs\WriterStub;
 
@@ -49,7 +50,7 @@ class AnsiRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
+            ->will($this->returnValue(new ArrayIterator($violations)));
         $report->expects($this->atLeastOnce())
             ->method('isEmpty')
             ->will($this->returnValue(false));
@@ -58,7 +59,7 @@ class AnsiRendererTest extends AbstractTestCase
             ->will($this->returnValue(true));
         $report->expects($this->atLeastOnce())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($errors)));
+            ->will($this->returnValue(new ArrayIterator($errors)));
         $report->expects($this->once())
             ->method('getElapsedTimeInMillis')
             ->will($this->returnValue(200));
@@ -104,7 +105,7 @@ class AnsiRendererTest extends AbstractTestCase
         $report = $this->getReportWithNoViolation();
         $report->expects($this->atLeastOnce())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->atLeastOnce())
             ->method('isEmpty')
             ->will($this->returnValue(true));
@@ -113,7 +114,7 @@ class AnsiRendererTest extends AbstractTestCase
             ->will($this->returnValue(false));
         $report->expects($this->atLeastOnce())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $report->expects($this->once())
             ->method('getElapsedTimeInMillis')
             ->will($this->returnValue(200));
