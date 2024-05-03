@@ -371,9 +371,10 @@ class UnusedFormalParameterTest extends AbstractTestCase
      */
     public function testRuleDoesNotApplyToMagicMethod()
     {
-        $methods = array_filter($this->getClass()->getMethods(), function ($method) {
-            return $method->getName() === '__call';
-        });
+        $methods = array_filter(
+            $this->getClass()->getMethods(),
+            static fn ($method) => $method->getName() === '__call',
+        );
 
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -529,9 +530,10 @@ class UnusedFormalParameterTest extends AbstractTestCase
      */
     public function testRuleDoesNotApplyToPropertyPromotionParameters()
     {
-        $methods = array_filter($this->getClass()->getMethods(), function ($method) {
-            return $method->getImage() === '__construct';
-        });
+        $methods = array_filter(
+            $this->getClass()->getMethods(),
+            static fn ($method) => $method->getImage() === '__construct',
+        );
 
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());

@@ -81,8 +81,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     protected function getExpressions(array $statements)
     {
         $nodes = [];
+
         foreach ($statements as $statement) {
             $node = $statement->getFirstChildOfType(ASTExpression::class);
+
             if ($node) {
                 $nodes[] = $node;
             }
