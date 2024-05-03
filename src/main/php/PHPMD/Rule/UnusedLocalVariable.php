@@ -84,7 +84,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
                 return true;
             }
 
-            if (in_array($this->getNode($node), array_slice($parent->getChildren(), 1))) {
+            if (in_array($node->getNode(), array_slice($parent->getChildren(), 1))) {
                 return true;
             }
         }

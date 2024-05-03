@@ -174,7 +174,7 @@ abstract class AbstractNode
     /**
      * Searches recursive for all children of this node that are of variable.
      *
-     * @return ASTVariable[]
+     * @return array<int, ASTNode<ASTVariable>>
      * @todo Cover by a test.
      */
     public function findChildrenOfTypeVariable()
