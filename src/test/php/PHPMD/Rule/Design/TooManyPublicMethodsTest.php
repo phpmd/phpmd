@@ -20,6 +20,7 @@ namespace PHPMD\Rule\Design;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Report;
 
@@ -181,10 +182,10 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     /**
      * Creates a prepared class node mock
      *
-     * @param integer $numberOfMethods
+     * @param int $numberOfMethods
      * @param array|null $publicMethods
      * @param array|null $privateMethods
-     * @return \PHPMD\Node\ClassNode
+     * @return ClassNode
      */
     private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = [])
     {

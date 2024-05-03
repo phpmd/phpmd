@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\MethodNode;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
@@ -138,7 +139,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethod()
     {

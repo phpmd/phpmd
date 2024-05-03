@@ -199,7 +199,7 @@ class PHPMDTest extends AbstractTestCase
 
         /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject $baselineSet */
         $baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
         );
         $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 

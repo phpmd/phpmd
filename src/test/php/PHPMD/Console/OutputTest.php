@@ -13,9 +13,6 @@ class OutputTest extends AbstractTestCase
     /** @var TestOutput */
     private $output;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();

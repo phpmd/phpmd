@@ -17,7 +17,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     {
         /** @var AbstractTypeNode&MockObject $node */
         $node = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Node\AbstractTypeNode')->disableOriginalConstructor()
+            $this->getMockBuilder(AbstractTypeNode::class)->disableOriginalConstructor()
         );
         $node->method('getName')->willReturn('className');
         $node->method('getFileName')->willReturn('/file/path');
@@ -42,7 +42,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     {
         /** @var MethodNode&MockObject $node */
         $node = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Node\MethodNode')->disableOriginalConstructor()
+            $this->getMockBuilder(MethodNode::class)->disableOriginalConstructor()
         );
         $node->method('getName')->willReturn('methodName');
         $node->method('getParentName')->willReturn('className');
@@ -68,7 +68,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     {
         /** @var MethodNode&MockObject $node */
         $node = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Node\FunctionNode')->disableOriginalConstructor()
+            $this->getMockBuilder(FunctionNode::class)->disableOriginalConstructor()
         );
         $node->method('getName')->willReturn('functionName');
         $node->method('getFileName')->willReturn('/file/path');

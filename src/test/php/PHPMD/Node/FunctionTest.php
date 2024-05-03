@@ -37,7 +37,7 @@ class FunctionTest extends AbstractTestCase
     public function testMagicCallDelegatesToWrappedPHPDependFunction()
     {
         $function = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\\Source\\AST\\ASTFunction')
+            $this->getMockBuilder(ASTFunction::class)
                 ->setConstructorArgs([null])
         );
         $function->expects($this->once())

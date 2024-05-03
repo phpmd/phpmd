@@ -39,7 +39,7 @@ class MethodNodeTest extends AbstractTestCase
     public function testMagicCallDelegatesToWrappedPHPDependMethod()
     {
         $method = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\\Source\\AST\\ASTMethod')
+            $this->getMockBuilder(ASTMethod::class)
                 ->setConstructorArgs([null])
         );
         $method->expects($this->once())
@@ -70,7 +70,7 @@ class MethodNodeTest extends AbstractTestCase
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod()
     {
         $this->assertInstanceOf(
-            'PHPMD\\Node\\InterfaceNode',
+            InterfaceNode::class,
             $this->getMethod()->getParentType()
         );
     }
@@ -83,7 +83,7 @@ class MethodNodeTest extends AbstractTestCase
     public function testGetParentTypeReturnsClassForClassMethod()
     {
         $this->assertInstanceOf(
-            'PHPMD\\Node\\ClassNode',
+            ClassNode::class,
             $this->getMethod()->getParentType()
         );
     }
@@ -94,7 +94,7 @@ class MethodNodeTest extends AbstractTestCase
     public function testGetParentTypeReturnsTrait()
     {
         $this->assertInstanceOf(
-            'PHPMD\\Node\\TraitNode',
+            TraitNode::class,
             $this->getMethod()->getParentType()
         );
     }

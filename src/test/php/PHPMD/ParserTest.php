@@ -17,10 +17,19 @@
 
 namespace PHPMD;
 
+use ArrayIterator;
+use PDepend\Engine;
 use PDepend\Metrics\AnalyzerFactory;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
+use PHPMD\Node\ClassNode;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\MethodNode;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -43,7 +52,7 @@ class ParserTest extends AbstractTestCase
             ->will($this->returnValue(true));
 
         $adapter = new Parser($this->getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\ClassNode'));
+        $adapter->addRuleSet($this->getRuleSetMock(ClassNode::class));
         $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitClass($mock);
     }
@@ -75,7 +84,7 @@ class ParserTest extends AbstractTestCase
     public function testAdapterDelegatesMethodNodeToRuleSet()
     {
         $adapter = new Parser($this->getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\MethodNode'));
+        $adapter->addRuleSet($this->getRuleSetMock(MethodNode::class));
         $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitMethod($this->getPHPDependMethodMock());
     }
@@ -102,7 +111,7 @@ class ParserTest extends AbstractTestCase
     public function testAdapterDelegatesFunctionNodeToRuleSet()
     {
         $adapter = new Parser($this->getPHPDependMock());
-        $adapter->addRuleSet($this->getRuleSetMock('PHPMD\\Node\\FunctionNode'));
+        $adapter->addRuleSet($this->getRuleSetMock(FunctionNode::class));
         $adapter->setReport($this->getReportWithNoViolation());
         $adapter->visitFunction($this->getPHPDependFunctionMock());
     }
@@ -147,7 +156,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Creates a mocked PDepend instance.
      *
-     * @return \PDepend\Engine
+     * @return Engine
      */
     private function getPHPDependMock()
     {
@@ -155,7 +164,7 @@ class ParserTest extends AbstractTestCase
         $config = new Configuration((object)[]);
 
         return $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\Engine')
+            $this->getMockBuilder(Engine::class)
                 ->setConstructorArgs([
                     $config,
                     new CacheFactory($config),
@@ -167,12 +176,12 @@ class ParserTest extends AbstractTestCase
     /**
      * Creates a mocked PDepend class instance.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
      */
     protected function getPHPDependClassMock()
     {
         $class = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
+            $this->getMockBuilder(ASTClass::class)
                 ->setConstructorArgs([null])
         );
         $class->expects($this->any())
@@ -180,13 +189,13 @@ class ParserTest extends AbstractTestCase
             ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
         $class->expects($this->any())
             ->method('getConstants')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $class->expects($this->any())
             ->method('getProperties')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
         $class->expects($this->any())
             ->method('getMethods')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will($this->returnValue(new ArrayIterator([])));
 
         return $class;
     }
@@ -200,7 +209,7 @@ class ParserTest extends AbstractTestCase
     protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
     {
         $function = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\Source\AST\ASTFunction')
+            $this->getMockBuilder(ASTFunction::class)
                 ->setConstructorArgs([null])
         );
         $function->expects($this->atLeastOnce())
@@ -219,7 +228,7 @@ class ParserTest extends AbstractTestCase
     protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
     {
         $method = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\Source\AST\ASTMethod')
+            $this->getMockBuilder(ASTMethod::class)
                 ->setConstructorArgs([null])
         );
         $method->expects($this->atLeastOnce())
@@ -238,7 +247,7 @@ class ParserTest extends AbstractTestCase
     protected function getPHPDependFileMock($fileName)
     {
         $file = $this->getMockFromBuilder(
-            $this->getMockBuilder('PDepend\Source\AST\ASTCompilationUnit')
+            $this->getMockBuilder(ASTCompilationUnit::class)
                 ->setConstructorArgs([null])
         );
         $file->expects($this->any())

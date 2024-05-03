@@ -14,7 +14,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 class ResultCacheUpdaterTest extends AbstractTestCase
 {
-    /** @var ResultCacheState&MockObject */
+    /** @var MockObject&ResultCacheState */
     private $state;
 
     /** @var ResultCacheUpdater */
@@ -23,7 +23,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheState')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
         );
 
         $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');

@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\ClassNode;
 
 /**
  * Test case for the too many methods rule.
@@ -163,9 +164,9 @@ class TooManyMethodsTest extends AbstractTestCase
     /**
      * Creates a prepared class node mock
      *
-     * @param integer $numberOfMethods
+     * @param int $numberOfMethods
      * @param string[] $methodNames
-     * @return \PHPMD\Node\ClassNode
+     * @return ClassNode
      */
     private function createClassMock($numberOfMethods, array $methodNames = null)
     {

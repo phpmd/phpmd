@@ -24,7 +24,6 @@ use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
-use PHPMD\RuleByNameNotFoundException;
 use PHPMD\Rule\CleanCode\ElseExpression;
 use PHPMD\Stubs\RuleStub;
 

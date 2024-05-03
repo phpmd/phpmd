@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use Closure;
+use ErrorException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -189,8 +190,6 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
-     *
-     * @return void
      */
     public static function setUpBeforeClass(): void
     {
@@ -260,7 +259,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the trace frame of the calling test case.
      *
      * @return array
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     protected static function getCallingTestCase()
     {
@@ -269,7 +268,7 @@ abstract class AbstractStaticTestCase extends TestCase
                 return $frame;
             }
         }
-        throw new \ErrorException('Cannot locate calling test case.');
+        throw new ErrorException('Cannot locate calling test case.');
     }
 
     protected static function getResourceFilePathFromClassName($className, $localPath)
