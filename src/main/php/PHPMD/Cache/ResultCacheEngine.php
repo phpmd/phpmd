@@ -18,7 +18,7 @@ class ResultCacheEngine
         ResultCacheUpdater    $updater,
         ResultCacheWriter     $writer
     ) {
-    
+
         $this->fileFilter = $fileFilter;
         $this->updater    = $updater;
         $this->writer     = $writer;
