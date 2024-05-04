@@ -15,14 +15,15 @@ jobs:
 
     strategy:
       matrix:
-        php: [8.3]
-        dependency-version: [prefer-stable]
+        php: ['8.3']
 
     name: PHP ${{ matrix.php }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -33,14 +34,14 @@ jobs:
 
       - name: Cache library packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
-          key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+          key: ${{ runner.os }}-coverage-v2-${{ matrix.php }}-${{ hashFiles('composer.json') }}
 
       - name: Cache test packages
         id: composer-test-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: src/test/vendor
           key: ${{ runner.os }}-coverage-test-${{ matrix.php }}-${{ hashFiles('src/test/composer.json') }}
@@ -48,6 +49,7 @@ jobs:
       - name: Upgrade PHPUnit
         run: |
           composer require symfony/config:^6.4 --no-update --no-interaction --dev
+          composer require scrutinizer/ocular --no-update --no-interaction --dev
           cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
 
       - name: Install dependencies
@@ -63,6 +65,8 @@ jobs:
 
       - name: Execute Unit Tests
         run: src/test/vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        env:
+          XDEBUG_MODE: coverage
 
       - name: Archive code coverage results
         uses: codecov/codecov-action@v4
@@ -70,3 +74,6 @@ jobs:
           files: ./coverage.xml
           disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload Code Coverage To Scrutinizer
+        run: vendor/bin/ocular code-coverage:upload --format=php-clover coverage.xml

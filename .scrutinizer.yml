@@ -1,13 +1,18 @@
 build:
-  environment:
-    php:
-      version: 7.4.0
+    environment:
+        php:
+            version: 7.4
+    tests:
+        override:
+            - true
 
 checks:
-  php:
-    code_rating: true
-    duplication: true
+    php:
+        code_rating: true
+        duplication: true
 
 filter:
-  excluded_paths:
-    - src/test/resources/files/
+    paths: [ "src/main/php/*" ]
+
+tools:
+    external_code_coverage: true
