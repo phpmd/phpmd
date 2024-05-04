@@ -18,7 +18,10 @@
 namespace PHPMD;
 
 use ArrayIterator;
+use InvalidArgumentException;
 use IteratorAggregate;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -230,6 +233,10 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Applies all registered rules that match against the concrete node type.
+     *
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     public function apply(AbstractNode $node): void
     {

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -68,6 +69,9 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         }
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function isValid($variable)
     {
         $image = $variable->getImage();

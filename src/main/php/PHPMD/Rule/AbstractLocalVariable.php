@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTArtifact;
@@ -75,6 +76,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @param ASTNode<ASTVariable> $variable The variable to check.
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isLocal(ASTNode $variable)
     {
@@ -111,6 +113,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * or method postfix.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isRegularVariable(ASTNode $variable)
     {
@@ -137,6 +140,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * instance.
      *
      * @return ASTNode
+     * @throws OutOfBoundsException
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
     {
@@ -197,6 +201,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @return string
+     * @throws OutOfBoundsException
      */
     protected function getVariableImage($variable)
     {
@@ -214,6 +219,9 @@ abstract class AbstractLocalVariable extends AbstractRule
         return $this->prependMemberPrimaryPrefix($image, $variable);
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
     {
         do {
@@ -335,6 +343,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
      * @return string
+     * @throws OutOfBoundsException
      */
     private function prependMemberPrimaryPrefix($image, $variable)
     {

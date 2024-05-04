@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -57,6 +58,7 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      * Whether the given scope is an else clause
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isElseScope(AbstractNode $scope, ASTNode $parent)
     {

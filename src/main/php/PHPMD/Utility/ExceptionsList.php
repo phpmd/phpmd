@@ -19,6 +19,7 @@ namespace PHPMD\Utility;
 
 use ArrayAccess;
 use ArrayIterator;
+use InvalidArgumentException;
 use IteratorAggregate;
 use OutOfBoundsException;
 use PHPMD\Rule;
@@ -55,6 +56,10 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         $this->separator = $separator;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     */
     public function contains(string $value): bool
     {
         $exceptions = $this->getExceptionsList();
@@ -66,6 +71,8 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
      * Gets array of exceptions from property
      *
      * @return array<string, int>
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function getExceptionsList(): array
     {
@@ -82,6 +89,10 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return $this->exceptions;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     */
     public function getIterator(): ArrayIterator
     {
         $keys = array_keys($this->getExceptionsList());
@@ -89,12 +100,17 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
         return new ArrayIterator(array_combine($keys, $keys));
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     */
     public function offsetExists($offset): bool
     {
         return $this->contains($offset);
     }
 
     /**
+     * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
     public function offsetGet($offset): int

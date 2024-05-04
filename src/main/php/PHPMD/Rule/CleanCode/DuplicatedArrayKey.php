@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
@@ -53,6 +54,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * with duplicated entries for any key and emits a rule violation if so.
      *
      * @param ASTNode $node Array node.
+     * @throws OutOfBoundsException
      */
     protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
@@ -86,6 +88,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * @param AbstractASTNode $node Array key to evaluate.
      * @param int $index Fallback in case of non-associative arrays
      * @return ?AbstractASTNode Key name
+     * @throws OutOfBoundsException
      */
     protected function normalizeKey(AbstractASTNode $node, $index)
     {

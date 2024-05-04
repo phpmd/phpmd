@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Naming;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -93,6 +95,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Checks if the variable name of the given node is smaller/equal to the
      * configured threshold.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function checkNodeImage(AbstractNode $node): void
     {
@@ -105,6 +110,8 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Template method that performs the real node image check.
      *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      * @SuppressWarnings(PHPMD.LongVariable)
      */
     protected function checkMaximumLength(AbstractNode $node): void
@@ -186,6 +193,8 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     protected function getSubtractPrefixList()
     {
@@ -200,6 +209,8 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     protected function getSubtractSuffixList()
     {

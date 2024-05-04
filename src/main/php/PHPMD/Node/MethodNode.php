@@ -18,6 +18,7 @@
 namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTTrait;
@@ -134,6 +135,7 @@ class MethodNode extends AbstractCallableNode
      * Otherwise this method will return <b>false</b>.
      *
      * @return bool
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
     public function isDeclaration()

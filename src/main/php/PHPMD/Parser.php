@@ -17,13 +17,16 @@
 
 namespace PHPMD;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PDepend\Engine;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Report\CodeAwareGenerator;
-use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTCompilationUnitNotFoundException;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
@@ -137,8 +140,6 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Closes the logger process and writes the output file.
-     *
-     * @throws NoLogOutputException If the no log target exists.
      */
     public function close(): void
     {
@@ -175,6 +176,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits a class node.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitClass(ASTClass $node): void
     {
@@ -188,6 +193,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits a trait node.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitTrait(ASTTrait $node): void
     {
@@ -201,6 +210,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits a enum node.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitEnum(ASTEnum $node): void
     {
@@ -214,6 +227,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits a function node.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitFunction(ASTFunction $node): void
     {
@@ -226,6 +243,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits an interface node.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitInterface(ASTInterface $node): void
     {
@@ -239,6 +260,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Visits a method node.
+     *
+     * @throws ASTCompilationUnitNotFoundException
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function visitMethod(ASTMethod $node): void
     {
@@ -259,6 +285,10 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Applies all rule-sets to the given <b>$node</b> instance.
+     *
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     private function apply(AbstractNode $node): void
     {

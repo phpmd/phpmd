@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use BadMethodCallException;
+use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTArtifact;
@@ -98,6 +99,7 @@ abstract class AbstractNode
      *
      * @param int $index The child offset.
      * @return AbstractNode
+     * @throws OutOfBoundsException
      */
     public function getChild($index)
     {
@@ -316,7 +318,7 @@ abstract class AbstractNode
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
      *
-     * @return string
+     * @return ?string
      */
     abstract public function getFullQualifiedName();
 

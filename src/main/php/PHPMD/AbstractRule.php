@@ -17,7 +17,9 @@
 
 namespace PHPMD;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -362,6 +364,9 @@ abstract class AbstractRule implements Rule
      * Apply the current rule on each method of a class node.
      *
      * @param ClassNode|EnumNode|InterfaceNode|TraitNode $node class node containing methods.
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
@@ -377,6 +382,10 @@ abstract class AbstractRule implements Rule
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
+     *
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     abstract public function apply(AbstractNode $node): void;
 }
