@@ -20,4 +20,6 @@ namespace PHPMD\Rule;
 /**
  * This interface is used to mark a rule implementation as enum aware.
  */
-interface EnumAware {}
+interface EnumAware
+{
+}
