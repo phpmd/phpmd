@@ -37,22 +37,22 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php != '8.4'
-        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress
+        run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
       # For now we need to overwrite the PHP version check on the 8.4 beta as paratest has not been releasd for it yet
       - name: Install dependencies (PHP 8.4 beta)
         if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php == '8.4'
-        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php
+        run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
 
       - name: Execute Unit Tests
-        run: vendor/bin/paratest
+        run: composer test
 
       - name: Run PHPStan
         if: matrix.php != '8.4'
