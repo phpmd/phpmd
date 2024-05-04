@@ -36,7 +36,7 @@ class GitLabRenderer extends AbstractRenderer
         $jsonData = $this->encodeReport($data);
 
         $writer = $this->getWriter();
-        $writer->write($jsonData.PHP_EOL);
+        $writer->write($jsonData . PHP_EOL);
     }
 
 
@@ -61,7 +61,7 @@ class GitLabRenderer extends AbstractRenderer
                         'PHP',
                     ],
                 'check_name' => $violation->getRule()->getName(),
-                'fingerprint' => $violation->getFileName().':'.$violation->getBeginLine().':'.$violation->getRule(
+                'fingerprint' => $violation->getFileName() . ':' . $violation->getBeginLine() . ':' . $violation->getRule(
                 )->getName(),
                 'description' => $violation->getDescription(),
                 'severity' => 'minor',
@@ -96,7 +96,7 @@ class GitLabRenderer extends AbstractRenderer
         foreach ($errors as $error) {
             $errorResult = [
                 'description' => $error->getMessage(),
-                'fingerprint' => $error->getFile().':0:MajorErrorInFile',
+                'fingerprint' => $error->getFile() . ':0:MajorErrorInFile',
                 'severity' => 'major',
                 'location' =>
                     [
