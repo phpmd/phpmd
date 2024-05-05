@@ -60,7 +60,7 @@ class ResultCacheState
     public function addRuleViolation($filePath, RuleViolation $violation): void
     {
         $this->state['files'][$filePath]['violations'][] = [
-            'rule'          => get_class($violation->getRule()),
+            'rule'          => $violation->getRule()::class,
             'namespaceName' => $violation->getNamespaceName(),
             'className'     => $violation->getClassName(),
             'methodName'    => $violation->getMethodName(),
