@@ -17,7 +17,6 @@
 
 namespace PHPMD\Rule\CleanCode;
 
-use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
