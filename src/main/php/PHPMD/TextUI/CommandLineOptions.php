@@ -292,7 +292,7 @@ class CommandLineOptions
                     break;
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
-                    /* Deprecated: We use the suffixes option now */
+                    // Deprecated: We use the suffixes option now
                     $this->extensions = $this->readValue($equalChunk, $args);
                     break;
                 case '--suffixes':
@@ -300,7 +300,7 @@ class CommandLineOptions
                     break;
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
-                    /* Deprecated: We use the exclude option now */
+                    // Deprecated: We use the exclude option now
                     $this->ignore = $this->readValue($equalChunk, $args);
                     break;
                 case '--exclude':
