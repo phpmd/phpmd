@@ -49,7 +49,6 @@ class Strings
         array $subtractPrefixes,
         array $subtractSuffixes
     ) {
-
         $stringLength = strlen($stringName);
 
         foreach ($subtractSuffixes as $suffix) {
