@@ -83,6 +83,8 @@ return $config
                 'since', // Source & version
                 'filesource', // phpDocumentor specific
                 'ignore', // phpDocumentor specific
+                'SuppressWarnings', // PHPMD specific (Current format "@SuppressWarnings(*)" not supported)
+                'phpcsSuppress', // PHPCS specific
                 'deprecated', // Should be to the end to better notice them
                 'todo', // Should be last to better notice them
             ],
