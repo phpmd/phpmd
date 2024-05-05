@@ -74,7 +74,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
         return array_map(
             'strtolower',
             array_map(
-                'trim',
+                trim(...),
                 explode(
                     ',',
                     $this->getStringProperty('unwanted-functions')
