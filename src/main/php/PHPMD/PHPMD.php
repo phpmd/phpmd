@@ -17,9 +17,8 @@
 
 namespace PHPMD;
 
-use LogicException;
+use Exception;
 use PHPMD\Cache\ResultCacheEngine;
-use RuntimeException;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -214,8 +213,7 @@ class PHPMD
      * @param AbstractRenderer[] $renderers
      * @param RuleSet[]          $ruleSetList
      *
-     * @throws LogicException
-     * @throws RuntimeException
+     * @throws Exception
      */
     public function processFiles(
         $inputPath,

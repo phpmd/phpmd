@@ -18,8 +18,6 @@
 namespace PHPMD\TextUI;
 
 use Exception;
-use InvalidArgumentException;
-use LogicException;
 use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
@@ -73,9 +71,7 @@ class Command
      * even if any violation or error is found.
      *
      * @return int
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
-     * @throws LogicException
+     * @throws Exception
      */
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
     {
