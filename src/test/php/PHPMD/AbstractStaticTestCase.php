@@ -293,7 +293,7 @@ abstract class AbstractStaticTestCase extends TestCase
     {
         return sprintf(
             '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
+            __DIR__,
             $directory,
             $file
         );
