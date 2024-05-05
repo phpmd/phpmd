@@ -185,7 +185,7 @@ return $config
         // There should not be a binary flag before strings.
         'no_binary_string' => true,
         // There should not be blank lines between docblock and the documented element.
-        'no_blank_lines_after_phpdoc' => false,
+        'no_blank_lines_after_phpdoc' => true,
         // There should not be any empty comments.
         'no_empty_comment' => true,
         // Remove useless (semicolon) statements.
