@@ -731,7 +731,7 @@ class CommandLineOptionsTest extends AbstractTestCase
             ['sarif', SARIFRenderer::class],
             ['PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'],
             [NamespaceRenderer::class, NamespaceRenderer::class],
-            /* Test what happens when class already exists. */
+            // Test what happens when class already exists.
             [NamespaceRenderer::class, NamespaceRenderer::class],
         ];
     }
