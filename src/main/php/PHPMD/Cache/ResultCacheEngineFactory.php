@@ -16,8 +16,8 @@ class ResultCacheEngineFactory
     private $cacheStateFactory;
 
     public function __construct(
-        OutputInterface         $output,
-        ResultCacheKeyFactory   $cacheKeyFactory,
+        OutputInterface $output,
+        ResultCacheKeyFactory $cacheKeyFactory,
         ResultCacheStateFactory $cacheStateFactory
     ) {
         $this->output = $output;
