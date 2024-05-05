@@ -17,8 +17,10 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 {
     /** @var NullOutput */
     private $output;
+
     /** @var MockObject&ResultCacheKey */
     private $key;
+
     /** @var MockObject&ResultCacheState */
     private $state;
 

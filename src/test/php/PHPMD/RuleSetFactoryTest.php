@@ -670,6 +670,7 @@ class RuleSetFactoryTest extends AbstractTestCase
             $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
         } catch (Exception $exception) {
             set_include_path($includePathBefore);
+
             throw $exception;
         }
 
@@ -724,6 +725,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     {
         $ruleSets = $this->createRuleSetsFromFiles($file);
         $ruleSet = $ruleSets[0];
+
         /** @var Rule $rule */
         foreach ($ruleSet->getRules() as $rule) {
             $message = sprintf(

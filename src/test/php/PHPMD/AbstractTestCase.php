@@ -673,6 +673,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
                 return $node;
             }
         }
+
         throw new ErrorException("Cannot locate node named $name.");
     }
 

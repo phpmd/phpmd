@@ -923,6 +923,7 @@ class CommandLineOptions
         if (file_exists($inputFile)) {
             return implode(',', array_map(trim(...), file($inputFile)));
         }
+
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
 

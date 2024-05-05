@@ -59,6 +59,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
         $keys = [];
+
         /** @var ASTArrayElement $arrayElement */
         foreach ($node->getChildren() as $index => $arrayElement) {
             $arrayElement = $this->normalizeKey($arrayElement, $index);
@@ -70,6 +71,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
                 $this->addViolation($node, [$key, $arrayElement->getStartLine()]);
+
                 continue;
             }
             $keys[$key] = $arrayElement;
@@ -122,6 +124,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     protected function castStringFromLiteral(PDependASTNode $key)
     {
         $value = $key->getImage();
+
         switch ($value) {
             case 'false':
                 return '0';

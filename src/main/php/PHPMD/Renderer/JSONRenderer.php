@@ -67,6 +67,7 @@ class JSONRenderer extends AbstractRenderer
     protected function addViolationsToReport(Report $report, array $data)
     {
         $filesList = [];
+
         /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();

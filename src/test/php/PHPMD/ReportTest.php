@@ -198,6 +198,7 @@ class ReportTest extends AbstractTestCase
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
+
         /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
@@ -224,6 +225,7 @@ class ReportTest extends AbstractTestCase
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
+
         /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 

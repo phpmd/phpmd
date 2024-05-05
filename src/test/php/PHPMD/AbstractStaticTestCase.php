@@ -252,6 +252,7 @@ abstract class AbstractStaticTestCase extends TestCase
         } else {
             $filePath = tempnam(sys_get_temp_dir(), 'phpmd.');
         }
+
         return (self::$tempFiles[] = $filePath);
     }
 
@@ -268,6 +269,7 @@ abstract class AbstractStaticTestCase extends TestCase
                 return $frame;
             }
         }
+
         throw new ErrorException('Cannot locate calling test case.');
     }
 

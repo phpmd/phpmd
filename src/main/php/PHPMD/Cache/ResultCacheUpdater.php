@@ -12,6 +12,7 @@ class ResultCacheUpdater
 {
     /** @var OutputInterface */
     private $output;
+
     /** @var string */
     private $basePath;
 
