@@ -208,7 +208,6 @@ class ResultCacheStateTest extends TestCase
                             ],
                         ],
                     ],
-
                 ],
             ],
         ];

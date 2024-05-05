@@ -614,7 +614,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         $file = '/foo/baz.php',
         $message = 'Error in file "/foo/baz.php"'
     ) {
-
         $processingError = $this->getMockFromBuilder(
             $this->getMockBuilder(ProcessingError::class)
                 ->setConstructorArgs([$message])

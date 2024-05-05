@@ -47,7 +47,6 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
         $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
-
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             $inputs,
