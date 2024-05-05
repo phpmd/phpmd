@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * When running old PHPUnit version such as <= 5 with PHP >= 8.0,
  * new PHP tokens will be missing and generate errors.
  *
