@@ -75,7 +75,7 @@ abstract class AbstractNode
             );
         }
 
-        return $node->$name(...$args);
+        return $node->{$name}(...$args);
     }
 
     /**
