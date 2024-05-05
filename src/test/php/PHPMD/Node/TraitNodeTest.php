@@ -25,8 +25,8 @@ use Sindelfingen\MyTrait;
 /**
  * Test case for the trait node implementation.
  *
- * @covers \PHPMD\Node\TraitNode
  * @covers \PHPMD\Node\AbstractTypeNode
+ * @covers \PHPMD\Node\TraitNode
  */
 class TraitNodeTest extends AbstractTestCase
 {

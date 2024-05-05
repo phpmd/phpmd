@@ -28,8 +28,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
     public function testFromFileEmptyCache()
     {
@@ -38,8 +38,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
     public function testFromFileIncompleteCacheKey()
     {
@@ -48,8 +48,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
     public function testFromFileFullCache()
     {
@@ -73,8 +73,8 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
     public function testFromFileWithCacheWithoutBaselineOrComposer()
     {

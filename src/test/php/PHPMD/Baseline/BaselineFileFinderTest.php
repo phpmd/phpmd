@@ -23,8 +23,8 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::find
      * @covers ::existingFile
+     * @covers ::find
      */
     public function testShouldFindExistingFileNearRuleSet()
     {
@@ -65,9 +65,9 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
+     * @covers ::existingFile
      * @covers ::find
      * @covers ::nullOrThrow
-     * @covers ::existingFile
      */
     public function testShouldOnlyFindExistingFile()
     {
