@@ -360,7 +360,7 @@ class RuleSetFactory
             }
         }
 
-        /* @var RuleSet $rule */
+        /** @var RuleSet $rule */
         $rule = new $className();
         $rule->setName((string) $ruleNode['name']);
         $rule->setMessage((string) $ruleNode['message']);
