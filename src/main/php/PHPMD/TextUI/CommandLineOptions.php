@@ -638,6 +638,7 @@ class CommandLineOptions
     {
         return $this->extraLineInExcerpt;
     }
+
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
