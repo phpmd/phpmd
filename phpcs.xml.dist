@@ -51,6 +51,9 @@
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
         <severity>0</severity>
     </rule>
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber">
+        <severity>0</severity>
+    </rule>
 
     <!-- Sniffs from Slevomat standard -->
 

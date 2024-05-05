@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFormalParameter;
@@ -138,6 +140,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * the initial declaration.
      *
      * @return bool
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
     protected function isNotDeclaration(AbstractNode $node)
@@ -170,6 +173,8 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * This method collects all local variables in the body of the currently
      * analyzed method or function and removes those parameters that are
      * referenced by one of the collected variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function removeUsedParameters(AbstractNode $node): void
     {
@@ -183,6 +188,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Removes all the regular variables from a given node
      *
      * @param AbstractNode $node The node to remove the regular variables from.
+     * @throws OutOfBoundsException
      */
     protected function removeRegularVariables(AbstractNode $node): void
     {

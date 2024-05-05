@@ -18,6 +18,8 @@
 namespace PHPMD\TextUI;
 
 use Exception;
+use InvalidArgumentException;
+use LogicException;
 use PHPMD\Baseline\BaselineFileFinder;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSetFactory;
@@ -34,6 +36,7 @@ use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
+use RuntimeException;
 
 /**
  * This class provides a command line interface for PHPMD
@@ -70,6 +73,9 @@ class Command
      * even if any violation or error is found.
      *
      * @return int
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws LogicException
      */
     public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
     {
@@ -200,6 +206,7 @@ class Command
      *
      * @param string[] $args The raw command line arguments array.
      * @return int
+     * @throws RuntimeException
      */
     public static function main(array $args)
     {

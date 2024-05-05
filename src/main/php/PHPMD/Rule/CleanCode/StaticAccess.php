@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
@@ -70,6 +71,9 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function isStaticMethodCall(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
@@ -78,11 +82,17 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             !$this->isCallingSelf($methodCall);
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function isCallingParent(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function isCallingSelf(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;

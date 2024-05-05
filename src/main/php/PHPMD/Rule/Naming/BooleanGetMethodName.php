@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Naming;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -46,6 +47,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * boolean get method.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isBooleanGetMethod(MethodNode $node)
     {
@@ -84,6 +86,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * or has no parameters.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isParameterizedOrIgnored(MethodNode $node)
     {

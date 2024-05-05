@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Naming;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -68,6 +70,8 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * Gets array of prefixes from property
      *
      * @return string[]
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function getSubtractPrefixList()
     {
@@ -85,6 +89,8 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function getSubtractSuffixList()
     {

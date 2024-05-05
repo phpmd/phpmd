@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\MethodAware;
@@ -68,6 +69,9 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
         }
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     protected function isValid($methodName)
     {
         // disallow any consecutive uppercase letters

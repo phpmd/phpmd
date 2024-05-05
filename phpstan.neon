@@ -3,3 +3,9 @@ parameters:
         - src/main
     rememberPossiblyImpureFunctionValues: false
     level: 3
+    exceptions:
+        reportUncheckedExceptionDeadCatch: true
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true

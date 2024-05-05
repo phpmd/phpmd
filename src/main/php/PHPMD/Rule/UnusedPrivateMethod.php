@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
@@ -52,6 +53,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * as private and are not used in the same class' context.
      *
      * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
      */
     protected function collectUnusedPrivateMethods(ClassNode $class)
     {
@@ -101,6 +103,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      *
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
      */
     protected function removeUsedMethods(ClassNode $class, array $methods)
     {
@@ -115,6 +118,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      *
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
      */
     protected function removeExplicitCalls(ClassNode $class, array $methods)
     {
@@ -132,6 +136,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      *
      * @param array<string, MethodNode> $methods
      * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
      */
     protected function removeCallableArrayRepresentations(ClassNode $class, array $methods)
     {
@@ -154,6 +159,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * and that the second one is a literal static string.
      *
      * @return string|null
+     * @throws OutOfBoundsException
      */
     protected function getMethodNameFromArraySecondElement(AbstractNode $parent)
     {
@@ -179,6 +185,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * instance or static reference to the given class.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isClassScope(ClassNode $class, ASTNode $postfix)
     {

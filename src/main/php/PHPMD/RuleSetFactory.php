@@ -101,6 +101,7 @@ class RuleSetFactory
      *
      * @param string $ruleSetFileNames Comma-separated string of rule-set filenames or identifier.
      * @return RuleSet[]
+     * @throws RuntimeException
      */
     public function createRuleSets($ruleSetFileNames)
     {
@@ -121,6 +122,8 @@ class RuleSetFactory
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
      * @return RuleSet
+     * @throws RuleSetNotFoundException
+     * @throws RuntimeException
      */
     public function createSingleRuleSet($ruleSetOrFileName)
     {
@@ -239,6 +242,9 @@ class RuleSetFactory
      * This method parses a single rule xml node. Bases on the structure of the
      * xml node this method delegates the parsing process to another method in
      * this class.
+     *
+     * @throws RuleClassNotFoundException
+     * @throws RuntimeException
      */
     private function parseRuleNode(RuleSet $ruleSet, SimpleXMLElement $node): void
     {
@@ -262,6 +268,8 @@ class RuleSetFactory
     /**
      * This method parses a complete rule set that was includes a reference in
      * the currently parsed ruleset.
+     *
+     * @throws RuntimeException
      */
     private function parseRuleSetReferenceNode(RuleSet $ruleSet, SimpleXMLElement $ruleSetNode): void
     {
@@ -277,6 +285,7 @@ class RuleSetFactory
      * Parses a rule-set xml file referenced by the given rule-set xml element.
      *
      * @return RuleSet
+     * @throws RuntimeException
      * @since 0.2.3
      */
     private function parseRuleSetReference(SimpleXMLElement $ruleSetNode)
@@ -383,6 +392,10 @@ class RuleSetFactory
     /**
      * This method parses a single rule that was included from a different
      * rule-set.
+     *
+     * @throws RuleSetNotFoundException
+     * @throws RuleByNameNotFoundException
+     * @throws RuntimeException
      */
     private function parseRuleReferenceNode(RuleSet $ruleSet, SimpleXMLElement $ruleNode): void
     {

@@ -17,6 +17,9 @@
 
 namespace PHPMD;
 
+use LogicException;
+use RuntimeException;
+
 /**
  * Abstract base class for PHPMD rendering engines.
  */
@@ -59,6 +62,9 @@ abstract class AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
+     *
+     * @throws RuntimeException
+     * @throws LogicException
      */
     abstract public function renderReport(Report $report): void;
 

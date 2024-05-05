@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
@@ -56,6 +57,9 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
         }
     }
 
+    /**
+     * @throws OutOfBoundsException
+     */
     private function isValid($propertyName)
     {
         // disallow any consecutive uppercase letters

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -66,6 +67,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      * development.
      *
      * @return array
+     * @throws OutOfBoundsException
      */
     protected function getSuspectImages()
     {

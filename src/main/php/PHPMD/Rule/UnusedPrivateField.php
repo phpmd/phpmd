@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTFieldDeclaration;
@@ -65,6 +66,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * method.
      *
      * @return AbstractNode[]
+     * @throws OutOfBoundsException
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
     {
@@ -105,6 +107,8 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method extracts all property postfix nodes from the given class and
      * removes all fields from the <b>$_fields</b> property that are accessed by
      * one of the postfix nodes.
+     *
+     * @throws OutOfBoundsException
      */
     protected function removeUsedFields(ClassNode $class): void
     {
@@ -166,6 +170,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * instance or static reference to the given class.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isInScopeOfClass(ClassNode $class, ASTNode $postfix)
     {
@@ -184,6 +189,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      *
      * @param ASTNode<ASTPropertyPostfix> $postfix
      * @return AbstractNode
+     * @throws OutOfBoundsException
      */
     protected function getOwner(ASTNode $postfix)
     {

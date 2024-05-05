@@ -3,13 +3,11 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\Writer\StreamWriter;
-use RuntimeException;
 
 class RendererFactory
 {
     /**
      * @return BaselineRenderer
-     * @throws RuntimeException
      */
     public static function createBaselineRenderer(StreamWriter $writer)
     {

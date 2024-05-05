@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTCatchStatement;
@@ -90,6 +91,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect variables defined inside a PHPMD entry node (such as MethodNode).
+     *
+     * @throws OutOfBoundsException
      */
     protected function collect(AbstractNode $node): void
     {
@@ -118,6 +121,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an global of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectGlobalStatements(AbstractNode $node): void
     {
@@ -128,6 +133,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an catch of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectExceptionCatches(AbstractCallableNode $node): void
     {
@@ -140,6 +147,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal list of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectListExpressions(AbstractCallableNode $node): void
     {
@@ -150,6 +159,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal foreach of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectForeachStatements(AbstractCallableNode $node): void
     {
@@ -172,6 +183,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Stores the given literal node in an internal closure of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectClosureParameters(AbstractCallableNode $node): void
     {
@@ -186,6 +199,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Check if the given variable was defined in the current context before usage.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
     {
@@ -196,6 +210,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect parameter names of method/function.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectParameters(AbstractNode $node): void
     {
@@ -212,6 +228,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect assignments of variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectAssignments(AbstractCallableNode $node): void
     {
@@ -237,6 +255,8 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
     /**
      * Collect postfix property.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectPropertyPostfix(AbstractNode $node): void
     {
@@ -251,6 +271,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Add the variable to images.
      *
      * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @throws OutOfBoundsException
      */
     protected function addVariableDefinition($variable): void
     {

@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Naming;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTForeachStatement;
@@ -76,6 +78,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function applyClass(AbstractNode $node): void
     {
@@ -94,6 +99,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * Checks the variable name length against the configured minimum
      * length.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function applyNonClass(AbstractNode $node): void
     {
@@ -112,6 +120,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the variable name of the given node is greater/equal to the
      * configured threshold or if the given node is an allowed context.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function checkNodeImage(AbstractNode $node): void
     {
@@ -123,6 +134,9 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Template method that performs the real node image check.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function checkMinimumLength(AbstractNode $node): void
     {
@@ -165,6 +179,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * variable names in catch-statements.
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
@@ -183,6 +198,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks if a short name is initialized within a foreach loop statement
      *
      * @return bool
+     * @throws OutOfBoundsException
      */
     protected function isInitializedInLoop(AbstractNode $node)
     {

@@ -17,8 +17,10 @@
 
 namespace PHPMD\Renderer;
 
+use LogicException;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use RuntimeException;
 use SplFileObject;
 
 /**
@@ -431,6 +433,8 @@ class HTMLRenderer extends AbstractRenderer
      * for additional cognitive context.
      *
      * @return array
+     * @throws RuntimeException
+     * @throws LogicException
      */
     protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
     {
@@ -501,6 +505,8 @@ class HTMLRenderer extends AbstractRenderer
 
     /**
      * Render a pretty informational table and send the HTML to the writer.
+     *
+     * @param array<int, int> $items
      */
     protected function writeTable($title, $itemsTitle, $items): void
     {
@@ -541,7 +547,7 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Go through passed violations and count occurrences based on pre-specified conditions.
      *
-     * @return array
+     * @return array<string, array<int, int>>
      */
     protected static function sumUpViolations($violations)
     {

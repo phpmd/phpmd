@@ -14,6 +14,8 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -56,6 +58,8 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
     /**
      * Gets array of exceptions from property
      * @return array<string, int>
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function getExceptionsList()
     {

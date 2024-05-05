@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTCompoundVariable;
@@ -104,6 +106,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * This method removes all variables from the <b>$_images</b> property that
      * are also found in the formal parameters of the given method or/and
      * function node.
+     *
+     * @throws OutOfBoundsException
      */
     protected function removeParameters(AbstractCallableNode $node): void
     {
@@ -122,6 +126,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * This method collects all local variable instances from the given
      * method/function node and stores their image in the <b>$_images</b>
      * property.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectVariables(AbstractCallableNode $node): void
     {
@@ -150,6 +156,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
 
     /**
      * Stores the given compound variable node in an internal list of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectCompoundVariableInString(ASTNode $node): void
     {
@@ -170,6 +178,8 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
 
     /**
      * Stores the given variable node in an internal list of found variables.
+     *
+     * @throws OutOfBoundsException
      */
     protected function collectVariable(ASTNode $node): void
     {
@@ -207,6 +217,9 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
 
     /**
      * Template method that performs the real node image check.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
     protected function doCheckNodeImage(ASTNode $node): void
     {
@@ -253,6 +266,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @param ASTNode $variable The variable to check.
      * @return bool True if allowed, else false.
+     * @throws OutOfBoundsException
      */
     protected function isUnusedForeachVariableAllowed(ASTNode $variable)
     {
