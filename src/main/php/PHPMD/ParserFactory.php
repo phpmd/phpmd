@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use Exception;
+use InvalidArgumentException;
 use PDepend\Application;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
@@ -46,6 +48,7 @@ class ParserFactory
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
      *
      * @return Parser
+     * @throws Exception
      */
     public function create(PHPMD $phpmd)
     {
@@ -59,6 +62,7 @@ class ParserFactory
      * Creates a clean php depend instance with some base settings.
      *
      * @return Engine
+     * @throws Exception
      */
     private function createInstance()
     {
@@ -78,6 +82,7 @@ class ParserFactory
      * Configures the given PDepend\Engine instance based on some user settings.
      *
      * @return Engine
+     * @throws InvalidArgumentException
      */
     private function init(Engine $pdepend, PHPMD $phpmd)
     {
@@ -92,6 +97,8 @@ class ParserFactory
 
     /**
      * Configures the input source.
+     *
+     * @throws InvalidArgumentException
      */
     private function initInput(Engine $pdepend, PHPMD $phpmd): void
     {

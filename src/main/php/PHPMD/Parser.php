@@ -92,6 +92,8 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Parses the projects source and reports all detected errors and violations.
+     *
+     * @throws InvalidArgumentException
      */
     public function parse(Report $report): void
     {
