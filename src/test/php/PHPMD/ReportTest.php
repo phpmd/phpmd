@@ -202,7 +202,7 @@ class ReportTest extends AbstractTestCase
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline
-        $violation = new ViolationBaseline(get_class($ruleA->getRule()), 'foo.txt', null);
+        $violation = new ViolationBaseline($ruleA->getRule()::class, 'foo.txt', null);
         $baseline  = new BaselineSet();
         $baseline->addEntry($violation);
 
@@ -228,7 +228,7 @@ class ReportTest extends AbstractTestCase
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline
-        $violation = new ViolationBaseline(get_class($ruleA->getRule()), 'foo.txt', null);
+        $violation = new ViolationBaseline($ruleA->getRule()::class, 'foo.txt', null);
         $baseline  = new BaselineSet();
         $baseline->addEntry($violation);
 
