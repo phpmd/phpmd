@@ -861,7 +861,7 @@ class CommandLineOptions
         // Try to load a custom renderer
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
 
-        $fileHandle = @fopen($fileName, 'r', true);
+        $fileHandle = @fopen($fileName, 'rb', true);
         if (!is_resource($fileHandle)) {
             throw new InvalidArgumentException(
                 sprintf(

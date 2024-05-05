@@ -357,7 +357,7 @@ class RuleSetFactory
         }
 
         if (!class_exists($className)) {
-            $handle = @fopen($fileName, 'r', true);
+            $handle = @fopen($fileName, 'rb', true);
             if (!$handle) {
                 throw new RuleClassFileNotFoundException($className);
             }
