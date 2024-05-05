@@ -101,7 +101,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
     /**
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
-     * {@inheritdoc} annotation.
+     * {@inheritDoc} annotation.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @return bool
