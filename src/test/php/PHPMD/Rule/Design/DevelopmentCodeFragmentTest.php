@@ -22,10 +22,9 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DevelopmentCodeFragment} class.
  *
+ * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
  * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
- *
- * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
  */
 class DevelopmentCodeFragmentTest extends AbstractTestCase
 {

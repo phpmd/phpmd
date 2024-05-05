@@ -37,11 +37,11 @@ class BaselineValidatorTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::isBaselined
-     * @dataProvider dataProvider
      * @param bool   $contains
      * @param string $baselineMode
      * @param bool   $isBaselined
+     * @dataProvider dataProvider
+     * @covers ::isBaselined
      */
     public function testIsBaselined($contains, $baselineMode, $isBaselined)
     {

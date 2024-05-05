@@ -22,9 +22,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the weighted method count rule.
  *
- * @since 0.2.5
- *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
+ * @since 0.2.5
  */
 class WeightedMethodCountTest extends AbstractTestCase
 {
