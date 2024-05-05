@@ -61,8 +61,12 @@ class GitLabRenderer extends AbstractRenderer
                         'PHP',
                     ],
                 'check_name' => $violation->getRule()->getName(),
-                'fingerprint' => $violation->getFileName() . ':' . $violation->getBeginLine() . ':' . $violation->getRule(
-                )->getName(),
+                'fingerprint' => sprintf(
+                    "%s:%s:%s",
+                    $violation->getFileName(),
+                    $violation->getBeginLine(),
+                    $violation->getRule()->getName()
+                ),
                 'description' => $violation->getDescription(),
                 'severity' => 'minor',
                 'location' =>
