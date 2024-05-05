@@ -55,6 +55,7 @@ class Strings
             $suffixLength = strlen($suffix);
             if (substr($stringName, -$suffixLength) === $suffix) {
                 $stringLength -= $suffixLength;
+
                 break;
             }
         }
@@ -63,6 +64,7 @@ class Strings
             $prefixLength = strlen($prefix);
             if (strncmp($stringName, $prefix, $prefixLength) === 0) {
                 $stringLength -= $prefixLength;
+
                 break;
             }
         }
