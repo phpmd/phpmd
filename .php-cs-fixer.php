@@ -354,6 +354,55 @@ return $config
         'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
         // Write conditions in Yoda style (`true`), non-Yoda style (`['equal' => false, 'identical' => false, 'less_and_greater' => false]`) or ignore those conditions (`null`) based on configuration.
         'yoda_style' => false,
+
+        /*
+         * Additional rules, mostly risky ones
+         */
+
+        '@PHPUnit100Migration:risky' => true,
+        '@PER-CS2.0:risky' => true,
+        '@PHP81Migration' => true,
+        '@PHP80Migration:risky' => true,
+
+        'declare_strict_types' => false, // Not yet
+        'pow_to_exponentiation' => false, // Risky
+
+        'array_push' => true, // Risky
+        'comment_to_phpdoc' => true, // Risky
+        'date_time_create_from_format_call' => true, // Risky
+        'dir_constant' => true, // Risky
+        'ereg_to_preg' => true, // Risky
+        'fopen_flag_order' => true, // Risky
+        'fopen_flags' => true, // Risky
+        'function_to_constant' => true, // Risky
+        'general_phpdoc_annotation_remove' => false, // We do not want to remove any in general
+        'heredoc_closing_marker' => true,
+        'is_null' => false, // Risky // Uses yoda-style
+        'logical_operators' => true, // Risky
+        'long_to_shorthand_operator' => true, // Risky
+        'mb_str_functions' => true, // Risky
+        'modernize_types_casting' => true, // Risky
+        'no_unset_on_property' => true, // Risky
+        'no_useless_sprintf' => true, // Risky
+        'ordered_interfaces' => true,
+        'ordered_traits' => true, // Risky
+        'php_unit_construct' => true, // Risky
+        'php_unit_set_up_tear_down_visibility' => true, // Risky
+         'php_unit_strict' => false, // Risky
+        'php_unit_test_annotation' => true, // Risky
+        'php_unit_test_case_static_method_calls' => true, // Risky
+        'phpdoc_line_span' => ['const' => 'single','property' => 'single'],
+        'phpdoc_param_order' => true,
+        'phpdoc_tag_casing' => true,
+        'regular_callable_call' => true, // Risky
+        'self_accessor' => true, // Risky
+        'set_type_to_cast' => true, // Risky
+        'simplified_if_return' => false, // TODO Arguable, can make it less readable
+        'strict_comparison' => true, // Risky
+        'strict_param' => true, // Risky
+        'string_length_to_empty' => true, // Risky
+        'string_line_ending' => true, // Risky
+        'ternary_to_elvis_operator' => true, // Risky
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
