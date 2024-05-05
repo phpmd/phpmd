@@ -34,7 +34,7 @@ class CamelCaseMethodNameTest extends AbstractTestCase
      */
     public function testRuleDoesNotApplyForValidMethodName()
     {
-        //$method = $this->getMethod();
+        // $method = $this->getMethod();
         $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseMethodName();
