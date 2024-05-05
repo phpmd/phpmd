@@ -70,7 +70,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         $this->scanFormalParameters($node);
     }
 
-    protected function isBooleanValue(ASTValue $value = null)
+    protected function isBooleanValue(?ASTValue $value = null)
     {
         return $value?->isValueAvailable() && is_bool($value->getValue());
     }

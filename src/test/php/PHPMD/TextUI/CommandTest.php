@@ -46,7 +46,7 @@ class CommandTest extends AbstractTestCase
      * @return void
      * @dataProvider dataProviderTestMainWithOption
      */
-    public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, array $options = null)
+    public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, ?array $options = null)
     {
         $args = array_filter(
             array_merge(

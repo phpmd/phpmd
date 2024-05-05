@@ -168,7 +168,7 @@ class TooManyMethodsTest extends AbstractTestCase
      * @param string[] $methodNames
      * @return ClassNode
      */
-    private function createClassMock($numberOfMethods, array $methodNames = null)
+    private function createClassMock($numberOfMethods, ?array $methodNames = null)
     {
         $class = $this->getClassMock('nom', $numberOfMethods);
 

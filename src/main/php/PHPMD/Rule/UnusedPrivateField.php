@@ -145,7 +145,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * @return bool
      * @since 0.2.6
      */
-    protected function isValidPropertyNode(ASTNode $node = null)
+    protected function isValidPropertyNode(?ASTNode $node = null)
     {
         if ($node === null) {
             return false;
