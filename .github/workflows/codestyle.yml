@@ -59,7 +59,7 @@ jobs:
       - name: Run PHPCS for the codestyle
         run: vendor/bin/phpcs
 
-      - name: Run PHP Coding Standards Fixer
+      - name: Run PHP Coding Standards Fixer Check
         run: |
           vendor/bin/php-cs-fixer fix --dry-run --diff --ansi || true
           vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
