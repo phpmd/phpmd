@@ -26,7 +26,7 @@ use PHPMD\Rule\ClassAware;
  */
 class RuleStub extends AbstractRule implements ClassAware
 {
-    public $node = null;
+    public $node;
 
     /**
      * Constructs a new rule stub instance.

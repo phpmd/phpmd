@@ -64,21 +64,21 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @var ASTArtifactList
      */
-    private $artifacts = null;
+    private $artifacts;
 
     /**
      * The violation report used by this PDepend adapter.
      *
      * @var Report
      */
-    private $report = null;
+    private $report;
 
     /**
      * The wrapped PDepend Engine instance.
      *
      * @var Engine
      */
-    private $pdepend = null;
+    private $pdepend;
 
     /**
      * Constructs a new parser adapter instance.

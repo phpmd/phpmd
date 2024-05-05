@@ -30,7 +30,7 @@ class StreamWriter extends AbstractWriter
      *
      * @var ?resource
      */
-    private $stream = null;
+    private $stream;
 
     /**
      * Constructs a new stream writer instance.

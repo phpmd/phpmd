@@ -35,7 +35,7 @@ abstract class AbstractNode extends BaseNode
      *
      * @var Annotations
      */
-    private $annotations = null;
+    private $annotations;
 
     /**
      * Checks if this node has a suppressed annotation for the given rule

@@ -30,7 +30,7 @@ abstract class AbstractRenderer
      *
      * @var AbstractWriter
      */
-    private $writer = null;
+    private $writer;
 
     /**
      * Returns the associated output writer instance.

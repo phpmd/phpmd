@@ -64,7 +64,7 @@ class HTMLRenderer extends AbstractRenderer
         ],
     ];
 
-    protected static $compiledHighlightRegex = null;
+    protected static $compiledHighlightRegex;
 
     /**
      * Specify how many extra lines are added to a code snippet

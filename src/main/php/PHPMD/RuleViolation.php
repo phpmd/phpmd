@@ -52,7 +52,7 @@ class RuleViolation
      *
      * @var array|null
      */
-    private $args = null;
+    private $args;
 
     /**
      * The raw metric value which caused this rule violation.

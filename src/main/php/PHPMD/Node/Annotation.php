@@ -34,14 +34,14 @@ class Annotation
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * The annotation value.
      *
      * @var string
      */
-    private $value = null;
+    private $value;
 
     /**
      * Constructs a new annotation instance.

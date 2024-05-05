@@ -39,14 +39,14 @@ abstract class AbstractNode
     /**
      * @var TNode $node
      */
-    private $node = null;
+    private $node;
 
     /**
      * The collected metrics for this node.
      *
      * @var array<string, mixed>
      */
-    private $metrics = null;
+    private $metrics;
 
     /**
      * Constructs a new PHPMD node.

@@ -35,7 +35,7 @@ class ASTNode extends AbstractNode
      *
      * @var string
      */
-    private $fileName = null;
+    private $fileName;
 
     /**
      * Constructs a new ast node instance.

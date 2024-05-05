@@ -31,14 +31,14 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @var string $filesDirectory
      */
-    private static $filesDirectory = null;
+    private static $filesDirectory;
 
     /**
      * Original directory is used to reset a changed working directory.
      *
      * @return void
      */
-    private static $originalWorkingDirectory = null;
+    private static $originalWorkingDirectory;
 
     /**
      * Temporary files created by a test.
