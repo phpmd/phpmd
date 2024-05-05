@@ -373,7 +373,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     {
         $methods = array_filter(
             $this->getClass()->getMethods(),
-            static fn ($method) => $method->getName() === '__call',
+            static fn($method) => $method->getName() === '__call',
         );
 
         $rule = new UnusedFormalParameter();
@@ -532,7 +532,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     {
         $methods = array_filter(
             $this->getClass()->getMethods(),
-            static fn ($method) => $method->getImage() === '__construct',
+            static fn($method) => $method->getImage() === '__construct',
         );
 
         $rule = new UnusedFormalParameter();

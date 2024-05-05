@@ -102,23 +102,23 @@ class Command
         }
 
         // Configure baseline violations
-        $report       = null;
-        $finder       = new BaselineFileFinder($opts);
+        $report = null;
+        $finder = new BaselineFileFinder($opts);
         $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::GENERATE) {
             // overwrite any renderer with the baseline renderer
             $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find()))];
         } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
             $baselineFile = $finder->notNull()->existingFile()->find();
-            $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-            $renderers    = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
-            $report       = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
+            $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
+            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
+            $report = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
         } else {
             // try to locate a baseline file and read it
             $baselineFile = $finder->existingFile()->find();
             if ($baselineFile !== null) {
                 $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-                $report   = new Report(new BaselineValidator($baseline, BaselineMode::NONE));
+                $report = new Report(new BaselineValidator($baseline, BaselineMode::NONE));
             }
         }
 
@@ -149,7 +149,7 @@ class Command
         }
 
         $ignorePattern = $ruleSetFactory->getIgnorePattern($opts->getRuleSets());
-        $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
+        $ruleSetList = $ruleSetFactory->createRuleSets($opts->getRuleSets());
 
         // Configure Result Cache Engine
         if ($opts->generateBaseline() === BaselineMode::NONE) {
@@ -193,7 +193,7 @@ class Command
 
         $version = '@package_version@';
         if (file_exists($build)) {
-            $data    = @parse_ini_file($build);
+            $data = @parse_ini_file($build);
             $version = $data['project.version'];
         }
 
@@ -214,11 +214,11 @@ class Command
 
         try {
             $ruleSetFactory = new RuleSetFactory();
-            $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $errorFile      = $options->getErrorFile();
-            $errorStream    = new StreamWriter($errorFile ?: STDERR);
-            $output         = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
-            $command        = new self($output);
+            $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+            $errorFile = $options->getErrorFile();
+            $errorStream = new StreamWriter($errorFile ?: STDERR);
+            $output = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
+            $command = new self($output);
 
             foreach ($options->getDeprecations() as $deprecation) {
                 $output->write($deprecation . PHP_EOL . PHP_EOL);

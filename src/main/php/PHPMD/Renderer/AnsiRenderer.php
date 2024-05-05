@@ -13,7 +13,6 @@ use PHPMD\RuleViolation;
  */
 class AnsiRenderer extends AbstractRenderer
 {
-
     public function renderReport(Report $report): void
     {
         $this->writeViolationsReport($report);

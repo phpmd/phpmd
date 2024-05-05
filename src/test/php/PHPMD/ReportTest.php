@@ -203,7 +203,7 @@ class ReportTest extends AbstractTestCase
 
         // setup baseline
         $violation = new ViolationBaseline($ruleA->getRule()::class, 'foo.txt', null);
-        $baseline  = new BaselineSet();
+        $baseline = new BaselineSet();
         $baseline->addEntry($violation);
 
         // setup report
@@ -229,7 +229,7 @@ class ReportTest extends AbstractTestCase
 
         // setup baseline
         $violation = new ViolationBaseline($ruleA->getRule()::class, 'foo.txt', null);
-        $baseline  = new BaselineSet();
+        $baseline = new BaselineSet();
         $baseline->addEntry($violation);
 
         // setup report

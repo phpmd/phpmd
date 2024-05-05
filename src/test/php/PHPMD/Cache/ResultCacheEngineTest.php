@@ -17,13 +17,13 @@ class ResultCacheEngineTest extends AbstractTestCase
      */
     public function testGetters()
     {
-        $filter  = $this->getMockFromBuilder(
+        $filter = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheFileFilter::class)->disableOriginalConstructor()
         );
         $updater = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheUpdater::class)->disableOriginalConstructor()
         );
-        $writer  = $this->getMockFromBuilder(
+        $writer = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheWriter::class)->disableOriginalConstructor()
         );
 

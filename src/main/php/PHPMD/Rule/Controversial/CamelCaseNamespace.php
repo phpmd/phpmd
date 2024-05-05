@@ -40,8 +40,8 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
             $pattern = '/^([A-Z][a-z0-9]+)*$/';
         }
 
-        $exceptions     = $this->getExceptionsList();
-        $fullNamespace  = $node->getNamespaceName();
+        $exceptions = $this->getExceptionsList();
+        $fullNamespace = $node->getNamespaceName();
         $namespaceNames = $fullNamespace === '' ? [] : explode('\\', $fullNamespace);
 
         foreach ($namespaceNames as $namespaceName) {

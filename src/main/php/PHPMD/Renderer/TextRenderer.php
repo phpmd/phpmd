@@ -47,7 +47,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         $violations = [];
 
         foreach ($report->getRuleViolations() as $violation) {
-            $location = $violation->getFileName().':'.$violation->getBeginLine();
+            $location = $violation->getFileName() . ':' . $violation->getBeginLine();
             $rule = $violation->getRule();
             $ruleName = $rule->getName();
             $ruleSet = $rule->getRuleSetName();

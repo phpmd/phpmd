@@ -17,7 +17,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      */
     public function testShouldFindFileFromCLI()
     {
-        $args   = ['script', 'source', 'xml', 'phpmd.xml', '--baseline-file', 'foobar.txt'];
+        $args = ['script', 'source', 'xml', 'phpmd.xml', '--baseline-file', 'foobar.txt'];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertSame('foobar.txt', $finder->find());
     }
@@ -28,12 +28,12 @@ class BaselineFileFinderTest extends AbstractTestCase
      */
     public function testShouldFindExistingFileNearRuleSet()
     {
-        $args   = ['script', 'source', 'xml', static::createResourceUriForTest('testA/phpmd.xml')];
+        $args = ['script', 'source', 'xml', static::createResourceUriForTest('testA/phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
 
         // ensure consistent slashes
         $expected = str_replace("\\", "/", realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')));
-        $actual   = str_replace("\\", "/", $finder->existingFile()->find());
+        $actual = str_replace("\\", "/", $finder->existingFile()->find());
 
         static::assertSame($expected, $actual);
     }
@@ -48,7 +48,7 @@ class BaselineFileFinderTest extends AbstractTestCase
             'Unable to determine the baseline file location.',
         ));
 
-        $args   = ['script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml')];
+        $args = ['script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         $finder->notNull()->find();
     }
@@ -59,7 +59,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      */
     public function testShouldReturnNullForNonExistingRuleSet()
     {
-        $args   = ['script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml')];
+        $args = ['script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertNull($finder->find());
     }
@@ -71,7 +71,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      */
     public function testShouldOnlyFindExistingFile()
     {
-        $args   = ['script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml')];
+        $args = ['script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertNull($finder->existingFile()->find());
     }
@@ -87,7 +87,7 @@ class BaselineFileFinderTest extends AbstractTestCase
             'Unable to find the baseline file',
         ));
 
-        $args   = ['script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml')];
+        $args = ['script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
         static::assertNull($finder->existingFile()->notNull()->find());
     }

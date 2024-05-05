@@ -20,9 +20,8 @@ namespace PHPMD;
 /**
  * Test case for the processing error class.
  *
- * @since 1.2.1
- *
  * @covers \PHPMD\ProcessingError
+ * @since 1.2.1
  */
 class ProcessingErrorTest extends AbstractTestCase
 {

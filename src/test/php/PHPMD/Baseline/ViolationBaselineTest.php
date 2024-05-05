@@ -22,9 +22,9 @@ class ViolationBaselineTest extends TestCase
     /**
      * Test the give file matches the baseline correctly
      *
+     * @return void
      * @covers ::__construct
      * @covers ::matches
-     * @return void
      */
     public function testMatchesWithMethod()
     {
@@ -38,9 +38,9 @@ class ViolationBaselineTest extends TestCase
     /**
      * Test the give file matches the baseline correctly
      *
+     * @return void
      * @covers ::__construct
      * @covers ::matches
-     * @return void
      */
     public function testMatchesWithoutMethod()
     {

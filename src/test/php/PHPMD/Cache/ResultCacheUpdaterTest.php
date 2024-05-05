@@ -34,8 +34,8 @@ class ResultCacheUpdaterTest extends AbstractTestCase
      */
     public function testUpdate()
     {
-        $ruleSet    = new RuleSet();
-        $report     = $this->getReportMock();
+        $ruleSet = new RuleSet();
+        $report = $this->getReportMock();
         $violationA = $this->getRuleViolationMock('/base/path/violation/a');
         $violationB = $this->getRuleViolationMock('/base/path/violation/b');
 

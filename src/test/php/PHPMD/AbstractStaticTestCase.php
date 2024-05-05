@@ -48,6 +48,31 @@ abstract class AbstractStaticTestCase extends TestCase
     private static $tempFiles = [];
 
     /**
+     * This method initializes the test environment, it configures the files
+     * directory and sets the include_path for svn versions.
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
+
+        if (!str_contains(get_include_path(), self::$filesDirectory)) {
+            set_include_path(
+                sprintf(
+                    '%s%s%s%s%s',
+                    get_include_path(),
+                    PATH_SEPARATOR,
+                    self::$filesDirectory,
+                    PATH_SEPARATOR,
+                    realpath(__DIR__ . '/../')
+                )
+            );
+        }
+
+        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
+        date_default_timezone_set('UTC');
+    }
+
+    /**
      * Return to original working directory if changed.
      *
      * @return void
@@ -98,7 +123,7 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     protected static function getValuesAsArrays($values)
     {
-        return array_map(static fn ($value) => [$value], $values);
+        return array_map(static fn($value) => [$value], $values);
     }
 
     /**
@@ -185,31 +210,6 @@ abstract class AbstractStaticTestCase extends TestCase
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
         self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
-    }
-
-    /**
-     * This method initializes the test environment, it configures the files
-     * directory and sets the include_path for svn versions.
-     */
-    public static function setUpBeforeClass(): void
-    {
-        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
-
-        if (!str_contains(get_include_path(), self::$filesDirectory)) {
-            set_include_path(
-                sprintf(
-                    '%s%s%s%s%s',
-                    get_include_path(),
-                    PATH_SEPARATOR,
-                    self::$filesDirectory,
-                    PATH_SEPARATOR,
-                    realpath(__DIR__ . '/../')
-                )
-            );
-        }
-
-        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
-        date_default_timezone_set('UTC');
     }
 
     /**

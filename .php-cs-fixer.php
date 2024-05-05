@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This document has been generated with
  * https://mlocati.github.io/php-cs-fixer-configurator/#version:3.54.0|configurator
@@ -7,14 +8,47 @@
 $config = new PhpCsFixer\Config();
 return $config
     ->setRules([
-        'blank_line_after_namespace' => true,
-        'blank_lines_before_namespace' => true,
+        '@PER-CS2.0' => true,
+        'binary_operator_spaces' => true, // Going beyond PER CS v2
+        'ordered_class_elements' => [
+            'order' => [
+                'use_trait',
+                // Going beyond PER CS v2
+                'case',
+                'constant_public',
+                'constant_protected',
+                'constant_private',
+                'property_public',
+                'property_protected',
+                'property_private',
+                'construct',
+                'destruct',
+                'magic',
+                'phpunit',
+                // We do not want to order methods
+//                'method_public',
+//                'method_protected',
+//                'method_private',
+            ]
+        ],
+        'single_line_empty_body' => false, // Not adhering to PER CS v2
+        'trailing_comma_in_multiline' => [
+            'after_heredoc' => true,
+            'elements' => [
+                // Not adhering to PER CS v2; we don't want trailing commas for arguments
+//                'arguments',
+                'arrays',
+                'match',
+                // Not adhering to PER CS v2; we don't want trailing commas for parameters
+//                'parameters'
+            ]
+        ],
         'fully_qualified_strict_types' => true,
         'global_namespace_import' => true,
         'no_empty_phpdoc' => true,
-        'no_leading_import_slash' => true,
         'no_superfluous_phpdoc_tags' => true,
         'no_unused_imports' => true,
+        // Using sorting algo "alpha" instead of "none" defined in PER CS v2
         'ordered_imports' => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
         'phpdoc_indent' => true,
         'phpdoc_order' => [
@@ -59,10 +93,9 @@ return $config
         'phpdoc_trim_consecutive_blank_line_separation' => true,
         'phpdoc_types_order' => ['null_adjustment' => 'always_last'],
         'phpdoc_var_annotation_correct_order' => true,
-        'single_line_after_imports' => true,
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')
         ->in(__DIR__ . '/src/main/php/PHPMD')
-    )
-;
+        ->in(__DIR__ . '/src/test/php/')
+    );

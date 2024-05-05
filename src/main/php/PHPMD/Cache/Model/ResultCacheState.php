@@ -22,7 +22,7 @@ class ResultCacheState
     public function __construct(ResultCacheKey $cacheKey, $state = [])
     {
         $this->cacheKey = $cacheKey;
-        $this->state    = $state;
+        $this->state = $state;
     }
 
     /**
@@ -60,16 +60,16 @@ class ResultCacheState
     public function addRuleViolation($filePath, RuleViolation $violation): void
     {
         $this->state['files'][$filePath]['violations'][] = [
-            'rule'          => $violation->getRule()::class,
+            'rule' => $violation->getRule()::class,
             'namespaceName' => $violation->getNamespaceName(),
-            'className'     => $violation->getClassName(),
-            'methodName'    => $violation->getMethodName(),
-            'functionName'  => $violation->getFunctionName(),
-            'beginLine'     => $violation->getBeginLine(),
-            'endLine'       => $violation->getEndLine(),
-            'description'   => $violation->getDescription(),
-            'args'          => $violation->getArgs(),
-            'metric'        => $violation->getMetric(),
+            'className' => $violation->getClassName(),
+            'methodName' => $violation->getMethodName(),
+            'functionName' => $violation->getFunctionName(),
+            'beginLine' => $violation->getBeginLine(),
+            'endLine' => $violation->getEndLine(),
+            'description' => $violation->getDescription(),
+            'args' => $violation->getArgs(),
+            'metric' => $violation->getMetric(),
         ];
     }
 
@@ -90,7 +90,7 @@ class ResultCacheState
                 continue;
             }
             foreach ($violations['violations'] as $violation) {
-                $rule     = self::findRuleIn($violation['rule'], $ruleSetList);
+                $rule = self::findRuleIn($violation['rule'], $ruleSetList);
                 $nodeInfo = new NodeInfo(
                     Paths::concat($basePath, $filePath),
                     $violation['namespaceName'],
@@ -142,7 +142,7 @@ class ResultCacheState
     public function toArray()
     {
         return [
-            'key'   => $this->cacheKey->toArray(),
+            'key' => $this->cacheKey->toArray(),
             'state' => $this->state,
         ];
     }

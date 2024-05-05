@@ -36,10 +36,10 @@ class ResultCacheFileFilter implements Filter
      */
     public function __construct(OutputInterface $output, $basePath, $strategy, ResultCacheKey $cacheKey, $state)
     {
-        $this->output   = $output;
+        $this->output = $output;
         $this->basePath = $basePath;
         $this->strategy = $strategy;
-        $this->state    = $state;
+        $this->state = $state;
         $this->newState = new ResultCacheState($cacheKey);
     }
 

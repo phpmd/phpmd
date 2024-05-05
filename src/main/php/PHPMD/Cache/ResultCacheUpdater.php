@@ -20,7 +20,7 @@ class ResultCacheUpdater
      */
     public function __construct(OutputInterface $output, $basePath)
     {
-        $this->output   = $output;
+        $this->output = $output;
         $this->basePath = $basePath;
     }
 

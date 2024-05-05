@@ -877,7 +877,7 @@ class CommandLineOptions
     protected function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers            = [];
+        $renderers = [];
 
         foreach (scandir($renderersDirPathName) as $rendererFileName) {
             $rendererName = [];

@@ -20,7 +20,7 @@ class ResultCacheKeyFactory
      */
     public function __construct($basePath, $baselineFile)
     {
-        $this->basePath     = $basePath;
+        $this->basePath = $basePath;
         $this->baselineFile = $baselineFile;
     }
 

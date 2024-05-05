@@ -24,11 +24,11 @@ class ResultCacheKey
      */
     public function __construct($strict, $baselineHash, $rules, $composer, $phpVersion)
     {
-        $this->strict       = $strict;
+        $this->strict = $strict;
         $this->baselineHash = $baselineHash;
-        $this->rules        = $rules;
-        $this->composer     = $composer;
-        $this->phpVersion   = $phpVersion;
+        $this->rules = $rules;
+        $this->composer = $composer;
+        $this->phpVersion = $phpVersion;
     }
 
     /**
@@ -37,11 +37,11 @@ class ResultCacheKey
     public function toArray()
     {
         return [
-            'strict'       => $this->strict,
+            'strict' => $this->strict,
             'baselineHash' => $this->baselineHash,
-            'rules'        => $this->rules,
-            'composer'     => $this->composer,
-            'phpVersion'   => $this->phpVersion,
+            'rules' => $this->rules,
+            'composer' => $this->composer,
+            'phpVersion' => $this->phpVersion,
         ];
     }
 

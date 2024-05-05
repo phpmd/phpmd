@@ -114,7 +114,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
 
         foreach ($node->getProperties() as $property) {
             if ($property->isStatic()) {
-                $this->images['::'.$property->getName()] = $property;
+                $this->images['::' . $property->getName()] = $property;
             }
         }
     }

@@ -32,7 +32,7 @@ abstract class Output implements OutputInterface
             | self::VERBOSITY_VERBOSE
             | self::VERBOSITY_VERY_VERBOSE
             | self::VERBOSITY_DEBUG;
-        $verbosity   = $verbosities & $options ?: self::VERBOSITY_NORMAL;
+        $verbosity = $verbosities & $options ?: self::VERBOSITY_NORMAL;
 
         if ($verbosity > $this->getVerbosity()) {
             return;

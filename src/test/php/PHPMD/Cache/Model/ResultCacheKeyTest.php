@@ -15,7 +15,7 @@ class ResultCacheKeyTest extends AbstractTestCase
      */
     public function testToArray()
     {
-        $key      = new ResultCacheKey(
+        $key = new ResultCacheKey(
             true,
             'baselineHash',
             ['rule A' => 'hash1'],
@@ -23,11 +23,11 @@ class ResultCacheKeyTest extends AbstractTestCase
             12345
         );
         $expected = [
-            'strict'       => true,
+            'strict' => true,
             'baselineHash' => 'baselineHash',
-            'rules'        => ['rule A' => 'hash1'],
-            'composer'     => ['composer.json' => 'hash2'],
-            'phpVersion'   => 12345,
+            'rules' => ['rule A' => 'hash1'],
+            'composer' => ['composer.json' => 'hash2'],
+            'phpVersion' => 12345,
         ];
 
         static::assertSame($expected, $key->toArray());

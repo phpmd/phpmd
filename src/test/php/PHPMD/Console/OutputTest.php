@@ -20,9 +20,9 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
+     * @return void
      * @covers ::getVerbosity
      * @covers ::setVerbosity
-     * @return void
      */
     public function testSetGetVerbosity()
     {
@@ -34,8 +34,8 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::write
      * @return void
+     * @covers ::write
      */
     public function testWriteSingleMessage()
     {
@@ -46,8 +46,8 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::write
      * @return void
+     * @covers ::write
      */
     public function testWriteMultiMessageWithNewline()
     {
@@ -61,8 +61,8 @@ class OutputTest extends AbstractTestCase
      * @param int    $verbosity
      * @param string $expected
      * @param string $msg
-     * @covers ::write
      * @dataProvider verbosityProvider
+     * @covers ::write
      */
     public function testWriteWithVerbosityOption($verbosity, $expected, $msg)
     {
@@ -108,8 +108,8 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::writeln
      * @return void
+     * @covers ::writeln
      */
     public function testWritelnMessage()
     {

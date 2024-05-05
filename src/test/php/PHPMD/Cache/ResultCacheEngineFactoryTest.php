@@ -31,10 +31,10 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
 
     protected function setUp(): void
     {
-        $this->options      = $this->getMockFromBuilder(
+        $this->options = $this->getMockFromBuilder(
             $this->getMockBuilder(CommandLineOptions::class)->disableOriginalConstructor()
         );
-        $this->keyFactory   = $this->getMockFromBuilder(
+        $this->keyFactory = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheKeyFactory::class)->disableOriginalConstructor()
         );
         $this->stateFactory = $this->getMockFromBuilder(
@@ -61,9 +61,9 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     public function testCreateCacheMissShouldHaveNoOriginalState()
     {
         $ruleSetList = [new RuleSet()];
-        $cacheKeyA   = new ResultCacheKey(true, 'baseline', [], [], 123);
-        $cacheKeyB   = new ResultCacheKey(false, 'baseline', [], [], 321);
-        $state       = new ResultCacheState($cacheKeyB, []);
+        $cacheKeyA = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $cacheKeyB = new ResultCacheKey(false, 'baseline', [], [], 321);
+        $state = new ResultCacheState($cacheKeyB, []);
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
@@ -83,8 +83,8 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     public function testCreateCacheHitShouldHaveOriginalState()
     {
         $ruleSetList = [new RuleSet()];
-        $cacheKey    = new ResultCacheKey(true, 'baseline', [], [], 123);
-        $state       = new ResultCacheState($cacheKey, []);
+        $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $state = new ResultCacheState($cacheKey, []);
 
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(self::once())->method('hasStrict')->willReturn(true);

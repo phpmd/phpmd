@@ -18,8 +18,8 @@ class BaselineSetFactoryTest extends AbstractTestCase
     public function testFromFileShouldSucceed()
     {
         $filename = static::createResourceUriForTest('baseline.xml');
-        $baseDir  = dirname($filename);
-        $set      = BaselineSetFactory::fromFile($filename);
+        $baseDir = dirname($filename);
+        $set = BaselineSetFactory::fromFile($filename);
 
         static::assertTrue($set->contains(MissingImport::class, $baseDir . '/src/foo/bar', null));
         static::assertTrue(
@@ -33,8 +33,8 @@ class BaselineSetFactoryTest extends AbstractTestCase
     public function testFromFileShouldSucceedWithBackAndForwardSlashes()
     {
         $filename = static::createResourceUriForTest('baseline.xml');
-        $baseDir  = dirname($filename);
-        $set      = BaselineSetFactory::fromFile($filename);
+        $baseDir = dirname($filename);
+        $set = BaselineSetFactory::fromFile($filename);
 
         static::assertTrue($set->contains(MissingImport::class, $baseDir . '/src\\foo/bar', null));
         static::assertTrue(

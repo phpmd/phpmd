@@ -22,9 +22,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
  *
- * @link https://www.pivotaltracker.com/story/show/10474873
- *
  * @covers \PHPMD\Rule\Design\GotoStatement
+ * @link https://www.pivotaltracker.com/story/show/10474873
  */
 class GotoStatementTest extends AbstractTestCase
 {

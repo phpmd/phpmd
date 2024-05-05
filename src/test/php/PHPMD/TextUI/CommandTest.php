@@ -58,7 +58,7 @@ class CommandTest extends AbstractTestCase
                     '--reportfile',
                     self::createTempFileUri(),
                 ],
-                (array)$options
+                (array) $options
             )
         );
 
@@ -170,8 +170,8 @@ class CommandTest extends AbstractTestCase
 
     public function testOutput()
     {
-        $uri      = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
-        $temp     = self::createTempFileUri();
+        $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        $temp = self::createTempFileUri();
         $exitCode = Command::main([
             __FILE__,
             $uri,
@@ -222,8 +222,8 @@ class CommandTest extends AbstractTestCase
 
     public function testMainGenerateBaseline()
     {
-        $uri      = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
-        $temp     = self::createTempFileUri();
+        $uri = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
+        $temp = self::createTempFileUri();
         $exitCode = Command::main([
             __FILE__,
             $uri,
@@ -250,7 +250,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testMainUpdateBaseline()
     {
-        $sourceTemp   = self::createTempFileUri('ClassWithMultipleViolations.php');
+        $sourceTemp = self::createTempFileUri('ClassWithMultipleViolations.php');
         $baselineTemp = self::createTempFileUri();
         // set work directory to the temp dir
         self::changeWorkingDirectory(dirname($baselineTemp));
@@ -277,9 +277,9 @@ class CommandTest extends AbstractTestCase
 
     public function testMainBaselineViolationShouldBeIgnored()
     {
-        $sourceFile   = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        $sourceFile = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
-        $exitCode     = Command::main([
+        $exitCode = Command::main([
             __FILE__,
             $sourceFile,
             'text',
@@ -327,7 +327,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $errors = (string)file_get_contents($file);
+        $errors = (string) file_get_contents($file);
         unlink($file);
 
         $this->assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
@@ -346,7 +346,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $errors = (string)file_get_contents($file);
+        $errors = (string) file_get_contents($file);
         unlink($file);
 
         $this->assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
@@ -385,7 +385,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $errors = (string)file_get_contents($file);
+        $errors = (string) file_get_contents($file);
         unlink($file);
 
         $this->assertSame(
@@ -407,7 +407,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $data    = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
         $version = $data['project.version'];
 
         $this->assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));
