@@ -109,7 +109,7 @@ class SARIFRenderer extends JSONRenderer
                     $ruleData['help']['markdown'] =
                         $ruleData['help']['text'] .
                         "\n\n### Example\n\n```php\n" .
-                        implode("\n```\n\n```php\n", array_map('trim', $examples)) . "\n```";
+                        implode("\n```\n\n```php\n", array_map(trim(...), $examples)) . "\n```";
                 }
 
                 $since = $rule->getSince();

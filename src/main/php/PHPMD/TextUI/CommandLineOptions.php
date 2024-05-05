@@ -920,7 +920,7 @@ class CommandLineOptions
     protected function readInputFile($inputFile)
     {
         if (file_exists($inputFile)) {
-            return implode(',', array_map('trim', file($inputFile)));
+            return implode(',', array_map(trim(...), file($inputFile)));
         }
         throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
     }
