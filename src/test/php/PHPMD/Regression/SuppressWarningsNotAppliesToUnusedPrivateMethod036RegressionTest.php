@@ -27,10 +27,8 @@ class SuppressWarningsNotAppliesToUnusedPrivateMethod036RegressionTest extends A
 {
     /**
      * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation()
+    public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedPrivateMethod());

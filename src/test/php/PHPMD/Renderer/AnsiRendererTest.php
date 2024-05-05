@@ -30,10 +30,8 @@ class AnsiRendererTest extends AbstractTestCase
 {
     /**
      * testRendererOutputsForReportWithContents
-     *
-     * @return void
      */
-    public function testRendererOutputsForReportWithContents()
+    public function testRendererOutputsForReportWithContents(): void
     {
         $writer = new WriterStub();
 
@@ -95,10 +93,8 @@ class AnsiRendererTest extends AbstractTestCase
 
     /**
      * testRendererOutputsForReportWithoutContents
-     *
-     * @return void
      */
-    public function testRendererOutputsForReportWithoutContents()
+    public function testRendererOutputsForReportWithoutContents(): void
     {
         $writer = new WriterStub();
 

@@ -28,10 +28,8 @@ class ExitExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutExitExpression
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutExitExpression()
+    public function testRuleNotAppliesToMethodWithoutExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -40,10 +38,8 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithExitExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithExitExpression()
+    public function testRuleAppliesToMethodWithExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportWithOneViolation());
@@ -52,10 +48,8 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithExitExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToMethodWithExitExpression()
+    public function testRuleAppliesMultipleTimesToMethodWithExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportMock(3));
@@ -64,10 +58,8 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutExitExpression
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutExitExpression()
+    public function testRuleNotAppliesToFunctionWithoutExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -76,10 +68,8 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithExitExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithExitExpression()
+    public function testRuleAppliesToFunctionWithExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportWithOneViolation());
@@ -88,10 +78,8 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithExitExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToFunctionWithExitExpression()
+    public function testRuleAppliesMultipleTimesToFunctionWithExitExpression(): void
     {
         $rule = new ExitExpression();
         $rule->setReport($this->getReportMock(3));

@@ -28,10 +28,8 @@ class CountInLoopExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToAllTypesOfLoops
-     *
-     * @return void
      */
-    public function testRuleAppliesToAllTypesOfLoops()
+    public function testRuleAppliesToAllTypesOfLoops(): void
     {
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportMock(3));
@@ -40,10 +38,8 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotApplyToExpressionElsewhere
-     *
-     * @return void
      */
-    public function testRuleNotApplyToExpressionElsewhere()
+    public function testRuleNotApplyToExpressionElsewhere(): void
     {
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -52,10 +48,8 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testRuleApplyToNestedLoops
-     *
-     * @return void
      */
-    public function testRuleApplyToNestedLoops()
+    public function testRuleApplyToNestedLoops(): void
     {
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportMock(8));
@@ -64,10 +58,8 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testMutedRuleAtClassLevel
-     *
-     * @return void
      */
-    public function testMutedRuleAtClassLevel()
+    public function testMutedRuleAtClassLevel(): void
     {
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -76,10 +68,8 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testMutedRuleAtMethodLevel
-     *
-     * @return void
      */
-    public function testMutedRuleAtMethodLevel()
+    public function testMutedRuleAtMethodLevel(): void
     {
         $rule = new CountInLoopExpression();
         $rule->setReport($this->getReportWithNoViolation());

@@ -27,10 +27,8 @@ class ProcessingErrorTest extends AbstractTestCase
 {
     /**
      * testGetMessageReturnsTheExpectedValue
-     *
-     * @return void
      */
-    public function testGetMessageReturnsTheExpectedValue()
+    public function testGetMessageReturnsTheExpectedValue(): void
     {
         $processingError = new ProcessingError('Hello World.');
         $this->assertEquals('Hello World.', $processingError->getMessage());
@@ -41,10 +39,9 @@ class ProcessingErrorTest extends AbstractTestCase
      * a given exception message,
      *
      * @param string $message The original exception message
-     * @return void
      * @dataProvider getParserExceptionMessages
      */
-    public function testGetFileReturnsExpectedFileName($message)
+    public function testGetFileReturnsExpectedFileName($message): void
     {
         $processingError = new ProcessingError($message);
         $this->assertEquals('/tmp/foo.php', $processingError->getFile());

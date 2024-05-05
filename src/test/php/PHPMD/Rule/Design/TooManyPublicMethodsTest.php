@@ -31,10 +31,7 @@ use PHPMD\Report;
  */
 class TooManyPublicMethodsTest extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
+    public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -43,10 +40,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(23));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -55,10 +49,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
+    public function testRuleAppliesToClassesWithMoreMethodsThanThreshold(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithOneViolation());
@@ -67,10 +58,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresGetterMethodsInTest()
+    public function testRuleIgnoresGetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -79,10 +67,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresSetterMethodsInTest()
+    public function testRuleIgnoresSetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -91,10 +76,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
+    public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -103,10 +85,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresGetterAndSetterMethodsInTest()
+    public function testRuleIgnoresGetterAndSetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -115,10 +94,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(3, ['foo', 'bar'], ['baz', 'bah']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresPrivateMethods()
+    public function testRuleIgnoresPrivateMethods(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -127,10 +103,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass', 'setClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresHassers()
+    public function testRuleIgnoresHassers(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -139,10 +112,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresIssers()
+    public function testRuleIgnoresIssers(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -151,10 +121,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresWithers()
+    public function testRuleIgnoresWithers(): void
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -163,7 +130,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
 
-    public function testRuleApplyToBasicClass()
+    public function testRuleApplyToBasicClass(): void
     {
         $class = $this->getClass();
         $rule = new TooManyPublicMethods();

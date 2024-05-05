@@ -13,7 +13,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromNode
      */
-    public function testFromNodeForAbstractTypeNode()
+    public function testFromNodeForAbstractTypeNode(): void
     {
         /** @var AbstractTypeNode&MockObject $node */
         $node = $this->getMockFromBuilder(
@@ -38,7 +38,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromNode
      */
-    public function testFromNodeForMethodNode()
+    public function testFromNodeForMethodNode(): void
     {
         /** @var MethodNode&MockObject $node */
         $node = $this->getMockFromBuilder(
@@ -64,7 +64,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromNode
      */
-    public function testFromNodeForFunctionNode()
+    public function testFromNodeForFunctionNode(): void
     {
         /** @var MethodNode&MockObject $node */
         $node = $this->getMockFromBuilder(

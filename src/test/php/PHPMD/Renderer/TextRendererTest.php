@@ -33,10 +33,8 @@ class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfTextEntries()
+    public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -73,10 +71,7 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRendererSupportVerbose()
+    public function testRendererSupportVerbose(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -112,10 +107,7 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRendererSupportColor()
+    public function testRendererSupportColor(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -151,10 +143,8 @@ class TextRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToTextReport()
+    public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();

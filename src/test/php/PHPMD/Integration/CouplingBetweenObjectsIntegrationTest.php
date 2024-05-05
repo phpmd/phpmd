@@ -30,10 +30,9 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
     /**
      * testReportContainsCouplingBetweenObjectsWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsCouplingBetweenObjectsWarning()
+    public function testReportContainsCouplingBetweenObjectsWarning(): void
     {
         $file = self::createTempFileUri();
 

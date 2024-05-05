@@ -31,10 +31,8 @@ class FunctionTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependFunction
-     *
-     * @return void
      */
-    public function testMagicCallDelegatesToWrappedPHPDependFunction()
+    public function testMagicCallDelegatesToWrappedPHPDependFunction(): void
     {
         $function = $this->getMockFromBuilder(
             $this->getMockBuilder(ASTFunction::class)
@@ -49,10 +47,8 @@ class FunctionTest extends AbstractTestCase
 
     /**
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     *
-     * @return void
      */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
+    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists(): void
     {
         self::expectException(BadMethodCallException::class);
 

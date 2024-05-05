@@ -37,7 +37,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
      * @covers ::accept
      * @covers ::getState
      */
-    public function testAcceptStrategyContentModified()
+    public function testAcceptStrategyContentModified(): void
     {
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
@@ -52,7 +52,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
      * @covers ::accept
      * @covers ::getState
      */
-    public function testAcceptStrategyContentUnmodified()
+    public function testAcceptStrategyContentUnmodified(): void
     {
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 
@@ -68,7 +68,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
      * @covers ::accept
      * @covers ::getState
      */
-    public function testAcceptStrategyTimestampModified()
+    public function testAcceptStrategyTimestampModified(): void
     {
         $timestamp = (string) filemtime(__FILE__);
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::TIMESTAMP, $this->key, $this->state);
@@ -84,7 +84,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
      * @covers ::accept
      * @covers ::getState
      */
-    public function testAcceptWithoutState()
+    public function testAcceptWithoutState(): void
     {
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, null);
 
@@ -98,7 +98,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     /**
      * @covers ::accept
      */
-    public function testAcceptShouldCacheResults()
+    public function testAcceptShouldCacheResults(): void
     {
         $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::CONTENT, $this->key, $this->state);
 

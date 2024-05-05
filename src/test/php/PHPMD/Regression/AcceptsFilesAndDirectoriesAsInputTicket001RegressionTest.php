@@ -30,10 +30,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
 {
     /**
      * testCliAcceptsDirectoryAsInput
-     *
-     * @return void
      */
-    public function testCliAcceptsDirectoryAsInput()
+    public function testCliAcceptsDirectoryAsInput(): void
     {
         self::changeWorkingDirectory();
 
@@ -54,10 +52,8 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
 
     /**
      * testCliAcceptsSingleFileAsInput
-     *
-     * @return void
      */
-    public function testCliAcceptsSingleFileAsInput()
+    public function testCliAcceptsSingleFileAsInput(): void
     {
         self::changeWorkingDirectory();
 

@@ -30,10 +30,8 @@ class HTMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedHtmlTableRow()
+    public function testRendererCreatesExpectedHtmlTableRow(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();

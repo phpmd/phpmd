@@ -28,10 +28,8 @@ class ExcessivePublicCountTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold()
+    public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold(): void
     {
         $rule = new ExcessivePublicCount();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class ExcessivePublicCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold()
+    public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold(): void
     {
         $rule = new ExcessivePublicCount();
         $rule->setReport($this->getReportWithOneViolation());
@@ -54,10 +50,8 @@ class ExcessivePublicCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold()
+    public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold(): void
     {
         $rule = new ExcessivePublicCount();
         $rule->setReport($this->getReportWithOneViolation());

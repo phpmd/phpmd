@@ -28,10 +28,8 @@ class ParserFactoryTest extends AbstractTestCase
 {
     /**
      * testFactoryConfiguresInputDirectory
-     *
-     * @return void
      */
-    public function testFactoryConfiguresInputDirectory()
+    public function testFactoryConfiguresInputDirectory(): void
     {
         $factory = new ParserFactory();
 
@@ -54,10 +52,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresInputFile
-     *
-     * @return void
      */
-    public function testFactoryConfiguresInputFile()
+    public function testFactoryConfiguresInputFile(): void
     {
         $factory = new ParserFactory();
 
@@ -80,10 +76,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputDirectories
-     *
-     * @return void
      */
-    public function testFactoryConfiguresMultipleInputDirectories()
+    public function testFactoryConfiguresMultipleInputDirectories(): void
     {
         $factory = new ParserFactory();
 
@@ -107,10 +101,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputFilesAndDirectories
-     *
-     * @return void
      */
-    public function testFactoryConfiguresMultipleInputFilesAndDirectories()
+    public function testFactoryConfiguresMultipleInputFilesAndDirectories(): void
     {
         $factory = new ParserFactory();
 
@@ -131,10 +123,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresIgnorePattern
-     *
-     * @return void
      */
-    public function testFactoryConfiguresIgnorePattern()
+    public function testFactoryConfiguresIgnorePattern(): void
     {
         $factory = new ParserFactory();
 
@@ -156,10 +146,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresFileExtensions
-     *
-     * @return void
      */
-    public function testFactoryConfiguresFileExtensions()
+    public function testFactoryConfiguresFileExtensions(): void
     {
         $factory = new ParserFactory();
 

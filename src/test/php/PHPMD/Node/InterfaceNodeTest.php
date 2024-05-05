@@ -32,10 +32,8 @@ class InterfaceNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $interface = new ASTInterface('MyInterface');
         $interface->setNamespace(new ASTNamespace('Sindelfingen'));
@@ -45,28 +43,19 @@ class InterfaceNodeTest extends AbstractTestCase
         $this->assertSame(MyInterface::class, $node->getFullQualifiedName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCountReturnsZeroByDefault()
+    public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $interface = new InterfaceNode(new ASTInterface('MyInterface'));
         $this->assertSame(0, $interface->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCount()
+    public function testGetConstantCount(): void
     {
         $class = $this->getInterface();
         $this->assertSame(3, $class->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $interface = new InterfaceNode(new ASTInterface('MyInterface'));
         $this->assertNull($interface->getParentName());

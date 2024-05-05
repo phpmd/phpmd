@@ -250,10 +250,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
-     * @return void
      * @throws ExpectationFailedException
      */
-    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
+    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file): void
     {
         $report = new Report();
         $rule->setReport($report);

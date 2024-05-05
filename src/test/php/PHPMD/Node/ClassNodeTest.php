@@ -35,10 +35,8 @@ class ClassNodeTest extends AbstractTestCase
 {
     /**
      * testGetMethodNamesReturnsExpectedResult
-     *
-     * @return void
      */
-    public function testGetMethodNamesReturnsExpectedResult()
+    public function testGetMethodNamesReturnsExpectedResult(): void
     {
         $class = new ASTClass(null);
         $class->addMethod(new ASTMethod(__CLASS__));
@@ -50,10 +48,8 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForReturnsTrue
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsAnnotationForReturnsTrue()
+    public function testHasSuppressWarningsAnnotationForReturnsTrue(): void
     {
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
@@ -67,10 +63,8 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsWithRuleNameContainingSlashes
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsWithRuleNameContainingSlashes()
+    public function testHasSuppressWarningsWithRuleNameContainingSlashes(): void
     {
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings(PMD.CouplingBetweenObjects) */');
@@ -95,10 +89,8 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');
         $class->setNamespace(new ASTNamespace('Sindelfingen'));
@@ -108,28 +100,19 @@ class ClassNodeTest extends AbstractTestCase
         $this->assertSame(MyClass::class, $node->getFullQualifiedName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCountReturnsZeroByDefault()
+    public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
         $this->assertSame(0, $class->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCount()
+    public function testGetConstantCount(): void
     {
         $class = $this->getClass();
         $this->assertSame(3, $class->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
         $this->assertNull($class->getParentName());

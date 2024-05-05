@@ -74,10 +74,8 @@ abstract class AbstractStaticTestCase extends TestCase
 
     /**
      * Return to original working directory if changed.
-     *
-     * @return void
      */
-    protected static function returnToOriginalWorkingDirectory()
+    protected static function returnToOriginalWorkingDirectory(): void
     {
         if (self::$originalWorkingDirectory !== null) {
             chdir(self::$originalWorkingDirectory);
@@ -88,10 +86,8 @@ abstract class AbstractStaticTestCase extends TestCase
 
     /**
      * Cleanup temporary files created for the test.
-     *
-     * @return void
      */
-    protected static function cleanupTempFiles()
+    protected static function cleanupTempFiles(): void
     {
         // cleanup any open resources on temp files
         gc_collect_cycles();
@@ -145,9 +141,8 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
-     * @return void
      */
-    public static function assertXmlEquals($actualOutput, $expectedFileName)
+    public static function assertXmlEquals($actualOutput, $expectedFileName): void
     {
         $actual = simplexml_load_string($actualOutput);
         // Remove dynamic timestamp and duration attribute
@@ -179,10 +174,8 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param string $expectedFileName File with expected JSON result.
      * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
-     *
-     * @return void
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true)
+    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true): void
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
@@ -216,9 +209,8 @@ abstract class AbstractStaticTestCase extends TestCase
      * Changes the working directory for a single test.
      *
      * @param string $localPath The temporary working directory.
-     * @return void
      */
-    protected static function changeWorkingDirectory($localPath = '')
+    protected static function changeWorkingDirectory($localPath = ''): void
     {
         self::$originalWorkingDirectory = getcwd();
 

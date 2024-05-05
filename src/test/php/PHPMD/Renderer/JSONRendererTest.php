@@ -31,10 +31,8 @@ class JSONRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfJsonElements()
+    public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
         $writer = new WriterStub();
 
@@ -67,10 +65,8 @@ class JSONRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToJsonReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToJsonReport()
+    public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
         $writer = new WriterStub();
 

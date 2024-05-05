@@ -27,10 +27,8 @@ class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends Abstr
 {
     /**
      * testRuleSetInvokesRuleForClassInstance
-     *
-     * @return void
      */
-    public function testRuleSetInvokesRuleForClassInstance()
+    public function testRuleSetInvokesRuleForClassInstance(): void
     {
         $rule = new ExcessivePublicCount();
         $rule->addProperty('minimum', 3);

@@ -28,7 +28,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     /**
      * Rule does not apply for valid namespace.
      */
-    public function testRuleDoesNotApplyForValidNamespace()
+    public function testRuleDoesNotApplyForValidNamespace(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -40,7 +40,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     /**
      * Rule does apply for incorrect namespace.
      */
-    public function testRuleDoesApplyForIncorrectNamespace()
+    public function testRuleDoesApplyForIncorrectNamespace(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -52,7 +52,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     /**
      * Rule does not apply for namespace with uppercase abbreviation.
      */
-    public function testRuleDoesNotApplyForNamespaceWithUppercaseAbbreviation()
+    public function testRuleDoesNotApplyForNamespaceWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -64,7 +64,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     /**
      * Rule does apply for namespace with uppercase abbreviation.
      */
-    public function testRuleDoesApplyForNamespaceWithUppercaseAbbreviation()
+    public function testRuleDoesApplyForNamespaceWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -77,7 +77,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     /**
      * Rule does not apply for invalid namespace in exception list.
      */
-    public function testRuleDoesNotApplyForNamespaceInException()
+    public function testRuleDoesNotApplyForNamespaceInException(): void
     {
         $report = $this->getReportWithNoViolation();
 

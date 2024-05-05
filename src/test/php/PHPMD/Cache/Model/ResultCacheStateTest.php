@@ -29,7 +29,7 @@ class ResultCacheStateTest extends TestCase
     /**
      * @covers ::getCacheKey
      */
-    public function testGetCacheKey()
+    public function testGetCacheKey(): void
     {
         static::assertSame($this->key, $this->state->getCacheKey());
     }
@@ -38,7 +38,7 @@ class ResultCacheStateTest extends TestCase
      * @covers ::setViolations
      * @covers ::getViolations
      */
-    public function testGetSetViolations()
+    public function testGetSetViolations(): void
     {
         $violations = ['violations'];
 
@@ -51,7 +51,7 @@ class ResultCacheStateTest extends TestCase
     /**
      * @covers ::addRuleViolation
      */
-    public function testAddRuleViolation()
+    public function testAddRuleViolation(): void
     {
         $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
@@ -90,7 +90,7 @@ class ResultCacheStateTest extends TestCase
      * @covers ::getRuleViolations
      * @covers ::findRuleIn
      */
-    public function testGetRuleViolationsWithoutDescriptionArgs()
+    public function testGetRuleViolationsWithoutDescriptionArgs(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
@@ -117,7 +117,7 @@ class ResultCacheStateTest extends TestCase
      * @covers ::getRuleViolations
      * @covers ::findRuleIn
      */
-    public function testGetRuleViolationsWithDescriptionArgs()
+    public function testGetRuleViolationsWithDescriptionArgs(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
@@ -149,7 +149,7 @@ class ResultCacheStateTest extends TestCase
      * @covers ::setFileState
      * @covers ::isFileModified
      */
-    public function testIsFileModified()
+    public function testIsFileModified(): void
     {
         $this->state->setFileState('/file/path', 'hash');
 
@@ -161,7 +161,7 @@ class ResultCacheStateTest extends TestCase
     /**
      * @covers ::toArray
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());

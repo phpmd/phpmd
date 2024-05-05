@@ -32,10 +32,8 @@ class ReportTest extends AbstractTestCase
     /**
      * Tests that the report returns a linear/sorted list of all rule violation
      * files.
-     *
-     * @return void
      */
-    public function testReportReturnsAListWithAllRuleViolations()
+    public function testReportReturnsAListWithAllRuleViolations(): void
     {
         $report = new Report();
 
@@ -57,10 +55,8 @@ class ReportTest extends AbstractTestCase
 
     /**
      * Tests that the report returns the result by the violation line number.
-     *
-     * @return void
      */
-    public function testReportSortsResultByLineNumber()
+    public function testReportSortsResultByLineNumber(): void
     {
         $report = new Report();
 
@@ -94,10 +90,8 @@ class ReportTest extends AbstractTestCase
 
     /**
      * Tests that the timer method returns the expected result.
-     *
-     * @return void
      */
-    public function testReportTimerReturnsMilliSeconds()
+    public function testReportTimerReturnsMilliSeconds(): void
     {
         $start = microtime(true);
 
@@ -117,10 +111,8 @@ class ReportTest extends AbstractTestCase
 
     /**
      * testIsEmptyReturnsTrueByDefault
-     *
-     * @return void
      */
-    public function testIsEmptyReturnsTrueByDefault()
+    public function testIsEmptyReturnsTrueByDefault(): void
     {
         $report = new Report();
         $this->assertTrue($report->isEmpty());
@@ -128,10 +120,8 @@ class ReportTest extends AbstractTestCase
 
     /**
      * testIsEmptyReturnsFalseWhenAtLeastOneViolationExists
-     *
-     * @return void
      */
-    public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists()
+    public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists(): void
     {
         $report = new Report();
         $report->addRuleViolation($this->getRuleViolationMock('foo.txt', 4, 5));
@@ -142,10 +132,9 @@ class ReportTest extends AbstractTestCase
     /**
      * testHasErrorsReturnsFalseByDefault
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testHasErrorsReturnsFalseByDefault()
+    public function testHasErrorsReturnsFalseByDefault(): void
     {
         $report = new Report();
         $this->assertFalse($report->hasErrors());
@@ -154,10 +143,9 @@ class ReportTest extends AbstractTestCase
     /**
      * testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError()
+    public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError(): void
     {
         $report = new Report();
         $report->addError(new ProcessingError('Failing file "/foo.php".'));
@@ -168,10 +156,9 @@ class ReportTest extends AbstractTestCase
     /**
      * testGetErrorsReturnsEmptyIteratorByDefault
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testGetErrorsReturnsEmptyIteratorByDefault()
+    public function testGetErrorsReturnsEmptyIteratorByDefault(): void
     {
         $report = new Report();
         $this->assertSame(0, iterator_count($report->getErrors()));
@@ -180,10 +167,9 @@ class ReportTest extends AbstractTestCase
     /**
      * testGetErrorsReturnsPreviousAddedProcessingError
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testGetErrorsReturnsPreviousAddedProcessingError()
+    public function testGetErrorsReturnsPreviousAddedProcessingError(): void
     {
         $report = new Report();
         $report->addError(new ProcessingError('Failing file "/foo.php".'));
@@ -191,10 +177,7 @@ class ReportTest extends AbstractTestCase
         $this->assertSame(1, iterator_count($report->getErrors()));
     }
 
-    /**
-     * @return void
-     */
-    public function testReportShouldIgnoreBaselineViolation()
+    public function testReportShouldIgnoreBaselineViolation(): void
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
@@ -217,10 +200,7 @@ class ReportTest extends AbstractTestCase
         static::assertSame($ruleB, $violations[0]);
     }
 
-    /**
-     * @return void
-     */
-    public function testReportShouldIgnoreNewViolationsOnBaselineUpdate()
+    public function testReportShouldIgnoreNewViolationsOnBaselineUpdate(): void
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');

@@ -15,7 +15,7 @@ class BaselineFileFinderTest extends AbstractTestCase
     /**
      * @covers ::find
      */
-    public function testShouldFindFileFromCLI()
+    public function testShouldFindFileFromCLI(): void
     {
         $args = ['script', 'source', 'xml', 'phpmd.xml', '--baseline-file', 'foobar.txt'];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
@@ -26,7 +26,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      * @covers ::find
      * @covers ::existingFile
      */
-    public function testShouldFindExistingFileNearRuleSet()
+    public function testShouldFindExistingFileNearRuleSet(): void
     {
         $args = ['script', 'source', 'xml', static::createResourceUriForTest('testA/phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
@@ -42,7 +42,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      * @covers ::find
      * @covers ::nullOrThrow
      */
-    public function testShouldThrowExceptionForNonExistingRuleSet()
+    public function testShouldThrowExceptionForNonExistingRuleSet(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Unable to determine the baseline file location.',
@@ -57,7 +57,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      * @covers ::find
      * @covers ::nullOrThrow
      */
-    public function testShouldReturnNullForNonExistingRuleSet()
+    public function testShouldReturnNullForNonExistingRuleSet(): void
     {
         $args = ['script', 'source', 'xml', static::createResourceUriForTest('phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
@@ -69,7 +69,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      * @covers ::nullOrThrow
      * @covers ::existingFile
      */
-    public function testShouldOnlyFindExistingFile()
+    public function testShouldOnlyFindExistingFile(): void
     {
         $args = ['script', 'source', 'xml', static::createResourceUriForTest('testB/phpmd.xml')];
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
@@ -81,7 +81,7 @@ class BaselineFileFinderTest extends AbstractTestCase
      * @covers ::notNull
      * @covers ::nullOrThrow
      */
-    public function testShouldThrowExceptionWhenFileIsNull()
+    public function testShouldThrowExceptionWhenFileIsNull(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Unable to find the baseline file',

@@ -28,10 +28,8 @@ class AnnotationTest extends AbstractTestCase
 {
     /**
      * testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists
-     *
-     * @return void
      */
-    public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists()
+    public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists(): void
     {
         $annotation = new Annotation('NoSuppressWarning', 'PMD');
         $this->assertFalse($annotation->suppresses($this->getRuleMock()));
@@ -39,10 +37,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue
-     *
-     * @return void
      */
-    public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue()
+    public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PHP');
         $this->assertFalse($annotation->suppresses($this->getRuleMock()));
@@ -50,10 +46,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PMD');
         $this->assertTrue($annotation->suppresses($this->getRuleMock()));
@@ -61,10 +55,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PHPMD');
         $this->assertTrue($annotation->suppresses($this->getRuleMock()));
@@ -72,10 +64,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst(): void
     {
         $annotation = new Annotation('suppressWarnings', 'PHPMD');
         $this->assertTrue($annotation->suppresses($this->getRuleMock()));
@@ -83,10 +73,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');
@@ -97,10 +85,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');
@@ -111,10 +97,8 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');

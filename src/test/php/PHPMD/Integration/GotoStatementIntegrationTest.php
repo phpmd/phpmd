@@ -30,10 +30,9 @@ class GotoStatementIntegrationTest extends AbstractTestCase
     /**
      * testReportContainsGotoStatementWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsGotoStatementWarning()
+    public function testReportContainsGotoStatementWarning(): void
     {
         $file = self::createTempFileUri();
 

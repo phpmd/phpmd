@@ -29,10 +29,8 @@ class ASTNodeTest extends AbstractTestCase
 {
     /**
      * testGetImageDelegatesToGetImageMethodOfWrappedNode
-     *
-     * @return void
      */
-    public function testGetImageDelegatesToGetImageMethodOfWrappedNode()
+    public function testGetImageDelegatesToGetImageMethodOfWrappedNode(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $mock->expects($this->once())
@@ -44,10 +42,8 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNameDelegatesToGetImageMethodOfWrappedNode
-     *
-     * @return void
      */
-    public function testGetNameDelegatesToGetImageMethodOfWrappedNode()
+    public function testGetNameDelegatesToGetImageMethodOfWrappedNode(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $mock->expects($this->once())
@@ -59,10 +55,8 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse()
+    public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
 
@@ -74,10 +68,8 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetParentNameReturnsNull
-     *
-     * @return void
      */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $node = new ASTNode($mock, __FILE__);
@@ -87,10 +79,8 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNamespaceNameReturnsNull
-     *
-     * @return void
      */
-    public function testGetNamespaceNameReturnsNull()
+    public function testGetNamespaceNameReturnsNull(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $node = new ASTNode($mock, __FILE__);
@@ -100,10 +90,8 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsNull
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsNull()
+    public function testGetFullQualifiedNameReturnsNull(): void
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $node = new ASTNode($mock, __FILE__);

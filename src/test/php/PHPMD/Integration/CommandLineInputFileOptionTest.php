@@ -30,10 +30,9 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
     /**
      * testReportContainsExpectedRuleViolationWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsExpectedRuleViolationWarning()
+    public function testReportContainsExpectedRuleViolationWarning(): void
     {
         self::assertStringContainsString(
             "Avoid unused local variables such as '\$foo'.",
@@ -44,10 +43,9 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
     /**
      * testReportNotContainsRuleViolationWarningForFileNotInList
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportNotContainsRuleViolationWarningForFileNotInList()
+    public function testReportNotContainsRuleViolationWarningForFileNotInList(): void
     {
         self::assertStringNotContainsString(
             "Avoid unused local variables such as '\$bar'.",

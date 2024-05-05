@@ -60,10 +60,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsGeneratedIWithNoSuppression()
+    public function testReportIsGeneratedIWithNoSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
@@ -74,7 +72,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
             ->method('renderReport')
             ->will(
                 $this->returnCallback(
-                    function (Report $report) use ($self) {
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
                             if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
@@ -104,10 +102,8 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsNotGeneratedIWithSuppression()
+    public function testReportIsNotGeneratedIWithSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
@@ -118,7 +114,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
             ->method('renderReport')
             ->will(
                 $this->returnCallback(
-                    function (Report $report) use ($self) {
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
                             if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {

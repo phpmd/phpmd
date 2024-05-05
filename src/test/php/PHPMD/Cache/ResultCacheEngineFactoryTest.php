@@ -47,7 +47,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateNotEnabledShouldReturnNull()
+    public function testCreateNotEnabledShouldReturnNull(): void
     {
         $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(false);
         $this->keyFactory->expects(self::never())->method('create');
@@ -58,7 +58,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateCacheMissShouldHaveNoOriginalState()
+    public function testCreateCacheMissShouldHaveNoOriginalState(): void
     {
         $ruleSetList = [new RuleSet()];
         $cacheKeyA = new ResultCacheKey(true, 'baseline', [], [], 123);
@@ -80,7 +80,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateCacheHitShouldHaveOriginalState()
+    public function testCreateCacheHitShouldHaveOriginalState(): void
     {
         $ruleSetList = [new RuleSet()];
         $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 123);

@@ -31,10 +31,8 @@ class GitLabRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfGitLabElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfGitLabElements()
+    public function testRendererCreatesExpectedNumberOfGitLabElements(): void
     {
         $writer = new WriterStub();
 
@@ -67,10 +65,8 @@ class GitLabRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToGitLabReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToGitLabReport()
+    public function testRendererAddsProcessingErrorsToGitLabReport(): void
     {
         $writer = new WriterStub();
 

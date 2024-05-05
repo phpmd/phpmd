@@ -32,10 +32,8 @@ class TraitNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $trait = new ASTTrait('MyTrait');
         $trait->setNamespace(new ASTNamespace('Sindelfingen'));
@@ -45,19 +43,13 @@ class TraitNodeTest extends AbstractTestCase
         $this->assertSame(MyTrait::class, $node->getFullQualifiedName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCountReturnsZeroByDefault()
+    public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
         $this->assertSame(0, $trait->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
         $this->assertNull($trait->getParentName());

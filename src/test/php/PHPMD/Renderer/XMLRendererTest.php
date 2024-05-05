@@ -31,10 +31,8 @@ class XMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfXmlElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfXmlElements()
+    public function testRendererCreatesExpectedNumberOfXmlElements(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -69,10 +67,9 @@ class XMLRendererTest extends AbstractTestCase
     /**
      * testRendererAddsProcessingErrorsToXmlReport
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testRendererAddsProcessingErrorsToXmlReport()
+    public function testRendererAddsProcessingErrorsToXmlReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();

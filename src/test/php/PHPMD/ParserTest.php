@@ -41,10 +41,8 @@ class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesClassNodeToRuleSet()
+    public function testAdapterDelegatesClassNodeToRuleSet(): void
     {
         $mock = $this->getPHPDependClassMock();
         $mock->expects($this->once())
@@ -60,10 +58,8 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet(): void
     {
         $mock = $this->getPHPDependClassMock();
         $mock->expects($this->once())
@@ -78,10 +74,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesMethodNodeToRuleSet()
+    public function testAdapterDelegatesMethodNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock(MethodNode::class));
@@ -92,10 +86,8 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
@@ -105,10 +97,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesFunctionNodeToRuleSet()
+    public function testAdapterDelegatesFunctionNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock(FunctionNode::class));
@@ -119,10 +109,8 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
@@ -133,10 +121,9 @@ class ParserTest extends AbstractTestCase
     /**
      * testParserStoreParsingExceptionsInReport
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testParserStoreParsingExceptionsInReport()
+    public function testParserStoreParsingExceptionsInReport(): void
     {
         $report = $this->getReportWithNoViolation();
         $report->expects($this->once())

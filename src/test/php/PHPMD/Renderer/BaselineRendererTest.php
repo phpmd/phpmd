@@ -17,7 +17,7 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReport()
+    public function testRenderReport(): void
     {
         $writer = new WriterStub();
         $violations = [
@@ -46,7 +46,7 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReportShouldWriteMethodName()
+    public function testRenderReportShouldWriteMethodName(): void
     {
         $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
@@ -73,7 +73,7 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReportShouldDeduplicateSimilarViolations()
+    public function testRenderReportShouldDeduplicateSimilarViolations(): void
     {
         $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
@@ -101,7 +101,7 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderEmptyReport()
+    public function testRenderEmptyReport(): void
     {
         $writer = new WriterStub();
         $report = $this->getReportWithNoViolation();

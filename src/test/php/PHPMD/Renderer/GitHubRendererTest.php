@@ -31,10 +31,8 @@ class GitHubRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfTextEntries()
+    public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -70,10 +68,8 @@ class GitHubRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToTextReport()
+    public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();

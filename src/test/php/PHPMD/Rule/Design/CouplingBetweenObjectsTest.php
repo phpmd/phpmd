@@ -29,10 +29,8 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithCboLessThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassWithCboLessThanThreshold()
+    public function testRuleNotAppliesToClassWithCboLessThanThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportWithNoViolation());
@@ -42,10 +40,8 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithCboEqualToThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithCboEqualToThreshold()
+    public function testRuleAppliesToClassWithCboEqualToThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportWithOneViolation());
@@ -55,10 +51,8 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithCboGreaterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithCboGreaterThanThreshold()
+    public function testRuleAppliesToClassWithCboGreaterThanThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
         $rule->setReport($this->getReportWithOneViolation());

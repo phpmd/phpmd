@@ -28,10 +28,8 @@ class NumberOfChildrenTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithChildrenLessThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassWithChildrenLessThanThreshold()
+    public function testRuleNotAppliesToClassWithChildrenLessThanThreshold(): void
     {
         $rule = new NumberOfChildren();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class NumberOfChildrenTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithChildrenIdenticalToThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithChildrenIdenticalToThreshold()
+    public function testRuleAppliesToClassWithChildrenIdenticalToThreshold(): void
     {
         $rule = new NumberOfChildren();
         $rule->setReport($this->getReportWithOneViolation());
@@ -54,10 +50,8 @@ class NumberOfChildrenTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithChildrenGreaterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithChildrenGreaterThanThreshold()
+    public function testRuleAppliesToClassWithChildrenGreaterThanThreshold(): void
     {
         $rule = new NumberOfChildren();
         $rule->setReport($this->getReportWithOneViolation());

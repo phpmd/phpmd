@@ -29,10 +29,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToMethodStartingWithGetAndReturningBoolean
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodStartingWithGetAndReturningBoolean()
+    public function testRuleAppliesToMethodStartingWithGetAndReturningBoolean(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -42,10 +40,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodStartingWithGetAndReturningBool
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodStartingWithGetAndReturningBool()
+    public function testRuleAppliesToMethodStartingWithGetAndReturningBool(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -55,10 +51,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean
-     *
-     * @return void
      */
-    public function testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean()
+    public function testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -68,10 +62,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresParametersWhenNotExplicitConfigured
-     *
-     * @return void
      */
-    public function testRuleIgnoresParametersWhenNotExplicitConfigured()
+    public function testRuleIgnoresParametersWhenNotExplicitConfigured(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -81,10 +73,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesWhenParametersAreExplicitEnabled
-     *
-     * @return void
      */
-    public function testRuleNotAppliesWhenParametersAreExplicitEnabled()
+    public function testRuleNotAppliesWhenParametersAreExplicitEnabled(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'true');
@@ -95,10 +85,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodStartingWithIs
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodStartingWithIs()
+    public function testRuleNotAppliesToMethodStartingWithIs(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -109,10 +97,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodStartingWithHas
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodStartingWithHas()
+    public function testRuleNotAppliesToMethodStartingWithHas(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');
@@ -123,10 +109,8 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithReturnTypeNotBoolean
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithReturnTypeNotBoolean()
+    public function testRuleNotAppliesToMethodWithReturnTypeNotBoolean(): void
     {
         $rule = new BooleanGetMethodName();
         $rule->addProperty('checkParameterizedMethods', 'false');

@@ -43,10 +43,9 @@ class CommandTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @dataProvider dataProviderTestMainWithOption
      */
-    public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, array $options = null)
+    public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, array $options = null): void
     {
         $args = array_filter(
             array_merge(
@@ -132,10 +131,7 @@ class CommandTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @return void
-     */
-    public function testWithMultipleReportFiles()
+    public function testWithMultipleReportFiles(): void
     {
         $args = [
             __FILE__,
@@ -168,7 +164,7 @@ class CommandTest extends AbstractTestCase
         $this->assertFileExists($sarif);
     }
 
-    public function testOutput()
+    public function testOutput(): void
     {
         $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
         $temp = self::createTempFileUri();
@@ -192,10 +188,9 @@ class CommandTest extends AbstractTestCase
     /**
      * @param string $option
      * @param string $value
-     * @return void
      * @dataProvider dataProviderWithFilter
      */
-    public function testWithFilter($option, $value)
+    public function testWithFilter($option, $value): void
     {
         $args = [
             __FILE__,
@@ -220,7 +215,7 @@ class CommandTest extends AbstractTestCase
         ];
     }
 
-    public function testMainGenerateBaseline()
+    public function testMainGenerateBaseline(): void
     {
         $uri = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
         $temp = self::createTempFileUri();
@@ -248,7 +243,7 @@ class CommandTest extends AbstractTestCase
      * - ShortVariable violation should still exist
      * - BooleanGetMethodName shouldn't be added
      */
-    public function testMainUpdateBaseline()
+    public function testMainUpdateBaseline(): void
     {
         $sourceTemp = self::createTempFileUri('ClassWithMultipleViolations.php');
         $baselineTemp = self::createTempFileUri();
@@ -275,7 +270,7 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    public function testMainBaselineViolationShouldBeIgnored()
+    public function testMainBaselineViolationShouldBeIgnored(): void
     {
         $sourceFile = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
@@ -291,7 +286,7 @@ class CommandTest extends AbstractTestCase
         static::assertSame(Command::EXIT_SUCCESS, $exitCode);
     }
 
-    public function testMainWritesExceptionMessageToStderr()
+    public function testMainWritesExceptionMessageToStderr(): void
     {
         stream_filter_register('stderr_stream', StreamFilter::class);
 
@@ -312,7 +307,7 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    public function testMainWritesExceptionMessageToErrorFileIfSpecified()
+    public function testMainWritesExceptionMessageToErrorFileIfSpecified(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
 
@@ -368,7 +363,7 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    public function testOutputDeprecation()
+    public function testOutputDeprecation(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
 
@@ -394,7 +389,7 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    public function testMainPrintsVersionToStdout()
+    public function testMainPrintsVersionToStdout(): void
     {
         stream_filter_register('stderr_stream', StreamFilter::class);
 

@@ -28,10 +28,8 @@ class AnnotationsTest extends AbstractTestCase
 {
     /**
      * testCollectionReturnsFalseWhenNoAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsFalseWhenNoAnnotationExists()
+    public function testCollectionReturnsFalseWhenNoAnnotationExists(): void
     {
         $annotations = new Annotations($this->getClassMock());
         $this->assertFalse($annotations->suppresses($this->getRuleMock()));
@@ -39,10 +37,8 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsFalseWhenNoMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists()
+    public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
         $class->expects($this->once())
@@ -64,10 +60,8 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsTrueWhenMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsTrueWhenMatchingAnnotationExists()
+    public function testCollectionReturnsTrueWhenMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
         $class->expects($this->once())
@@ -81,10 +75,8 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsTrueWhenOneMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists()
+    public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
         $class->expects($this->once())

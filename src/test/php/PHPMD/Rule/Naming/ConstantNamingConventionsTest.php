@@ -28,10 +28,8 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToClassConstantWithLowerCaseCharacters
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassConstantWithLowerCaseCharacters()
+    public function testRuleAppliesToClassConstantWithLowerCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
         $rule->setReport($this->getReportMock(2));
@@ -40,10 +38,8 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToInterfaceConstantWithLowerCaseCharacters
-     *
-     * @return void
      */
-    public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters()
+    public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
         $rule->setReport($this->getReportMock(3));
@@ -52,10 +48,8 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToClassConstantWithUpperCaseCharacters
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters()
+    public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
         $rule->setReport($this->getReportWithNoViolation());
@@ -64,10 +58,8 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters()
+    public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
         $rule->setReport($this->getReportWithNoViolation());

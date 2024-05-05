@@ -29,10 +29,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionUnusedFormalParameter()
+    public function testRuleAppliesToFunctionUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());
@@ -41,10 +39,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMultipleFunctionUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToMultipleFunctionUnusedFormalParameter()
+    public function testRuleAppliesToMultipleFunctionUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(3));
@@ -53,10 +49,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodUnusedFormalParameter()
+    public function testRuleAppliesToMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());
@@ -65,10 +59,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToEnumMethodUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToEnumMethodUnusedFormalParameter()
+    public function testRuleAppliesToEnumMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());
@@ -77,10 +69,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClosureUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToClosureUnusedFormalParameter()
+    public function testRuleAppliesToClosureUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());
@@ -89,10 +79,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMultipleMethodUnusedFormalParameter
-     *
-     * @return void
      */
-    public function testRuleAppliesToMultipleMethodUnusedFormalParameter()
+    public function testRuleAppliesToMultipleMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(2));
@@ -110,10 +98,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed()
+    public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithOneViolation());
@@ -130,10 +116,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable()
+    public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -150,10 +134,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable()
+    public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -162,10 +144,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToAbstractMethodFormalParameter
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToAbstractMethodFormalParameter()
+    public function testRuleDoesNotApplyToAbstractMethodFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -174,10 +154,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToInterfaceMethodFormalParameter
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToInterfaceMethodFormalParameter()
+    public function testRuleDoesNotApplyToInterfaceMethodFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -186,10 +164,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToInnerFunctionDeclaration
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToInnerFunctionDeclaration()
+    public function testRuleDoesNotApplyToInnerFunctionDeclaration(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -207,10 +183,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression()
+    public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -227,10 +201,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMethodArgument()
+    public function testRuleDoesNotApplyToMethodArgument(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -239,10 +211,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex()
+    public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -259,10 +229,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToParameterUsedAsArrayIndex()
+    public function testRuleDoesNotApplyToParameterUsedAsArrayIndex(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -279,10 +247,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToParameterUsedAsStringIndex()
+    public function testRuleDoesNotApplyToParameterUsedAsStringIndex(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -303,10 +269,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMethodWithFuncGetArgs()
+    public function testRuleDoesNotApplyToMethodWithFuncGetArgs(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -315,10 +279,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.0
      */
-    public function testFuncGetArgsRuleWorksCaseInsensitive()
+    public function testFuncGetArgsRuleWorksCaseInsensitive(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -328,10 +291,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToInheritMethod
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testRuleDoesNotApplyToInheritMethod()
+    public function testRuleDoesNotApplyToInheritMethod(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -341,10 +303,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToImplementedAbstractMethod
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testRuleDoesNotApplyToImplementedAbstractMethod()
+    public function testRuleDoesNotApplyToImplementedAbstractMethod(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -354,10 +315,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToImplementedInterfaceMethod
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testRuleDoesNotApplyToImplementedInterfaceMethod()
+    public function testRuleDoesNotApplyToImplementedInterfaceMethod(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -366,10 +326,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMagicMethod
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMagicMethod()
+    public function testRuleDoesNotApplyToMagicMethod(): void
     {
         $methods = array_filter(
             $this->getClass()->getMethods(),
@@ -384,7 +342,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToMethodWithInheritdocAnnotation
      */
-    public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation()
+    public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -394,7 +352,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase
      */
-    public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase()
+    public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -403,10 +361,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.0
      */
-    public function testCompactFunctionRuleDoesNotApply()
+    public function testCompactFunctionRuleDoesNotApply(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -415,10 +372,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.0
      */
-    public function testCompactFunctionRuleOnlyAppliesToUsedParameters()
+    public function testCompactFunctionRuleOnlyAppliesToUsedParameters(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(2));
@@ -427,10 +383,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.0
      */
-    public function testCompactFunctionRuleWorksCaseInsensitive()
+    public function testCompactFunctionRuleWorksCaseInsensitive(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -439,10 +394,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.1
      */
-    public function testNamespacedCompactFunctionRuleDoesNotApply()
+    public function testNamespacedCompactFunctionRuleDoesNotApply(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -451,10 +405,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.1
      */
-    public function testNamespacedCompactFunctionRuleOnlyAppliesToUsedParameters()
+    public function testNamespacedCompactFunctionRuleOnlyAppliesToUsedParameters(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportMock(2));
@@ -463,10 +416,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * @test
-     * @return void
      * @since 2.0.1
      */
-    public function testNamespacedCompactFunctionRuleWorksCaseInsensitive()
+    public function testNamespacedCompactFunctionRuleWorksCaseInsensitive(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -483,10 +435,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable()
+    public function testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -507,10 +457,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable()
+    public function testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
@@ -525,10 +473,8 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     public function __construct(private string $foo) {}
      * }
      * </code>
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToPropertyPromotionParameters()
+    public function testRuleDoesNotApplyToPropertyPromotionParameters(): void
     {
         $methods = array_filter(
             $this->getClass()->getMethods(),

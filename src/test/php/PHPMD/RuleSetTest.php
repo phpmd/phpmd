@@ -36,10 +36,8 @@ class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
-     *
-     * @return void
      */
-    public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists()
+    public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists(): void
     {
         self::expectException(RuleByNameNotFoundException::class);
 
@@ -49,10 +47,8 @@ class RuleSetTest extends AbstractTestCase
 
     /**
      * testGetRuleByNameReturnsMatchingRuleInstance
-     *
-     * @return void
      */
-    public function testGetRuleByNameReturnsMatchingRuleInstance()
+    public function testGetRuleByNameReturnsMatchingRuleInstance(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
         $rule = $ruleSet->getRuleByName(__CLASS__);
@@ -62,10 +58,8 @@ class RuleSetTest extends AbstractTestCase
 
     /**
      * testApplyNotInvokesRuleWhenSuppressAnnotationExists
-     *
-     * @return void
      */
-    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
+    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
@@ -76,10 +70,8 @@ class RuleSetTest extends AbstractTestCase
 
     /**
      * testApplyInvokesRuleWhenStrictModeIsSet
-     *
-     * @return void
      */
-    public function testApplyInvokesRuleWhenStrictModeIsSet()
+    public function testApplyInvokesRuleWhenStrictModeIsSet(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
@@ -91,7 +83,7 @@ class RuleSetTest extends AbstractTestCase
         $this->assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
     }
 
-    public function testDescriptionCanBeChanged()
+    public function testDescriptionCanBeChanged(): void
     {
         $ruleSet = new RuleSet();
 
@@ -102,7 +94,7 @@ class RuleSetTest extends AbstractTestCase
         $this->assertSame('foobar', $ruleSet->getDescription());
     }
 
-    public function testStrictnessCanBeEnabled()
+    public function testStrictnessCanBeEnabled(): void
     {
         $ruleSet = new RuleSet();
 
@@ -113,7 +105,7 @@ class RuleSetTest extends AbstractTestCase
         $this->assertTrue($ruleSet->isStrict());
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->setReport(new Report());

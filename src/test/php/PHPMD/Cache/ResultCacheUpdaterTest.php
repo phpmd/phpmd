@@ -32,7 +32,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     /**
      * @covers ::update
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $ruleSet = new RuleSet();
         $report = $this->getReportMock();
