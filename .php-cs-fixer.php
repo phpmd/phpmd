@@ -37,11 +37,11 @@ return $config
             'after_heredoc' => true,
             'elements' => [
                 // Not adhering to PER CS v2; we don't want trailing commas for arguments
-//                'arguments',
+                //'arguments',
                 'arrays',
                 'match',
                 // Not adhering to PER CS v2; we don't want trailing commas for parameters
-//                'parameters'
+                //'parameters'
             ]
         ],
         'fully_qualified_strict_types' => true,
