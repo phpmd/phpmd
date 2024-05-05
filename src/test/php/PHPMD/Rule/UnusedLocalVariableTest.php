@@ -22,8 +22,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the unused local variable rule.
  *
- * @covers \PHPMD\Rule\UnusedLocalVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
+ * @covers \PHPMD\Rule\UnusedLocalVariable
  */
 class UnusedLocalVariableTest extends AbstractTestCase
 {

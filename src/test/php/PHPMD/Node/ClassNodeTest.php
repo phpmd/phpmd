@@ -28,8 +28,8 @@ use Sindelfingen\MyClass;
 /**
  * Test case for the class node implementation.
  *
- * @covers \PHPMD\Node\ClassNode
  * @covers \PHPMD\Node\AbstractTypeNode
+ * @covers \PHPMD\Node\ClassNode
  */
 class ClassNodeTest extends AbstractTestCase
 {

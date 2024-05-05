@@ -22,8 +22,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the unused formal parameter rule.
  *
- * @covers \PHPMD\Rule\UnusedFormalParameter
  * @covers \PHPMD\Rule\AbstractLocalVariable
+ * @covers \PHPMD\Rule\UnusedFormalParameter
  */
 class UnusedFormalParameterTest extends AbstractTestCase
 {

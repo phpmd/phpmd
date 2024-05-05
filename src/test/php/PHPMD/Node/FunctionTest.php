@@ -24,8 +24,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the function node implementation.
  *
- * @covers \PHPMD\Node\FunctionNode
  * @covers \PHPMD\Node\AbstractCallableNode
+ * @covers \PHPMD\Node\FunctionNode
  */
 class FunctionTest extends AbstractTestCase
 {

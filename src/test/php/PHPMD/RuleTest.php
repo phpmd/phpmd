@@ -172,8 +172,8 @@ class RuleTest extends AbstractTestCase
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
      * @return void
-     * @covers ::getStringProperty
      * @covers ::getProperty
+     * @covers ::getStringProperty
      */
     public function testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists()
     {
@@ -188,8 +188,8 @@ class RuleTest extends AbstractTestCase
      * testGetStringPropertyReturnsStringValue
      *
      * @return void
-     * @covers ::getStringProperty
      * @covers ::getProperty
+     * @covers ::getStringProperty
      */
     public function testGetStringPropertyReturnsString()
     {
@@ -204,8 +204,8 @@ class RuleTest extends AbstractTestCase
      * Tests the getStringProperty method with a fallback value
      *
      * @return void
-     * @covers ::getStringProperty
      * @covers ::getProperty
+     * @covers ::getStringProperty
      */
     public function testGetStringPropertyReturnsFallbackString()
     {

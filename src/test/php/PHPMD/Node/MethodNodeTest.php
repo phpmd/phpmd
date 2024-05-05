@@ -26,8 +26,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the method node implementation.
  *
- * @covers \PHPMD\Node\MethodNode
  * @covers \PHPMD\Node\AbstractCallableNode
+ * @covers \PHPMD\Node\MethodNode
  */
 class MethodNodeTest extends AbstractTestCase
 {

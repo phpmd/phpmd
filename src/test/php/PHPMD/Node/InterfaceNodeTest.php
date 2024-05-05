@@ -25,8 +25,8 @@ use Sindelfingen\MyInterface;
 /**
  * Test case for the interface node implementation.
  *
- * @covers \PHPMD\Node\InterfaceNode
  * @covers \PHPMD\Node\AbstractTypeNode
+ * @covers \PHPMD\Node\InterfaceNode
  */
 class InterfaceNodeTest extends AbstractTestCase
 {

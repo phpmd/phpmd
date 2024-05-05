@@ -35,8 +35,8 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::setViolations
      * @covers ::getViolations
+     * @covers ::setViolations
      */
     public function testGetSetViolations()
     {
@@ -87,8 +87,8 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::getRuleViolations
      * @covers ::findRuleIn
+     * @covers ::getRuleViolations
      */
     public function testGetRuleViolationsWithoutDescriptionArgs()
     {
@@ -114,8 +114,8 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::getRuleViolations
      * @covers ::findRuleIn
+     * @covers ::getRuleViolations
      */
     public function testGetRuleViolationsWithDescriptionArgs()
     {
@@ -146,8 +146,8 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::setFileState
      * @covers ::isFileModified
+     * @covers ::setFileState
      */
     public function testIsFileModified()
     {
