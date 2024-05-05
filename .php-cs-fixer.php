@@ -7,8 +7,10 @@
  */
 $config = new PhpCsFixer\Config();
 return $config
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PER-CS2.0' => true,
+        '@PER-CS2.0:risky' => true,
         'binary_operator_spaces' => true, // Going beyond PER CS v2
         'ordered_class_elements' => [
             'order' => [
@@ -96,6 +98,8 @@ return $config
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')
-        ->in(__DIR__ . '/src/main/php/PHPMD')
-        ->in(__DIR__ . '/src/test/php/')
+        ->in([
+            __DIR__ . '/src/main/php/PHPMD',
+            __DIR__ . '/src/test/php',
+        ])
     );
