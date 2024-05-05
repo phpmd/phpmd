@@ -48,7 +48,7 @@ class ResultCacheKey
     /**
      * @return bool
      */
-    public function isEqualTo(ResultCacheKey $other)
+    public function isEqualTo(self $other)
     {
         return $this->strict === $other->strict
             && $this->baselineHash === $other->baselineHash

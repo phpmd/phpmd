@@ -299,7 +299,7 @@ class RuleSetFactory
      */
     private function parseRuleSetReference(SimpleXMLElement $ruleSetNode)
     {
-        $ruleSetFactory = new RuleSetFactory();
+        $ruleSetFactory = new self();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
         $ruleSetFactory->setMaximumPriority($this->maximumPriority);
 
@@ -415,7 +415,7 @@ class RuleSetFactory
 
         $ruleName = substr($ref, strpos($ref, '.xml/') + 5);
 
-        $ruleSetFactory = new RuleSetFactory();
+        $ruleSetFactory = new self();
 
         $ruleSetRef = $ruleSetFactory->createSingleRuleSet($fileName);
         $rule = $ruleSetRef->getRuleByName($ruleName);
