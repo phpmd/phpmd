@@ -236,7 +236,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
         return new $nodeClassName(
             $this->getNodeByName(
-                $source->$getter(),
+                $source->{$getter}(),
                 pathinfo($file, PATHINFO_FILENAME)
             )
         );
