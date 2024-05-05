@@ -39,7 +39,6 @@ class GitLabRenderer extends AbstractRenderer
         $writer->write($jsonData . PHP_EOL);
     }
 
-
     /**
      * Add violations, if any, to GitLab Code Quality report format
      *

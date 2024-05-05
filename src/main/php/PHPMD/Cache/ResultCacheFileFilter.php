@@ -28,7 +28,6 @@ class ResultCacheFileFilter implements Filter
     /** @var OutputInterface */
     private $output;
 
-
     /**
      * @param string                $basePath
      * @param string                $strategy
