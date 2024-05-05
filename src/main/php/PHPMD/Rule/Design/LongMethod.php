@@ -55,7 +55,7 @@ class LongMethod extends AbstractRule implements FunctionAware, MethodAware
                 $node->getName(),
                 $loc,
                 $threshold,
-            ]
+            ],
         );
     }
 }

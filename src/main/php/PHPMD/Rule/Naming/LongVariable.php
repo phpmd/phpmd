@@ -121,7 +121,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
             \ltrim($variableName, '$'),
             $this->getSubtractPrefixList(),
-            $this->getSubtractSuffixList()
+            $this->getSubtractSuffixList(),
         );
         if ($lengthWithoutDollarSign <= $threshold) {
             return;

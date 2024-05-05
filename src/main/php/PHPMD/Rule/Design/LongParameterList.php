@@ -52,7 +52,7 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
                 $node->getName(),
                 $count,
                 $threshold,
-            ]
+            ],
         );
     }
 }

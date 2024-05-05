@@ -18,7 +18,7 @@ class ResultCacheEngineFactory
     public function __construct(
         OutputInterface         $output,
         ResultCacheKeyFactory   $cacheKeyFactory,
-        ResultCacheStateFactory $cacheStateFactory
+        ResultCacheStateFactory $cacheStateFactory,
     ) {
         $this->output            = $output;
         $this->cacheKeyFactory   = $cacheKeyFactory;
@@ -45,7 +45,7 @@ class ResultCacheEngineFactory
         if ($state === null) {
             $this->output->writeln(
                 'ResultCache is enabled, but no prior cache-result file exists.',
-                OutputInterface::VERBOSITY_VERY_VERBOSE
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
             );
         }
 
@@ -53,20 +53,20 @@ class ResultCacheEngineFactory
         if ($state && !$state->getCacheKey()->isEqualTo($cacheKey)) {
             $this->output->writeln(
                 'ResultCache is enabled, but the cache metadata doesn\'t match.',
-                OutputInterface::VERBOSITY_VERY_VERBOSE
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
             );
             $state = null;
         } else {
             $this->output->writeln(
                 'ResultCache is enabled, and read from ' . $options->cacheFile(),
-                OutputInterface::VERBOSITY_VERY_VERBOSE
+                OutputInterface::VERBOSITY_VERY_VERBOSE,
             );
         }
 
         return new ResultCacheEngine(
             new ResultCacheFileFilter($this->output, $basePath, $options->cacheStrategy(), $cacheKey, $state),
             new ResultCacheUpdater($this->output, $basePath),
-            new ResultCacheWriter($options->cacheFile())
+            new ResultCacheWriter($options->cacheFile()),
         );
     }
 }

@@ -51,7 +51,7 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
                     $node,
                     [
                         $propertyName,
-                    ]
+                    ],
                 );
             }
         }

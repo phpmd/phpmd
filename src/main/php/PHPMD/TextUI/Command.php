@@ -134,8 +134,8 @@ class Command
             array_filter(
                 [
                     'coverage' => $opts->getCoverageReport(),
-                ]
-            )
+                ],
+            ),
         );
 
         $extensions = $opts->getExtensions();
@@ -156,7 +156,7 @@ class Command
             $cacheEngineFactory = new ResultCacheEngineFactory(
                 $this->output,
                 new ResultCacheKeyFactory(getcwd(), $baselineFile),
-                new ResultCacheStateFactory()
+                new ResultCacheStateFactory(),
             );
             $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
         }
@@ -166,7 +166,7 @@ class Command
             $ignorePattern,
             $renderers,
             $ruleSetList,
-            $report !== null ? $report : new Report()
+            $report !== null ? $report : new Report(),
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {

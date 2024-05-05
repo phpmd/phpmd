@@ -13,7 +13,6 @@ use PHPMD\RuleViolation;
  */
 class AnsiRenderer extends AbstractRenderer
 {
-
     public function renderReport(Report $report): void
     {
         $this->writeViolationsReport($report);
@@ -62,11 +61,11 @@ class AnsiRenderer extends AbstractRenderer
     {
         $fileHeader = sprintf(
             'FILE: %s',
-            $violation->getFileName()
+            $violation->getFileName(),
         );
         $this->getWriter()->write(
             PHP_EOL . $fileHeader . PHP_EOL .
-            str_repeat('-', strlen($fileHeader)) . PHP_EOL
+            str_repeat('-', strlen($fileHeader)) . PHP_EOL,
         );
     }
 
@@ -78,7 +77,7 @@ class AnsiRenderer extends AbstractRenderer
         $this->getWriter()->write(sprintf(
             " %s | \e[31mVIOLATION\e[0m | %s" . PHP_EOL,
             str_pad($violation->getBeginLine(), $padding, ' '),
-            $violation->getDescription()
+            $violation->getDescription(),
         ));
     }
 
@@ -92,17 +91,17 @@ class AnsiRenderer extends AbstractRenderer
         foreach ($report->getErrors() as $error) {
             $errorHeader = sprintf(
                 "\e[33mERROR\e[0m while parsing %s",
-                $error->getFile()
+                $error->getFile(),
             );
 
             $this->getWriter()->write(
                 PHP_EOL . $errorHeader . PHP_EOL .
-                str_repeat('-', strlen($errorHeader) - 9) . PHP_EOL
+                str_repeat('-', strlen($errorHeader) - 9) . PHP_EOL,
             );
 
             $this->getWriter()->write(sprintf(
                 '%s' . PHP_EOL,
-                $error->getMessage()
+                $error->getMessage(),
             ));
         }
     }
@@ -116,8 +115,8 @@ class AnsiRenderer extends AbstractRenderer
                 count($report->getRuleViolations()) !== 1 ? 'violations' : 'violation',
                 iterator_count($report->getErrors()),
                 iterator_count($report->getErrors()) !== 1 ? 'errors' : 'error',
-                $report->getElapsedTimeInMillis()
-            )
+                $report->getElapsedTimeInMillis(),
+            ),
         );
         if (count($report->getRuleViolations()) === 0 && iterator_count($report->getErrors()) === 0) {
             $this->getWriter()->write(PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL);

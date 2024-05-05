@@ -78,7 +78,7 @@ class NodeInfo
         $methodName,
         $functionName,
         $beginLine,
-        $endLine
+        $endLine,
     ) {
         $this->fileName      = $fileName;
         $this->namespaceName = $namespaceName;

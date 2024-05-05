@@ -49,7 +49,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
                     $node,
                     [
                         $parameter->getName(),
-                    ]
+                    ],
                 );
             }
         }

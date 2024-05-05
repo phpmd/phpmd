@@ -159,7 +159,7 @@ class PHPMD
     {
         $this->ignorePatterns = array_merge(
             $this->ignorePatterns,
-            $ignorePatterns
+            $ignorePatterns,
         );
 
         return $this;
@@ -222,7 +222,7 @@ class PHPMD
         $ignorePattern,
         array $renderers,
         array $ruleSetList,
-        Report $report
+        Report $report,
     ): void {
         // Merge parsed excludes
         $this->addIgnorePatterns($ignorePattern);

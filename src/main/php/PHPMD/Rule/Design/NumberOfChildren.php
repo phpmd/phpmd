@@ -42,7 +42,7 @@ class NumberOfChildren extends AbstractRule implements ClassAware
                     $node->getName(),
                     $nocc,
                     $threshold,
-                ]
+                ],
             );
         }
     }

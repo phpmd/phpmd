@@ -80,12 +80,12 @@ class ResultCacheFileFilter implements Filter
         if ($isModified) {
             $this->output->writeln(
                 'Cache: MISS for file ' . $filePath . '.',
-                OutputInterface::VERBOSITY_DEBUG
+                OutputInterface::VERBOSITY_DEBUG,
             );
         } else {
             $this->output->writeln(
                 'Cache: HIT for file ' . $filePath . '.',
-                OutputInterface::VERBOSITY_DEBUG
+                OutputInterface::VERBOSITY_DEBUG,
             );
         }
 

@@ -49,7 +49,7 @@ class ResultCacheStateFactory
             $data['baselineHash'],
             $data['rules'],
             $data['composer'],
-            $data['phpVersion']
+            $data['phpVersion'],
         );
     }
 }

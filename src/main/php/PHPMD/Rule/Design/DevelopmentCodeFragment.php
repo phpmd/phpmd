@@ -77,9 +77,9 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
                 trim(...),
                 explode(
                     ',',
-                    $this->getStringProperty('unwanted-functions')
-                )
-            )
+                    $this->getStringProperty('unwanted-functions'),
+                ),
+            ),
         );
     }
 }

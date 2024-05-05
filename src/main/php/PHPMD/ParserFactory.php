@@ -112,7 +112,7 @@ class ParserFactory
     {
         if (count($phpmd->getIgnorePatterns()) > 0) {
             $pdepend->addFileFilter(
-                new ExcludePathFilter($phpmd->getIgnorePatterns())
+                new ExcludePathFilter($phpmd->getIgnorePatterns()),
             );
         }
     }
@@ -124,7 +124,7 @@ class ParserFactory
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(
-                new ExtensionFilter($phpmd->getFileExtensions())
+                new ExtensionFilter($phpmd->getFileExtensions()),
             );
         }
     }

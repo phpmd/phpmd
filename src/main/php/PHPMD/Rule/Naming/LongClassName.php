@@ -57,7 +57,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
         $length = Strings::lengthWithoutPrefixesAndSuffixes(
             $classOrInterfaceName,
             $this->getSubtractPrefixList(),
-            $this->getSubtractSuffixList()
+            $this->getSubtractSuffixList(),
         );
 
         if ($length <= $threshold) {
@@ -78,7 +78,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList(
                 $this->getStringProperty('subtract-prefixes', ''),
-                ','
+                ',',
             );
         }
 
@@ -96,7 +96,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList(
-                $this->getStringProperty('subtract-suffixes', '')
+                $this->getStringProperty('subtract-suffixes', ''),
             );
         }
 

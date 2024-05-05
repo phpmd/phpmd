@@ -216,7 +216,7 @@ abstract class AbstractLocalVariable extends AbstractRule
 
         // If variable name is not in the node, it's in the second child
         if ($image === '::') {
-            return $image.$variable->getChild(1)->getImage();
+            return $image . $variable->getChild(1)->getImage();
         }
 
         return $this->prependMemberPrimaryPrefix($image, $variable);

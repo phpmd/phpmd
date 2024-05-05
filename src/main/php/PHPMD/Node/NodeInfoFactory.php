@@ -28,7 +28,7 @@ class NodeInfoFactory
             $methodName,
             $functionName,
             $node->getBeginLine(),
-            $node->getEndLine()
+            $node->getEndLine(),
         );
     }
 }

@@ -76,7 +76,7 @@ class MethodNode extends AbstractCallableNode
             '%s\\%s::%s()',
             $this->getNamespaceName(),
             $this->getParentName(),
-            $this->getName()
+            $this->getName(),
         );
     }
 

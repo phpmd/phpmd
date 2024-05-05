@@ -16,9 +16,9 @@ class ResultCacheEngine
     public function __construct(
         ResultCacheFileFilter $fileFilter,
         ResultCacheUpdater    $updater,
-        ResultCacheWriter     $writer
+        ResultCacheWriter     $writer,
     ) {
-    
+
         $this->fileFilter = $fileFilter;
         $this->updater    = $updater;
         $this->writer     = $writer;

@@ -84,7 +84,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
         $loops = array_merge(
             $node->findChildrenOfType(ASTForStatement::class),
             $node->findChildrenOfType(ASTWhileStatement::class),
-            $node->findChildrenOfType(ASTDoWhileStatement::class)
+            $node->findChildrenOfType(ASTDoWhileStatement::class),
         );
 
         /** @var AbstractNode $loop */
@@ -153,7 +153,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
             $node->getEndLine(),
             $node->getStartColumn(),
             $node->getEndColumn(),
-            $node->getImage()
+            $node->getImage(),
         );
     }
 

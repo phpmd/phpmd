@@ -66,8 +66,8 @@ class BaselineFileFinder
                     'Unable to determine the baseline file location. ' .
                     'Either specify file location via --baseline-file or make sure `%s` ' .
                     'is a valid ruleset file location',
-                    $ruleSets[0]
-                )
+                    $ruleSets[0],
+                ),
             );
         }
 

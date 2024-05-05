@@ -62,7 +62,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
                     [
                         $node->getName(),
                         $variable->getImage(),
-                    ]
+                    ],
                 );
             }
         }

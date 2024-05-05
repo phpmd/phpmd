@@ -80,7 +80,7 @@ class Annotation
             return true;
         } elseif (preg_match(
             '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
-            $this->value
+            $this->value,
         )) {
             return true;
         }

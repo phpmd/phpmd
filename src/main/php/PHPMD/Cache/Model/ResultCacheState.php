@@ -98,7 +98,7 @@ class ResultCacheState
                     $violation['methodName'],
                     $violation['functionName'],
                     $violation['beginLine'],
-                    $violation['endLine']
+                    $violation['endLine'],
                 );
 
                 if ($violation['args'] === null) {

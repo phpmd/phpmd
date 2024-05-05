@@ -81,8 +81,8 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
                 Strings::splitToList(
                     $this->rule->getStringProperty('exceptions', ''),
                     $this->separator,
-                    $this->trim
-                )
+                    $this->trim,
+                ),
             );
         }
 

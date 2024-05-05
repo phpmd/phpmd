@@ -63,7 +63,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
                     $node,
                     [
                         $methodName,
-                    ]
+                    ],
                 );
             }
         }

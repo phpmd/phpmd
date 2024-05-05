@@ -71,7 +71,7 @@ class CheckStyleRenderer extends XMLRenderer
                 ' message="%s (%s, %s) "',
                 \htmlspecialchars($violation->getDescription()),
                 $rule->getName(),
-                $rule->getRuleSetName()
+                $rule->getRuleSetName(),
             ));
 
             $this->maybeAdd('package', $violation->getNamespaceName());

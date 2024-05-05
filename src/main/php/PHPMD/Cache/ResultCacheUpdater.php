@@ -49,11 +49,11 @@ class ResultCacheUpdater
 
         $this->output->writeln(
             'Cache: added ' . count($newViolations) . ' violations to the result cache.',
-            OutputInterface::VERBOSITY_VERY_VERBOSE
+            OutputInterface::VERBOSITY_VERY_VERBOSE,
         );
         $this->output->writeln(
             'Cache: added ' . $violationsFromCache . ' violations from the result cache to the report.',
-            OutputInterface::VERBOSITY_VERY_VERBOSE
+            OutputInterface::VERBOSITY_VERY_VERBOSE,
         );
 
         return $state;

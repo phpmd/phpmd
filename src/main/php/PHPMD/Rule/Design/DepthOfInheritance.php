@@ -52,7 +52,7 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
                     $node->getName(),
                     $dit,
                     $threshold,
-                ]
+                ],
             );
         }
     }

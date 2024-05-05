@@ -47,7 +47,7 @@ class ArgumentsValidator
             'If you intend to use "' . $value . '" as a value for ' . $name . ' argument, ' .
             'use the explicit argument separator:' . PHP_EOL .
             rtrim('phpmd ' . implode(' ', $options)) . ' -- ' .
-            implode(' ', $this->arguments)
+            implode(' ', $this->arguments),
         );
     }
 }

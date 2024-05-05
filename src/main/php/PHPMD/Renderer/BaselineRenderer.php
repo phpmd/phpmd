@@ -43,7 +43,7 @@ class BaselineRenderer extends AbstractRenderer
                 '  <violation rule="%s" file="%s"%s/>' . PHP_EOL,
                 $ruleName,
                 $filePath,
-                $methodName === null ? '' : ' method="' . $methodName . '"'
+                $methodName === null ? '' : ' method="' . $methodName . '"',
             );
             $writer->write($xmlTag);
             $registered[$key] = true;

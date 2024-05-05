@@ -122,14 +122,14 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
         if ($magicMethodRegExp === null) {
             $magicMethodRegExp = '/__(?:' . implode("|", [
-                    'call',
-                    'callStatic',
-                    'get',
-                    'set',
-                    'isset',
-                    'unset',
-                    'set_state',
-                ]) . ')/i';
+                'call',
+                'callStatic',
+                'get',
+                'set',
+                'isset',
+                'unset',
+                'set_state',
+            ]) . ')/i';
         }
 
         return preg_match($magicMethodRegExp, $node->getName()) === 1;

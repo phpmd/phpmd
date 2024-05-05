@@ -71,7 +71,7 @@ abstract class AbstractNode
         $node = $this->getNode();
         if (!method_exists($node, $name)) {
             throw new BadMethodCallException(
-                sprintf('Invalid method %s() called.', $name)
+                sprintf('Invalid method %s() called.', $name),
             );
         }
 
@@ -105,7 +105,7 @@ abstract class AbstractNode
     {
         return new ASTNode(
             $this->node->getChild($index),
-            $this->getFileName()
+            $this->getFileName(),
         );
     }
 

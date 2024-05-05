@@ -58,7 +58,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
                 $node->getName(),
                 $nom,
                 $threshold,
-            ]
+            ],
         );
     }
 

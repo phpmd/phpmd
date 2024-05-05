@@ -141,7 +141,7 @@ class RuleSetFactory
     {
         return array_merge(
             self::listRuleSetsInDirectory($this->location . '/rulesets/'),
-            self::listRuleSetsInDirectory(getcwd() . '/rulesets/')
+            self::listRuleSetsInDirectory(getcwd() . '/rulesets/'),
         );
     }
 

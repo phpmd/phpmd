@@ -373,7 +373,7 @@ class HTMLRenderer extends AbstractRenderer
             $excerpt = self::getLineExcerpt(
                 $violation->getFileName(),
                 $violation->getBeginLine(),
-                $this->extraLineInExcerpt
+                $this->extraLineInExcerpt,
             );
 
             foreach ($excerpt as $line => $code) {
@@ -528,7 +528,7 @@ class HTMLRenderer extends AbstractRenderer
             $bar = sprintf(
                 '<div class="t-bar" style="width: %d%%; opacity: %.2f"></div>',
                 $width,
-                min(0.2 + $width / 100, 1) // Minimum opacity for the bar is 0.2.
+                min(0.2 + $width / 100, 1), // Minimum opacity for the bar is 0.2.
             );
 
             $pct = $sum !== 0 ? sprintf('%.1f', $count / $sum * 100) : '-'; // Avoid division by zero.

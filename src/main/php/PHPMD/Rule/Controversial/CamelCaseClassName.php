@@ -49,7 +49,7 @@ class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAw
                 $node,
                 [
                     $node->getName(),
-                ]
+                ],
             );
         }
     }

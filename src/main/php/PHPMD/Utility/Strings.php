@@ -47,7 +47,7 @@ class Strings
     public static function lengthWithoutPrefixesAndSuffixes(
         $stringName,
         array $subtractPrefixes,
-        array $subtractSuffixes
+        array $subtractSuffixes,
     ) {
 
         $stringLength = strlen($stringName);
@@ -88,10 +88,10 @@ class Strings
 
         return array_filter(
             array_map(
-                static fn ($value) => Strings::trim($value, $trim),
-                explode($separator, $listAsString)
+                static fn($value) => Strings::trim($value, $trim),
+                explode($separator, $listAsString),
             ),
-            static fn ($value) => $value !== ''
+            static fn($value) => $value !== '',
         );
     }
 

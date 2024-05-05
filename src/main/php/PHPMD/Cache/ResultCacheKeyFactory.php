@@ -35,7 +35,7 @@ class ResultCacheKeyFactory
             $this->getBaselineHash(),
             $this->createRuleHashes($ruleSetList),
             $this->getComposerHashes(),
-            PHP_VERSION_ID
+            PHP_VERSION_ID,
         );
     }
 

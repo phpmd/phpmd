@@ -783,7 +783,7 @@ class CommandLineOptions
         if ('' === $this->reportFormat) {
             throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
-                self::INPUT_ERROR
+                self::INPUT_ERROR,
             );
         }
 
@@ -799,9 +799,9 @@ class CommandLineOptions
             throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
-                    $this->reportFormat
+                    $this->reportFormat,
                 ),
-                self::INPUT_ERROR
+                self::INPUT_ERROR,
             );
         }
         @fclose($fileHandle);
@@ -902,7 +902,7 @@ class CommandLineOptions
         $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
             $deprecatedName,
-            $newName
+            $newName,
         );
     }
 

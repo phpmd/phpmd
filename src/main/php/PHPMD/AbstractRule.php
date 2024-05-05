@@ -349,7 +349,7 @@ abstract class AbstractRule implements Rule
     protected function addViolation(
         AbstractNode $node,
         array $args = [],
-        mixed $metric = null
+        mixed $metric = null,
     ): void {
         $message = [
             'message' => $this->message,

@@ -65,7 +65,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
     {
         if ($this->exceptions === null) {
             $this->exceptions = array_flip(
-                Strings::splitToList($this->getStringProperty('exceptions', ''), ',')
+                Strings::splitToList($this->getStringProperty('exceptions', ''), ','),
             );
         }
 
