@@ -29,8 +29,8 @@ class BaselineRenderer extends AbstractRenderer
         $writer->write('<phpmd-baseline>' . PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            $ruleName   = $violation->getRule()::class;
-            $filePath   = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $ruleName = $violation->getRule()::class;
+            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
             $methodName = $violation->getMethodName();
 
             // deduplicate similar violations

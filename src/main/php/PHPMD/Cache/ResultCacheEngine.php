@@ -20,8 +20,8 @@ class ResultCacheEngine
     ) {
 
         $this->fileFilter = $fileFilter;
-        $this->updater    = $updater;
-        $this->writer     = $writer;
+        $this->updater = $updater;
+        $this->writer = $writer;
     }
 
     /**

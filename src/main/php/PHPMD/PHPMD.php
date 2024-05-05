@@ -230,7 +230,7 @@ class PHPMD
         $this->input = $inputPath;
 
         $factory = new ParserFactory();
-        $parser  = $factory->create($this);
+        $parser = $factory->create($this);
 
         foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
@@ -257,7 +257,7 @@ class PHPMD
             $renderer->end();
         }
 
-        $this->errors     = $report->hasErrors();
+        $this->errors = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

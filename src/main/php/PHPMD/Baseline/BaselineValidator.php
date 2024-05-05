@@ -18,7 +18,7 @@ class BaselineValidator
     public function __construct(BaselineSet $baselineSet, $baselineMode)
     {
         $this->baselineMode = $baselineMode;
-        $this->baselineSet  = $baselineSet;
+        $this->baselineSet = $baselineSet;
     }
 
     /**

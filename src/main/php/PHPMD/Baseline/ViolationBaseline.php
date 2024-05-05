@@ -23,9 +23,9 @@ class ViolationBaseline
      */
     public function __construct($ruleName, $fileName, $methodName)
     {
-        $this->ruleName       = $ruleName;
-        $this->fileName       = $fileName;
-        $this->methodName     = $methodName;
+        $this->ruleName = $ruleName;
+        $this->fileName = $fileName;
+        $this->methodName = $methodName;
         $this->fileNameLength = strlen($fileName);
     }
 

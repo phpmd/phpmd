@@ -80,12 +80,12 @@ class NodeInfo
         $beginLine,
         $endLine
     ) {
-        $this->fileName      = $fileName;
+        $this->fileName = $fileName;
         $this->namespaceName = $namespaceName;
-        $this->className     = $className;
-        $this->methodName    = $methodName;
-        $this->functionName  = $functionName;
-        $this->beginLine     = $beginLine;
-        $this->endLine       = $endLine;
+        $this->className = $className;
+        $this->methodName = $methodName;
+        $this->functionName = $functionName;
+        $this->beginLine = $beginLine;
+        $this->endLine = $endLine;
     }
 }
