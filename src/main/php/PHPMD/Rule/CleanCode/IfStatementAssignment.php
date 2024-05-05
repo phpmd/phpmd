@@ -117,9 +117,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     protected function addViolations(AbstractNode $node, array $assignments): void
     {
         $processesViolations = [];
-        /** @var AbstractASTNode $assignment */
         foreach ($assignments as $assignment) {
-            if (null === $assignment || $assignment->getImage() !== '=') {
+            if ($assignment->getImage() !== '=') {
                 continue;
             }
 

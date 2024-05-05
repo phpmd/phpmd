@@ -163,22 +163,20 @@ class SARIFRenderer extends JSONRenderer
     protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
-        if ($errors) {
-            foreach ($errors as $error) {
-                $data['runs'][0]['results'][] = [
-                    'level' => 'error',
-                    'message' => [
-                        'text' => $error->getMessage(),
-                    ],
-                    'locations' => [
-                        [
-                            'physicalLocation' => [
-                                'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
-                            ],
+        foreach ($errors as $error) {
+            $data['runs'][0]['results'][] = [
+                'level' => 'error',
+                'message' => [
+                    'text' => $error->getMessage(),
+                ],
+                'locations' => [
+                    [
+                        'physicalLocation' => [
+                            'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
                         ],
                     ],
-                ];
-            }
+                ],
+            ];
         }
 
         return $data;

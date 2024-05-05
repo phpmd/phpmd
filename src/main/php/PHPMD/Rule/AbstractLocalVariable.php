@@ -199,12 +199,15 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Prefix self:: and static:: properties with "::".
      *
-     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @param AbstractNode|PDependNode $variable
      * @return string
      * @throws OutOfBoundsException
      */
     protected function getVariableImage($variable)
     {
+        if ($variable instanceof ASTNode) {
+            $variable = $variable->getNode();
+        }
         $image = $variable->getImage();
 
         if ($this->isFieldDeclaration($variable, $image)) {
@@ -226,7 +229,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         do {
             $postfix = $postfix->getParent();
-        } while ($postfix && $postfix->getChild(0) && $postfix->getChild(0)->getImage() === $image);
+        } while ($postfix?->getChildren() && $postfix->getChild(0)->getImage() === $image);
 
         $previousChildImage = $postfix->getChild(0)->getImage();
 
@@ -347,12 +350,11 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function prependMemberPrimaryPrefix($image, $variable)
     {
-        $base = $this->getNode($variable);
-        $parent = $this->getNode($base->getParent());
+        $parent = $variable->getParent();
 
-        while ($parent && $parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $base) {
-            $base = $parent;
-            $parent = $this->getNode($base->getParent());
+        while ($parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $variable) {
+            $variable = $parent;
+            $parent = $variable->getParent();
         }
 
         if ($parent instanceof ASTPropertyPostfix) {

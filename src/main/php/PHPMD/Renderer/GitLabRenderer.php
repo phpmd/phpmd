@@ -93,24 +93,22 @@ class GitLabRenderer extends AbstractRenderer
     protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
-        if ($errors) {
-            foreach ($errors as $error) {
-                $errorResult = [
-                    'description' => $error->getMessage(),
-                    'fingerprint' => $error->getFile().':0:MajorErrorInFile',
-                    'severity' => 'major',
-                    'location' =>
-                        [
-                            'path' => $error->getFile(),
-                            'lines' =>
-                                [
-                                    'begin' => 0,
-                                ],
-                        ],
-                ];
+        foreach ($errors as $error) {
+            $errorResult = [
+                'description' => $error->getMessage(),
+                'fingerprint' => $error->getFile().':0:MajorErrorInFile',
+                'severity' => 'major',
+                'location' =>
+                    [
+                        'path' => $error->getFile(),
+                        'lines' =>
+                            [
+                                'begin' => 0,
+                            ],
+                    ],
+            ];
 
-                $data[] = $errorResult;
-            }
+            $data[] = $errorResult;
         }
 
         return $data;

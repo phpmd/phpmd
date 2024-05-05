@@ -503,7 +503,10 @@ class RuleSetFactory
     public function getIgnorePattern($fileName)
     {
         $excludes = [];
-        foreach (array_map('trim', explode(',', $fileName)) as $ruleSetFileName) {
+        $files = array_map('trim', explode(',', $fileName));
+        $files = array_filter($files);
+
+        foreach ($files as $ruleSetFileName) {
             $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
 
             // Hide error messages

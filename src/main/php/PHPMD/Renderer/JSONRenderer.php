@@ -101,13 +101,11 @@ class JSONRenderer extends AbstractRenderer
     protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
-        if ($errors) {
-            foreach ($errors as $error) {
-                $data['errors'][] = [
-                    'fileName' => $error->getFile(),
-                    'message' => $error->getMessage(),
-                ];
-            }
+        foreach ($errors as $error) {
+            $data['errors'][] = [
+                'fileName' => $error->getFile(),
+                'message' => $error->getMessage(),
+            ];
         }
 
         return $data;
