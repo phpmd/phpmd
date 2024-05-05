@@ -128,9 +128,9 @@ class ShortMethodNameTest extends AbstractTestCase
      * testRuleAlsoWorksWithoutExceptionListConfigured
      *
      * @return void
-     * @since 2.2.2
      * @link https://github.com/phpmd/phpmd/issues/80
      * @link https://github.com/phpmd/phpmd/issues/270
+     * @since 2.2.2
      */
     public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock()
     {

@@ -363,8 +363,8 @@ class ShortVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesToVariablesWithinForeach
      *
-     * @dataProvider provideClassWithShortForeachVariables
      * @return void
+     * @dataProvider provideClassWithShortForeachVariables
      */
     public function testRuleAppliesToVariablesWithinForeach($allowShortVarInLoop, $expectedErrorsCount)
     {

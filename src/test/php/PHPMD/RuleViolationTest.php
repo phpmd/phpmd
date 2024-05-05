@@ -22,9 +22,8 @@ use PHPMD\Node\NodeInfo;
 /**
  * Test case for the {@link \PHPMD\RuleViolation} class.
  *
- * @since 0.2.5
- *
  * @covers \PHPMD\RuleViolation
+ * @since 0.2.5
  */
 class RuleViolationTest extends AbstractTestCase
 {
