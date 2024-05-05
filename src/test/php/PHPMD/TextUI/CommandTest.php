@@ -222,7 +222,7 @@ class CommandTest extends AbstractTestCase
 
     public function testMainGenerateBaseline()
     {
-        $uri = str_replace("\\", "/", realpath(self::createFileUri('source/source_with_anonymous_class.php')));
+        $uri = str_replace('\\', '/', realpath(self::createFileUri('source/source_with_anonymous_class.php')));
         $temp = self::createTempFileUri();
         $exitCode = Command::main([
             __FILE__,

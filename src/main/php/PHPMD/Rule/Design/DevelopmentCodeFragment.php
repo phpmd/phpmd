@@ -45,10 +45,10 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
         foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $postfix) {
             $fragment = $postfix->getImage();
             if ($ignoreNS) {
-                $fragment = str_replace("{$namespace}\\", "", $fragment);
+                $fragment = str_replace("{$namespace}\\", '', $fragment);
             }
             $fragment = strtolower($fragment);
-            $fragment = trim($fragment, "\\");
+            $fragment = trim($fragment, '\\');
             if (!in_array($fragment, $this->getSuspectImages())) {
                 continue;
             }

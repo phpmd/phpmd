@@ -75,6 +75,6 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     protected function isIfOrElseIfStatement(ASTNode $parent)
     {
-        return ($parent->getName() === "if" || $parent->getName() === "elseif");
+        return ($parent->getName() === 'if' || $parent->getName() === 'elseif');
     }
 }

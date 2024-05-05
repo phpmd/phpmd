@@ -88,7 +88,7 @@ class HTMLRenderer extends AbstractRenderer
     {
         $writer = $this->getWriter();
 
-        $mainColor = "#2f838a";
+        $mainColor = '#2f838a';
 
         // Avoid inlining styles.
         $style = "
@@ -319,7 +319,7 @@ class HTMLRenderer extends AbstractRenderer
                 on <em>PHP %s</em>
                 on <em>%s</em>
             </header>
-        ", date('Y-m-d H:i'), "https://phpmd.org", \PHP_VERSION, gethostname());
+        ", date('Y-m-d H:i'), 'https://phpmd.org', \PHP_VERSION, gethostname());
 
         $writer->write($header);
     }
@@ -344,7 +344,7 @@ class HTMLRenderer extends AbstractRenderer
         }
 
         // Render summary tables.
-        $writer->write("<h2>Summary</h2>");
+        $writer->write('<h2>Summary</h2>');
         $categorized = self::sumUpViolations($violations);
         $this->writeTable('By priority', 'Priority', $categorized[self::CATEGORY_PRIORITY]);
         $this->writeTable('By namespace', 'PHP Namespace', $categorized[self::CATEGORY_NAMESPACE]);
@@ -366,7 +366,7 @@ class HTMLRenderer extends AbstractRenderer
 
         foreach ($violations as $violation) {
             // This is going to be used as ID in HTML (deep anchoring).
-            $htmlId = "p-" . $index++;
+            $htmlId = 'p-' . $index++;
 
             // Get excerpt of the code from validated file.
             $excerptHtml = null;
@@ -384,7 +384,7 @@ class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . "</a>";
+            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . '</a>';
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
@@ -475,7 +475,7 @@ class HTMLRenderer extends AbstractRenderer
                 $value = "(?<{$key}>{$value['regex']})";
             });
 
-            self::$compiledHighlightRegex = "#(" . implode('|', $prepared) . ")#";
+            self::$compiledHighlightRegex = '#(' . implode('|', $prepared) . ')#';
         }
 
         $rules = self::$descHighlightRules;
@@ -497,7 +497,7 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected static function highlightFile($path)
     {
-        $file = substr(strrchr($path, "/"), 1);
+        $file = substr(strrchr($path, '/'), 1);
         $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';
@@ -596,6 +596,6 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected static function reduceWhitespace($input, $eol = true)
     {
-        return preg_replace("#\s+#", " ", $input) . ($eol ? PHP_EOL : null);
+        return preg_replace("#\s+#", ' ', $input) . ($eol ? PHP_EOL : null);
     }
 }

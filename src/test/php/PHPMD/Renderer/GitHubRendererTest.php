@@ -61,9 +61,9 @@ class GitHubRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertEquals(
-            "::warning file=/bar.php,line=1::Test description" . PHP_EOL .
-            "::warning file=/foo.php,line=2::Test description" . PHP_EOL .
-            "::warning file=/foo.php,line=3::Test description" . PHP_EOL,
+            '::warning file=/bar.php,line=1::Test description' . PHP_EOL .
+            '::warning file=/foo.php,line=2::Test description' . PHP_EOL .
+            '::warning file=/foo.php,line=3::Test description' . PHP_EOL,
             $writer->getData()
         );
     }
@@ -100,9 +100,9 @@ class GitHubRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertEquals(
-            "::error file=/tmp/foo.php::Failed for file \"/tmp/foo.php\"." . PHP_EOL .
-            "::error file=/tmp/bar.php::Failed for file \"/tmp/bar.php\"." . PHP_EOL .
-            "::error file=/tmp/baz.php::Failed for file \"/tmp/baz.php\"." . PHP_EOL,
+            '::error file=/tmp/foo.php::Failed for file "/tmp/foo.php".' . PHP_EOL .
+            '::error file=/tmp/bar.php::Failed for file "/tmp/bar.php".' . PHP_EOL .
+            '::error file=/tmp/baz.php::Failed for file "/tmp/baz.php".' . PHP_EOL,
             $writer->getData()
         );
     }

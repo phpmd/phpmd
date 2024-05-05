@@ -32,8 +32,8 @@ class BaselineFileFinderTest extends AbstractTestCase
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
 
         // ensure consistent slashes
-        $expected = str_replace("\\", "/", realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')));
-        $actual = str_replace("\\", "/", $finder->existingFile()->find());
+        $expected = str_replace('\\', '/', realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')));
+        $actual = str_replace('\\', '/', $finder->existingFile()->find());
 
         static::assertSame($expected, $actual);
     }

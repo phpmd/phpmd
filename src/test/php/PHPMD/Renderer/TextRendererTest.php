@@ -66,9 +66,9 @@ class TextRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertEquals(
-            "/bar.php:1      LongerNamedRule  An other description for this rule" . PHP_EOL .
-            "/foo-biz.php:2  RuleStub         Test description" . PHP_EOL .
-            "/foo.php:34     RuleStub         Test description" . PHP_EOL,
+            '/bar.php:1      LongerNamedRule  An other description for this rule' . PHP_EOL .
+            '/foo-biz.php:2  RuleStub         Test description' . PHP_EOL .
+            '/foo.php:34     RuleStub         Test description' . PHP_EOL,
             $writer->getData()
         );
     }
