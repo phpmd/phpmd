@@ -22,7 +22,7 @@ class ResultCacheStateTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->key   = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $this->key = new ResultCacheKey(true, 'baseline', [], [], 123);
         $this->state = new ResultCacheState($this->key, []);
     }
 
@@ -53,7 +53,7 @@ class ResultCacheStateTest extends TestCase
      */
     public function testAddRuleViolation()
     {
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             'fileName',
             'namespace',
@@ -63,22 +63,22 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
         $expected = [
             [
-                'rule'          => BooleanArgumentFlag::class,
+                'rule' => BooleanArgumentFlag::class,
                 'namespaceName' => 'namespace',
-                'className'     => 'className',
-                'methodName'    => 'methodName',
-                'functionName'  => 'functionName',
-                'beginLine'     => 123,
-                'endLine'       => 456,
-                'description'   => 'violation',
-                'args'          => null,
-                'metric'        => $metric,
+                'className' => 'className',
+                'methodName' => 'methodName',
+                'functionName' => 'functionName',
+                'beginLine' => 123,
+                'endLine' => 456,
+                'description' => 'violation',
+                'args' => null,
+                'metric' => $metric,
             ],
         ];
 
@@ -94,7 +94,7 @@ class ResultCacheStateTest extends TestCase
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -104,7 +104,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -121,7 +121,7 @@ class ResultCacheStateTest extends TestCase
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -131,7 +131,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation(
             $rule,
@@ -165,7 +165,7 @@ class ResultCacheStateTest extends TestCase
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -175,36 +175,36 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
         $this->state->setFileState('/file/path', 'hash');
         $this->state->addRuleViolation('/file/path', $ruleViolation);
 
         $expected = [
-            'key'   => [
-                'strict'       => true,
+            'key' => [
+                'strict' => true,
                 'baselineHash' => 'baseline',
-                'rules'        => [],
-                'composer'     => [],
-                'phpVersion'   => 123,
+                'rules' => [],
+                'composer' => [],
+                'phpVersion' => 123,
             ],
             'state' => [
                 'files' => [
                     '/file/path' => [
-                        'hash'       => 'hash',
+                        'hash' => 'hash',
                         'violations' => [
                             [
-                                'rule'          => BooleanArgumentFlag::class,
+                                'rule' => BooleanArgumentFlag::class,
                                 'namespaceName' => 'namespace',
-                                'className'     => 'className',
-                                'methodName'    => 'methodName',
-                                'functionName'  => 'functionName',
-                                'beginLine'     => 123,
-                                'endLine'       => 456,
-                                'description'   => 'violation',
-                                'args'          => null,
-                                'metric'        => $metric,
+                                'className' => 'className',
+                                'methodName' => 'methodName',
+                                'functionName' => 'functionName',
+                                'beginLine' => 123,
+                                'endLine' => 456,
+                                'description' => 'violation',
+                                'args' => null,
+                                'metric' => $metric,
                             ],
                         ],
                     ],

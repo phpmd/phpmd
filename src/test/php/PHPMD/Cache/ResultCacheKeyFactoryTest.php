@@ -33,7 +33,7 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
      */
     public function testCreate()
     {
-        $rule    = new DuplicatedArrayKey();
+        $rule = new DuplicatedArrayKey();
         $ruleSet = new RuleSet();
         $ruleSet->addRule($rule);
 

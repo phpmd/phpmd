@@ -19,7 +19,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReport()
     {
-        $writer     = new WriterStub();
+        $writer = new WriterStub();
         $violations = [
             $this->getRuleViolationMock('/src/php/bar.php'),
             $this->getRuleViolationMock('/src/php/foo.php'),
@@ -48,7 +48,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReportShouldWriteMethodName()
     {
-        $writer        = new WriterStub();
+        $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
 
@@ -75,7 +75,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReportShouldDeduplicateSimilarViolations()
     {
-        $writer        = new WriterStub();
+        $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
 

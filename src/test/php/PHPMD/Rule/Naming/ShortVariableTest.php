@@ -26,7 +26,6 @@ use PHPMD\AbstractTestCase;
  */
 class ShortVariableTest extends AbstractTestCase
 {
-
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold
      *

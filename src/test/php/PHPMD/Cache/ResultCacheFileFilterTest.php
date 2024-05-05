@@ -25,10 +25,10 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->output = new NullOutput();
-        $this->key    = $this->getMockFromBuilder(
+        $this->key = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()
         );
-        $this->state  = $this->getMockFromBuilder(
+        $this->state = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
         );
     }
@@ -70,8 +70,8 @@ class ResultCacheFileFilterTest extends AbstractTestCase
      */
     public function testAcceptStrategyTimestampModified()
     {
-        $timestamp = (string)filemtime(__FILE__);
-        $filter    = new ResultCacheFileFilter($this->output, __DIR__, Strategy::TIMESTAMP, $this->key, $this->state);
+        $timestamp = (string) filemtime(__FILE__);
+        $filter = new ResultCacheFileFilter($this->output, __DIR__, Strategy::TIMESTAMP, $this->key, $this->state);
 
         $this->state->expects(self::once())->method('isFileModified')->willReturn(true);
 

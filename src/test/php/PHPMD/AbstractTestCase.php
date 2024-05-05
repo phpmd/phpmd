@@ -57,6 +57,17 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected const ONE_VIOLATION = 1;
 
     /**
+     * Resets a changed working directory.
+     */
+    protected function tearDown(): void
+    {
+        static::returnToOriginalWorkingDirectory();
+        static::cleanupTempFiles();
+
+        parent::tearDown();
+    }
+
+    /**
      * Get a list of files that should trigger a rule violation.
      *
      * By default, files named like "testRuleAppliesTo*", but it can be overridden in sub-classes.
@@ -98,17 +109,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     public static function getNotApplyingCases()
     {
         return static::getValuesAsArrays(static::getNotApplyingFiles());
-    }
-
-    /**
-     * Resets a changed working directory.
-     */
-    protected function tearDown(): void
-    {
-        static::returnToOriginalWorkingDirectory();
-        static::cleanupTempFiles();
-
-        parent::tearDown();
     }
 
     /**
@@ -285,12 +285,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
     {
-        return basename($file)." failed:\n".
-            "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
-            "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
+        return basename($file) . " failed:\n" .
+            "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
+            "But $actualInvokes violation" . ($actualInvokes !== 1 ? 's' : '') . " raised" .
             (
                 $actualInvokes > 0
-                ? ":\n".$this->getViolationsSummary($violations)
+                ? ":\n" . $this->getViolationsSummary($violations)
                 : '.'
             );
     }
@@ -312,11 +312,11 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             $nodeExtractor->setAccessible(true);
             $node = $nodeExtractor->getValue($violation);
             $node = $node ? $node->getNode() : null;
-            $message = '  - line '.$violation->getBeginLine();
+            $message = '  - line ' . $violation->getBeginLine();
 
             if ($node) {
                 $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', $node::class);
-                $message .= ' on '.$type.' '.$node->getImage();
+                $message .= ' on ' . $type . ' ' . $node->getImage();
             }
 
             return $message;
