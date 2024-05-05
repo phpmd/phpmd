@@ -37,7 +37,7 @@ use PHPMD\Node\ASTNode;
 abstract class AbstractNode
 {
     /**
-     * @var TNode $node
+     * @var TNode
      */
     private $node;
 

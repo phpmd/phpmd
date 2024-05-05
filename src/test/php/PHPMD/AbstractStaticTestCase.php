@@ -29,7 +29,7 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Directory with test files.
      *
-     * @var string $filesDirectory
+     * @var string
      */
     private static $filesDirectory;
 
