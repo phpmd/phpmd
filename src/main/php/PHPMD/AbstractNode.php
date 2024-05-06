@@ -157,7 +157,7 @@ abstract class AbstractNode
      * the current node.
      *
      * @param class-string<PDependNode> $type The searched child type.
-     * @return array<int, AbstractASTNode|ASTArtifact>
+     * @return array<int, PDependNode>
      */
     public function findChildrenWithParentType($type)
     {
@@ -206,7 +206,7 @@ abstract class AbstractNode
      */
     public function getImage()
     {
-        return $this->node->getName();
+        return $this->node->getImage();
     }
 
     /**
@@ -217,7 +217,7 @@ abstract class AbstractNode
      */
     public function getName()
     {
-        return $this->node->getName();
+        return $this->node->getImage();
     }
 
     /**
