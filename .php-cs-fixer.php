@@ -7,6 +7,7 @@
  */
 $config = new PhpCsFixer\Config();
 return $config
+    ->setRiskyAllowed(true)
     ->setRules([
         '@PhpCsFixer' => true, // Gets overwritten by rules below
         '@PER-CS2.0' => true,
