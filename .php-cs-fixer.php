@@ -217,7 +217,7 @@ return $config
         // Operator `=>` should not be surrounded by multi-line whitespaces.
         'no_multiline_whitespace_around_double_arrow' => true,
         // Properties MUST not be explicitly initialized with `null` except when they have a type declaration (PHP 7.4).
-        'no_null_property_initialization' => true, // TODO Arguable, could remove info about nullability
+        'no_null_property_initialization' => false, // TODO Arguable, could remove info about nullability
         // Short cast `bool` using double exclamation mark should not be used.
         'no_short_bool_cast' => true,
         // Single-line whitespace before closing semicolon are prohibited.
