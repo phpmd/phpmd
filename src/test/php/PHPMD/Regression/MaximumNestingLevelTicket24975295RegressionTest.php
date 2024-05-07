@@ -54,5 +54,7 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
             $factory->createRuleSets($rules),
             new Report()
         );
+
+        static::assertFalse($phpmd->hasErrors());
     }
 }
