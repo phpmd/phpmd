@@ -39,7 +39,7 @@
     "php": "^8.1",
     "ext-xml": "*",
     "composer/xdebug-handler": "^3.0",
-    "pdepend/pdepend": "3.x-dev"
+    "pdepend/pdepend": "3.x-dev#bd4de6b346154c3b8e96dc41e5a84fe33b973970"
   },
   "require-dev": {
     "ext-json": "*",
