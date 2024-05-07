@@ -140,27 +140,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      */
     protected function isNameAllowedInContext(AbstractNode $node)
     {
-        return $this->isChildOf($node, ASTMemberPrimaryPrefix::class);
-    }
-
-    /**
-     * Checks if the given node is a direct or indirect child of a node with
-     * the given type.
-     *
-     * @param string $type
-     * @return bool
-     */
-    protected function isChildOf(AbstractNode $node, $type)
-    {
-        $parent = $node->getParent();
-        while (is_object($parent)) {
-            if ($parent->isInstanceOf($type)) {
-                return true;
-            }
-            $parent = $parent->getParent();
-        }
-
-        return false;
+        return $node->getParentOfType(ASTMemberPrimaryPrefix::class) !== null;
     }
 
     /**

@@ -19,6 +19,7 @@ namespace PHPMD\Rule;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTCompoundVariable;
@@ -142,7 +143,10 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         }
 
         foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $variable) {
-            $this->collectVariable($variable);
+            $parent = $variable->getParentOfType(AbstractASTCallable::class);
+            if ($parent->getNode() === $node->getNode()) {
+                $this->collectVariable($variable);
+            }
         }
 
         foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $func) {

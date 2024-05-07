@@ -18,6 +18,7 @@
 namespace PHPMD\Rule;
 
 use OutOfBoundsException;
+use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTExpression;
@@ -33,6 +34,8 @@ use PHPMD\Node\MethodNode;
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
+ *
+ * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
 class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
@@ -160,6 +163,11 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     {
         // First collect the formal parameters containers
         foreach ($node->findChildrenOfType(ASTFormalParameters::class) as $parameters) {
+            $parent = $parameters->getParentOfType(AbstractASTCallable::class);
+            if ($parent->getNode() !== $node->getNode()) {
+                continue;
+            }
+
             // Now get all declarators in the formal parameters container
             $declarators = $parameters->findChildrenOfType(ASTVariableDeclarator::class);
 

@@ -250,15 +250,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      */
     protected function isChildOf(AbstractNode $node, $type)
     {
-        $parent = $node->getParent();
-        while (is_object($parent)) {
-            if ($parent->isInstanceOf($type)) {
-                return true;
-            }
-            $parent = $parent->getParent();
-        }
-
-        return false;
+        return $node->getParentOfType($type) !== null;
     }
 
     /**

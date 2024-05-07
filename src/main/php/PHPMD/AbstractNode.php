@@ -20,7 +20,6 @@ namespace PHPMD;
 use BadMethodCallException;
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTArtifact;
-use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariable;
@@ -95,6 +94,28 @@ abstract class AbstractNode
     }
 
     /**
+     * Returns the first parent node of the specified type
+     *
+     * @template T of PDependNode
+     *
+     * @param class-string<T> $type The searched parent type.
+     * @return ASTNode<T>|null
+     */
+    public function getParentOfType($type)
+    {
+        $parent = $this->node->getParent();
+
+        while ($parent) {
+            if ($parent instanceof $type) {
+                return new ASTNode($parent, $this->getFileName());
+            }
+            $parent = $parent->getParent();
+        }
+
+        return null;
+    }
+
+    /**
      * Returns a child node at the given index.
      *
      * @param int $index The child offset.
@@ -157,7 +178,7 @@ abstract class AbstractNode
      * the current node.
      *
      * @param class-string<PDependNode> $type The searched child type.
-     * @return array<int, AbstractASTNode|ASTArtifact>
+     * @return list<PDependNode>
      */
     public function findChildrenWithParentType($type)
     {
@@ -206,7 +227,7 @@ abstract class AbstractNode
      */
     public function getImage()
     {
-        return $this->node->getName();
+        return $this->node->getImage();
     }
 
     /**
@@ -217,7 +238,7 @@ abstract class AbstractNode
      */
     public function getName()
     {
-        return $this->node->getName();
+        return $this->node->getImage();
     }
 
     /**
