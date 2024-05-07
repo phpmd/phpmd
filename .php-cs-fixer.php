@@ -381,7 +381,7 @@ return $config
         'is_null' => false, // Risky // Uses yoda-style
         'logical_operators' => true, // Risky
         'long_to_shorthand_operator' => true, // Risky
-        'mb_str_functions' => true, // Risky
+        'mb_str_functions' => false, // Risky, leads to test suite errors
         'modernize_types_casting' => true, // Risky
         'no_unset_on_property' => true, // Risky
         'no_useless_sprintf' => true, // Risky
