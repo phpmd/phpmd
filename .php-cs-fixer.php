@@ -28,9 +28,9 @@ return $config
                 'magic',
                 'phpunit',
                 // We do not want to order methods
-//                'method_public',
-//                'method_protected',
-//                'method_private',
+                //'method_public',
+                //'method_protected',
+                //'method_private',
             ]
         ],
         'single_line_empty_body' => false, // Not adhering to PER CS v2
