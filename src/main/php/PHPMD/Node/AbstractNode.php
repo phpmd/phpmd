@@ -24,7 +24,7 @@ use PHPMD\Rule;
 /**
  * Abstract base class for all code nodes.
  *
- * @template TNode of ASTArtifact
+ * @template-covariant TNode of ASTArtifact
  *
  * @extends BaseNode<TNode>
  */

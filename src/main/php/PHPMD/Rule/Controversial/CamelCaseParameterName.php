@@ -20,8 +20,7 @@ namespace PHPMD\Rule\Controversial;
 use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\FunctionNode;
-use PHPMD\Node\MethodNode;
+use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -39,7 +38,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
      */
     public function apply(AbstractNode $node): void
     {
-        if (!$node instanceof FunctionNode && !$node instanceof MethodNode) {
+        if (!$node instanceof AbstractCallableNode) {
             return;
         }
 

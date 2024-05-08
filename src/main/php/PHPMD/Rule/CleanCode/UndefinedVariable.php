@@ -27,6 +27,7 @@ use PDepend\Source\AST\ASTForeachStatement;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTGlobalStatement;
 use PDepend\Source\AST\ASTListExpression;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTUnaryExpression;
@@ -62,6 +63,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof AbstractCallableNode) {
+            return;
+        }
+
         $this->images = [];
 
         if ($node instanceof MethodNode) {
@@ -71,8 +76,6 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         $this->collect($node);
 
         foreach ($node->findChildrenOfType(ASTClass::class) as $class) {
-            /** @var ASTClass $class */
-
             $this->collectProperties($class);
 
             foreach ($class->getMethods() as $method) {
@@ -81,7 +84,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
         }
 
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
-            if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable)) {
+            if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable->getNode())) {
                 $this->addVariableDefinition($variable);
             } elseif (!$this->checkVariableDefined($variable, $node)) {
                 $this->addViolation($variable, [$this->getVariableImage($variable)]);
@@ -94,7 +97,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @throws OutOfBoundsException
      */
-    protected function collect(AbstractNode $node): void
+    protected function collect(AbstractCallableNode $node): void
     {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
@@ -270,7 +273,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * Add the variable to images.
      *
-     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @param AbstractNode|PDependNode $variable
      * @throws OutOfBoundsException
      */
     protected function addVariableDefinition($variable): void

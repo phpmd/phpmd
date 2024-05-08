@@ -24,6 +24,8 @@ use PDepend\Source\AST\ASTIfStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\MethodNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -94,8 +96,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all assignments from expressions array
      *
-     * @param ASTExpression[] $expressions Array of expressions
-     * @return ASTAssignmentExpression[]
+     * @param array<int, ASTNode<ASTExpression>> $expressions Array of expressions
+     * @return array<int, ASTNode<ASTAssignmentExpression>>
      */
     protected function getAssignments(array $expressions)
     {
@@ -111,7 +113,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * Signals if any violations have been found in given method or function
      *
      * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @param ASTAssignmentExpression[] $assignments Array of assignments
+     * @param array<int, ASTNode<ASTAssignmentExpression>> $assignments Array of assignments
      */
     protected function addViolations(AbstractNode $node, array $assignments): void
     {

@@ -23,13 +23,13 @@ use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTSelfReference;
-use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use RuntimeException;
 
 /**
  * This rule collects all private methods in a class that aren't used in any
@@ -40,9 +40,15 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
+     *
+     * @throws RuntimeException
      */
     public function apply(AbstractNode $class): void
     {
+        if (!$class instanceof ClassNode) {
+            return;
+        }
+
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, [$node->getImage()]);
         }
@@ -54,6 +60,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      *
      * @return array<string, MethodNode>
      * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
     protected function collectUnusedPrivateMethods(ClassNode $class)
     {
@@ -65,7 +72,8 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * Collects all private methods declared in the given class node.
      *
-     * @return AbstractNode[]
+     * @return array<string, MethodNode>
+     * @throws RuntimeException
      */
     protected function collectPrivateMethods(ClassNode $class)
     {
@@ -85,6 +93,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * analysis.
      *
      * @return bool
+     * @throws RuntimeException
      */
     protected function acceptMethod(ClassNode $class, MethodNode $method)
     {
@@ -194,7 +203,6 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
         return (
             $owner->isInstanceOf(ASTMethodPostfix::class) ||
             $owner->isInstanceOf(ASTSelfReference::class) ||
-            $owner->isInstanceOf(ASTStaticReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
