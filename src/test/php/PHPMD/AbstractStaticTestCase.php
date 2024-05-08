@@ -119,7 +119,11 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     protected static function getValuesAsArrays($values)
     {
-        return array_map(static fn($value) => [$value], $values);
+        array_walk($values, static function ($value, $key) use (&$valuesAsArray): void {
+            $valuesAsArray[$value] = [$value];
+        });
+
+        return $valuesAsArray;
     }
 
     /**
