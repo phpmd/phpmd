@@ -42,6 +42,10 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
         foreach ($node->findChildrenOfType(ASTScopeStatement::class) as $scope) {
             $parent = $scope->getParent();
 
+            if (!$parent) {
+                continue;
+            }
+
             if (!$this->isIfOrElseIfStatement($parent)) {
                 continue;
             }

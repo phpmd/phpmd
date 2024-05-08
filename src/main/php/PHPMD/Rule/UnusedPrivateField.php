@@ -25,7 +25,6 @@ use PDepend\Source\AST\ASTIdentifier;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTSelfReference;
-use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
@@ -55,7 +54,10 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        /** @var ClassNode $field */
+        if (!$node instanceof ClassNode) {
+            return;
+        }
+
         foreach ($this->collectUnusedPrivateFields($node) as $field) {
             $this->addViolation($field, [$field->getImage()]);
         }
@@ -178,7 +180,6 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
 
         return (
             $owner->isInstanceOf(ASTSelfReference::class) ||
-            $owner->isInstanceOf(ASTStaticReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );

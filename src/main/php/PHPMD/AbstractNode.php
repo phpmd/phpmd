@@ -20,7 +20,6 @@ namespace PHPMD;
 use BadMethodCallException;
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTArtifact;
-use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\Node\ASTNode;
@@ -29,7 +28,7 @@ use PHPMD\Node\ASTNode;
  * This is an abstract base class for PHPMD code nodes, it is just a wrapper
  * around PDepend's object model.
  *
- * @template TNode of ASTArtifact|PDependNode
+ * @template-covariant TNode of PDependNode
  *
  * @mixin TNode
  */
@@ -81,7 +80,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return AbstractNode|null
+     * @return ASTNode|null
      */
     public function getParent()
     {
@@ -119,7 +118,7 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param int $index The child offset.
-     * @return AbstractNode
+     * @return ASTNode
      * @throws OutOfBoundsException
      */
     public function getChild($index)
@@ -155,9 +154,7 @@ abstract class AbstractNode
      * type.
      *
      * @template T of PDependNode
-     *
      * @param class-string<T> $type The searched child type.
-     *
      * @return array<int, ASTNode<T>>
      */
     public function findChildrenOfType($type)

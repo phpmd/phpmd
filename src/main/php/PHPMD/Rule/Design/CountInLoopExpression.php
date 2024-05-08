@@ -17,11 +17,12 @@
 
 namespace PHPMD\Rule\Design;
 
-use PDepend\Source\AST\AbstractASTNode;
+use InvalidArgumentException;
 use PDepend\Source\AST\ASTDoWhileStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTForStatement;
 use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -32,6 +33,7 @@ use PHPMD\Node\TraitNode;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\TraitAware;
+use RuntimeException;
 
 /**
  * Count In Loop Expression Rule
@@ -45,6 +47,7 @@ use PHPMD\Rule\TraitAware;
  * - do-while() loops
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAware, EnumAware
 {
@@ -71,6 +74,9 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
 
     /**
      * Gets a list of loops in a node and iterates over them
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public function apply(AbstractNode $node): void
     {
@@ -145,7 +151,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @return string
      */
-    protected function getHash(AbstractASTNode $node)
+    protected function getHash(PDependNode $node)
     {
         return sprintf(
             '%s:%s:%s:%s:%s',

@@ -24,7 +24,7 @@ use PHPMD\Rule;
 /**
  * Wrapper around a PHP_Depend ast node.
  *
- * @template TNode of PDependNode
+ * @template-covariant TNode of PDependNode
  *
  * @extends AbstractNode<TNode>
  */

@@ -38,7 +38,7 @@ class GitHubRenderer extends AbstractRenderer
             $writer->write('::warning file=');
             $writer->write($violation->getFileName());
             $writer->write(',line=');
-            $writer->write($violation->getBeginLine());
+            $writer->write((string) $violation->getBeginLine());
             $writer->write('::');
             $writer->write($violation->getDescription());
             $writer->write(PHP_EOL);

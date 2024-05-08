@@ -49,8 +49,8 @@ class AnsiRenderer extends AbstractRenderer
     {
         $maxLength = null;
         foreach ($report->getRuleViolations() as $violation) {
-            if ($maxLength === null || strlen($violation->getBeginLine()) > $maxLength) {
-                $maxLength = strlen($violation->getBeginLine());
+            if ($maxLength === null || strlen((string) $violation->getBeginLine()) > $maxLength) {
+                $maxLength = strlen((string) $violation->getBeginLine());
             }
         }
 
@@ -76,7 +76,7 @@ class AnsiRenderer extends AbstractRenderer
     {
         $this->getWriter()->write(sprintf(
             " %s | \e[31mVIOLATION\e[0m | %s" . PHP_EOL,
-            str_pad($violation->getBeginLine(), $padding, ' '),
+            str_pad((string) $violation->getBeginLine(), $padding, ' '),
             $violation->getDescription()
         ));
     }

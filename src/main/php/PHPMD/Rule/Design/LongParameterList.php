@@ -19,8 +19,7 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\FunctionNode;
-use PHPMD\Node\MethodNode;
+use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -35,7 +34,7 @@ class LongParameterList extends AbstractRule implements FunctionAware, MethodAwa
      */
     public function apply(AbstractNode $node): void
     {
-        if (!$node instanceof FunctionNode && !$node instanceof MethodNode) {
+        if (!$node instanceof AbstractCallableNode) {
             return;
         }
 

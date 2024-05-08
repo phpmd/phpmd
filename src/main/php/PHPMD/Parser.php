@@ -33,6 +33,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;

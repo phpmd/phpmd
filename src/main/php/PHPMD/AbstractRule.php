@@ -26,6 +26,7 @@ use PHPMD\Node\EnumNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
+use RuntimeException;
 
 /**
  * This is the abstract base class for PHPMD rules.
@@ -367,6 +368,7 @@ abstract class AbstractRule implements Rule
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {

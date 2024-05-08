@@ -23,7 +23,7 @@ use PDepend\Source\AST\ASTArtifact;
 /**
  * Abstract base class for classes and interfaces.
  *
- * @template TNode of ASTArtifact
+ * @template-covariant TNode of ASTArtifact
  *
  * @extends AbstractNode<TNode>
  */

@@ -23,6 +23,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
+use RuntimeException;
 
 /**
  * This rule class will detect methods that define a php4 style constructor
@@ -33,6 +34,8 @@ class ConstructorWithNameAsEnclosingClass extends AbstractRule implements Method
     /**
      * Is method has the same name as the enclosing class
      * (php4 style constructor).
+     *
+     * @throws RuntimeException
      */
     public function apply(AbstractNode $node): void
     {

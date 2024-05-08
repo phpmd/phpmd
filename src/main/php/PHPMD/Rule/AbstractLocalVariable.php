@@ -149,7 +149,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         $parent = $node->getParent();
-        if ($parent->getChild(0)->getNode() === $node->getNode()) {
+        if ($parent?->getChild(0)->getNode() === $node->getNode()) {
             return $this->stripWrappedIndexExpression($parent);
         }
 
@@ -344,7 +344,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * same variable and won't overlap in a storage keyed by image as first one
      * image is "$foo", second one is "::$foo".
      *
-     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @param PDependNode $variable
      * @return string
      * @throws OutOfBoundsException
      */
@@ -378,7 +378,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * }
      * ```
      *
-     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @param PDependNode $variable
      * @param string $image
      * @return bool
      */

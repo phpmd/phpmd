@@ -20,9 +20,11 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTTrait;
 use PHPMD\Rule;
+use RuntimeException;
 
 /**
  * Wrapper around a PHP_Depend method node.
@@ -96,6 +98,7 @@ class MethodNode extends AbstractCallableNode
      * instance.
      *
      * @return bool
+     * @throws RuntimeException
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {
@@ -110,6 +113,7 @@ class MethodNode extends AbstractCallableNode
      * Returns the parent class or interface instance.
      *
      * @return AbstractTypeNode
+     * @throws RuntimeException
      */
     public function getParentType()
     {
@@ -127,7 +131,11 @@ class MethodNode extends AbstractCallableNode
             return new EnumNode($parentNode);
         }
 
-        return new InterfaceNode($parentNode);
+        if ($parentNode instanceof ASTInterface) {
+            return new InterfaceNode($parentNode);
+        }
+
+        throw new RuntimeException('Unexpected method parent type: ' . $parentNode::class);
     }
 
     /**
