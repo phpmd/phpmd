@@ -19,7 +19,7 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\AbstractTypeNode;
+use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
 /**
@@ -40,6 +40,10 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof ClassNode) {
+            return;
+        }
+
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
         $threshold = $this->getIntProperty('maxmethods');
@@ -49,7 +53,6 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
             return;
         }
 
-        /** @var AbstractTypeNode $node */
         $nom = $this->countMethods($node);
 
         if ($nom <= $threshold) {
@@ -72,7 +75,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      *
      * @return int
      */
-    protected function countMethods(AbstractTypeNode $node)
+    protected function countMethods(ClassNode $node)
     {
         $count = 0;
         foreach ($node->getMethods() as $method) {

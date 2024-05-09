@@ -20,7 +20,6 @@ namespace PHPMD\Rule\CleanCode;
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTArray;
-use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;
@@ -53,14 +52,16 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * This method checks if a given function or method contains an array literal
      * with duplicated entries for any key and emits a rule violation if so.
      *
-     * @param ASTNode $node Array node.
+     * @param ASTNode<ASTArray> $node Array node.
      * @throws OutOfBoundsException
      */
     protected function checkForDuplicatedArrayKeys(ASTNode $node): void
     {
         $keys = [];
-        /** @var ASTArrayElement $arrayElement */
         foreach ($node->getChildren() as $index => $arrayElement) {
+            if (!$arrayElement instanceof AbstractASTNode) {
+                continue;
+            }
             $arrayElement = $this->normalizeKey($arrayElement, $index);
             if (null === $arrayElement) {
                 // skip everything that can't be resolved easily

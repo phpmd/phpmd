@@ -20,8 +20,10 @@ namespace PHPMD\Rule;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
@@ -41,6 +43,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method checks that all private class methods are at least accessed
      * by one method.
      *
+     * @param AbstractNode<PDependNode> $class
      * @throws RuntimeException
      */
     public function apply(AbstractNode $class): void
@@ -167,6 +170,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Return represented method name if the given element is a 2-items array
      * and that the second one is a literal static string.
      *
+     * @param AbstractNode<PDependNode> $parent
      * @return string|null
      * @throws OutOfBoundsException
      */
@@ -193,6 +197,7 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
+     * @param ASTNode<ASTExpression> $postfix
      * @return bool
      * @throws OutOfBoundsException
      */

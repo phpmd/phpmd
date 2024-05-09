@@ -66,7 +66,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      * Returns an array with function images that are normally only used during
      * development.
      *
-     * @return array
+     * @return list<string>
      * @throws OutOfBoundsException
      */
     protected function getSuspectImages()

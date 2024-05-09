@@ -30,6 +30,9 @@ use PHPMD\Rule\MethodAware;
  */
 class Superglobals extends AbstractRule implements MethodAware, FunctionAware
 {
+    /**
+     * @var list<string>
+     */
     protected $superglobals = [
         '$GLOBALS',
         '$_SERVER',

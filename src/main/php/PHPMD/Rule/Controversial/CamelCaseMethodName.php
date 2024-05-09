@@ -30,6 +30,9 @@ use PHPMD\Rule\MethodAware;
  */
 class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
+    /**
+     * @var list<string>
+     */
     protected $ignoredMethods = [
         '__construct',
         '__destruct',
@@ -72,7 +75,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     /**
      * @throws OutOfBoundsException
      */
-    protected function isValid($methodName)
+    protected function isValid(string $methodName): bool
     {
         // disallow any consecutive uppercase letters
         if ($this->getBooleanProperty('camelcase-abbreviations', false)

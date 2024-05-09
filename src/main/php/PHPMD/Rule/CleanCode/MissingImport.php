@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -32,14 +33,12 @@ use PHPMD\Rule\MethodAware;
 class MissingImport extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * @var array Self reference class names.
+     * @var list<string> Self reference class names.
      */
     protected $selfReferences = ['self', 'static'];
 
     /**
      * Checks for missing class imports and warns about it
-     *
-     * @param AbstractNode $node The node to check upon.
      */
     public function apply(AbstractNode $node): void
     {
@@ -64,7 +63,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             $fqcnLength = strlen($className);
 
             if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
-                $this->addViolation($classNode, [$classNode->getBeginLine(), $classNode->getStartColumn()]);
+                $this->addViolation(
+                    $classNode,
+                    [(string) $classNode->getBeginLine(), (string) $classNode->getStartColumn()]
+                );
             }
         }
     }
@@ -72,7 +74,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Check whether a given class node is a self reference
      *
-     * @param ASTNode $classNode A class node to check.
+     * @param ASTNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is a self reference.
      */
     protected function isSelfReference(ASTNode $classNode)
@@ -83,7 +85,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Check whether a given class node is in the global namespace
      *
-     * @param ASTNode $classNode A class node to check.
+     * @param ASTNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is in the global namespace.
      */
     protected function isGlobalNamespace(ASTNode $classNode)

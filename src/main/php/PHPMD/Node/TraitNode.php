@@ -21,6 +21,8 @@ use PDepend\Source\AST\ASTTrait;
 
 /**
  * Wrapper around PHP_Depend's interface objects.
+ *
+ * @extends AbstractTypeNode<ASTTrait>
  */
 class TraitNode extends AbstractTypeNode
 {

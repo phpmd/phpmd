@@ -21,8 +21,9 @@ use ArrayIterator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use OutOfBoundsException;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
-use PHPMD\Node\AbstractTypeNode;
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
@@ -38,6 +39,8 @@ use PHPMD\Rule\TraitAware;
 
 /**
  * This class is a collection of concrete source analysis rules.
+ *
+ * @implements IteratorAggregate<int, Rule>
  */
 class RuleSet implements IteratorAggregate
 {
@@ -71,7 +74,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Mapping between marker interfaces and concrete context code node classes.
      *
-     * @var array<class-string, class-string<AbstractTypeNode>>
+     * @var array<class-string, class-string<AbstractNode<ASTArtifact>>>
      */
     private array $applyTo = [
         ClassAware::class => ClassNode::class,
@@ -85,7 +88,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Mapping of rules that apply to a concrete code node type.
      *
-     * @var array<class-string<AbstractTypeNode>, array<int, Rule>>
+     * @var array<class-string<AbstractNode<ASTArtifact>>, list<Rule>>
      */
     private $rules = [
         ClassNode::class => [],
@@ -204,6 +207,8 @@ class RuleSet implements IteratorAggregate
     /**
      * This method returns an iterator will all rules that belong to this
      * rule-set.
+     *
+     * @return ArrayIterator<int, Rule>
      */
     public function getRules(): ArrayIterator
     {
@@ -234,6 +239,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Applies all registered rules that match against the concrete node type.
      *
+     * @param AbstractNode<ASTArtifact> $node
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
@@ -250,7 +256,6 @@ class RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->rules[$className] as $rule) {
-            /** @var Rule $rule */
             if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->strict) {
                 continue;
             }
@@ -264,6 +269,8 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns an iterator with all rules that are part of this rule-set.
+     *
+     * @return ArrayIterator<int, Rule>
      */
     public function getIterator(): ArrayIterator
     {

@@ -23,6 +23,7 @@ use PDepend\Engine;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
@@ -31,6 +32,7 @@ use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PHPMD\Node\AbstractNode;
@@ -49,21 +51,21 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * The analysing rule-set instance.
      *
-     * @var RuleSet[]
+     * @var list<RuleSet>
      */
     private $ruleSets = [];
 
     /**
      * The metric containing analyzer instances.
      *
-     * @var AnalyzerNodeAware[]
+     * @var list<AnalyzerNodeAware>
      */
     private $analyzers = [];
 
     /**
      * The raw PDepend code nodes.
      *
-     * @var ASTArtifactList
+     * @var ASTArtifactList<ASTNamespace>
      */
     private $artifacts = null;
 
@@ -280,6 +282,8 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Sets the context code nodes.
+     *
+     * @param ASTArtifactList<ASTNamespace> $artifacts
      */
     public function setArtifacts(ASTArtifactList $artifacts): void
     {
@@ -289,6 +293,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Applies all rule-sets to the given <b>$node</b> instance.
      *
+     * @param AbstractNode<ASTArtifact> $node
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
@@ -305,6 +310,8 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Collects the collected metrics for the given node and adds them to the
      * <b>$node</b>.
+     *
+     * @param AbstractNode<ASTArtifact> $node
      */
     private function collectMetrics(AbstractNode $node): void
     {

@@ -20,7 +20,6 @@ namespace PHPMD\Renderer;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\RuleViolation;
 
 /**
  * This class will render a JSON report.
@@ -44,7 +43,7 @@ class JSONRenderer extends AbstractRenderer
     /**
      * Create report data and add renderer meta properties
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function initReportData()
     {
@@ -61,13 +60,12 @@ class JSONRenderer extends AbstractRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array $data The report output to add the violations to.
-     * @return array The report output with violations, if any.
+     * @param array<string, mixed> $data The report output to add the violations to.
+     * @return array<string, mixed> The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
         $filesList = [];
-        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
             $rule = $violation->getRule();
@@ -95,8 +93,8 @@ class JSONRenderer extends AbstractRenderer
      * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
-     * @param array $data The report output to add the errors to.
-     * @return array The report output with errors, if any.
+     * @param array<string, mixed> $data The report output to add the errors to.
+     * @return array<string, mixed> The report output with errors, if any.
      */
     protected function addErrorsToReport(Report $report, array $data)
     {
@@ -114,7 +112,7 @@ class JSONRenderer extends AbstractRenderer
     /**
      * Encode report data to the JSON representation string
      *
-     * @param array $data The report data
+     * @param array<mixed> $data The report data
      *
      * @return string
      */

@@ -24,6 +24,7 @@ use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTForeachStatement;
 use PDepend\Source\AST\ASTForInit;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -43,7 +44,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Temporary map holding variables that were already processed in the
      * current context.
      *
-     * @var array(string=>boolean)
+     * @var array<string, bool>
      */
     protected $processedVariables = [];
 
@@ -79,6 +80,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks the variable name length against the configured minimum
      * length.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -100,6 +102,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks the variable name length against the configured minimum
      * length.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -121,6 +124,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks if the variable name of the given node is greater/equal to the
      * configured threshold or if the given node is an allowed context.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -135,6 +139,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Template method that performs the real node image check.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -178,6 +183,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * moment these contexts are the init section of a for-loop and short
      * variable names in catch-statements.
      *
+     * @param AbstractNode<ASTNode> $node
      * @return bool
      * @throws OutOfBoundsException
      */
@@ -197,6 +203,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if a short name is initialized within a foreach loop statement
      *
+     * @param AbstractNode<ASTNode> $node
      * @return bool
      * @throws OutOfBoundsException
      */
@@ -223,7 +230,10 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Returns an array of parent nodes of the specified type
      *
-     * @return array
+     * @template T of ASTNode
+     * @param AbstractNode<ASTNode> $node
+     * @param class-string<T> $type
+     * @return list<AbstractNode<T>>
      */
     protected function getParentsOfType(AbstractNode $node, $type)
     {
@@ -245,7 +255,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * Checks if the given node is a direct or indirect child of a node with
      * the given type.
      *
-     * @param string $type
+     * @param AbstractNode<ASTNode> $node
+     * @param class-string<ASTNode> $type
      * @return bool
      */
     protected function isChildOf(AbstractNode $node, $type)
@@ -263,6 +274,8 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
 
     /**
      * Flags the given node as already processed.
+     *
+     * @param AbstractNode<ASTNode> $node
      */
     protected function addProcessed(AbstractNode $node): void
     {
@@ -272,6 +285,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Checks if the given node was already processed.
      *
+     * @param AbstractNode<ASTNode> $node
      * @return bool
      */
     protected function isNotProcessed(AbstractNode $node)

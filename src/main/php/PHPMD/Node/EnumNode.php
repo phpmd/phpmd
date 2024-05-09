@@ -21,6 +21,8 @@ use PDepend\Source\AST\ASTEnum;
 
 /**
  * Wrapper around PHP_Depend's enum objects.
+ *
+ * @extends AbstractTypeNode<ASTEnum>
  */
 class EnumNode extends AbstractTypeNode
 {

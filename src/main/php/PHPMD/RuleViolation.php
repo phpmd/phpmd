@@ -50,7 +50,7 @@ class RuleViolation
      * The arguments for the description/message text or <b>null</b>
      * when the arguments are unknown.
      *
-     * @var array|null
+     * @var array<int, string>|null
      */
     private $args = null;
 
@@ -64,7 +64,7 @@ class RuleViolation
     /**
      * Constructs a new rule violation instance.
      *
-     * @param array|string $violationMessage
+     * @param array<string, mixed>|string $violationMessage
      * @param ?numeric $metric
      */
     public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
@@ -112,7 +112,7 @@ class RuleViolation
      * Returns the arguments for the description/message text or <b>null</b>
      * when the arguments are unknown.
      *
-     * @return array|null
+     * @return array<int, string>|null
      */
     public function getArgs()
     {

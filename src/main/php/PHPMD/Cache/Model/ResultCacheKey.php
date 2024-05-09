@@ -32,7 +32,7 @@ class ResultCacheKey
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {

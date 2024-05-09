@@ -2,10 +2,15 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTNode;
 use PHPMD\AbstractNode as PHPMDAbstractNode;
 
 class NodeInfoFactory
 {
+    /**
+     * @param PHPMDAbstractNode<ASTNode> $node
+     * @return NodeInfo
+     */
     public static function fromNode(PHPMDAbstractNode $node)
     {
         $className = null;

@@ -31,6 +31,7 @@ class ResultCacheStateFactory
     }
 
     /**
+     * @param array<string, mixed> $data
      * @return ResultCacheKey|null
      */
     private function createCacheKey(array $data)

@@ -6,20 +6,15 @@ use InvalidArgumentException;
 
 class ArgumentsValidator
 {
-    /** @var bool */
-    private $hasImplicitArguments;
-
-    /** @var string[] */
-    private $originalArguments;
-
-    /** @var string[] */
-    private $arguments;
-
-    public function __construct($hasImplicitArguments, $originalArguments, $arguments)
-    {
-        $this->hasImplicitArguments = $hasImplicitArguments;
-        $this->originalArguments = $originalArguments;
-        $this->arguments = $arguments;
+    /**
+     * @param string[] $originalArguments
+     * @param string[] $arguments
+     */
+    public function __construct(
+        private bool $hasImplicitArguments,
+        private array $originalArguments,
+        private array $arguments,
+    ) {
     }
 
     /**

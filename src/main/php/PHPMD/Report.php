@@ -30,7 +30,7 @@ class Report
     /**
      * List of rule violations detected in the analyzed source code.
      *
-     * @var array
+     * @var array<string, array<int, list<RuleViolation>>>
      */
     private $ruleViolations = [];
 
@@ -51,7 +51,7 @@ class Report
     /**
      * Errors that occurred while parsing the source.
      *
-     * @var array
+     * @var list<ProcessingError>
      * @since 1.2.1
      */
     private $errors = [];

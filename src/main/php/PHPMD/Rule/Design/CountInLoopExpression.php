@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTForStatement;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -54,14 +55,14 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * List of functions to search against
      *
-     * @var array
+     * @var list<string>
      */
     protected $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
-     * @var array
+     * @var array<string, bool>
      */
     protected $processedFunctions = [];
 
@@ -93,7 +94,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
             $node->findChildrenOfType(ASTDoWhileStatement::class)
         );
 
-        /** @var AbstractNode $loop */
         foreach ($loops as $loop) {
             $this->findViolations($loop);
         }
@@ -103,7 +103,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * Scans for expressions and count() or sizeof() functions inside,
      * if found, triggers a violation
      *
-     * @param AbstractNode $loop Loop statement to look against
+     * @param AbstractNode<ASTStatement> $loop Loop statement to look against
      */
     protected function findViolations(AbstractNode $loop): void
     {
@@ -131,6 +131,8 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks whether node in a direct child of the loop
      *
+     * @param AbstractNode<ASTStatement> $loop
+     * @param ASTNode<ASTExpression> $expression
      * @return bool
      */
     protected function isDirectChild(AbstractNode $loop, ASTNode $expression)
@@ -166,6 +168,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks the given function against the list of unwanted functions
      *
+     * @param ASTNode<ASTFunctionPostfix> $function
      * @return bool
      */
     protected function isUnwantedFunction(ASTNode $function)

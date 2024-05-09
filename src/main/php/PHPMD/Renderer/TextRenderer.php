@@ -29,11 +29,11 @@ use PHPMD\Report;
  */
 class TextRenderer extends AbstractRenderer implements Verbose, Color
 {
-    protected $columnSpacing = 2;
+    protected int $columnSpacing = 2;
 
-    protected $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
+    protected int $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
 
-    protected $colored = false;
+    protected bool $colored = false;
 
     /**
      * This method will be called when the engine has finished the source analysis
@@ -99,7 +99,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         $this->colored = $colored;
     }
 
-    protected function applyColor($text, $color)
+    protected function applyColor(string $text, string $color): string
     {
         if (!$this->colored) {
             return $text;
@@ -109,7 +109,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             'yellow' => 33,
             'red' => 31,
         ];
-        $color = $colors[$color] ?? $color;
+        $color = $colors[$color] ?? 0;
 
         return "\033[{$color}m{$text}\033[0m";
     }

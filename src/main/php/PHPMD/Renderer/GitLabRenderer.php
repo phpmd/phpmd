@@ -19,7 +19,6 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
-use PHPMD\RuleViolation;
 
 /**
  * This class will render a GitLab compatible JSON report.
@@ -45,13 +44,12 @@ class GitLabRenderer extends AbstractRenderer
      *
      * @param Report $report The report with potential violations.
      *
-     * @return array The report output with violations, if any.
+     * @return list<array<string, mixed>> The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report)
     {
         $data = [];
 
-        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $violationResult = [
                 'type' => 'issue',
@@ -90,9 +88,8 @@ class GitLabRenderer extends AbstractRenderer
      * Add errors, if any, to GitLab Code Quality report format
      *
      * @param Report $report The report with potential errors.
-     * @param array  $data   The report output to add the errors to.
-     *
-     * @return array The report output with errors, if any.
+     * @param array<int, array<string, mixed>> $data The report output to add the errors to.
+     * @return array<int, array<string, mixed>> The report output with errors, if any.
      */
     protected function addErrorsToReport(Report $report, array $data)
     {
@@ -121,7 +118,7 @@ class GitLabRenderer extends AbstractRenderer
     /**
      * Encode report data to the JSON representation string
      *
-     * @param array $data The report data
+     * @param array<mixed> $data The report data
      *
      * @return string
      */

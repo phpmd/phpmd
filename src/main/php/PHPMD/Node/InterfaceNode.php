@@ -21,6 +21,8 @@ use PDepend\Source\AST\ASTInterface;
 
 /**
  * Wrapper around PHP_Depend's interface objects.
+ *
+ * @extends AbstractTypeNode<ASTInterface>
  */
 class InterfaceNode extends AbstractTypeNode
 {

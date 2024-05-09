@@ -48,7 +48,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns an <b>array</b> with all methods defined in the context class or
      * interface.
      *
-     * @return MethodNode[]
+     * @return list<MethodNode>
      */
     public function getMethods()
     {
@@ -64,7 +64,7 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns an array with the names of all methods within this class or
      * interface node.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getMethodNames()
     {
