@@ -72,9 +72,10 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     }
 
     /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isStaticMethodCall(AbstractNode $methodCall)
+    protected function isStaticMethodCall(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -83,22 +84,25 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     }
 
     /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isCallingParent(AbstractNode $methodCall)
+    protected function isCallingParent(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
     /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isCallingSelf(AbstractNode $methodCall)
+    protected function isCallingSelf(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
 
     /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @param string $ignorePattern
      * @return bool
      */

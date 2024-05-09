@@ -229,7 +229,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *
      * <code>
      * class Foo {
-     *     private $bar = array();
+     *     private $bar = [];
      *     // ...
      *     public function baz() {
      *         return $this->bar[42];

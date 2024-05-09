@@ -19,6 +19,7 @@ namespace PHPMD\Rule\Controversial;
 
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -33,7 +34,7 @@ use PHPMD\Rule\MethodAware;
 class CamelCaseVariableName extends AbstractRule implements MethodAware, FunctionAware
 {
     /**
-     * @var array
+     * @var list<string>
      */
     protected $exceptions = [
         '$php_errormsg',
@@ -70,9 +71,10 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     }
 
     /**
+     * @param AbstractNode<ASTVariable> $variable
      * @throws OutOfBoundsException
      */
-    protected function isValid($variable)
+    protected function isValid(AbstractNode $variable): bool
     {
         $image = $variable->getImage();
 

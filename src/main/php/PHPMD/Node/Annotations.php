@@ -29,7 +29,7 @@ class Annotations
     /**
      * Detected annotations.
      *
-     * @var Annotation[]
+     * @var list<Annotation>
      */
     private $annotations = [];
 

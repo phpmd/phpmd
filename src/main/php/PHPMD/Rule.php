@@ -20,6 +20,7 @@ namespace PHPMD;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTNode;
 
 /**
  * Base interface for a PHPMD rule.
@@ -90,6 +91,8 @@ interface Rule
 
     /**
      * Returns a list of examples for this rule.
+     *
+     * @return list<string>
      */
     public function getExamples(): array;
 
@@ -167,6 +170,7 @@ interface Rule
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
      *
+     * @param AbstractNode<ASTNode> $node The node to check upon.
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException

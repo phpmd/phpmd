@@ -20,6 +20,7 @@ namespace PHPMD;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTNode;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -63,7 +64,7 @@ abstract class AbstractRule implements Rule
     /**
      * A list of code examples for this rule.
      *
-     * @var array<string>
+     * @var list<string>
      */
     private array $examples = [];
 
@@ -185,7 +186,7 @@ abstract class AbstractRule implements Rule
     /**
      * Returns a list of examples for this rule.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getExamples(): array
     {
@@ -346,6 +347,9 @@ abstract class AbstractRule implements Rule
     /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
+     *
+     * @param AbstractNode<ASTNode> $node
+     * @param array<int, string> $args
      */
     protected function addViolation(
         AbstractNode $node,
@@ -380,14 +384,4 @@ abstract class AbstractRule implements Rule
             $this->apply($method);
         }
     }
-
-    /**
-     * This method should implement the violation analysis algorithm of concrete
-     * rule implementations. All extending classes must implement this method.
-     *
-     * @throws OutOfBoundsException
-     * @throws InvalidArgumentException
-     * @throws ASTClassOrInterfaceRecursiveInheritanceException
-     */
-    abstract public function apply(AbstractNode $node): void;
 }

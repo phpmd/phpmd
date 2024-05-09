@@ -60,7 +60,7 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
     /**
      * @throws OutOfBoundsException
      */
-    private function isValid($propertyName)
+    private function isValid(string $propertyName): bool
     {
         // disallow any consecutive uppercase letters
         if ($this->getBooleanProperty('camelcase-abbreviations', false)

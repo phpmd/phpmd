@@ -38,7 +38,7 @@ class ParserFactory
     /**
      * Mapping between phpmd option names and those used by pdepend.
      *
-     * @var array
+     * @var array<string, string>
      */
     private $phpmd2pdepend = [
         'coverage' => 'coverage-report',

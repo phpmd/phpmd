@@ -19,7 +19,6 @@ namespace PHPMD\Renderer;
 
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\RuleViolation;
 
 /**
  * This class will render a SARIF (Static Analysis
@@ -30,7 +29,7 @@ class SARIFRenderer extends JSONRenderer
     /**
      * Create report data and add renderer meta properties
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function initReportData()
     {
@@ -66,8 +65,10 @@ class SARIFRenderer extends JSONRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array $data The report output to add the violations to.
-     * @return array The report output with violations, if any.
+     * @param array<string, array<int, array<string, array<string, array<mixed>>>>> $data The report output to add the
+     *                                                                                    violations to.
+     * @return array<string, array<int, array<string, array<string, array<mixed>>>>> The report output with violations,
+     *                                                                               if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
@@ -75,7 +76,6 @@ class SARIFRenderer extends JSONRenderer
         $results = [];
         $ruleIndices = [];
 
-        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $rule = $violation->getRule();
             $ruleRef = str_replace(' ', '', $rule->getRuleSetName()) . '/' . $rule->getName();
@@ -157,8 +157,10 @@ class SARIFRenderer extends JSONRenderer
      * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
-     * @param array $data The report output to add the errors to.
-     * @return array The report output with errors, if any.
+     * @param array<string, array<int, array<string, list<array<string, mixed>>>>> $data The report output to add the
+     *                                                                                   errors to.
+     * @return array<string, array<int, array<string, list<array<string, mixed>>>>> The report output with errors, if
+     *                                                                              any.
      */
     protected function addErrorsToReport(Report $report, array $data)
     {
@@ -188,7 +190,7 @@ class SARIFRenderer extends JSONRenderer
      * and returns the result as a SARIF `artifactLocation`
      *
      * @param string $path
-     * @return array
+     * @return array<string, string>
      */
     protected static function pathToArtifactLocation($path)
     {

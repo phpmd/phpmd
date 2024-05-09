@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -523,7 +524,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string $expectedClass Optional class name for apply() expected at least once.
+     * @param class-string<ASTNode> $expectedClass Optional class name for apply() expected at least once.
      * @param int|string $count How often should apply() be called?
      * @return MockObject|RuleSet
      */

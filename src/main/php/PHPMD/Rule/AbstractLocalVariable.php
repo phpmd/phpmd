@@ -20,14 +20,12 @@ namespace PHPMD\Rule;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
-use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTVariable;
-use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -42,7 +40,7 @@ use ReflectionFunction;
 abstract class AbstractLocalVariable extends AbstractRule
 {
     /**
-     * @var array Self reference class names.
+     * @var list<string> Self reference class names.
      */
     protected $selfReferences = ['self', 'static'];
 
@@ -50,7 +48,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * PHP super globals that are available in all php scopes, so that they
      * can never be unused local variables.
      *
-     * @var array(string=>boolean)
+     * @var array<string, bool>
      * @link http://php.net/manual/en/reserved.variables.php
      */
     protected static $superGlobals = [
@@ -90,6 +88,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable represents one of the PHP super globals
      * that are available in scopes.
      *
+     * @param AbstractNode<ASTVariable> $variable
      * @return bool
      */
     protected function isSuperGlobal(AbstractNode $variable)
@@ -101,6 +100,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable does not represent one of the PHP super globals
      * that are available in scopes.
      *
+     * @param AbstractNode<ASTVariable> $variable
      * @return bool
      */
     protected function isNotSuperGlobal(AbstractNode $variable)
@@ -112,6 +112,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node is a regular variable an not property
      * or method postfix.
      *
+     * @param ASTNode<ASTVariable> $variable
      * @return bool
      * @throws OutOfBoundsException
      */
@@ -139,7 +140,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Removes all index expressions that are wrapped around the given node
      * instance.
      *
-     * @return ASTNode
+     * @param ASTNode<PDependNode> $node
+     * @return ASTNode<PDependNode>
      * @throws OutOfBoundsException
      */
     protected function stripWrappedIndexExpression(ASTNode $node)
@@ -159,6 +161,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Tests if the given variable node os part of an index expression.
      *
+     * @param ASTNode<PDependNode> $node
      * @return bool
      */
     protected function isWrappedByIndexExpression(ASTNode $node)
@@ -172,6 +175,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * PHP is case insensitive so we should compare function names case
      * insensitive.
      *
+     * @param AbstractNode<PDependNode> $node
      * @param string $name
      * @return bool
      */
@@ -184,6 +188,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * AST puts namespace prefix to global functions called from a namespace.
      * This method checks if the last part of function fully qualified name is equal to $name
      *
+     * @param AbstractNode<PDependNode> $node
      * @param string $name
      * @return bool
      */
@@ -199,7 +204,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Prefix self:: and static:: properties with "::".
      *
-     * @param AbstractNode|PDependNode $variable
+     * @param AbstractNode<PDependNode>|PDependNode $variable
      * @return string
      * @throws OutOfBoundsException
      */
@@ -223,6 +228,8 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
+     * @param string $image
+     * @return ?string
      * @throws OutOfBoundsException
      */
     protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
@@ -247,7 +254,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * Or return the input as is if it's not an ASTNode PHPMD node.
      *
-     * @return ASTArtifact|PDependNode
+     * @param ASTNode<PDependNode>|PDependNode $node
+     * @return PDependNode
      */
     protected function getNode($node)
     {
@@ -288,18 +296,18 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Return true if the given variable is passed by reference in a native PHP function.
      *
-     * @param ASTPropertyPostfix|ASTVariable|ASTVariableDeclarator $variable
+     * @param ASTVariable $variable
      * @return bool
      */
     protected function isPassedByReference($variable)
     {
-        $parent = $this->getNode($variable->getParent());
+        $parent = $variable->getParent();
 
         if (!($parent instanceof ASTArguments)) {
             return false;
         }
 
-        $argumentPosition = array_search($this->getNode($variable), $parent->getChildren());
+        $argumentPosition = array_search($variable, $parent->getChildren());
         $parentParent = $parent->getParent();
         if ($parentParent === null) {
             return false;
@@ -348,7 +356,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @return string
      * @throws OutOfBoundsException
      */
-    private function prependMemberPrimaryPrefix($image, $variable)
+    private function prependMemberPrimaryPrefix(string $image, $variable)
     {
         $parent = $variable->getParent();
 

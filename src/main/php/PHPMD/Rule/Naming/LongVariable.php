@@ -21,6 +21,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -54,7 +55,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Temporary map holding variables that were already processed in the
      * current context.
      *
-     * @var array(string=>boolean)
+     * @var array<string, bool>
      */
     protected $processedVariables = [];
 
@@ -96,6 +97,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Checks if the variable name of the given node is smaller/equal to the
      * configured threshold.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -110,6 +112,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Template method that performs the real node image check.
      *
+     * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      * @SuppressWarnings(PHPMD.LongVariable)
@@ -136,6 +139,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Checks if a short name is acceptable in the current context. For the
      * moment the only context is a static member.
      *
+     * @param AbstractNode<ASTNode> $node
      * @return bool
      */
     protected function isNameAllowedInContext(AbstractNode $node)
@@ -153,6 +157,8 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
 
     /**
      * Flags the given node as already processed.
+     *
+     * @param AbstractNode<ASTNode> $node
      */
     protected function addProcessed(AbstractNode $node): void
     {
@@ -162,6 +168,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Checks if the given node was already processed.
      *
+     * @param AbstractNode<ASTNode> $node
      * @return bool
      */
     protected function isNotProcessed(AbstractNode $node)

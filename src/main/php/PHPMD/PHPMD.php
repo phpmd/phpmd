@@ -42,14 +42,14 @@ class PHPMD
     /**
      * List of valid file extensions for analyzed files.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
 
     /**
      * List of exclude directory patterns.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
 
@@ -75,7 +75,7 @@ class PHPMD
     /**
      * Additional options for PHPMD or one of it's parser backends.
      *
-     * @var array
+     * @var array<string, string>
      * @since 1.2.0
      */
     private $options = [];
@@ -186,7 +186,7 @@ class PHPMD
     /**
      * Returns additional options for PHPMD or one of it's parser backends.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getOptions()
     {
@@ -196,7 +196,7 @@ class PHPMD
     /**
      * Sets additional options for PHPMD or one of it's parser backends.
      *
-     * @param array $options Additional backend or PHPMD options.
+     * @param array<string, string> $options Additional backend or PHPMD options.
      */
     public function setOptions(array $options): void
     {
@@ -209,10 +209,9 @@ class PHPMD
      * argument. The result will be passed to all given renderer instances.
      *
      * @param string             $inputPath
-     * @param array|null         $ignorePattern
+     * @param string[]|null      $ignorePattern
      * @param AbstractRenderer[] $renderers
      * @param RuleSet[]          $ruleSetList
-     *
      * @throws Exception
      */
     public function processFiles(

@@ -25,12 +25,16 @@ use OutOfBoundsException;
 use PHPMD\Rule;
 use RuntimeException;
 
+/**
+ * @implements IteratorAggregate<string, string>
+ * @implements ArrayAccess<string, string>
+ */
 class ExceptionsList implements IteratorAggregate, ArrayAccess
 {
     /**
      * Temporary cache of configured exceptions. Have name as key
      *
-     * @var array<string, int>
+     * @var array<string, string>
      */
     protected array $exceptions;
 
@@ -70,34 +74,33 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
     /**
      * Gets array of exceptions from property
      *
-     * @return array<string, int>
+     * @return array<string, string>
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
     protected function getExceptionsList(): array
     {
         if (!isset($this->exceptions)) {
-            $this->exceptions = array_flip(
-                Strings::splitToList(
-                    $this->rule->getStringProperty('exceptions', ''),
-                    $this->separator,
-                    $this->trim
-                )
+            $values = Strings::splitToList(
+                $this->rule->getStringProperty('exceptions', ''),
+                $this->separator,
+                $this->trim
             );
+
+            $this->exceptions = array_combine($values, $values);
         }
 
         return $this->exceptions;
     }
 
     /**
+     * @return ArrayIterator<string, string>
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
     public function getIterator(): ArrayIterator
     {
-        $keys = array_keys($this->getExceptionsList());
-
-        return new ArrayIterator(array_combine($keys, $keys));
+        return new ArrayIterator($this->getExceptionsList());
     }
 
     /**
@@ -113,7 +116,7 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    public function offsetGet($offset): int
+    public function offsetGet($offset): string
     {
         $exceptions = $this->getExceptionsList();
         $value = $exceptions[Strings::trim($offset, $this->trim)] ?? null;

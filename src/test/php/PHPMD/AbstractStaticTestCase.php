@@ -43,7 +43,7 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Temporary files created by a test.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private static $tempFiles = [];
 

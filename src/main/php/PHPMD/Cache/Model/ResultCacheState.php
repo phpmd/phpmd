@@ -13,11 +13,11 @@ class ResultCacheState
     /** @var ResultCacheKey */
     private $cacheKey;
 
-    /** @var array{files?: array<string, array{hash: string, violations?: array}>} */
+    /** @var array{files?: array<string, array{hash: string, violations?: list<array<string, mixed>>}>} */
     private $state;
 
     /**
-     * @param array{files?: array<string, array{hash: string, violations?: array}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: list<array<string, mixed>>}>} $state
      */
     public function __construct(ResultCacheKey $cacheKey, $state = [])
     {
@@ -35,7 +35,7 @@ class ResultCacheState
 
     /**
      * @param string $filePath
-     * @return array
+     * @return list<array<string, mixed>>
      */
     public function getViolations($filePath)
     {
@@ -48,6 +48,7 @@ class ResultCacheState
 
     /**
      * @param string $filePath
+     * @param list<array<string, mixed>> $violations
      */
     public function setViolations($filePath, array $violations): void
     {
@@ -74,8 +75,9 @@ class ResultCacheState
     }
 
     /**
-     * @param string    $basePath
-     * @param RuleSet[] $ruleSetList
+     * @param string $basePath
+     * @param list<RuleSet> $ruleSetList
+     * @return list<RuleViolation>
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
@@ -130,14 +132,15 @@ class ResultCacheState
     /**
      * @param string $filePath
      * @param string $hash
+     * @return void
      */
     public function setFileState($filePath, $hash)
     {
-        return $this->state['files'][$filePath]['hash'] = $hash;
+        $this->state['files'][$filePath]['hash'] = $hash;
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function toArray()
     {

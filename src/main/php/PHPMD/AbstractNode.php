@@ -61,6 +61,7 @@ abstract class AbstractNode
      * to the underlying PDepend AST node.
      *
      * @param string $name
+     * @param array<mixed> $args
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
@@ -80,7 +81,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode|null
+     * @return ASTNode<PDependNode>|null
      */
     public function getParent()
     {
@@ -118,7 +119,7 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param int $index The child offset.
-     * @return ASTNode
+     * @return ASTNode<PDependNode>
      * @throws OutOfBoundsException
      */
     public function getChild($index)
@@ -155,7 +156,7 @@ abstract class AbstractNode
      *
      * @template T of PDependNode
      * @param class-string<T> $type The searched child type.
-     * @return array<int, ASTNode<T>>
+     * @return list<ASTNode<T>>
      */
     public function findChildrenOfType($type)
     {

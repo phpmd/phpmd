@@ -94,14 +94,14 @@ class CommandLineOptions
     /**
      * Additional report files.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $reportFiles = [];
 
     /**
      * List of deprecations.
      *
-     * @var array
+     * @var list<string>
      */
     protected $deprecations = [];
 
@@ -171,7 +171,7 @@ class CommandLineOptions
     /**
      * List of available rule-sets.
      *
-     * @var array(string)
+     * @var array<int, string>
      */
     protected $availableRuleSets = [];
 
@@ -454,7 +454,7 @@ class CommandLineOptions
      * Returns a hash with report files specified for different renderers. The
      * key represents the report format and the value the report file location.
      *
-     * @return array
+     * @return array<string, string|null>
      */
     public function getReportFiles()
     {

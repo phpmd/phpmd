@@ -2,7 +2,6 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractRule;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
@@ -27,6 +26,7 @@ class ResultCacheKeyFactory
     /**
      * @param bool      $strict
      * @param RuleSet[] $ruleSetList
+     * @return ResultCacheKey
      */
     public function create($strict, array $ruleSetList)
     {
@@ -51,7 +51,6 @@ class ResultCacheKeyFactory
     {
         $result = [];
         foreach ($ruleSetList as $ruleSet) {
-            /** @var AbstractRule $rule */
             foreach ($ruleSet->getRules() as $rule) {
                 $result[$rule::class] = hash('sha1', serialize($rule));
             }

@@ -17,12 +17,15 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTIfStatement;
+use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
@@ -46,11 +49,13 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * This method checks if method/function has if clauses
      * that use assignment instead of comparison.
-     *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
      */
     public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof AbstractCallableNode) {
+            return;
+        }
+
         $statements = $this->getStatements($node);
         $expressions = $this->getExpressions($statements);
         $assignments = $this->getAssignments($expressions);
@@ -61,10 +66,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts if and elseif statements from method/function body
      *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return array<int, ASTNode<ASTElseIfStatement>|ASTNode<ASTIfStatement>>
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return array<int, ASTNode<ASTStatement>>
      */
-    protected function getStatements(AbstractNode $node)
+    protected function getStatements(AbstractCallableNode $node)
     {
         return [
             ...$node->findChildrenOfType(ASTIfStatement::class),
@@ -75,8 +80,8 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts all expression from statements array
      *
-     * @param array<int, ASTNode<ASTElseIfStatement>|ASTNode<ASTIfStatement>> $statements Array of if and elseif clauses
-     * @return array<int, ASTNode<ASTExpression>>
+     * @param array<ASTNode<ASTStatement>> $statements Array of if and elseif clauses
+     * @return list<ASTNode<ASTExpression>>
      */
     protected function getExpressions(array $statements)
     {
@@ -103,7 +108,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     {
         $assignments = [];
         foreach ($expressions as $expression) {
-            $assignments = [...$assignments, ...$expression->findChildrenOfType(ASTAssignmentExpression::class)];
+            $assignments = [
+                ...$assignments,
+                ...$expression->findChildrenOfType(ASTAssignmentExpression::class),
+            ];
         }
 
         return $assignments;
@@ -112,10 +120,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Signals if any violations have been found in given method or function
      *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @param array<int, ASTNode<ASTAssignmentExpression>> $assignments Array of assignments
+     * @param AbstractCallableNode<AbstractASTCallable> $node An instance of MethodNode or FunctionNode class
+     * @param array<ASTNode<ASTAssignmentExpression>> $assignments Array of assignments
      */
-    protected function addViolations(AbstractNode $node, array $assignments): void
+    protected function addViolations(AbstractCallableNode $node, array $assignments): void
     {
         $processesViolations = [];
         foreach ($assignments as $assignment) {
@@ -126,7 +134,10 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
             if (!in_array($uniqueHash, $processesViolations)) {
                 $processesViolations[] = $uniqueHash;
-                $this->addViolation($node, [$assignment->getStartLine(), $assignment->getStartColumn()]);
+                $this->addViolation(
+                    $node,
+                    [(string) $assignment->getStartLine(), (string) $assignment->getStartColumn()]
+                );
             }
         }
     }

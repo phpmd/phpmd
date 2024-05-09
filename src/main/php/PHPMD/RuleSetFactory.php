@@ -100,7 +100,7 @@ class RuleSetFactory
      * Creates an array of rule-set instances for the given argument.
      *
      * @param string $ruleSetFileNames Comma-separated string of rule-set filenames or identifier.
-     * @return RuleSet[]
+     * @return list<RuleSet>
      * @throws RuntimeException
      */
     public function createRuleSets($ruleSetFileNames)
@@ -168,7 +168,7 @@ class RuleSetFactory
      * Lists available rule-set identifiers in given directory.
      *
      * @param string $directory The directory to scan for rule-sets.
-     * @return string[]
+     * @return list<string>
      */
     private static function listRuleSetsInDirectory($directory)
     {
@@ -497,7 +497,7 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     * @return array|null
+     * @return list<string>|null
      * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
@@ -548,7 +548,7 @@ class RuleSetFactory
      * Returns list of possible file paths to search against code rules
      *
      * @param string $fileName Rule set file name
-     * @return array Array of possible file locations
+     * @return list<string> Array of possible file locations
      */
     private function filePaths($fileName)
     {

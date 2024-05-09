@@ -20,6 +20,7 @@ namespace PHPMD\Renderer;
 use LogicException;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use PHPMD\RuleViolation;
 use RuntimeException;
 use SplFileObject;
 
@@ -40,7 +41,10 @@ class HTMLRenderer extends AbstractRenderer
 
     private const CATEGORY_RULE = 'category_rule';
 
-    protected static $priorityTitles = [
+    /**
+     * @var array<int, string>
+     */
+    protected static array $priorityTitles = [
         1 => 'Top (1)',
         2 => 'High (2)',
         3 => 'Moderate (3)',
@@ -48,8 +52,12 @@ class HTMLRenderer extends AbstractRenderer
         5 => 'Lowest (5)',
     ];
 
-    // Used in self::colorize() method.
-    protected static $descHighlightRules = [
+    /**
+     * Used in self::colorize() method.
+     *
+     * @var array<string, array<string, string>>
+     */
+    protected static array $descHighlightRules = [
         'method' => [ // Method names.
             'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
             'css-class' => 'hlt-method',
@@ -64,7 +72,7 @@ class HTMLRenderer extends AbstractRenderer
         ],
     ];
 
-    protected static $compiledHighlightRegex = null;
+    protected static ?string $compiledHighlightRegex = null;
 
     /**
      * Specify how many extra lines are added to a code snippet
@@ -73,6 +81,9 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected $extraLineInExcerpt = 2;
 
+    /**
+     * @param ?int $extraLineInExcerpt
+     */
     public function __construct($extraLineInExcerpt = null)
     {
         if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
@@ -432,7 +443,10 @@ class HTMLRenderer extends AbstractRenderer
      * Return array of lines from a specified file:line, optionally with extra lines around
      * for additional cognitive context.
      *
-     * @return array
+     * @param string $file
+     * @param int $lineNumber
+     * @param int $extra
+     * @return array<int, string>
      * @throws RuntimeException
      * @throws LogicException
      */
@@ -464,16 +478,17 @@ class HTMLRenderer extends AbstractRenderer
      * Take a rule description text and try to decorate/stylize parts of it with HTML.
      * Based on self::$descHighlightRules config.
      *
+     * @param string $message
      * @return string
      */
     protected static function colorize($message)
     {
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
-            $prepared = self::$descHighlightRules;
-            array_walk($prepared, function (&$value, $key): void {
-                $value = "(?<{$key}>{$value['regex']})";
-            });
+            $prepared = [];
+            foreach (self::$descHighlightRules as $key => $value) {
+                $prepared[] = "(?<{$key}>{$value['regex']})";
+            }
 
             self::$compiledHighlightRegex = "#(" . implode('|', $prepared) . ")#";
         }
@@ -493,6 +508,7 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Take a file path and return a bit of HTML where the basename is wrapped in styled <span>.
      *
+     * @param string $path
      * @return string
      */
     protected static function highlightFile($path)
@@ -506,6 +522,8 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Render a pretty informational table and send the HTML to the writer.
      *
+     * @param string $title
+     * @param string $itemsTitle
      * @param array<int, int> $items
      */
     protected function writeTable($title, $itemsTitle, $items): void
@@ -547,6 +565,7 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Go through passed violations and count occurrences based on pre-specified conditions.
      *
+     * @param iterable<RuleViolation> $violations
      * @return array<string, array<int, int>>
      */
     protected static function sumUpViolations($violations)
@@ -592,6 +611,8 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Reduces two and more whitespaces in a row to a single whitespace to conserve space.
      *
+     * @param string $input
+     * @param bool $eol
      * @return string
      */
     protected static function reduceWhitespace($input, $eol = true)
