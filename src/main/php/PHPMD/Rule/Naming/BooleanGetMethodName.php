@@ -52,7 +52,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isBooleanGetMethod(MethodNode $node)
+    private function isBooleanGetMethod(MethodNode $node)
     {
         return $this->isGetterMethodName($node)
             && $this->isReturnTypeBoolean($node)
@@ -64,7 +64,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      *
      * @return bool
      */
-    protected function isGetterMethodName(MethodNode $node)
+    private function isGetterMethodName(MethodNode $node)
     {
         return (preg_match('(^_?get)i', $node->getImage()) > 0);
     }
@@ -74,7 +74,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      *
      * @return bool
      */
-    protected function isReturnTypeBoolean(MethodNode $node)
+    private function isReturnTypeBoolean(MethodNode $node)
     {
         $comment = $node->getComment();
         if ($comment === null) {
@@ -91,7 +91,7 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isParameterizedOrIgnored(MethodNode $node)
+    private function isParameterizedOrIgnored(MethodNode $node)
     {
         if ($this->getBooleanProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;

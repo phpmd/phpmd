@@ -32,7 +32,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    protected $ignoreRegexp;
+    private $ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks
@@ -70,7 +70,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @return int
      */
-    protected function countMethods(ClassNode $node)
+    private function countMethods(ClassNode $node)
     {
         $count = 0;
         foreach ($node->getMethodNames() as $name) {

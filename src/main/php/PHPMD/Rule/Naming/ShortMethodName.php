@@ -33,7 +33,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -72,7 +72,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);

@@ -46,14 +46,14 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @var array<string, bool>
      */
-    protected $processedVariables = [];
+    private $processedVariables = [];
 
     /**
      * Temporary cache of configured exceptions.
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -84,7 +84,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function applyClass(AbstractNode $node): void
+    private function applyClass(AbstractNode $node): void
     {
         $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
         foreach ($fields as $field) {
@@ -106,7 +106,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function applyNonClass(AbstractNode $node): void
+    private function applyNonClass(AbstractNode $node): void
     {
         $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($declarators as $declarator) {
@@ -128,7 +128,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function checkNodeImage(AbstractNode $node): void
+    private function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -143,7 +143,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function checkMinimumLength(AbstractNode $node): void
+    private function checkMinimumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
 
@@ -169,7 +169,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);
@@ -187,7 +187,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node)
     {
         $parent = $node->getParent();
 
@@ -207,7 +207,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isInitializedInLoop(AbstractNode $node)
+    private function isInitializedInLoop(AbstractNode $node)
     {
         if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
             return false;
@@ -235,7 +235,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param class-string<T> $type
      * @return list<AbstractNode<T>>
      */
-    protected function getParentsOfType(AbstractNode $node, $type)
+    private function getParentsOfType(AbstractNode $node, $type)
     {
         $parents = [];
 
@@ -259,7 +259,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param class-string<ASTNode> $type
      * @return bool
      */
-    protected function isChildOf(AbstractNode $node, $type)
+    private function isChildOf(AbstractNode $node, $type)
     {
         return $node->getParentOfType($type) !== null;
     }
@@ -267,7 +267,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
     /**
      * Resets the already processed nodes.
      */
-    protected function resetProcessed(): void
+    private function resetProcessed(): void
     {
         $this->processedVariables = [];
     }
@@ -277,7 +277,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      *
      * @param AbstractNode<ASTNode> $node
      */
-    protected function addProcessed(AbstractNode $node): void
+    private function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }
@@ -288,7 +288,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
      * @param AbstractNode<ASTNode> $node
      * @return bool
      */
-    protected function isNotProcessed(AbstractNode $node)
+    private function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }

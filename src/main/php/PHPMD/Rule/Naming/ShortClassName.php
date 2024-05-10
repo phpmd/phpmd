@@ -35,7 +35,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * Check if a class or interface name is below the minimum configured length and emit a rule violation
@@ -60,7 +60,7 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this, '\\');

@@ -50,14 +50,14 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @var array<string, list<ASTNode<AbstractASTNode>>>
      */
-    protected $images = [];
+    private $images = [];
 
     /**
      * Temporary cache of configured exceptions.
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * This method checks that all local variables within the given function or
@@ -87,7 +87,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param array<int, ASTNode<AbstractASTNode>> $nodes
      * @return bool
      */
-    protected function containsUsages(array $nodes)
+    private function containsUsages(array $nodes)
     {
         if (count($nodes) === 1) {
             return false;
@@ -116,7 +116,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function removeParameters(AbstractCallableNode $node): void
+    private function removeParameters(AbstractCallableNode $node): void
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType(ASTFormalParameters::class);
@@ -137,7 +137,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectVariables(AbstractCallableNode $node): void
+    private function collectVariables(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isLocal($variable)) {
@@ -171,7 +171,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param ASTNode<ASTCompoundVariable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectCompoundVariableInString(ASTNode $node): void
+    private function collectCompoundVariableInString(ASTNode $node): void
     {
         $parentNode = $node->getParent()->getNode();
         $candidateParentNodes = $node->getParentsOfType(ASTString::class);
@@ -194,7 +194,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param ASTNode<ASTExpression> $node
      * @throws OutOfBoundsException
      */
-    protected function collectVariable(ASTNode $node): void
+    private function collectVariable(ASTNode $node): void
     {
         $this->storeImage($this->getVariableImage($node->getNode()), $node);
     }
@@ -205,7 +205,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param string $imageName the name to store the node as
      * @param ASTNode<AbstractASTNode> $node the node being stored
      */
-    protected function storeImage($imageName, ASTNode $node): void
+    private function storeImage($imageName, ASTNode $node): void
     {
         if (!isset($this->images[$imageName])) {
             $this->images[$imageName] = [];
@@ -219,7 +219,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @param ASTNode<ASTLiteral> $node
      */
-    protected function collectLiteral(ASTNode $node): void
+    private function collectLiteral(ASTNode $node): void
     {
         $variable = '$' . trim($node->getImage(), '\'"');
 
@@ -237,7 +237,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function doCheckNodeImage(ASTNode $node): void
+    private function doCheckNodeImage(ASTNode $node): void
     {
         if ($this->isNameAllowedInContext($node)) {
             return;
@@ -271,7 +271,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param AbstractNode<AbstractASTNode> $node
      * @return bool
      */
-    protected function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, ASTCatchStatement::class);
     }
@@ -285,7 +285,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @return bool True if allowed, else false.
      * @throws OutOfBoundsException
      */
-    protected function isUnusedForeachVariableAllowed(ASTNode $variable)
+    private function isUnusedForeachVariableAllowed(ASTNode $variable)
     {
         $isForeachVariable = $this->isChildOf($variable, ASTForeachStatement::class);
 
@@ -304,7 +304,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      * @param class-string<AbstractASTNode> $type
      * @return bool
      */
-    protected function isChildOf(AbstractNode $node, $type)
+    private function isChildOf(AbstractNode $node, $type)
     {
         $parent = $node->getParent();
 
@@ -316,7 +316,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);

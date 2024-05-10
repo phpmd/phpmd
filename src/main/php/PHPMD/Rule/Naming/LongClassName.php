@@ -38,14 +38,14 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      *
      * @var string[]|null
      */
-    protected $subtractPrefixes;
+    private $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractSuffixes;
+    private $subtractSuffixes;
 
     /**
      * Check if a class name exceeds the configured maximum length and emit a rule violation
@@ -73,7 +73,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function getSubtractPrefixList()
+    private function getSubtractPrefixList()
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList(
@@ -92,7 +92,7 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function getSubtractSuffixList()
+    private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList(

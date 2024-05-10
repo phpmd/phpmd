@@ -33,7 +33,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     /**
      * @var list<string>
      */
-    protected $ignoredMethods = [
+    private $ignoredMethods = [
         '__construct',
         '__destruct',
         '__set',
@@ -75,7 +75,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     /**
      * @throws OutOfBoundsException
      */
-    protected function isValid(string $methodName): bool
+    private function isValid(string $methodName): bool
     {
         // disallow any consecutive uppercase letters
         if ($this->getBooleanProperty('camelcase-abbreviations', false)

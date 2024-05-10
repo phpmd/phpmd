@@ -57,21 +57,21 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @var list<string>
      */
-    protected $unwantedFunctions = ['count', 'sizeof'];
+    private $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
      * @var array<string, bool>
      */
-    protected $processedFunctions = [];
+    private $processedFunctions = [];
 
     /**
      * Functions in classes tends to be name-spaced
      *
      * @var string
      */
-    protected $currentNamespace = '';
+    private $currentNamespace = '';
 
     /**
      * Gets a list of loops in a node and iterates over them
@@ -105,7 +105,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @param AbstractNode<ASTStatement> $loop Loop statement to look against
      */
-    protected function findViolations(AbstractNode $loop): void
+    private function findViolations(AbstractNode $loop): void
     {
         foreach ($loop->findChildrenOfType(ASTExpression::class) as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
@@ -135,7 +135,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * @param ASTNode<ASTExpression> $expression
      * @return bool
      */
-    protected function isDirectChild(AbstractNode $loop, ASTNode $expression)
+    private function isDirectChild(AbstractNode $loop, ASTNode $expression)
     {
         return $this->getHash($expression->getParent()->getNode()) !== $this->getHash($loop->getNode());
     }
@@ -153,7 +153,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      *
      * @return string
      */
-    protected function getHash(PDependNode $node)
+    private function getHash(PDependNode $node)
     {
         return sprintf(
             '%s:%s:%s:%s:%s',
@@ -171,7 +171,7 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * @param ASTNode<ASTFunctionPostfix> $function
      * @return bool
      */
-    protected function isUnwantedFunction(ASTNode $function)
+    private function isUnwantedFunction(ASTNode $function)
     {
         $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 

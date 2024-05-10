@@ -36,7 +36,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     /**
      * @var list<string>
      */
-    protected $exceptions = [
+    private $exceptions = [
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',
@@ -74,7 +74,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      * @param AbstractNode<ASTVariable> $variable
      * @throws OutOfBoundsException
      */
-    protected function isValid(AbstractNode $variable): bool
+    private function isValid(AbstractNode $variable): bool
     {
         $image = $variable->getImage();
 

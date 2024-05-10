@@ -35,7 +35,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * @var list<string> Self reference class names.
      */
-    protected $selfReferences = ['self', 'static'];
+    private $selfReferences = ['self', 'static'];
 
     /**
      * Checks for missing class imports and warns about it
@@ -77,7 +77,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      * @param ASTNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is a self reference.
      */
-    protected function isSelfReference(ASTNode $classNode)
+    private function isSelfReference(ASTNode $classNode)
     {
         return in_array($classNode->getImage(), $this->selfReferences, true);
     }
@@ -88,7 +88,7 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
      * @param ASTNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is in the global namespace.
      */
-    protected function isGlobalNamespace(ASTNode $classNode)
+    private function isGlobalNamespace(ASTNode $classNode)
     {
         return $classNode->getImage() !== '' && !strpos($classNode->getImage(), '\\', 1);
     }

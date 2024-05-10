@@ -50,7 +50,7 @@ class SARIFRenderer extends JSONRenderer
                     ],
                     'originalUriBaseIds' => [
                         'WORKINGDIR' => [
-                            'uri' => static::pathToUri(getcwd() ?: '') . '/',
+                            'uri' => self::pathToUri(getcwd() ?: '') . '/',
                         ],
                     ],
                     'results' => [],
@@ -135,7 +135,7 @@ class SARIFRenderer extends JSONRenderer
                 'locations' => [
                     [
                         'physicalLocation' => [
-                            'artifactLocation' => static::pathToArtifactLocation($violation->getFileName()),
+                            'artifactLocation' => self::pathToArtifactLocation($violation->getFileName()),
                             'region' => [
                                 'startLine' => $violation->getBeginLine(),
                                 'endLine' => $violation->getEndLine(),
@@ -173,7 +173,7 @@ class SARIFRenderer extends JSONRenderer
                 'locations' => [
                     [
                         'physicalLocation' => [
-                            'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
+                            'artifactLocation' => self::pathToArtifactLocation($error->getFile()),
                         ],
                     ],
                 ],
@@ -191,7 +191,7 @@ class SARIFRenderer extends JSONRenderer
      * @param string $path
      * @return array<string, string>
      */
-    protected static function pathToArtifactLocation($path)
+    private static function pathToArtifactLocation($path)
     {
         $workingDir = getcwd() ?: '';
         if (substr($path, 0, strlen($workingDir)) === $workingDir) {
@@ -204,7 +204,7 @@ class SARIFRenderer extends JSONRenderer
 
         // absolute path with protocol
         return [
-            'uri' => static::pathToUri($path),
+            'uri' => self::pathToUri($path),
         ];
     }
 
@@ -214,7 +214,7 @@ class SARIFRenderer extends JSONRenderer
      * @param string $path
      * @return string
      */
-    protected static function pathToUri($path)
+    private static function pathToUri($path)
     {
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 

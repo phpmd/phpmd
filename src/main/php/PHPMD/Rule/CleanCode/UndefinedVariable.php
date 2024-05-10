@@ -57,7 +57,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      *
      * @var array<string, PDependNode>
      */
-    protected $images = [];
+    private $images = [];
 
     /**
      * This method checks that all local variables within the given function or
@@ -100,7 +100,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collect(AbstractCallableNode $node): void
+    private function collect(AbstractCallableNode $node): void
     {
         $this->collectPropertyPostfix($node);
         $this->collectClosureParameters($node);
@@ -115,7 +115,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * @param AbstractASTClassOrInterface $node
      */
-    protected function collectProperties($node): void
+    private function collectProperties($node): void
     {
         if (!($node instanceof ASTClass)) {
             return;
@@ -134,7 +134,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectGlobalStatements(AbstractCallableNode $node): void
+    private function collectGlobalStatements(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType(ASTGlobalStatement::class) as $variable) {
             $this->addVariableDefinition($variable);
@@ -147,7 +147,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectExceptionCatches(AbstractCallableNode $node): void
+    private function collectExceptionCatches(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType(ASTCatchStatement::class) as $child) {
             if ($child instanceof ASTVariable) {
@@ -162,7 +162,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectListExpressions(AbstractCallableNode $node): void
+    private function collectListExpressions(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType(ASTListExpression::class) as $variable) {
             $this->addVariableDefinition($variable);
@@ -175,7 +175,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectForeachStatements(AbstractCallableNode $node): void
+    private function collectForeachStatements(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType(ASTForeachStatement::class) as $child) {
             if ($child instanceof ASTVariable) {
@@ -200,7 +200,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectClosureParameters(AbstractCallableNode $node): void
+    private function collectClosureParameters(AbstractCallableNode $node): void
     {
         $closures = $node->findChildrenOfType(ASTClosure::class);
 
@@ -217,7 +217,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
+    private function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
     {
         $image = $this->getVariableImage($variable);
 
@@ -230,7 +230,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractNode<PDependNode> $node
      * @throws OutOfBoundsException
      */
-    protected function collectParameters(AbstractNode $node): void
+    private function collectParameters(AbstractNode $node): void
     {
         // Get formal parameter container
         $parameters = $node->getFirstChildOfType(ASTFormalParameters::class);
@@ -249,7 +249,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectAssignments(AbstractCallableNode $node): void
+    private function collectAssignments(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenOfType(ASTAssignmentExpression::class) as $assignment) {
             $variable = $assignment->getChild(0);
@@ -277,7 +277,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @throws OutOfBoundsException
      */
-    protected function collectPropertyPostfix(AbstractCallableNode $node): void
+    private function collectPropertyPostfix(AbstractCallableNode $node): void
     {
         foreach ($node->findChildrenWithParentType(ASTPropertyPostfix::class) as $child) {
             if ($child instanceof ASTVariable) {
@@ -292,7 +292,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param PDependNode $variable
      * @throws OutOfBoundsException
      */
-    protected function addVariableDefinition($variable): void
+    private function addVariableDefinition($variable): void
     {
         $image = $this->getVariableImage($variable);
 
@@ -308,7 +308,7 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * @param ASTNode<ASTVariable> $variable
      * @return bool
      */
-    protected function isNameAllowedInContext(AbstractCallableNode $node, ASTNode $variable)
+    private function isNameAllowedInContext(AbstractCallableNode $node, ASTNode $variable)
     {
         return (
             $node instanceof MethodNode &&

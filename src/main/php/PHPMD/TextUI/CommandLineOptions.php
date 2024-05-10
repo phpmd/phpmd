@@ -54,77 +54,77 @@ class CommandLineOptions
      *
      * @var int
      */
-    protected $minimumPriority = Rule::LOWEST_PRIORITY;
+    private $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
      * The maximum rule priority.
      *
      * @var int
      */
-    protected $maximumPriority = Rule::HIGHEST_PRIORITY;
+    private $maximumPriority = Rule::HIGHEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
      *
      * @var string
      */
-    protected $inputPath;
+    private $inputPath;
 
     /**
      * The specified report format.
      *
      * @var ?class-string<AbstractRenderer>
      */
-    protected $reportFormat;
+    private $reportFormat;
 
     /**
      * An optional filename for the generated report.
      *
      * @var string
      */
-    protected $reportFile;
+    private $reportFile;
 
     /**
      * An optional filename to collect errors.
      *
      * @var string
      */
-    protected $errorFile;
+    private $errorFile;
 
     /**
      * Additional report files.
      *
      * @var array<string, string>
      */
-    protected $reportFiles = [];
+    private $reportFiles = [];
 
     /**
      * List of deprecations.
      *
      * @var list<string>
      */
-    protected $deprecations = [];
+    private $deprecations = [];
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
      */
-    protected $ruleSets;
+    private $ruleSets;
 
     /**
      * File name of a PHPUnit code coverage report.
      *
      * @var string
      */
-    protected $coverageReport;
+    private $coverageReport;
 
     /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
      * @var string
      */
-    protected $extensions;
+    private $extensions;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
@@ -133,14 +133,14 @@ class CommandLineOptions
      *
      * @var string
      */
-    protected $ignore;
+    private $ignore;
 
     /**
      * Should the shell show the current phpmd version?
      *
      * @var bool
      */
-    protected $version = false;
+    private $version = false;
 
     /**
      * Should PHPMD run in strict mode?
@@ -148,10 +148,10 @@ class CommandLineOptions
      * @var bool
      * @since 1.2.0
      */
-    protected $strict = false;
+    private $strict = false;
 
     /** @var int */
-    protected $verbosity = OutputInterface::VERBOSITY_NORMAL;
+    private $verbosity = OutputInterface::VERBOSITY_NORMAL;
 
     /**
      * Should PHPMD exit without error code even if error is found?
@@ -159,65 +159,65 @@ class CommandLineOptions
      * @var bool
      * @since 2.10.0
      */
-    protected $ignoreErrorsOnExit = false;
+    private $ignoreErrorsOnExit = false;
 
     /**
      * Should PHPMD exit without error code even if violation is found?
      *
      * @var bool
      */
-    protected $ignoreViolationsOnExit = false;
+    private $ignoreViolationsOnExit = false;
 
     /**
      * List of available rule-sets.
      *
      * @var array<int, string>
      */
-    protected $availableRuleSets = [];
+    private $availableRuleSets = [];
 
     /**
      * Should PHPMD baseline the existing violations and write them to the $baselineFile
      * @var string allowed modes: NONE, GENERATE or UPDATE
      */
-    protected $generateBaseline = BaselineMode::NONE;
+    private $generateBaseline = BaselineMode::NONE;
 
     /**
      * The baseline source file to read the baseline violations from.
      * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
      * @var string|null
      */
-    protected $baselineFile;
+    private $baselineFile;
 
     /**
      * Should PHPMD read or write the result cache state from the cache file
      * @var bool
      */
-    protected $cacheEnabled = false;
+    private $cacheEnabled = false;
 
     /**
      * If set the path to read and write the result cache state from and to.
      * @var string|null
      */
-    protected $cacheFile;
+    private $cacheFile;
 
     /**
      * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
      * @var string|null
      */
-    protected $cacheStrategy;
+    private $cacheStrategy;
 
     /**
      * Either the output should be colored.
      *
      * @var bool
      */
-    protected $colored = false;
+    private $colored = false;
 
     /**
      * Specify how many extra lines are added to a code snippet
      * @var int|null
      */
-    protected $extraLineInExcerpt;
+    private $extraLineInExcerpt;
 
     /**
      * Constructs a new command line options instance.
@@ -674,7 +674,7 @@ class CommandLineOptions
      * @return AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    protected function createRendererWithoutOptions($reportFormat = null)
+    private function createRendererWithoutOptions($reportFormat = null)
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
@@ -705,7 +705,7 @@ class CommandLineOptions
     /**
      * @return XMLRenderer
      */
-    protected function createXmlRenderer()
+    private function createXmlRenderer()
     {
         return new XMLRenderer();
     }
@@ -713,7 +713,7 @@ class CommandLineOptions
     /**
      * @return TextRenderer
      */
-    protected function createTextRenderer()
+    private function createTextRenderer()
     {
         return new TextRenderer();
     }
@@ -721,7 +721,7 @@ class CommandLineOptions
     /**
      * @return AnsiRenderer
      */
-    protected function createAnsiRenderer()
+    private function createAnsiRenderer()
     {
         return new AnsiRenderer();
     }
@@ -729,7 +729,7 @@ class CommandLineOptions
     /**
      * @return GitLabRenderer
      */
-    protected function createGitLabRenderer()
+    private function createGitLabRenderer()
     {
         return new GitLabRenderer();
     }
@@ -737,7 +737,7 @@ class CommandLineOptions
     /**
      * @return GitHubRenderer
      */
-    protected function createGitHubRenderer()
+    private function createGitHubRenderer()
     {
         return new GitHubRenderer();
     }
@@ -745,7 +745,7 @@ class CommandLineOptions
     /**
      * @return HTMLRenderer
      */
-    protected function createHtmlRenderer()
+    private function createHtmlRenderer()
     {
         return new HTMLRenderer($this->extraLineInExcerpt);
     }
@@ -753,7 +753,7 @@ class CommandLineOptions
     /**
      * @return JSONRenderer
      */
-    protected function createJsonRenderer()
+    private function createJsonRenderer()
     {
         return new JSONRenderer();
     }
@@ -761,7 +761,7 @@ class CommandLineOptions
     /**
      * @return CheckStyleRenderer
      */
-    protected function createCheckStyleRenderer()
+    private function createCheckStyleRenderer()
     {
         return new CheckStyleRenderer();
     }
@@ -769,7 +769,7 @@ class CommandLineOptions
     /**
      * @return SARIFRenderer
      */
-    protected function createSarifRenderer()
+    private function createSarifRenderer()
     {
         return new SARIFRenderer();
     }
@@ -778,7 +778,7 @@ class CommandLineOptions
      * @return AbstractRenderer
      * @throws InvalidArgumentException
      */
-    protected function createCustomRenderer()
+    private function createCustomRenderer()
     {
         if (!$this->reportFormat) {
             throw new InvalidArgumentException(
@@ -876,7 +876,7 @@ class CommandLineOptions
      * @return string|null The list of renderers found separated by comma, or null if none.
      * @throws InvalidArgumentException
      */
-    protected function getListOfAvailableRenderers()
+    private function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers = [];
@@ -904,7 +904,7 @@ class CommandLineOptions
      * @param string $deprecatedName
      * @param string $newName
      */
-    protected function logDeprecated($deprecatedName, $newName): void
+    private function logDeprecated($deprecatedName, $newName): void
     {
         $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
@@ -924,7 +924,7 @@ class CommandLineOptions
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    protected function readInputFile($inputFile)
+    private function readInputFile($inputFile)
     {
         $content = file($inputFile);
         if ($content === false) {

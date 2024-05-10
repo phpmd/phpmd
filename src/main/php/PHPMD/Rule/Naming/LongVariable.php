@@ -42,14 +42,14 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var string[]|null
      */
-    protected $subtractPrefixes;
+    private $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractSuffixes;
+    private $subtractSuffixes;
 
     /**
      * Temporary map holding variables that were already processed in the
@@ -57,7 +57,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @var array<string, bool>
      */
-    protected $processedVariables = [];
+    private $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -101,7 +101,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function checkNodeImage(AbstractNode $node): void
+    private function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -117,7 +117,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @throws OutOfBoundsException
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    protected function checkMaximumLength(AbstractNode $node): void
+    private function checkMaximumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
@@ -142,7 +142,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param AbstractNode<ASTNode> $node
      * @return bool
      */
-    protected function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node)
     {
         return $node->getParentOfType(ASTMemberPrimaryPrefix::class) !== null;
     }
@@ -150,7 +150,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Resets the already processed nodes.
      */
-    protected function resetProcessed(): void
+    private function resetProcessed(): void
     {
         $this->processedVariables = [];
     }
@@ -160,7 +160,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      *
      * @param AbstractNode<ASTNode> $node
      */
-    protected function addProcessed(AbstractNode $node): void
+    private function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }
@@ -171,7 +171,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @param AbstractNode<ASTNode> $node
      * @return bool
      */
-    protected function isNotProcessed(AbstractNode $node)
+    private function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }
@@ -183,7 +183,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    protected function getSubtractPrefixList()
+    private function getSubtractPrefixList()
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
@@ -199,7 +199,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    protected function getSubtractSuffixList()
+    private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''));
