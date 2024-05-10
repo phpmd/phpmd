@@ -16,11 +16,11 @@ class BaselineSetFactory
      */
     public static function fromFile($fileName)
     {
-        if (!file_exists($fileName)) {
-            throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);
+        $content = file_get_contents($fileName);
+        if ($content === false) {
+            throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
         }
-
-        $xml = @simplexml_load_string(file_get_contents($fileName));
+        $xml = @simplexml_load_string($content);
         if (!$xml) {
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }

@@ -45,8 +45,8 @@ class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
             [
                 $node->getType(),
                 $node->getName(),
-                $npath,
-                $threshold,
+                (string) $npath,
+                (string) $threshold,
             ]
         );
     }

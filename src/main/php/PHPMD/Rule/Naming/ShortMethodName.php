@@ -62,7 +62,7 @@ class ShortMethodName extends AbstractRule implements MethodAware, FunctionAware
             [
                 $node->getParentName(),
                 $node->getName(),
-                $threshold,
+                (string) $threshold,
             ]
         );
     }

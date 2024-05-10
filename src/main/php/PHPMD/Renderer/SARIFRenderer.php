@@ -50,7 +50,7 @@ class SARIFRenderer extends JSONRenderer
                     ],
                     'originalUriBaseIds' => [
                         'WORKINGDIR' => [
-                            'uri' => static::pathToUri(getcwd()) . '/',
+                            'uri' => static::pathToUri(getcwd() ?: '') . '/',
                         ],
                     ],
                     'results' => [],
@@ -65,10 +65,9 @@ class SARIFRenderer extends JSONRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array<string, array<int, array<string, array<string, array<mixed>>>>> $data The report output to add the
-     *                                                                                    violations to.
-     * @return array<string, array<int, array<string, array<string, array<mixed>>>>> The report output with violations,
-     *                                                                               if any.
+     * @param array<string, array<int, array<string, array<array<mixed>>>>> $data The report output to add the
+     *                                                                            violations to.
+     * @return array<string, array<int, array<string, array<array<mixed>>>>> The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
@@ -194,7 +193,7 @@ class SARIFRenderer extends JSONRenderer
      */
     protected static function pathToArtifactLocation($path)
     {
-        $workingDir = getcwd();
+        $workingDir = getcwd() ?: '';
         if (substr($path, 0, strlen($workingDir)) === $workingDir) {
             // relative path
             return [

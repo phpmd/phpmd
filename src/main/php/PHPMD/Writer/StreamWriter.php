@@ -54,7 +54,7 @@ class StreamWriter extends AbstractWriter
             throw new RuntimeException($message);
         }
 
-        $this->stream = fopen($streamResourceOrUri, 'wb');
+        $this->stream = fopen($streamResourceOrUri, 'wb') ?: null;
     }
 
     /**

@@ -39,7 +39,7 @@ class WeightedMethodCount extends AbstractRule implements ClassAware
         $actual = $node->getMetric('wmc');
 
         if ($actual >= $threshold) {
-            $this->addViolation($node, [$node->getName(), $actual, $threshold]);
+            $this->addViolation($node, [$node->getName(), (string) $actual, (string) $threshold]);
         }
     }
 }

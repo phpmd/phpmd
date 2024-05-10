@@ -18,24 +18,25 @@
 namespace PHPMD\Node;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\ASTArtifact;
 
 /**
  * Abstract base class for classes and interfaces.
  *
- * @template-covariant TNode of ASTArtifact
+ * @template-covariant TNode of AbstractASTClassOrInterface
  *
  * @extends AbstractNode<TNode>
  */
 abstract class AbstractTypeNode extends AbstractNode
 {
     /**
-     * @var AbstractASTClassOrInterface
+     * @var TNode
      */
     private $node;
 
     /**
      * Constructs a new generic class or interface node.
+     *
+     * @param TNode $node
      */
     public function __construct(AbstractASTClassOrInterface $node)
     {

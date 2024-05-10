@@ -161,7 +161,7 @@ class ShortVariable extends AbstractRule implements ClassAware, MethodAware, Fun
             return;
         }
 
-        $this->addViolation($node, [$node->getImage(), $threshold]);
+        $this->addViolation($node, [$node->getImage(), (string) $threshold]);
     }
 
     /**
