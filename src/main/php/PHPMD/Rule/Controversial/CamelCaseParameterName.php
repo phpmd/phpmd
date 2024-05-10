@@ -66,9 +66,9 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {
-            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName);
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName) === 1;
         }
 
-        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName);
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName) === 1;
     }
 }

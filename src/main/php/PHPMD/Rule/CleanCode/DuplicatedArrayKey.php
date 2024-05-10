@@ -70,7 +70,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
 
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
-                $this->addViolation($node, [$key, $arrayElement->getStartLine()]);
+                $this->addViolation($node, [$key, (string) $arrayElement->getStartLine()]);
                 continue;
             }
             $keys[$key] = $arrayElement;

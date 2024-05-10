@@ -174,10 +174,13 @@ class RuleSetFactory
     {
         $ruleSets = [];
         if (is_dir($directory)) {
-            foreach (scandir($directory) as $file) {
-                $matches = [];
-                if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
-                    $ruleSets[] = $matches[1];
+            $filesPaths = scandir($directory);
+            if ($filesPaths !== false) {
+                foreach ($filesPaths as $file) {
+                    $matches = [];
+                    if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
+                        $ruleSets[] = $matches[1];
+                    }
                 }
             }
         }
@@ -197,12 +200,18 @@ class RuleSetFactory
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
 
-        $xml = simplexml_load_string(file_get_contents($fileName));
+        $fileContent = file_get_contents($fileName);
+        if ($fileContent === false) {
+            throw new RuntimeException('Unable to load ' . $fileName);
+        }
+
+        $xml = simplexml_load_string($fileContent);
         if (!$xml) {
             // Reset error handling to previous setting
             libxml_use_internal_errors($libxml);
+            $error = libxml_get_last_error();
 
-            throw new RuntimeException(trim(libxml_get_last_error()->message));
+            throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
         }
 
         $ruleSet = new RuleSet();
@@ -336,6 +345,7 @@ class RuleSetFactory
             }
         }
 
+        /** @var class-string<Rule> */
         $className = (string) $ruleNode['class'];
 
         if (!is_readable($fileName)) {
@@ -360,7 +370,6 @@ class RuleSetFactory
             }
         }
 
-        /* @var RuleSet $rule */
         $rule = new $className();
         $rule->setName((string) $ruleNode['name']);
         $rule->setMessage((string) $ruleNode['message']);
@@ -511,13 +520,18 @@ class RuleSetFactory
 
             // Hide error messages
             $libxml = libxml_use_internal_errors(true);
+            $fileContent = file_get_contents($ruleSetFileName);
+            if ($fileContent === false) {
+                throw new RuntimeException('Unable to load ' . $ruleSetFileName);
+            }
 
-            $xml = simplexml_load_string(file_get_contents($ruleSetFileName));
+            $xml = simplexml_load_string($fileContent);
             if (!$xml) {
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
+                $error = libxml_get_last_error();
 
-                throw new RuntimeException(trim(libxml_get_last_error()->message));
+                throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
             }
 
             foreach ($xml->children() as $node) {

@@ -73,7 +73,7 @@ class CommandLineOptions
     /**
      * The specified report format.
      *
-     * @var string
+     * @var ?class-string<AbstractRenderer>
      */
     protected $reportFormat;
 
@@ -382,7 +382,7 @@ class CommandLineOptions
         $this->ruleSets = (string) array_pop($arguments);
         $validator->validate('ruleset', $this->ruleSets);
 
-        $this->reportFormat = (string) array_pop($arguments);
+        $this->reportFormat = array_pop($arguments);
         $validator->validate('report format', $this->reportFormat);
 
         $this->inputPath = implode(',', $arguments);
@@ -780,7 +780,7 @@ class CommandLineOptions
      */
     protected function createCustomRenderer()
     {
-        if ('' === $this->reportFormat) {
+        if (!$this->reportFormat) {
             throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
                 self::INPUT_ERROR
@@ -815,6 +815,7 @@ class CommandLineOptions
      * Returns usage information for the PHPMD command line interface.
      *
      * @return string
+     * @throws InvalidArgumentException
      */
     public function usage()
     {
@@ -873,13 +874,19 @@ class CommandLineOptions
      * Get a list of available renderers
      *
      * @return string|null The list of renderers found separated by comma, or null if none.
+     * @throws InvalidArgumentException
      */
     protected function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers = [];
 
-        foreach (scandir($renderersDirPathName) as $rendererFileName) {
+        $filesPaths = scandir($renderersDirPathName);
+        if ($filesPaths === false) {
+            throw new InvalidArgumentException("Unable to access directory: '{$renderersDirPathName}'.");
+        }
+
+        foreach ($filesPaths as $rendererFileName) {
             $rendererName = [];
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
@@ -919,10 +926,12 @@ class CommandLineOptions
      */
     protected function readInputFile($inputFile)
     {
-        if (file_exists($inputFile)) {
-            return implode(',', array_map(trim(...), file($inputFile)));
+        $content = file($inputFile);
+        if ($content === false) {
+            throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
-        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
+
+        return implode(',', array_map(trim(...), $content));
     }
 
     /**

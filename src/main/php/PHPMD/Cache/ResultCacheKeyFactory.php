@@ -70,7 +70,7 @@ class ResultCacheKeyFactory
             return null;
         }
 
-        return sha1_file($this->baselineFile);
+        return sha1_file($this->baselineFile) ?: null;
     }
 
     /**
@@ -83,7 +83,10 @@ class ResultCacheKeyFactory
         foreach (['composer.json', 'composer.lock'] as $file) {
             $filePath = Paths::concat($this->basePath, $file);
             if (file_exists($filePath)) {
-                $result[$file] = sha1_file($filePath);
+                $hash = sha1_file($filePath);
+                if ($hash) {
+                    $result[$file] = $hash;
+                }
             }
         }
 

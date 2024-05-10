@@ -17,7 +17,7 @@
 
 namespace PHPMD\Node;
 
-use PDepend\Source\AST\ASTArtifact;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTEnum;
@@ -113,7 +113,7 @@ class MethodNode extends AbstractCallableNode
     /**
      * Returns the parent class or interface instance.
      *
-     * @return AbstractTypeNode<ASTArtifact>
+     * @return AbstractTypeNode<AbstractASTClassOrInterface>
      * @throws RuntimeException
      */
     public function getParentType()

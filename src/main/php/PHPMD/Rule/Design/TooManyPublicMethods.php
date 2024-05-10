@@ -64,8 +64,8 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
             [
                 $node->getType(),
                 $node->getName(),
-                $nom,
-                $threshold,
+                (string) $nom,
+                (string) $threshold,
             ]
         );
     }

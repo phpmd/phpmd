@@ -132,7 +132,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, [$variableName, $threshold]);
+        $this->addViolation($node, [$variableName, (string) $threshold]);
     }
 
     /**

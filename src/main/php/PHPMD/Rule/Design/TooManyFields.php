@@ -42,8 +42,8 @@ class TooManyFields extends AbstractRule implements ClassAware
             [
                 $node->getType(),
                 $node->getName(),
-                $vars,
-                $threshold,
+                (string) $vars,
+                (string) $threshold,
             ]
         );
     }

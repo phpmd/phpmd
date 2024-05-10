@@ -42,8 +42,8 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAwar
             [
                 $node->getType(),
                 $node->getName(),
-                $cis,
-                $threshold,
+                (string) $cis,
+                (string) $threshold,
             ]
         );
     }

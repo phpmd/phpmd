@@ -210,7 +210,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     protected function getVariableImage($variable)
     {
-        if ($variable instanceof ASTNode) {
+        if ($variable instanceof AbstractNode) {
             $variable = $variable->getNode();
         }
         $image = $variable->getImage();

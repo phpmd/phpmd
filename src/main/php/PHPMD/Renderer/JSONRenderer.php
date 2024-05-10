@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use JsonException;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\Report;
@@ -113,13 +114,13 @@ class JSONRenderer extends AbstractRenderer
      * Encode report data to the JSON representation string
      *
      * @param array<mixed> $data The report data
-     *
      * @return string
+     * @throws JsonException
      */
     private function encodeReport($data)
     {
-        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP |
-            (defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0);
+        $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
+            | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
 
         return json_encode($data, $encodeOptions);
     }

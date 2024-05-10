@@ -466,8 +466,11 @@ class HTMLRenderer extends AbstractRenderer
         if (!$file->eof()) {
             $file->seek($line);
             for ($i = 0; $i <= ($extra * 2); $i++) {
-                $result[++$line] = trim((string) $file->current(), "\n");
-                $file->next();
+                $lineContent = $file->current();
+                if (is_string($lineContent)) {
+                    $result[++$line] = trim($lineContent, "\n");
+                    $file->next();
+                }
             }
         }
 
@@ -513,7 +516,7 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected static function highlightFile($path)
     {
-        $file = substr(strrchr($path, "/"), 1);
+        $file = substr(strrchr($path, "/") ?: '', 1);
         $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';

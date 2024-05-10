@@ -48,7 +48,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     public function testFromFileShouldThrowExceptionForMissingFile()
     {
         self::expectExceptionObject(new RuntimeException(
-            'Unable to locate the baseline file at',
+            'Unable to load the baseline file at: ',
         ));
 
         BaselineSetFactory::fromFile('foobar.xml');

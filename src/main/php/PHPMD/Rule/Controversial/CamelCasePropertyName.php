@@ -69,9 +69,9 @@ class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAwa
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {
-            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $propertyName);
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $propertyName) === 1;
         }
 
-        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $propertyName);
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $propertyName) === 1;
     }
 }

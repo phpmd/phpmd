@@ -306,7 +306,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testThrowsExpectedExceptionWhenInputFileNotExists()
     {
         self::expectExceptionObject(new InvalidArgumentException(
-            "Input file 'inputfail.txt' not exists.",
+            "Unable to load 'inputfail.txt'.",
         ));
 
         $args = ['foo.php', 'text', 'design', '--inputfile', 'inputfail.txt'];

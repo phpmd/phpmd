@@ -147,14 +147,16 @@ class Command
         $ignorePattern = $ruleSetFactory->getIgnorePattern($opts->getRuleSets());
         $ruleSetList = $ruleSetFactory->createRuleSets($opts->getRuleSets());
 
+        $cwd = getcwd() ?: '';
+
         // Configure Result Cache Engine
         if ($opts->generateBaseline() === BaselineMode::NONE) {
             $cacheEngineFactory = new ResultCacheEngineFactory(
                 $this->output,
-                new ResultCacheKeyFactory(getcwd(), $baselineFile),
+                new ResultCacheKeyFactory($cwd, $baselineFile),
                 new ResultCacheStateFactory()
             );
-            $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
+            $phpmd->setResultCache($cacheEngineFactory->create($cwd, $opts, $ruleSetList));
         }
 
         $phpmd->processFiles(
@@ -190,7 +192,7 @@ class Command
         $version = '@package_version@';
         if (file_exists($build)) {
             $data = @parse_ini_file($build);
-            $version = $data['project.version'];
+            $version = $data['project.version'] ?? $version;
         }
 
         return $version;
