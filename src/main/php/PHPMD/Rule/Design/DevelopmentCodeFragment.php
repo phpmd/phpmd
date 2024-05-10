@@ -69,7 +69,7 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      * @return list<string>
      * @throws OutOfBoundsException
      */
-    protected function getSuspectImages()
+    private function getSuspectImages()
     {
         return array_map(
             'strtolower',

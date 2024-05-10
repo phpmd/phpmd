@@ -33,7 +33,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
     /**
      * @var list<string>
      */
-    protected $superglobals = [
+    private $superglobals = [
         '$GLOBALS',
         '$_SERVER',
         '$HTTP_SERVER_VARS',

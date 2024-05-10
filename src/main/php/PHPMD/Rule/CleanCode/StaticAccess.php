@@ -42,7 +42,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * Method checks for use of static access and warns about it.
@@ -75,7 +75,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isStaticMethodCall(AbstractNode $methodCall): bool
+    private function isStaticMethodCall(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -87,7 +87,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isCallingParent(AbstractNode $methodCall): bool
+    private function isCallingParent(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
@@ -96,7 +96,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
      */
-    protected function isCallingSelf(AbstractNode $methodCall): bool
+    private function isCallingSelf(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
@@ -106,7 +106,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      * @param string $ignorePattern
      * @return bool
      */
-    protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
+    private function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
     {
         if ($ignorePattern === '') {
             return false;
@@ -122,7 +122,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this, '\\');

@@ -32,7 +32,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    protected $ignoreRegexp;
+    private $ignoreRegexp;
 
     /**
      * This method checks the number of public methods with in a given class and checks
@@ -75,7 +75,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      *
      * @return int
      */
-    protected function countMethods(ClassNode $node)
+    private function countMethods(ClassNode $node)
     {
         $count = 0;
         foreach ($node->getMethods() as $method) {

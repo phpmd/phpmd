@@ -42,7 +42,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * @var list<string> Self reference class names.
      */
-    protected $selfReferences = ['self', 'static'];
+    private $selfReferences = ['self', 'static'];
 
     /**
      * PHP super globals that are available in all php scopes, so that they
@@ -51,7 +51,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array<string, bool>
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    protected static $superGlobals = [
+    private static $superGlobals = [
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
@@ -103,7 +103,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param AbstractNode<ASTVariable> $variable
      * @return bool
      */
-    protected function isNotSuperGlobal(AbstractNode $variable)
+    private function isNotSuperGlobal(AbstractNode $variable)
     {
         return !$this->isSuperGlobal($variable);
     }
@@ -144,7 +144,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @return ASTNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    protected function stripWrappedIndexExpression(ASTNode $node)
+    private function stripWrappedIndexExpression(ASTNode $node)
     {
         if (!$this->isWrappedByIndexExpression($node)) {
             return $node;
@@ -164,7 +164,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param ASTNode<PDependNode> $node
      * @return bool
      */
-    protected function isWrappedByIndexExpression(ASTNode $node)
+    private function isWrappedByIndexExpression(ASTNode $node)
     {
         return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
             || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)
@@ -232,7 +232,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @return ?string
      * @throws OutOfBoundsException
      */
-    protected function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
+    private function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
     {
         do {
             $postfix = $postfix->getParent();
@@ -257,7 +257,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param ASTNode<PDependNode>|PDependNode $node
      * @return PDependNode
      */
-    protected function getNode($node)
+    private function getNode($node)
     {
         if ($node instanceof ASTNode) {
             return $node->getNode();

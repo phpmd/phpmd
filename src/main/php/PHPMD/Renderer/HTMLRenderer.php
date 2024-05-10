@@ -44,7 +44,7 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * @var array<int, string>
      */
-    protected static array $priorityTitles = [
+    private static array $priorityTitles = [
         1 => 'Top (1)',
         2 => 'High (2)',
         3 => 'Moderate (3)',
@@ -57,7 +57,7 @@ class HTMLRenderer extends AbstractRenderer
      *
      * @var array<string, array<string, string>>
      */
-    protected static array $descHighlightRules = [
+    private static array $descHighlightRules = [
         'method' => [ // Method names.
             'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
             'css-class' => 'hlt-method',
@@ -72,14 +72,14 @@ class HTMLRenderer extends AbstractRenderer
         ],
     ];
 
-    protected static ?string $compiledHighlightRegex = null;
+    private static ?string $compiledHighlightRegex = null;
 
     /**
      * Specify how many extra lines are added to a code snippet
      * By default 2
      * @var int
      */
-    protected $extraLineInExcerpt = 2;
+    private $extraLineInExcerpt = 2;
 
     /**
      * @param ?int $extraLineInExcerpt
@@ -450,7 +450,7 @@ class HTMLRenderer extends AbstractRenderer
      * @throws RuntimeException
      * @throws LogicException
      */
-    protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
+    private static function getLineExcerpt($file, $lineNumber, $extra = 0)
     {
         if (!is_readable($file)) {
             return [];
@@ -484,7 +484,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param string $message
      * @return string
      */
-    protected static function colorize($message)
+    private static function colorize($message)
     {
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
@@ -514,7 +514,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param string $path
      * @return string
      */
-    protected static function highlightFile($path)
+    private static function highlightFile($path)
     {
         $file = substr(strrchr($path, "/") ?: '', 1);
         $dir = str_replace($file, '', $path);
@@ -529,7 +529,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param string $itemsTitle
      * @param array<int, int> $items
      */
-    protected function writeTable($title, $itemsTitle, $items): void
+    private function writeTable($title, $itemsTitle, $items): void
     {
         if (!$items) {
             return;
@@ -571,7 +571,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param iterable<RuleViolation> $violations
      * @return array<string, array<int, int>>
      */
-    protected static function sumUpViolations($violations)
+    private static function sumUpViolations($violations)
     {
         $result = [
             self::CATEGORY_PRIORITY => [],
@@ -618,7 +618,7 @@ class HTMLRenderer extends AbstractRenderer
      * @param bool $eol
      * @return string
      */
-    protected static function reduceWhitespace($input, $eol = true)
+    private static function reduceWhitespace($input, $eol = true)
     {
         return preg_replace("#\s+#", " ", $input) . ($eol ? PHP_EOL : null);
     }

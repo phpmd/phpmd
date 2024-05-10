@@ -32,26 +32,25 @@ use RuntimeException;
 class ExceptionsList implements IteratorAggregate, ArrayAccess
 {
     /**
+     * Separator used to join exception in the property string.
+     */
+    protected string $separator;
+    /**
      * Temporary cache of configured exceptions. Have name as key
      *
      * @var array<string, string>
      */
-    protected array $exceptions;
+    private array $exceptions;
 
     /**
      * Rule to which the exception list apply.
      */
-    protected Rule $rule;
+    private Rule $rule;
 
     /**
      * Extra characters to be trimmed with whitespace at beginning and ending of each exception.
      */
-    protected string $trim;
-
-    /**
-     * Separator used to join exception in the property string.
-     */
-    protected string $separator;
+    private string $trim;
 
     public function __construct(Rule $rule, string $trim = '', string $separator = ',')
     {

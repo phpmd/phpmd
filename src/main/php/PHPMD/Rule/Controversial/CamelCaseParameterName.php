@@ -57,7 +57,7 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
     /**
      * @throws OutOfBoundsException
      */
-    protected function isValid(string $parameterName): bool
+    private function isValid(string $parameterName): bool
     {
         // disallow any consecutive uppercase letters
         if ($this->getBooleanProperty('camelcase-abbreviations', false)

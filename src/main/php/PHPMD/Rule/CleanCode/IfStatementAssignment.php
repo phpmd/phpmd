@@ -69,7 +69,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @return array<int, ASTNode<ASTStatement>>
      */
-    protected function getStatements(AbstractCallableNode $node)
+    private function getStatements(AbstractCallableNode $node)
     {
         return [
             ...$node->findChildrenOfType(ASTIfStatement::class),
@@ -83,7 +83,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param array<ASTNode<ASTStatement>> $statements Array of if and elseif clauses
      * @return list<ASTNode<ASTExpression>>
      */
-    protected function getExpressions(array $statements)
+    private function getExpressions(array $statements)
     {
         $nodes = [];
 
@@ -104,7 +104,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param array<int, ASTNode<ASTExpression>> $expressions Array of expressions
      * @return array<int, ASTNode<ASTAssignmentExpression>>
      */
-    protected function getAssignments(array $expressions)
+    private function getAssignments(array $expressions)
     {
         $assignments = [];
         foreach ($expressions as $expression) {
@@ -123,7 +123,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
      * @param AbstractCallableNode<AbstractASTCallable> $node An instance of MethodNode or FunctionNode class
      * @param array<ASTNode<ASTAssignmentExpression>> $assignments Array of assignments
      */
-    protected function addViolations(AbstractCallableNode $node, array $assignments): void
+    private function addViolations(AbstractCallableNode $node, array $assignments): void
     {
         $processesViolations = [];
         foreach ($assignments as $assignment) {

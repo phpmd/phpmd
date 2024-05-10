@@ -30,7 +30,7 @@ use PHPMD\Utility\Strings;
 class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
 {
     /** @var array<string, int>|null */
-    protected $exceptions;
+    private $exceptions;
 
     public function apply(AbstractNode $node): void
     {
@@ -61,7 +61,7 @@ class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAw
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = array_flip(
