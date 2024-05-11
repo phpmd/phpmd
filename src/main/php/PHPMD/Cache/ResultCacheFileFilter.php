@@ -64,11 +64,7 @@ class ResultCacheFileFilter implements Filter
         }
 
         // Determine if file was modified since last analyse
-        if ($this->state === null || $hash === false) {
-            $isModified = true;
-        } else {
-            $isModified = $this->state->isFileModified($filePath, $hash);
-        }
+        $isModified = $hash === false || ($this->state?->isFileModified($filePath, $hash) ?? true);
 
         if ($hash !== false) {
             $this->newState->setFileState($filePath, $hash);
