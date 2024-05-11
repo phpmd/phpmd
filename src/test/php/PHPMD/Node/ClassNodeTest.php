@@ -28,32 +28,28 @@ use Sindelfingen\MyClass;
 /**
  * Test case for the class node implementation.
  *
- * @covers \PHPMD\Node\ClassNode
  * @covers \PHPMD\Node\AbstractTypeNode
+ * @covers \PHPMD\Node\ClassNode
  */
 class ClassNodeTest extends AbstractTestCase
 {
     /**
      * testGetMethodNamesReturnsExpectedResult
-     *
-     * @return void
      */
-    public function testGetMethodNamesReturnsExpectedResult()
+    public function testGetMethodNamesReturnsExpectedResult(): void
     {
         $class = new ASTClass(null);
         $class->addMethod(new ASTMethod(__CLASS__));
         $class->addMethod(new ASTMethod(__FUNCTION__));
 
         $node = new ClassNode($class);
-        $this->assertEquals([__CLASS__, __FUNCTION__], $node->getMethodNames());
+        static::assertEquals([__CLASS__, __FUNCTION__], $node->getMethodNames());
     }
 
     /**
      * testHasSuppressWarningsAnnotationForReturnsTrue
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsAnnotationForReturnsTrue()
+    public function testHasSuppressWarningsAnnotationForReturnsTrue(): void
     {
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
@@ -62,15 +58,13 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testHasSuppressWarningsWithRuleNameContainingSlashes
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsWithRuleNameContainingSlashes()
+    public function testHasSuppressWarningsWithRuleNameContainingSlashes(): void
     {
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings(PMD.CouplingBetweenObjects) */');
@@ -80,7 +74,7 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        $this->assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
 
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings(PMD.TooManyFields) */');
@@ -90,48 +84,37 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        $this->assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');
         $class->setNamespace(new ASTNamespace('Sindelfingen'));
 
         $node = new ClassNode($class);
 
-        $this->assertSame(MyClass::class, $node->getFullQualifiedName());
+        static::assertSame(MyClass::class, $node->getFullQualifiedName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCountReturnsZeroByDefault()
+    public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
-        $this->assertSame(0, $class->getConstantCount());
+        static::assertSame(0, $class->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCount()
+    public function testGetConstantCount(): void
     {
         $class = $this->getClass();
-        $this->assertSame(3, $class->getConstantCount());
+        static::assertSame(3, $class->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
-        $this->assertNull($class->getParentName());
+        static::assertNull($class->getParentName());
     }
 }

@@ -29,14 +29,10 @@ use PDepend\Source\AST\ASTNode;
  */
 interface Rule
 {
-    /**
-     * The default lowest rule priority.
-     */
+    /** The default lowest rule priority. */
     public const LOWEST_PRIORITY = 5;
 
-    /**
-     * The default highest rule priority.
-     */
+    /** The default highest rule priority. */
     public const HIGHEST_PRIORITY = 1;
 
     /**

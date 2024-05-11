@@ -39,7 +39,6 @@ class GitLabRenderer extends AbstractRenderer
         $writer->write($jsonData . PHP_EOL);
     }
 
-
     /**
      * Add violations, if any, to GitLab Code Quality report format
      *
@@ -54,29 +53,26 @@ class GitLabRenderer extends AbstractRenderer
         foreach ($report->getRuleViolations() as $violation) {
             $violationResult = [
                 'type' => 'issue',
-                'categories' =>
-                    [
-                        'Style',
-                        'PHP',
-                    ],
+                'categories' => [
+                    'Style',
+                    'PHP',
+                ],
                 'check_name' => $violation->getRule()->getName(),
                 'fingerprint' => sprintf(
-                    "%s:%s:%s",
+                    '%s:%s:%s',
                     $violation->getFileName(),
                     $violation->getBeginLine(),
                     $violation->getRule()->getName()
                 ),
                 'description' => $violation->getDescription(),
                 'severity' => 'minor',
-                'location' =>
-                    [
-                        'path' => $violation->getFileName(),
-                        'lines' =>
-                            [
-                                'begin' => $violation->getBeginLine(),
-                                'end' => $violation->getEndLine(),
-                            ],
+                'location' => [
+                    'path' => $violation->getFileName(),
+                    'lines' => [
+                        'begin' => $violation->getBeginLine(),
+                        'end' => $violation->getEndLine(),
                     ],
+                ],
             ];
 
             $data[] = $violationResult;
@@ -100,14 +96,12 @@ class GitLabRenderer extends AbstractRenderer
                 'description' => $error->getMessage(),
                 'fingerprint' => $error->getFile() . ':0:MajorErrorInFile',
                 'severity' => 'major',
-                'location' =>
-                    [
-                        'path' => $error->getFile(),
-                        'lines' =>
-                            [
-                                'begin' => 0,
-                            ],
+                'location' => [
+                    'path' => $error->getFile(),
+                    'lines' => [
+                        'begin' => 0,
                     ],
+                ],
             ];
 
             $data[] = $errorResult;

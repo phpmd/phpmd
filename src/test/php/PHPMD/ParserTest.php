@@ -41,15 +41,13 @@ class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesClassNodeToRuleSet()
+    public function testAdapterDelegatesClassNodeToRuleSet(): void
     {
         $mock = $this->getPHPDependClassMock();
-        $mock->expects($this->once())
+        $mock->expects(static::once())
             ->method('isUserDefined')
-            ->will($this->returnValue(true));
+            ->will(static::returnValue(true));
 
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock(ClassNode::class));
@@ -60,15 +58,13 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet(): void
     {
         $mock = $this->getPHPDependClassMock();
-        $mock->expects($this->once())
+        $mock->expects(static::once())
             ->method('isUserDefined')
-            ->will($this->returnValue(false));
+            ->will(static::returnValue(false));
 
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
@@ -78,10 +74,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesMethodNodeToRuleSet()
+    public function testAdapterDelegatesMethodNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock(MethodNode::class));
@@ -92,10 +86,8 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
@@ -105,10 +97,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDelegatesFunctionNodeToRuleSet()
+    public function testAdapterDelegatesFunctionNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock(FunctionNode::class));
@@ -119,10 +109,8 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     *
-     * @return void
      */
-    public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet()
+    public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet(): void
     {
         $adapter = new Parser($this->getPHPDependMock());
         $adapter->addRuleSet($this->getRuleSetMock());
@@ -133,19 +121,18 @@ class ParserTest extends AbstractTestCase
     /**
      * testParserStoreParsingExceptionsInReport
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testParserStoreParsingExceptionsInReport()
+    public function testParserStoreParsingExceptionsInReport(): void
     {
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('addError');
 
         $pdepend = $this->getPHPDependMock();
-        $pdepend->expects($this->once())
+        $pdepend->expects(static::once())
             ->method('getExceptions')
-            ->will($this->returnValue([
+            ->will(static::returnValue([
                 new InvalidStateException(42, __FILE__, 'foo'),
             ]));
 
@@ -184,18 +171,18 @@ class ParserTest extends AbstractTestCase
             $this->getMockBuilder(ASTClass::class)
                 ->setConstructorArgs([null])
         );
-        $class->expects($this->any())
+        $class->expects(static::any())
             ->method('getCompilationUnit')
-            ->will($this->returnValue($this->getPHPDependFileMock('foo.php')));
-        $class->expects($this->any())
+            ->will(static::returnValue($this->getPHPDependFileMock('foo.php')));
+        $class->expects(static::any())
             ->method('getConstants')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $class->expects($this->any())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $class->expects(static::any())
             ->method('getProperties')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $class->expects($this->any())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $class->expects(static::any())
             ->method('getMethods')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         return $class;
     }
@@ -212,9 +199,9 @@ class ParserTest extends AbstractTestCase
             $this->getMockBuilder(ASTFunction::class)
                 ->setConstructorArgs([null])
         );
-        $function->expects($this->atLeastOnce())
+        $function->expects(static::atLeastOnce())
             ->method('getCompilationUnit')
-            ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
+            ->will(static::returnValue($this->getPHPDependFileMock($fileName)));
 
         return $function;
     }
@@ -231,9 +218,9 @@ class ParserTest extends AbstractTestCase
             $this->getMockBuilder(ASTMethod::class)
                 ->setConstructorArgs([null])
         );
-        $method->expects($this->atLeastOnce())
+        $method->expects(static::atLeastOnce())
             ->method('getCompilationUnit')
-            ->will($this->returnValue($this->getPHPDependFileMock($fileName)));
+            ->will(static::returnValue($this->getPHPDependFileMock($fileName)));
 
         return $method;
     }
@@ -250,9 +237,9 @@ class ParserTest extends AbstractTestCase
             $this->getMockBuilder(ASTCompilationUnit::class)
                 ->setConstructorArgs([null])
         );
-        $file->expects($this->any())
+        $file->expects(static::any())
             ->method('getFileName')
-            ->will($this->returnValue($fileName));
+            ->will(static::returnValue($fileName));
 
         return $file;
     }

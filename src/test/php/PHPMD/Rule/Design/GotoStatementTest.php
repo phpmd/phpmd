@@ -29,10 +29,8 @@ class GotoStatementTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutGotoStatement
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutGotoStatement()
+    public function testRuleNotAppliesToMethodWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithGotoStatement
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithGotoStatement()
+    public function testRuleAppliesToMethodWithGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithOneViolation());
@@ -53,10 +49,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutGotoStatement
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutGotoStatement()
+    public function testRuleNotAppliesToFunctionWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithNoViolation());
@@ -65,10 +59,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithGotoStatement
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithGotoStatement()
+    public function testRuleAppliesToFunctionWithGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithOneViolation());

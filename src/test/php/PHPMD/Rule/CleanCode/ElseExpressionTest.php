@@ -21,21 +21,21 @@ use PHPMD\AbstractTestCase;
 
 class ElseExpressionTest extends AbstractTestCase
 {
-    public function testRuleNotAppliesToMethodWithoutElseExpression()
+    public function testRuleNotAppliesToMethodWithoutElseExpression(): void
     {
         $rule = new ElseExpression();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleAppliesToMethodWithElseExpression()
+    public function testRuleAppliesToMethodWithElseExpression(): void
     {
         $rule = new ElseExpression();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleAppliesMultipleTimesToMethodWithMultipleElseExpressions()
+    public function testRuleAppliesMultipleTimesToMethodWithMultipleElseExpressions(): void
     {
         $rule = new ElseExpression();
         $rule->setReport($this->getReportMock(3));

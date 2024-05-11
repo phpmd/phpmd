@@ -25,9 +25,7 @@ use PHPMD\Cache\ResultCacheEngine;
  */
 class PHPMD
 {
-    /**
-     * The current PHPMD version.
-     */
+    /** The current PHPMD version. */
     public const VERSION = '@package_version@';
 
     /**

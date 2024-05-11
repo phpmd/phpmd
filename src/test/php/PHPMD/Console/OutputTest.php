@@ -20,11 +20,10 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @covers ::getVerbosity
      * @covers ::setVerbosity
      */
-    public function testSetGetVerbosity()
+    public function testSetGetVerbosity(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
         static::assertSame(OutputInterface::VERBOSITY_VERBOSE, $this->output->getVerbosity());
@@ -34,25 +33,23 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @covers ::write
      */
-    public function testWriteSingleMessage()
+    public function testWriteSingleMessage(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this->output->write("message", false, OutputInterface::VERBOSITY_VERBOSE);
+        $this->output->write('message', false, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame('message', $this->output->getOutput());
     }
 
     /**
-     * @return void
      * @covers ::write
      */
-    public function testWriteMultiMessageWithNewline()
+    public function testWriteMultiMessageWithNewline(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this->output->write(["foo", "bar"], true, OutputInterface::VERBOSITY_VERBOSE);
+        $this->output->write(['foo', 'bar'], true, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame("foo\nbar\n", $this->output->getOutput());
     }
@@ -64,7 +61,7 @@ class OutputTest extends AbstractTestCase
      * @dataProvider verbosityProvider
      * @covers ::write
      */
-    public function testWriteWithVerbosityOption($verbosity, $expected, $msg)
+    public function testWriteWithVerbosityOption($verbosity, $expected, $msg): void
     {
         $this->output->setVerbosity($verbosity);
         $this->output->write('1', false);
@@ -108,12 +105,11 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @covers ::writeln
      */
-    public function testWritelnMessage()
+    public function testWritelnMessage(): void
     {
-        $this->output->writeln("message", OutputInterface::VERBOSITY_QUIET);
+        $this->output->writeln('message', OutputInterface::VERBOSITY_QUIET);
 
         static::assertSame("message\n", $this->output->getOutput());
     }

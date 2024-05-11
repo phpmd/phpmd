@@ -26,7 +26,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of PHP's eval-expression.
  */
-class EvalExpression extends AbstractRule implements MethodAware, FunctionAware
+class EvalExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an eval-expression

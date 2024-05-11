@@ -25,41 +25,33 @@ use Sindelfingen\MyTrait;
 /**
  * Test case for the trait node implementation.
  *
- * @covers \PHPMD\Node\TraitNode
  * @covers \PHPMD\Node\AbstractTypeNode
+ * @covers \PHPMD\Node\TraitNode
  */
 class TraitNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $trait = new ASTTrait('MyTrait');
         $trait->setNamespace(new ASTNamespace('Sindelfingen'));
 
         $node = new TraitNode($trait);
 
-        $this->assertSame(MyTrait::class, $node->getFullQualifiedName());
+        static::assertSame(MyTrait::class, $node->getFullQualifiedName());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetConstantCountReturnsZeroByDefault()
+    public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
-        $this->assertSame(0, $trait->getConstantCount());
+        static::assertSame(0, $trait->getConstantCount());
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentNameReturnsNull()
+    public function testGetParentNameReturnsNull(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
-        $this->assertNull($trait->getParentName());
+        static::assertNull($trait->getParentName());
     }
 }

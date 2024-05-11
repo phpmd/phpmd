@@ -24,9 +24,7 @@ use PHPMD\Rule;
  */
 class Annotation
 {
-    /**
-     * Name of the suppress warnings annotation.
-     */
+    /** Name of the suppress warnings annotation. */
     private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
     /**
@@ -76,9 +74,10 @@ class Annotation
      */
     private function isSuppressed(Rule $rule)
     {
-        if (in_array($this->value, ['PHPMD', 'PMD'])) {
+        if (in_array($this->value, ['PHPMD', 'PMD'], true)) {
             return true;
-        } elseif (preg_match(
+        }
+        if (preg_match(
             '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
             $this->value
         )) {

@@ -30,10 +30,8 @@ class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegression
 {
     /**
      * testRuleDoesNotApplyToFunctionParameterNamedArgv
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToFunctionParameterNamedArgv()
+    public function testRuleDoesNotApplyToFunctionParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());
@@ -44,10 +42,8 @@ class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegression
 
     /**
      * testRuleDoesNotApplyToMethodParameterNamedArgv
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMethodParameterNamedArgv()
+    public function testRuleDoesNotApplyToMethodParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());

@@ -28,9 +28,7 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
  */
 abstract class AbstractTypeNode extends AbstractNode
 {
-    /**
-     * @var TNode
-     */
+    /** @var TNode */
     private $node;
 
     /**

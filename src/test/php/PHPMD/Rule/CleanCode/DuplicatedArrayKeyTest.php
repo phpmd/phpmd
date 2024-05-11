@@ -29,10 +29,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutArrayDefinition
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutArrayDefinition()
+    public function testRuleNotAppliesToMethodWithoutArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition()
+    public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -53,10 +49,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
+    public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -65,10 +59,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys()
+    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -77,10 +69,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
+    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -89,10 +79,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
+    public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -101,10 +89,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys()
+    public function testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportMock(3));
@@ -113,10 +99,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutArrayDefinition
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutArrayDefinition()
+    public function testRuleNotAppliesToFunctionWithoutArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -125,10 +109,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition()
+    public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -137,10 +119,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys()
+    public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithNoViolation());
@@ -149,10 +129,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys()
+    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -161,10 +139,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys()
+    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -173,10 +149,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys()
+    public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportWithOneViolation());
@@ -185,10 +159,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys()
+    public function testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportMock(3));
@@ -197,10 +169,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenKeyIsDeclaredInNonStandardWay
-     *
-     * @return void
      */
-    public function testRuleAppliesWhenKeyIsDeclaredInNonStandardWay()
+    public function testRuleAppliesWhenKeyIsDeclaredInNonStandardWay(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportMock(4));
@@ -209,10 +179,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesCorrectlyWithNestedArrays
-     *
-     * @return void
      */
-    public function testRuleAppliesCorrectlyWithNestedArrays()
+    public function testRuleAppliesCorrectlyWithNestedArrays(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportMock(4));
@@ -221,10 +189,8 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesCorrectlyToMultipleArrays
-     *
-     * @return void
      */
-    public function testRuleAppliesCorrectlyToMultipleArrays()
+    public function testRuleAppliesCorrectlyToMultipleArrays(): void
     {
         $rule = new DuplicatedArrayKey();
         $rule->setReport($this->getReportMock(4));

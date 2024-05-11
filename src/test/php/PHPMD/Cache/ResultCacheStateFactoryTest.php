@@ -21,37 +21,37 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileNonExisting()
+    public function testFromFileNonExisting(): void
     {
         $state = $this->factory->fromFile('foobar');
         static::assertNull($state);
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
-    public function testFromFileEmptyCache()
+    public function testFromFileEmptyCache(): void
     {
         $state = $this->factory->fromFile(static::createResourceUriForTest('.invalid-cache.php'));
         static::assertNull($state);
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
-    public function testFromFileIncompleteCacheKey()
+    public function testFromFileIncompleteCacheKey(): void
     {
         $state = $this->factory->fromFile(static::createResourceUriForTest('.incomplete-cache.php'));
         static::assertNull($state);
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
-    public function testFromFileFullCache()
+    public function testFromFileFullCache(): void
     {
         $state = $this->factory->fromFile(static::createResourceUriForTest('.result-cache.php'));
 
@@ -73,10 +73,10 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @covers ::fromFile
      * @covers ::createCacheKey
+     * @covers ::fromFile
      */
-    public function testFromFileWithCacheWithoutBaselineOrComposer()
+    public function testFromFileWithCacheWithoutBaselineOrComposer(): void
     {
         $state = $this->factory->fromFile(static::createResourceUriForTest('.minimal-cache.php'));
         static::assertNotNull($state);

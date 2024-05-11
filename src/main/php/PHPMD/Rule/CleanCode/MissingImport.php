@@ -30,11 +30,9 @@ use PHPMD\Rule\MethodAware;
  *
  * This rule can be used to prevent use of fully qualified class names.
  */
-class MissingImport extends AbstractRule implements MethodAware, FunctionAware
+class MissingImport extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var list<string> Self reference class names.
-     */
+    /** @var list<string> Self reference class names. */
     private $selfReferences = ['self', 'static'];
 
     /**

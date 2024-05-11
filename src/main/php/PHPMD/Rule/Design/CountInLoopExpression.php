@@ -50,7 +50,7 @@ use RuntimeException;
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAware, EnumAware
+class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
 {
     /**
      * List of functions to search against
@@ -175,6 +175,6 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     {
         $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 
-        return in_array($functionName, $this->unwantedFunctions);
+        return in_array($functionName, $this->unwantedFunctions, true);
     }
 }

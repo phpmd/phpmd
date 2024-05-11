@@ -27,7 +27,7 @@ use PHPMD\Utility\Strings;
 /**
  * This rule class detects namespace parts that are not named in CamelCase.
  */
-class CamelCaseNamespace extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /** @var array<string, int>|null */
     private $exceptions;

@@ -27,7 +27,7 @@ use PHPMD\Report;
  * This renderer output a textual log with all found violations and suspect
  * software artifacts.
  */
-class TextRenderer extends AbstractRenderer implements Verbose, Color
+class TextRenderer extends AbstractRenderer implements Color, Verbose
 {
     private int $columnSpacing = 2;
 

@@ -30,6 +30,7 @@ class BaselineFileFinder
     public function existingFile()
     {
         $this->existingFile = true;
+
         return $this;
     }
 
@@ -40,6 +41,7 @@ class BaselineFileFinder
     public function notNull()
     {
         $this->notNull = true;
+
         return $this;
     }
 
@@ -91,6 +93,7 @@ class BaselineFileFinder
         if ($this->notNull) {
             throw new RuntimeException($message);
         }
+
         return null;
     }
 }

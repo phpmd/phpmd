@@ -26,10 +26,8 @@ class SuperGlobalsFlaggedAsUnusedTicket019RegressionTest extends AbstractRegress
 {
     /**
      * testRuleDoesNotApplyToAnySuperGlobalVariable
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToAnySuperGlobalVariable()
+    public function testRuleDoesNotApplyToAnySuperGlobalVariable(): void
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());

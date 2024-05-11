@@ -34,10 +34,9 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
+    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $renderer = new TextRenderer();
         $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
@@ -46,7 +45,6 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
         $rules = 'unusedcode';
         $renderers = [$renderer];
         $factory = new RuleSetFactory();
-
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(

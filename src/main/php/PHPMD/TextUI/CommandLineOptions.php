@@ -44,9 +44,7 @@ use PHPMD\Utility\ArgumentsValidator;
  */
 class CommandLineOptions
 {
-    /**
-     * Error code for invalid input
-     */
+    /** Error code for invalid input */
     private const INPUT_ERROR = 23;
 
     /**
@@ -251,107 +249,158 @@ class CommandLineOptions
                 case '--':
                     $this->refuseValue($equalChunk);
                     $listenOptions = false;
+
                     break;
+
                 case '--verbose':
                 case '-v':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
+
                     break;
+
                 case '-vv':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
+
                     break;
+
                 case '-vvv':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
+
                     break;
+
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
                     $this->minimumPriority = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
                     $this->maximumPriority = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--report-file':
                 case '--reportfile':
                     $this->reportFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--error-file':
                 case '--errorfile':
                     $this->errorFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--input-file':
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile($this->readValue($equalChunk, $args)));
+
                     break;
+
                 case '--coverage':
                     $this->coverageReport = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
-                    /* Deprecated: We use the suffixes option now */
+                    // Deprecated: We use the suffixes option now
                     $this->extensions = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--suffixes':
                     $this->extensions = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
-                    /* Deprecated: We use the exclude option now */
+                    // Deprecated: We use the exclude option now
                     $this->ignore = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--exclude':
                     $this->ignore = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--color':
                     $this->refuseValue($equalChunk);
                     $this->colored = true;
+
                     break;
+
                 case '--version':
                     $this->refuseValue($equalChunk);
                     $this->version = true;
 
                     return;
+
                 case '--strict':
                     $this->refuseValue($equalChunk);
                     $this->strict = true;
+
                     break;
+
                 case '--not-strict':
                     $this->refuseValue($equalChunk);
                     $this->strict = false;
+
                     break;
+
                 case '--generate-baseline':
                     $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::GENERATE;
+
                     break;
+
                 case '--update-baseline':
                     $this->refuseValue($equalChunk);
                     $this->generateBaseline = BaselineMode::UPDATE;
+
                     break;
+
                 case '--baseline-file':
                     $this->baselineFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--cache':
                     $this->refuseValue($equalChunk);
                     $this->cacheEnabled = true;
+
                     break;
+
                 case '--cache-file':
                     $this->cacheFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--cache-strategy':
                     $this->cacheStrategy = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--ignore-errors-on-exit':
                     $this->refuseValue($equalChunk);
                     $this->ignoreErrorsOnExit = true;
+
                     break;
+
                 case '--ignore-violations-on-exit':
                     $this->refuseValue($equalChunk);
                     $this->ignoreViolationsOnExit = true;
+
                     break;
+
                 case '--reportfile-checkstyle':
                 case '--reportfile-github':
                 case '--reportfile-gitlab':
@@ -362,13 +411,18 @@ class CommandLineOptions
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--extra-line-in-excerpt':
                     $this->extraLineInExcerpt = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 default:
                     $hasImplicitArguments = true;
                     $arguments[] = $arg;
+
                     break;
             }
         }
@@ -603,6 +657,7 @@ class CommandLineOptions
             case ResultCacheStrategy::CONTENT:
             case ResultCacheStrategy::TIMESTAMP:
                 return $this->cacheStrategy;
+
             default:
                 return ResultCacheStrategy::CONTENT;
         }
@@ -638,6 +693,7 @@ class CommandLineOptions
     {
         return $this->extraLineInExcerpt;
     }
+
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
@@ -681,22 +737,31 @@ class CommandLineOptions
         switch ($reportFormat) {
             case 'ansi':
                 return $this->createAnsiRenderer();
+
             case 'checkstyle':
                 return $this->createCheckStyleRenderer();
+
             case 'gitlab':
                 return $this->createGitLabRenderer();
+
             case 'github':
                 return $this->createGitHubRenderer();
+
             case 'html':
                 return $this->createHtmlRenderer();
+
             case 'json':
                 return $this->createJsonRenderer();
+
             case 'sarif':
                 return $this->createSarifRenderer();
+
             case 'text':
                 return $this->createTextRenderer();
+
             case 'xml':
                 return $this->createXmlRenderer();
+
             default:
                 return $this->createCustomRenderer();
         }
@@ -794,7 +859,7 @@ class CommandLineOptions
         // Try to load a custom renderer
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
 
-        $fileHandle = @fopen($fileName, 'r', true);
+        $fileHandle = @fopen($fileName, 'rb', true);
         if (!is_resource($fileHandle)) {
             throw new InvalidArgumentException(
                 sprintf(

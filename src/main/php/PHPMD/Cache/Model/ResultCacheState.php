@@ -132,9 +132,8 @@ class ResultCacheState
     /**
      * @param string $filePath
      * @param string $hash
-     * @return void
      */
-    public function setFileState($filePath, $hash)
+    public function setFileState($filePath, $hash): void
     {
         $this->state['files'][$filePath]['hash'] = $hash;
     }

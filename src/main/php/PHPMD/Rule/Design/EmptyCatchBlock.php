@@ -30,7 +30,7 @@ use PHPMD\Rule\MethodAware;
  * @author Grégoire Paris <postmaster@greg0ire.fr>
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
+class EmptyCatchBlock extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an empty catch block

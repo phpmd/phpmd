@@ -28,7 +28,7 @@ class ResultCacheWriterTest extends AbstractTestCase
     /**
      * @covers ::write
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 70000);
         $cacheState = new ResultCacheState($cacheKey, []);

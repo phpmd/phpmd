@@ -28,11 +28,9 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class Superglobals extends AbstractRule implements MethodAware, FunctionAware
+class Superglobals extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var list<string>
-     */
+    /** @var list<string> */
     private $superglobals = [
         '$GLOBALS',
         '$_SERVER',
@@ -59,7 +57,7 @@ class Superglobals extends AbstractRule implements MethodAware, FunctionAware
     public function apply(AbstractNode $node): void
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
-            if (in_array($variable->getImage(), $this->superglobals)) {
+            if (in_array($variable->getImage(), $this->superglobals, true)) {
                 $this->addViolation(
                     $node,
                     [

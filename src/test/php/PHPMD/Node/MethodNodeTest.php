@@ -26,23 +26,21 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the method node implementation.
  *
- * @covers \PHPMD\Node\MethodNode
  * @covers \PHPMD\Node\AbstractCallableNode
+ * @covers \PHPMD\Node\MethodNode
  */
 class MethodNodeTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependMethod
-     *
-     * @return void
      */
-    public function testMagicCallDelegatesToWrappedPHPDependMethod()
+    public function testMagicCallDelegatesToWrappedPHPDependMethod(): void
     {
         $method = $this->getMockFromBuilder(
             $this->getMockBuilder(ASTMethod::class)
                 ->setConstructorArgs([null])
         );
-        $method->expects($this->once())
+        $method->expects(static::once())
             ->method('getStartLine');
 
         $node = new MethodNode($method);
@@ -51,10 +49,8 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     *
-     * @return void
      */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists()
+    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists(): void
     {
         self::expectException(BadMethodCallException::class);
 
@@ -64,12 +60,10 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testGetParentTypeReturnsInterfaceForInterfaceMethod
-     *
-     * @return void
      */
-    public function testGetParentTypeReturnsInterfaceForInterfaceMethod()
+    public function testGetParentTypeReturnsInterfaceForInterfaceMethod(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             InterfaceNode::class,
             $this->getMethod()->getParentType()
         );
@@ -77,23 +71,18 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testGetParentTypeReturnsClassForClassMethod
-     *
-     * @return void
      */
-    public function testGetParentTypeReturnsClassForClassMethod()
+    public function testGetParentTypeReturnsClassForClassMethod(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ClassNode::class,
             $this->getMethod()->getParentType()
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testGetParentTypeReturnsTrait()
+    public function testGetParentTypeReturnsTrait(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             TraitNode::class,
             $this->getMethod()->getParentType()
         );
@@ -101,135 +90,117 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsExecutesDefaultImplementation
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsExecutesDefaultImplementation()
+    public function testHasSuppressWarningsExecutesDefaultImplementation(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testHasSuppressWarningsDelegatesToParentClassMethod
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsDelegatesToParentClassMethod()
+    public function testHasSuppressWarningsDelegatesToParentClassMethod(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testHasSuppressWarningsDelegatesToParentInterfaceMethod
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsDelegatesToParentInterfaceMethod()
+    public function testHasSuppressWarningsDelegatesToParentInterfaceMethod(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testHasSuppressWarningsIgnoresCaseFirstLetter
-     *
-     * @return void
      */
-    public function testHasSuppressWarningsIgnoresCaseFirstLetter()
+    public function testHasSuppressWarningsIgnoresCaseFirstLetter(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        $this->assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
     }
 
     /**
      * testIsDeclarationReturnsTrueForMethodDeclaration
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testIsDeclarationReturnsTrueForMethodDeclaration()
+    public function testIsDeclarationReturnsTrueForMethodDeclaration(): void
     {
         $method = $this->getMethod();
-        $this->assertTrue($method->isDeclaration());
+        static::assertTrue($method->isDeclaration());
     }
 
     /**
      * testIsDeclarationReturnsTrueForMethodDeclarationWithParent
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testIsDeclarationReturnsTrueForMethodDeclarationWithParent()
+    public function testIsDeclarationReturnsTrueForMethodDeclarationWithParent(): void
     {
         $method = $this->getMethod();
-        $this->assertTrue($method->isDeclaration());
+        static::assertTrue($method->isDeclaration());
     }
 
     /**
      * testIsDeclarationReturnsFalseForInheritMethodDeclaration
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testIsDeclarationReturnsFalseForInheritMethodDeclaration()
+    public function testIsDeclarationReturnsFalseForInheritMethodDeclaration(): void
     {
         $method = $this->getMethod();
-        $this->assertFalse($method->isDeclaration());
+        static::assertFalse($method->isDeclaration());
     }
 
     /**
      * testIsDeclarationReturnsFalseForImplementedAbstractMethod
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testIsDeclarationReturnsFalseForImplementedAbstractMethod()
+    public function testIsDeclarationReturnsFalseForImplementedAbstractMethod(): void
     {
         $method = $this->getMethod();
-        $this->assertFalse($method->isDeclaration());
+        static::assertFalse($method->isDeclaration());
     }
 
     /**
      * testIsDeclarationReturnsFalseForImplementedInterfaceMethod
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testIsDeclarationReturnsFalseForImplementedInterfaceMethod()
+    public function testIsDeclarationReturnsFalseForImplementedInterfaceMethod(): void
     {
         $method = $this->getMethod();
-        $this->assertFalse($method->isDeclaration());
+        static::assertFalse($method->isDeclaration());
     }
 
-    /**
-     * @return void
-     */
-    public function testIsDeclarationReturnsTrueForPrivateMethod()
+    public function testIsDeclarationReturnsTrueForPrivateMethod(): void
     {
         $method = $this->getMethod();
-        $this->assertTrue($method->isDeclaration());
+        static::assertTrue($method->isDeclaration());
     }
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
-     *
-     * @return void
      */
-    public function testGetFullQualifiedNameReturnsExpectedValue()
+    public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');
         $class->setNamespace(new ASTNamespace('Sindelfingen'));
@@ -239,6 +210,6 @@ class MethodNodeTest extends AbstractTestCase
 
         $node = new MethodNode($method);
 
-        $this->assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
+        static::assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
     }
 }

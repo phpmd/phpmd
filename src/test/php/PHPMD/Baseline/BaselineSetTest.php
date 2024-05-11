@@ -13,7 +13,7 @@ class BaselineSetTest extends AbstractTestCase
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testSetContainsEntryWithoutMethodName()
+    public function testSetContainsEntryWithoutMethodName(): void
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('rule', 'foobar', null));
@@ -25,7 +25,7 @@ class BaselineSetTest extends AbstractTestCase
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testSetContainsEntryWithMethodName()
+    public function testSetContainsEntryWithMethodName(): void
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('rule', 'foobar', 'method'));
@@ -37,7 +37,7 @@ class BaselineSetTest extends AbstractTestCase
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testShouldFindEntryForIdenticalRules()
+    public function testShouldFindEntryForIdenticalRules(): void
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('rule', 'foo', null));
@@ -54,7 +54,7 @@ class BaselineSetTest extends AbstractTestCase
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testShouldNotFindEntryForNonExistingRule()
+    public function testShouldNotFindEntryForNonExistingRule(): void
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('rule', 'foo', null));
@@ -66,7 +66,7 @@ class BaselineSetTest extends AbstractTestCase
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testShouldNotFindEntryForNonExistingMethod()
+    public function testShouldNotFindEntryForNonExistingMethod(): void
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('rule', 'foo', 'method'));

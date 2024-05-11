@@ -35,7 +35,7 @@ use PHPMD\Utility\Strings;
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
+class LongVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
 {
     /**
      * Temporary cache of configured prefixes to subtract

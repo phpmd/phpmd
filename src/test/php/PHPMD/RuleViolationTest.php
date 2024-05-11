@@ -27,10 +27,7 @@ use PHPMD\Node\NodeInfo;
  */
 class RuleViolationTest extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
-    public function testNodeInfoGetters()
+    public function testNodeInfoGetters(): void
     {
         $rule = $this->getRuleMock();
 

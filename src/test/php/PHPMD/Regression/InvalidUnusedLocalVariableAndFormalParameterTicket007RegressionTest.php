@@ -27,10 +27,8 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extend
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
-     *
-     * @return void
      */
-    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
+    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());
@@ -39,10 +37,8 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extend
 
     /**
      * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
-     *
-     * @return void
      */
-    public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported()
+    public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());

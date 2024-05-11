@@ -31,11 +31,9 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseVariableName extends AbstractRule implements MethodAware, FunctionAware
+class CamelCaseVariableName extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var list<string>
-     */
+    /** @var list<string> */
     private $exceptions = [
         '$php_errormsg',
         '$http_response_header',
@@ -78,7 +76,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     {
         $image = $variable->getImage();
 
-        if (in_array($image, $this->exceptions)) {
+        if (in_array($image, $this->exceptions, true)) {
             return true;
         }
 

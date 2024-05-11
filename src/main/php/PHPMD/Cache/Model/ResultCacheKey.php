@@ -6,12 +6,16 @@ class ResultCacheKey
 {
     /** @var bool */
     private $strict;
+
     /** @var string|null */
     private $baselineHash;
+
     /** @var array<string, string> */
     private $rules;
+
     /** @var array<string, string> */
     private $composer;
+
     /** @var int */
     private $phpVersion;
 
@@ -48,7 +52,7 @@ class ResultCacheKey
     /**
      * @return bool
      */
-    public function isEqualTo(ResultCacheKey $other)
+    public function isEqualTo(self $other)
     {
         return $this->strict === $other->strict
             && $this->baselineHash === $other->baselineHash

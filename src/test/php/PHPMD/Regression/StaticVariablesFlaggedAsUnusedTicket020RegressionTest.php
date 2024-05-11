@@ -26,10 +26,8 @@ class StaticVariablesFlaggedAsUnusedTicket020RegressionTest extends AbstractRegr
 {
     /**
      * testRuleDoesNotApplyToAnySuperGlobalVariable
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
+    public function testRuleDoesNotApplyToAnyStaticLocalVariable(): void
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());

@@ -30,10 +30,9 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
     /**
      * testReportContainsCouplingBetweenObjectsWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsCouplingBetweenObjectsWarning()
+    public function testReportContainsCouplingBetweenObjectsWarning(): void
     {
         $file = self::createTempFileUri();
 
@@ -48,7 +47,7 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
             ]
         );
 
-        self::assertStringContainsString(
+        static::assertStringContainsString(
             'has a coupling between objects value of 14. ' .
             'Consider to reduce the number of dependencies under 13.',
             file_get_contents($file)

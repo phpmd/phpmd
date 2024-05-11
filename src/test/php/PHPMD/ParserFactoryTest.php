@@ -28,10 +28,8 @@ class ParserFactoryTest extends AbstractTestCase
 {
     /**
      * testFactoryConfiguresInputDirectory
-     *
-     * @return void
      */
-    public function testFactoryConfiguresInputDirectory()
+    public function testFactoryConfiguresInputDirectory(): void
     {
         $factory = new ParserFactory();
 
@@ -41,7 +39,7 @@ class ParserFactoryTest extends AbstractTestCase
             $this->getMockBuilder(PHPMD::class)
                 ->onlyMethods(['getInput'])
         );
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn($uri);
 
@@ -54,10 +52,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresInputFile
-     *
-     * @return void
      */
-    public function testFactoryConfiguresInputFile()
+    public function testFactoryConfiguresInputFile(): void
     {
         $factory = new ParserFactory();
 
@@ -67,9 +63,9 @@ class ParserFactoryTest extends AbstractTestCase
             $this->getMockBuilder(PHPMD::class)
                 ->onlyMethods(['getInput'])
         );
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
-            ->will($this->returnValue($uri));
+            ->will(static::returnValue($uri));
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class);
 
@@ -80,10 +76,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputDirectories
-     *
-     * @return void
      */
-    public function testFactoryConfiguresMultipleInputDirectories()
+    public function testFactoryConfiguresMultipleInputDirectories(): void
     {
         $factory = new ParserFactory();
 
@@ -94,9 +88,9 @@ class ParserFactoryTest extends AbstractTestCase
             $this->getMockBuilder(PHPMD::class)
                 ->onlyMethods(['getInput'])
         );
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
-            ->will($this->returnValue($uri1 . ',' . $uri2));
+            ->will(static::returnValue($uri1 . ',' . $uri2));
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class, 2);
 
@@ -107,10 +101,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputFilesAndDirectories
-     *
-     * @return void
      */
-    public function testFactoryConfiguresMultipleInputFilesAndDirectories()
+    public function testFactoryConfiguresMultipleInputFilesAndDirectories(): void
     {
         $factory = new ParserFactory();
 
@@ -118,9 +110,9 @@ class ParserFactoryTest extends AbstractTestCase
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
         $phpmd = $this->getMockFromBuilder($this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput']));
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
-            ->will($this->returnValue($uri1 . ',' . $uri2));
+            ->will(static::returnValue($uri1 . ',' . $uri2));
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class, 2);
 
@@ -131,10 +123,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresIgnorePattern
-     *
-     * @return void
      */
-    public function testFactoryConfiguresIgnorePattern()
+    public function testFactoryConfiguresIgnorePattern(): void
     {
         $factory = new ParserFactory();
 
@@ -144,10 +134,10 @@ class ParserFactoryTest extends AbstractTestCase
             $this->getMockBuilder(PHPMD::class)
                 ->onlyMethods(['getIgnorePatterns', 'getInput'])
         );
-        $phpmd->expects($this->exactly(2))
+        $phpmd->expects(static::exactly(2))
             ->method('getIgnorePatterns')
             ->willReturn(['Test']);
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn($uri);
 
@@ -156,10 +146,8 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresFileExtensions
-     *
-     * @return void
      */
-    public function testFactoryConfiguresFileExtensions()
+    public function testFactoryConfiguresFileExtensions(): void
     {
         $factory = new ParserFactory();
 
@@ -169,10 +157,10 @@ class ParserFactoryTest extends AbstractTestCase
             $this->getMockBuilder(PHPMD::class)
                 ->onlyMethods(['getFileExtensions', 'getInput'])
         );
-        $phpmd->expects($this->exactly(2))
+        $phpmd->expects(static::exactly(2))
             ->method('getFileExtensions')
             ->willReturn(['.php']);
-        $phpmd->expects($this->once())
+        $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn($uri);
 

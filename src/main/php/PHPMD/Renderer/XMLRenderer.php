@@ -83,7 +83,7 @@ class XMLRenderer extends AbstractRenderer
             $this->maybeAdd('function', $violation->getFunctionName());
             $this->maybeAdd('class', $violation->getClassName());
             $this->maybeAdd('method', $violation->getMethodName());
-            //$this->_maybeAdd('variable', $violation->getVariableName());
+            // $this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);

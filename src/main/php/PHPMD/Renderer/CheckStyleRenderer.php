@@ -37,6 +37,7 @@ class CheckStyleRenderer extends XMLRenderer
 
         return (int) $priority === 2 ? 'warning' : 'error';
     }
+
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
@@ -79,7 +80,7 @@ class CheckStyleRenderer extends XMLRenderer
             $this->maybeAdd('function', $violation->getFunctionName());
             $this->maybeAdd('class', $violation->getClassName());
             $this->maybeAdd('method', $violation->getMethodName());
-            //$this->_maybeAdd('variable', $violation->getVariableName());
+            // $this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' />' . \PHP_EOL);
         }

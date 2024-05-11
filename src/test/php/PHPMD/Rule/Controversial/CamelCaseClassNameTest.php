@@ -25,10 +25,7 @@ use PHPMD\Node\ClassNode;
  */
 class CamelCaseClassNameTest extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyForValidClassName()
+    public function testRuleDoesNotApplyForValidClassName(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -38,10 +35,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidClass'));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyForValidClassNameWithUppercaseAbbreviation()
+    public function testRuleDoesNotApplyForValidClassNameWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -51,10 +45,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidURLClass'));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesApplyForClassNameWithUppercaseAbbreviation()
+    public function testRuleDoesApplyForClassNameWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -64,10 +55,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidURLClass'));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyForClassNameWithCamelcaseAbbreviation()
+    public function testRuleDoesNotApplyForClassNameWithCamelcaseAbbreviation(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -77,10 +65,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidUrlClass'));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleAppliesForClassNameWithLowerCase()
+    public function testRuleAppliesForClassNameWithLowerCase(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -90,10 +75,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('invalidClass'));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleAppliesForClassNameWithLowerCaseAndCamelcaseAbbreviation()
+    public function testRuleAppliesForClassNameWithLowerCaseAndCamelcaseAbbreviation(): void
     {
         $report = $this->getReportWithOneViolation();
 

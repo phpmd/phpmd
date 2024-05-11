@@ -33,7 +33,7 @@ use PHPMD\Utility\ExceptionsList;
  *
  * Boolean flags are signs for single responsibility principle violations.
  */
-class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionAware
+class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Temporary cache of configured exceptions.
@@ -71,7 +71,7 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         $this->scanFormalParameters($node);
     }
 
-    protected function isBooleanValue(ASTValue $value = null): bool
+    protected function isBooleanValue(?ASTValue $value = null): bool
     {
         return $value?->isValueAvailable() && is_bool($value->getValue());
     }

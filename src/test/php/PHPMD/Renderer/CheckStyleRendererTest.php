@@ -31,10 +31,8 @@ class CheckStyleRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfXmlElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfXmlElements()
+    public function testRendererCreatesExpectedNumberOfXmlElements(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -46,12 +44,12 @@ class CheckStyleRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);
@@ -69,10 +67,9 @@ class CheckStyleRendererTest extends AbstractTestCase
     /**
      * testRendererAddsProcessingErrorsToXmlReport
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testRendererAddsProcessingErrorsToXmlReport()
+    public function testRendererAddsProcessingErrorsToXmlReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -84,12 +81,12 @@ class CheckStyleRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator($processingErrors)));
+            ->will(static::returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);

@@ -43,7 +43,7 @@ class BaselineValidatorTest extends AbstractTestCase
      * @dataProvider dataProvider
      * @covers ::isBaselined
      */
-    public function testIsBaselined($contains, $baselineMode, $isBaselined)
+    public function testIsBaselined($contains, $baselineMode, $isBaselined): void
     {
         $this->baselineSet->method('contains')->willReturn($contains);
         $validator = new BaselineValidator($this->baselineSet, $baselineMode);

@@ -33,10 +33,8 @@ class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfTextEntries()
+    public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -51,12 +49,12 @@ class TextRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
@@ -65,18 +63,15 @@ class TextRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
-            "/bar.php:1      LongerNamedRule  An other description for this rule" . PHP_EOL .
-            "/foo-biz.php:2  RuleStub         Test description" . PHP_EOL .
-            "/foo.php:34     RuleStub         Test description" . PHP_EOL,
+        static::assertEquals(
+            '/bar.php:1      LongerNamedRule  An other description for this rule' . PHP_EOL .
+            '/foo-biz.php:2  RuleStub         Test description' . PHP_EOL .
+            '/foo.php:34     RuleStub         Test description' . PHP_EOL,
             $writer->getData()
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRendererSupportVerbose()
+    public function testRendererSupportVerbose(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -93,18 +88,18 @@ class TextRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
+        static::assertEquals(
             'LongerNamedRule  An other description for this rule' . PHP_EOL .
             '📁 in /bar.php on line 1' . PHP_EOL .
             '🔗 testruleset.xml https://phpmd.org/rules/testruleset.html#longernamedrule' . PHP_EOL . PHP_EOL,
@@ -112,10 +107,7 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testRendererSupportColor()
+    public function testRendererSupportColor(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -132,18 +124,18 @@ class TextRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
+        static::assertEquals(
             "/bar.php:1  \033[33mLongerNamedRule\033[0m  \033[31mAn other description for this rule\033[0m" . PHP_EOL,
             $writer->getData()
         );
@@ -151,10 +143,8 @@ class TextRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToTextReport()
+    public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -166,12 +156,12 @@ class TextRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator($errors)));
+            ->will(static::returnValue(new ArrayIterator($errors)));
 
         $renderer = new TextRenderer();
         $renderer->setWriter($writer);
@@ -180,7 +170,7 @@ class TextRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
+        static::assertEquals(
             "/tmp/foo.php\t-\tFailed for file \"/tmp/foo.php\"." . PHP_EOL .
             "/tmp/bar.php\t-\tFailed for file \"/tmp/bar.php\"." . PHP_EOL .
             "/tmp/baz.php\t-\tFailed for file \"/tmp/baz.php\"." . PHP_EOL,

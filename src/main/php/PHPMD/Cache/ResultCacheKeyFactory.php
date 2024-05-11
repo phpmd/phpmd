@@ -10,6 +10,7 @@ class ResultCacheKeyFactory
 {
     /** @var string */
     private $basePath;
+
     /** @var string|null */
     private $baselineFile;
 

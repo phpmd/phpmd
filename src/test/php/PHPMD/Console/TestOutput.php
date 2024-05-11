@@ -24,6 +24,7 @@ class TestOutput extends Output
     public function getOutput()
     {
         fseek($this->stream, 0);
+
         return fread($this->stream, 1024);
     }
 }

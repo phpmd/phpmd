@@ -29,7 +29,7 @@ use PHPMD\Rule\TraitAware;
  * This rule detects class/interface constants that do not follow the upper
  * case convention.
  */
-class ConstantNamingConventions extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+class ConstantNamingConventions extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * Extracts all constant declarations from the given node and tests that
