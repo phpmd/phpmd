@@ -248,23 +248,6 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
-     * Return the PDepend node of ASTNode PHPMD node.
-     *
-     * Or return the input as is if it's not an ASTNode PHPMD node.
-     *
-     * @param ASTNode<PDependNode>|PDependNode $node
-     * @return PDependNode
-     */
-    private function getNode($node)
-    {
-        if ($node instanceof ASTNode) {
-            return $node->getNode();
-        }
-
-        return $node;
-    }
-
-    /**
      * Reflect function trying as namespaced function first, then global function.
      *
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
@@ -306,13 +289,12 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         $argumentPosition = array_search($variable, $parent->getChildren(), true);
-        $parentParent = $parent->getParent();
-        if ($parentParent === null) {
+        $function = $parent->getParent();
+        if ($function === null) {
             return false;
         }
-        $function = $this->getNode($parentParent);
 
-        $functionParent = $this->getNode($function->getParent());
+        $functionParent = $function->getParent();
         $functionName = $function->getImage();
 
         if ($functionParent instanceof ASTMemberPrimaryPrefix) {
@@ -391,6 +373,6 @@ abstract class AbstractLocalVariable extends AbstractRule
     private function isFieldDeclaration($variable, $image = '$')
     {
         return substr($image, 0, 1) === '$' &&
-            $this->getNode($variable->getParent()) instanceof ASTFieldDeclaration;
+            $variable->getParent() instanceof ASTFieldDeclaration;
     }
 }
