@@ -29,10 +29,8 @@ class TooManyMethodsTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold()
+    public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -43,10 +41,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold()
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -57,10 +53,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMoreMethodsThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassesWithMoreMethodsThanThreshold()
+    public function testRuleAppliesToClassesWithMoreMethodsThanThreshold(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithOneViolation());
@@ -71,10 +65,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresGetterMethodsInTest
-     *
-     * @return void
      */
-    public function testRuleIgnoresGetterMethodsInTest()
+    public function testRuleIgnoresGetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -85,10 +77,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresSetterMethodsInTest
-     *
-     * @return void
      */
-    public function testRuleIgnoresSetterMethodsInTest()
+    public function testRuleIgnoresSetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -99,10 +89,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-     *
-     * @return void
      */
-    public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven()
+    public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -113,10 +101,8 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresGetterAndSetterMethodsInTest
-     *
-     * @return void
      */
-    public function testRuleIgnoresGetterAndSetterMethodsInTest()
+    public function testRuleIgnoresGetterAndSetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -125,10 +111,7 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(3, ['invoke', 'getClass', 'setClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresHassers()
+    public function testRuleIgnoresHassers(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -137,10 +120,7 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresIssers()
+    public function testRuleIgnoresIssers(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -149,10 +129,7 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleIgnoresWithers()
+    public function testRuleIgnoresWithers(): void
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
@@ -168,14 +145,14 @@ class TooManyMethodsTest extends AbstractTestCase
      * @param string[] $methodNames
      * @return ClassNode
      */
-    private function createClassMock($numberOfMethods, array $methodNames = null)
+    private function createClassMock($numberOfMethods, ?array $methodNames = null)
     {
         $class = $this->getClassMock('nom', $numberOfMethods);
 
         if (is_array($methodNames)) {
-            $class->expects($this->once())
+            $class->expects(static::once())
                 ->method('getMethodNames')
-                ->will($this->returnValue($methodNames));
+                ->will(static::returnValue($methodNames));
         }
 
         return $class;

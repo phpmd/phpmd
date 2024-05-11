@@ -39,7 +39,7 @@ abstract class Output implements OutputInterface
         }
 
         foreach ($messages as $message) {
-            $this->doWrite($message . ($newline ? "\n" : ""));
+            $this->doWrite($message . ($newline ? "\n" : ''));
         }
     }
 

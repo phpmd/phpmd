@@ -21,7 +21,7 @@ use PHPMD\PHPMD;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Regression test for issue 409.
@@ -30,14 +30,10 @@ use PHPUnit_Framework_MockObject_MockObject;
  */
 class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * @var string Beginning of the violation message
-     */
+    /** @var string Beginning of the violation message */
     private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject|TextRenderer
-     */
+    /** @var PHPUnit_Framework_MockObject_MockObject|TextRenderer */
     private $renderer;
 
     /**
@@ -60,21 +56,19 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsGeneratedIWithNoSuppression()
+    public function testReportIsGeneratedIWithNoSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
         $ruleSetFactory = new RuleSetFactory();
 
-        $this->renderer->expects($this->once())
+        $this->renderer->expects(static::once())
             ->method('renderReport')
             ->will(
-                $this->returnCallback(
-                    function (Report $report) use ($self) {
+                static::returnCallback(
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
                             if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
@@ -105,21 +99,19 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsNotGeneratedIWithSuppression()
+    public function testReportIsNotGeneratedIWithSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
         $ruleSetFactory = new RuleSetFactory();
 
-        $this->renderer->expects($this->once())
+        $this->renderer->expects(static::once())
             ->method('renderReport')
             ->will(
-                $this->returnCallback(
-                    function (Report $report) use ($self) {
+                static::returnCallback(
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
                             if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {

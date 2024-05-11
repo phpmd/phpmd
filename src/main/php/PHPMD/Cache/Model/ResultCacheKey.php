@@ -6,12 +6,16 @@ class ResultCacheKey
 {
     /** @var bool */
     private $strict;
+
     /** @var string|null */
     private $baselineHash;
+
     /** @var array<string, string> */
     private $rules;
+
     /** @var array<string, string> */
     private $composer;
+
     /** @var int */
     private $phpVersion;
 

@@ -28,10 +28,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid property name.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidPropertyName()
+    public function testRuleDoesNotApplyForValidPropertyName(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -43,10 +41,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does apply for all caps abbreviation in property name.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForAllCapsAbbreviationInProperty()
+    public function testRuleDoesApplyForAllCapsAbbreviationInProperty(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -59,10 +55,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does not apply for a camelcase abbreviation in property name.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForCamelcaseAbbreviationInProperty()
+    public function testRuleDoesNotApplyForCamelcaseAbbreviationInProperty(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -76,10 +70,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a property name
      * starting with a capital.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForPropertyNameWithCapital()
+    public function testRuleDoesApplyForPropertyNameWithCapital(): void
     {
         // Test property name with capital at the beginning
         $report = $this->getReportWithOneViolation();
@@ -93,10 +85,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a property name
      * with underscores.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForPropertyNameWithUnderscores()
+    public function testRuleDoesApplyForPropertyNameWithUnderscores(): void
     {
         // Test property name with underscores
         $report = $this->getReportWithOneViolation();
@@ -110,10 +100,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid property name
      * with an underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed()
+    public function testRuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -126,10 +114,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid property name
      * with no underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -142,10 +128,8 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid property name
      * with an underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed(): void
     {
         $report = $this->getReportWithNoViolation();
 

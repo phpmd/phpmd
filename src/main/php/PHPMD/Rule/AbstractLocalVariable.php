@@ -39,9 +39,7 @@ use ReflectionFunction;
  */
 abstract class AbstractLocalVariable extends AbstractRule
 {
-    /**
-     * @var list<string> Self reference class names.
-     */
+    /** @var list<string> Self reference class names. */
     private $selfReferences = ['self', 'static'];
 
     /**
@@ -241,7 +239,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         $previousChildImage = $postfix->getChild(0)->getImage();
 
         if ($postfix instanceof ASTMemberPrimaryPrefix &&
-            in_array($previousChildImage, $this->selfReferences)
+            in_array($previousChildImage, $this->selfReferences, true)
         ) {
             return $previousChildImage;
         }
@@ -307,7 +305,7 @@ abstract class AbstractLocalVariable extends AbstractRule
             return false;
         }
 
-        $argumentPosition = array_search($variable, $parent->getChildren());
+        $argumentPosition = array_search($variable, $parent->getChildren(), true);
         $parentParent = $parent->getParent();
         if ($parentParent === null) {
             return false;

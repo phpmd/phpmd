@@ -30,7 +30,7 @@ use PHPMD\Rule\TraitAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+class CamelCaseClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * This method checks if a class is not named in CamelCase

@@ -51,6 +51,7 @@ class StreamWriter extends AbstractWriter
         }
         if (!file_exists($dirName)) {
             $message = 'Cannot find output directory "' . $dirName . '".';
+
             throw new RuntimeException($message);
         }
 

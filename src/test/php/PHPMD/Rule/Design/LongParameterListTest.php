@@ -30,10 +30,8 @@ class LongParameterListTest extends AbstractTestCase
 {
     /**
      * testApplyIgnoresMethodsWithLessParametersThanMinimum
-     *
-     * @return void
      */
-    public function testApplyIgnoresMethodsWithLessParametersThanMinimum()
+    public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithNoViolation());
@@ -43,10 +41,8 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsMethodsWithIdenticalParametersAndMinimum
-     *
-     * @return void
      */
-    public function testApplyReportsMethodsWithIdenticalParametersAndMinimum()
+    public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithOneViolation());
@@ -56,10 +52,8 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsMethodsWithMoreParametersThanMinimum
-     *
-     * @return void
      */
-    public function testApplyReportsMethodsWithMoreParametersThanMinimum()
+    public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithOneViolation());
@@ -69,10 +63,8 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyIgnoresFunctionsWithLessParametersThanMinimum
-     *
-     * @return void
      */
-    public function testApplyIgnoresFunctionsWithLessParametersThanMinimum()
+    public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithNoViolation());
@@ -82,10 +74,8 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsFunctionsWithIdenticalParametersAndMinimum
-     *
-     * @return void
      */
-    public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum()
+    public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithOneViolation());
@@ -95,10 +85,8 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsFunctionsWithMoreParametersThanMinimum
-     *
-     * @return void
      */
-    public function testApplyReportsFunctionsWithMoreParametersThanMinimum()
+    public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
     {
         $rule = new LongParameterList();
         $rule->setReport($this->getReportWithOneViolation());
@@ -138,9 +126,9 @@ class LongParameterListTest extends AbstractTestCase
      */
     private function initFunctionOrMethodMock($mock, $parameterCount)
     {
-        $mock->expects($this->once())
+        $mock->expects(static::once())
             ->method('getParameterCount')
-            ->will($this->returnValue($parameterCount));
+            ->will(static::returnValue($parameterCount));
 
         return $mock;
     }

@@ -36,7 +36,7 @@ use PHPMD\Rule\MethodAware;
  * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  */
-class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAware
+class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Retrieves all arrays from single node and performs comparison logic on it
@@ -71,6 +71,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
                 $this->addViolation($node, [$key, (string) $arrayElement->getStartLine()]);
+
                 continue;
             }
             $keys[$key] = $arrayElement;
@@ -123,6 +124,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     private function castStringFromLiteral(PDependASTNode $key)
     {
         $value = $key->getImage();
+
         switch ($value) {
             case 'false':
                 return '0';

@@ -15,7 +15,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileShouldSucceed()
+    public function testFromFileShouldSucceed(): void
     {
         $filename = static::createResourceUriForTest('baseline.xml');
         $baseDir = dirname($filename);
@@ -30,7 +30,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileShouldSucceedWithBackAndForwardSlashes()
+    public function testFromFileShouldSucceedWithBackAndForwardSlashes(): void
     {
         $filename = static::createResourceUriForTest('baseline.xml');
         $baseDir = dirname($filename);
@@ -45,7 +45,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileShouldThrowExceptionForMissingFile()
+    public function testFromFileShouldThrowExceptionForMissingFile(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Unable to load the baseline file at: ',
@@ -57,7 +57,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileShouldThrowExceptionForOnInvalidXML()
+    public function testFromFileShouldThrowExceptionForOnInvalidXML(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Unable to read xml from',
@@ -69,7 +69,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileViolationMissingRuleShouldThrowException()
+    public function testFromFileViolationMissingRuleShouldThrowException(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Missing `rule` attribute in `violation`',
@@ -81,7 +81,7 @@ class BaselineSetFactoryTest extends AbstractTestCase
     /**
      * @covers ::fromFile
      */
-    public function testFromFileViolationMissingFileShouldThrowException()
+    public function testFromFileViolationMissingFileShouldThrowException(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Missing `file` attribute in `violation` in',

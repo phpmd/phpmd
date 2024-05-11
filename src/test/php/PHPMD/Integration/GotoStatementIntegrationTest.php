@@ -30,10 +30,9 @@ class GotoStatementIntegrationTest extends AbstractTestCase
     /**
      * testReportContainsGotoStatementWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsGotoStatementWarning()
+    public function testReportContainsGotoStatementWarning(): void
     {
         $file = self::createTempFileUri();
 
@@ -48,6 +47,6 @@ class GotoStatementIntegrationTest extends AbstractTestCase
             ]
         );
 
-        self::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
+        static::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
     }
 }

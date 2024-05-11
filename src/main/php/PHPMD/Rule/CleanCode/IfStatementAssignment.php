@@ -44,7 +44,7 @@ use PHPMD\Rule\MethodAware;
  *
  * Empty if clauses are skipped
  */
-class IfStatementAssignment extends AbstractRule implements MethodAware, FunctionAware
+class IfStatementAssignment extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if method/function has if clauses
@@ -132,7 +132,7 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
             }
 
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
-            if (!in_array($uniqueHash, $processesViolations)) {
+            if (!in_array($uniqueHash, $processesViolations, true)) {
                 $processesViolations[] = $uniqueHash;
                 $this->addViolation(
                     $node,

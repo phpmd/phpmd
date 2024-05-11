@@ -32,10 +32,8 @@ class ReportTest extends AbstractTestCase
     /**
      * Tests that the report returns a linear/sorted list of all rule violation
      * files.
-     *
-     * @return void
      */
-    public function testReportReturnsAListWithAllRuleViolations()
+    public function testReportReturnsAListWithAllRuleViolations(): void
     {
         $report = new Report();
 
@@ -52,15 +50,13 @@ class ReportTest extends AbstractTestCase
 
         $expected = ['bar.txt', 'bar.txt', 'foo.txt', 'foo.txt', 'foo.txt'];
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
      * Tests that the report returns the result by the violation line number.
-     *
-     * @return void
      */
-    public function testReportSortsResultByLineNumber()
+    public function testReportSortsResultByLineNumber(): void
     {
         $report = new Report();
 
@@ -89,15 +85,13 @@ class ReportTest extends AbstractTestCase
             ['foo.txt', 4, 5],
         ];
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
      * Tests that the timer method returns the expected result.
-     *
-     * @return void
      */
-    public function testReportTimerReturnsMilliSeconds()
+    public function testReportTimerReturnsMilliSeconds(): void
     {
         $start = microtime(true);
 
@@ -110,94 +104,84 @@ class ReportTest extends AbstractTestCase
 
         // Windows does not compute the time correctly, simply skipping
         if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-            $this->assertGreaterThanOrEqual(50, $report->getElapsedTimeInMillis());
+            static::assertGreaterThanOrEqual(50, $report->getElapsedTimeInMillis());
         }
-        $this->assertLessThanOrEqual($time, $report->getElapsedTimeInMillis());
+        static::assertLessThanOrEqual($time, $report->getElapsedTimeInMillis());
     }
 
     /**
      * testIsEmptyReturnsTrueByDefault
-     *
-     * @return void
      */
-    public function testIsEmptyReturnsTrueByDefault()
+    public function testIsEmptyReturnsTrueByDefault(): void
     {
         $report = new Report();
-        $this->assertTrue($report->isEmpty());
+        static::assertTrue($report->isEmpty());
     }
 
     /**
      * testIsEmptyReturnsFalseWhenAtLeastOneViolationExists
-     *
-     * @return void
      */
-    public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists()
+    public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists(): void
     {
         $report = new Report();
         $report->addRuleViolation($this->getRuleViolationMock('foo.txt', 4, 5));
 
-        $this->assertFalse($report->isEmpty());
+        static::assertFalse($report->isEmpty());
     }
 
     /**
      * testHasErrorsReturnsFalseByDefault
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testHasErrorsReturnsFalseByDefault()
+    public function testHasErrorsReturnsFalseByDefault(): void
     {
         $report = new Report();
-        $this->assertFalse($report->hasErrors());
+        static::assertFalse($report->hasErrors());
     }
 
     /**
      * testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError()
+    public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError(): void
     {
         $report = new Report();
         $report->addError(new ProcessingError('Failing file "/foo.php".'));
 
-        $this->assertTrue($report->hasErrors());
+        static::assertTrue($report->hasErrors());
     }
 
     /**
      * testGetErrorsReturnsEmptyIteratorByDefault
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testGetErrorsReturnsEmptyIteratorByDefault()
+    public function testGetErrorsReturnsEmptyIteratorByDefault(): void
     {
         $report = new Report();
-        $this->assertSame(0, iterator_count($report->getErrors()));
+        static::assertSame(0, iterator_count($report->getErrors()));
     }
 
     /**
      * testGetErrorsReturnsPreviousAddedProcessingError
      *
-     * @return void
      * @since 1.2.1
      */
-    public function testGetErrorsReturnsPreviousAddedProcessingError()
+    public function testGetErrorsReturnsPreviousAddedProcessingError(): void
     {
         $report = new Report();
         $report->addError(new ProcessingError('Failing file "/foo.php".'));
 
-        $this->assertSame(1, iterator_count($report->getErrors()));
+        static::assertSame(1, iterator_count($report->getErrors()));
     }
 
-    /**
-     * @return void
-     */
-    public function testReportShouldIgnoreBaselineViolation()
+    public function testReportShouldIgnoreBaselineViolation(): void
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
+
         /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
@@ -217,13 +201,11 @@ class ReportTest extends AbstractTestCase
         static::assertSame($ruleB, $violations[0]);
     }
 
-    /**
-     * @return void
-     */
-    public function testReportShouldIgnoreNewViolationsOnBaselineUpdate()
+    public function testReportShouldIgnoreNewViolationsOnBaselineUpdate(): void
     {
         /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
+
         /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 

@@ -28,28 +28,24 @@ class AnnotationsTest extends AbstractTestCase
 {
     /**
      * testCollectionReturnsFalseWhenNoAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsFalseWhenNoAnnotationExists()
+    public function testCollectionReturnsFalseWhenNoAnnotationExists(): void
     {
         $annotations = new Annotations($this->getClassMock());
-        $this->assertFalse($annotations->suppresses($this->getRuleMock()));
+        static::assertFalse($annotations->suppresses($this->getRuleMock()));
     }
 
     /**
      * testCollectionReturnsFalseWhenNoMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists()
+    public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
-        $class->expects($this->once())
+        $class->expects(static::once())
             ->method('__call')
-            ->with($this->equalTo('getComment'))
+            ->with(static::equalTo('getComment'))
             ->will(
-                $this->returnValue(
+                static::returnValue(
                     '/**
                       * @SuppressWarnings("Foo")
                       * @SuppressWarnings("Bar")
@@ -59,39 +55,35 @@ class AnnotationsTest extends AbstractTestCase
             );
 
         $annotations = new Annotations($class);
-        $this->assertFalse($annotations->suppresses($this->getRuleMock()));
+        static::assertFalse($annotations->suppresses($this->getRuleMock()));
     }
 
     /**
      * testCollectionReturnsTrueWhenMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsTrueWhenMatchingAnnotationExists()
+    public function testCollectionReturnsTrueWhenMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
-        $class->expects($this->once())
+        $class->expects(static::once())
             ->method('__call')
-            ->with($this->equalTo('getComment'))
-            ->will($this->returnValue('/** @SuppressWarnings("PMD") */'));
+            ->with(static::equalTo('getComment'))
+            ->will(static::returnValue('/** @SuppressWarnings("PMD") */'));
 
         $annotations = new Annotations($class);
-        $this->assertTrue($annotations->suppresses($this->getRuleMock()));
+        static::assertTrue($annotations->suppresses($this->getRuleMock()));
     }
 
     /**
      * testCollectionReturnsTrueWhenOneMatchingAnnotationExists
-     *
-     * @return void
      */
-    public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists()
+    public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
-        $class->expects($this->once())
+        $class->expects(static::once())
             ->method('__call')
-            ->with($this->equalTo('getComment'))
+            ->with(static::equalTo('getComment'))
             ->will(
-                $this->returnValue(
+                static::returnValue(
                     '/**
                       * @SuppressWarnings("FooBar")
                       * @SuppressWarnings("PMD")
@@ -100,6 +92,6 @@ class AnnotationsTest extends AbstractTestCase
             );
 
         $annotations = new Annotations($class);
-        $this->assertTrue($annotations->suppresses($this->getRuleMock()));
+        static::assertTrue($annotations->suppresses($this->getRuleMock()));
     }
 }

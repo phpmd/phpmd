@@ -100,7 +100,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
                 return true;
             }
 
-            if (in_array($node->getNode(), array_slice($parent->getChildren(), 1))) {
+            if (in_array($node->getNode(), array_slice($parent->getChildren(), 1), true)) {
                 return true;
             }
         }
@@ -176,7 +176,7 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
         $parentNode = $node->getParent()->getNode();
         $candidateParentNodes = $node->getParentsOfType(ASTString::class);
 
-        if (in_array($parentNode, $candidateParentNodes)) {
+        if (in_array($parentNode, $candidateParentNodes, true)) {
             $variablePrefix = $node->getImage();
 
             foreach ($node->findChildrenOfType(ASTExpression::class) as $child) {

@@ -31,7 +31,7 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
      * @covers ::getBaselineHash
      * @covers ::getComposerHashes
      */
-    public function testCreate()
+    public function testCreate(): void
     {
         $rule = new DuplicatedArrayKey();
         $ruleSet = new RuleSet();

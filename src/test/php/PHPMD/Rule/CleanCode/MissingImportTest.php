@@ -35,6 +35,7 @@ class MissingImportTest extends AbstractTestCase
     {
         $rule = new MissingImport();
         $rule->addProperty('ignore-global', 'false');
+
         return $rule;
     }
 
@@ -42,10 +43,9 @@ class MissingImportTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
-     * @return void
      * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesTo($file)
+    public function testRuleAppliesTo($file): void
     {
         $expectedInvokes = str_contains($file, 'testRuleAppliesTwice')
             ? 2
@@ -57,10 +57,9 @@ class MissingImportTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
-     * @return void
      * @dataProvider getNotApplyingCases
      */
-    public function testRuleDoesNotApplyTo($file)
+    public function testRuleDoesNotApplyTo($file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }
@@ -68,11 +67,10 @@ class MissingImportTest extends AbstractTestCase
     /**
      * Tests that it applies to a class that has fully qualified class names
      *
-     * @return void
      * @covers ::apply
      * @covers ::isSelfReference
      */
-    public function testRuleAppliesTwiceToClassWithNotImportedDependencies()
+    public function testRuleAppliesTwiceToClassWithNotImportedDependencies(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(2));
@@ -82,11 +80,10 @@ class MissingImportTest extends AbstractTestCase
     /**
      * Tests that it does not apply to a class in root namespace when configured.
      *
-     * @return void
      * @covers ::apply
      * @covers ::isGlobalNamespace
      */
-    public function testRuleDoesNotApplyWhenSuppressed()
+    public function testRuleDoesNotApplyWhenSuppressed(): void
     {
         $rule = new MissingImport();
         $rule->addProperty('ignore-global', 'true');
@@ -95,6 +92,7 @@ class MissingImportTest extends AbstractTestCase
             // Covers case when the new property is set and the rule *should* apply.
             if (strpos($file, 'WithNotImportedDeepDependencies')) {
                 $this->expectRuleHasViolationsForFile($rule, static::ONE_VIOLATION, $file);
+
                 continue;
             }
             // Covers case when the new property is set and the rule *should not* apply.

@@ -10,8 +10,10 @@ class ResultCacheEngineFactory
 {
     /** @var OutputInterface */
     private $output;
+
     /** @var ResultCacheKeyFactory */
     private $cacheKeyFactory;
+
     /** @var ResultCacheStateFactory */
     private $cacheStateFactory;
 
@@ -34,6 +36,7 @@ class ResultCacheEngineFactory
     {
         if (!$options->isCacheEnabled()) {
             $this->output->writeln('ResultCache is not enabled.', OutputInterface::VERBOSITY_VERY_VERBOSE);
+
             return null;
         }
 

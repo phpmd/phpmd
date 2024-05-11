@@ -15,7 +15,7 @@ class ResultCacheEngineTest extends AbstractTestCase
      * @covers ::getUpdater
      * @covers ::getWriter
      */
-    public function testGetters()
+    public function testGetters(): void
     {
         $filter = $this->getMockFromBuilder(
             $this->getMockBuilder(ResultCacheFileFilter::class)->disableOriginalConstructor()

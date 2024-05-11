@@ -29,12 +29,11 @@ use RuntimeException;
  * @implements IteratorAggregate<string, string>
  * @implements ArrayAccess<string, string>
  */
-class ExceptionsList implements IteratorAggregate, ArrayAccess
+class ExceptionsList implements ArrayAccess, IteratorAggregate
 {
-    /**
-     * Separator used to join exception in the property string.
-     */
+    /** Separator used to join exception in the property string. */
     protected string $separator;
+
     /**
      * Temporary cache of configured exceptions. Have name as key
      *
@@ -42,14 +41,10 @@ class ExceptionsList implements IteratorAggregate, ArrayAccess
      */
     private array $exceptions;
 
-    /**
-     * Rule to which the exception list apply.
-     */
+    /** Rule to which the exception list apply. */
     private Rule $rule;
 
-    /**
-     * Extra characters to be trimmed with whitespace at beginning and ending of each exception.
-     */
+    /** Extra characters to be trimmed with whitespace at beginning and ending of each exception. */
     private string $trim;
 
     public function __construct(Rule $rule, string $trim = '', string $separator = ',')

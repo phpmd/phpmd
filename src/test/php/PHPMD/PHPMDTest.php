@@ -22,7 +22,7 @@ use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the main PHPMD class.
@@ -41,10 +41,8 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * Tests the main PHPMD interface with default settings an a xml-renderer.
-     *
-     * @return void
      */
-    public function testRunWithDefaultSettingsAndXmlRenderer()
+    public function testRunWithDefaultSettingsAndXmlRenderer(): void
     {
         self::changeWorkingDirectory();
 
@@ -68,10 +66,8 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
-     *
-     * @return void
      */
-    public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory()
+    public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory(): void
     {
         self::changeWorkingDirectory();
 
@@ -94,10 +90,8 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
-     *
-     * @return void
      */
-    public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile()
+    public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile(): void
     {
         self::changeWorkingDirectory();
 
@@ -120,32 +114,26 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasErrorsReturnsFalseByDefault
-     *
-     * @return void
      */
-    public function testHasErrorsReturnsFalseByDefault()
+    public function testHasErrorsReturnsFalseByDefault(): void
     {
         $phpmd = new PHPMD();
-        $this->assertFalse($phpmd->hasErrors());
+        static::assertFalse($phpmd->hasErrors());
     }
 
     /**
      * testHasViolationsReturnsFalseByDefault
-     *
-     * @return void
      */
-    public function testHasViolationsReturnsFalseByDefault()
+    public function testHasViolationsReturnsFalseByDefault(): void
     {
         $phpmd = new PHPMD();
-        $this->assertFalse($phpmd->hasViolations());
+        static::assertFalse($phpmd->hasViolations());
     }
 
     /**
      * testHasViolationsReturnsFalseForSourceWithoutViolations
-     *
-     * @return void
      */
-    public function testHasViolationsReturnsFalseForSourceWithoutViolations()
+    public function testHasViolationsReturnsFalseForSourceWithoutViolations(): void
     {
         self::changeWorkingDirectory();
 
@@ -161,16 +149,14 @@ class PHPMDTest extends AbstractTestCase
             new Report()
         );
 
-        $this->assertFalse($phpmd->hasErrors());
-        $this->assertFalse($phpmd->hasViolations());
+        static::assertFalse($phpmd->hasErrors());
+        static::assertFalse($phpmd->hasViolations());
     }
 
     /**
      * testHasViolationsReturnsTrueForSourceWithViolation
-     *
-     * @return void
      */
-    public function testHasViolationsReturnsTrueForSourceWithViolation()
+    public function testHasViolationsReturnsTrueForSourceWithViolation(): void
     {
         self::changeWorkingDirectory();
 
@@ -186,14 +172,11 @@ class PHPMDTest extends AbstractTestCase
             new Report()
         );
 
-        $this->assertFalse($phpmd->hasErrors());
-        $this->assertTrue($phpmd->hasViolations());
+        static::assertFalse($phpmd->hasErrors());
+        static::assertTrue($phpmd->hasViolations());
     }
 
-    /**
-     * @return void
-     */
-    public function testHasViolationsReturnsFalseWhenViolationIsBaselined()
+    public function testHasViolationsReturnsFalseWhenViolationIsBaselined(): void
     {
         self::changeWorkingDirectory();
 
@@ -220,10 +203,8 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasErrorsReturnsTrueForSourceWithError
-     *
-     * @return void
      */
-    public function testHasErrorsReturnsTrueForSourceWithError()
+    public function testHasErrorsReturnsTrueForSourceWithError(): void
     {
         self::changeWorkingDirectory();
 
@@ -239,16 +220,14 @@ class PHPMDTest extends AbstractTestCase
             new Report()
         );
 
-        $this->assertTrue($phpmd->hasErrors());
-        $this->assertFalse($phpmd->hasViolations());
+        static::assertTrue($phpmd->hasErrors());
+        static::assertFalse($phpmd->hasViolations());
     }
 
     /**
      * testIgnorePattern
-     *
-     * @return void
      */
-    public function testIgnorePattern()
+    public function testIgnorePattern(): void
     {
         self::changeWorkingDirectory();
 
@@ -263,8 +242,8 @@ class PHPMDTest extends AbstractTestCase
             new Report()
         );
 
-        $this->assertFalse($phpmd->hasErrors());
-        $this->assertTrue($phpmd->hasViolations());
+        static::assertFalse($phpmd->hasErrors());
+        static::assertTrue($phpmd->hasViolations());
 
         // Process with exclusions, should result in no violations.
         $phpmd->processFiles(
@@ -275,7 +254,7 @@ class PHPMDTest extends AbstractTestCase
             new Report()
         );
 
-        $this->assertFalse($phpmd->hasErrors());
-        $this->assertFalse($phpmd->hasViolations());
+        static::assertFalse($phpmd->hasErrors());
+        static::assertFalse($phpmd->hasViolations());
     }
 }

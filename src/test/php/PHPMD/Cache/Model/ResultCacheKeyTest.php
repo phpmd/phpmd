@@ -13,7 +13,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::toArray
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $key = new ResultCacheKey(
             true,
@@ -36,7 +36,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualTo()
+    public function testIsEqualTo(): void
     {
         $keyA = new ResultCacheKey(
             true,
@@ -60,7 +60,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualToDiffStrict()
+    public function testIsEqualToDiffStrict(): void
     {
         $keyA = new ResultCacheKey(
             true,
@@ -84,7 +84,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualToDiffRules()
+    public function testIsEqualToDiffRules(): void
     {
         $keyA = new ResultCacheKey(
             true,
@@ -108,7 +108,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualToDiffComposer()
+    public function testIsEqualToDiffComposer(): void
     {
         $keyA = new ResultCacheKey(
             true,
@@ -132,7 +132,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualToDiffPhpVersion()
+    public function testIsEqualToDiffPhpVersion(): void
     {
         $keyA = new ResultCacheKey(
             true,
@@ -156,7 +156,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     /**
      * @covers ::isEqualTo
      */
-    public function testIsEqualToDiffBaselineHash()
+    public function testIsEqualToDiffBaselineHash(): void
     {
         $keyA = new ResultCacheKey(
             true,

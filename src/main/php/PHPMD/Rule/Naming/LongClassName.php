@@ -31,7 +31,7 @@ use PHPMD\Utility\Strings;
  * This rule checks if an interface or class name exceeds the configured length
  * excluding certain configured prefixes and suffixes
  */
-class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+class LongClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * Temporary cache of configured prefixes to subtract

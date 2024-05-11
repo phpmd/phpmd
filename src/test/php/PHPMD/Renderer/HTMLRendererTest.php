@@ -30,10 +30,8 @@ class HTMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedHtmlTableRow()
+    public function testRendererCreatesExpectedHtmlTableRow(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -45,9 +43,9 @@ class HTMLRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
+            ->will(static::returnValue(new ArrayIterator($violations)));
 
         $extraLineInExcerpt = 2;
         $renderer = new HTMLRenderer($extraLineInExcerpt);
@@ -57,7 +55,7 @@ class HTMLRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertMatchesRegularExpression(
+        static::assertMatchesRegularExpression(
             "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
             $writer->getData()
         );

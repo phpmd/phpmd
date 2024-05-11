@@ -32,7 +32,7 @@ use PHPMD\Rule\MethodAware;
  * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
  */
-class DevelopmentCodeFragment extends AbstractRule implements MethodAware, FunctionAware
+class DevelopmentCodeFragment extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an eval-expression
@@ -45,11 +45,11 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
         foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $postfix) {
             $fragment = $postfix->getImage();
             if ($ignoreNS) {
-                $fragment = str_replace("{$namespace}\\", "", $fragment);
+                $fragment = str_replace("{$namespace}\\", '', $fragment);
             }
             $fragment = strtolower($fragment);
-            $fragment = trim($fragment, "\\");
-            if (!in_array($fragment, $this->getSuspectImages())) {
+            $fragment = trim($fragment, '\\');
+            if (!in_array($fragment, $this->getSuspectImages(), true)) {
                 continue;
             }
 

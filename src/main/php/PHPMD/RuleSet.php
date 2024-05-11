@@ -51,24 +51,16 @@ class RuleSet implements IteratorAggregate
      */
     private bool $strict = false;
 
-    /**
-     * The name of the file where this set is specified.
-     */
+    /** The name of the file where this set is specified. */
     private string $fileName = '';
 
-    /**
-     * The name of this rule-set.
-     */
+    /** The name of this rule-set. */
     private string $name = '';
 
-    /**
-     * An optional description for this rule-set.
-     */
+    /** An optional description for this rule-set. */
     private string $description = '';
 
-    /**
-     * The violation report used by the rule-set.
-     */
+    /** The violation report used by the rule-set. */
     private ?Report $report = null;
 
     /**

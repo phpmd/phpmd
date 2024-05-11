@@ -28,7 +28,7 @@ use PHPMD\Utility\ExceptionsList;
 /**
  * This rule will detect classes and interfaces with names that are too short.
  */
-class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+class ShortClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * Temporary cache of configured exceptions. Have name as key

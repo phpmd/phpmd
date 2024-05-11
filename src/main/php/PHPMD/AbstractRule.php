@@ -36,29 +36,19 @@ use RuntimeException;
  */
 abstract class AbstractRule implements Rule
 {
-    /**
-     * The name for this rule instance.
-     */
+    /** The name for this rule instance. */
     private string $name = '';
 
-    /**
-     * The violation message text for this rule.
-     */
+    /** The violation message text for this rule. */
     private string $message = '';
 
-    /**
-     * The version since when this rule is available.
-     */
+    /** The version since when this rule is available. */
     private ?string $since = null;
 
-    /**
-     * An url will external information for this rule.
-     */
+    /** An url will external information for this rule. */
     private string $externalInfoUrl = '';
 
-    /**
-     * An optional description for this rule.
-     */
+    /** An optional description for this rule. */
     private string $description = '';
 
     /**
@@ -68,14 +58,10 @@ abstract class AbstractRule implements Rule
      */
     private array $examples = [];
 
-    /**
-     * The name of the parent rule-set instance.
-     */
+    /** The name of the parent rule-set instance. */
     private string $ruleSetName = '';
 
-    /**
-     * The priority of this rule.
-     */
+    /** The priority of this rule. */
     private int $priority = self::LOWEST_PRIORITY;
 
     /**
@@ -85,14 +71,10 @@ abstract class AbstractRule implements Rule
      */
     private array $properties = [];
 
-    /**
-     * The report for object for this rule.
-     */
+    /** The report for object for this rule. */
     private ?Report $report = null;
 
-    /**
-     * Should this rule force the strict mode.
-     */
+    /** Should this rule force the strict mode. */
     private bool $strict = false;
 
     /**

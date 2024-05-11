@@ -251,10 +251,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
-     * @return void
      * @throws ExpectationFailedException
      */
-    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
+    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file): void
     {
         $report = new Report();
         $rule->setReport($report);
@@ -271,7 +270,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             );
         }
 
-        $this->assertTrue($assertion);
+        static::assertTrue($assertion);
     }
 
     /**
@@ -288,7 +287,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     {
         return basename($file) . " failed:\n" .
             "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
-            "But $actualInvokes violation" . ($actualInvokes !== 1 ? 's' : '') . " raised" .
+            "But $actualInvokes violation" . ($actualInvokes !== 1 ? 's' : '') . ' raised' .
             (
                 $actualInvokes > 0
                 ? ":\n" . $this->getViolationsSummary($violations)
@@ -388,9 +387,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         );
 
         if ($metric !== null) {
-            $class->expects($this->atLeastOnce())
+            $class->expects(static::atLeastOnce())
                 ->method('getMetric')
-                ->with($this->equalTo($metric))
+                ->with(static::equalTo($metric))
                 ->willReturn($value);
         }
 
@@ -439,9 +438,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             return $mock;
         }
 
-        $mock->expects($this->atLeastOnce())
+        $mock->expects(static::atLeastOnce())
             ->method('getMetric')
-            ->with($this->equalTo($metric))
+            ->with(static::equalTo($metric))
             ->willReturn($value);
 
         return $mock;
@@ -456,13 +455,13 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected function getReportMock($expectedInvokes = -1)
     {
         if ($expectedInvokes === self::AL_LEAST_ONE_VIOLATION) {
-            $expects = $this->atLeastOnce();
+            $expects = static::atLeastOnce();
         } elseif ($expectedInvokes === self::NO_VIOLATION) {
-            $expects = $this->never();
+            $expects = static::never();
         } elseif ($expectedInvokes === self::ONE_VIOLATION) {
-            $expects = $this->once();
+            $expects = static::once();
         } else {
-            $expects = $this->exactly($expectedInvokes);
+            $expects = static::exactly($expectedInvokes);
         }
 
         $report = $this->getMockFromBuilder($this->getMockBuilder(Report::class));
@@ -532,20 +531,20 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     {
         $ruleSet = $this->getMockFromBuilder($this->getMockBuilder(RuleSet::class));
         if ($expectedClass === null) {
-            $ruleSet->expects($this->never())->method('apply');
+            $ruleSet->expects(static::never())->method('apply');
 
             return $ruleSet;
         }
 
         if ($count === '*') {
-            $count = $this->atLeastOnce();
+            $count = static::atLeastOnce();
         } else {
-            $count = $this->exactly($count);
+            $count = static::exactly($count);
         }
 
         $ruleSet->expects($count)
             ->method('apply')
-            ->with($this->isInstanceOf($expectedClass));
+            ->with(static::isInstanceOf($expectedClass));
 
         return $ruleSet;
     }
@@ -674,6 +673,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
                 return $node;
             }
         }
+
         throw new ErrorException("Cannot locate node named $name.");
     }
 

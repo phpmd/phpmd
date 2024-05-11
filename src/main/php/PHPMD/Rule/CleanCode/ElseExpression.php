@@ -33,7 +33,7 @@ use PHPMD\Rule\MethodAware;
  * Object Calisthenics teaches us, that an else expression can always be
  * avoided by simple guard clause or return statements.
  */
-class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
+class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a method/function uses an else expression and add a violation for each one found.
@@ -83,6 +83,6 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
      */
     private function isIfOrElseIfStatement(ASTNode $parent)
     {
-        return ($parent->getName() === "if" || $parent->getName() === "elseif");
+        return ($parent->getName() === 'if' || $parent->getName() === 'elseif');
     }
 }

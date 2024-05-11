@@ -30,10 +30,8 @@ class AnsiRendererTest extends AbstractTestCase
 {
     /**
      * testRendererOutputsForReportWithContents
-     *
-     * @return void
      */
-    public function testRendererOutputsForReportWithContents()
+    public function testRendererOutputsForReportWithContents(): void
     {
         $writer = new WriterStub();
 
@@ -48,21 +46,21 @@ class AnsiRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->atLeastOnce())
+        $report->expects(static::atLeastOnce())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::atLeastOnce())
             ->method('isEmpty')
-            ->will($this->returnValue(false));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(false));
+        $report->expects(static::atLeastOnce())
             ->method('hasErrors')
-            ->will($this->returnValue(true));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(true));
+        $report->expects(static::atLeastOnce())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator($errors)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($errors)));
+        $report->expects(static::once())
             ->method('getElapsedTimeInMillis')
-            ->will($this->returnValue(200));
+            ->will(static::returnValue(200));
 
         $renderer = new AnsiRenderer();
         $renderer->setWriter($writer);
@@ -72,20 +70,20 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->end();
 
         $expectedChunks = [
-            PHP_EOL . "FILE: /bar.php" . PHP_EOL . "--------------" . PHP_EOL,
+            PHP_EOL . 'FILE: /bar.php' . PHP_EOL . '--------------' . PHP_EOL,
             " 1 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
             PHP_EOL,
-            PHP_EOL . "FILE: /foo.php" . PHP_EOL . "--------------" . PHP_EOL,
+            PHP_EOL . 'FILE: /foo.php' . PHP_EOL . '--------------' . PHP_EOL,
             " 2 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
             " 3 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
-            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . "--------------------------------" .
+            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . '--------------------------------' .
             (version_compare(PHP_VERSION, '5.4.0-dev', '<') ? '--' : '') . PHP_EOL,
-            "Error in file \"/foo/baz.php\"" . PHP_EOL,
-            PHP_EOL . "Found 3 violations and 1 error in 200ms" . PHP_EOL,
+            'Error in file "/foo/baz.php"' . PHP_EOL,
+            PHP_EOL . 'Found 3 violations and 1 error in 200ms' . PHP_EOL,
         ];
 
         foreach ($writer->getChunks() as $i => $chunk) {
-            $this->assertEquals(
+            static::assertEquals(
                 $expectedChunks[$i],
                 $chunk,
                 sprintf('Chunk %s did not match expected string', $i)
@@ -95,29 +93,27 @@ class AnsiRendererTest extends AbstractTestCase
 
     /**
      * testRendererOutputsForReportWithoutContents
-     *
-     * @return void
      */
-    public function testRendererOutputsForReportWithoutContents()
+    public function testRendererOutputsForReportWithoutContents(): void
     {
         $writer = new WriterStub();
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->atLeastOnce())
+        $report->expects(static::atLeastOnce())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::atLeastOnce())
             ->method('isEmpty')
-            ->will($this->returnValue(true));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(true));
+        $report->expects(static::atLeastOnce())
             ->method('hasErrors')
-            ->will($this->returnValue(false));
-        $report->expects($this->atLeastOnce())
+            ->will(static::returnValue(false));
+        $report->expects(static::atLeastOnce())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getElapsedTimeInMillis')
-            ->will($this->returnValue(200));
+            ->will(static::returnValue(200));
 
         $renderer = new AnsiRenderer();
         $renderer->setWriter($writer);
@@ -127,12 +123,12 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->end();
 
         $expectedChunks = [
-            PHP_EOL . "Found 0 violations and 0 errors in 200ms" . PHP_EOL,
+            PHP_EOL . 'Found 0 violations and 0 errors in 200ms' . PHP_EOL,
             PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL,
         ];
 
         foreach ($writer->getChunks() as $i => $chunk) {
-            $this->assertEquals(
+            static::assertEquals(
                 $expectedChunks[$i],
                 $chunk,
                 sprintf('Chunk %s did not match expected string', $i)

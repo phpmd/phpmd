@@ -28,98 +28,82 @@ class AnnotationTest extends AbstractTestCase
 {
     /**
      * testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists
-     *
-     * @return void
      */
-    public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists()
+    public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists(): void
     {
         $annotation = new Annotation('NoSuppressWarning', 'PMD');
-        $this->assertFalse($annotation->suppresses($this->getRuleMock()));
+        static::assertFalse($annotation->suppresses($this->getRuleMock()));
     }
 
     /**
      * testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue
-     *
-     * @return void
      */
-    public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue()
+    public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PHP');
-        $this->assertFalse($annotation->suppresses($this->getRuleMock()));
+        static::assertFalse($annotation->suppresses($this->getRuleMock()));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PMD');
-        $this->assertTrue($annotation->suppresses($this->getRuleMock()));
+        static::assertTrue($annotation->suppresses($this->getRuleMock()));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD(): void
     {
         $annotation = new Annotation('SuppressWarnings', 'PHPMD');
-        $this->assertTrue($annotation->suppresses($this->getRuleMock()));
+        static::assertTrue($annotation->suppresses($this->getRuleMock()));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst(): void
     {
         $annotation = new Annotation('suppressWarnings', 'PHPMD');
-        $this->assertTrue($annotation->suppresses($this->getRuleMock()));
+        static::assertTrue($annotation->suppresses($this->getRuleMock()));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');
 
         $annotation = new Annotation('SuppressWarnings', 'PMD.UnusedCodeRule');
-        $this->assertTrue($annotation->suppresses($rule));
+        static::assertTrue($annotation->suppresses($rule));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');
 
         $annotation = new Annotation('SuppressWarnings', 'PHPMD.UnusedCodeRule');
-        $this->assertTrue($annotation->suppresses($rule));
+        static::assertTrue($annotation->suppresses($rule));
     }
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName
-     *
-     * @return void
      */
-    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName()
+    public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName(): void
     {
         $rule = $this->getRuleMock();
         $rule->setName('UnusedCodeRule');
 
         $annotation = new Annotation('SuppressWarnings', 'unused');
-        $this->assertTrue($annotation->suppresses($rule));
+        static::assertTrue($annotation->suppresses($rule));
     }
 }

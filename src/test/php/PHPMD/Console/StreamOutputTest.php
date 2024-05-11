@@ -13,7 +13,7 @@ class StreamOutputTest extends TestCase
      * @covers ::__construct
      * @covers ::doWrite
      */
-    public function testDoWrite()
+    public function testDoWrite(): void
     {
         $stream = fopen('php://memory', 'w+b');
         $output = new StreamOutput($stream);

@@ -59,7 +59,7 @@ class GitLabRenderer extends AbstractRenderer
                 ],
                 'check_name' => $violation->getRule()->getName(),
                 'fingerprint' => sprintf(
-                    "%s:%s:%s",
+                    '%s:%s:%s',
                     $violation->getFileName(),
                     $violation->getBeginLine(),
                     $violation->getRule()->getName()

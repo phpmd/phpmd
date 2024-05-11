@@ -31,10 +31,8 @@ class GitLabRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfGitLabElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfGitLabElements()
+    public function testRendererCreatesExpectedNumberOfGitLabElements(): void
     {
         $writer = new WriterStub();
 
@@ -45,12 +43,12 @@ class GitLabRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer = new GitLabRenderer();
         $renderer->setWriter($writer);
@@ -67,10 +65,8 @@ class GitLabRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToGitLabReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToGitLabReport()
+    public function testRendererAddsProcessingErrorsToGitLabReport(): void
     {
         $writer = new WriterStub();
 
@@ -82,12 +78,12 @@ class GitLabRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new ArrayIterator($processingErrors)));
+            ->will(static::returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new GitLabRenderer();
         $renderer->setWriter($writer);

@@ -30,9 +30,7 @@ use PHPMD\Rule\MethodAware;
  */
 class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
-    /**
-     * @var list<string>
-     */
+    /** @var list<string> */
     private $ignoredMethods = [
         '__construct',
         '__destruct',
@@ -60,7 +58,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     public function apply(AbstractNode $node): void
     {
         $methodName = $node->getName();
-        if (!in_array($methodName, $this->ignoredMethods)) {
+        if (!in_array($methodName, $this->ignoredMethods, true)) {
             if (!$this->isValid($methodName)) {
                 $this->addViolation(
                     $node,

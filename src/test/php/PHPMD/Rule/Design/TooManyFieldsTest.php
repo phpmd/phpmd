@@ -28,10 +28,8 @@ class TooManyFieldsTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold()
+    public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold(): void
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class TooManyFieldsTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold()
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold(): void
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithNoViolation());
@@ -54,10 +50,8 @@ class TooManyFieldsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMoreFieldsThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassesWithMoreFieldsThanThreshold()
+    public function testRuleAppliesToClassesWithMoreFieldsThanThreshold(): void
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithOneViolation());

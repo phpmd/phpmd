@@ -106,6 +106,7 @@ class ParserFactory
             $trimmedPath = trim($path);
             if (is_dir($trimmedPath)) {
                 $pdepend->addDirectory($trimmedPath);
+
                 continue;
             }
             $pdepend->addFile($trimmedPath);

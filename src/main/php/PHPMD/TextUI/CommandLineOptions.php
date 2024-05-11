@@ -44,9 +44,7 @@ use PHPMD\Utility\ArgumentsValidator;
  */
 class CommandLineOptions
 {
-    /**
-     * Error code for invalid input
-     */
+    /** Error code for invalid input */
     private const INPUT_ERROR = 23;
 
     /**
