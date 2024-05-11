@@ -160,10 +160,10 @@ class TooManyPublicMethodsTest extends AbstractTestCase
 
         $class->expects(static::any())
             ->method('getMethods')
-            ->will(static::returnValue(array_merge(
-                array_map([$this, 'createPublicMethod'], $publicMethods),
-                array_map([$this, 'createPrivateMethod'], $privateMethods)
-            )));
+            ->will(static::returnValue([
+                ...array_map([$this, 'createPublicMethod'], $publicMethods),
+                ...array_map([$this, 'createPrivateMethod'], $privateMethods),
+            ]));
 
         return $class;
     }

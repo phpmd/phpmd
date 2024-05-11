@@ -49,17 +49,15 @@ class CommandTest extends AbstractTestCase
         ?array $options = null
     ): void {
         $args = array_filter(
-            array_merge(
-                [
-                    __FILE__,
-                    self::createFileUri($sourceFile),
-                    'html',
-                    'codesize',
-                    '--reportfile',
-                    self::createTempFileUri(),
-                ],
-                (array) $options
-            )
+            [
+                __FILE__,
+                self::createFileUri($sourceFile),
+                'html',
+                'codesize',
+                '--reportfile',
+                self::createTempFileUri(),
+                ...($options ?? []),
+            ]
         );
 
         $exitCode = Command::main($args);

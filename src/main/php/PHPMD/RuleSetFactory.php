@@ -139,10 +139,10 @@ class RuleSetFactory
      */
     public function listAvailableRuleSets()
     {
-        return array_merge(
-            self::listRuleSetsInDirectory($this->location . '/rulesets/'),
-            self::listRuleSetsInDirectory(getcwd() . '/rulesets/')
-        );
+        return [
+            ...self::listRuleSetsInDirectory($this->location . '/rulesets/'),
+            ...self::listRuleSetsInDirectory(getcwd() . '/rulesets/'),
+        ];
     }
 
     /**

@@ -110,7 +110,7 @@ class Report
             ksort($violationInLine);
 
             foreach ($violationInLine as $violation) {
-                $violations = array_merge($violations, $violation);
+                $violations = [...$violations, ...$violation];
             }
         }
 

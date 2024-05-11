@@ -154,10 +154,10 @@ class PHPMD
      */
     public function addIgnorePatterns(array $ignorePatterns)
     {
-        $this->ignorePatterns = array_merge(
-            $this->ignorePatterns,
-            $ignorePatterns
-        );
+        $this->ignorePatterns = [
+            ...$this->ignorePatterns,
+            ...$ignorePatterns,
+        ];
 
         return $this;
     }
