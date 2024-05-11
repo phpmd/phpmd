@@ -125,18 +125,11 @@ class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAw
     {
         $value = $key->getImage();
 
-        switch ($value) {
-            case 'false':
-                return '0';
-
-            case 'true':
-                return '1';
-
-            case 'null':
-                return '';
-
-            default:
-                return trim($value, '\'""');
-        }
+        return match ($value) {
+            'false' => '0',
+            'true' => '1',
+            'null' => '',
+            default => trim($value, '\'""'),
+        };
     }
 }

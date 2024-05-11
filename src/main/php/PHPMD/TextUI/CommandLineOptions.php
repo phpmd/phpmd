@@ -653,14 +653,11 @@ class CommandLineOptions
      */
     public function cacheStrategy()
     {
-        switch ($this->cacheStrategy) {
-            case ResultCacheStrategy::CONTENT:
-            case ResultCacheStrategy::TIMESTAMP:
-                return $this->cacheStrategy;
-
-            default:
-                return ResultCacheStrategy::CONTENT;
-        }
+        return match ($this->cacheStrategy) {
+            ResultCacheStrategy::CONTENT,
+            ResultCacheStrategy::TIMESTAMP => $this->cacheStrategy,
+            default => ResultCacheStrategy::CONTENT,
+        };
     }
 
     /**
@@ -734,37 +731,18 @@ class CommandLineOptions
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
-        switch ($reportFormat) {
-            case 'ansi':
-                return $this->createAnsiRenderer();
-
-            case 'checkstyle':
-                return $this->createCheckStyleRenderer();
-
-            case 'gitlab':
-                return $this->createGitLabRenderer();
-
-            case 'github':
-                return $this->createGitHubRenderer();
-
-            case 'html':
-                return $this->createHtmlRenderer();
-
-            case 'json':
-                return $this->createJsonRenderer();
-
-            case 'sarif':
-                return $this->createSarifRenderer();
-
-            case 'text':
-                return $this->createTextRenderer();
-
-            case 'xml':
-                return $this->createXmlRenderer();
-
-            default:
-                return $this->createCustomRenderer();
-        }
+        return match ($reportFormat) {
+            'ansi' => $this->createAnsiRenderer(),
+            'checkstyle' => $this->createCheckStyleRenderer(),
+            'gitlab' => $this->createGitLabRenderer(),
+            'github' => $this->createGitHubRenderer(),
+            'html' => $this->createHtmlRenderer(),
+            'json' => $this->createJsonRenderer(),
+            'sarif' => $this->createSarifRenderer(),
+            'text' => $this->createTextRenderer(),
+            'xml' => $this->createXmlRenderer(),
+            default => $this->createCustomRenderer(),
+        };
     }
 
     /**
