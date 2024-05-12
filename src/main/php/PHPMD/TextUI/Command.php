@@ -42,7 +42,7 @@ use RuntimeException;
 class Command
 {
     /** Exit codes used by the phpmd command line tool. */
-    public const EXIT_SUCCESS = 0,
+    final public const EXIT_SUCCESS = 0,
         EXIT_EXCEPTION = 1,
         EXIT_VIOLATION = 2,
         EXIT_ERROR = 3;

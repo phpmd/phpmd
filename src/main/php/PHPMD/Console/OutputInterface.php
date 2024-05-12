@@ -8,11 +8,11 @@ namespace PHPMD\Console;
  */
 interface OutputInterface
 {
-    public const VERBOSITY_QUIET = 16;
-    public const VERBOSITY_NORMAL = 32;
-    public const VERBOSITY_VERBOSE = 64;
-    public const VERBOSITY_VERY_VERBOSE = 128;
-    public const VERBOSITY_DEBUG = 256;
+    final public const VERBOSITY_QUIET = 16;
+    final public const VERBOSITY_NORMAL = 32;
+    final public const VERBOSITY_VERBOSE = 64;
+    final public const VERBOSITY_VERY_VERBOSE = 128;
+    final public const VERBOSITY_DEBUG = 256;
 
     /**
      * @param string|string[] $messages
