@@ -32,7 +32,7 @@ use RuntimeException;
 class ExceptionsList implements ArrayAccess, IteratorAggregate
 {
     /** Separator used to join exception in the property string. */
-    protected string $separator;
+    private string $separator;
 
     /**
      * Temporary cache of configured exceptions. Have name as key
@@ -72,7 +72,7 @@ class ExceptionsList implements ArrayAccess, IteratorAggregate
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    protected function getExceptionsList(): array
+    private function getExceptionsList(): array
     {
         if (!isset($this->exceptions)) {
             $values = Strings::splitToList(

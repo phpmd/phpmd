@@ -257,7 +257,7 @@ abstract class AbstractRule implements Rule
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    protected function getProperty(string $name, mixed $default = null): mixed
+    private function getProperty(string $name, mixed $default = null): mixed
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];

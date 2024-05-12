@@ -40,7 +40,7 @@ class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodA
      *
      * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * This method checks if a method/function has boolean flag arguments and warns about them.
@@ -71,7 +71,7 @@ class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodA
         $this->scanFormalParameters($node);
     }
 
-    protected function isBooleanValue(?ASTValue $value = null): bool
+    private function isBooleanValue(?ASTValue $value = null): bool
     {
         return $value?->isValueAvailable() && is_bool($value->getValue());
     }
@@ -81,7 +81,7 @@ class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodA
      *
      * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);
