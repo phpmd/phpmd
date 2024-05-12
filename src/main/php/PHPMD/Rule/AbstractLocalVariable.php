@@ -67,22 +67,6 @@ abstract class AbstractLocalVariable extends AbstractRule
     ];
 
     /**
-     * Tests if the given variable node represents a local variable or if it is
-     * a static object property or something similar.
-     *
-     * @param ASTNode<ASTVariable> $variable The variable to check.
-     * @return bool
-     * @throws OutOfBoundsException
-     */
-    protected function isLocal(ASTNode $variable)
-    {
-        return (!$variable->isThis()
-            && $this->isNotSuperGlobal($variable)
-            && $this->isRegularVariable($variable)
-        );
-    }
-
-    /**
      * Tests if the given variable represents one of the PHP super globals
      * that are available in scopes.
      *
@@ -92,18 +76,6 @@ abstract class AbstractLocalVariable extends AbstractRule
     protected function isSuperGlobal(AbstractNode $variable)
     {
         return isset(self::$superGlobals[$variable->getImage()]);
-    }
-
-    /**
-     * Tests if the given variable does not represent one of the PHP super globals
-     * that are available in scopes.
-     *
-     * @param AbstractNode<ASTVariable> $variable
-     * @return bool
-     */
-    private function isNotSuperGlobal(AbstractNode $variable)
-    {
-        return !$this->isSuperGlobal($variable);
     }
 
     /**
@@ -167,19 +139,6 @@ abstract class AbstractLocalVariable extends AbstractRule
         return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
             || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)
         );
-    }
-
-    /**
-     * PHP is case insensitive so we should compare function names case
-     * insensitive.
-     *
-     * @param AbstractNode<PDependNode> $node
-     * @param string $name
-     * @return bool
-     */
-    protected function isFunctionNameEqual(AbstractNode $node, $name)
-    {
-        return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
     }
 
     /**
