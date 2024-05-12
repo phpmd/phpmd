@@ -174,13 +174,11 @@ class RuleSetFactory
     {
         $ruleSets = [];
         if (is_dir($directory)) {
-            $filesPaths = scandir($directory);
-            if ($filesPaths !== false) {
-                foreach ($filesPaths as $file) {
-                    $matches = [];
-                    if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
-                        $ruleSets[] = $matches[1];
-                    }
+            $filesPaths = scandir($directory) ?: [];
+            foreach ($filesPaths as $file) {
+                $matches = [];
+                if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
+                    $ruleSets[] = $matches[1];
                 }
             }
         }
