@@ -30,10 +30,10 @@ use PDepend\Source\AST\ASTNode;
 interface Rule
 {
     /** The default lowest rule priority. */
-    public const LOWEST_PRIORITY = 5;
+    final public const LOWEST_PRIORITY = 5;
 
     /** The default highest rule priority. */
-    public const HIGHEST_PRIORITY = 1;
+    final public const HIGHEST_PRIORITY = 1;
 
     /**
      * Returns the name for this rule instance.
