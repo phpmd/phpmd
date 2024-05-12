@@ -2,7 +2,7 @@
 
 namespace PHPMD\Console;
 
-class StreamOutput extends Output
+final class StreamOutput extends Output
 {
     /**
      * @param resource $stream

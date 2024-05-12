@@ -30,7 +30,6 @@ use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 
 /**
@@ -39,12 +38,12 @@ use PHPMD\Node\MethodNode;
  *
  * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
-class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
+final class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**
      * Collected ast nodes.
      *
-     * @var array<string, ASTNode<ASTVariableDeclarator>>
+     * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
     private $nodes = [];
 

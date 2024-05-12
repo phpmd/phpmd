@@ -4,7 +4,7 @@ namespace PHPMD\Utility;
 
 use RuntimeException;
 
-class Paths
+final class Paths
 {
     /**
      * Transform the given absolute path to the relative path based on the given base path.

@@ -24,7 +24,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule will detect class that have to much direct child classes.
  */
-class NumberOfChildren extends AbstractRule implements ClassAware
+final class NumberOfChildren extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the number of classes derived from the given class

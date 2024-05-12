@@ -38,7 +38,7 @@ use PHPMD\Utility\ExceptionsList;
  * This rule class will detect variables, parameters and properties with short
  * names.
  */
-class ShortVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
+final class ShortVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
 {
     /**
      * Temporary map holding variables that were already processed in the

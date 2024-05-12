@@ -31,7 +31,6 @@ use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 
 /**
@@ -40,13 +39,13 @@ use PHPMD\Node\ClassNode;
  *
  * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
-class UnusedPrivateField extends AbstractRule implements ClassAware
+final class UnusedPrivateField extends AbstractRule implements ClassAware
 {
     /**
      * Collected private fields/variable declarators in the currently processed
      * class.
      *
-     * @var array<string, ASTNode<ASTVariableDeclarator>>
+     * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
     private $fields = [];
 
@@ -69,7 +68,7 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method collects all private fields that aren't used by any class
      * method.
      *
-     * @return array<string, ASTNode<ASTVariableDeclarator>>
+     * @return array<string, AbstractNode<ASTVariableDeclarator>>
      * @throws OutOfBoundsException
      */
     private function collectUnusedPrivateFields(ClassNode $class)
@@ -99,9 +98,9 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method extracts all variable declarators from the given field
      * declaration and stores them in the <b>$_fields</b> property.
      *
-     * @param ASTNode<ASTFieldDeclaration> $declaration
+     * @param AbstractNode<ASTFieldDeclaration> $declaration
      */
-    private function collectPrivateField(ASTNode $declaration): void
+    private function collectPrivateField(AbstractNode $declaration): void
     {
         $fields = $declaration->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($fields as $field) {
@@ -129,9 +128,9 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method removes the field from the <b>$_fields</b> property that is
      * accessed through the given property postfix node.
      *
-     * @param ASTNode<ASTPropertyPostfix> $postfix
+     * @param AbstractNode<ASTPropertyPostfix> $postfix
      */
-    private function removeUsedField(ASTNode $postfix): void
+    private function removeUsedField(AbstractNode $postfix): void
     {
         $image = '$';
         $child = $postfix->getFirstChildOfType(ASTIdentifier::class);
@@ -150,11 +149,11 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * Checks if the given node is a valid property node.
      *
-     * @param ASTNode<ASTExpression> $node
+     * @param AbstractNode<ASTExpression> $node
      * @return bool
      * @since 0.2.6
      */
-    private function isValidPropertyNode(ASTNode $node)
+    private function isValidPropertyNode(AbstractNode $node)
     {
         $parent = $node->getParent();
         while (!$parent->isInstanceOf(ASTPropertyPostfix::class)) {
@@ -174,11 +173,11 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
      * This method checks that the given property postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param ASTNode<ASTPropertyPostfix> $postfix
+     * @param AbstractNode<ASTPropertyPostfix> $postfix
      * @return bool
      * @throws OutOfBoundsException
      */
-    private function isInScopeOfClass(ClassNode $class, ASTNode $postfix)
+    private function isInScopeOfClass(ClassNode $class, AbstractNode $postfix)
     {
         $owner = $this->getOwner($postfix);
 
@@ -192,11 +191,11 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     /**
      * Looks for owner of the given variable.
      *
-     * @param ASTNode<ASTPropertyPostfix> $postfix
+     * @param AbstractNode<ASTPropertyPostfix> $postfix
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    private function getOwner(ASTNode $postfix)
+    private function getOwner(AbstractNode $postfix)
     {
         $owner = $postfix->getParent()->getChild(0);
         if ($owner->isInstanceOf(ASTPropertyPostfix::class)) {

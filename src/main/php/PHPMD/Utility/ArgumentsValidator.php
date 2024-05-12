@@ -4,7 +4,7 @@ namespace PHPMD\Utility;
 
 use InvalidArgumentException;
 
-class ArgumentsValidator
+final class ArgumentsValidator
 {
     /**
      * @param string[] $originalArguments

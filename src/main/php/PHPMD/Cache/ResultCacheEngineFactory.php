@@ -6,7 +6,7 @@ use PHPMD\Console\OutputInterface;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 
-class ResultCacheEngineFactory
+final class ResultCacheEngineFactory
 {
     public function __construct(
         private OutputInterface $output,

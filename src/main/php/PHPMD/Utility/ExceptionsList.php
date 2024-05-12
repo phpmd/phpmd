@@ -29,7 +29,7 @@ use RuntimeException;
  * @implements IteratorAggregate<string, string>
  * @implements ArrayAccess<string, string>
  */
-class ExceptionsList implements ArrayAccess, IteratorAggregate
+final class ExceptionsList implements ArrayAccess, IteratorAggregate
 {
     /**
      * Temporary cache of configured exceptions. Have name as key

@@ -22,7 +22,7 @@ use RuntimeException;
 /**
  * When a configured rule class does not exist.
  */
-class RuleClassNotFoundException extends RuntimeException
+final class RuleClassNotFoundException extends RuntimeException
 {
     /**
      * Constructs a new class not found exception.

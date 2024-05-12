@@ -8,7 +8,7 @@ use PHPMD\Report;
  * This class will render a Java-checkstyle compatible xml-report.
  * for use with cs2pr and others
  */
-class CheckStyleRenderer extends XMLRenderer
+final class CheckStyleRenderer extends XMLRenderer
 {
     /**
      * Temporary property that holds the name of the last rendered file, it is

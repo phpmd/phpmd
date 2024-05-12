@@ -24,7 +24,7 @@ use PHPMD\Report;
 /**
  * This class will render a GitLab compatible JSON report.
  */
-class GitLabRenderer extends AbstractRenderer
+final class GitLabRenderer extends AbstractRenderer
 {
     /**
      * {@inheritDoc}

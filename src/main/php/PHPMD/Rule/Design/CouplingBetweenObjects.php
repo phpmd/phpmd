@@ -26,7 +26,7 @@ use PHPMD\Rule\ClassAware;
  *
  * @since 1.1.0
  */
-class CouplingBetweenObjects extends AbstractRule implements ClassAware
+final class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {
     /**
      * This method should implement the violation analysis algorithm of concrete

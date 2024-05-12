@@ -4,7 +4,7 @@ namespace PHPMD\Baseline;
 
 use RuntimeException;
 
-class BaselineSetFactory
+final class BaselineSetFactory
 {
     /**
      * Read the baseline violations from the given filename path. Append the baseDir to all the filepaths within

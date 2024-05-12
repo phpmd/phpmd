@@ -24,6 +24,6 @@ use PDepend\Source\AST\ASTTrait;
  *
  * @extends AbstractTypeNode<ASTTrait>
  */
-class TraitNode extends AbstractTypeNode
+final class TraitNode extends AbstractTypeNode
 {
 }

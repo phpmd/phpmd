@@ -28,7 +28,6 @@ use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use ReflectionException;
 use ReflectionFunction;
 
@@ -82,11 +81,11 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node is a regular variable an not property
      * or method postfix.
      *
-     * @param ASTNode<ASTVariable> $variable
+     * @param AbstractNode<ASTVariable> $variable
      * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isRegularVariable(ASTNode $variable)
+    protected function isRegularVariable(AbstractNode $variable)
     {
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
@@ -110,11 +109,11 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Removes all index expressions that are wrapped around the given node
      * instance.
      *
-     * @param ASTNode<PDependNode> $node
-     * @return ASTNode<PDependNode>
+     * @param AbstractNode<PDependNode> $node
+     * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    private function stripWrappedIndexExpression(ASTNode $node)
+    private function stripWrappedIndexExpression(AbstractNode $node)
     {
         if (!$this->isWrappedByIndexExpression($node)) {
             return $node;
@@ -131,10 +130,10 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Tests if the given variable node os part of an index expression.
      *
-     * @param ASTNode<PDependNode> $node
+     * @param AbstractNode<PDependNode> $node
      * @return bool
      */
-    private function isWrappedByIndexExpression(ASTNode $node)
+    private function isWrappedByIndexExpression(AbstractNode $node)
     {
         return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
             || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)

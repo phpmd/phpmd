@@ -25,7 +25,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class will detect all classes with too many methods.
  */
-class TooManyMethods extends AbstractRule implements ClassAware
+final class TooManyMethods extends AbstractRule implements ClassAware
 {
     /**
      * Regular expression that filters all methods that are ignored by this rule.

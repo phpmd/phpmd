@@ -28,7 +28,6 @@ use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use RuntimeException;
@@ -37,7 +36,7 @@ use RuntimeException;
  * This rule collects all private methods in a class that aren't used in any
  * method of the analyzed class.
  */
-class UnusedPrivateMethod extends AbstractRule implements ClassAware
+final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
     /**
      * This method checks that all private class methods are at least accessed
@@ -197,11 +196,11 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param ASTNode<ASTExpression> $postfix
+     * @param AbstractNode<ASTExpression> $postfix
      * @return bool
      * @throws OutOfBoundsException
      */
-    private function isClassScope(ClassNode $class, ASTNode $postfix)
+    private function isClassScope(ClassNode $class, AbstractNode $postfix)
     {
         $owner = $postfix->getParent()->getChild(0);
 

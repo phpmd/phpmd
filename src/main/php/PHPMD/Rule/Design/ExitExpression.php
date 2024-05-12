@@ -26,7 +26,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of PHP's exit statement.
  */
-class ExitExpression extends AbstractRule implements FunctionAware, MethodAware
+final class ExitExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an exit-expression

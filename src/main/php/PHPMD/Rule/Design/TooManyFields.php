@@ -24,7 +24,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class will detect all classes with too much fields.
  */
-class TooManyFields extends AbstractRule implements ClassAware
+final class TooManyFields extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the number of methods with in a given class and checks

@@ -26,7 +26,7 @@ use PHPMD\Rule\MethodAware;
  * This rule will detect to long methods, those methods are unreadable and in
  * many cases the result of copy and paste coding.
  */
-class LongMethod extends AbstractRule implements FunctionAware, MethodAware
+final class LongMethod extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the lines of code length for the given function or

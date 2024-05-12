@@ -24,7 +24,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule class will detect excessive long classes.
  */
-class LongClass extends AbstractRule implements ClassAware
+final class LongClass extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the length of the given class node against a configured

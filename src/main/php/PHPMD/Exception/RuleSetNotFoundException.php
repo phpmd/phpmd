@@ -22,7 +22,7 @@ use RuntimeException;
 /**
  * This type of exception is thrown when a not existing rule-set was specified.
  */
-class RuleSetNotFoundException extends RuntimeException
+final class RuleSetNotFoundException extends RuntimeException
 {
     /**
      * Constructs a new exception for the given rule-set identifier or file name.

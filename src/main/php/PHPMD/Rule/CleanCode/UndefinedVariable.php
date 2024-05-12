@@ -38,7 +38,6 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\AbstractLocalVariable;
 use PHPMD\Rule\FunctionAware;
@@ -50,7 +49,7 @@ use PHPMD\Rule\MethodAware;
  *
  * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
-class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
+final class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**
      * Found variable images within a single method or function.
@@ -212,12 +211,12 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
     /**
      * Check if the given variable was defined in the current context before usage.
      *
-     * @param ASTNode<ASTVariable> $variable
+     * @param AbstractNode<ASTVariable> $variable
      * @param AbstractCallableNode<AbstractASTCallable> $parentNode
      * @return bool
      * @throws OutOfBoundsException
      */
-    private function checkVariableDefined(ASTNode $variable, AbstractCallableNode $parentNode)
+    private function checkVariableDefined(AbstractNode $variable, AbstractCallableNode $parentNode)
     {
         $image = $this->getVariableImage($variable);
 
@@ -305,10 +304,10 @@ class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, 
      * Checks if a short name is acceptable in the current context.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @param ASTNode<ASTVariable> $variable
+     * @param AbstractNode<ASTVariable> $variable
      * @return bool
      */
-    private function isNameAllowedInContext(AbstractCallableNode $node, ASTNode $variable)
+    private function isNameAllowedInContext(AbstractCallableNode $node, AbstractNode $variable)
     {
         return (
             $node instanceof MethodNode &&

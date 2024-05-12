@@ -28,7 +28,7 @@ use PHPMD\Rule\MethodAware;
  *
  * @since 1.1.0
  */
-class GotoStatement extends AbstractRule implements FunctionAware, MethodAware
+final class GotoStatement extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method should implement the violation analysis algorithm of concrete

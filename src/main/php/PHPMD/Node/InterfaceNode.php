@@ -24,6 +24,6 @@ use PDepend\Source\AST\ASTInterface;
  *
  * @extends AbstractTypeNode<ASTInterface>
  */
-class InterfaceNode extends AbstractTypeNode
+final class InterfaceNode extends AbstractTypeNode
 {
 }

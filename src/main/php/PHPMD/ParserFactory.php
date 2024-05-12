@@ -27,7 +27,7 @@ use PDepend\Input\ExtensionFilter;
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
  */
-class ParserFactory
+final class ParserFactory
 {
     /** @var string The default config file name */
     private const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';

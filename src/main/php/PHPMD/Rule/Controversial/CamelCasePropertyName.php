@@ -31,7 +31,7 @@ use PHPMD\Rule\TraitAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAware
+final class CamelCasePropertyName extends AbstractRule implements ClassAware, TraitAware
 {
     /**
      * This method checks if a property is not named in camelCase

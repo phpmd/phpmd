@@ -76,7 +76,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode<PDependNode>|null
+     * @return AbstractNode<PDependNode>|null
      */
     public function getParent()
     {
@@ -94,7 +94,7 @@ abstract class AbstractNode
      * @template T of PDependNode
      *
      * @param class-string<T> $type The searched parent type.
-     * @return ASTNode<T>|null
+     * @return AbstractNode<T>|null
      */
     public function getParentOfType($type)
     {
@@ -114,7 +114,7 @@ abstract class AbstractNode
      * Returns a child node at the given index.
      *
      * @param int $index The child offset.
-     * @return ASTNode<PDependNode>
+     * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
     public function getChild($index)
@@ -132,7 +132,7 @@ abstract class AbstractNode
      * @template T of PDependNode
      *
      * @param class-string<T> $type The searched child type.
-     * @return ASTNode<T>|null
+     * @return AbstractNode<T>|null
      */
     public function getFirstChildOfType($type)
     {
@@ -151,7 +151,7 @@ abstract class AbstractNode
      *
      * @template T of PDependNode
      * @param class-string<T> $type The searched child type.
-     * @return list<ASTNode<T>>
+     * @return list<AbstractNode<T>>
      */
     public function findChildrenOfType($type)
     {
@@ -191,7 +191,7 @@ abstract class AbstractNode
     /**
      * Searches recursive for all children of this node that are of variable.
      *
-     * @return array<int, ASTNode<ASTVariable>>
+     * @return array<int, AbstractNode<ASTVariable>>
      * @todo Cover by a test.
      */
     public function findChildrenOfTypeVariable()

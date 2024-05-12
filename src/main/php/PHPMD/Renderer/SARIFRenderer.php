@@ -24,7 +24,7 @@ use PHPMD\Report;
  * This class will render a SARIF (Static Analysis
  * Results Interchange Format) report.
  */
-class SARIFRenderer extends JSONRenderer
+final class SARIFRenderer extends JSONRenderer
 {
     /**
      * Create report data and add renderer meta properties

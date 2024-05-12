@@ -31,7 +31,7 @@ use PHPMD\Rule\MethodAware;
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  * @link http://php.net/manual/en/language.operators.errorcontrol.php
  */
-class ErrorControlOperator extends AbstractRule implements FunctionAware, MethodAware
+final class ErrorControlOperator extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Loops trough all class or function nodes and looks for '@' sign.

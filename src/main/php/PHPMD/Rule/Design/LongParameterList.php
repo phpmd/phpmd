@@ -26,7 +26,7 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class checks for excessive long function and method parameter lists.
  */
-class LongParameterList extends AbstractRule implements FunctionAware, MethodAware
+final class LongParameterList extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the number of arguments for the given function or method

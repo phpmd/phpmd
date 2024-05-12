@@ -22,7 +22,6 @@ use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -33,7 +32,7 @@ use PHPMD\Rule\MethodAware;
  * Object Calisthenics teaches us, that an else expression can always be
  * avoided by simple guard clause or return statements.
  */
-class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
+final class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a method/function uses an else expression and add a violation for each one found.
@@ -63,11 +62,11 @@ class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
      * Whether the given scope is an else clause
      *
      * @param AbstractNode<ASTScopeStatement> $scope
-     * @param ASTNode<PDependNode> $parent
+     * @param AbstractNode<PDependNode> $parent
      * @return bool
      * @throws OutOfBoundsException
      */
-    private function isElseScope(AbstractNode $scope, ASTNode $parent)
+    private function isElseScope(AbstractNode $scope, AbstractNode $parent)
     {
         return (
             count($parent->getChildren()) === 3 &&
@@ -78,10 +77,10 @@ class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
     /**
      * Whether the parent node is an if or an elseif clause
      *
-     * @param ASTNode<PDependNode> $parent
+     * @param AbstractNode<PDependNode> $parent
      * @return bool
      */
-    private function isIfOrElseIfStatement(ASTNode $parent)
+    private function isIfOrElseIfStatement(AbstractNode $parent)
     {
         return ($parent->getName() === 'if' || $parent->getName() === 'elseif');
     }

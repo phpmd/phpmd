@@ -35,7 +35,7 @@ use PHPMD\Utility\ExceptionsList;
  * Static access is known to cause hard dependencies between classes
  * and is a bad practice.
  */
-class StaticAccess extends AbstractRule implements FunctionAware, MethodAware
+final class StaticAccess extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Temporary cache of configured exceptions.

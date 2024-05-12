@@ -24,7 +24,7 @@ use PHPMD\AbstractRule;
  * This rule checks a given method or function against the configured cyclomatic
  * complexity threshold.
  */
-class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
+final class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the cyclomatic complexity for the given node against

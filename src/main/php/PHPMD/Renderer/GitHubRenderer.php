@@ -24,7 +24,7 @@ use PHPMD\Report;
  * This renderer outputs all violations in a format that GitHub Actions
  * understands to display and highlight as problems.
  */
-class GitHubRenderer extends AbstractRenderer
+final class GitHubRenderer extends AbstractRenderer
 {
     /**
      * This method will be called when the engine has finished the source analysis
