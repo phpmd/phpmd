@@ -31,23 +31,16 @@ use PHPMD\Rule;
 class ASTNode extends AbstractNode
 {
     /**
-     * The source file of this node.
-     *
-     * @var string
-     */
-    private $fileName = null;
-
-    /**
      * Constructs a new ast node instance.
      *
      * @param TNode $node
-     * @param string $fileName
+     * @param string $fileName The source file of this node.
      */
-    public function __construct(PDependNode $node, $fileName)
-    {
+    public function __construct(
+        PDependNode $node,
+        private ?string $fileName,
+    ) {
         parent::__construct($node);
-
-        $this->fileName = $fileName;
     }
 
     /**
@@ -107,10 +100,8 @@ class ASTNode extends AbstractNode
 
     /**
      * Returns the name of the parent namespace.
-     *
-     * @return ?string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return null;
     }

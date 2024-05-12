@@ -8,15 +8,9 @@ use PHPMD\Utility\Paths;
 
 class BaselineRenderer extends AbstractRenderer
 {
-    /** @var string */
-    private $basePath;
-
-    /**
-     * @param string $basePath
-     */
-    public function __construct($basePath)
-    {
-        $this->basePath = $basePath;
+    public function __construct(
+        private string $basePath,
+    ) {
     }
 
     public function renderReport(Report $report): void

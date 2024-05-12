@@ -27,29 +27,18 @@ class Annotation
     /** Name of the suppress warnings annotation. */
     private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
-    /**
-     * The annotation name.
-     *
-     * @var string
-     */
-    private $name = null;
-
-    /**
-     * The annotation value.
-     *
-     * @var string
-     */
-    private $value = null;
+    /** The annotation value. */
+    private string $value;
 
     /**
      * Constructs a new annotation instance.
      *
-     * @param string $name
-     * @param string $value
+     * @param string $name The annotation name.
      */
-    public function __construct($name, $value)
-    {
-        $this->name = $name;
+    public function __construct(
+        private string $name,
+        string $value,
+    ) {
         $this->value = trim($value, '" ');
     }
 

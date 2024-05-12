@@ -26,11 +26,4 @@ use PDepend\Source\AST\ASTTrait;
  */
 class TraitNode extends AbstractTypeNode
 {
-    /**
-     * Constructs a new interface wrapper instance.
-     */
-    public function __construct(ASTTrait $node)
-    {
-        parent::__construct($node);
-    }
 }

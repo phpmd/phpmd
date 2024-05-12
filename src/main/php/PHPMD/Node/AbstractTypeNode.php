@@ -28,21 +28,6 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
  */
 abstract class AbstractTypeNode extends AbstractNode
 {
-    /** @var TNode */
-    private $node;
-
-    /**
-     * Constructs a new generic class or interface node.
-     *
-     * @param TNode $node
-     */
-    public function __construct(AbstractASTClassOrInterface $node)
-    {
-        parent::__construct($node);
-
-        $this->node = $node;
-    }
-
     /**
      * Returns an <b>array</b> with all methods defined in the context class or
      * interface.
@@ -52,7 +37,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethods()
     {
         $methods = [];
-        foreach ($this->node->getMethods() as $method) {
+        foreach ($this->getNode()->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
 
@@ -68,7 +53,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethodNames()
     {
         $names = [];
-        foreach ($this->node->getMethods() as $method) {
+        foreach ($this->getNode()->getMethods() as $method) {
             $names[] = $method->getName();
         }
 
@@ -82,17 +67,15 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getConstantCount()
     {
-        return count($this->node->getConstants());
+        return count($this->getNode()->getConstants());
     }
 
     /**
      * Returns the name of the parent namespace.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
-        return $this->node->getNamespace()->getName();
+        return $this->getNode()->getNamespace()->getName();
     }
 
     /**

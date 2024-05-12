@@ -34,9 +34,6 @@ use PHPMD\Node\ASTNode;
  */
 abstract class AbstractNode
 {
-    /** @var TNode */
-    private $node = null;
-
     /**
      * The collected metrics for this node.
      *
@@ -49,9 +46,9 @@ abstract class AbstractNode
      *
      * @param TNode $node
      */
-    public function __construct($node)
-    {
-        $this->node = $node;
+    public function __construct(
+        private PDependNode $node,
+    ) {
     }
 
     /**
@@ -239,20 +236,16 @@ abstract class AbstractNode
 
     /**
      * Returns the begin line for this node in the php source code file.
-     *
-     * @return int
      */
-    public function getBeginLine()
+    public function getBeginLine(): int
     {
         return $this->node->getStartLine();
     }
 
     /**
      * Returns the end line for this node in the php source code file.
-     *
-     * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->node->getEndLine();
     }
@@ -349,8 +342,6 @@ abstract class AbstractNode
 
     /**
      * Returns the name of the parent package.
-     *
-     * @return string
      */
-    abstract public function getNamespaceName();
+    abstract public function getNamespaceName(): ?string;
 }

@@ -27,19 +27,9 @@ use PDepend\Source\AST\ASTFunction;
 class FunctionNode extends AbstractCallableNode
 {
     /**
-     * Constructs a new function wrapper.
-     */
-    public function __construct(ASTFunction $node)
-    {
-        parent::__construct($node);
-    }
-
-    /**
      * Returns the name of the parent package.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->getNode()->getNamespace()->getName();
     }

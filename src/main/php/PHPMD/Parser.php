@@ -77,20 +77,13 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     private $report = null;
 
     /**
-     * The wrapped PDepend Engine instance.
-     *
-     * @var Engine
-     */
-    private $pdepend = null;
-
-    /**
      * Constructs a new parser adapter instance.
      *
-     * @param Engine $pdepend The context php depend instance.
+     * @param Engine $pdepend The wrapped PDepend Engine instance.
      */
-    public function __construct(Engine $pdepend)
-    {
-        $this->pdepend = $pdepend;
+    public function __construct(
+        private Engine $pdepend,
+    ) {
     }
 
     /**

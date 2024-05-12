@@ -10,19 +10,10 @@ use PHPMD\Utility\Paths;
 
 class ResultCacheUpdater
 {
-    /** @var OutputInterface */
-    private $output;
-
-    /** @var string */
-    private $basePath;
-
-    /**
-     * @param string $basePath
-     */
-    public function __construct(OutputInterface $output, $basePath)
-    {
-        $this->output = $output;
-        $this->basePath = $basePath;
+    public function __construct(
+        private OutputInterface $output,
+        private string $basePath,
+    ) {
     }
 
     /**

@@ -43,12 +43,9 @@ use ValueError;
  */
 class Command
 {
-    /** @var Output */
-    private $output;
-
-    public function __construct(Output $output)
-    {
-        $this->output = $output;
+    public function __construct(
+        private Output $output,
+    ) {
     }
 
     /**
