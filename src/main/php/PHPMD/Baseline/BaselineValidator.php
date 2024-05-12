@@ -6,16 +6,12 @@ use PHPMD\RuleViolation;
 
 class BaselineValidator
 {
-    /** @var string */
-    private $baselineMode;
+    private BaselineMode $baselineMode;
 
     /** @var BaselineSet */
     private $baselineSet;
 
-    /**
-     * @param string $baselineMode
-     */
-    public function __construct(BaselineSet $baselineSet, $baselineMode)
+    public function __construct(BaselineSet $baselineSet, BaselineMode $baselineMode)
     {
         $this->baselineMode = $baselineMode;
         $this->baselineSet = $baselineSet;
@@ -33,12 +29,12 @@ class BaselineValidator
         );
 
         // regular baseline: violations is baselined if it is in the BaselineSet
-        if ($this->baselineMode === BaselineMode::NONE) {
+        if ($this->baselineMode === BaselineMode::None) {
             return $contains;
         }
 
         // update baseline: violation _can_ be baselined if it was already in the BaselineSet
-        if ($this->baselineMode === BaselineMode::UPDATE) {
+        if ($this->baselineMode === BaselineMode::Update) {
             return !$contains;
         }
 

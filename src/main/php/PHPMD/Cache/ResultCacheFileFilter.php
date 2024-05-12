@@ -5,36 +5,25 @@ namespace PHPMD\Cache;
 use PDepend\Input\Filter;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Utility\Paths;
 
 class ResultCacheFileFilter implements Filter
 {
-    /** @var string */
-    private $strategy;
-
-    /** @var ResultCacheState|null */
-    private $state;
-
     /** @var ResultCacheState */
     private $newState;
-
-    /** @var string */
-    private $basePath;
 
     /** @var array<string, bool> */
     private $fileIsModified = [];
 
-    /** @var OutputInterface */
-    private $output;
-
-    /**
-     * @param string                $basePath
-     * @param string                $strategy
-     * @param ResultCacheState|null $state
-     */
-    public function __construct(OutputInterface $output, $basePath, $strategy, ResultCacheKey $cacheKey, $state)
-    {
+    public function __construct(
+        private OutputInterface $output,
+        private string $basePath,
+        private ResultCacheStrategy $strategy,
+        ResultCacheKey $cacheKey,
+        private ?ResultCacheState $state,
+    ) {
         $this->output = $output;
         $this->basePath = $basePath;
         $this->strategy = $strategy;
@@ -56,8 +45,7 @@ class ResultCacheFileFilter implements Filter
             return $this->fileIsModified[$filePath];
         }
 
-        // Determine file hash. Either `timestamp` or `content`
-        if ($this->strategy === 'timestamp') {
+        if ($this->strategy === ResultCacheStrategy::Timestamp) {
             $hash = (string) filemtime($absolute);
         } else {
             $hash = sha1_file($absolute);

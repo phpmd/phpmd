@@ -34,7 +34,7 @@ if (isset($argv) && realpath($argv[0]) === __FILE__) {
     include_once 'phar://${archive.alias}/vendor/autoload.php';
 
     // Run command line interface
-    exit(\PHPMD\TextUI\Command::main($argv));
+    exit(\PHPMD\TextUI\Command::main($argv)->value);
 }
 
 __HALT_COMPILER();

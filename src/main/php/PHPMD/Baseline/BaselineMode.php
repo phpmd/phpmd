@@ -2,14 +2,14 @@
 
 namespace PHPMD\Baseline;
 
-class BaselineMode
+enum BaselineMode
 {
     /** Do not generate or update any baseline file */
-    final public const NONE = 'none';
+    case None;
 
     /** Generate a baseline file for _all_ current violations */
-    final public const GENERATE = 'generate';
+    case Generate;
 
     /** Remove any non existing violations from the baseline file. Do not baseline any new violations. */
-    final public const UPDATE = 'update';
+    case Update;
 }

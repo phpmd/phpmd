@@ -465,7 +465,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
-        static::assertSame(BaselineMode::NONE, $opts->generateBaseline());
+        static::assertSame(BaselineMode::None, $opts->generateBaseline());
     }
 
     public function testCliOptionVerbosityNormal(): void
@@ -500,14 +500,14 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline'];
         $opts = new CommandLineOptions($args);
-        static::assertSame(BaselineMode::GENERATE, $opts->generateBaseline());
+        static::assertSame(BaselineMode::Generate, $opts->generateBaseline());
     }
 
     public function testCliOptionUpdateBaselineShouldBeSet(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--update-baseline'];
         $opts = new CommandLineOptions($args);
-        static::assertSame(BaselineMode::UPDATE, $opts->generateBaseline());
+        static::assertSame(BaselineMode::Update, $opts->generateBaseline());
     }
 
     public function testCliOptionBaselineFileShouldBeNullByDefault(): void
@@ -567,7 +567,7 @@ class CommandLineOptionsTest extends AbstractTestCase
             ]
         );
 
-        static::assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        static::assertSame(ResultCacheStrategy::Content, $opts->cacheStrategy());
         static::assertFalse($opts->isCacheEnabled());
 
         $opts = new CommandLineOptions(
@@ -578,11 +578,11 @@ class CommandLineOptionsTest extends AbstractTestCase
                 'codesize',
                 '--cache',
                 '--cache-strategy',
-                ResultCacheStrategy::TIMESTAMP,
+                ResultCacheStrategy::Timestamp->value,
             ]
         );
 
-        static::assertSame(ResultCacheStrategy::TIMESTAMP, $opts->cacheStrategy());
+        static::assertSame(ResultCacheStrategy::Timestamp, $opts->cacheStrategy());
         static::assertTrue($opts->isCacheEnabled());
 
         $opts = new CommandLineOptions(
@@ -593,13 +593,13 @@ class CommandLineOptionsTest extends AbstractTestCase
                 'codesize',
                 '--cache',
                 '--cache-strategy',
-                ResultCacheStrategy::CONTENT,
+                ResultCacheStrategy::Content->value,
                 '--cache-file',
                 'abc',
             ]
         );
 
-        static::assertSame(ResultCacheStrategy::CONTENT, $opts->cacheStrategy());
+        static::assertSame(ResultCacheStrategy::Content, $opts->cacheStrategy());
         static::assertSame('abc', $opts->cacheFile());
         static::assertTrue($opts->isCacheEnabled());
     }
