@@ -383,13 +383,13 @@ return $config
         'long_to_shorthand_operator' => true, // Risky
         'mb_str_functions' => false, // Risky, leads to test suite errors
         'modernize_types_casting' => true, // Risky
-        'no_unset_on_property' => true, // Risky
+        'no_unset_on_property' => false, // Risky, unset and null is not the same in PHP 7.4+
         'no_useless_sprintf' => true, // Risky
         'ordered_interfaces' => true,
         'ordered_traits' => true, // Risky
         'php_unit_construct' => true, // Risky
         'php_unit_set_up_tear_down_visibility' => true, // Risky
-         'php_unit_strict' => false, // Risky
+        'php_unit_strict' => false, // Risky
         'php_unit_test_annotation' => true, // Risky
         'php_unit_test_case_static_method_calls' => true, // Risky
         'phpdoc_line_span' => ['const' => 'single','property' => 'single'],
