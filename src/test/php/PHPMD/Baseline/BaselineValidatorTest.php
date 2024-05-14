@@ -53,12 +53,12 @@ class BaselineValidatorTest extends AbstractTestCase
     public static function dataProvider(): array
     {
         return [
-            'contains: true, mode: none' => [true, BaselineMode::NONE, true],
-            'contains: false, mode: none' => [false, BaselineMode::NONE, false],
-            'contains: true, mode: update' => [true, BaselineMode::UPDATE, false],
-            'contains: false, mode: update' => [false, BaselineMode::UPDATE, true],
-            'contains: true, mode: generate' => [true, BaselineMode::GENERATE, false],
-            'contains: false, mode: generate' => [false, BaselineMode::GENERATE, false],
+            'contains: true, mode: none' => [true, BaselineMode::None, true],
+            'contains: false, mode: none' => [false, BaselineMode::None, false],
+            'contains: true, mode: update' => [true, BaselineMode::Update, false],
+            'contains: false, mode: update' => [false, BaselineMode::Update, true],
+            'contains: true, mode: generate' => [true, BaselineMode::Generate, false],
+            'contains: false, mode: generate' => [false, BaselineMode::Generate, false],
         ];
     }
 }

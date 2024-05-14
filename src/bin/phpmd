@@ -58,4 +58,4 @@ if (!isset($_SERVER['argv']) && !isset($argv)) {
 }
 
 // Run command line interface
-exit(Command::main($argv));
+exit(Command::main($argv)->value);

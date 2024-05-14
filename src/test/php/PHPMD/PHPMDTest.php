@@ -195,7 +195,7 @@ class PHPMDTest extends AbstractTestCase
             $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
             [$renderer],
             $this->ruleSetFactory->createRuleSets('pmd-refset1'),
-            new Report(new BaselineValidator($baselineSet, BaselineMode::NONE))
+            new Report(new BaselineValidator($baselineSet, BaselineMode::None))
         );
 
         static::assertFalse($phpmd->hasViolations());

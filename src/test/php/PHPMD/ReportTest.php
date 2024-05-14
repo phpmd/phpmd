@@ -191,7 +191,7 @@ class ReportTest extends AbstractTestCase
         $baseline->addEntry($violation);
 
         // setup report
-        $report = new Report(new BaselineValidator($baseline, BaselineMode::NONE));
+        $report = new Report(new BaselineValidator($baseline, BaselineMode::None));
         $report->addRuleViolation($ruleA);
         $report->addRuleViolation($ruleB);
 
@@ -215,7 +215,7 @@ class ReportTest extends AbstractTestCase
         $baseline->addEntry($violation);
 
         // setup report
-        $report = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
+        $report = new Report(new BaselineValidator($baseline, BaselineMode::Update));
         $report->addRuleViolation($ruleA);
         $report->addRuleViolation($ruleB);
 

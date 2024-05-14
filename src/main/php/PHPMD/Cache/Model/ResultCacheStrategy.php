@@ -2,11 +2,11 @@
 
 namespace PHPMD\Cache\Model;
 
-class ResultCacheStrategy
+enum ResultCacheStrategy: string
 {
     /** Determine the file cache freshness based on sha hash of the contents of the file */
-    final public const CONTENT = 'content';
+    case Content = 'content';
 
     /** Determine the file cache freshness based on the file modified timestamp */
-    final public const TIMESTAMP = 'timestamp';
+    case Timestamp = 'timestamp';
 }

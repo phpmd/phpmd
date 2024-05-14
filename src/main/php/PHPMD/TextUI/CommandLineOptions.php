@@ -35,6 +35,8 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 use PHPMD\Utility\ArgumentsValidator;
+use TypeError;
+use ValueError;
 
 /**
  * This is a helper class that collects the specified cli arguments and puts them
@@ -173,11 +175,8 @@ class CommandLineOptions
      */
     private $availableRuleSets = [];
 
-    /**
-     * Should PHPMD baseline the existing violations and write them to the $baselineFile
-     * @var string allowed modes: NONE, GENERATE or UPDATE
-     */
-    private $generateBaseline = BaselineMode::NONE;
+    /** Should PHPMD baseline the existing violations and write them to the $baselineFile */
+    private BaselineMode $generateBaseline = BaselineMode::None;
 
     /**
      * The baseline source file to read the baseline violations from.
@@ -198,11 +197,8 @@ class CommandLineOptions
      */
     private $cacheFile;
 
-    /**
-     * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
-     * @var string|null
-     */
-    private $cacheStrategy;
+    /** Determine the cache strategy. */
+    private ResultCacheStrategy $cacheStrategy = ResultCacheStrategy::Content;
 
     /**
      * Either the output should be colored.
@@ -223,6 +219,8 @@ class CommandLineOptions
      * @param string[] $args
      * @param string[] $availableRuleSets
      * @throws InvalidArgumentException
+     * @throws ValueError
+     * @throws TypeError
      */
     public function __construct(array $args, array $availableRuleSets = [])
     {
@@ -358,13 +356,13 @@ class CommandLineOptions
 
                 case '--generate-baseline':
                     $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::GENERATE;
+                    $this->generateBaseline = BaselineMode::Generate;
 
                     break;
 
                 case '--update-baseline':
                     $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::UPDATE;
+                    $this->generateBaseline = BaselineMode::Update;
 
                     break;
 
@@ -385,7 +383,8 @@ class CommandLineOptions
                     break;
 
                 case '--cache-strategy':
-                    $this->cacheStrategy = $this->readValue($equalChunk, $args);
+                    $strategy = $this->readValue($equalChunk, $args);
+                    $this->cacheStrategy = ResultCacheStrategy::from($strategy);
 
                     break;
 
@@ -609,10 +608,8 @@ class CommandLineOptions
 
     /**
      * Should the current violations be baselined
-     *
-     * @return string
      */
-    public function generateBaseline()
+    public function generateBaseline(): BaselineMode
     {
         return $this->generateBaseline;
     }
@@ -646,18 +643,11 @@ class CommandLineOptions
     }
 
     /**
-     * The caching strategy to determine if a file should be (re)inspected. Either
-     * `content` or last modified `timestamp` based.
-     *
-     * @return string
+     * The caching strategy to determine if a file should be (re)inspected.
      */
-    public function cacheStrategy()
+    public function cacheStrategy(): ResultCacheStrategy
     {
-        return match ($this->cacheStrategy) {
-            ResultCacheStrategy::CONTENT,
-            ResultCacheStrategy::TIMESTAMP => $this->cacheStrategy,
-            default => ResultCacheStrategy::CONTENT,
-        };
+        return $this->cacheStrategy;
     }
 
     /**

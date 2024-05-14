@@ -5,6 +5,7 @@ namespace PHPMD\Cache;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
@@ -65,6 +66,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
         $cacheKeyB = new ResultCacheKey(false, 'baseline', [], [], 321);
         $state = new ResultCacheState($cacheKeyB, []);
 
+        $this->options->expects(static::once())->method('cacheStrategy')->willReturn(ResultCacheStrategy::Content);
         $this->options->expects(static::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(static::once())->method('hasStrict')->willReturn(true);
         $this->options->expects(static::exactly(2))->method('cacheFile')->willReturn('/path/to/cache');
@@ -86,6 +88,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
         $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 123);
         $state = new ResultCacheState($cacheKey, []);
 
+        $this->options->expects(static::once())->method('cacheStrategy')->willReturn(ResultCacheStrategy::Content);
         $this->options->expects(static::once())->method('isCacheEnabled')->willReturn(true);
         $this->options->expects(static::once())->method('hasStrict')->willReturn(true);
         $this->options->expects(static::exactly(3))->method('cacheFile')->willReturn('/path/to/cache');

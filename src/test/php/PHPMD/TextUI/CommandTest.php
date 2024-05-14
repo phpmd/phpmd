@@ -43,8 +43,11 @@ class CommandTest extends AbstractTestCase
     /**
      * @dataProvider dataProviderTestMainWithOption
      */
-    public function testMainStrictOptionIsOfByDefault($sourceFile, $expectedExitCode, ?array $options = null): void
-    {
+    public function testMainStrictOptionIsOfByDefault(
+        string $sourceFile,
+        ExitCode $expectedExitCode,
+        ?array $options = null
+    ): void {
         $args = array_filter(
             array_merge(
                 [
@@ -68,63 +71,63 @@ class CommandTest extends AbstractTestCase
         return [
             [
                 'source/source_without_violations.php',
-                Command::EXIT_SUCCESS,
+                ExitCode::Success,
             ],
             [
                 'source/source_with_npath_violation.php',
-                Command::EXIT_VIOLATION,
+                ExitCode::Violation,
             ],
             [
                 'source/source_with_npath_violation.php',
-                Command::EXIT_SUCCESS,
+                ExitCode::Success,
                 ['--ignore-violations-on-exit'],
             ],
             [
                 'source/source_with_npath_violation.php',
-                Command::EXIT_VIOLATION,
+                ExitCode::Violation,
                 ['--ignore-errors-on-exit'],
             ],
             [
                 'source/source_with_parse_error.php',
-                Command::EXIT_ERROR,
+                ExitCode::Error,
             ],
             [
                 'source/source_with_parse_error.php',
-                Command::EXIT_ERROR,
+                ExitCode::Error,
                 ['--ignore-violations-on-exit'],
             ],
             [
                 'source/source_with_parse_error.php',
-                Command::EXIT_SUCCESS,
+                ExitCode::Success,
                 ['--ignore-errors-on-exit'],
             ],
             [
                 'source',
-                Command::EXIT_ERROR,
+                ExitCode::Error,
             ],
             [
                 'source',
-                Command::EXIT_ERROR,
+                ExitCode::Error,
                 ['--ignore-violations-on-exit'],
             ],
             [
                 'source',
-                Command::EXIT_VIOLATION,
+                ExitCode::Violation,
                 ['--ignore-errors-on-exit'],
             ],
             [
                 'source',
-                Command::EXIT_SUCCESS,
+                ExitCode::Success,
                 ['--ignore-errors-on-exit', '--ignore-violations-on-exit'],
             ],
             [
                 'source/ccn_suppress_function.php',
-                Command::EXIT_VIOLATION,
+                ExitCode::Violation,
                 ['--strict'],
             ],
             [
                 'source/ccn_suppress_function.php',
-                Command::EXIT_SUCCESS,
+                ExitCode::Success,
             ],
         ];
     }
@@ -175,7 +178,7 @@ class CommandTest extends AbstractTestCase
             $temp,
         ]);
 
-        static::assertSame(Command::EXIT_VIOLATION, $exitCode);
+        static::assertSame(ExitCode::Violation, $exitCode);
         static::assertSame(
             "$uri:8  ShortVariable  Avoid variables with short names like \$a. " .
             'Configured minimum length is 3.' . PHP_EOL,
@@ -202,7 +205,7 @@ class CommandTest extends AbstractTestCase
         ];
 
         $exitCode = Command::main($args);
-        static::assertEquals(Command::EXIT_SUCCESS, $exitCode);
+        static::assertEquals(ExitCode::Success, $exitCode);
     }
 
     public static function dataProviderWithFilter(): array
@@ -227,7 +230,7 @@ class CommandTest extends AbstractTestCase
             $temp,
         ]);
 
-        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertSame(ExitCode::Success, $exitCode);
         static::assertFileExists($temp);
         static::assertStringContainsString(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
     }
@@ -261,7 +264,7 @@ class CommandTest extends AbstractTestCase
             $baselineTemp,
         ]);
 
-        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertSame(ExitCode::Success, $exitCode);
         static::assertXmlStringEqualsXmlString(
             file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
             file_get_contents($baselineTemp)
@@ -281,7 +284,7 @@ class CommandTest extends AbstractTestCase
             $baselineFile,
         ]);
 
-        static::assertSame(Command::EXIT_SUCCESS, $exitCode);
+        static::assertSame(ExitCode::Success, $exitCode);
     }
 
     public function testMainWritesExceptionMessageToStderr(): void
