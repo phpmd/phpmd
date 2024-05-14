@@ -22,7 +22,7 @@ namespace PHPMD\TextUI;
  */
 enum ExitCode: int
 {
-    /** When no exception was thrown, no violation was found and no error occured */
+    /** When no exception was thrown, no violation was found and no error occurred */
     case Success = 0;
 
     /** When an exception was thrown */
