@@ -26,6 +26,7 @@ use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
@@ -82,6 +83,19 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         foreach ($this->nodes as $node) {
             $this->addViolation($node, [$node->getImage()]);
         }
+    }
+
+    /**
+     * PHP is case insensitive so we should compare function names case
+     * insensitive.
+     *
+     * @param AbstractNode<PDependNode> $node
+     * @param string $name
+     * @return bool
+     */
+    private function isFunctionNameEqual(AbstractNode $node, $name)
+    {
+        return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
     }
 
     /**
