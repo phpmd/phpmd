@@ -88,11 +88,11 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAwar
         }
 
         $this->currentNamespace = $node->getNamespaceName() . '\\';
-        $loops = array_merge(
-            $node->findChildrenOfType(ASTForStatement::class),
-            $node->findChildrenOfType(ASTWhileStatement::class),
-            $node->findChildrenOfType(ASTDoWhileStatement::class)
-        );
+        $loops = [
+            ...$node->findChildrenOfType(ASTForStatement::class),
+            ...$node->findChildrenOfType(ASTWhileStatement::class),
+            ...$node->findChildrenOfType(ASTDoWhileStatement::class),
+        ];
 
         foreach ($loops as $loop) {
             $this->findViolations($loop);

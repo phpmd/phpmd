@@ -312,7 +312,7 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
         $pdepend = $node->getNode();
         foreach ($this->analyzers as $analyzer) {
-            $metrics = array_merge($metrics, $analyzer->getNodeMetrics($pdepend));
+            $metrics = [...$metrics, ...$analyzer->getNodeMetrics($pdepend)];
         }
         $node->setMetrics($metrics);
     }

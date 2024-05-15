@@ -146,7 +146,7 @@ class SARIFRenderer extends JSONRenderer
         }
 
         $data['runs'][0]['tool']['driver']['rules'] = $rules;
-        $data['runs'][0]['results'] = array_merge($data['runs'][0]['results'], $results);
+        $data['runs'][0]['results'] = $results + $data['runs'][0]['results'];
 
         return $data;
     }

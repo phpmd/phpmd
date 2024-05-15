@@ -725,7 +725,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public function testGetReportFiles(array $options, array $expected): void
     {
-        $args = array_merge([__FILE__, __FILE__, 'text', 'codesize'], $options);
+        $args = [__FILE__, __FILE__, 'text', 'codesize', ...$options];
         $opts = new CommandLineOptions($args);
 
         static::assertEquals($expected, $opts->getReportFiles());
