@@ -8,20 +8,10 @@ use PHPMD\Utility\Paths;
 
 class ResultCacheKeyFactory
 {
-    /** @var string */
-    private $basePath;
-
-    /** @var string|null */
-    private $baselineFile;
-
-    /**
-     * @param string      $basePath
-     * @param string|null $baselineFile
-     */
-    public function __construct($basePath, $baselineFile)
-    {
-        $this->basePath = $basePath;
-        $this->baselineFile = $baselineFile;
+    public function __construct(
+        private string $basePath,
+        private ?string $baselineFile,
+    ) {
     }
 
     /**

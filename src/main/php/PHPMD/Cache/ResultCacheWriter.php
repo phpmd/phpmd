@@ -6,15 +6,9 @@ use PHPMD\Cache\Model\ResultCacheState;
 
 class ResultCacheWriter
 {
-    /** @var string */
-    private $filePath;
-
-    /**
-     * @param string $filePath
-     */
-    public function __construct($filePath)
-    {
-        $this->filePath = $filePath;
+    public function __construct(
+        private string $filePath,
+    ) {
     }
 
     public function write(ResultCacheState $state): void

@@ -26,11 +26,4 @@ use PDepend\Source\AST\ASTClass;
  */
 class ClassNode extends AbstractTypeNode
 {
-    /**
-     * Constructs a new class wrapper node.
-     */
-    public function __construct(ASTClass $node)
-    {
-        parent::__construct($node);
-    }
 }

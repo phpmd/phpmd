@@ -31,9 +31,6 @@ use RuntimeException;
  */
 class ExceptionsList implements ArrayAccess, IteratorAggregate
 {
-    /** Separator used to join exception in the property string. */
-    private string $separator;
-
     /**
      * Temporary cache of configured exceptions. Have name as key
      *
@@ -41,17 +38,16 @@ class ExceptionsList implements ArrayAccess, IteratorAggregate
      */
     private array $exceptions;
 
-    /** Rule to which the exception list apply. */
-    private Rule $rule;
-
-    /** Extra characters to be trimmed with whitespace at beginning and ending of each exception. */
-    private string $trim;
-
-    public function __construct(Rule $rule, string $trim = '', string $separator = ',')
-    {
-        $this->rule = $rule;
-        $this->trim = $trim;
-        $this->separator = $separator;
+    /**
+     * @param Rule $rule Rule to which the exception list apply.
+     * @param string $trim Extra characters to be trimmed with whitespace at beginning and ending of each exception.
+     * @param string $separator Separator used to join exception in the property string.
+     */
+    public function __construct(
+        private Rule $rule,
+        private string $trim = '',
+        private string $separator = ',',
+    ) {
     }
 
     /**

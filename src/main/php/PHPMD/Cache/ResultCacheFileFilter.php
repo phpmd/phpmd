@@ -24,10 +24,6 @@ class ResultCacheFileFilter implements Filter
         ResultCacheKey $cacheKey,
         private ?ResultCacheState $state,
     ) {
-        $this->output = $output;
-        $this->basePath = $basePath;
-        $this->strategy = $strategy;
-        $this->state = $state;
         $this->newState = new ResultCacheState($cacheKey);
     }
 

@@ -26,11 +26,4 @@ use PDepend\Source\AST\ASTEnum;
  */
 class EnumNode extends AbstractTypeNode
 {
-    /**
-     * Constructs a new class wrapper node.
-     */
-    public function __construct(ASTEnum $node)
-    {
-        parent::__construct($node);
-    }
 }

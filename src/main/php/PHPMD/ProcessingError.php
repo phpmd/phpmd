@@ -25,13 +25,6 @@ namespace PHPMD;
 class ProcessingError
 {
     /**
-     * The original processing error message.
-     *
-     * @var string
-     */
-    private $message;
-
-    /**
      * The source file where the processing error occurred.
      *
      * @var string
@@ -41,11 +34,11 @@ class ProcessingError
     /**
      * Constructs a new processing error instance.
      *
-     * @param string $message
+     * @param string $message The original processing error message.
      */
-    public function __construct($message)
-    {
-        $this->message = $message;
+    public function __construct(
+        private string $message,
+    ) {
         $this->file = $this->extractFile($message);
     }
 

@@ -8,23 +8,11 @@ use PHPMD\TextUI\CommandLineOptions;
 
 class ResultCacheEngineFactory
 {
-    /** @var OutputInterface */
-    private $output;
-
-    /** @var ResultCacheKeyFactory */
-    private $cacheKeyFactory;
-
-    /** @var ResultCacheStateFactory */
-    private $cacheStateFactory;
-
     public function __construct(
-        OutputInterface $output,
-        ResultCacheKeyFactory $cacheKeyFactory,
-        ResultCacheStateFactory $cacheStateFactory
+        private OutputInterface $output,
+        private ResultCacheKeyFactory $cacheKeyFactory,
+        private ResultCacheStateFactory $cacheStateFactory,
     ) {
-        $this->output = $output;
-        $this->cacheKeyFactory = $cacheKeyFactory;
-        $this->cacheStateFactory = $cacheStateFactory;
     }
 
     /**

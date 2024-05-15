@@ -56,12 +56,9 @@ class Report
      */
     private $errors = [];
 
-    /** @var BaselineValidator|null */
-    private $baselineValidator;
-
-    public function __construct(?BaselineValidator $baselineValidator = null)
-    {
-        $this->baselineValidator = $baselineValidator;
+    public function __construct(
+        private ?BaselineValidator $baselineValidator = null,
+    ) {
     }
 
     /**

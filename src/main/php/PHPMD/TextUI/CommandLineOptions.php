@@ -168,13 +168,6 @@ class CommandLineOptions
      */
     private $ignoreViolationsOnExit = false;
 
-    /**
-     * List of available rule-sets.
-     *
-     * @var array<int, string>
-     */
-    private $availableRuleSets = [];
-
     /** Should PHPMD baseline the existing violations and write them to the $baselineFile */
     private BaselineMode $generateBaseline = BaselineMode::None;
 
@@ -217,18 +210,19 @@ class CommandLineOptions
      * Constructs a new command line options instance.
      *
      * @param string[] $args
-     * @param string[] $availableRuleSets
+     * @param array<int, string> $availableRuleSets List of available rule-sets.
      * @throws InvalidArgumentException
      * @throws ValueError
      * @throws TypeError
      */
-    public function __construct(array $args, array $availableRuleSets = [])
-    {
+    public function __construct(
+        array $args,
+        private array $availableRuleSets = [],
+    ) {
         // Remove current file name
         array_shift($args);
 
         $originalArguments = $args;
-        $this->availableRuleSets = $availableRuleSets;
 
         $arguments = [];
         $listenOptions = true;

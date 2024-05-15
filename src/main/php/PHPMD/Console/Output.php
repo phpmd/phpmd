@@ -4,15 +4,9 @@ namespace PHPMD\Console;
 
 abstract class Output implements OutputInterface
 {
-    /** @var int */
-    private $verbosity;
-
-    /**
-     * @param int $verbosity
-     */
-    public function __construct($verbosity = self::VERBOSITY_NORMAL)
-    {
-        $this->verbosity = $verbosity;
+    public function __construct(
+        private int $verbosity = self::VERBOSITY_NORMAL,
+    ) {
     }
 
     /**

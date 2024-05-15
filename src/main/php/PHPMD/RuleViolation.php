@@ -25,26 +25,8 @@ use PHPMD\Node\NodeInfo;
  */
 class RuleViolation
 {
-    /**
-     * The rule that causes this violation.
-     *
-     * @var Rule
-     */
-    private $rule;
-
-    /**
-     * The AST Node information for this rule violation.
-     *
-     * @var NodeInfo
-     */
-    private $nodeInfo;
-
-    /**
-     * The description/message text that describes the violation.
-     *
-     * @var string
-     */
-    private $description;
+    /** The description/message text that describes the violation. */
+    private string $description;
 
     /**
      * The arguments for the description/message text or <b>null</b>
@@ -55,24 +37,19 @@ class RuleViolation
     private $args = null;
 
     /**
-     * The raw metric value which caused this rule violation.
-     *
-     * @var ?numeric
-     */
-    private $metric;
-
-    /**
      * Constructs a new rule violation instance.
      *
+     * @param Rule $rule The rule that causes this violation.
+     * @param NodeInfo $nodeInfo The AST Node information for this rule violation.
      * @param array<string, mixed>|string $violationMessage
-     * @param ?numeric $metric
+     * @param ?numeric $metric The raw metric value which caused this rule violation.
      */
-    public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
-    {
-        $this->rule = $rule;
-        $this->metric = $metric;
-        $this->nodeInfo = $nodeInfo;
-
+    public function __construct(
+        private Rule $rule,
+        private NodeInfo $nodeInfo,
+        array|string $violationMessage,
+        private mixed $metric = null,
+    ) {
         if (is_array($violationMessage)) {
             $search = [];
             $replace = [];
@@ -161,10 +138,8 @@ class RuleViolation
 
     /**
      * Returns the name of the package that contains this violation.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->nodeInfo->namespaceName;
     }

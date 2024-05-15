@@ -6,15 +6,10 @@ use PHPMD\RuleViolation;
 
 class BaselineValidator
 {
-    private BaselineMode $baselineMode;
-
-    /** @var BaselineSet */
-    private $baselineSet;
-
-    public function __construct(BaselineSet $baselineSet, BaselineMode $baselineMode)
-    {
-        $this->baselineMode = $baselineMode;
-        $this->baselineSet = $baselineSet;
+    public function __construct(
+        private BaselineSet $baselineSet,
+        private BaselineMode $baselineMode,
+    ) {
     }
 
     /**

@@ -39,19 +39,9 @@ use RuntimeException;
 class MethodNode extends AbstractCallableNode
 {
     /**
-     * Constructs a new method wrapper.
-     */
-    public function __construct(ASTMethod $node)
-    {
-        parent::__construct($node);
-    }
-
-    /**
      * Returns the name of the parent package.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->getNode()->getParent()->getNamespace()->getName();
     }

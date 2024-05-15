@@ -26,11 +26,4 @@ use PDepend\Source\AST\ASTInterface;
  */
 class InterfaceNode extends AbstractTypeNode
 {
-    /**
-     * Constructs a new interface wrapper instance.
-     */
-    public function __construct(ASTInterface $node)
-    {
-        parent::__construct($node);
-    }
 }

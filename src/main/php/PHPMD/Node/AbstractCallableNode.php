@@ -29,14 +29,6 @@ use PDepend\Source\AST\AbstractASTCallable;
 abstract class AbstractCallableNode extends AbstractNode
 {
     /**
-     * Constructs a new callable wrapper.
-     */
-    public function __construct(AbstractASTCallable $node)
-    {
-        parent::__construct($node);
-    }
-
-    /**
      * Returns the number of parameters in the callable signature.
      *
      * @return int
