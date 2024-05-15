@@ -31,6 +31,7 @@ use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTString;
+use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
@@ -79,6 +80,34 @@ class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware
                 $this->doCheckNodeImage($nodes[0]);
             }
         }
+    }
+
+    /**
+     * Tests if the given variable node represents a local variable or if it is
+     * a static object property or something similar.
+     *
+     * @param ASTNode<ASTVariable> $variable The variable to check.
+     * @return bool
+     * @throws OutOfBoundsException
+     */
+    private function isLocal(ASTNode $variable)
+    {
+        return (!$variable->isThis()
+            && $this->isNotSuperGlobal($variable)
+            && $this->isRegularVariable($variable)
+        );
+    }
+
+    /**
+     * Tests if the given variable does not represent one of the PHP super globals
+     * that are available in scopes.
+     *
+     * @param AbstractNode<ASTVariable> $variable
+     * @return bool
+     */
+    private function isNotSuperGlobal(AbstractNode $variable)
+    {
+        return !$this->isSuperGlobal($variable);
     }
 
     /**
