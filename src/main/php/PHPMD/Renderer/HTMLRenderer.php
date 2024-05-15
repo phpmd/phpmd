@@ -31,7 +31,7 @@ use SplFileObject;
  * @copyright 2017 Premysl Karbula. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class HTMLRenderer extends AbstractRenderer
+final class HTMLRenderer extends AbstractRenderer
 {
     private const CATEGORY_PRIORITY = 'category_priority';
 

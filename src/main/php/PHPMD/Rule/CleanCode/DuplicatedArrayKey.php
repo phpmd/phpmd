@@ -24,7 +24,6 @@ use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -36,7 +35,7 @@ use PHPMD\Rule\MethodAware;
  * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  */
-class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAware
+final class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Retrieves all arrays from single node and performs comparison logic on it
@@ -52,10 +51,10 @@ class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAw
      * This method checks if a given function or method contains an array literal
      * with duplicated entries for any key and emits a rule violation if so.
      *
-     * @param ASTNode<ASTArray> $node Array node.
+     * @param AbstractNode<ASTArray> $node Array node.
      * @throws OutOfBoundsException
      */
-    private function checkForDuplicatedArrayKeys(ASTNode $node): void
+    private function checkForDuplicatedArrayKeys(AbstractNode $node): void
     {
         $keys = [];
         foreach ($node->getChildren() as $index => $arrayElement) {

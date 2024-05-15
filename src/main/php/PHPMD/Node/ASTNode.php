@@ -28,7 +28,7 @@ use PHPMD\Rule;
  *
  * @extends AbstractNode<TNode>
  */
-class ASTNode extends AbstractNode
+final class ASTNode extends AbstractNode
 {
     /**
      * Constructs a new ast node instance.

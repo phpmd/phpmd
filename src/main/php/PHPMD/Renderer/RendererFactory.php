@@ -2,14 +2,14 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\Writer\StreamWriter;
+use PHPMD\AbstractWriter;
 
-class RendererFactory
+final class RendererFactory
 {
     /**
      * @return BaselineRenderer
      */
-    public static function createBaselineRenderer(StreamWriter $writer)
+    public static function createBaselineRenderer(AbstractWriter $writer)
     {
         // set base path to current working directory
         $renderer = new BaselineRenderer(getcwd() ?: '');

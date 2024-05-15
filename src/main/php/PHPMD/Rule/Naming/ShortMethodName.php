@@ -26,7 +26,7 @@ use PHPMD\Utility\ExceptionsList;
 /**
  * This rule class will detect methods and functions with very short names.
  */
-class ShortMethodName extends AbstractRule implements FunctionAware, MethodAware
+final class ShortMethodName extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Temporary cache of configured exceptions.

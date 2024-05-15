@@ -41,7 +41,7 @@ use ValueError;
 /**
  * This class provides a command line interface for PHPMD
  */
-class Command
+final class Command
 {
     public function __construct(
         private Output $output,

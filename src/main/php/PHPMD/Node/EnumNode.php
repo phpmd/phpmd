@@ -24,6 +24,6 @@ use PDepend\Source\AST\ASTEnum;
  *
  * @extends AbstractTypeNode<ASTEnum>
  */
-class EnumNode extends AbstractTypeNode
+final class EnumNode extends AbstractTypeNode
 {
 }

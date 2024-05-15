@@ -46,7 +46,7 @@ use PHPMD\Node\TraitNode;
 /**
  * Simple wrapper around the php depend engine.
  */
-class Parser extends AbstractASTVisitor implements CodeAwareGenerator
+final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 {
     /**
      * The analysing rule-set instance.

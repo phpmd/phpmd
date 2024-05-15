@@ -33,7 +33,7 @@ use PHPMD\Utility\ExceptionsList;
  *
  * Boolean flags are signs for single responsibility principle violations.
  */
-class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodAware
+final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Temporary cache of configured exceptions.

@@ -31,7 +31,7 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseVariableName extends AbstractRule implements FunctionAware, MethodAware
+final class CamelCaseVariableName extends AbstractRule implements FunctionAware, MethodAware
 {
     /** @var list<string> */
     private $exceptions = [

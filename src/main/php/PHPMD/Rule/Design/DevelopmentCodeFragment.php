@@ -32,7 +32,7 @@ use PHPMD\Rule\MethodAware;
  * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
  */
-class DevelopmentCodeFragment extends AbstractRule implements FunctionAware, MethodAware
+final class DevelopmentCodeFragment extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an eval-expression

@@ -10,7 +10,7 @@ use PHPMD\RuleViolation;
  * This renderer output a command line friendly log with all found violations
  * and suspect software artifacts.
  */
-class AnsiRenderer extends AbstractRenderer
+final class AnsiRenderer extends AbstractRenderer
 {
     public function renderReport(Report $report): void
     {

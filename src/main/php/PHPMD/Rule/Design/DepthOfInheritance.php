@@ -25,7 +25,7 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule will detect classes that are too deep in the inheritance tree.
  */
-class DepthOfInheritance extends AbstractRule implements ClassAware
+final class DepthOfInheritance extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the number of parents for the given class

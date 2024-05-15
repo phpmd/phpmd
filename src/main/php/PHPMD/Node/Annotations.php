@@ -24,7 +24,7 @@ use PHPMD\Rule;
 /**
  * Collection of code annotations.
  */
-class Annotations
+final class Annotations
 {
     /**
      * Detected annotations.

@@ -26,7 +26,7 @@ use PHPMD\Rule\MethodAware;
  * This rule will check the NPath-complexity of a method or function against the
  * configured threshold.
  */
-class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
+final class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the acyclic complexity for the given node against a

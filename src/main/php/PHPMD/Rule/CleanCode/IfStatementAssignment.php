@@ -26,7 +26,6 @@ use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractCallableNode;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\FunctionAware;
@@ -44,7 +43,7 @@ use PHPMD\Rule\MethodAware;
  *
  * Empty if clauses are skipped
  */
-class IfStatementAssignment extends AbstractRule implements FunctionAware, MethodAware
+final class IfStatementAssignment extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if method/function has if clauses
@@ -67,7 +66,7 @@ class IfStatementAssignment extends AbstractRule implements FunctionAware, Metho
      * Extracts if and elseif statements from method/function body
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @return array<int, ASTNode<ASTStatement>>
+     * @return array<int, AbstractNode<ASTStatement>>
      */
     private function getStatements(AbstractCallableNode $node)
     {
@@ -80,8 +79,8 @@ class IfStatementAssignment extends AbstractRule implements FunctionAware, Metho
     /**
      * Extracts all expression from statements array
      *
-     * @param array<ASTNode<ASTStatement>> $statements Array of if and elseif clauses
-     * @return list<ASTNode<ASTExpression>>
+     * @param array<AbstractNode<ASTStatement>> $statements Array of if and elseif clauses
+     * @return list<AbstractNode<ASTExpression>>
      */
     private function getExpressions(array $statements)
     {
@@ -101,8 +100,8 @@ class IfStatementAssignment extends AbstractRule implements FunctionAware, Metho
     /**
      * Extracts all assignments from expressions array
      *
-     * @param array<int, ASTNode<ASTExpression>> $expressions Array of expressions
-     * @return array<int, ASTNode<ASTAssignmentExpression>>
+     * @param array<int, AbstractNode<ASTExpression>> $expressions Array of expressions
+     * @return array<int, AbstractNode<ASTAssignmentExpression>>
      */
     private function getAssignments(array $expressions)
     {
@@ -121,7 +120,7 @@ class IfStatementAssignment extends AbstractRule implements FunctionAware, Metho
      * Signals if any violations have been found in given method or function
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node An instance of MethodNode or FunctionNode class
-     * @param array<ASTNode<ASTAssignmentExpression>> $assignments Array of assignments
+     * @param array<AbstractNode<ASTAssignmentExpression>> $assignments Array of assignments
      */
     private function addViolations(AbstractCallableNode $node, array $assignments): void
     {

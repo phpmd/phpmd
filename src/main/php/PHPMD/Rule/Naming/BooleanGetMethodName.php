@@ -27,7 +27,7 @@ use PHPMD\Rule\MethodAware;
  * This rule tests that a method which returns a boolean value does not start
  * with <b>get</b> or <b>_get</b> for a getter.
  */
-class BooleanGetMethodName extends AbstractRule implements MethodAware
+final class BooleanGetMethodName extends AbstractRule implements MethodAware
 {
     /**
      * Extracts all variable and variable declarator nodes from the given node

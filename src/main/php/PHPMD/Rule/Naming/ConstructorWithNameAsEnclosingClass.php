@@ -29,7 +29,7 @@ use RuntimeException;
  * This rule class will detect methods that define a php4 style constructor
  * method while has the same name as the enclosing class.
  */
-class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
+final class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
 {
     /**
      * Is method has the same name as the enclosing class

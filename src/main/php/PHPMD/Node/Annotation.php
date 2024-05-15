@@ -22,7 +22,7 @@ use PHPMD\Rule;
 /**
  * Simple code annotation class.
  */
-class Annotation
+final class Annotation
 {
     /** Name of the suppress warnings annotation. */
     private const SUPPRESS_ANNOTATION = 'suppressWarnings';

@@ -30,7 +30,7 @@ use PHPMD\Rule\MethodAware;
  *
  * This rule can be used to prevent use of fully qualified class names.
  */
-class MissingImport extends AbstractRule implements FunctionAware, MethodAware
+final class MissingImport extends AbstractRule implements FunctionAware, MethodAware
 {
     /** @var list<string> Self reference class names. */
     private $selfReferences = ['self', 'static'];
@@ -72,10 +72,10 @@ class MissingImport extends AbstractRule implements FunctionAware, MethodAware
     /**
      * Check whether a given class node is a self reference
      *
-     * @param ASTNode<PDependNode> $classNode A class node to check.
+     * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is a self reference.
      */
-    private function isSelfReference(ASTNode $classNode)
+    private function isSelfReference(AbstractNode $classNode)
     {
         return in_array($classNode->getImage(), $this->selfReferences, true);
     }
@@ -83,10 +83,10 @@ class MissingImport extends AbstractRule implements FunctionAware, MethodAware
     /**
      * Check whether a given class node is in the global namespace
      *
-     * @param ASTNode<PDependNode> $classNode A class node to check.
+     * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is in the global namespace.
      */
-    private function isGlobalNamespace(ASTNode $classNode)
+    private function isGlobalNamespace(AbstractNode $classNode)
     {
         return $classNode->getImage() !== '' && !strpos($classNode->getImage(), '\\', 1);
     }

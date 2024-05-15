@@ -30,7 +30,7 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseParameterName extends AbstractRule implements FunctionAware, MethodAware
+final class CamelCaseParameterName extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a parameter is not named in camelCase

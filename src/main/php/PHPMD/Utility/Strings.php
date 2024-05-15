@@ -22,7 +22,7 @@ use InvalidArgumentException;
 /**
  * Utility class to provide string checks and manipulations
  */
-class Strings
+final class Strings
 {
     /**
      * Returns the length of the given string, excluding at most one suffix
@@ -33,7 +33,7 @@ class Strings
      */
     public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes)
     {
-        return static::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
+        return self::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
     }
 
     /**

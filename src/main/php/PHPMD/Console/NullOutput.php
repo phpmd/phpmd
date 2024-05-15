@@ -2,7 +2,7 @@
 
 namespace PHPMD\Console;
 
-class NullOutput extends Output
+final class NullOutput extends Output
 {
     /**
      * @inheritDoc

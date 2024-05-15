@@ -27,7 +27,6 @@ use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\TraitNode;
@@ -50,7 +49,7 @@ use RuntimeException;
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
+final class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
 {
     /**
      * List of functions to search against
@@ -132,10 +131,10 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAwar
      * Checks whether node in a direct child of the loop
      *
      * @param AbstractNode<ASTStatement> $loop
-     * @param ASTNode<ASTExpression> $expression
+     * @param AbstractNode<ASTExpression> $expression
      * @return bool
      */
-    private function isDirectChild(AbstractNode $loop, ASTNode $expression)
+    private function isDirectChild(AbstractNode $loop, AbstractNode $expression)
     {
         return $this->getHash($expression->getParent()->getNode()) !== $this->getHash($loop->getNode());
     }
@@ -168,10 +167,10 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAwar
     /**
      * Checks the given function against the list of unwanted functions
      *
-     * @param ASTNode<ASTFunctionPostfix> $function
+     * @param AbstractNode<ASTFunctionPostfix> $function
      * @return bool
      */
-    private function isUnwantedFunction(ASTNode $function)
+    private function isUnwantedFunction(AbstractNode $function)
     {
         $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 

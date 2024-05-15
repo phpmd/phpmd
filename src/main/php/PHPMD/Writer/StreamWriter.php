@@ -23,7 +23,7 @@ use RuntimeException;
 /**
  * This writer uses PHP's stream api as its output target.
  */
-class StreamWriter extends AbstractWriter
+final class StreamWriter extends AbstractWriter
 {
     /**
      * The stream resource handle

@@ -6,7 +6,7 @@ use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Utility\Paths;
 
-class BaselineRenderer extends AbstractRenderer
+final class BaselineRenderer extends AbstractRenderer
 {
     public function __construct(
         private string $basePath,
