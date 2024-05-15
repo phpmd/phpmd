@@ -41,6 +41,8 @@ class XdebugOptionHandler extends XdebugHandler
             fwrite(STDERR, PHP_EOL);
         }
 
-        parent::restart($command);
+        if ($command) {
+                parent::restart($command);
+        }
     }
 }
