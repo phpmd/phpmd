@@ -893,6 +893,7 @@ class CommandLineOptions
             '--color: enable color in output' . \PHP_EOL .
             '--extra-line-in-excerpt: Specify how many extra lines are added ' .
             'to a code snippet in html format' . \PHP_EOL .
+            '--xdebug: Enable Xdebug for debugging' . \PHP_EOL .
             '--: Explicit argument separator: Anything after "--" will be read as an argument even if' .
             'it starts with "-" or matches the name of an option' . \PHP_EOL;
     }
