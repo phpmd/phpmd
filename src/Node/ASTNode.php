@@ -78,9 +78,9 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the name of the declaring source file.
      */
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
-        return $this->fileName ?? '';
+        return $this->fileName;
     }
 
     /**
