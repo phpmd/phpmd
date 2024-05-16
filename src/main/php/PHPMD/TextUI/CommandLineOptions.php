@@ -958,7 +958,8 @@ class CommandLineOptions
      */
     private function readInputFile($inputFile)
     {
-        $content = file($inputFile);
+        $content = @file($inputFile);
+
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
