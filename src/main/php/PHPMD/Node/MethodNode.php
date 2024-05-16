@@ -43,27 +43,23 @@ class MethodNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getParent()->getNamespace()->getName();
+        return $this->getNode()->getParent()?->getNamespace()?->getName();
     }
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    public function getParentName()
+    public function getParentName(): ?string
     {
-        return $this->getNode()->getParent()->getName();
+        return $this->getNode()->getParent()?->getName();
     }
 
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return string
      */
-    public function getFullQualifiedName()
+    public function getFullQualifiedName(): string
     {
         return sprintf(
             '%s\\%s::%s()',
