@@ -159,7 +159,7 @@ class RuleSetTest extends AbstractTestCase
                 return '';
             }
 
-            public function getNamespaceName()
+            public function getNamespaceName(): ?string
             {
                 return '';
             }
