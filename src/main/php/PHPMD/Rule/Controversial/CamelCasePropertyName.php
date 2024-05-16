@@ -44,7 +44,7 @@ final class CamelCasePropertyName extends AbstractRule implements ClassAware, Tr
         }
 
         foreach ($node->getProperties() as $property) {
-            $propertyName = $property->getName();
+            $propertyName = $property->getImage();
 
             if (!$this->isValid($propertyName)) {
                 $this->addViolation(
