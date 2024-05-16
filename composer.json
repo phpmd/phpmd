@@ -39,7 +39,7 @@
     "php": "^8.1",
     "ext-xml": "*",
     "composer/xdebug-handler": "^3.0",
-    "pdepend/pdepend": "3.x-dev#625560a5915047e6b2a1047579eb1505709ababc",
+    "pdepend/pdepend": "3.x-dev#7b0290901cabcb083b68c229228ef5b49272ce79",
     "symfony/yaml": "^5.4.31 || ^6.0 || ^7.0"
   },
   "require-dev": {
