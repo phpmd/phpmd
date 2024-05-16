@@ -37,7 +37,7 @@ abstract class AbstractNode
     /**
      * The collected metrics for this node.
      *
-     * @var array<string, int|float|null>
+     * @var array<string, float|int|null>
      */
     private ?array $metrics = null;
 
@@ -76,7 +76,7 @@ abstract class AbstractNode
      *
      * @return AbstractNode<PDependNode>|null
      */
-    public function getParent(): ?AbstractNode
+    public function getParent(): ?self
     {
         $node = $this->node->getParent();
 
@@ -95,7 +95,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched parent type.
      * @return AbstractNode<T>|null
      */
-    public function getParentOfType(string $type): ?AbstractNode
+    public function getParentOfType(string $type): ?self
     {
         $parent = $this->node->getParent();
 
@@ -117,7 +117,7 @@ abstract class AbstractNode
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    public function getChild(int $index): AbstractNode
+    public function getChild(int $index): self
     {
         return new ASTNode(
             $this->node->getChild($index),
@@ -134,7 +134,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return AbstractNode<T>|null
      */
-    public function getFirstChildOfType(string $type): ?AbstractNode
+    public function getFirstChildOfType(string $type): ?self
     {
         $node = $this->node->getFirstChildOfType($type);
 
@@ -286,7 +286,7 @@ abstract class AbstractNode
      *
      * @param string $name The metric name or abbreviation.
      */
-    public function getMetric(string $name): int|float|null
+    public function getMetric(string $name): null|float|int
     {
         if (isset($this->metrics[$name])) {
             return $this->metrics[$name];

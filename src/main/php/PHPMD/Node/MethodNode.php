@@ -84,10 +84,9 @@ class MethodNode extends AbstractCallableNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @return bool
      * @throws RuntimeException
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule)
+    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
     {
         if (parent::hasSuppressWarningsAnnotationFor($rule)) {
             return true;

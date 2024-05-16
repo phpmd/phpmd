@@ -30,9 +30,7 @@ use PHPMD\Rule;
  */
 abstract class AbstractNode extends BaseNode
 {
-    /**
-     * Annotations associated with node instance.
-     */
+    /** Annotations associated with node instance. */
     private ?Annotations $annotations = null;
 
     /**

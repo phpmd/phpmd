@@ -34,7 +34,8 @@ class ASTNodeTest extends AbstractTestCase
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $mock->expects(static::once())
-            ->method('getImage');
+            ->method('getImage')
+            ->willReturn('');
 
         $node = new ASTNode($mock, __FILE__);
         $node->getImage();
@@ -47,7 +48,8 @@ class ASTNodeTest extends AbstractTestCase
     {
         $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
         $mock->expects(static::once())
-            ->method('getImage');
+            ->method('getImage')
+            ->willReturn('');
 
         $node = new ASTNode($mock, __FILE__);
         $node->getName();
