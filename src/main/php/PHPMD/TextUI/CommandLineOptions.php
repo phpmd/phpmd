@@ -737,6 +737,7 @@ class CommandLineOptions
     private function readInputFile(string $inputFile): string
     {
         $content = @file($inputFile);
+
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
