@@ -43,7 +43,7 @@ class MethodNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getParent()?->getNamespace()?->getName();
+        return $this->getNode()->getParent()?->getNamespace()?->getImage();
     }
 
     /**
@@ -52,7 +52,7 @@ class MethodNode extends AbstractCallableNode
      */
     public function getParentName(): ?string
     {
-        return $this->getNode()->getParent()?->getName();
+        return $this->getNode()->getParent()?->getImage();
     }
 
     /**
