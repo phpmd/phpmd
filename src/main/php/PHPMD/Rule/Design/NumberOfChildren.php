@@ -24,16 +24,13 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule will detect class that have to much direct child classes.
  */
-class NumberOfChildren extends AbstractRule implements ClassAware
+final class NumberOfChildren extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the number of classes derived from the given class
      * node.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $nocc = $node->getMetric('nocc');
         $threshold = $this->getIntProperty('minimum');
@@ -43,8 +40,8 @@ class NumberOfChildren extends AbstractRule implements ClassAware
                 [
                     $node->getType(),
                     $node->getName(),
-                    $nocc,
-                    $threshold,
+                    (string) $nocc,
+                    (string) $threshold,
                 ]
             );
         }

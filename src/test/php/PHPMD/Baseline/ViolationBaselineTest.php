@@ -13,7 +13,7 @@ class ViolationBaselineTest extends TestCase
      * @covers ::__construct
      * @covers ::getRuleName
      */
-    public function testGetRuleName()
+    public function testGetRuleName(): void
     {
         $violation = new ViolationBaseline('rule', 'foobar', null);
         static::assertSame('rule', $violation->getRuleName());
@@ -24,9 +24,8 @@ class ViolationBaselineTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::matches
-     * @return void
      */
-    public function testMatchesWithMethod()
+    public function testMatchesWithMethod(): void
     {
         $violation = new ViolationBaseline('sniff', 'foobar.txt', 'method');
         static::assertTrue($violation->matches('foobar.txt', 'method'));
@@ -40,9 +39,8 @@ class ViolationBaselineTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::matches
-     * @return void
      */
-    public function testMatchesWithoutMethod()
+    public function testMatchesWithoutMethod(): void
     {
         $violation = new ViolationBaseline('sniff', 'foobar.txt', null);
         static::assertTrue($violation->matches('foobar.txt', null));

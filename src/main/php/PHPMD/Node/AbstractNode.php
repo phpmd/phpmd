@@ -17,17 +17,23 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTArtifact;
+use PHPMD\AbstractNode as BaseNode;
 use PHPMD\Rule;
 
 /**
  * Abstract base class for all code nodes.
+ *
+ * @template-covariant TNode of ASTArtifact
+ *
+ * @extends BaseNode<TNode>
  */
-abstract class AbstractNode extends \PHPMD\AbstractNode
+abstract class AbstractNode extends BaseNode
 {
     /**
      * Annotations associated with node instance.
      *
-     * @var \PHPMD\Node\Annotations
+     * @var Annotations
      */
     private $annotations = null;
 
@@ -35,8 +41,7 @@ abstract class AbstractNode extends \PHPMD\AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {

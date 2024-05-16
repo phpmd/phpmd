@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ASTNode;
@@ -28,29 +30,23 @@ use PHPMD\Rule\MethodAware;
  *
  * This rule can be used to prevent use of fully qualified class names.
  */
-class MissingImport extends AbstractRule implements MethodAware, FunctionAware
+final class MissingImport extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var array Self reference class names.
-     */
-    protected $selfReferences = ['self', 'static'];
+    /** @var list<string> Self reference class names. */
+    private $selfReferences = ['self', 'static'];
 
     /**
      * Checks for missing class imports and warns about it
-     *
-     * @param AbstractNode $node The node to check upon.
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $ignoreGlobal = $this->getBooleanProperty('ignore-global');
 
-        foreach ($node->findChildrenOfType('AllocationExpression') as $allocationNode) {
-            if (!$allocationNode) {
+        foreach ($node->findChildrenOfType(ASTAllocationExpression::class) as $allocationNode) {
+            $classNode = $allocationNode->getChild(0);
+            if (!$classNode instanceof ASTNode) {
                 continue;
             }
-
-            $classNode = $allocationNode->getChild(0);
 
             if ($this->isSelfReference($classNode)) {
                 continue;
@@ -65,7 +61,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
             $fqcnLength = strlen($className);
 
             if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
-                $this->addViolation($classNode, [$classNode->getBeginLine(), $classNode->getStartColumn()]);
+                $this->addViolation(
+                    $classNode,
+                    [(string) $classNode->getBeginLine(), (string) $classNode->getStartColumn()]
+                );
             }
         }
     }
@@ -73,10 +72,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Check whether a given class node is a self reference
      *
-     * @param ASTNode $classNode A class node to check.
+     * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is a self reference.
      */
-    protected function isSelfReference(ASTNode $classNode)
+    private function isSelfReference(AbstractNode $classNode)
     {
         return in_array($classNode->getImage(), $this->selfReferences, true);
     }
@@ -84,10 +83,10 @@ class MissingImport extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Check whether a given class node is in the global namespace
      *
-     * @param ASTNode $classNode A class node to check.
+     * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is in the global namespace.
      */
-    protected function isGlobalNamespace(ASTNode $classNode)
+    private function isGlobalNamespace(AbstractNode $classNode)
     {
         return $classNode->getImage() !== '' && !strpos($classNode->getImage(), '\\', 1);
     }

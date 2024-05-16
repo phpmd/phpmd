@@ -23,12 +23,12 @@ use RuntimeException;
 /**
  * This writer uses PHP's stream api as its output target.
  */
-class StreamWriter extends AbstractWriter
+final class StreamWriter extends AbstractWriter
 {
     /**
      * The stream resource handle
      *
-     * @var resource
+     * @var ?resource
      */
     private $stream = null;
 
@@ -40,21 +40,22 @@ class StreamWriter extends AbstractWriter
      */
     public function __construct($streamResourceOrUri)
     {
-        if (is_resource($streamResourceOrUri) === true) {
+        if (is_resource($streamResourceOrUri)) {
             $this->stream = $streamResourceOrUri;
 
             return;
         }
         $dirName = dirname($streamResourceOrUri);
-        if (file_exists($dirName) === false) {
-            mkdir($dirName, 0777, true);
+        if (!file_exists($dirName)) {
+            mkdir($dirName, 0o777, true);
         }
-        if (file_exists($dirName) === false) {
+        if (!file_exists($dirName)) {
             $message = 'Cannot find output directory "' . $dirName . '".';
+
             throw new RuntimeException($message);
         }
 
-        $this->stream = fopen($streamResourceOrUri, 'wb');
+        $this->stream = fopen($streamResourceOrUri, 'wb') ?: null;
     }
 
     /**
@@ -62,7 +63,7 @@ class StreamWriter extends AbstractWriter
      */
     public function __destruct()
     {
-        if ($this->stream !== STDOUT && $this->stream !== STDERR && is_resource($this->stream) === true) {
+        if ($this->stream !== STDOUT && $this->stream !== STDERR && is_resource($this->stream)) {
             @fclose($this->stream);
         }
         $this->stream = null;
@@ -72,9 +73,8 @@ class StreamWriter extends AbstractWriter
      * Writes the given <b>$data</b> fragment to the wrapper output stream.
      *
      * @param string $data
-     * @return void
      */
-    public function write($data)
+    public function write($data): void
     {
         fwrite($this->stream, $data);
     }

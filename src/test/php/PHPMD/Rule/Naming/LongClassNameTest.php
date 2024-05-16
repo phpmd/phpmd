@@ -28,10 +28,8 @@ class LongClassNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply to class name length (43) below threshold (44)
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassNameBelowThreshold()
+    public function testRuleNotAppliesToClassNameBelowThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 44);
@@ -41,10 +39,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (40) below threshold (39)
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameAboveThreshold()
+    public function testRuleAppliesToClassNameAboveThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 39);
@@ -54,10 +50,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does not apply to interface name length (47) below threshold (47)
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToInterfaceNameBelowThreshold()
+    public function testRuleNotAppliesToInterfaceNameBelowThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 47);
@@ -67,10 +61,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (44) above threshold (43)
-     *
-     * @return void
      */
-    public function testRuleAppliesToInterfaceNameAboveThreshold()
+    public function testRuleAppliesToInterfaceNameAboveThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 43);
@@ -80,10 +72,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to trait name length (40) above threshold (39)
-     *
-     * @return void
      */
-    public function testRuleAppliesToTraitNameAboveThreshold()
+    public function testRuleAppliesToTraitNameAboveThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 39);
@@ -93,10 +83,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to enum name length (39) above threshold (38)
-     *
-     * @return void
      */
-    public function testRuleAppliesToEnumNameAboveThreshold()
+    public function testRuleAppliesToEnumNameAboveThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 38);
@@ -107,10 +95,8 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply to class name length (69) below threshold (60)
      * with configured suffix length (9)
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassNameLengthWithSuffixSubtractedBelowThreshold()
+    public function testRuleNotAppliesToClassNameLengthWithSuffixSubtractedBelowThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 60);
@@ -121,10 +107,8 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (66) above threshold (56) with configured suffix length (9)
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold()
+    public function testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 56);
@@ -136,10 +120,8 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply to class name length (55) below threshold (54)
      * not matching configured suffix length (9)
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameLengthWithoutSuffixSubtracted()
+    public function testRuleAppliesToClassNameLengthWithoutSuffixSubtracted(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 54);
@@ -151,10 +133,8 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule applies to class name length (43) below threshold (40)
      * not matching configured prefix length (15)
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameWithPrefixMatched()
+    public function testRuleAppliesToClassNameWithPrefixMatched(): void
     {
         $rule = new LongClassName();
         $rule->addProperty('maximum', 45);

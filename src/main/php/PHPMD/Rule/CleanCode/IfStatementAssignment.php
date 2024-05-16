@@ -17,9 +17,17 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\AbstractASTCallable;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTElseIfStatement;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTIfStatement;
+use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
+use PHPMD\Node\AbstractCallableNode;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\MethodNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -35,25 +43,18 @@ use PHPMD\Rule\MethodAware;
  *
  * Empty if clauses are skipped
  */
-class IfStatementAssignment extends AbstractRule implements MethodAware, FunctionAware
+final class IfStatementAssignment extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var array List of statement types where to forbid assignation.
-     */
-    protected $ifStatements = [
-        'IfStatement',
-        'ElseIfStatement',
-    ];
-
     /**
      * This method checks if method/function has if clauses
      * that use assignment instead of comparison.
-     *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof AbstractCallableNode) {
+            return;
+        }
+
         $statements = $this->getStatements($node);
         $expressions = $this->getExpressions($statements);
         $assignments = $this->getAssignments($expressions);
@@ -64,41 +65,52 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Extracts if and elseif statements from method/function body
      *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @return ASTNode[]
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return array<int, AbstractNode<ASTStatement>>
      */
-    protected function getStatements(AbstractNode $node)
+    private function getStatements(AbstractCallableNode $node)
     {
-        return call_user_func_array('array_merge', array_map(function ($type) use ($node) {
-            return $node->findChildrenOfType($type);
-        }, $this->ifStatements));
+        return [
+            ...$node->findChildrenOfType(ASTIfStatement::class),
+            ...$node->findChildrenOfType(ASTElseIfStatement::class),
+        ];
     }
 
     /**
      * Extracts all expression from statements array
      *
-     * @param ASTNode[] $statements Array of if and elseif clauses
-     * @return ASTExpression[]
+     * @param array<AbstractNode<ASTStatement>> $statements Array of if and elseif clauses
+     * @return list<AbstractNode<ASTExpression>>
      */
-    protected function getExpressions(array $statements)
+    private function getExpressions(array $statements)
     {
-        return array_map(function (ASTNode $statement) {
-            return $statement->getFirstChildOfType('Expression');
-        }, $statements);
+        $nodes = [];
+
+        foreach ($statements as $statement) {
+            $node = $statement->getFirstChildOfType(ASTExpression::class);
+
+            if ($node) {
+                $nodes[] = $node;
+            }
+        }
+
+        return $nodes;
     }
 
     /**
      * Extracts all assignments from expressions array
      *
-     * @param ASTExpression[] $expressions Array of expressions
-     * @return ASTAssignmentExpression[]
+     * @param array<int, AbstractNode<ASTExpression>> $expressions Array of expressions
+     * @return array<int, AbstractNode<ASTAssignmentExpression>>
      */
-    protected function getAssignments(array $expressions)
+    private function getAssignments(array $expressions)
     {
         $assignments = [];
-        /** @var ASTNode $expression */
         foreach ($expressions as $expression) {
-            $assignments = array_merge($assignments, $expression->findChildrenOfType('AssignmentExpression'));
+            $assignments = [
+                ...$assignments,
+                ...$expression->findChildrenOfType(ASTAssignmentExpression::class),
+            ];
         }
 
         return $assignments;
@@ -107,22 +119,24 @@ class IfStatementAssignment extends AbstractRule implements MethodAware, Functio
     /**
      * Signals if any violations have been found in given method or function
      *
-     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
-     * @param ASTAssignmentExpression[] $assignments Array of assignments
+     * @param AbstractCallableNode<AbstractASTCallable> $node An instance of MethodNode or FunctionNode class
+     * @param array<AbstractNode<ASTAssignmentExpression>> $assignments Array of assignments
      */
-    protected function addViolations(AbstractNode $node, array $assignments)
+    private function addViolations(AbstractCallableNode $node, array $assignments): void
     {
         $processesViolations = [];
-        /** @var \PDepend\Source\AST\AbstractASTNode $assignment */
         foreach ($assignments as $assignment) {
-            if (null === $assignment || $assignment->getImage() !== '=') {
+            if ($assignment->getImage() !== '=') {
                 continue;
             }
 
             $uniqueHash = $assignment->getStartColumn() . ':' . $assignment->getStartLine();
-            if (!in_array($uniqueHash, $processesViolations)) {
+            if (!in_array($uniqueHash, $processesViolations, true)) {
                 $processesViolations[] = $uniqueHash;
-                $this->addViolation($node, [$assignment->getStartLine(), $assignment->getStartColumn()]);
+                $this->addViolation(
+                    $node,
+                    [(string) $assignment->getStartLine(), (string) $assignment->getStartColumn()]
+                );
             }
         }
     }

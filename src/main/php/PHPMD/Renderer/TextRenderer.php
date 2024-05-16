@@ -27,22 +27,19 @@ use PHPMD\Report;
  * This renderer output a textual log with all found violations and suspect
  * software artifacts.
  */
-class TextRenderer extends AbstractRenderer implements Verbose, Color
+class TextRenderer extends AbstractRenderer implements Color, Verbose
 {
-    protected $columnSpacing = 2;
+    private int $columnSpacing = 2;
 
-    protected $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
+    private int $verbosityLevel = OutputInterface::VERBOSITY_NORMAL;
 
-    protected $colored = false;
+    private bool $colored = false;
 
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $longestLocationLength = 0;
@@ -50,7 +47,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         $violations = [];
 
         foreach ($report->getRuleViolations() as $violation) {
-            $location = $violation->getFileName().':'.$violation->getBeginLine();
+            $location = $violation->getFileName() . ':' . $violation->getBeginLine();
             $rule = $violation->getRule();
             $ruleName = $rule->getName();
             $ruleSet = $rule->getRuleSetName();
@@ -62,7 +59,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         }
 
         foreach ($violations as $data) {
-            list($violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength) = $data;
+            [$violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength] = $data;
 
             if ($this->verbosityLevel < OutputInterface::VERBOSITY_VERBOSE) {
                 $writer->write($location);
@@ -92,17 +89,17 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
         }
     }
 
-    public function setVerbosityLevel($level)
+    public function setVerbosityLevel($level): void
     {
-        $this->verbosityLevel = (int)$level;
+        $this->verbosityLevel = (int) $level;
     }
 
-    public function setColored($colored)
+    public function setColored($colored): void
     {
         $this->colored = $colored;
     }
 
-    protected function applyColor($text, $color)
+    private function applyColor(string $text, string $color): string
     {
         if (!$this->colored) {
             return $text;
@@ -112,7 +109,7 @@ class TextRenderer extends AbstractRenderer implements Verbose, Color
             'yellow' => 33,
             'red' => 31,
         ];
-        $color = isset($colors[$color]) ? $colors[$color] : $color;
+        $color = $colors[$color] ?? 0;
 
         return "\033[{$color}m{$text}\033[0m";
     }

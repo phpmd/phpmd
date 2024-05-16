@@ -21,36 +21,23 @@ use PDepend\Source\AST\AbstractASTClassOrInterface;
 
 /**
  * Abstract base class for classes and interfaces.
+ *
+ * @template-covariant TNode of AbstractASTClassOrInterface
+ *
+ * @extends AbstractNode<TNode>
  */
 abstract class AbstractTypeNode extends AbstractNode
 {
     /**
-     * @var \PDepend\Source\AST\AbstractASTClassOrInterface
-     */
-    private $node;
-
-    /**
-     * Constructs a new generic class or interface node.
-     *
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $node
-     */
-    public function __construct(AbstractASTClassOrInterface $node)
-    {
-        parent::__construct($node);
-
-        $this->node = $node;
-    }
-
-    /**
      * Returns an <b>array</b> with all methods defined in the context class or
      * interface.
      *
-     * @return \PHPMD\Node\MethodNode[]
+     * @return list<MethodNode>
      */
     public function getMethods()
     {
         $methods = [];
-        foreach ($this->node->getMethods() as $method) {
+        foreach ($this->getNode()->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
 
@@ -61,12 +48,12 @@ abstract class AbstractTypeNode extends AbstractNode
      * Returns an array with the names of all methods within this class or
      * interface node.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getMethodNames()
     {
         $names = [];
-        foreach ($this->node->getMethods() as $method) {
+        foreach ($this->getNode()->getMethods() as $method) {
             $names[] = $method->getName();
         }
 
@@ -76,28 +63,26 @@ abstract class AbstractTypeNode extends AbstractNode
     /**
      * Returns the number of constants declared in this type.
      *
-     * @return integer
+     * @return int
      */
     public function getConstantCount()
     {
-        return count($this->node->getConstants());
+        return count($this->getNode()->getConstants());
     }
 
     /**
      * Returns the name of the parent namespace.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
-        return $this->node->getNamespace()->getName();
+        return $this->getNode()->getNamespace()->getName();
     }
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {

@@ -15,9 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
-
-/**
- * @deprecated 3.0.0 Use PHPMD\Exception\RuleClassNotFoundException instead.
- */
-class_alias('PHPMD\Exception\RuleClassNotFoundException', 'PHPMD\RuleClassNotFoundException');
+class testRuleDoesApplyForAllCapsAbbreviationInProperty
+{
+    public $invalidPropertyNameURL;
+}

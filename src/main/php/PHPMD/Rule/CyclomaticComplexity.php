@@ -24,16 +24,13 @@ use PHPMD\AbstractRule;
  * This rule checks a given method or function against the configured cyclomatic
  * complexity threshold.
  */
-class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
+final class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the cyclomatic complexity for the given node against
      * a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('reportLevel');
         $ccn = $node->getMetric('ccn2');
@@ -46,8 +43,8 @@ class CyclomaticComplexity extends AbstractRule implements FunctionAware, Method
             [
                 $node->getType(),
                 $node->getName(),
-                $ccn,
-                $threshold,
+                (string) $ccn,
+                (string) $threshold,
             ]
         );
     }

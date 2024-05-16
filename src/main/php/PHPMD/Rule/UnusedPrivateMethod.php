@@ -17,29 +17,40 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use RuntimeException;
 
 /**
  * This rule collects all private methods in a class that aren't used in any
  * method of the analyzed class.
  */
-class UnusedPrivateMethod extends AbstractRule implements ClassAware
+final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
      *
-     * @param AbstractNode $class
-     * @return void
+     * @param AbstractNode<PDependNode> $class
+     * @throws RuntimeException
      */
-    public function apply(AbstractNode $class)
+    public function apply(AbstractNode $class): void
     {
-        /** @var ClassNode $node */
+        if (!$class instanceof ClassNode) {
+            return;
+        }
+
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, [$node->getImage()]);
         }
@@ -49,10 +60,11 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * This method collects all methods in the given class that are declared
      * as private and are not used in the same class' context.
      *
-     * @param ClassNode $class
-     * @return ASTMethodPostfix[]
+     * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
-    protected function collectUnusedPrivateMethods(ClassNode $class)
+    private function collectUnusedPrivateMethods(ClassNode $class)
     {
         $methods = $this->collectPrivateMethods($class);
 
@@ -62,10 +74,10 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * Collects all private methods declared in the given class node.
      *
-     * @param ClassNode $class
-     * @return AbstractNode[]
+     * @return array<string, MethodNode>
+     * @throws RuntimeException
      */
-    protected function collectPrivateMethods(ClassNode $class)
+    private function collectPrivateMethods(ClassNode $class)
     {
         $methods = [];
 
@@ -82,15 +94,14 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
      *
-     * @param ClassNode $class
-     * @param MethodNode $method
-     * @return boolean
+     * @return bool
+     * @throws RuntimeException
      */
-    protected function acceptMethod(ClassNode $class, MethodNode $method)
+    private function acceptMethod(ClassNode $class, MethodNode $method)
     {
         return (
             $method->isPrivate() &&
-            false === $method->hasSuppressWarningsAnnotationFor($this) &&
+            !$method->hasSuppressWarningsAnnotationFor($this) &&
             strcasecmp($method->getImage(), $class->getImage()) !== 0 &&
             strcasecmp($method->getImage(), '__construct') !== 0 &&
             strcasecmp($method->getImage(), '__destruct') !== 0 &&
@@ -101,14 +112,28 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * This method removes all used methods from the given methods array.
      *
-     * @param ClassNode $class
-     * @param MethodNode[] $methods
-     * @return ASTMethodPostfix[]
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
      */
-    protected function removeUsedMethods(ClassNode $class, array $methods)
+    private function removeUsedMethods(ClassNode $class, array $methods)
     {
-        foreach ($class->findChildrenOfType('MethodPostfix') as $postfix) {
-            /** @var $postfix ASTNode */
+        $methods = $this->removeExplicitCalls($class, $methods);
+        $methods = $this->removeCallableArrayRepresentations($class, $methods);
+
+        return $methods;
+    }
+
+    /**
+     * $this->privateMethod() makes "privateMethod" marked as used as an explicit call.
+     *
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
+     */
+    private function removeExplicitCalls(ClassNode $class, array $methods)
+    {
+        foreach ($class->findChildrenOfType(ASTMethodPostfix::class) as $postfix) {
             if ($this->isClassScope($class, $postfix)) {
                 unset($methods[strtolower($postfix->getImage())]);
             }
@@ -118,21 +143,70 @@ class UnusedPrivateMethod extends AbstractRule implements ClassAware
     }
 
     /**
+     * [$this 'privateMethod'] makes "privateMethod" marked as used as very likely to be used as a callable value.
+     *
+     * @param array<string, MethodNode> $methods
+     * @return array<string, MethodNode>
+     * @throws OutOfBoundsException
+     */
+    private function removeCallableArrayRepresentations(ClassNode $class, array $methods)
+    {
+        foreach ($class->findChildrenOfType(ASTVariable::class) as $variable) {
+            $parent = $variable->getParent();
+            if ($parent && $this->isClassScope($class, $variable) && $variable->getImage() === '$this') {
+                $method = $this->getMethodNameFromArraySecondElement($parent);
+
+                if ($method) {
+                    unset($methods[strtolower($method)]);
+                }
+            }
+        }
+
+        return $methods;
+    }
+
+    /**
+     * Return represented method name if the given element is a 2-items array
+     * and that the second one is a literal static string.
+     *
+     * @param AbstractNode<PDependNode> $parent
+     * @return string|null
+     * @throws OutOfBoundsException
+     */
+    private function getMethodNameFromArraySecondElement(AbstractNode $parent)
+    {
+        if ($parent->isInstanceOf(ASTArrayElement::class)) {
+            $array = $parent->getParent();
+
+            if ($array?->isInstanceOf(ASTArray::class)
+                && count($array->getChildren()) === 2
+            ) {
+                $secondElement = $array->getChild(1)->getChild(0);
+
+                if ($secondElement->isInstanceOf(ASTLiteral::class)) {
+                    return substr($secondElement->getImage(), 1, -1);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * This method checks that the given method postfix is accessed on an
      * instance or static reference to the given class.
      *
-     * @param ClassNode $class
-     * @param ASTNode $postfix
-     * @return boolean
+     * @param AbstractNode<ASTExpression> $postfix
+     * @return bool
+     * @throws OutOfBoundsException
      */
-    protected function isClassScope(ClassNode $class, ASTNode $postfix)
+    private function isClassScope(ClassNode $class, AbstractNode $postfix)
     {
         $owner = $postfix->getParent()->getChild(0);
 
         return (
-            $owner->isInstanceOf('MethodPostfix') ||
-            $owner->isInstanceOf('SelfReference') ||
-            $owner->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf(ASTMethodPostfix::class) ||
+            $owner->isInstanceOf(ASTSelfReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );

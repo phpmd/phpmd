@@ -21,70 +21,70 @@ use PHPMD\AbstractTestCase;
 
 class IfStatementAssignmentTest extends AbstractTestCase
 {
-    public function testRuleNotAppliesInsideClosure()
+    public function testRuleNotAppliesInsideClosure(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesInsideClosureCallbacks()
+    public function testRuleNotAppliesInsideClosureCallbacks(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToIfsWithoutAssignment()
+    public function testRuleNotAppliesToIfsWithoutAssignment(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToIfsWithConditionsOnly()
+    public function testRuleNotAppliesToIfsWithConditionsOnly(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToLogicalOperators()
+    public function testRuleNotAppliesToLogicalOperators(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleWorksCorrectlyWhenExpressionContainsMath()
+    public function testRuleWorksCorrectlyWhenExpressionContainsMath(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportMock(3));
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleAppliesToFunctions()
+    public function testRuleAppliesToFunctions(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
-    public function testRuleAppliesMultipleIfConditions()
+    public function testRuleAppliesMultipleIfConditions(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
 
-    public function testRuleAppliesToMultilevelIfConditions()
+    public function testRuleAppliesToMultilevelIfConditions(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportMock(6));
         $rule->apply($this->getFunction());
     }
 
-    public function testRuleAppliesMultipleTimesInOneIfCondition()
+    public function testRuleAppliesMultipleTimesInOneIfCondition(): void
     {
         $rule = new IfStatementAssignment();
         $rule->setReport($this->getReportMock(3));

@@ -21,23 +21,17 @@ use PDepend\Source\AST\AbstractASTCallable;
 
 /**
  * Abstract base class for PHP_Depend function and method wrappers.
+ *
+ * @template-covariant TNode of AbstractASTCallable
+ *
+ * @extends AbstractNode<TNode>
  */
 abstract class AbstractCallableNode extends AbstractNode
 {
     /**
-     * Constructs a new callable wrapper.
-     *
-     * @param \PDepend\Source\AST\AbstractASTCallable $node
-     */
-    public function __construct(AbstractASTCallable $node)
-    {
-        parent::__construct($node);
-    }
-
-    /**
      * Returns the number of parameters in the callable signature.
      *
-     * @return integer
+     * @return int
      */
     public function getParameterCount()
     {

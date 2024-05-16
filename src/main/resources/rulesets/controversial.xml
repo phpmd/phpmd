@@ -45,9 +45,42 @@ It is considered best practice to use the CamelCase notation to name classes.
             ]]>
         </description>
         <priority>1</priority>
-        <properties />
+        <properties>
+            <property name="camelcase-abbreviations"
+                      description="Name should be CamelCase including abbreviations."
+                      value="false" />
+        </properties>
         <example>
             <![CDATA[
+class class_name {
+}
+            ]]>
+        </example>
+    </rule>
+
+    <rule name="CamelCaseNamespace"
+          since="2.16"
+          message = "The name {0} in namespace {1} is not named in CamelCase."
+          class="PHPMD\Rule\Controversial\CamelCaseNamespace"
+          externalInfoUrl="#">
+        <description>
+            <![CDATA[
+A rule to use CamelCase notation to name namespaces.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="camelcase-abbreviations"
+                      description="Name should be CamelCase including abbreviations."
+                      value="false" />
+            <property name="exceptions"
+                      description="Comma-separated class name list of exceptions"
+                      value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+use example\name_space;
+
 class class_name {
 }
             ]]>
@@ -71,6 +104,9 @@ It is considered best practice to use the camelCase notation to name attributes.
                       value="false" />
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
+                      value="false" />
+            <property name="camelcase-abbreviations"
+                      description="Name should be camelCase including abbreviations."
                       value="false" />
         </properties>
         <example>
@@ -100,6 +136,9 @@ It is considered best practice to use the camelCase notation to name methods.
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
                       value="false" />
+            <property name="camelcase-abbreviations"
+                      description="Name should be camelCase including abbreviations."
+                      value="false" />
         </properties>
         <example>
             <![CDATA[
@@ -126,6 +165,9 @@ It is considered best practice to use the camelCase notation to name parameters.
             <property name="allow-underscore"
                       description="Allow an optional, single underscore at the beginning."
                       value="false" />
+            <property name="camelcase-abbreviations"
+                      description="Name should be camelCase including abbreviations."
+                      value="false" />
         </properties>
         <example>
             <![CDATA[
@@ -151,6 +193,9 @@ It is considered best practice to use the camelCase notation to name variables.
         <properties>
             <property name="allow-underscore"
                       description="Allow an optional, single underscore at the beginning."
+                      value="false" />
+            <property name="camelcase-abbreviations"
+                      description="Name should be camelCase including abbreviations."
                       value="false" />
         </properties>
         <example>

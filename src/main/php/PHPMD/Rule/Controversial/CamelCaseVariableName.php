@@ -17,6 +17,9 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -28,12 +31,10 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseVariableName extends AbstractRule implements MethodAware, FunctionAware
+final class CamelCaseVariableName extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * @var array
-     */
-    protected $exceptions = [
+    /** @var list<string> */
+    private $exceptions = [
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',
@@ -50,11 +51,8 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
     /**
      * This method checks if a variable is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $variables = [];
 
@@ -70,12 +68,22 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
         }
     }
 
-    protected function isValid($variable)
+    /**
+     * @param AbstractNode<ASTVariable> $variable
+     * @throws OutOfBoundsException
+     */
+    private function isValid(AbstractNode $variable): bool
     {
         $image = $variable->getImage();
 
-        if (in_array($image, $this->exceptions)) {
+        if (in_array($image, $this->exceptions, true)) {
             return true;
+        }
+
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $image) === 1) {
+            return false;
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {
@@ -88,7 +96,7 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
             return true;
         }
 
-        if ($variable->getParent()->isInstanceOf('PropertyPostfix')) {
+        if ($variable->getParent()->isInstanceOf(ASTPropertyPostfix::class)) {
             return true;
         }
 

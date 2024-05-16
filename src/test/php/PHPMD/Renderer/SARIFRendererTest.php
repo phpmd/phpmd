@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
@@ -31,10 +32,8 @@ class SARIFRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfJsonElements()
+    public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
         $writer = new WriterStub();
 
@@ -55,12 +54,12 @@ class SARIFRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -73,7 +72,7 @@ class SARIFRendererTest extends AbstractTestCase
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        $this->assertSame(
+        static::assertSame(
             json_encode($actual, $flags),
             json_encode(json_decode(file_get_contents(
                 __DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif'
@@ -83,10 +82,8 @@ class SARIFRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToJsonReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToJsonReport()
+    public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
         $writer = new WriterStub();
 
@@ -98,12 +95,12 @@ class SARIFRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($processingErrors)));
+            ->will(static::returnValue(new ArrayIterator($processingErrors)));
 
         $renderer = new SARIFRenderer();
         $renderer->setWriter($writer);
@@ -120,11 +117,11 @@ class SARIFRendererTest extends AbstractTestCase
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
 
-        $this->assertSame(
-            json_encode($actual, $flags),
+        static::assertSame(
             json_encode(json_decode(file_get_contents(
                 __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
-            )), $flags)
+            )), $flags),
+            json_encode($actual, $flags)
         );
     }
 }

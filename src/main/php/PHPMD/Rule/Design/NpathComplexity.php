@@ -26,16 +26,13 @@ use PHPMD\Rule\MethodAware;
  * This rule will check the NPath-complexity of a method or function against the
  * configured threshold.
  */
-class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
+final class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks the acyclic complexity for the given node against a
      * configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $npath = $node->getMetric('npath');
@@ -48,8 +45,8 @@ class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
             [
                 $node->getType(),
                 $node->getName(),
-                $npath,
-                $threshold,
+                (string) $npath,
+                (string) $threshold,
             ]
         );
     }

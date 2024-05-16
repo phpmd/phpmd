@@ -10,19 +10,13 @@ use PHPMD\Utility\Paths;
 
 class ResultCacheState
 {
-    /** @var ResultCacheKey */
-    private $cacheKey;
-
-    /** @var array{files: array<string, array{hash: string, violations: array}>} */
-    private $state;
-
     /**
-     * @param array{files: array<string, array{hash: string, violations: array}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: list<array<string, mixed>>}>} $state
      */
-    public function __construct(ResultCacheKey $cacheKey, $state = [])
-    {
-        $this->cacheKey = $cacheKey;
-        $this->state    = $state;
+    public function __construct(
+        private ResultCacheKey $cacheKey,
+        private array $state = [],
+    ) {
     }
 
     /**
@@ -35,11 +29,11 @@ class ResultCacheState
 
     /**
      * @param string $filePath
-     * @return array
+     * @return list<array<string, mixed>>
      */
     public function getViolations($filePath)
     {
-        if (isset($this->state['files'][$filePath]['violations']) === false) {
+        if (!isset($this->state['files'][$filePath]['violations'])) {
             return [];
         }
 
@@ -48,8 +42,9 @@ class ResultCacheState
 
     /**
      * @param string $filePath
+     * @param list<array<string, mixed>> $violations
      */
-    public function setViolations($filePath, array $violations)
+    public function setViolations($filePath, array $violations): void
     {
         $this->state['files'][$filePath]['violations'] = $violations;
     }
@@ -57,40 +52,41 @@ class ResultCacheState
     /**
      * @param string $filePath
      */
-    public function addRuleViolation($filePath, RuleViolation $violation)
+    public function addRuleViolation($filePath, RuleViolation $violation): void
     {
         $this->state['files'][$filePath]['violations'][] = [
-            'rule'          => get_class($violation->getRule()),
+            'rule' => $violation->getRule()::class,
             'namespaceName' => $violation->getNamespaceName(),
-            'className'     => $violation->getClassName(),
-            'methodName'    => $violation->getMethodName(),
-            'functionName'  => $violation->getFunctionName(),
-            'beginLine'     => $violation->getBeginLine(),
-            'endLine'       => $violation->getEndLine(),
-            'description'   => $violation->getDescription(),
-            'args'          => $violation->getArgs(),
-            'metric'        => $violation->getMetric()
+            'className' => $violation->getClassName(),
+            'methodName' => $violation->getMethodName(),
+            'functionName' => $violation->getFunctionName(),
+            'beginLine' => $violation->getBeginLine(),
+            'endLine' => $violation->getEndLine(),
+            'description' => $violation->getDescription(),
+            'args' => $violation->getArgs(),
+            'metric' => $violation->getMetric(),
         ];
     }
 
     /**
-     * @param string    $basePath
-     * @param RuleSet[] $ruleSetList
+     * @param string $basePath
+     * @param list<RuleSet> $ruleSetList
+     * @return list<RuleViolation>
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
-        if (isset($this->state['files']) === false) {
+        if (!isset($this->state['files'])) {
             return [];
         }
 
         $ruleViolations = [];
 
         foreach ($this->state['files'] as $filePath => $violations) {
-            if (isset($violations['violations']) === false) {
+            if (!isset($violations['violations'])) {
                 continue;
             }
             foreach ($violations['violations'] as $violation) {
-                $rule     = self::findRuleIn($violation['rule'], $ruleSetList);
+                $rule = self::findRuleIn($violation['rule'], $ruleSetList);
                 $nodeInfo = new NodeInfo(
                     Paths::concat($basePath, $filePath),
                     $violation['namespaceName'],
@@ -120,7 +116,7 @@ class ResultCacheState
      */
     public function isFileModified($filePath, $hash)
     {
-        if (isset($this->state['files'][$filePath]['hash']) === false) {
+        if (!isset($this->state['files'][$filePath]['hash'])) {
             return true;
         }
 
@@ -131,19 +127,19 @@ class ResultCacheState
      * @param string $filePath
      * @param string $hash
      */
-    public function setFileState($filePath, $hash)
+    public function setFileState($filePath, $hash): void
     {
-        return $this->state['files'][$filePath]['hash'] = $hash;
+        $this->state['files'][$filePath]['hash'] = $hash;
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function toArray()
     {
         return [
-            'key'   => $this->cacheKey->toArray(),
-            'state' => $this->state
+            'key' => $this->cacheKey->toArray(),
+            'state' => $this->state,
         ];
     }
 
@@ -156,7 +152,7 @@ class ResultCacheState
     {
         foreach ($ruleSetList as $ruleSet) {
             foreach ($ruleSet->getRules() as $rule) {
-                if (get_class($rule) === $ruleClassName) {
+                if ($rule::class === $ruleClassName) {
                     return $rule;
                 }
             }

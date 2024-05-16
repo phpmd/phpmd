@@ -13,7 +13,7 @@ class StreamWriterTest extends TestCase
     /**
      * @covers ::getStream
      */
-    public function testGetStream()
+    public function testGetStream(): void
     {
         $writer = new StreamWriter(STDOUT);
         static::assertSame(STDOUT, $writer->getStream());

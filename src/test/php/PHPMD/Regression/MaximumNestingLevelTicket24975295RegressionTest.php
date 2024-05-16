@@ -28,18 +28,15 @@ use PHPMD\Writer\StreamWriter;
  *
  * @link https://www.pivotaltracker.com/story/show/24975295
  * @since 1.3.1
- *
- * @covers \stdClass
  */
-class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegressionTestCase
+class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
+    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $renderer = new TextRenderer();
         $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
@@ -49,7 +46,6 @@ class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegres
         $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
-
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             $inputs,
@@ -58,5 +54,7 @@ class MaximumNestingLevelTicket24975295RegressionTestCase extends AbstractRegres
             $factory->createRuleSets($rules),
             new Report()
         );
+
+        static::assertFalse($phpmd->hasErrors());
     }
 }

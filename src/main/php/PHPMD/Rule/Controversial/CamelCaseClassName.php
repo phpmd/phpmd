@@ -30,18 +30,21 @@ use PHPMD\Rule\TraitAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+final class CamelCaseClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * This method checks if a class is not named in CamelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        if (!preg_match('/^[A-Z][a-zA-Z0-9]*$/', $node->getName())) {
+        $pattern = '/^[A-Z][a-zA-Z0-9]*$/';
+        if ($this->getBooleanProperty('camelcase-abbreviations')) {
+            // disallow any consecutive uppercase letters
+            $pattern = '/^([A-Z][a-z0-9]+)*$/';
+        }
+
+        if (!preg_match($pattern, $node->getName())) {
             $this->addViolation(
                 $node,
                 [

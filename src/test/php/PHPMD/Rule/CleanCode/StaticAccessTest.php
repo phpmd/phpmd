@@ -24,28 +24,28 @@ use PHPMD\AbstractTestCase;
  */
 class StaticAccessTest extends AbstractTestCase
 {
-    public function testRuleNotAppliesToParentStaticCall()
+    public function testRuleNotAppliesToParentStaticCall(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToSelfStaticCall()
+    public function testRuleNotAppliesToSelfStaticCall(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToDynamicMethodCall()
+    public function testRuleNotAppliesToDynamicMethodCall(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToStaticMethodAccessWhenExcluded()
+    public function testRuleNotAppliesToStaticMethodAccessWhenExcluded(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
@@ -53,14 +53,14 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleAppliesToStaticMethodAccess()
+    public function testRuleAppliesToStaticMethodAccess(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded()
+    public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithOneViolation());
@@ -68,7 +68,7 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToConstantAccess()
+    public function testRuleNotAppliesToConstantAccess(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
@@ -79,7 +79,7 @@ class StaticAccessTest extends AbstractTestCase
      * @covers ::apply
      * @covers ::isMethodIgnored
      */
-    public function testRuleNotAppliesToStaticMethodAccessWhenIgnored()
+    public function testRuleNotAppliesToStaticMethodAccessWhenIgnored(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithNoViolation());
@@ -91,7 +91,7 @@ class StaticAccessTest extends AbstractTestCase
      * @covers ::apply
      * @covers ::isMethodIgnored
      */
-    public function testRuleAppliesToStaticMethodAccessWhenNotIgnored()
+    public function testRuleAppliesToStaticMethodAccessWhenNotIgnored(): void
     {
         $rule = new StaticAccess();
         $rule->setReport($this->getReportWithOneViolation());

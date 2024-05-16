@@ -25,17 +25,13 @@ use PHPMD\Stubs\WriterStub;
 
 /**
  * Regression test for issue 001.
- *
- * @covers \stdClass
  */
-class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends AbstractRegressionTestCase
+class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testCliAcceptsDirectoryAsInput
-     *
-     * @return void
      */
-    public function testCliAcceptsDirectoryAsInput()
+    public function testCliAcceptsDirectoryAsInput(): void
     {
         self::changeWorkingDirectory();
 
@@ -45,21 +41,22 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends Abstr
         $ruleSetFactory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
+        $inputPath = self::createFileUri('001/source');
         $phpmd->processFiles(
-            self::createFileUri('source'),
+            $inputPath,
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
+
+        static::assertSame($inputPath, $phpmd->getInput());
     }
 
     /**
      * testCliAcceptsSingleFileAsInput
-     *
-     * @return void
      */
-    public function testCliAcceptsSingleFileAsInput()
+    public function testCliAcceptsSingleFileAsInput(): void
     {
         self::changeWorkingDirectory();
 
@@ -69,12 +66,15 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTestCase extends Abstr
         $ruleSetFactory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
+        $inputPath = self::createFileUri('001/source/FooBar.php');
         $phpmd->processFiles(
-            self::createFileUri('source/FooBar.php'),
+            $inputPath,
             $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             [$renderer],
             $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
+
+        static::assertSame($inputPath, $phpmd->getInput());
     }
 }

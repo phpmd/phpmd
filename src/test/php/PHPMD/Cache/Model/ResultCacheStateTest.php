@@ -22,23 +22,23 @@ class ResultCacheStateTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->key   = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $this->key = new ResultCacheKey(true, 'baseline', [], [], 123);
         $this->state = new ResultCacheState($this->key, []);
     }
 
     /**
      * @covers ::getCacheKey
      */
-    public function testGetCacheKey()
+    public function testGetCacheKey(): void
     {
         static::assertSame($this->key, $this->state->getCacheKey());
     }
 
     /**
-     * @covers ::setViolations
      * @covers ::getViolations
+     * @covers ::setViolations
      */
-    public function testGetSetViolations()
+    public function testGetSetViolations(): void
     {
         $violations = ['violations'];
 
@@ -51,9 +51,9 @@ class ResultCacheStateTest extends TestCase
     /**
      * @covers ::addRuleViolation
      */
-    public function testAddRuleViolation()
+    public function testAddRuleViolation(): void
     {
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             'fileName',
             'namespace',
@@ -63,23 +63,23 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
         $expected = [
             [
-                'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
+                'rule' => BooleanArgumentFlag::class,
                 'namespaceName' => 'namespace',
-                'className'     => 'className',
-                'methodName'    => 'methodName',
-                'functionName'  => 'functionName',
-                'beginLine'     => 123,
-                'endLine'       => 456,
-                'description'   => 'violation',
-                'args'          => null,
-                'metric'        => $metric
-            ]
+                'className' => 'className',
+                'methodName' => 'methodName',
+                'functionName' => 'functionName',
+                'beginLine' => 123,
+                'endLine' => 456,
+                'description' => 'violation',
+                'args' => null,
+                'metric' => $metric,
+            ],
         ];
 
         $this->state->addRuleViolation('/file/path', $ruleViolation);
@@ -87,14 +87,14 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::getRuleViolations
      * @covers ::findRuleIn
+     * @covers ::getRuleViolations
      */
-    public function testGetRuleViolationsWithoutDescriptionArgs()
+    public function testGetRuleViolationsWithoutDescriptionArgs(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -104,7 +104,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -114,14 +114,14 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::getRuleViolations
      * @covers ::findRuleIn
+     * @covers ::getRuleViolations
      */
-    public function testGetRuleViolationsWithDescriptionArgs()
+    public function testGetRuleViolationsWithDescriptionArgs(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -131,7 +131,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation(
             $rule,
@@ -146,10 +146,10 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::setFileState
      * @covers ::isFileModified
+     * @covers ::setFileState
      */
-    public function testIsFileModified()
+    public function testIsFileModified(): void
     {
         $this->state->setFileState('/file/path', 'hash');
 
@@ -161,11 +161,11 @@ class ResultCacheStateTest extends TestCase
     /**
      * @covers ::toArray
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new BooleanArgumentFlag());
-        $rule     = new BooleanArgumentFlag();
+        $rule = new BooleanArgumentFlag();
         $nodeInfo = new NodeInfo(
             '/file/path',
             'namespace',
@@ -175,42 +175,41 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric   = ['line' => 100];
+        $metric = ['line' => 100];
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
         $this->state->setFileState('/file/path', 'hash');
         $this->state->addRuleViolation('/file/path', $ruleViolation);
 
         $expected = [
-            'key'   => [
-                'strict'       => true,
+            'key' => [
+                'strict' => true,
                 'baselineHash' => 'baseline',
-                'rules'        => [],
-                'composer'     => [],
-                'phpVersion'   => 123
+                'rules' => [],
+                'composer' => [],
+                'phpVersion' => 123,
             ],
             'state' => [
                 'files' => [
                     '/file/path' => [
-                        'hash'       => 'hash',
+                        'hash' => 'hash',
                         'violations' => [
                             [
-                                'rule'          => 'PHPMD\Rule\CleanCode\BooleanArgumentFlag',
+                                'rule' => BooleanArgumentFlag::class,
                                 'namespaceName' => 'namespace',
-                                'className'     => 'className',
-                                'methodName'    => 'methodName',
-                                'functionName'  => 'functionName',
-                                'beginLine'     => 123,
-                                'endLine'       => 456,
-                                'description'   => 'violation',
-                                'args'          => null,
-                                'metric'        => $metric
-                            ]
-                        ]
-                    ]
-
-                ]
-            ]
+                                'className' => 'className',
+                                'methodName' => 'methodName',
+                                'functionName' => 'functionName',
+                                'beginLine' => 123,
+                                'endLine' => 456,
+                                'description' => 'violation',
+                                'args' => null,
+                                'metric' => $metric,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         static::assertSame($expected, $this->state->toArray());

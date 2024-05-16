@@ -17,7 +17,9 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTParentReference;
 use PDepend\Source\AST\ASTSelfReference;
@@ -25,6 +27,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * Check if static access is used in a method.
@@ -32,19 +35,23 @@ use PHPMD\Rule\MethodAware;
  * Static access is known to cause hard dependencies between classes
  * and is a bad practice.
  */
-class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
+final class StaticAccess extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
-     * Method checks for use of static access and warns about it.
+     * Temporary cache of configured exceptions.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @var ExceptionsList|null
      */
-    public function apply(AbstractNode $node)
+    private $exceptions;
+
+    /**
+     * Method checks for use of static access and warns about it.
+     */
+    public function apply(AbstractNode $node): void
     {
         $ignoreRegexp = trim($this->getStringProperty('ignorepattern', ''));
         $exceptions = $this->getExceptionsList();
-        $nodes = $node->findChildrenOfType('MemberPrimaryPrefix');
+        $nodes = $node->findChildrenOfType(ASTMemberPrimaryPrefix::class);
 
         foreach ($nodes as $methodCall) {
             if ($this->isMethodIgnored($methodCall, $ignoreRegexp)) {
@@ -56,7 +63,7 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             }
 
             $className = $methodCall->getChild(0)->getNode()->getImage();
-            if ($this->isExcludedFromAnalysis($className, $exceptions)) {
+            if ($exceptions->contains($className)) {
                 continue;
             }
 
@@ -64,12 +71,11 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
         }
     }
 
-    protected function isExcludedFromAnalysis($className, $exceptions)
-    {
-        return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
-    }
-
-    protected function isStaticMethodCall(AbstractNode $methodCall)
+    /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
+     * @throws OutOfBoundsException
+     */
+    private function isStaticMethodCall(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
@@ -77,49 +83,51 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             !$this->isCallingSelf($methodCall);
     }
 
-    protected function isCallingParent(AbstractNode $methodCall)
+    /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
+     * @throws OutOfBoundsException
+     */
+    private function isCallingParent(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTParentReference;
     }
 
-    protected function isCallingSelf(AbstractNode $methodCall)
+    /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
+     * @throws OutOfBoundsException
+     */
+    private function isCallingSelf(AbstractNode $methodCall): bool
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
     }
 
     /**
+     * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @param string $ignorePattern
      * @return bool
      */
-    protected function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
+    private function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
     {
         if ($ignorePattern === '') {
             return false;
         }
 
-        $methodName = $methodCall->getFirstChildOfType('MethodPostfix');
+        $methodName = $methodCall->getFirstChildOfType(ASTMethodPostfix::class);
 
         return $methodName !== null && preg_match($ignorePattern, $methodName->getName()) === 1;
     }
 
     /**
-     * Gets array of exceptions from property
+     * Gets exceptions from property
      *
-     * @return array
+     * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
-        try {
-            $exceptions = $this->getStringProperty('exceptions');
-        } catch (\OutOfBoundsException $e) {
-            $exceptions = '';
+        if ($this->exceptions === null) {
+            $this->exceptions = new ExceptionsList($this, '\\');
         }
 
-        return array_map(
-            function ($className) {
-                return trim($className, " \t\n\r\0\x0B\\");
-            },
-            explode(',', $exceptions)
-        );
+        return $this->exceptions;
     }
 }

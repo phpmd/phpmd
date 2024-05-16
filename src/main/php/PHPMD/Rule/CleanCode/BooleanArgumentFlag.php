@@ -18,34 +18,34 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use PHPMD\Utility\Strings;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * Check for a boolean flag in the method/function signature.
  *
  * Boolean flags are signs for single responsibility principle violations.
  */
-class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionAware
+final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Temporary cache of configured exceptions.
      *
-     * @return array<string, int>
+     * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * This method checks if a method/function has boolean flag arguments and warns about them.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $name = $node->getName();
 
@@ -58,53 +58,48 @@ class BooleanArgumentFlag extends AbstractRule implements MethodAware, FunctionA
         }
 
         $currNode = $node->getNode();
-        $parent = is_callable([$currNode, 'getParent']) ? $currNode->getParent() : null;
+        $parent = $currNode->getParent();
 
         if ($parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
-            ($name = $parent->getName())
+            ($name = $parent->getName()) &&
+            $this->getExceptionsList()->contains($name)
         ) {
-            $exceptions = $this->getExceptionsList();
-
-            if (isset($exceptions[$name])) {
-                return;
-            }
+            return;
         }
 
         $this->scanFormalParameters($node);
     }
 
-    protected function isBooleanValue(ASTValue $value = null)
+    private function isBooleanValue(?ASTValue $value = null): bool
     {
-        return $value && $value->isValueAvailable() && ($value->getValue() === true || $value->getValue() === false);
+        return $value?->isValueAvailable() && is_bool($value->getValue());
     }
 
     /**
      * Gets exceptions from property
      *
-     * @return array<string, int>
+     * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
-            $this->exceptions = array_flip(
-                Strings::splitToList(
-                    $this->getStringProperty('exceptions', ''),
-                    ','
-                )
-            );
+            $this->exceptions = new ExceptionsList($this);
         }
 
         return $this->exceptions;
     }
 
-    private function scanFormalParameters(AbstractNode $node)
+    /**
+     * @param AbstractNode<ASTNode> $node
+     */
+    private function scanFormalParameters(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('FormalParameter') as $param) {
-            $declarator = $param->getFirstChildOfType('VariableDeclarator');
+        foreach ($node->findChildrenOfType(ASTFormalParameter::class) as $param) {
+            $declarator = $param->getFirstChildOfType(ASTVariableDeclarator::class);
             $value = $declarator->getValue();
 
-            if (false === $this->isBooleanValue($value)) {
+            if (!$this->isBooleanValue($value)) {
                 continue;
             }
 

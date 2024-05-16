@@ -21,16 +21,9 @@ use PDepend\Source\AST\ASTTrait;
 
 /**
  * Wrapper around PHP_Depend's interface objects.
+ *
+ * @extends AbstractTypeNode<ASTTrait>
  */
-class TraitNode extends AbstractTypeNode
+final class TraitNode extends AbstractTypeNode
 {
-    /**
-     * Constructs a new interface wrapper instance.
-     *
-     * @param \PDepend\Source\AST\ASTTrait $node
-     */
-    public function __construct(ASTTrait $node)
-    {
-        parent::__construct($node);
-    }
 }

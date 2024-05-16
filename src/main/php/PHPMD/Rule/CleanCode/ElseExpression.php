@@ -17,9 +17,11 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -30,24 +32,25 @@ use PHPMD\Rule\MethodAware;
  * Object Calisthenics teaches us, that an else expression can always be
  * avoided by simple guard clause or return statements.
  */
-class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
+final class ElseExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a method/function uses an else expression and add a violation for each one found.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('ScopeStatement') as $scope) {
+        foreach ($node->findChildrenOfType(ASTScopeStatement::class) as $scope) {
             $parent = $scope->getParent();
 
-            if (false === $this->isIfOrElseIfStatement($parent)) {
+            if (!$parent) {
                 continue;
             }
 
-            if (false === $this->isElseScope($scope, $parent)) {
+            if (!$this->isIfOrElseIfStatement($parent)) {
+                continue;
+            }
+
+            if (!$this->isElseScope($scope, $parent)) {
                 continue;
             }
 
@@ -58,11 +61,12 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Whether the given scope is an else clause
      *
-     * @param AbstractNode $scope
-     * @param ASTNode $parent
+     * @param AbstractNode<ASTScopeStatement> $scope
+     * @param AbstractNode<PDependNode> $parent
      * @return bool
+     * @throws OutOfBoundsException
      */
-    protected function isElseScope(AbstractNode $scope, ASTNode $parent)
+    private function isElseScope(AbstractNode $scope, AbstractNode $parent)
     {
         return (
             count($parent->getChildren()) === 3 &&
@@ -73,11 +77,11 @@ class ElseExpression extends AbstractRule implements MethodAware, FunctionAware
     /**
      * Whether the parent node is an if or an elseif clause
      *
-     * @param ASTNode $parent
+     * @param AbstractNode<PDependNode> $parent
      * @return bool
      */
-    protected function isIfOrElseIfStatement(ASTNode $parent)
+    private function isIfOrElseIfStatement(AbstractNode $parent)
     {
-        return ($parent->getName() === "if" || $parent->getName() === "elseif");
+        return ($parent->getName() === 'if' || $parent->getName() === 'elseif');
     }
 }

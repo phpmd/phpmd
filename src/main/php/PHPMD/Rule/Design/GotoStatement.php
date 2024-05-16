@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTGotoStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -27,18 +28,15 @@ use PHPMD\Rule\MethodAware;
  *
  * @since 1.1.0
  */
-class GotoStatement extends AbstractRule implements MethodAware, FunctionAware
+final class GotoStatement extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('GotoStatement') as $goto) {
+        foreach ($node->findChildrenOfType(ASTGotoStatement::class) as $goto) {
             $this->addViolation($goto, [$node->getType(), $node->getName()]);
         }
     }

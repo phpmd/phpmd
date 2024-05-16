@@ -22,18 +22,15 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the weighted method count rule.
  *
- * @since 0.2.5
- *
  * @covers \PHPMD\Rule\Design\WeightedMethodCount
+ * @since 0.2.5
  */
 class WeightedMethodCountTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesForValueGreaterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesForValueGreaterThanThreshold()
+    public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithOneViolation();
@@ -46,10 +43,8 @@ class WeightedMethodCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesForValueEqualToThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesForValueEqualToThreshold()
+    public function testRuleAppliesForValueEqualToThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithOneViolation();
@@ -62,10 +57,8 @@ class WeightedMethodCountTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesForValueLowerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesForValueLowerThanThreshold()
+    public function testRuleNotAppliesForValueLowerThanThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithNoViolation();

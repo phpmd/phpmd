@@ -28,10 +28,8 @@ class DepthOfInheritanceTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold()
+    public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold(): void
     {
         $rule = new DepthOfInheritance();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class DepthOfInheritanceTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold()
+    public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold(): void
     {
         $rule = new DepthOfInheritance();
         $rule->setReport($this->getReportWithOneViolation());
@@ -54,10 +50,8 @@ class DepthOfInheritanceTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold()
+    public function testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold(): void
     {
         $rule = new DepthOfInheritance();
         $rule->setReport($this->getReportWithOneViolation());

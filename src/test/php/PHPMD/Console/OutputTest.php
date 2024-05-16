@@ -13,9 +13,6 @@ class OutputTest extends AbstractTestCase
     /** @var TestOutput */
     private $output;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,9 +22,8 @@ class OutputTest extends AbstractTestCase
     /**
      * @covers ::getVerbosity
      * @covers ::setVerbosity
-     * @return void
      */
-    public function testSetGetVerbosity()
+    public function testSetGetVerbosity(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
         static::assertSame(OutputInterface::VERBOSITY_VERBOSE, $this->output->getVerbosity());
@@ -38,24 +34,22 @@ class OutputTest extends AbstractTestCase
 
     /**
      * @covers ::write
-     * @return void
      */
-    public function testWriteSingleMessage()
+    public function testWriteSingleMessage(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this->output->write("message", false, OutputInterface::VERBOSITY_VERBOSE);
+        $this->output->write('message', false, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame('message', $this->output->getOutput());
     }
 
     /**
      * @covers ::write
-     * @return void
      */
-    public function testWriteMultiMessageWithNewline()
+    public function testWriteMultiMessageWithNewline(): void
     {
         $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        $this->output->write(["foo", "bar"], true, OutputInterface::VERBOSITY_VERBOSE);
+        $this->output->write(['foo', 'bar'], true, OutputInterface::VERBOSITY_VERBOSE);
 
         static::assertSame("foo\nbar\n", $this->output->getOutput());
     }
@@ -64,10 +58,10 @@ class OutputTest extends AbstractTestCase
      * @param int    $verbosity
      * @param string $expected
      * @param string $msg
-     * @covers ::write
      * @dataProvider verbosityProvider
+     * @covers ::write
      */
-    public function testWriteWithVerbosityOption($verbosity, $expected, $msg)
+    public function testWriteWithVerbosityOption($verbosity, $expected, $msg): void
     {
         $this->output->setVerbosity($verbosity);
         $this->output->write('1', false);
@@ -85,38 +79,37 @@ class OutputTest extends AbstractTestCase
             [
                 Output::VERBOSITY_QUIET,
                 '2',
-                '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed'
+                '->write() in QUIET mode only outputs when an explicit QUIET verbosity is passed',
             ],
             [
                 Output::VERBOSITY_NORMAL,
                 '123',
-                '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity'
+                '->write() in NORMAL mode outputs anything below an explicit VERBOSE verbosity',
             ],
             [
                 Output::VERBOSITY_VERBOSE,
                 '1234',
-                '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity'
+                '->write() in VERBOSE mode outputs anything below an explicit VERY_VERBOSE verbosity',
             ],
             [
                 Output::VERBOSITY_VERY_VERBOSE,
                 '12345',
-                '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity'
+                '->write() in VERY_VERBOSE mode outputs anything below an explicit DEBUG verbosity',
             ],
             [
                 Output::VERBOSITY_DEBUG,
                 '123456',
-                '->write() in DEBUG mode outputs everything'
+                '->write() in DEBUG mode outputs everything',
             ],
         ];
     }
 
     /**
      * @covers ::writeln
-     * @return void
      */
-    public function testWritelnMessage()
+    public function testWritelnMessage(): void
     {
-        $this->output->writeln("message", OutputInterface::VERBOSITY_QUIET);
+        $this->output->writeln('message', OutputInterface::VERBOSITY_QUIET);
 
         static::assertSame("message\n", $this->output->getOutput());
     }

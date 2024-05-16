@@ -12,7 +12,7 @@ class NodeInfoTest extends AbstractTestCase
     /**
      * @covers ::__construct
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $nodeInfo = new NodeInfo(
             '/file/path',

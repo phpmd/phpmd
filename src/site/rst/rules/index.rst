@@ -42,6 +42,7 @@ Controversial Rules
 
 - `Superglobals <controversial.html#superglobals>`_: Accessing a super-global variable directly is considered a bad practice. These variables should be encapsulated in objects that are provided by a framework, for instance.
 - `CamelCaseClassName <controversial.html#camelcaseclassname>`_: It is considered best practice to use the CamelCase notation to name classes.
+- `CamelCaseNamespace <controversial.html#camelcasenamespace>`_: A rule to use CamelCase notation to name namespaces.
 - `CamelCasePropertyName <controversial.html#camelcasepropertyname>`_: It is considered best practice to use the camelCase notation to name attributes.
 - `CamelCaseMethodName <controversial.html#camelcasemethodname>`_: It is considered best practice to use the camelCase notation to name methods.
 - `CamelCaseParameterName <controversial.html#camelcaseparametername>`_: It is considered best practice to use the camelCase notation to name parameters.

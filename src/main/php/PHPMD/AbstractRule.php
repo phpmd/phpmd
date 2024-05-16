@@ -17,60 +17,51 @@
 
 namespace PHPMD;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTNode;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
+use RuntimeException;
 
 /**
- * This is the abstract base class for pmd rules.
+ * This is the abstract base class for PHPMD rules.
  *
  * @SuppressWarnings(PHPMD)
  */
 abstract class AbstractRule implements Rule
 {
-    /**
-     * The name for this rule instance.
-     */
+    /** The name for this rule instance. */
     private string $name = '';
 
-    /**
-     * The violation message text for this rule.
-     */
+    /** The violation message text for this rule. */
     private string $message = '';
 
-    /**
-     * The version since when this rule is available.
-     */
+    /** The version since when this rule is available. */
     private ?string $since = null;
 
-    /**
-     * An url will external information for this rule.
-     */
+    /** An url will external information for this rule. */
     private string $externalInfoUrl = '';
 
-    /**
-     * An optional description for this rule.
-     */
+    /** An optional description for this rule. */
     private string $description = '';
 
     /**
      * A list of code examples for this rule.
      *
-     * @var array<string>
+     * @var list<string>
      */
     private array $examples = [];
 
-    /**
-     * The name of the parent rule-set instance.
-     */
+    /** The name of the parent rule-set instance. */
     private string $ruleSetName = '';
 
-    /**
-     * The priority of this rule.
-     */
+    /** The priority of this rule. */
     private int $priority = self::LOWEST_PRIORITY;
 
     /**
@@ -80,14 +71,10 @@ abstract class AbstractRule implements Rule
      */
     private array $properties = [];
 
-    /**
-     * The report for object for this rule.
-     */
+    /** The report for object for this rule. */
     private ?Report $report = null;
 
-    /**
-     * Should this rule force the strict mode.
-     */
+    /** Should this rule force the strict mode. */
     private bool $strict = false;
 
     /**
@@ -181,7 +168,7 @@ abstract class AbstractRule implements Rule
     /**
      * Returns a list of examples for this rule.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function getExamples(): array
     {
@@ -209,7 +196,7 @@ abstract class AbstractRule implements Rule
     /**
      * Set the priority of this rule.
      *
-     * @param integer $priority The rule priority
+     * @param int $priority The rule priority
      */
     public function setPriority(int $priority): void
     {
@@ -267,10 +254,10 @@ abstract class AbstractRule implements Rule
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param mixed $default An optional default value to fall back instead of throwing an exception.
      * @return mixed The value of a configured property.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    protected function getProperty(string $name, mixed $default = null): mixed
+    private function getProperty(string $name, mixed $default = null): mixed
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
@@ -280,7 +267,7 @@ abstract class AbstractRule implements Rule
             return $default;
         }
 
-        throw new \OutOfBoundsException('Property "' . $name . '" does not exist.');
+        throw new OutOfBoundsException('Property "' . $name . '" does not exist.');
     }
 
     /**
@@ -292,7 +279,7 @@ abstract class AbstractRule implements Rule
      * @param string $name The name of the property, e.g. "ignore-whitespace".
      * @param bool|null $default An optional default value to fall back instead of throwing an exception.
      * @return bool The value of a configured property as a boolean.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
     public function getBooleanProperty(string $name, ?bool $default = null): bool
@@ -309,12 +296,12 @@ abstract class AbstractRule implements Rule
      * @param string $name The name of the property, e.g. "minimum".
      * @param int|null $default An optional default value to fall back instead of throwing an exception.
      * @return int The value of a configured property as an integer.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
     public function getIntProperty(string $name, ?int $default = null): int
     {
-        return (int)$this->getProperty($name, $default);
+        return (int) $this->getProperty($name, $default);
     }
 
     /**
@@ -326,12 +313,12 @@ abstract class AbstractRule implements Rule
      * @param string $name The name of the property, e.g. "exceptions".
      * @param string|null $default An optional default value to fall back instead of throwing an exception.
      * @return string The raw string value of a configured property.
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists and
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
     public function getStringProperty(string $name, ?string $default = null): string
     {
-        return (string)$this->getProperty($name, $default);
+        return (string) $this->getProperty($name, $default);
     }
 
     public function setStrict(bool $strict): void
@@ -342,6 +329,9 @@ abstract class AbstractRule implements Rule
     /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
+     *
+     * @param AbstractNode<ASTNode> $node
+     * @param array<int, string> $args
      */
     protected function addViolation(
         AbstractNode $node,
@@ -360,7 +350,11 @@ abstract class AbstractRule implements Rule
     /**
      * Apply the current rule on each method of a class node.
      *
-     * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node class node containing methods.
+     * @param ClassNode|EnumNode|InterfaceNode|TraitNode $node class node containing methods.
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
      */
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
@@ -372,13 +366,4 @@ abstract class AbstractRule implements Rule
             $this->apply($method);
         }
     }
-
-    /**
-     * This method should implement the violation analysis algorithm of concrete
-     * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
-     */
-    abstract public function apply(AbstractNode $node);
 }

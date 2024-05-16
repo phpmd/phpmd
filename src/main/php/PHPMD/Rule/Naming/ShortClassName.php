@@ -23,27 +23,24 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\InterfaceAware;
 use PHPMD\Rule\TraitAware;
-use PHPMD\Utility\Strings;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule will detect classes and interfaces with names that are too short.
  */
-class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+final class ShortClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * Temporary cache of configured exceptions. Have name as key
      *
-     * @var array<string, int>|null
+     * @var ExceptionsList|null
      */
-    protected $exceptions;
+    private $exceptions;
 
     /**
      * Check if a class or interface name is below the minimum configured length and emit a rule violation
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $classOrInterfaceName = $node->getName();
@@ -51,25 +48,22 @@ class ShortClassName extends AbstractRule implements ClassAware, InterfaceAware,
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-        if (isset($exceptions[$classOrInterfaceName])) {
+        if ($this->getExceptionsList()->contains($classOrInterfaceName)) {
             return;
         }
 
-        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
+        $this->addViolation($node, [$classOrInterfaceName, (string) $threshold]);
     }
 
     /**
-     * Gets array of exceptions from property
+     * Gets exceptions from property
      *
-     * @return array<string, int>
+     * @return ExceptionsList
      */
-    protected function getExceptionsList()
+    private function getExceptionsList()
     {
         if ($this->exceptions === null) {
-            $this->exceptions = array_flip(
-                Strings::splitToList($this->getStringProperty('exceptions', ''), ',')
-            );
+            $this->exceptions = new ExceptionsList($this, '\\');
         }
 
         return $this->exceptions;

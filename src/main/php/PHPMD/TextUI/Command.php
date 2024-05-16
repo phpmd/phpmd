@@ -34,26 +34,18 @@ use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Utility\Paths;
 use PHPMD\Writer\StreamWriter;
+use RuntimeException;
+use TypeError;
+use ValueError;
 
 /**
  * This class provides a command line interface for PHPMD
  */
-class Command
+final class Command
 {
-    /**
-     * Exit codes used by the phpmd command line tool.
-     */
-    const EXIT_SUCCESS = 0,
-        EXIT_EXCEPTION = 1,
-        EXIT_VIOLATION = 2,
-        EXIT_ERROR = 3;
-
-    /** @var Output */
-    private $output;
-
-    public function __construct(Output $output)
-    {
-        $this->output = $output;
+    public function __construct(
+        private Output $output,
+    ) {
     }
 
     /**
@@ -69,16 +61,14 @@ class Command
      * <b>--ignore-errors-on-exit</b> will result to a <b>EXIT_SUCCESS</b>
      * even if any violation or error is found.
      *
-     * @param \PHPMD\TextUI\CommandLineOptions $opts
-     * @param \PHPMD\RuleSetFactory            $ruleSetFactory
-     * @return integer
+     * @throws Exception
      */
-    public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory)
+    public function run(CommandLineOptions $opts, RuleSetFactory $ruleSetFactory): ExitCode
     {
         if ($opts->hasVersion()) {
             fwrite(STDOUT, sprintf('PHPMD %s', $this->getVersion()) . PHP_EOL);
 
-            return self::EXIT_SUCCESS;
+            return ExitCode::Success;
         }
 
         // Create a report stream
@@ -98,23 +88,23 @@ class Command
         }
 
         // Configure baseline violations
-        $report       = null;
-        $finder       = new BaselineFileFinder($opts);
+        $report = null;
+        $finder = new BaselineFileFinder($opts);
         $baselineFile = null;
-        if ($opts->generateBaseline() === BaselineMode::GENERATE) {
+        if ($opts->generateBaseline() === BaselineMode::Generate) {
             // overwrite any renderer with the baseline renderer
             $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find()))];
-        } elseif ($opts->generateBaseline() === BaselineMode::UPDATE) {
+        } elseif ($opts->generateBaseline() === BaselineMode::Update) {
             $baselineFile = $finder->notNull()->existingFile()->find();
-            $baseline     = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-            $renderers    = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
-            $report       = new Report(new BaselineValidator($baseline, BaselineMode::UPDATE));
+            $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
+            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
+            $report = new Report(new BaselineValidator($baseline, BaselineMode::Update));
         } else {
             // try to locate a baseline file and read it
             $baselineFile = $finder->existingFile()->find();
             if ($baselineFile !== null) {
                 $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-                $report   = new Report(new BaselineValidator($baseline, BaselineMode::NONE));
+                $report = new Report(new BaselineValidator($baseline, BaselineMode::None));
             }
         }
 
@@ -145,16 +135,18 @@ class Command
         }
 
         $ignorePattern = $ruleSetFactory->getIgnorePattern($opts->getRuleSets());
-        $ruleSetList   = $ruleSetFactory->createRuleSets($opts->getRuleSets());
+        $ruleSetList = $ruleSetFactory->createRuleSets($opts->getRuleSets());
+
+        $cwd = getcwd() ?: '';
 
         // Configure Result Cache Engine
-        if ($opts->generateBaseline() === BaselineMode::NONE) {
+        if ($opts->generateBaseline() === BaselineMode::None) {
             $cacheEngineFactory = new ResultCacheEngineFactory(
                 $this->output,
-                new ResultCacheKeyFactory(getcwd(), $baselineFile),
+                new ResultCacheKeyFactory($cwd, $baselineFile),
                 new ResultCacheStateFactory()
             );
-            $phpmd->setResultCache($cacheEngineFactory->create(getcwd(), $opts, $ruleSetList));
+            $phpmd->setResultCache($cacheEngineFactory->create($cwd, $opts, $ruleSetList));
         }
 
         $phpmd->processFiles(
@@ -166,16 +158,16 @@ class Command
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
-            return self::EXIT_ERROR;
+            return ExitCode::Error;
         }
 
         if ($phpmd->hasViolations()
             && !$opts->ignoreViolationsOnExit()
-            && $opts->generateBaseline() === BaselineMode::NONE) {
-            return self::EXIT_VIOLATION;
+            && $opts->generateBaseline() === BaselineMode::None) {
+            return ExitCode::Violation;
         }
 
-        return self::EXIT_SUCCESS;
+        return ExitCode::Success;
     }
 
     /**
@@ -189,8 +181,8 @@ class Command
 
         $version = '@package_version@';
         if (file_exists($build)) {
-            $data    = @parse_ini_file($build);
-            $version = $data['project.version'];
+            $data = @parse_ini_file($build);
+            $version = $data['project.version'] ?? $version;
         }
 
         return $version;
@@ -201,19 +193,21 @@ class Command
      * value can be used as exit code.
      *
      * @param string[] $args The raw command line arguments array.
-     * @return integer
+     * @throws RuntimeException
+     * @throws ValueError
+     * @throws TypeError
      */
-    public static function main(array $args)
+    public static function main(array $args): ExitCode
     {
         $options = null;
 
         try {
             $ruleSetFactory = new RuleSetFactory();
-            $options        = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
-            $errorFile      = $options->getErrorFile();
-            $errorStream    = new StreamWriter($errorFile ?: STDERR);
-            $output         = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
-            $command        = new self($output);
+            $options = new CommandLineOptions($args, $ruleSetFactory->listAvailableRuleSets());
+            $errorFile = $options->getErrorFile();
+            $errorStream = new StreamWriter($errorFile ?: STDERR);
+            $output = new StreamOutput($errorStream->getStream(), $options->getVerbosity());
+            $command = new self($output);
 
             foreach ($options->getDeprecations() as $deprecation) {
                 $output->write($deprecation . PHP_EOL . PHP_EOL);
@@ -231,7 +225,7 @@ class Command
                 $writer->write($e->getTraceAsString() . PHP_EOL);
             }
 
-            $exitCode = self::EXIT_EXCEPTION;
+            $exitCode = ExitCode::Exception;
         }
 
         return $exitCode;

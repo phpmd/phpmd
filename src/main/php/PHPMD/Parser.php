@@ -17,17 +17,25 @@
 
 namespace PHPMD;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PDepend\Engine;
+use PDepend\Metrics\Analyzer;
+use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Source\AST\ASTArtifact;
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTCompilationUnitNotFoundException;
 use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
-use PDepend\Metrics\Analyzer;
-use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTInterface;
-use PDepend\Source\AST\ASTFunction;
-use PDepend\Source\AST\ASTArtifactList;
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
@@ -38,60 +46,52 @@ use PHPMD\Node\TraitNode;
 /**
  * Simple wrapper around the php depend engine.
  */
-class Parser extends AbstractASTVisitor implements CodeAwareGenerator
+final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 {
     /**
      * The analysing rule-set instance.
      *
-     * @var \PHPMD\RuleSet[]
+     * @var list<RuleSet>
      */
     private $ruleSets = [];
 
     /**
      * The metric containing analyzer instances.
      *
-     * @var \PDepend\Metrics\AnalyzerNodeAware[]
+     * @var list<AnalyzerNodeAware>
      */
     private $analyzers = [];
 
     /**
      * The raw PDepend code nodes.
      *
-     * @var \PDepend\Source\AST\ASTArtifactList
+     * @var ASTArtifactList<ASTNamespace>
      */
     private $artifacts = null;
 
     /**
      * The violation report used by this PDepend adapter.
      *
-     * @var \PHPMD\Report
+     * @var Report
      */
     private $report = null;
 
     /**
-     * The wrapped PDepend Engine instance.
-     *
-     * @var \PDepend\Engine
-     */
-    private $pdepend = null;
-
-    /**
      * Constructs a new parser adapter instance.
      *
-     * @param \PDepend\Engine $pdepend The context php depend instance.
+     * @param Engine $pdepend The wrapped PDepend Engine instance.
      */
-    public function __construct(Engine $pdepend)
-    {
-        $this->pdepend = $pdepend;
+    public function __construct(
+        private Engine $pdepend,
+    ) {
     }
 
     /**
      * Parses the projects source and reports all detected errors and violations.
      *
-     * @param \PHPMD\Report $report
-     * @return void
+     * @throws InvalidArgumentException
      */
-    public function parse(Report $report)
+    public function parse(Report $report): void
     {
         $this->setReport($report);
 
@@ -105,22 +105,16 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /**
      * Adds a new analysis rule-set to this adapter.
-     *
-     * @param \PHPMD\RuleSet $ruleSet
-     * @return void
      */
-    public function addRuleSet(RuleSet $ruleSet)
+    public function addRuleSet(RuleSet $ruleSet): void
     {
         $this->ruleSets[] = $ruleSet;
     }
 
     /**
      * Sets the violation report used by the rule-set.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function setReport(Report $report)
+    public function setReport(Report $report): void
     {
         $this->report = $report;
     }
@@ -129,21 +123,23 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return void
+     * @param Analyzer $analyzer The analyzer to log.
      */
-    public function log(Analyzer $analyzer)
+    public function log(Analyzer $analyzer): bool
     {
+        if (!$analyzer instanceof AnalyzerNodeAware) {
+            return false;
+        }
+
         $this->analyzers[] = $analyzer;
+
+        return true;
     }
 
     /**
      * Closes the logger process and writes the output file.
-     *
-     * @return void
-     * @throws \PDepend\Report\NoLogOutputException If the no log target exists.
      */
-    public function close()
+    public function close(): void
     {
         // Set max nesting level, because we may get really deep data structures
         ini_set('xdebug.max_nesting_level', 8192);
@@ -179,10 +175,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits a class node.
      *
-     * @param \PDepend\Source\AST\ASTClass $node
-     * @return void
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitClass(ASTClass $node)
+    public function visitClass(ASTClass $node): void
     {
         if (!$node->isUserDefined()) {
             return;
@@ -195,10 +192,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits a trait node.
      *
-     * @param \PDepend\Source\AST\ASTTrait $node
-     * @return void
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitTrait(ASTTrait $node)
+    public function visitTrait(ASTTrait $node): void
     {
         if (!$node->isUserDefined()) {
             return;
@@ -211,10 +209,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits a enum node.
      *
-     * @param \PDepend\Source\AST\ASTEnum $node
-     * @return void
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitEnum(ASTEnum $node)
+    public function visitEnum(ASTEnum $node): void
     {
         if (!$node->isUserDefined()) {
             return;
@@ -227,10 +226,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits a function node.
      *
-     * @param \PDepend\Source\AST\ASTFunction $node
-     * @return void
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitFunction(ASTFunction $node)
+    public function visitFunction(ASTFunction $node): void
     {
         if ($node->getCompilationUnit()->getFileName() === null) {
             return;
@@ -242,10 +242,11 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits an interface node.
      *
-     * @param \PDepend\Source\AST\ASTInterface $node
-     * @return void
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitInterface(ASTInterface $node)
+    public function visitInterface(ASTInterface $node): void
     {
         if (!$node->isUserDefined()) {
             return;
@@ -258,10 +259,12 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Visits a method node.
      *
-     * @param \PDepend\Source\AST\ASTMethod $node
-     * @return void
+     * @throws ASTCompilationUnitNotFoundException
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function visitMethod(ASTMethod $node)
+    public function visitMethod(ASTMethod $node): void
     {
         if ($node->getCompilationUnit()->getFileName() === null) {
             return;
@@ -273,10 +276,9 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Sets the context code nodes.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
-     * @return void
+     * @param ASTArtifactList<ASTNamespace> $artifacts
      */
-    public function setArtifacts(ASTArtifactList $artifacts)
+    public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->artifacts = $artifacts;
     }
@@ -284,10 +286,12 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     /**
      * Applies all rule-sets to the given <b>$node</b> instance.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTArtifact> $node
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
-    private function apply(AbstractNode $node)
+    private function apply(AbstractNode $node): void
     {
         $this->collectMetrics($node);
         foreach ($this->ruleSets as $ruleSet) {
@@ -300,16 +304,15 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * Collects the collected metrics for the given node and adds them to the
      * <b>$node</b>.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTArtifact> $node
      */
-    private function collectMetrics(AbstractNode $node)
+    private function collectMetrics(AbstractNode $node): void
     {
         $metrics = [];
 
         $pdepend = $node->getNode();
         foreach ($this->analyzers as $analyzer) {
-            $metrics = array_merge($metrics, $analyzer->getNodeMetrics($pdepend));
+            $metrics = [...$metrics, ...$analyzer->getNodeMetrics($pdepend)];
         }
         $node->setMetrics($metrics);
     }

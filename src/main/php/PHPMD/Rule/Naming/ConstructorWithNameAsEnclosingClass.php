@@ -21,23 +21,27 @@ use PDepend\Source\AST\ASTTrait;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\MethodNode;
 use PHPMD\Rule\MethodAware;
+use RuntimeException;
 
 /**
  * This rule class will detect methods that define a php4 style constructor
  * method while has the same name as the enclosing class.
  */
-class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
+final class ConstructorWithNameAsEnclosingClass extends AbstractRule implements MethodAware
 {
     /**
      * Is method has the same name as the enclosing class
      * (php4 style constructor).
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @throws RuntimeException
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof MethodNode) {
+            return;
+        }
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;
         }

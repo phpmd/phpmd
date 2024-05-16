@@ -29,70 +29,56 @@ class StringsTest extends AbstractTestCase
 {
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesEmptyString()
+    public function testLengthWithoutSuffixesEmptyString(): void
     {
         static::assertSame(0, Strings::lengthWithoutSuffixes('', []));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string with list of suffixes
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix()
+    public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix(): void
     {
         static::assertSame(0, Strings::lengthWithoutSuffixes('', ['Foo', 'Bar']));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string not in the list of suffixes
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch()
+    public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch(): void
     {
         static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', ['Foo', 'Bar']));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string in the list of suffixes
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch()
+    public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch(): void
     {
         static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', ['Foo', 'Bar']));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string that should match only once for two potential matches
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce()
+    public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce(): void
     {
         static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', ['Foo', 'Bar']));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method that a Prefix should not be matched
-     *
-     * @return void
      */
-    public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract()
+    public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract(): void
     {
         static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
     }
 
     /**
      * Tests the lengthWithoutSuffixes() method that a Prefix should be matched
-     *
-     * @return void
      */
-    public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract()
+    public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract(): void
     {
         static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
         static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', ['Foo', 'Bar']));
@@ -100,10 +86,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched in order
-     *
-     * @return void
      */
-    public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder()
+    public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder(): void
     {
         $prefixes = ['Foo', 'Bar'];
         $suffixes = ['Foo', 'FooUnit'];
@@ -113,10 +97,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with an empty separator
-     *
-     * @return void
      */
-    public function testSplitToListEmptySeparatorThrowsException()
+    public function testSplitToListEmptySeparatorThrowsException(): void
     {
         self::expectExceptionObject(new InvalidArgumentException(
             "Separator can't be empty string",
@@ -127,60 +109,48 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with an empty string
-     *
-     * @return void
      */
-    public function testSplitToListEmptyString()
+    public function testSplitToListEmptyString(): void
     {
         static::assertSame([], Strings::splitToList('', ','));
     }
 
     /**
      * Tests the splitToList() method with a non-matching separator
-     *
-     * @return void
      */
-    public function testSplitToListStringWithoutMatchingSeparator()
+    public function testSplitToListStringWithoutMatchingSeparator(): void
     {
         static::assertSame(['UnitTest'], Strings::splitToList('UnitTest', ','));
     }
 
     /**
      * Tests the splitToList() method with a matching separator
-     *
-     * @return void
      */
-    public function testSplitToListStringWithMatchingSeparator()
+    public function testSplitToListStringWithMatchingSeparator(): void
     {
         static::assertSame(['Unit', 'Test'], Strings::splitToList('Unit,Test', ','));
     }
 
     /**
      * Tests the splitToList() method with trailing whitespace
-     *
-     * @return void
      */
-    public function testSplitToListStringTrimsLeadingAndTrailingWhitespace()
+    public function testSplitToListStringTrimsLeadingAndTrailingWhitespace(): void
     {
         static::assertSame(['Unit', 'Test'], Strings::splitToList('Unit , Test', ','));
     }
 
     /**
      * Tests the splitToList() method that it removes empty strings from list
-     *
-     * @return void
      */
-    public function testSplitToListStringRemoveEmptyStringValues()
+    public function testSplitToListStringRemoveEmptyStringValues(): void
     {
         static::assertSame(['Foo'], Strings::splitToList('Foo,,,', ','));
     }
 
     /**
      * Tests the splitToList() method that it does not remove zero values from list
-     *
-     * @return void
      */
-    public function testSplitToListStringShouldNotRemoveAZeroValue()
+    public function testSplitToListStringShouldNotRemoveAZeroValue(): void
     {
         static::assertSame(['0', '1', '2'], Strings::splitToList('0,1,2', ','));
     }

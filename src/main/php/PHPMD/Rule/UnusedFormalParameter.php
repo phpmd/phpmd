@@ -17,33 +17,46 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\AbstractASTCallable;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTCompoundVariable;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
-use PHPMD\Node\ASTNode;
+use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
 
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
+ *
+ * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
-class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
+final class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**
      * Collected ast nodes.
      *
-     * @var \PHPMD\Node\ASTNode[]
+     * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
-    protected $nodes = [];
+    private $nodes = [];
 
     /**
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof AbstractCallableNode) {
+            return;
+        }
+
         if ($this->isAbstractMethod($node)) {
             return;
         }
@@ -72,12 +85,25 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     }
 
     /**
+     * PHP is case insensitive so we should compare function names case
+     * insensitive.
+     *
+     * @param AbstractNode<PDependNode> $node
+     * @param string $name
+     * @return bool
+     */
+    private function isFunctionNameEqual(AbstractNode $node, $name)
+    {
+        return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
+    }
+
+    /**
      * Returns <b>true</b> when the given node is an abstract method.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return bool
      */
-    protected function isAbstractMethod(AbstractNode $node)
+    private function isAbstractMethod(AbstractCallableNode $node)
     {
         if ($node instanceof MethodNode) {
             return $node->isAbstract();
@@ -88,15 +114,15 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
 
     /**
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
-     * {@inheritdoc} annotation.
+     * {@inheritDoc} annotation.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return bool
      */
-    protected function isInheritedSignature(AbstractNode $node)
+    private function isInheritedSignature(AbstractCallableNode $node)
     {
         if ($node instanceof MethodNode) {
-            $comment = $node->getDocComment();
+            $comment = $node->getComment();
 
             return $comment && preg_match('/@inheritdoc/i', $comment);
         }
@@ -107,10 +133,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Returns <b>true</b> when the given node is a magic method signature
      *
-     * @param AbstractNode $node
-     * @return boolean
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return bool
      */
-    protected function isMagicMethod(AbstractNode $node)
+    private function isMagicMethod(AbstractCallableNode $node)
     {
         if (!($node instanceof MethodNode)) {
             return false;
@@ -119,15 +145,15 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
         static $magicMethodRegExp = null;
 
         if ($magicMethodRegExp === null) {
-            $magicMethodRegExp = '/__(?:' . implode("|", [
-                    'call',
-                    'callStatic',
-                    'get',
-                    'set',
-                    'isset',
-                    'unset',
-                    'set_state',
-                ]) . ')/i';
+            $magicMethodRegExp = '/__(?:' . implode('|', [
+                'call',
+                'callStatic',
+                'get',
+                'set',
+                'isset',
+                'unset',
+                'set_state',
+            ]) . ')/i';
         }
 
         return preg_match($magicMethodRegExp, $node->getName()) === 1;
@@ -137,11 +163,12 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * Tests if the given <b>$node</b> is a method and if this method is also
      * the initial declaration.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @return bool
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
-    protected function isNotDeclaration(AbstractNode $node)
+    private function isNotDeclaration(AbstractCallableNode $node)
     {
         if ($node instanceof MethodNode) {
             return !$node->isDeclaration();
@@ -154,15 +181,19 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * This method extracts all parameters for the given function or method node
      * and it stores the parameter images in the <b>$_images</b> property.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node
      */
-    protected function collectParameters(AbstractNode $node)
+    private function collectParameters(AbstractCallableNode $node): void
     {
         // First collect the formal parameters containers
-        foreach ($node->findChildrenOfType('FormalParameters') as $parameters) {
+        foreach ($node->findChildrenOfType(ASTFormalParameters::class) as $parameters) {
+            $parent = $parameters->getParentOfType(AbstractASTCallable::class);
+            if ($parent->getNode() !== $node->getNode()) {
+                continue;
+            }
+
             // Now get all declarators in the formal parameters container
-            $declarators = $parameters->findChildrenOfType('VariableDeclarator');
+            $declarators = $parameters->findChildrenOfType(ASTVariableDeclarator::class);
 
             foreach ($declarators as $declarator) {
                 $this->nodes[$declarator->getImage()] = $declarator;
@@ -175,10 +206,10 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * analyzed method or function and removes those parameters that are
      * referenced by one of the collected variables.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @throws OutOfBoundsException
      */
-    protected function removeUsedParameters(AbstractNode $node)
+    private function removeUsedParameters(AbstractCallableNode $node): void
     {
         $this->removeRegularVariables($node);
         $this->removeCompoundVariables($node);
@@ -189,15 +220,14 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Removes all the regular variables from a given node
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the regular variables from.
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node The node to remove the regular variables from.
+     * @throws OutOfBoundsException
      */
-    protected function removeRegularVariables(AbstractNode $node)
+    private function removeRegularVariables(AbstractCallableNode $node): void
     {
         $variables = $node->findChildrenOfTypeVariable();
 
         foreach ($variables as $variable) {
-            /** @var $variable ASTNode */
             if ($this->isRegularVariable($variable)) {
                 unset($this->nodes[$variable->getImage()]);
             }
@@ -219,17 +249,16 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      * // ------
      * </code>
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the compound variables from.
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node The node to remove the compound variables from.
      */
-    protected function removeCompoundVariables(AbstractNode $node)
+    private function removeCompoundVariables(AbstractCallableNode $node): void
     {
-        $compoundVariables = $node->findChildrenOfType('CompoundVariable');
+        $compoundVariables = $node->findChildrenOfType(ASTCompoundVariable::class);
 
         foreach ($compoundVariables as $compoundVariable) {
             $variablePrefix = $compoundVariable->getImage();
 
-            foreach ($compoundVariable->findChildrenOfType('Expression') as $child) {
+            foreach ($compoundVariable->findChildrenOfType(ASTExpression::class) as $child) {
                 $variableImage = $variablePrefix . $child->getImage();
 
                 if (isset($this->nodes[$variableImage])) {
@@ -244,12 +273,11 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      *
      * If the given method calls func_get_args() then all parameters are automatically referenced.
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the referenced variables from.
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node The node to remove the referenced variables from.
      */
-    protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node)
+    private function removeVariablesUsedByFuncGetArgs(AbstractCallableNode $node): void
     {
-        $functionCalls = $node->findChildrenOfType('FunctionPostfix');
+        $functionCalls = $node->findChildrenOfType(ASTFunctionPostfix::class);
 
         foreach ($functionCalls as $functionCall) {
             if ($this->isFunctionNameEqual($functionCall, 'func_get_args')) {
@@ -257,7 +285,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             }
 
             if ($this->isFunctionNameEndingWith($functionCall, 'compact')) {
-                foreach ($functionCall->findChildrenOfType('Literal') as $literal) {
+                foreach ($functionCall->findChildrenOfType(ASTLiteral::class) as $literal) {
                     unset($this->nodes['$' . trim($literal->getImage(), '"\'')]);
                 }
             }
@@ -267,10 +295,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
     /**
      * Removes all the property promotion parameters from a given node
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the property promotion parameters from.
-     * @return void
+     * @param AbstractCallableNode<AbstractASTCallable> $node The node to remove the property promotion parameters from.
      */
-    protected function removePropertyPromotionVariables(AbstractNode $node)
+    private function removePropertyPromotionVariables(AbstractCallableNode $node): void
     {
         if (! $node instanceof MethodNode) {
             return;
@@ -279,10 +306,9 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
             return;
         }
 
-        /** @var ASTFormalParameter&ASTNode $parameter */
-        foreach ($node->findChildrenOfType('FormalParameter') as $parameter) {
+        foreach ($node->findChildrenOfType(ASTFormalParameter::class) as $parameter) {
             if ($parameter->isPromoted()) {
-                $variable = $parameter->getFirstChildOfType('VariableDeclarator');
+                $variable = $parameter->getFirstChildOfType(ASTVariableDeclarator::class);
                 if ($variable !== null) {
                     unset($this->nodes[$variable->getImage()]);
                 }

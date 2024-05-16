@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Naming;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -26,19 +27,19 @@ use PHPMD\Rule\MethodAware;
  * This rule tests that a method which returns a boolean value does not start
  * with <b>get</b> or <b>_get</b> for a getter.
  */
-class BooleanGetMethodName extends AbstractRule implements MethodAware
+final class BooleanGetMethodName extends AbstractRule implements MethodAware
 {
     /**
      * Extracts all variable and variable declarator nodes from the given node
      * and checks the variable name length against the configured minimum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        /** @var $node MethodNode */
+        if (!$node instanceof MethodNode) {
+            return;
+        }
+
         if ($this->isBooleanGetMethod($node)) {
             $this->addViolation($node, [$node->getImage()]);
         }
@@ -48,10 +49,10 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the given method matches all criteria to be an invalid
      * boolean get method.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
+     * @throws OutOfBoundsException
      */
-    protected function isBooleanGetMethod(MethodNode $node)
+    private function isBooleanGetMethod(MethodNode $node)
     {
         return $this->isGetterMethodName($node)
             && $this->isReturnTypeBoolean($node)
@@ -61,10 +62,9 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     /**
      * Tests if the given method starts with <b>get</b> or <b>_get</b>.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
-    protected function isGetterMethodName(MethodNode $node)
+    private function isGetterMethodName(MethodNode $node)
     {
         return (preg_match('(^_?get)i', $node->getImage()) > 0);
     }
@@ -72,12 +72,11 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
     /**
      * Tests if the given method is declared with return type boolean.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
      */
-    protected function isReturnTypeBoolean(MethodNode $node)
+    private function isReturnTypeBoolean(MethodNode $node)
     {
-        $comment = $node->getDocComment();
+        $comment = $node->getComment();
         if ($comment === null) {
             return false;
         }
@@ -89,10 +88,10 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the property <b>$checkParameterizedMethods</b> is set to <b>true</b>
      * or has no parameters.
      *
-     * @param \PHPMD\Node\MethodNode $node
-     * @return boolean
+     * @return bool
+     * @throws OutOfBoundsException
      */
-    protected function isParameterizedOrIgnored(MethodNode $node)
+    private function isParameterizedOrIgnored(MethodNode $node)
     {
         if ($this->getBooleanProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;

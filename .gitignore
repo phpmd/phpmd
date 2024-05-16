@@ -10,3 +10,4 @@
 composer.lock
 vendor
 dist
+.php-cs-fixer.cache

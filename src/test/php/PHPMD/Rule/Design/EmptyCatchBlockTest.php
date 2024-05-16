@@ -29,10 +29,8 @@ class EmptyCatchBlockTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutTryCatchBlock
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutTryCatchBlock()
+    public function testRuleNotAppliesToMethodWithoutTryCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +39,8 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithEmptyCatchBlock
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithEmptyCatchBlock()
+    public function testRuleAppliesToFunctionWithEmptyCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportMock(3));
@@ -53,10 +49,8 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNonEmptyCatchBlock
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock()
+    public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportWithNoViolation());
@@ -65,10 +59,8 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToCatchBlockWithComments
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToCatchBlockWithComments()
+    public function testRuleNotAppliesToCatchBlockWithComments(): void
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportWithNoViolation());
@@ -77,10 +69,8 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions
-     *
-     * @return void
      */
-    public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions()
+    public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions(): void
     {
         $rule = new EmptyCatchBlock();
         $rule->setReport($this->getReportWithOneViolation());

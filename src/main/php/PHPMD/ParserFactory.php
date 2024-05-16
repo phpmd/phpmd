@@ -17,27 +17,28 @@
 
 namespace PHPMD;
 
+use Exception;
+use InvalidArgumentException;
 use PDepend\Application;
 use PDepend\Engine;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
-use PHPMD\Cache\CacheFileFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
  */
-class ParserFactory
+final class ParserFactory
 {
     /** @var string The default config file name */
-    const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';
+    private const PDEPEND_CONFIG_FILE_NAME = '/pdepend.xml';
 
     /** @var string The distribution config file name */
-    const PDEPEND_CONFIG_FILE_NAME_DIST = '/pdepend.xml.dist';
+    private const PDEPEND_CONFIG_FILE_NAME_DIST = '/pdepend.xml.dist';
 
     /**
      * Mapping between phpmd option names and those used by pdepend.
      *
-     * @var array
+     * @var array<string, string>
      */
     private $phpmd2pdepend = [
         'coverage' => 'coverage-report',
@@ -46,8 +47,8 @@ class ParserFactory
     /**
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
      *
-     * @param \PHPMD\PHPMD $phpmd
-     * @return \PHPMD\Parser
+     * @return Parser
+     * @throws Exception
      */
     public function create(PHPMD $phpmd)
     {
@@ -60,7 +61,8 @@ class ParserFactory
     /**
      * Creates a clean php depend instance with some base settings.
      *
-     * @return \PDepend\Engine
+     * @return Engine
+     * @throws Exception
      */
     private function createInstance()
     {
@@ -79,9 +81,8 @@ class ParserFactory
     /**
      * Configures the given PDepend\Engine instance based on some user settings.
      *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return \PDepend\Engine
+     * @return Engine
+     * @throws InvalidArgumentException
      */
     private function init(Engine $pdepend, PHPMD $phpmd)
     {
@@ -97,16 +98,15 @@ class ParserFactory
     /**
      * Configures the input source.
      *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
+     * @throws InvalidArgumentException
      */
-    private function initInput(Engine $pdepend, PHPMD $phpmd)
+    private function initInput(Engine $pdepend, PHPMD $phpmd): void
     {
         foreach (explode(',', $phpmd->getInput()) as $path) {
             $trimmedPath = trim($path);
             if (is_dir($trimmedPath)) {
                 $pdepend->addDirectory($trimmedPath);
+
                 continue;
             }
             $pdepend->addFile($trimmedPath);
@@ -115,12 +115,8 @@ class ParserFactory
 
     /**
      * Initializes the ignored files and path's.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
-    private function initIgnores(Engine $pdepend, PHPMD $phpmd)
+    private function initIgnores(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getIgnorePatterns()) > 0) {
             $pdepend->addFileFilter(
@@ -131,12 +127,8 @@ class ParserFactory
 
     /**
      * Initializes the accepted php source file extensions.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
-    private function initExtensions(Engine $pdepend, PHPMD $phpmd)
+    private function initExtensions(Engine $pdepend, PHPMD $phpmd): void
     {
         if (count($phpmd->getFileExtensions()) > 0) {
             $pdepend->addFileFilter(
@@ -148,7 +140,7 @@ class ParserFactory
     /**
      * Cache result hook to filter cached files
      */
-    private function initResultCache(Engine $pdepend, PHPMD $phpmd)
+    private function initResultCache(Engine $pdepend, PHPMD $phpmd): void
     {
         $resultCache = $phpmd->getResultCache();
         if ($resultCache !== null) {
@@ -158,12 +150,8 @@ class ParserFactory
 
     /**
      * Initializes additional options for pdepend.
-     *
-     * @param \PDepend\Engine $pdepend
-     * @param \PHPMD\PHPMD $phpmd
-     * @return void
      */
-    private function initOptions(Engine $pdepend, PHPMD $phpmd)
+    private function initOptions(Engine $pdepend, PHPMD $phpmd): void
     {
         $options = [];
         foreach (array_filter($phpmd->getOptions()) as $name => $value) {

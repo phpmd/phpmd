@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\MethodAware;
@@ -27,9 +28,10 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseMethodName extends AbstractRule implements MethodAware
+final class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
-    protected $ignoredMethods = [
+    /** @var list<string> */
+    private $ignoredMethods = [
         '__construct',
         '__destruct',
         '__set',
@@ -52,14 +54,11 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     /**
      * This method checks if a method is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $methodName = $node->getName();
-        if (!in_array($methodName, $this->ignoredMethods)) {
+        if (!in_array($methodName, $this->ignoredMethods, true)) {
             if (!$this->isValid($methodName)) {
                 $this->addViolation(
                     $node,
@@ -71,16 +70,25 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
         }
     }
 
-    protected function isValid($methodName)
+    /**
+     * @throws OutOfBoundsException
+     */
+    private function isValid(string $methodName): bool
     {
-        if ($this->getBooleanProperty('allow-underscore-test') && strpos($methodName, 'test') === 0) {
-            return preg_match('/^test[a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/', $methodName);
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $methodName) === 1) {
+            return false;
+        }
+
+        if ($this->getBooleanProperty('allow-underscore-test') && str_starts_with($methodName, 'test')) {
+            return preg_match('/^test[a-zA-Z0-9]*(_[a-z][a-zA-Z0-9]*)*$/', $methodName) === 1;
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {
-            return preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $methodName);
+            return preg_match('/^_?[a-z][a-zA-Z0-9]*$/', $methodName) === 1;
         }
 
-        return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName);
+        return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName) === 1;
     }
 }

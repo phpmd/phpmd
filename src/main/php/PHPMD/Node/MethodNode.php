@@ -17,14 +17,20 @@
 
 namespace PHPMD\Node;
 
-use PDepend\Source\AST\ASTEnum;
-use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTTrait;
 use PHPMD\Rule;
+use RuntimeException;
 
 /**
  * Wrapper around a PHP_Depend method node.
+ *
+ * @extends AbstractCallableNode<ASTMethod>
  *
  * Methods available on $node via PHPMD\AbstractNode::__call
  *
@@ -33,21 +39,9 @@ use PHPMD\Rule;
 class MethodNode extends AbstractCallableNode
 {
     /**
-     * Constructs a new method wrapper.
-     *
-     * @param \PDepend\Source\AST\ASTMethod $node
-     */
-    public function __construct(ASTMethod $node)
-    {
-        parent::__construct($node);
-    }
-
-    /**
      * Returns the name of the parent package.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->getNode()->getParent()->getNamespace()->getName();
     }
@@ -56,7 +50,7 @@ class MethodNode extends AbstractCallableNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {
@@ -83,7 +77,7 @@ class MethodNode extends AbstractCallableNode
      * Returns <b>true</b> when the underlying method is declared as abstract or
      * is declared as child of an interface.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAbstract()
     {
@@ -94,8 +88,8 @@ class MethodNode extends AbstractCallableNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
+     * @throws RuntimeException
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule)
     {
@@ -109,7 +103,8 @@ class MethodNode extends AbstractCallableNode
     /**
      * Returns the parent class or interface instance.
      *
-     * @return \PHPMD\Node\AbstractTypeNode
+     * @return AbstractTypeNode<AbstractASTClassOrInterface>
+     * @throws RuntimeException
      */
     public function getParentType()
     {
@@ -127,14 +122,19 @@ class MethodNode extends AbstractCallableNode
             return new EnumNode($parentNode);
         }
 
-        return new InterfaceNode($parentNode);
+        if ($parentNode instanceof ASTInterface) {
+            return new InterfaceNode($parentNode);
+        }
+
+        throw new RuntimeException('Unexpected method parent type: ' . $parentNode::class);
     }
 
     /**
      * Returns <b>true</b> when this method is the initial method declaration.
      * Otherwise this method will return <b>false</b>.
      *
-     * @return boolean
+     * @return bool
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
     public function isDeclaration()

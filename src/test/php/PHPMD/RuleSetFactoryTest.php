@@ -17,9 +17,15 @@
 
 namespace PHPMD;
 
+use Exception;
 use org\bovigo\vfs\vfsStream;
+use PHPMD\Exception\RuleClassFileNotFoundException;
+use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleSetNotFoundException;
 use PHPMD\Rule\CyclomaticComplexity;
 use PHPMD\Rule\Naming\ShortMethodName;
+use PHPMD\Stubs\ClassFileNotFoundRule;
+use PHPMD\Stubs\ClassNotFoundRule;
 use RuntimeException;
 
 /**
@@ -34,14 +40,14 @@ class RuleSetFactoryTest extends AbstractTestCase
      *
      * @var string
      */
-    const DIR_UNDER_TESTS = 'designăôü0汉字';
+    private const DIR_UNDER_TESTS = 'designăôü0汉字';
 
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets(): void
     {
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        $this->assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
+        static::assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory(): void
@@ -57,19 +63,19 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsReturnsArray(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertIsArray($ruleSets);
+        static::assertIsArray($ruleSets);
     }
 
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        self::assertSame(1, count($ruleSets));
+        self::assertCount(1, $ruleSets);
     }
 
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[0]);
+        static::assertInstanceOf(RuleSet::class, $ruleSets[0]);
     }
 
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
@@ -99,8 +105,8 @@ class RuleSetFactoryTest extends AbstractTestCase
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[0]);
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSets[1]);
+        static::assertInstanceOf(RuleSet::class, $ruleSets[0]);
+        static::assertInstanceOf(RuleSet::class, $ruleSets[1]);
     }
 
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames(): void
@@ -128,7 +134,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        $this->assertIsArray($ruleSets);
+        static::assertIsArray($ruleSets);
     }
 
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void
@@ -194,7 +200,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1');
 
-        $this->assertInstanceOf('PHPMD\\RuleSet', $ruleSet);
+        static::assertInstanceOf(RuleSet::class, $ruleSet);
     }
 
     /**
@@ -237,7 +243,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory->setMaximumPriority(2);
 
         $ruleSet = $factory->createSingleRuleSet('set1');
-        $this->assertCount(0, $ruleSet->getRules());
+        static::assertCount(0, $ruleSet->getRules());
     }
 
     public function testCreateRuleWithExcludePattern(): void
@@ -393,7 +399,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception for an invalid ruleset
      * identifier.
      *
-     * @covers \PHPMD\RuleSetNotFoundException
+     * @covers \PHPMD\Exception\RuleSetNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier(): void
     {
@@ -408,12 +414,12 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws an exception when the source code filename
      * for the configured rule does not exist.
      *
-     * @covers \PHPMD\RuleClassFileNotFoundException
+     * @covers \PHPMD\Exception\RuleClassFileNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath(): void
     {
         self::expectExceptionObject(new RuleClassFileNotFoundException(
-            'PHPMD\\Stubs\\ClassFileNotFoundRule',
+            ClassFileNotFoundRule::class,
         ));
 
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
@@ -426,12 +432,12 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception when a rule class
      * cannot be found.
      *
-     * @covers \PHPMD\RuleClassNotFoundException
+     * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass(): void
     {
         self::expectExceptionObject(new RuleClassNotFoundException(
-            'PHPMD\\Stubs\\ClassNotFoundRule',
+            ClassNotFoundRule::class,
         ));
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
@@ -443,7 +449,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception when a rule class
      * cannot be found.
      *
-     * @covers \PHPMD\RuleClassNotFoundException
+     * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile(): void
     {
@@ -464,7 +470,7 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        $this->assertTrue($ruleSets[0]->isStrict());
+        static::assertTrue($ruleSets[0]->isStrict());
     }
 
     /**
@@ -472,7 +478,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Also implicitly tests (by parsing the ruleset) that
      * reference-by-includepath and explicit-classfile-declaration works.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function testAddPHPIncludePath(): void
     {
@@ -485,17 +491,18 @@ class RuleSetFactoryTest extends AbstractTestCase
             $factory = new RuleSetFactory();
             $factory->createRuleSets($fileName);
 
-            $expectedIncludePath = "/foo/bar/baz";
+            $expectedIncludePath = '/foo/bar/baz';
             $actualIncludePaths = explode(PATH_SEPARATOR, get_include_path());
-            $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths);
-        } catch (\Exception $exception) {
+            $isIncludePathPresent = in_array($expectedIncludePath, $actualIncludePaths, true);
+        } catch (Exception $exception) {
             set_include_path($includePathBefore);
+
             throw $exception;
         }
 
         set_include_path($includePathBefore);
 
-        $this->assertTrue(
+        static::assertTrue(
             $isIncludePathPresent,
             "The include-path from '{$rulesetFilepath}' was not set!"
         );
@@ -524,7 +531,7 @@ class RuleSetFactoryTest extends AbstractTestCase
                 );
             } catch (RuleSetNotFoundException $e) {
                 $ruleSetNotFoundExceptionCount++;
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $runtimeExceptionCount++;
             }
         }
@@ -542,6 +549,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     {
         $ruleSets = $this->createRuleSetsFromFiles($file);
         $ruleSet = $ruleSets[0];
+
         /** @var Rule $rule */
         foreach ($ruleSet->getRules() as $rule) {
             $message = sprintf(
@@ -550,7 +558,7 @@ class RuleSetFactoryTest extends AbstractTestCase
                 $ruleSet->getName()
             );
 
-            $this->assertNotEmpty($rule->getExternalInfoUrl(), $message);
+            static::assertNotEmpty($rule->getExternalInfoUrl(), $message);
         }
     }
 
@@ -612,16 +620,15 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
-     * @param string $file At least one rule configuration file name. You can
+     * @param string $files At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
      */
     private function createRuleSetsFromAbsoluteFiles(string $file): array
     {
-        $files = (1 === func_num_args() ? [$file] : func_get_args());
-        $files = array_map([__CLASS__, 'createFileUri'], $files);
+        $files = array_map(static::createFileUri(...), $files);
 
-        return call_user_func_array([$this, 'createRuleSetsFromFiles'], $files);
+        return $this->createRuleSetsFromFiles(...$files);
     }
 
     /**
@@ -671,9 +678,9 @@ class RuleSetFactoryTest extends AbstractTestCase
             ],
         ];
         $root = vfsStream::setup('root', null, $structure);
-        $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(000);
+        $root->getChild('dir2/' . self::DIR_UNDER_TESTS)->chmod(0o000);
         $root->getChild('dir3/' . self::DIR_UNDER_TESTS)->chown(vfsStream::OWNER_ROOT)->chgrp(vfsStream::GROUP_ROOT);
-        $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(000);
+        $root->getChild('dirÅ/foo/' . self::DIR_UNDER_TESTS)->chmod(0o000);
 
         return [
             $root->url(),

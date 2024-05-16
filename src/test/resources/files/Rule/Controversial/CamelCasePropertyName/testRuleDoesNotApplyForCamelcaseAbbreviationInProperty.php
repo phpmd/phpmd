@@ -15,9 +15,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
-
-/**
- * @deprecated 3.0.0 Use PHPMD\Exception\RuleClassFileNotFoundException instead.
- */
-class_alias('PHPMD\Exception\RuleClassFileNotFoundException', 'PHPMD\RuleClassFileNotFoundException');
+class testRuleDoesNotApplyForCamelcaseAbbreviationInProperty
+{
+    public $validPropertyNameUrl;
+}

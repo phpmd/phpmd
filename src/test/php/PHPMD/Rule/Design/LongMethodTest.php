@@ -29,10 +29,8 @@ class LongMethodTest extends AbstractTestCase
     /**
      * Tests that the rule applies for a value greater than the configured
      * threshold.
-     *
-     * @return void
      */
-    public function testRuleAppliesForValueGreaterThanThreshold()
+    public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
         $method = $this->getMethodMock('loc', 42);
         $report = $this->getReportWithOneViolation();
@@ -47,10 +45,8 @@ class LongMethodTest extends AbstractTestCase
     /**
      * Test that the rule applies for a value that is equal with the configured
      * threshold.
-     *
-     * @return void
      */
-    public function testRuleAppliesForValueEqualToThreshold()
+    public function testRuleAppliesForValueEqualToThreshold(): void
     {
         $method = $this->getMethodMock('loc', 42);
         $report = $this->getReportWithOneViolation();
@@ -65,10 +61,8 @@ class LongMethodTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply when the value is at least one lower
      * than the threshold.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValueLowerThanThreshold()
+    public function testRuleDoesNotApplyForValueLowerThanThreshold(): void
     {
         $method = $this->getMethodMock('loc', 22);
         $report = $this->getReportWithNoViolation();
@@ -82,10 +76,8 @@ class LongMethodTest extends AbstractTestCase
 
     /**
      * Tests that the rule uses eloc when ignore whitespace is set
-     *
-     * @return void
      */
-    public function testRuleUsesElocWhenIgnoreWhitespaceSet()
+    public function testRuleUsesElocWhenIgnoreWhitespaceSet(): void
     {
         $class = $this->getClassMock('eloc', 22);
         $report = $this->getReportWithNoViolation();

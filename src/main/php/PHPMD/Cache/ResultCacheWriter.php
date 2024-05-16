@@ -6,18 +6,12 @@ use PHPMD\Cache\Model\ResultCacheState;
 
 class ResultCacheWriter
 {
-    /** @var string */
-    private $filePath;
-
-    /**
-     * @param string $filePath
-     */
-    public function __construct($filePath)
-    {
-        $this->filePath = $filePath;
+    public function __construct(
+        private string $filePath,
+    ) {
     }
 
-    public function write(ResultCacheState $state)
+    public function write(ResultCacheState $state): void
     {
         $output = "<?php \n\nreturn ";
         $output .= var_export($state->toArray(), true);

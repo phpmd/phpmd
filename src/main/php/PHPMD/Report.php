@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use ArrayIterator;
+use Iterator;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
@@ -29,7 +30,7 @@ class Report
     /**
      * List of rule violations detected in the analyzed source code.
      *
-     * @var array
+     * @var array<string, array<int, list<RuleViolation>>>
      */
     private $ruleViolations = [];
 
@@ -50,26 +51,20 @@ class Report
     /**
      * Errors that occurred while parsing the source.
      *
-     * @var array
+     * @var list<ProcessingError>
      * @since 1.2.1
      */
     private $errors = [];
 
-    /** @var BaselineValidator|null */
-    private $baselineValidator;
-
-    public function __construct(BaselineValidator $baselineValidator = null)
-    {
-        $this->baselineValidator = $baselineValidator;
+    public function __construct(
+        private ?BaselineValidator $baselineValidator = null,
+    ) {
     }
 
     /**
      * Adds a rule violation to this report.
-     *
-     * @param \PHPMD\RuleViolation $violation
-     * @return void
      */
-    public function addRuleViolation(RuleViolation $violation)
+    public function addRuleViolation(RuleViolation $violation): void
     {
         if ($this->baselineValidator !== null && $this->baselineValidator->isBaselined($violation)) {
             return;
@@ -91,7 +86,7 @@ class Report
     /**
      * Returns <b>true</b> when this report does not contain any errors.
      *
-     * @return boolean
+     * @return bool
      * @since 0.2.5
      */
     public function isEmpty()
@@ -102,7 +97,7 @@ class Report
     /**
      * Returns an iterator with all occurred rule violations.
      *
-     * @return \PHPMD\RuleViolation[]
+     * @return ArrayIterator<int, RuleViolation>
      */
     public function getRuleViolations()
     {
@@ -115,7 +110,7 @@ class Report
             ksort($violationInLine);
 
             foreach ($violationInLine as $violation) {
-                $violations = array_merge($violations, $violation);
+                $violations = [...$violations, ...$violation];
             }
         }
 
@@ -125,11 +120,9 @@ class Report
     /**
      * Adds a processing error that occurred while parsing the source.
      *
-     * @param \PHPMD\ProcessingError $error
-     * @return void
      * @since 1.2.1
      */
-    public function addError(ProcessingError $error)
+    public function addError(ProcessingError $error): void
     {
         $this->errors[] = $error;
     }
@@ -138,7 +131,7 @@ class Report
      * Returns <b>true</b> when the report contains at least one processing
      * error. Otherwise this method will return <b>false</b>.
      *
-     * @return boolean
+     * @return bool
      * @since 1.2.1
      */
     public function hasErrors()
@@ -150,7 +143,7 @@ class Report
      * Returns an iterator with all {@link \PHPMD\ProcessingError} that were
      * added to this report.
      *
-     * @return \Iterator
+     * @return Iterator
      * @since 1.2.1
      */
     public function getErrors()
@@ -160,20 +153,16 @@ class Report
 
     /**
      * Starts the time tracking of this report instance.
-     *
-     * @return void
      */
-    public function start()
+    public function start(): void
     {
         $this->startTime = microtime(true) * 1000.0;
     }
 
     /**
      * Stops the time tracking of this report instance.
-     *
-     * @return void
      */
-    public function end()
+    public function end(): void
     {
         $this->endTime = microtime(true) * 1000.0;
     }

@@ -21,6 +21,9 @@
  */
 define('PHP_PMD_RELEASE', 'phar');
 
+// Disable deprecations as they are not actionable by end users
+@set_error_handler(null, E_ALL ^ (E_USER_DEPRECATED | E_DEPRECATED));
+
 Phar::mapPhar('${archive.alias}');
 
 // Configure include path to use this phar
@@ -31,7 +34,7 @@ if (isset($argv) && realpath($argv[0]) === __FILE__) {
     include_once 'phar://${archive.alias}/vendor/autoload.php';
 
     // Run command line interface
-    exit(\PHPMD\TextUI\Command::main($argv));
+    exit(\PHPMD\TextUI\Command::main($argv)->value);
 }
 
 __HALT_COMPILER();

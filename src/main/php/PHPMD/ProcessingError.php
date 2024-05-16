@@ -25,13 +25,6 @@ namespace PHPMD;
 class ProcessingError
 {
     /**
-     * The original processing error message.
-     *
-     * @var string
-     */
-    private $message;
-
-    /**
      * The source file where the processing error occurred.
      *
      * @var string
@@ -41,11 +34,11 @@ class ProcessingError
     /**
      * Constructs a new processing error instance.
      *
-     * @param string $message
+     * @param string $message The original processing error message.
      */
-    public function __construct($message)
-    {
-        $this->message = $message;
+    public function __construct(
+        private string $message,
+    ) {
         $this->file = $this->extractFile($message);
     }
 
@@ -74,9 +67,9 @@ class ProcessingError
      * message. This method should be removed once we have added the source file
      * as a mandatory property to PDepend's exceptions.
      */
-    private function extractFile(?string $message): string
+    private function extractFile(string $message): string
     {
-        preg_match('(file: (.+)\.$| file "([^"]+)")', $message ?? '', $match);
+        preg_match('(file: (.+)\.$| file "([^"]+)")', $message, $match);
 
         $match = array_values(array_filter($match));
 

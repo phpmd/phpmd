@@ -18,6 +18,7 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\MethodNode;
 
 /**
  * Test case for the camel case method name rule.
@@ -28,12 +29,10 @@ class CamelCaseMethodNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid method name.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidMethodName()
+    public function testRuleDoesNotApplyForValidMethodName(): void
     {
-        //$method = $this->getMethod();
+        // $method = $this->getMethod();
         $report = $this->getReportWithNoViolation();
 
         $rule = new CamelCaseMethodName();
@@ -44,12 +43,42 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     }
 
     /**
+     * Tests that the rule does apply for method name
+     * with all caps abbreviation.
+     */
+    public function testRuleDoesApplyForMethodNameWithAllCapsAbbreviation(): void
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * Tests that the rule does not apply for method name
+     * with camelcase abbreviation.
+     */
+    public function testRuleDoesNotApplyForMethodNameWithCamelcaseAbbreviation(): void
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseMethodName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->addProperty('allow-underscore-test', 'false');
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * Tests that the rule does apply for an method name
      * starting with a capital.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForMethodNameWithCapital()
+    public function testRuleDoesApplyForMethodNameWithCapital(): void
     {
         // Test method name with capital at the beginning
         $method = $this->getMethod();
@@ -65,10 +94,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a method name
      * with underscores.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForMethodNameWithUnderscores()
+    public function testRuleDoesApplyForMethodNameWithUnderscores(): void
     {
         // Test method name with underscores
         $method = $this->getMethod();
@@ -84,10 +111,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid method name
      * with an underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForValidMethodNameWithUnderscoreWhenNotAllowed()
+    public function testRuleDoesApplyForValidMethodNameWithUnderscoreWhenNotAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithOneViolation();
@@ -102,10 +127,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid method name
      * with an underscore at the beginning when it is not allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidMethodNameWithUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForValidMethodNameWithUnderscoreWhenAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithNoViolation();
@@ -120,10 +143,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid method name
      * with an underscore at the beginning when it is not allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForMagicMethods()
+    public function testRuleDoesNotApplyForMagicMethods(): void
     {
         $methods = $this->getClass()->getMethods();
 
@@ -141,10 +162,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid test method name
      * with an underscore.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForTestMethodWithUnderscoreWhenNotAllowed()
+    public function testRuleDoesApplyForTestMethodWithUnderscoreWhenNotAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithOneViolation();
@@ -159,10 +178,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid test method name
      * with an underscore when underscores are allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForTestMethodWithUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForTestMethodWithUnderscoreWhenAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithNoViolation();
@@ -177,10 +194,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid test method name
      * with multiple underscores in different positions when underscores are allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForTestMethodWithMultipleUnderscoresWhenAllowed()
+    public function testRuleDoesNotApplyForTestMethodWithMultipleUnderscoresWhenAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithNoViolation();
@@ -195,10 +210,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a test method name
      * with consecutive underscores even when underscores are allowed.
-     *
-     * @return void
      */
-    public function testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed()
+    public function testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithOneViolation();
@@ -213,10 +226,8 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply to for test method names that
      * have a capital after their single allowed underscore.
-     *
-     * @return void
      */
-    public function testRuleAppliesToTestMethodWithUnderscoreFollowedByCapital()
+    public function testRuleAppliesToTestMethodWithUnderscoreFollowedByCapital(): void
     {
         $method = $this->getMethod();
         $report = $this->getReportWithOneViolation();
@@ -232,7 +243,7 @@ class CamelCaseMethodNameTest extends AbstractTestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return \PHPMD\Node\MethodNode
+     * @return MethodNode
      */
     protected function getMethod()
     {

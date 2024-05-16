@@ -37,10 +37,8 @@ class XMLRenderer extends AbstractRenderer
     /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
-     *
-     * @return void
      */
-    public function start()
+    public function start(): void
     {
         $this->getWriter()->write('<?xml version="1.0" encoding="UTF-8" ?>');
         $this->getWriter()->write(PHP_EOL);
@@ -49,11 +47,8 @@ class XMLRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $writer->write('<pmd version="' . PHPMD::VERSION . '" ');
@@ -88,7 +83,7 @@ class XMLRenderer extends AbstractRenderer
             $this->maybeAdd('function', $violation->getFunctionName());
             $this->maybeAdd('class', $violation->getClassName());
             $this->maybeAdd('method', $violation->getMethodName());
-            //$this->_maybeAdd('variable', $violation->getVariableName());
+            // $this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' priority="' . $rule->getPriority() . '"');
             $writer->write('>' . PHP_EOL);
@@ -117,10 +112,9 @@ class XMLRenderer extends AbstractRenderer
      * when the given <b>$value</b> is not an empty string and is not <b>null</b>.
      *
      * @param string $attr The xml attribute name.
-     * @param string $value The attribute value.
-     * @return void
+     * @param ?string $value The attribute value.
      */
-    protected function maybeAdd($attr, $value)
+    protected function maybeAdd($attr, $value): void
     {
         if ($value === null || trim($value) === '') {
             return;

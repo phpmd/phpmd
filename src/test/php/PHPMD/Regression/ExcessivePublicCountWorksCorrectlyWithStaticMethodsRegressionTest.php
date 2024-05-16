@@ -18,24 +18,22 @@
 namespace PHPMD\Regression;
 
 use PHPMD\PHPMD;
+use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Regression test for issue 409.
  *
  * @link https://github.com/phpmd/phpmd/issues/409
  */
-class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase extends AbstractRegressionTestCase
+class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * @var string Beginning of the violation message
-     */
-    const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
+    /** @var string Beginning of the violation message */
+    private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\PHPMD\Renderer\TextRenderer
-     */
+    /** @var PHPUnit_Framework_MockObject_MockObject|TextRenderer */
     private $renderer;
 
     /**
@@ -44,7 +42,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
     protected function setUp(): void
     {
         $this->renderer = $this->getMockFromBuilder(
-            $this->getMockBuilder('PHPMD\Renderer\TextRenderer')
+            $this->getMockBuilder(TextRenderer::class)
                 ->disableOriginalConstructor()
                 ->onlyMethods(['renderReport', 'start', 'end'])
         );
@@ -58,25 +56,24 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsGeneratedIWithNoSuppression()
+    public function testReportIsGeneratedIWithNoSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
         $ruleSetFactory = new RuleSetFactory();
 
-        $this->renderer->expects($this->once())
+        $this->renderer->expects(static::once())
             ->method('renderReport')
             ->will(
-                $this->returnCallback(
-                    function (Report $report) use ($self) {
+                static::returnCallback(
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
+
                                 break;
                             }
                         }
@@ -102,25 +99,24 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTestCase exte
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     *
-     * @return void
      */
-    public function testReportIsNotGeneratedIWithSuppression()
+    public function testReportIsNotGeneratedIWithSuppression(): void
     {
         self::changeWorkingDirectory();
         $phpmd = new PHPMD();
         $self = $this;
         $ruleSetFactory = new RuleSetFactory();
 
-        $this->renderer->expects($this->once())
+        $this->renderer->expects(static::once())
             ->method('renderReport')
             ->will(
-                $this->returnCallback(
-                    function (Report $report) use ($self) {
+                static::returnCallback(
+                    function (Report $report) use ($self): void {
                         $isViolating = false;
                         foreach ($report->getRuleViolations() as $ruleViolation) {
-                            if (strpos($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE) === 0) {
+                            if (str_starts_with($ruleViolation->getDescription(), $self::VIOLATION_MESSAGE)) {
                                 $isViolating = true;
+
                                 break;
                             }
                         }

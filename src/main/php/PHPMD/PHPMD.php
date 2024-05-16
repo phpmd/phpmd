@@ -17,6 +17,7 @@
 
 namespace PHPMD;
 
+use Exception;
 use PHPMD\Cache\ResultCacheEngine;
 
 /**
@@ -24,16 +25,14 @@ use PHPMD\Cache\ResultCacheEngine;
  */
 class PHPMD
 {
-    /**
-     * The current PHPMD version.
-     */
-    const VERSION = '@package_version@';
+    /** The current PHPMD version. */
+    final public const VERSION = '@package_version@';
 
     /**
      * This property will be set to <b>true</b> when an error
      * was found in the processed source code.
      *
-     * @var boolean
+     * @var bool
      * @since 2.10.0
      */
     private $errors = false;
@@ -41,14 +40,14 @@ class PHPMD
     /**
      * List of valid file extensions for analyzed files.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
 
     /**
      * List of exclude directory patterns.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
 
@@ -66,7 +65,7 @@ class PHPMD
      * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
-     * @var boolean
+     * @var bool
      * @since 0.2.5
      */
     private $violations = false;
@@ -74,7 +73,7 @@ class PHPMD
     /**
      * Additional options for PHPMD or one of it's parser backends.
      *
-     * @var array
+     * @var array<string, string>
      * @since 1.2.0
      */
     private $options = [];
@@ -83,7 +82,7 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains errors.
      *
-     * @return boolean
+     * @return bool
      * @since 2.10.0
      */
     public function hasErrors()
@@ -95,7 +94,7 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains violations.
      *
-     * @return boolean
+     * @return bool
      * @since 0.2.5
      */
     public function hasViolations()
@@ -128,23 +127,10 @@ class PHPMD
      * Sets a list of filename extensions for valid php source code files.
      *
      * @param array<string> $fileExtensions Extensions without leading dot.
-     * @return void
      */
-    public function setFileExtensions(array $fileExtensions)
+    public function setFileExtensions(array $fileExtensions): void
     {
         $this->fileExtensions = $fileExtensions;
-    }
-
-    /**
-     * Returns an array with string patterns that mark a file path as invalid.
-     *
-     * @return string[]
-     * @since      0.2.0
-     * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
-     */
-    public function getIgnorePattern()
-    {
-        return $this->getIgnorePatterns();
     }
 
     /**
@@ -159,19 +145,6 @@ class PHPMD
     }
 
     /**
-     * Sets a list of ignore patterns that is used to exclude directories from
-     * the source analysis.
-     *
-     * @param array<string> $ignorePatterns List of ignore patterns.
-     * @return void
-     * @deprecated 3.0.0 Use addIgnorePatterns() instead, both will add an not set the patterns.
-     */
-    public function setIgnorePattern(array $ignorePatterns)
-    {
-        $this->addIgnorePatterns($ignorePatterns);
-    }
-
-    /**
      * Add a list of ignore patterns which is used to exclude directories from
      * the source analysis.
      *
@@ -181,10 +154,10 @@ class PHPMD
      */
     public function addIgnorePatterns(array $ignorePatterns)
     {
-        $this->ignorePatterns = array_merge(
-            $this->ignorePatterns,
-            $ignorePatterns
-        );
+        $this->ignorePatterns = [
+            ...$this->ignorePatterns,
+            ...$ignorePatterns,
+        ];
 
         return $this;
     }
@@ -211,7 +184,7 @@ class PHPMD
     /**
      * Returns additional options for PHPMD or one of it's parser backends.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getOptions()
     {
@@ -221,10 +194,9 @@ class PHPMD
     /**
      * Sets additional options for PHPMD or one of it's parser backends.
      *
-     * @param array $options Additional backend or PHPMD options.
-     * @return void
+     * @param array<string, string> $options Additional backend or PHPMD options.
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
@@ -234,12 +206,11 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string                    $inputPath
-     * @param array|null                $ignorePattern
-     * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSet[]          $ruleSetList
-     * @param \PHPMD\Report             $report
-     * @return void
+     * @param string             $inputPath
+     * @param string[]|null      $ignorePattern
+     * @param AbstractRenderer[] $renderers
+     * @param RuleSet[]          $ruleSetList
+     * @throws Exception
      */
     public function processFiles(
         $inputPath,
@@ -247,14 +218,14 @@ class PHPMD
         array $renderers,
         array $ruleSetList,
         Report $report
-    ) {
+    ): void {
         // Merge parsed excludes
         $this->addIgnorePatterns($ignorePattern);
 
         $this->input = $inputPath;
 
         $factory = new ParserFactory();
-        $parser  = $factory->create($this);
+        $parser = $factory->create($this);
 
         foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
@@ -281,7 +252,7 @@ class PHPMD
             $renderer->end();
         }
 
-        $this->errors     = $report->hasErrors();
+        $this->errors = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

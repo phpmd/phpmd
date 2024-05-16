@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTScopeStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -28,19 +30,16 @@ use PHPMD\Rule\MethodAware;
  * @author Grégoire Paris <postmaster@greg0ire.fr>
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
  */
-class EmptyCatchBlock extends AbstractRule implements MethodAware, FunctionAware
+final class EmptyCatchBlock extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an empty catch block
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('CatchStatement') as $catchBlock) {
-            $scope = $catchBlock->getFirstChildOfType('ScopeStatement');
+        foreach ($node->findChildrenOfType(ASTCatchStatement::class) as $catchBlock) {
+            $scope = $catchBlock->getFirstChildOfType(ASTScopeStatement::class);
             if (count($scope->getChildren()) === 0) {
                 $this->addViolation($catchBlock, [$node->getName()]);
             }

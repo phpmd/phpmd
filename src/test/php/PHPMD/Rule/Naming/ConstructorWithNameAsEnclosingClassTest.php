@@ -28,10 +28,8 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClass
-     *
-     * @return void
      */
-    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass()
+    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
         $rule->setReport($this->getReportWithOneViolation());
@@ -40,10 +38,8 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive
-     *
-     * @return void
      */
-    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive()
+    public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
         $rule->setReport($this->getReportWithOneViolation());
@@ -52,24 +48,22 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodNamedSimilarToEnclosingClass
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass()
+    public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToMethodNamedAsEnclosingInterface()
+    public function testRuleNotAppliesToMethodNamedAsEnclosingInterface(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
 
-    public function testRuleNotAppliesToMethodInNamespaces()
+    public function testRuleNotAppliesToMethodInNamespaces(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
         $rule->setReport($this->getReportWithNoViolation());

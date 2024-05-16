@@ -10,25 +10,16 @@ use PHPMD\RuleViolation;
  * This renderer output a command line friendly log with all found violations
  * and suspect software artifacts.
  */
-class AnsiRenderer extends AbstractRenderer
+final class AnsiRenderer extends AbstractRenderer
 {
-
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $this->writeViolationsReport($report);
         $this->writeErrorsReport($report);
         $this->writeReportSummary($report);
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
-    private function writeViolationsReport(Report $report)
+    private function writeViolationsReport(Report $report): void
     {
         if ($report->isEmpty()) {
             return;
@@ -51,26 +42,21 @@ class AnsiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param \PHPMD\Report $report
      * @return int|null
      */
     private function getMaxLineNumberLength(Report $report)
     {
         $maxLength = null;
         foreach ($report->getRuleViolations() as $violation) {
-            if ($maxLength === null || strlen($violation->getBeginLine()) > $maxLength) {
-                $maxLength = strlen($violation->getBeginLine());
+            if ($maxLength === null || strlen((string) $violation->getBeginLine()) > $maxLength) {
+                $maxLength = strlen((string) $violation->getBeginLine());
             }
         }
 
         return $maxLength;
     }
 
-    /**
-     * @param \PHPMD\RuleViolation $violation
-     * @return void
-     */
-    private function writeViolationFileHeader(RuleViolation $violation)
+    private function writeViolationFileHeader(RuleViolation $violation): void
     {
         $fileHeader = sprintf(
             'FILE: %s',
@@ -83,30 +69,23 @@ class AnsiRenderer extends AbstractRenderer
     }
 
     /**
-     * @param \PHPMD\RuleViolation $violation
      * @param int $padding
-     * @return void
      */
-    private function writeViolationLine(RuleViolation $violation, $padding)
+    private function writeViolationLine(RuleViolation $violation, $padding): void
     {
         $this->getWriter()->write(sprintf(
             " %s | \e[31mVIOLATION\e[0m | %s" . PHP_EOL,
-            str_pad($violation->getBeginLine(), $padding, ' '),
+            str_pad((string) $violation->getBeginLine(), $padding, ' '),
             $violation->getDescription()
         ));
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
-    private function writeErrorsReport(Report $report)
+    private function writeErrorsReport(Report $report): void
     {
         if (!$report->hasErrors()) {
             return;
         }
 
-        /** @var ProcessingError $error */
         foreach ($report->getErrors() as $error) {
             $errorHeader = sprintf(
                 "\e[33mERROR\e[0m while parsing %s",
@@ -125,11 +104,7 @@ class AnsiRenderer extends AbstractRenderer
         }
     }
 
-    /**
-     * @param \PHPMD\Report $report
-     * @return void
-     */
-    private function writeReportSummary(Report $report)
+    private function writeReportSummary(Report $report): void
     {
         $this->getWriter()->write(
             sprintf(

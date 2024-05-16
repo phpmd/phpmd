@@ -22,15 +22,15 @@ class ResultCacheWriterTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->filePath = vfsStream::setup()->url() . '/.result-cache.php';
-        $this->writer   = new ResultCacheWriter($this->filePath);
+        $this->writer = new ResultCacheWriter($this->filePath);
     }
 
     /**
      * @covers ::write
      */
-    public function testWrite()
+    public function testWrite(): void
     {
-        $cacheKey   = new ResultCacheKey(true, 'baseline', [], [], 70000);
+        $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 70000);
         $cacheState = new ResultCacheState($cacheKey, []);
 
         $this->writer->write($cacheState);

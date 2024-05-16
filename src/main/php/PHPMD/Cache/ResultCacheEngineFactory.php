@@ -6,23 +6,13 @@ use PHPMD\Console\OutputInterface;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 
-class ResultCacheEngineFactory
+final class ResultCacheEngineFactory
 {
-    /** @var OutputInterface */
-    private $output;
-    /** @var ResultCacheKeyFactory */
-    private $cacheKeyFactory;
-    /** @var ResultCacheStateFactory */
-    private $cacheStateFactory;
-
     public function __construct(
-        OutputInterface         $output,
-        ResultCacheKeyFactory   $cacheKeyFactory,
-        ResultCacheStateFactory $cacheStateFactory
+        private OutputInterface $output,
+        private ResultCacheKeyFactory $cacheKeyFactory,
+        private ResultCacheStateFactory $cacheStateFactory,
     ) {
-        $this->output            = $output;
-        $this->cacheKeyFactory   = $cacheKeyFactory;
-        $this->cacheStateFactory = $cacheStateFactory;
     }
 
     /**
@@ -32,8 +22,9 @@ class ResultCacheEngineFactory
      */
     public function create($basePath, CommandLineOptions $options, array $ruleSetList)
     {
-        if ($options->isCacheEnabled() === false) {
+        if (!$options->isCacheEnabled()) {
             $this->output->writeln('ResultCache is not enabled.', OutputInterface::VERBOSITY_VERY_VERBOSE);
+
             return null;
         }
 
@@ -50,7 +41,7 @@ class ResultCacheEngineFactory
         }
 
         // the cache key doesn't match the stored cache key. Invalidate cache
-        if ($state !== null && $state->getCacheKey()->isEqualTo($cacheKey) === false) {
+        if ($state && !$state->getCacheKey()->isEqualTo($cacheKey)) {
             $this->output->writeln(
                 'ResultCache is enabled, but the cache metadata doesn\'t match.',
                 OutputInterface::VERBOSITY_VERY_VERBOSE

@@ -19,30 +19,31 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\AbstractTypeNode;
+use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 
 /**
  * This rule class will detect all classes with too much public methods.
  */
-class TooManyPublicMethods extends AbstractRule implements ClassAware
+final class TooManyPublicMethods extends AbstractRule implements ClassAware
 {
     /**
      * Regular expression that filters all methods that are ignored by this rule.
      *
      * @var string
      */
-    protected $ignoreRegexp;
+    private $ignoreRegexp;
 
     /**
      * This method checks the number of public methods with in a given class and checks
      * this number against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof ClassNode) {
+            return;
+        }
+
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
         $threshold = $this->getIntProperty('maxmethods');
@@ -52,7 +53,6 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
             return;
         }
 
-        /** @var AbstractTypeNode $node */
         $nom = $this->countMethods($node);
 
         if ($nom <= $threshold) {
@@ -64,8 +64,8 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
             [
                 $node->getType(),
                 $node->getName(),
-                $nom,
-                $threshold,
+                (string) $nom,
+                (string) $threshold,
             ]
         );
     }
@@ -73,10 +73,9 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
     /**
      * Counts public methods within the given class/interface node.
      *
-     * @param \PHPMD\Node\AbstractTypeNode $node
-     * @return integer
+     * @return int
      */
-    protected function countMethods(AbstractTypeNode $node)
+    private function countMethods(ClassNode $node)
     {
         $count = 0;
         foreach ($node->getMethods() as $method) {

@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -24,21 +25,18 @@ use PHPMD\Rule\ClassAware;
 /**
  * This rule will detect classes that are too deep in the inheritance tree.
  */
-class DepthOfInheritance extends AbstractRule implements ClassAware
+final class DepthOfInheritance extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the number of parents for the given class
      * node.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         try {
             $threshold = $this->getIntProperty('maximum');
             $comparison = 1;
-        } catch (\OutOfBoundsException) {
+        } catch (OutOfBoundsException) {
             $threshold = $this->getIntProperty('minimum');
             $comparison = 2;
         }
@@ -52,8 +50,8 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
                 [
                     $node->getType(),
                     $node->getName(),
-                    $dit,
-                    $threshold,
+                    (string) $dit,
+                    (string) $threshold,
                 ]
             );
         }

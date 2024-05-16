@@ -28,10 +28,8 @@ class EvalExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutEvalExpression
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutEvalExpression()
+    public function testRuleNotAppliesToMethodWithoutEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -40,10 +38,8 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithEvalExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithEvalExpression()
+    public function testRuleAppliesToMethodWithEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportWithOneViolation());
@@ -52,10 +48,8 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithEvalExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToMethodWithEvalExpression()
+    public function testRuleAppliesMultipleTimesToMethodWithEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportMock(3));
@@ -64,10 +58,8 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutEvalExpression
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutEvalExpression()
+    public function testRuleNotAppliesToFunctionWithoutEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportWithNoViolation());
@@ -76,10 +68,8 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithEvalExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithEvalExpression()
+    public function testRuleAppliesToFunctionWithEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportWithOneViolation());
@@ -88,10 +78,8 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithEvalExpression
-     *
-     * @return void
      */
-    public function testRuleAppliesMultipleTimesToFunctionWithEvalExpression()
+    public function testRuleAppliesMultipleTimesToFunctionWithEvalExpression(): void
     {
         $rule = new EvalExpression();
         $rule->setReport($this->getReportMock(3));

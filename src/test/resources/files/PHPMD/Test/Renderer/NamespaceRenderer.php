@@ -22,7 +22,7 @@ use PHPMD\Report;
 
 class NamespaceRenderer extends AbstractRenderer
 {
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
     }
 }

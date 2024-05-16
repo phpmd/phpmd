@@ -17,8 +17,11 @@
 
 namespace PHPMD\Renderer;
 
+use LogicException;
 use PHPMD\AbstractRenderer;
 use PHPMD\Report;
+use PHPMD\RuleViolation;
+use RuntimeException;
 use SplFileObject;
 
 /**
@@ -28,17 +31,18 @@ use SplFileObject;
  * @copyright 2017 Premysl Karbula. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class HTMLRenderer extends AbstractRenderer
+final class HTMLRenderer extends AbstractRenderer
 {
-    const CATEGORY_PRIORITY = 'category_priority';
+    private const CATEGORY_PRIORITY = 'category_priority';
 
-    const CATEGORY_NAMESPACE = 'category_namespace';
+    private const CATEGORY_NAMESPACE = 'category_namespace';
 
-    const CATEGORY_RULESET = 'category_ruleset';
+    private const CATEGORY_RULESET = 'category_ruleset';
 
-    const CATEGORY_RULE = 'category_rule';
+    private const CATEGORY_RULE = 'category_rule';
 
-    protected static $priorityTitles = [
+    /** @var array<int, string> */
+    private static array $priorityTitles = [
         1 => 'Top (1)',
         2 => 'High (2)',
         3 => 'Moderate (3)',
@@ -46,8 +50,12 @@ class HTMLRenderer extends AbstractRenderer
         5 => 'Lowest (5)',
     ];
 
-    // Used in self::colorize() method.
-    protected static $descHighlightRules = [
+    /**
+     * Used in self::colorize() method.
+     *
+     * @var array<string, array<string, string>>
+     */
+    private static array $descHighlightRules = [
         'method' => [ // Method names.
             'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
             'css-class' => 'hlt-method',
@@ -62,16 +70,15 @@ class HTMLRenderer extends AbstractRenderer
         ],
     ];
 
-    protected static $compiledHighlightRegex = null;
+    private static ?string $compiledHighlightRegex = null;
 
     /**
      * Specify how many extra lines are added to a code snippet
      * By default 2
-     * @var int
      */
-    protected $extraLineInExcerpt = 2;
+    private int $extraLineInExcerpt = 2;
 
-    public function __construct($extraLineInExcerpt = null)
+    public function __construct(?int $extraLineInExcerpt = null)
     {
         if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
             $this->extraLineInExcerpt = $extraLineInExcerpt;
@@ -81,14 +88,12 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
-     *
-     * @return void
      */
-    public function start()
+    public function start(): void
     {
         $writer = $this->getWriter();
 
-        $mainColor = "#2f838a";
+        $mainColor = '#2f838a';
 
         // Avoid inlining styles.
         $style = "
@@ -319,7 +324,7 @@ class HTMLRenderer extends AbstractRenderer
                 on <em>PHP %s</em>
                 on <em>%s</em>
             </header>
-        ", date('Y-m-d H:i'), "https://phpmd.org", \PHP_VERSION, gethostname());
+        ", date('Y-m-d H:i'), 'https://phpmd.org', \PHP_VERSION, gethostname());
 
         $writer->write($header);
     }
@@ -327,11 +332,8 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
 
@@ -347,7 +349,7 @@ class HTMLRenderer extends AbstractRenderer
         }
 
         // Render summary tables.
-        $writer->write("<h2>Summary</h2>");
+        $writer->write('<h2>Summary</h2>');
         $categorized = self::sumUpViolations($violations);
         $this->writeTable('By priority', 'Priority', $categorized[self::CATEGORY_PRIORITY]);
         $this->writeTable('By namespace', 'PHP Namespace', $categorized[self::CATEGORY_NAMESPACE]);
@@ -369,7 +371,7 @@ class HTMLRenderer extends AbstractRenderer
 
         foreach ($violations as $violation) {
             // This is going to be used as ID in HTML (deep anchoring).
-            $htmlId = "p-" . $index++;
+            $htmlId = 'p-' . $index++;
 
             // Get excerpt of the code from validated file.
             $excerptHtml = null;
@@ -387,7 +389,7 @@ class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . "</a>";
+            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . '</a>';
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
@@ -424,10 +426,8 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * This method will be called the engine has finished the report processing
      * for all registered renderers.
-     *
-     * @return void
      */
-    public function end()
+    public function end(): void
     {
         $writer = $this->getWriter();
         $writer->write('</div></body></html>');
@@ -437,9 +437,14 @@ class HTMLRenderer extends AbstractRenderer
      * Return array of lines from a specified file:line, optionally with extra lines around
      * for additional cognitive context.
      *
-     * @return array
+     * @param string $file
+     * @param int $lineNumber
+     * @param int $extra
+     * @return array<int, string>
+     * @throws RuntimeException
+     * @throws LogicException
      */
-    protected static function getLineExcerpt($file, $lineNumber, $extra = 0)
+    private static function getLineExcerpt($file, $lineNumber, $extra = 0)
     {
         if (!is_readable($file)) {
             return [];
@@ -455,8 +460,11 @@ class HTMLRenderer extends AbstractRenderer
         if (!$file->eof()) {
             $file->seek($line);
             for ($i = 0; $i <= ($extra * 2); $i++) {
-                $result[++$line] = trim((string)$file->current(), "\n");
-                $file->next();
+                $lineContent = $file->current();
+                if (is_string($lineContent)) {
+                    $result[++$line] = trim($lineContent, "\n");
+                    $file->next();
+                }
             }
         }
 
@@ -467,18 +475,19 @@ class HTMLRenderer extends AbstractRenderer
      * Take a rule description text and try to decorate/stylize parts of it with HTML.
      * Based on self::$descHighlightRules config.
      *
+     * @param string $message
      * @return string
      */
-    protected static function colorize($message)
+    private static function colorize($message)
     {
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
-            $prepared = self::$descHighlightRules;
-            array_walk($prepared, function (&$value, $key) {
-                $value = "(?<{$key}>{$value['regex']})";
-            });
+            $prepared = [];
+            foreach (self::$descHighlightRules as $key => $value) {
+                $prepared[] = "(?<{$key}>{$value['regex']})";
+            }
 
-            self::$compiledHighlightRegex = "#(" . implode('|', $prepared) . ")#";
+            self::$compiledHighlightRegex = '#(' . implode('|', $prepared) . ')#';
         }
 
         $rules = self::$descHighlightRules;
@@ -496,11 +505,12 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Take a file path and return a bit of HTML where the basename is wrapped in styled <span>.
      *
+     * @param string $path
      * @return string
      */
-    protected static function highlightFile($path)
+    private static function highlightFile($path)
     {
-        $file = substr(strrchr($path, "/"), 1);
+        $file = substr(strrchr($path, '/') ?: '', 1);
         $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';
@@ -509,9 +519,11 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Render a pretty informational table and send the HTML to the writer.
      *
-     * @return void
+     * @param string $title
+     * @param string $itemsTitle
+     * @param array<int, int> $items
      */
-    protected function writeTable($title, $itemsTitle, $items)
+    private function writeTable($title, $itemsTitle, $items): void
     {
         if (!$items) {
             return;
@@ -550,9 +562,10 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Go through passed violations and count occurrences based on pre-specified conditions.
      *
-     * @return array
+     * @param iterable<RuleViolation> $violations
+     * @return array<string, array<int, int>>
      */
-    protected static function sumUpViolations($violations)
+    private static function sumUpViolations($violations)
     {
         $result = [
             self::CATEGORY_PRIORITY => [],
@@ -595,10 +608,12 @@ class HTMLRenderer extends AbstractRenderer
     /**
      * Reduces two and more whitespaces in a row to a single whitespace to conserve space.
      *
+     * @param string $input
+     * @param bool $eol
      * @return string
      */
-    protected static function reduceWhitespace($input, $eol = true)
+    private static function reduceWhitespace($input, $eol = true)
     {
-        return preg_replace("#\s+#", " ", $input) . ($eol ? PHP_EOL : null);
+        return preg_replace("#\s+#", ' ', $input) . ($eol ? PHP_EOL : null);
     }
 }

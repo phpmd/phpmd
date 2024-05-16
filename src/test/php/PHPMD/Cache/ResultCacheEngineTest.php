@@ -15,16 +15,16 @@ class ResultCacheEngineTest extends AbstractTestCase
      * @covers ::getUpdater
      * @covers ::getWriter
      */
-    public function testGetters()
+    public function testGetters(): void
     {
-        $filter  = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheFileFilter')->disableOriginalConstructor()
+        $filter = $this->getMockFromBuilder(
+            $this->getMockBuilder(ResultCacheFileFilter::class)->disableOriginalConstructor()
         );
         $updater = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheUpdater')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheUpdater::class)->disableOriginalConstructor()
         );
-        $writer  = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheWriter')->disableOriginalConstructor()
+        $writer = $this->getMockFromBuilder(
+            $this->getMockBuilder(ResultCacheWriter::class)->disableOriginalConstructor()
         );
 
         $engine = new ResultCacheEngine($filter, $updater, $writer);

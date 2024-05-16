@@ -2,19 +2,17 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\Writer\StreamWriter;
-use RuntimeException;
+use PHPMD\AbstractWriter;
 
-class RendererFactory
+final class RendererFactory
 {
     /**
      * @return BaselineRenderer
-     * @throws RuntimeException
      */
-    public static function createBaselineRenderer(StreamWriter $writer)
+    public static function createBaselineRenderer(AbstractWriter $writer)
     {
         // set base path to current working directory
-        $renderer = new BaselineRenderer(getcwd());
+        $renderer = new BaselineRenderer(getcwd() ?: '');
         $renderer->setWriter($writer);
 
         return $renderer;

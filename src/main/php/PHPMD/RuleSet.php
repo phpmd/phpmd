@@ -18,10 +18,29 @@
 namespace PHPMD;
 
 use ArrayIterator;
+use InvalidArgumentException;
 use IteratorAggregate;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTArtifact;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PHPMD\Node\AbstractNode;
+use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\FunctionNode;
+use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\MethodNode;
+use PHPMD\Node\TraitNode;
+use PHPMD\Rule\ClassAware;
+use PHPMD\Rule\EnumAware;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\InterfaceAware;
+use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * This class is a collection of concrete source analysis rules.
+ *
+ * @implements IteratorAggregate<int, Rule>
  */
 class RuleSet implements IteratorAggregate
 {
@@ -32,52 +51,44 @@ class RuleSet implements IteratorAggregate
      */
     private bool $strict = false;
 
-    /**
-     * The name of the file where this set is specified.
-     */
+    /** The name of the file where this set is specified. */
     private string $fileName = '';
 
-    /**
-     * The name of this rule-set.
-     */
+    /** The name of this rule-set. */
     private string $name = '';
 
-    /**
-     * An optional description for this rule-set.
-     */
+    /** An optional description for this rule-set. */
     private string $description = '';
 
-    /**
-     * The violation report used by the rule-set.
-     */
+    /** The violation report used by the rule-set. */
     private ?Report $report = null;
 
     /**
      * Mapping between marker interfaces and concrete context code node classes.
      *
-     * @var array(string=>string)
+     * @var array<class-string, class-string<AbstractNode<ASTArtifact>>>
      */
     private array $applyTo = [
-        'PHPMD\\Rule\\ClassAware' => 'PHPMD\\Node\\ClassNode',
-        'PHPMD\\Rule\\TraitAware' => 'PHPMD\\Node\\TraitNode',
-        'PHPMD\\Rule\\EnumAware' => 'PHPMD\\Node\\EnumNode',
-        'PHPMD\\Rule\\FunctionAware' => 'PHPMD\\Node\\FunctionNode',
-        'PHPMD\\Rule\\InterfaceAware' => 'PHPMD\\Node\\InterfaceNode',
-        'PHPMD\\Rule\\MethodAware' => 'PHPMD\\Node\\MethodNode',
+        ClassAware::class => ClassNode::class,
+        TraitAware::class => TraitNode::class,
+        EnumAware::class => EnumNode::class,
+        FunctionAware::class => FunctionNode::class,
+        InterfaceAware::class => InterfaceNode::class,
+        MethodAware::class => MethodNode::class,
     ];
 
     /**
      * Mapping of rules that apply to a concrete code node type.
      *
-     * @var array(string=>array)
+     * @var array<class-string<AbstractNode<ASTArtifact>>, list<Rule>>
      */
     private $rules = [
-        'PHPMD\\Node\\ClassNode' => [],
-        'PHPMD\\Node\\TraitNode' => [],
-        'PHPMD\\Node\\EnumNode' => [],
-        'PHPMD\\Node\\FunctionNode' => [],
-        'PHPMD\\Node\\InterfaceNode' => [],
-        'PHPMD\\Node\\MethodNode' => [],
+        ClassNode::class => [],
+        TraitNode::class => [],
+        EnumNode::class => [],
+        FunctionNode::class => [],
+        InterfaceNode::class => [],
+        MethodNode::class => [],
     ];
 
     /**
@@ -92,7 +103,6 @@ class RuleSet implements IteratorAggregate
      * Sets the file name where the definition of this rule-set comes from.
      *
      * @param string $fileName The file name.
-     * @return void
      */
     public function setFileName(string $fileName): void
     {
@@ -111,7 +121,6 @@ class RuleSet implements IteratorAggregate
      * Sets the name of this rule-set.
      *
      * @param string $name The name of this rule-set.
-     * @return void
      */
     public function setName(string $name): void
     {
@@ -120,8 +129,6 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns the description text for this rule-set instance.
-     *
-     * @return string
      */
     public function getDescription(): string
     {
@@ -173,9 +180,12 @@ class RuleSet implements IteratorAggregate
     }
 
     /**
-     * This method returns a rule by its name or <b>null</b> if it doesn't exist.
+     * This method returns a rule by its name or throws an exception
+     *
+     * @param string $name The name of the rule to get.
+     * @throws RuleByNameNotFoundException When the rule could not be found.
      */
-    public function getRuleByName(string $name): ?Rule
+    public function getRuleByName(string $name): Rule
     {
         foreach ($this->getRules() as $rule) {
             if ($rule->getName() === $name) {
@@ -183,19 +193,21 @@ class RuleSet implements IteratorAggregate
             }
         }
 
-        return null;
+        throw new RuleByNameNotFoundException($name);
     }
 
     /**
      * This method returns an iterator will all rules that belong to this
      * rule-set.
+     *
+     * @return ArrayIterator<int, Rule>
      */
     public function getRules(): ArrayIterator
     {
         $result = [];
         foreach ($this->rules as $rules) {
             foreach ($rules as $rule) {
-                if (in_array($rule, $result, true) === false) {
+                if (!in_array($rule, $result, true)) {
                     $result[] = $rule;
                 }
             }
@@ -218,11 +230,16 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Applies all registered rules that match against the concrete node type.
+     *
+     * @param AbstractNode<ASTArtifact> $node
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
     public function apply(AbstractNode $node): void
     {
         // Current node type
-        $className = get_class($node);
+        $className = $node::class;
 
         // Check for valid node type
         if (!isset($this->rules[$className])) {
@@ -231,7 +248,6 @@ class RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->rules[$className] as $rule) {
-            /** @var $rule Rule */
             if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->strict) {
                 continue;
             }
@@ -245,6 +261,8 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns an iterator with all rules that are part of this rule-set.
+     *
+     * @return ArrayIterator<int, Rule>
      */
     public function getIterator(): ArrayIterator
     {

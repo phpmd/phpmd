@@ -17,8 +17,10 @@
 
 namespace PHPMD\Rule\Controversial;
 
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -28,17 +30,18 @@ use PHPMD\Rule\MethodAware;
  * @author Francis Besset <francis.besset@gmail.com>
  * @since 1.1.0
  */
-class CamelCaseParameterName extends AbstractRule implements MethodAware, FunctionAware
+final class CamelCaseParameterName extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a parameter is not named in camelCase
      * and emits a rule violation.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
+        if (!$node instanceof AbstractCallableNode) {
+            return;
+        }
+
         foreach ($node->getParameters() as $parameter) {
             if (!$this->isValid($parameter->getName())) {
                 $this->addViolation(
@@ -51,12 +54,21 @@ class CamelCaseParameterName extends AbstractRule implements MethodAware, Functi
         }
     }
 
-    protected function isValid($parameterName)
+    /**
+     * @throws OutOfBoundsException
+     */
+    private function isValid(string $parameterName): bool
     {
-        if ($this->getBooleanProperty('allow-underscore')) {
-            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName);
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $parameterName) === 1) {
+            return false;
         }
 
-        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName);
+        if ($this->getBooleanProperty('allow-underscore')) {
+            return preg_match('/^\$[_]?[a-z][a-zA-Z0-9]*$/', $parameterName) === 1;
+        }
+
+        return preg_match('/^\$[a-z][a-zA-Z0-9]*$/', $parameterName) === 1;
     }
 }

@@ -6,7 +6,7 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Report;
 use PHPMD\Stubs\WriterStub;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
@@ -17,15 +17,15 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReport()
+    public function testRenderReport(): void
     {
-        $writer     = new WriterStub();
+        $writer = new WriterStub();
         $violations = [
             $this->getRuleViolationMock('/src/php/bar.php'),
             $this->getRuleViolationMock('/src/php/foo.php'),
         ];
 
-        /** @var Report|MockObject $report */
+        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -46,13 +46,13 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReportShouldWriteMethodName()
+    public function testRenderReportShouldWriteMethodName(): void
     {
-        $writer        = new WriterStub();
+        $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
 
-        /** @var Report|MockObject $report */
+        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -73,14 +73,14 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderReportShouldDeduplicateSimilarViolations()
+    public function testRenderReportShouldDeduplicateSimilarViolations(): void
     {
-        $writer        = new WriterStub();
+        $writer = new WriterStub();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
 
         // add the same violation twice
-        /** @var Report|MockObject $report */
+        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -101,7 +101,7 @@ class BaselineRendererTest extends AbstractTestCase
     /**
      * @covers ::renderReport
      */
-    public function testRenderEmptyReport()
+    public function testRenderEmptyReport(): void
     {
         $writer = new WriterStub();
         $report = $this->getReportWithNoViolation();
@@ -109,7 +109,7 @@ class BaselineRendererTest extends AbstractTestCase
             ->method('getRuleViolations')
             ->willReturn(new ArrayIterator([]));
 
-        /** @var Report|MockObject $report */
+        /** @var MockObject|Report $report */
         $renderer = new BaselineRenderer('/src');
         $renderer->setWriter($writer);
         $renderer->start();

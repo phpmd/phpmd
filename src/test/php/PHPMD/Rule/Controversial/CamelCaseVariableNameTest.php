@@ -28,10 +28,8 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid variable name
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForInvariableNameWithUnderscore()
+    public function testRuleDoesApplyForInvariableNameWithUnderscore(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -42,12 +40,40 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     }
 
     /**
+     * Tests that the rule does apply for variable name
+     * with all caps abbreviation.
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviation(): void
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does not apply for variable name
+     * with camelcase abbreviation.
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviation(): void
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseVariableName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * Tests that the rule does apply for an invalid variable name
      * starting with a capital.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForVariableNameWithCapital()
+    public function testRuleDoesApplyForVariableNameWithCapital(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -59,10 +85,8 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a valid variable name
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidVariableName()
+    public function testRuleDoesNotApplyForValidVariableName(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -74,10 +98,8 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a statically accessed variable
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForStaticVariableAccess()
+    public function testRuleDoesNotApplyForStaticVariableAccess(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -89,10 +111,8 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply if name allowed by config
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyIfExcluded()
+    public function testRuleDoesNotApplyIfExcluded(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -105,10 +125,8 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid variable name
      * with an underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed(): void
     {
         $report = $this->getReportWithNoViolation();
 

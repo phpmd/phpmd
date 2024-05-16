@@ -1,4 +1,7 @@
 <?php
+
+namespace Invalid\Is_Namespace;
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -14,11 +17,6 @@
  * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link http://phpmd.org/
  */
-
-class testRuleDoesApplyForInparameterNameWithUnderscore
+class testRuleDoesApplyForIncorrectNamespace
 {
-    public function invalidParameterNameWithUnderscore($invalid_parameter)
-    {
-        $foo = $invalid_parameter;
-    }
 }

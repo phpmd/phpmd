@@ -3,6 +3,7 @@
 namespace PHPMD\Baseline;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Rule;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -15,34 +16,34 @@ class BaselineValidatorTest extends AbstractTestCase
     /** @var BaselineSet|MockObject */
     private $baselineSet;
 
-    /** @var RuleViolation|MockObject */
+    /** @var MockObject|RuleViolation */
     private $violation;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $rule            = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Rule')->disableOriginalConstructor()
+        $rule = $this->getMockFromBuilder(
+            $this->getMockBuilder(Rule::class)->disableOriginalConstructor()
         );
         $this->violation = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\RuleViolation')->disableOriginalConstructor()
+            $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()
         );
         $this->violation
             ->method('getRule')
             ->willReturn($rule);
         $this->baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Baseline\BaselineSet')->disableOriginalConstructor()
+            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
         );
     }
 
     /**
-     * @covers ::isBaselined
-     * @dataProvider dataProvider
      * @param bool   $contains
      * @param string $baselineMode
      * @param bool   $isBaselined
+     * @dataProvider dataProvider
+     * @covers ::isBaselined
      */
-    public function testIsBaselined($contains, $baselineMode, $isBaselined)
+    public function testIsBaselined($contains, $baselineMode, $isBaselined): void
     {
         $this->baselineSet->method('contains')->willReturn($contains);
         $validator = new BaselineValidator($this->baselineSet, $baselineMode);
@@ -52,12 +53,12 @@ class BaselineValidatorTest extends AbstractTestCase
     public static function dataProvider(): array
     {
         return [
-            'contains: true, mode: none'      => [true, BaselineMode::NONE, true],
-            'contains: false, mode: none'     => [false, BaselineMode::NONE, false],
-            'contains: true, mode: update'    => [true, BaselineMode::UPDATE, false],
-            'contains: false, mode: update'   => [false, BaselineMode::UPDATE, true],
-            'contains: true, mode: generate'  => [true, BaselineMode::GENERATE, false],
-            'contains: false, mode: generate' => [false, BaselineMode::GENERATE, false],
+            'contains: true, mode: none' => [true, BaselineMode::None, true],
+            'contains: false, mode: none' => [false, BaselineMode::None, false],
+            'contains: true, mode: update' => [true, BaselineMode::Update, false],
+            'contains: false, mode: update' => [false, BaselineMode::Update, true],
+            'contains: true, mode: generate' => [true, BaselineMode::Generate, false],
+            'contains: false, mode: generate' => [false, BaselineMode::Generate, false],
         ];
     }
 }

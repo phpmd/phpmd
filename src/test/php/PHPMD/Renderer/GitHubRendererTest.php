@@ -17,6 +17,7 @@
 
 namespace PHPMD\Renderer;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
@@ -30,10 +31,8 @@ class GitHubRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
-     *
-     * @return void
      */
-    public function testRendererCreatesExpectedNumberOfTextEntries()
+    public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -45,12 +44,12 @@ class GitHubRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator($violations)));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator($violations)));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->will(static::returnValue(new ArrayIterator([])));
 
         $renderer = new GitHubRenderer();
         $renderer->setWriter($writer);
@@ -59,20 +58,18 @@ class GitHubRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
-            "::warning file=/bar.php,line=1::Test description" . PHP_EOL .
-            "::warning file=/foo.php,line=2::Test description" . PHP_EOL .
-            "::warning file=/foo.php,line=3::Test description" . PHP_EOL,
+        static::assertEquals(
+            '::warning file=/bar.php,line=1::Test description' . PHP_EOL .
+            '::warning file=/foo.php,line=2::Test description' . PHP_EOL .
+            '::warning file=/foo.php,line=3::Test description' . PHP_EOL,
             $writer->getData()
         );
     }
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
-     *
-     * @return void
      */
-    public function testRendererAddsProcessingErrorsToTextReport()
+    public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
         $writer = new WriterStub();
@@ -84,12 +81,12 @@ class GitHubRendererTest extends AbstractTestCase
         ];
 
         $report = $this->getReportWithNoViolation();
-        $report->expects($this->once())
+        $report->expects(static::once())
             ->method('getRuleViolations')
-            ->will($this->returnValue(new \ArrayIterator([])));
-        $report->expects($this->once())
+            ->will(static::returnValue(new ArrayIterator([])));
+        $report->expects(static::once())
             ->method('getErrors')
-            ->will($this->returnValue(new \ArrayIterator($errors)));
+            ->will(static::returnValue(new ArrayIterator($errors)));
 
         $renderer = new GitHubRenderer();
         $renderer->setWriter($writer);
@@ -98,10 +95,10 @@ class GitHubRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $this->assertEquals(
-            "::error file=/tmp/foo.php::Failed for file \"/tmp/foo.php\"." . PHP_EOL .
-            "::error file=/tmp/bar.php::Failed for file \"/tmp/bar.php\"." . PHP_EOL .
-            "::error file=/tmp/baz.php::Failed for file \"/tmp/baz.php\"." . PHP_EOL,
+        static::assertEquals(
+            '::error file=/tmp/foo.php::Failed for file "/tmp/foo.php".' . PHP_EOL .
+            '::error file=/tmp/bar.php::Failed for file "/tmp/bar.php".' . PHP_EOL .
+            '::error file=/tmp/baz.php::Failed for file "/tmp/baz.php".' . PHP_EOL,
             $writer->getData()
         );
     }

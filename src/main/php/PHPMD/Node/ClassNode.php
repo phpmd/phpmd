@@ -21,21 +21,9 @@ use PDepend\Source\AST\ASTClass;
 
 /**
  * Wrapper around PHP_Depend's class objects.
+ *
+ * @extends AbstractTypeNode<ASTClass>
  */
 class ClassNode extends AbstractTypeNode
 {
-    /**
-     * The type of this class.
-     */
-    const CLAZZ = __CLASS__;
-
-    /**
-     * Constructs a new class wrapper node.
-     *
-     * @param \PDepend\Source\AST\ASTClass $node
-     */
-    public function __construct(ASTClass $node)
-    {
-        parent::__construct($node);
-    }
 }

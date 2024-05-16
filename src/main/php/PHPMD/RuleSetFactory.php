@@ -17,11 +17,13 @@
 
 namespace PHPMD;
 
+use ArrayAccess;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
+use SimpleXMLElement;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -94,14 +96,15 @@ class RuleSetFactory
      * Creates an array of rule-set instances for the given argument.
      *
      * @param string $ruleSetFileNames Comma-separated string of rule-set filenames or identifier.
-     * @return \PHPMD\RuleSet[]
+     * @return list<RuleSet>
+     * @throws RuntimeException
      */
     public function createRuleSets(string $ruleSetFileNames): array
     {
         $ruleSets = [];
 
         $ruleSetFileName = strtok($ruleSetFileNames, ',');
-        while ($ruleSetFileName !== false) {
+        while ($ruleSetFileName) {
             $ruleSets[] = $this->createSingleRuleSet($ruleSetFileName);
 
             $ruleSetFileName = strtok(',');
@@ -114,6 +117,8 @@ class RuleSetFactory
      * Creates a single rule-set instance for the given filename or identifier.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
+     * @throws RuleSetNotFoundException
+     * @throws RuntimeException
      */
     public function createSingleRuleSet(string $ruleSetOrFileName): RuleSet
     {
@@ -129,10 +134,10 @@ class RuleSetFactory
      */
     public function listAvailableRuleSets(): array
     {
-        return array_merge(
-            self::listRuleSetsInDirectory($this->location . '/rulesets/'),
-            self::listRuleSetsInDirectory(getcwd() . '/rulesets/')
-        );
+        return [
+            ...self::listRuleSetsInDirectory($this->location . '/rulesets/'),
+            ...self::listRuleSetsInDirectory(getcwd() . '/rulesets/'),
+        ];
     }
 
     /**
@@ -158,13 +163,14 @@ class RuleSetFactory
      * Lists available rule-set identifiers in given directory.
      *
      * @param string $directory The directory to scan for rule-sets.
-     * @return string[]
+     * @return list<string>
      */
     private static function listRuleSetsInDirectory(string $directory): array
     {
         $ruleSets = [];
         if (is_dir($directory)) {
-            foreach (scandir($directory) as $file) {
+            $filesPaths = scandir($directory) ?: [];
+            foreach ($filesPaths as $file) {
                 $matches = [];
                 if (is_file($directory . $file) && preg_match('/^(.*)\.xml$/', $file, $matches)) {
                     $ruleSets[] = $matches[1];
@@ -198,10 +204,13 @@ class RuleSetFactory
      * This method parses a single rule xml node. Bases on the structure of the
      * xml node this method delegates the parsing process to another method in
      * this class.
+     *
+     * @throws RuleClassNotFoundException
+     * @throws RuntimeException
      */
-    private function parseRuleNode(RuleSet $ruleSet, \SimpleXMLElement|\ArrayAccess|array $node)
+    private function parseRuleNode(RuleSet $ruleSet, SimpleXMLElement|ArrayAccess|array $node)
     {
-        $ref = (string)($node['ref'] ?? '');
+        $ref = (string) ($node['ref'] ?? '');
 
         if ($ref === '') {
             $this->parseSingleRuleNode($ruleSet, $node);
@@ -221,10 +230,12 @@ class RuleSetFactory
     /**
      * This method parses a complete rule set that was includes a reference in
      * the currently parsed ruleset.
+     *
+     * @throws RuntimeException
      */
     private function parseRuleSetReferenceNode(
         RuleSet $ruleSet,
-        \SimpleXMLElement|\ArrayAccess|array $ruleSetNode,
+        SimpleXMLElement|ArrayAccess|array $ruleSetNode,
     ): void {
         foreach ($this->parseRuleSetReference($ruleSetNode) as $rule) {
             if ($this->isIncluded($rule, $ruleSetNode)) {
@@ -236,15 +247,16 @@ class RuleSetFactory
     /**
      * Parses a rule-set xml file referenced by the given rule-set xml element.
      *
+     * @throws RuntimeException
      * @since 0.2.3
      */
-    private function parseRuleSetReference(\SimpleXMLElement|\ArrayAccess|array $ruleSetNode): RuleSet
+    private function parseRuleSetReference(SimpleXMLElement|ArrayAccess|array $ruleSetNode): RuleSet
     {
         $ruleSetFactory = new self();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
         $ruleSetFactory->setMaximumPriority($this->maximumPriority);
 
-        return $ruleSetFactory->createSingleRuleSet((string)$ruleSetNode['ref']);
+        return $ruleSetFactory->createSingleRuleSet((string) $ruleSetNode['ref']);
     }
 
     /**
@@ -253,14 +265,14 @@ class RuleSetFactory
      *
      * @since 0.2.3
      */
-    private function isIncluded(Rule $rule, \SimpleXMLElement|\ArrayAccess|array $ruleSetNode): bool
+    private function isIncluded(Rule $rule, SimpleXMLElement|ArrayAccess|array $ruleSetNode): bool
     {
         $excludes = (is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
             ?? $ruleSetNode['exclude']
             ?? [];
 
         foreach ($excludes as $exclude) {
-            $name = is_string($exclude) ? $exclude : (string)($exclude['name'] ?? '');
+            $name = is_string($exclude) ? $exclude : (string) ($exclude['name'] ?? '');
 
             if ($rule->getName() === $name) {
                 return false;
@@ -277,14 +289,14 @@ class RuleSetFactory
      * @throws RuleClassFileNotFoundException
      * @throws RuleClassNotFoundException
      */
-    private function parseSingleRuleNode(RuleSet $ruleSet, \SimpleXMLElement|\ArrayAccess|array $ruleNode): void
+    private function parseSingleRuleNode(RuleSet $ruleSet, SimpleXMLElement|ArrayAccess|array $ruleNode): void
     {
         $fileName = '';
 
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
         if (isset($ruleNode['file'])) {
-            $ruleNodeFile = (string)$ruleNode['file'];
+            $ruleNodeFile = (string) $ruleNode['file'];
 
             if (is_readable($ruleNodeFile)) {
                 $fileName = $ruleNodeFile;
@@ -293,7 +305,8 @@ class RuleSetFactory
             }
         }
 
-        $className = (string)($ruleNode['class']
+        /** @var class-string<Rule> */
+        $className = (string) ($ruleNode['class']
             ?? ($fileName === '' ? '' : pathinfo($fileName, PATHINFO_FILENAME))
         );
 
@@ -305,29 +318,28 @@ class RuleSetFactory
             $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
         }
 
-        if (class_exists($className) === false) {
-            $handle = @fopen($fileName, 'r', true);
-            if ($handle === false) {
+        if (!class_exists($className)) {
+            $handle = @fopen($fileName, 'rb', true);
+            if (!$handle) {
                 throw new RuleClassFileNotFoundException($className);
             }
             fclose($handle);
 
             include_once $fileName;
 
-            if (class_exists($className) === false) {
+            if (!class_exists($className)) {
                 throw new RuleClassNotFoundException($className);
             }
         }
 
-        /* @var $rule \PHPMD\Rule */
         $rule = new $className();
-        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', $rule->setExternalInfoUr(...));
 
         $rule->setRuleSetName($ruleSet->getName());
 
-        $this->withNonEmptyStringAtKey($ruleNode, 'since', [$rule, 'setSince']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'since', $rule->setSince(...));
 
         $this->parseRuleProperties($rule, $ruleNode);
 
@@ -337,11 +349,16 @@ class RuleSetFactory
     }
 
     /**
-     * This method parses a single rule that was included from a different rule-set.
+     * This method parses a single rule that was included from a different
+     * rule-set.
+     *
+     * @throws RuleSetNotFoundException
+     * @throws RuleByNameNotFoundException
+     * @throws RuntimeException
      */
-    private function parseRuleReferenceNode(RuleSet $ruleSet, \SimpleXMLElement|\ArrayAccess|array $ruleNode): void
+    private function parseRuleReferenceNode(RuleSet $ruleSet, SimpleXMLElement|ArrayAccess|array $ruleNode): void
     {
-        $ref = (string)$ruleNode['ref'];
+        $ref = (string) $ruleNode['ref'];
 
         [
             'file' => $fileName,
@@ -369,7 +386,7 @@ class RuleSetFactory
     }
 
     private function withNonEmptyStringAtKey(
-        \SimpleXMLElement|\ArrayAccess|array $config,
+        SimpleXMLElement|ArrayAccess|array $config,
         string $key,
         callable $setter,
     ): void {
@@ -380,7 +397,7 @@ class RuleSetFactory
         }
     }
 
-    private function parseRuleProperties(Rule $rule, \SimpleXMLElement|\ArrayAccess|array $ruleNode): void
+    private function parseRuleProperties(Rule $rule, SimpleXMLElement|ArrayAccess|array $ruleNode): void
     {
         $this->withNonEmptyStringAtKey($ruleNode, 'description', [$rule, 'setDescription']);
         $this->withNonEmptyStringAtKey($ruleNode, 'example', [$rule, 'addExample']);
@@ -393,17 +410,17 @@ class RuleSetFactory
             $this->parsePropertiesNode($rule, $ruleNode['properties']);
         }
 
-        if (!($ruleNode instanceof \SimpleXMLElement)) {
+        if (!($ruleNode instanceof SimpleXMLElement)) {
             return;
         }
 
         foreach ($ruleNode->children() as $node) {
             if ($node->getName() === 'description') {
-                $rule->setDescription((string)$node);
+                $rule->setDescription((string) $node);
             } elseif ($node->getName() === 'example') {
-                $rule->addExample((string)$node);
+                $rule->addExample((string) $node);
             } elseif ($node->getName() === 'priority') {
-                $rule->setPriority((int)$node);
+                $rule->setPriority((int) $node);
             } elseif ($node->getName() === 'properties') {
                 $this->parsePropertiesNode($rule, $node);
             }
@@ -423,14 +440,10 @@ class RuleSetFactory
      *   </properties>
      *   ...
      * </code>
-     *
-     * @param \PHPMD\Rule $rule
-     * @param \SimpleXMLElement $propertiesNode
-     * @return void
      */
-    private function parsePropertiesNode(Rule $rule, \SimpleXMLElement|array $propertiesNode)
+    private function parsePropertiesNode(Rule $rule, SimpleXMLElement|array $propertiesNode): void
     {
-        if (!($propertiesNode instanceof \SimpleXMLElement)) {
+        if (!($propertiesNode instanceof SimpleXMLElement)) {
             foreach ($propertiesNode as $name => $value) {
                 $name = trim($name);
 
@@ -451,12 +464,8 @@ class RuleSetFactory
 
     /**
      * Adds an additional property to the given <b>$rule</b> instance.
-     *
-     * @param \PHPMD\Rule $rule
-     * @param \SimpleXMLElement $node
-     * @return void
      */
-    private function addProperty(Rule $rule, \SimpleXMLElement $node)
+    private function addProperty(Rule $rule, SimpleXMLElement $node): void
     {
         $name = trim($node['name']);
         $value = trim($this->getPropertyValue($node));
@@ -471,17 +480,16 @@ class RuleSetFactory
      * and the second valid notation is a child element named <b>value</b> that
      * contains the value as character data.
      *
-     * @param \SimpleXMLElement $propertyNode
      * @return string
      * @since 0.2.5
      */
-    private function getPropertyValue(\SimpleXMLElement $propertyNode)
+    private function getPropertyValue(SimpleXMLElement $propertyNode)
     {
         if (isset($propertyNode->value)) {
-            return (string)$propertyNode->value;
+            return (string) $propertyNode->value;
         }
 
-        return (string)$propertyNode['value'];
+        return (string) $propertyNode['value'];
     }
 
     /**
@@ -490,24 +498,32 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     * @return array|null
+     * @return list<string>|null
      * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
     {
         $excludes = [];
-        foreach (array_map('trim', explode(',', $fileName)) as $ruleSetFileName) {
+        $files = array_map(trim(...), explode(',', $fileName));
+        $files = array_filter($files);
+
+        foreach ($files as $ruleSetFileName) {
             $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
 
             // Hide error messages
             $libxml = libxml_use_internal_errors(true);
+            $fileContent = file_get_contents($ruleSetFileName);
+            if ($fileContent === false) {
+                throw new RuntimeException('Unable to load ' . $ruleSetFileName);
+            }
 
-            $xml = simplexml_load_string(file_get_contents($ruleSetFileName));
-            if ($xml === false) {
+            $xml = simplexml_load_string($fileContent);
+            if (!$xml) {
                 // Reset error handling to previous setting
                 libxml_use_internal_errors($libxml);
+                $error = libxml_get_last_error();
 
-                throw new RuntimeException(trim(libxml_get_last_error()->message));
+                throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
             }
 
             foreach ($xml->children() as $node) {
@@ -538,7 +554,7 @@ class RuleSetFactory
      * Returns list of possible file paths to search against code rules
      *
      * @param string $fileName Rule set file name
-     * @return string[] Array of possible file locations
+     * @return list<string> Array of possible file locations
      */
     private function filePaths(string $fileName): array
     {

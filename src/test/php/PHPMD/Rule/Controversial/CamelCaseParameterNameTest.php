@@ -28,10 +28,8 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid parameter name
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForInparameterNameWithUnderscore()
+    public function testRuleDoesApplyForInParameterNameWithUnderscore(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -44,12 +42,42 @@ class CamelCaseParameterNameTest extends AbstractTestCase
     }
 
     /**
+     * Tests that the rule does apply for all caps abbreviation when not allowed
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviation(): void
+    {
+        $report = $this->getReportWithOneViolation();
+
+        foreach ($this->getClass()->getMethods() as $method) {
+            $rule = new CamelCaseParameterName();
+            $rule->setReport($report);
+            $rule->addProperty('camelcase-abbreviations', 'true');
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
+     * Tests that the rule does not apply for camelcase abbreviation
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviation(): void
+    {
+        $report = $this->getReportWithNoViolation();
+
+        foreach ($this->getClass()->getMethods() as $method) {
+            $rule = new CamelCaseParameterName();
+            $rule->setReport($report);
+            $rule->addProperty('camelcase-abbreviations', 'true');
+            $rule->addProperty('allow-underscore', 'false');
+            $rule->apply($method);
+        }
+    }
+
+    /**
      * Tests that the rule does apply for an invalid parameter name
      * starting with a capital.
-     *
-     * @return void
      */
-    public function testRuleDoesApplyForParameterNameWithCapital()
+    public function testRuleDoesApplyForParameterNameWithCapital(): void
     {
         $report = $this->getReportWithOneViolation();
 
@@ -63,10 +91,8 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a valid parameter name
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidParameterName()
+    public function testRuleDoesNotApplyForValidParameterName(): void
     {
         $report = $this->getReportWithNoViolation();
 
@@ -81,10 +107,8 @@ class CamelCaseParameterNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid parameter name
      * with an underscore at the beginning when it is allowed.
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyForValidParameterNameWithUnderscoreWhenAllowed()
+    public function testRuleDoesNotApplyForValidParameterNameWithUnderscoreWhenAllowed(): void
     {
         $report = $this->getReportWithNoViolation();
 

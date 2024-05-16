@@ -3,24 +3,18 @@
 namespace PHPMD\Utility;
 
 use InvalidArgumentException;
-use RuntimeException;
 
-class ArgumentsValidator
+final class ArgumentsValidator
 {
-    /** @var bool */
-    private $hasImplicitArguments;
-
-    /** @var string[] */
-    private $originalArguments;
-
-    /** @var string[] */
-    private $arguments;
-
-    public function __construct($hasImplicitArguments, $originalArguments, $arguments)
-    {
-        $this->hasImplicitArguments = $hasImplicitArguments;
-        $this->originalArguments = $originalArguments;
-        $this->arguments = $arguments;
+    /**
+     * @param string[] $originalArguments
+     * @param string[] $arguments
+     */
+    public function __construct(
+        private bool $hasImplicitArguments,
+        private array $originalArguments,
+        private array $arguments,
+    ) {
     }
 
     /**
@@ -29,11 +23,9 @@ class ArgumentsValidator
      * @param string $name
      * @param string $value
      *
-     * @return void
-     *
      * @throws InvalidArgumentException if the given $value cannot be used as a value for the argument $name
      */
-    public function validate($name, $value)
+    public function validate($name, $value): void
     {
         if (!$this->hasImplicitArguments) {
             return;

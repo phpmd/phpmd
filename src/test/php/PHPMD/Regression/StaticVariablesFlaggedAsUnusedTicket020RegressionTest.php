@@ -21,17 +21,13 @@ use PHPMD\Rule\UnusedLocalVariable;
 
 /**
  * Regression test for issue 020.
- *
- * @covers \stdClass
  */
-class StaticVariablesFlaggedAsUnusedTicket020RegressionTestCase extends AbstractRegressionTestCase
+class StaticVariablesFlaggedAsUnusedTicket020RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testRuleDoesNotApplyToAnySuperGlobalVariable
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToAnyStaticLocalVariable()
+    public function testRuleDoesNotApplyToAnyStaticLocalVariable(): void
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());

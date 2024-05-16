@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Naming;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -29,29 +31,26 @@ use PHPMD\Utility\Strings;
  * This rule checks if an interface or class name exceeds the configured length
  * excluding certain configured prefixes and suffixes
  */
-class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, TraitAware, EnumAware
+final class LongClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
     /**
      * Temporary cache of configured prefixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractPrefixes;
+    private $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractSuffixes;
+    private $subtractSuffixes;
 
     /**
      * Check if a class name exceeds the configured maximum length and emit a rule violation
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $classOrInterfaceName = $node->getName();
@@ -64,15 +63,17 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
         if ($length <= $threshold) {
             return;
         }
-        $this->addViolation($node, [$classOrInterfaceName, $threshold]);
+        $this->addViolation($node, [$classOrInterfaceName, (string) $threshold]);
     }
 
     /**
      * Gets array of prefixes from property
      *
      * @return string[]
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
-    protected function getSubtractPrefixList()
+    private function getSubtractPrefixList()
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList(
@@ -88,13 +89,14 @@ class LongClassName extends AbstractRule implements ClassAware, InterfaceAware, 
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
-    protected function getSubtractSuffixList()
+    private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList(
-                $this->getStringProperty('subtract-suffixes', ''),
-                ','
+                $this->getStringProperty('subtract-suffixes', '')
             );
         }
 

@@ -6,7 +6,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater
@@ -14,7 +14,7 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 class ResultCacheUpdaterTest extends AbstractTestCase
 {
-    /** @var ResultCacheState&MockObject */
+    /** @var MockObject&ResultCacheState */
     private $state;
 
     /** @var ResultCacheUpdater */
@@ -23,7 +23,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\Model\ResultCacheState')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
         );
 
         $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');
@@ -32,24 +32,24 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     /**
      * @covers ::update
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
-        $ruleSet    = new RuleSet();
-        $report     = $this->getReportMock();
+        $ruleSet = new RuleSet();
+        $report = $this->getReportMock();
         $violationA = $this->getRuleViolationMock('/base/path/violation/a');
         $violationB = $this->getRuleViolationMock('/base/path/violation/b');
 
-        $report->expects(self::once())->method('getRuleViolations')->willReturn([$violationA]);
-        $this->state->expects(self::once())
+        $report->expects(static::once())->method('getRuleViolations')->willReturn([$violationA]);
+        $this->state->expects(static::once())
             ->method('getRuleViolations')
             ->with('/base/path/', [$ruleSet])
             ->willReturn([$violationB]);
 
         // expect ViolationB be added to the report
-        $report->expects(self::once())->method('addRuleViolation')->with($violationB);
+        $report->expects(static::once())->method('addRuleViolation')->with($violationB);
 
         // expect ViolationA be added to the state
-        $this->state->expects(self::once())->method('addRuleViolation')->with('violation/a', $violationA);
+        $this->state->expects(static::once())->method('addRuleViolation')->with('violation/a', $violationA);
 
         $state = $this->updater->update([$ruleSet], $this->state, $report);
         static::assertSame($this->state, $state);

@@ -17,10 +17,12 @@
 
 namespace PHPMD\TextUI;
 
+use php_user_filter;
+
 /**
  * Utility to test stream related stuff
  */
-class StreamFilter extends \php_user_filter
+class StreamFilter extends php_user_filter
 {
     public static $streamHandle;
 

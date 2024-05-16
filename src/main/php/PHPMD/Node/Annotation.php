@@ -22,44 +22,30 @@ use PHPMD\Rule;
 /**
  * Simple code annotation class.
  */
-class Annotation
+final class Annotation
 {
-    /**
-     * Name of the suppress warnings annotation.
-     */
-    const SUPPRESS_ANNOTATION = 'suppressWarnings';
+    /** Name of the suppress warnings annotation. */
+    private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
-    /**
-     * The annotation name.
-     *
-     * @var string
-     */
-    private $name = null;
-
-    /**
-     * The annotation value.
-     *
-     * @var string
-     */
-    private $value = null;
+    /** The annotation value. */
+    private string $value;
 
     /**
      * Constructs a new annotation instance.
      *
-     * @param string $name
-     * @param string $value
+     * @param string $name The annotation name.
      */
-    public function __construct($name, $value)
-    {
-        $this->name = $name;
+    public function __construct(
+        private string $name,
+        string $value,
+    ) {
         $this->value = trim($value, '" ');
     }
 
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     public function suppresses(Rule $rule)
     {
@@ -73,14 +59,14 @@ class Annotation
     /**
      * Checks if this annotation suppresses the given rule.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      */
     private function isSuppressed(Rule $rule)
     {
-        if (in_array($this->value, ['PHPMD', 'PMD'])) {
+        if (in_array($this->value, ['PHPMD', 'PMD'], true)) {
             return true;
-        } elseif (preg_match(
+        }
+        if (preg_match(
             '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
             $this->value
         )) {

@@ -22,26 +22,26 @@ use InvalidArgumentException;
 /**
  * Utility class to provide string checks and manipulations
  */
-class Strings
+final class Strings
 {
     /**
      * Returns the length of the given string, excluding at most one suffix
      *
      * @param string $stringName String to calculate the length for.
-     * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
+     * @param array<int, string> $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.
      */
     public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes)
     {
-        return static::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
+        return self::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
     }
 
     /**
      * Returns the length of the given string, excluding at most one suffix
      *
      * @param string $stringName String to calculate the length for.
-     * @param array $subtractPrefixes List of prefixes to exclude from the calculated length.
-     * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
+     * @param array<int, string> $subtractPrefixes List of prefixes to exclude from the calculated length.
+     * @param array<int, string> $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.
      */
     public static function lengthWithoutPrefixesAndSuffixes(
@@ -49,13 +49,13 @@ class Strings
         array $subtractPrefixes,
         array $subtractSuffixes
     ) {
-
         $stringLength = strlen($stringName);
 
         foreach ($subtractSuffixes as $suffix) {
             $suffixLength = strlen($suffix);
             if (substr($stringName, -$suffixLength) === $suffix) {
                 $stringLength -= $suffixLength;
+
                 break;
             }
         }
@@ -64,6 +64,7 @@ class Strings
             $prefixLength = strlen($prefix);
             if (strncmp($stringName, $prefix, $prefixLength) === 0) {
                 $stringLength -= $prefixLength;
+
                 break;
             }
         }
@@ -76,20 +77,34 @@ class Strings
      *
      * @param string $listAsString The string to split.
      * @param string $separator The separator to split the string with, similar to explode.
-     * @return array The list of trimmed and filtered parts of the string.
+     * @param string $trim Extra character to be trimmed off of each value.
+     * @return array<int, string> The list of trimmed and filtered parts of the string.
      * @throws InvalidArgumentException When the separator is an empty string.
      */
-    public static function splitToList($listAsString, $separator)
+    public static function splitToList($listAsString, $separator = ',', $trim = '')
     {
         if ($separator === '') {
             throw new InvalidArgumentException("Separator can't be empty string");
         }
 
         return array_filter(
-            array_map('trim', explode($separator, $listAsString)),
-            function ($value) {
-                return $value !== '';
-            }
+            array_map(
+                static fn($value) => Strings::trim($value, $trim),
+                explode($separator, $listAsString)
+            ),
+            static fn($value) => $value !== ''
         );
+    }
+
+    /**
+     * Trim " \t\n\r\0\x0B" and specified extra characters from start and end of a string.
+     *
+     * @param string $value
+     * @param string $trim
+     * @return string
+     */
+    public static function trim($value, $trim = '')
+    {
+        return trim($value, " \t\n\r\0\x0B$trim");
     }
 }

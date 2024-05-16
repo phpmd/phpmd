@@ -17,6 +17,11 @@
 
 namespace PHPMD;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\Source\AST\ASTNode;
+
 /**
  * Base interface for a PHPMD rule.
  *
@@ -24,15 +29,11 @@ namespace PHPMD;
  */
 interface Rule
 {
-    /**
-     * The default lowest rule priority.
-     */
-    const LOWEST_PRIORITY = 5;
+    /** The default lowest rule priority. */
+    final public const LOWEST_PRIORITY = 5;
 
-    /**
-     * The default highest rule priority.
-     */
-    const HIGHEST_PRIORITY = 1;
+    /** The default highest rule priority. */
+    final public const HIGHEST_PRIORITY = 1;
 
     /**
      * Returns the name for this rule instance.
@@ -86,6 +87,8 @@ interface Rule
 
     /**
      * Returns a list of examples for this rule.
+     *
+     * @return list<string>
      */
     public function getExamples(): array;
 
@@ -133,7 +136,7 @@ interface Rule
      * Returns the value of a configured property as a boolean or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
     public function getBooleanProperty(string $name): bool;
 
@@ -141,16 +144,32 @@ interface Rule
      * Returns the value of a configured property as an integer or throws an
      * exception when no property with <b>$name</b> exists.
      *
-     * @throws \OutOfBoundsException When no property for <b>$name</b> exists.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
     public function getIntProperty(string $name): int;
+
+    /**
+     * Returns the raw string value of a configured property
+     *
+     * Throws an exception when no property with <b>$name</b> exists
+     * and no default value to fall back was given.
+     *
+     * @param string $name The name of the property, e.g. "exceptions".
+     * @param string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return string The raw string value of a configured property.
+     * @throws OutOfBoundsException When no property for <b>$name</b> exists and
+     * no non-null default value to fall back was given.
+     */
+    public function getStringProperty(string $name, ?string $default = null): string;
 
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTNode> $node The node to check upon.
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
-    public function apply(AbstractNode $node);
+    public function apply(AbstractNode $node): void;
 }

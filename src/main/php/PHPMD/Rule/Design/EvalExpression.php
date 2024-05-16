@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTEvalExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -25,18 +26,15 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of PHP's eval-expression.
  */
-class EvalExpression extends AbstractRule implements MethodAware, FunctionAware
+final class EvalExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an eval-expression
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('EvalExpression') as $eval) {
+        foreach ($node->findChildrenOfType(ASTEvalExpression::class) as $eval) {
             $this->addViolation($eval, [$node->getType(), $node->getName()]);
         }
     }

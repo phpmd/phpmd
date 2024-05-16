@@ -19,25 +19,23 @@ namespace PHPMD\Renderer;
 
 use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\Renderer\JSONRenderer;
 
 /**
  * This class will render a SARIF (Static Analysis
  * Results Interchange Format) report.
  */
-class SARIFRenderer extends JSONRenderer
+final class SARIFRenderer extends JSONRenderer
 {
     /**
      * Create report data and add renderer meta properties
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function initReportData()
     {
         $data = [
             'version' => '2.1.0',
-            '$schema' =>
-                'https://raw.githubusercontent.com/oasis-tcs/' .
+            '$schema' => 'https://raw.githubusercontent.com/oasis-tcs/' .
                 'sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
             'runs' => [
                 [
@@ -51,7 +49,7 @@ class SARIFRenderer extends JSONRenderer
                     ],
                     'originalUriBaseIds' => [
                         'WORKINGDIR' => [
-                            'uri' => static::pathToUri(getcwd()) . '/',
+                            'uri' => self::pathToUri(getcwd() ?: '') . '/',
                         ],
                     ],
                     'results' => [],
@@ -66,8 +64,9 @@ class SARIFRenderer extends JSONRenderer
      * Add violations, if any, to the report data
      *
      * @param Report $report The report with potential violations.
-     * @param array $data The report output to add the violations to.
-     * @return array The report output with violations, if any.
+     * @param array<string, array<int, array<string, array<array<mixed>>>>> $data The report output to add the
+     *                                                                            violations to.
+     * @return array<string, array<int, array<string, array<array<mixed>>>>> The report output with violations, if any.
      */
     protected function addViolationsToReport(Report $report, array $data)
     {
@@ -75,7 +74,6 @@ class SARIFRenderer extends JSONRenderer
         $results = [];
         $ruleIndices = [];
 
-        /** @var RuleViolation $violation */
         foreach ($report->getRuleViolations() as $violation) {
             $rule = $violation->getRule();
             $ruleRef = str_replace(' ', '', $rule->getRuleSetName()) . '/' . $rule->getName();
@@ -109,7 +107,7 @@ class SARIFRenderer extends JSONRenderer
                     $ruleData['help']['markdown'] =
                         $ruleData['help']['text'] .
                         "\n\n### Example\n\n```php\n" .
-                        implode("\n```\n\n```php\n", array_map('trim', $examples)) . "\n```";
+                        implode("\n```\n\n```php\n", array_map(trim(...), $examples)) . "\n```";
                 }
 
                 $since = $rule->getSince();
@@ -136,19 +134,19 @@ class SARIFRenderer extends JSONRenderer
                 'locations' => [
                     [
                         'physicalLocation' => [
-                            'artifactLocation' => static::pathToArtifactLocation($violation->getFileName()),
+                            'artifactLocation' => self::pathToArtifactLocation($violation->getFileName()),
                             'region' => [
                                 'startLine' => $violation->getBeginLine(),
                                 'endLine' => $violation->getEndLine(),
                             ],
                         ],
-                    ]
+                    ],
                 ],
             ];
         }
 
         $data['runs'][0]['tool']['driver']['rules'] = $rules;
-        $data['runs'][0]['results'] = array_merge($data['runs'][0]['results'], $results);
+        $data['runs'][0]['results'] = $results + $data['runs'][0]['results'];
 
         return $data;
     }
@@ -157,28 +155,28 @@ class SARIFRenderer extends JSONRenderer
      * Add errors, if any, to the report data
      *
      * @param Report $report The report with potential errors.
-     * @param array $data The report output to add the errors to.
-     * @return array The report output with errors, if any.
+     * @param array<string, array<int, array<string, list<array<string, mixed>>>>> $data The report output to add the
+     *                                                                                   errors to.
+     * @return array<string, array<int, array<string, list<array<string, mixed>>>>> The report output with errors, if
+     *                                                                              any.
      */
     protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
-        if ($errors) {
-            foreach ($errors as $error) {
-                $data['runs'][0]['results'][] = [
-                    'level' => 'error',
-                    'message' => [
-                        'text' => $error->getMessage(),
+        foreach ($errors as $error) {
+            $data['runs'][0]['results'][] = [
+                'level' => 'error',
+                'message' => [
+                    'text' => $error->getMessage(),
+                ],
+                'locations' => [
+                    [
+                        'physicalLocation' => [
+                            'artifactLocation' => self::pathToArtifactLocation($error->getFile()),
+                        ],
                     ],
-                    'locations' => [
-                        [
-                            'physicalLocation' => [
-                                'artifactLocation' => static::pathToArtifactLocation($error->getFile()),
-                            ],
-                        ]
-                    ],
-                ];
-            }
+                ],
+            ];
         }
 
         return $data;
@@ -190,11 +188,11 @@ class SARIFRenderer extends JSONRenderer
      * and returns the result as a SARIF `artifactLocation`
      *
      * @param string $path
-     * @return array
+     * @return array<string, string>
      */
-    protected static function pathToArtifactLocation($path)
+    private static function pathToArtifactLocation($path)
     {
-        $workingDir = getcwd();
+        $workingDir = getcwd() ?: '';
         if (substr($path, 0, strlen($workingDir)) === $workingDir) {
             // relative path
             return [
@@ -205,7 +203,7 @@ class SARIFRenderer extends JSONRenderer
 
         // absolute path with protocol
         return [
-            'uri' => static::pathToUri($path),
+            'uri' => self::pathToUri($path),
         ];
     }
 
@@ -215,7 +213,7 @@ class SARIFRenderer extends JSONRenderer
      * @param string $path
      * @return string
      */
-    protected static function pathToUri($path)
+    private static function pathToUri($path)
     {
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 

@@ -18,6 +18,7 @@
 namespace PHPMD;
 
 use Closure;
+use ErrorException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,7 +29,7 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Directory with test files.
      *
-     * @var string $filesDirectory
+     * @var string
      */
     private static $filesDirectory = null;
 
@@ -42,16 +43,39 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Temporary files created by a test.
      *
-     * @var array(string)
+     * @var list<string>
      */
     private static $tempFiles = [];
 
     /**
-     * Return to original working directory if changed.
-     *
-     * @return void
+     * This method initializes the test environment, it configures the files
+     * directory and sets the include_path for svn versions.
      */
-    protected static function returnToOriginalWorkingDirectory()
+    public static function setUpBeforeClass(): void
+    {
+        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
+
+        if (!str_contains(get_include_path(), self::$filesDirectory)) {
+            set_include_path(
+                sprintf(
+                    '%s%s%s%s%s',
+                    get_include_path(),
+                    PATH_SEPARATOR,
+                    self::$filesDirectory,
+                    PATH_SEPARATOR,
+                    realpath(__DIR__ . '/../')
+                )
+            );
+        }
+
+        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
+        date_default_timezone_set('UTC');
+    }
+
+    /**
+     * Return to original working directory if changed.
+     */
+    protected static function returnToOriginalWorkingDirectory(): void
     {
         if (self::$originalWorkingDirectory !== null) {
             chdir(self::$originalWorkingDirectory);
@@ -62,10 +86,8 @@ abstract class AbstractStaticTestCase extends TestCase
 
     /**
      * Cleanup temporary files created for the test.
-     *
-     * @return void
      */
-    protected static function cleanupTempFiles()
+    protected static function cleanupTempFiles(): void
     {
         // cleanup any open resources on temp files
         gc_collect_cycles();
@@ -97,9 +119,11 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     protected static function getValuesAsArrays($values)
     {
-        return array_map(function ($value) {
-            return [$value];
-        }, $values);
+        array_walk($values, static function ($value, $key) use (&$valuesAsArray): void {
+            $valuesAsArray[$value] = [$value];
+        });
+
+        return $valuesAsArray;
     }
 
     /**
@@ -121,9 +145,8 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
-     * @return void
      */
-    public static function assertXmlEquals($actualOutput, $expectedFileName)
+    public static function assertXmlEquals($actualOutput, $expectedFileName): void
     {
         $actual = simplexml_load_string($actualOutput);
         // Remove dynamic timestamp and duration attribute
@@ -145,7 +168,7 @@ abstract class AbstractStaticTestCase extends TestCase
 
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
-        self::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
+        static::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
     }
 
     /**
@@ -155,14 +178,12 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param string $expectedFileName File with expected JSON result.
      * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
-     *
-     * @return void
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true)
+    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true): void
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
-        if ($removeDynamicValues === true) {
+        if ($removeDynamicValues) {
             if (isset($actual['timestamp'])) {
                 $actual['timestamp'] = '';
             }
@@ -185,43 +206,15 @@ abstract class AbstractStaticTestCase extends TestCase
         $expected = str_replace('#{workingDirectory}', getcwd(), $expected);
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
-        self::assertJsonStringEqualsJsonString($expected, json_encode($actual));
-    }
-
-    /**
-     * This method initializes the test environment, it configures the files
-     * directory and sets the include_path for svn versions.
-     *
-     * @return void
-     */
-    public static function setUpBeforeClass(): void
-    {
-        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
-
-        if (false === strpos(get_include_path(), self::$filesDirectory)) {
-            set_include_path(
-                sprintf(
-                    '%s%s%s%s%s',
-                    get_include_path(),
-                    PATH_SEPARATOR,
-                    self::$filesDirectory,
-                    PATH_SEPARATOR,
-                    realpath(__DIR__ . '/../')
-                )
-            );
-        }
-
-        // Prevent timezone warnings if no default TZ is set (PHP > 5.1.0)
-        date_default_timezone_set('UTC');
+        static::assertJsonStringEqualsJsonString($expected, json_encode($actual));
     }
 
     /**
      * Changes the working directory for a single test.
      *
      * @param string $localPath The temporary working directory.
-     * @return void
      */
-    protected static function changeWorkingDirectory($localPath = '')
+    protected static function changeWorkingDirectory($localPath = ''): void
     {
         self::$originalWorkingDirectory = getcwd();
 
@@ -255,6 +248,7 @@ abstract class AbstractStaticTestCase extends TestCase
         } else {
             $filePath = tempnam(sys_get_temp_dir(), 'phpmd.');
         }
+
         return (self::$tempFiles[] = $filePath);
     }
 
@@ -262,16 +256,17 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the trace frame of the calling test case.
      *
      * @return array
-     * @throws \ErrorException
+     * @throws ErrorException
      */
     protected static function getCallingTestCase()
     {
         foreach (debug_backtrace() as $frame) {
-            if (strpos($frame['function'], 'test') === 0) {
+            if (str_starts_with($frame['function'], 'test')) {
                 return $frame;
             }
         }
-        throw new \ErrorException('Cannot locate calling test case.');
+
+        throw new ErrorException('Cannot locate calling test case.');
     }
 
     protected static function getResourceFilePathFromClassName($className, $localPath)
@@ -296,7 +291,7 @@ abstract class AbstractStaticTestCase extends TestCase
     {
         return sprintf(
             '%s/../../resources/files/%s/%s',
-            dirname(__FILE__),
+            __DIR__,
             $directory,
             $file
         );

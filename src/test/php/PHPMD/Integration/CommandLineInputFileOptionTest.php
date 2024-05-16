@@ -30,12 +30,11 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
     /**
      * testReportContainsExpectedRuleViolationWarning
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportContainsExpectedRuleViolationWarning()
+    public function testReportContainsExpectedRuleViolationWarning(): void
     {
-        self::assertStringContainsString(
+        static::assertStringContainsString(
             "Avoid unused local variables such as '\$foo'.",
             self::runCommandLine()
         );
@@ -44,12 +43,11 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
     /**
      * testReportNotContainsRuleViolationWarningForFileNotInList
      *
-     * @return void
      * @outputBuffering enabled
      */
-    public function testReportNotContainsRuleViolationWarningForFileNotInList()
+    public function testReportNotContainsRuleViolationWarningForFileNotInList(): void
     {
-        self::assertStringNotContainsString(
+        static::assertStringNotContainsString(
             "Avoid unused local variables such as '\$bar'.",
             self::runCommandLine()
         );

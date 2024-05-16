@@ -22,17 +22,13 @@ use PHPMD\Rule\UnusedLocalVariable;
 
 /**
  * Regression test for issue 007.
- *
- * @covers stdClass
  */
-class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTestCase extends AbstractRegressionTestCase
+class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
-     *
-     * @return void
      */
-    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported()
+    public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedLocalVariable();
         $rule->setReport($this->getReportWithNoViolation());
@@ -41,10 +37,8 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTestCase ex
 
     /**
      * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
-     *
-     * @return void
      */
-    public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported()
+    public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());

@@ -17,6 +17,12 @@
 
 namespace PHPMD\Rule\Naming;
 
+use InvalidArgumentException;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -29,46 +35,43 @@ use PHPMD\Utility\Strings;
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
+final class LongVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
 {
     /**
      * Temporary cache of configured prefixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractPrefixes;
+    private $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var string[]|null
      */
-    protected $subtractSuffixes;
+    private $subtractSuffixes;
 
     /**
      * Temporary map holding variables that were already processed in the
      * current context.
      *
-     * @var array(string=>boolean)
+     * @var array<string, bool>
      */
-    protected $processedVariables = [];
+    private $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
      * and checks the variable name length against the configured maximum
      * length.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $this->resetProcessed();
 
         if ($node->getType() === 'class') {
-            $fields = $node->findChildrenOfType('FieldDeclaration');
+            $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
             foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType('VariableDeclarator');
+                $declarators = $field->findChildrenOfType(ASTVariableDeclarator::class);
                 foreach ($declarators as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
@@ -77,7 +80,7 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
 
             return;
         }
-        $declarators = $node->findChildrenOfType('VariableDeclarator');
+        $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($declarators as $declarator) {
             $this->checkNodeImage($declarator);
         }
@@ -94,10 +97,11 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Checks if the variable name of the given node is smaller/equal to the
      * configured threshold.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTNode> $node
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      */
-    protected function checkNodeImage(AbstractNode $node)
+    private function checkNodeImage(AbstractNode $node): void
     {
         if ($this->isNotProcessed($node)) {
             $this->addProcessed($node);
@@ -108,11 +112,12 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Template method that performs the real node image check.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTNode> $node
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
      * @SuppressWarnings(PHPMD.LongVariable)
      */
-    protected function checkMaximumLength(AbstractNode $node)
+    private function checkMaximumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
@@ -127,48 +132,25 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
-        $this->addViolation($node, [$variableName, $threshold]);
+        $this->addViolation($node, [$variableName, (string) $threshold]);
     }
 
     /**
      * Checks if a short name is acceptable in the current context. For the
      * moment the only context is a static member.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @param AbstractNode<ASTNode> $node
+     * @return bool
      */
-    protected function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node)
     {
-        return $this->isChildOf($node, 'MemberPrimaryPrefix');
-    }
-
-    /**
-     * Checks if the given node is a direct or indirect child of a node with
-     * the given type.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @param string $type
-     * @return boolean
-     */
-    protected function isChildOf(AbstractNode $node, $type)
-    {
-        $parent = $node->getParent();
-        while (is_object($parent)) {
-            if ($parent->isInstanceOf($type)) {
-                return true;
-            }
-            $parent = $parent->getParent();
-        }
-
-        return false;
+        return $node->getParentOfType(ASTMemberPrimaryPrefix::class) !== null;
     }
 
     /**
      * Resets the already processed nodes.
-     *
-     * @return void
      */
-    protected function resetProcessed()
+    private function resetProcessed(): void
     {
         $this->processedVariables = [];
     }
@@ -176,10 +158,9 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Flags the given node as already processed.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
+     * @param AbstractNode<ASTNode> $node
      */
-    protected function addProcessed(AbstractNode $node)
+    private function addProcessed(AbstractNode $node): void
     {
         $this->processedVariables[$node->getImage()] = true;
     }
@@ -187,10 +168,10 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     /**
      * Checks if the given node was already processed.
      *
-     * @param \PHPMD\AbstractNode $node
-     * @return boolean
+     * @param AbstractNode<ASTNode> $node
+     * @return bool
      */
-    protected function isNotProcessed(AbstractNode $node)
+    private function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }
@@ -199,8 +180,10 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
-    protected function getSubtractPrefixList()
+    private function getSubtractPrefixList()
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
@@ -213,11 +196,13 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
      * Gets array of suffixes from property
      *
      * @return string[]
+     * @throws OutOfBoundsException
+     * @throws InvalidArgumentException
      */
-    protected function getSubtractSuffixList()
+    private function getSubtractSuffixList()
     {
         if ($this->subtractSuffixes === null) {
-            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''), ',');
+            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''));
         }
 
         return $this->subtractSuffixes;

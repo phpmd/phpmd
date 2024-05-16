@@ -4,51 +4,37 @@ namespace PHPMD\Cache\Model;
 
 class ResultCacheKey
 {
-    /** @var bool */
-    private $strict;
-    /** @var string|null */
-    private $baselineHash;
-    /** @var array<string, string> */
-    private $rules;
-    /** @var array<string, string> */
-    private $composer;
-    /** @var int */
-    private $phpVersion;
-
     /**
-     * @param bool                  $strict
-     * @param string|null           $baselineHash
      * @param array<string, string> $rules
      * @param array<string, string> $composer
-     * @param int                   $phpVersion
      */
-    public function __construct($strict, $baselineHash, $rules, $composer, $phpVersion)
-    {
-        $this->strict       = $strict;
-        $this->baselineHash = $baselineHash;
-        $this->rules        = $rules;
-        $this->composer     = $composer;
-        $this->phpVersion   = $phpVersion;
+    public function __construct(
+        private bool $strict,
+        private ?string $baselineHash,
+        private array $rules,
+        private array $composer,
+        private int $phpVersion
+    ) {
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {
         return [
-            'strict'       => $this->strict,
+            'strict' => $this->strict,
             'baselineHash' => $this->baselineHash,
-            'rules'        => $this->rules,
-            'composer'     => $this->composer,
-            'phpVersion'   => $this->phpVersion,
+            'rules' => $this->rules,
+            'composer' => $this->composer,
+            'phpVersion' => $this->phpVersion,
         ];
     }
 
     /**
      * @return bool
      */
-    public function isEqualTo(ResultCacheKey $other)
+    public function isEqualTo(self $other)
     {
         return $this->strict === $other->strict
             && $this->baselineHash === $other->baselineHash

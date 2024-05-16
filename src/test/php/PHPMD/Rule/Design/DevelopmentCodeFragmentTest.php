@@ -22,19 +22,16 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DevelopmentCodeFragment} class.
  *
+ * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
  * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
- *
- * @covers \PHPMD\Rule\Design\DevelopmentCodeFragment
  */
 class DevelopmentCodeFragmentTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall()
+    public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithNoViolation());
@@ -43,10 +40,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithSuspectFunctionCall()
+    public function testRuleAppliesToMethodWithSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithOneViolation());
@@ -55,10 +50,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithMultipleSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall()
+    public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
@@ -67,10 +60,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall()
+    public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithOneViolation());
@@ -79,10 +70,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall()
+    public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
@@ -91,10 +80,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall()
+    public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithNoViolation());
@@ -103,10 +90,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithSuspectFunctionCall()
+    public function testRuleAppliesToFunctionWithSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithOneViolation());
@@ -115,10 +100,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithMultipleSuspectFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall()
+    public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
@@ -127,10 +110,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall()
+    public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithOneViolation());
@@ -139,10 +120,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall()
+    public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportMock(3));
@@ -151,10 +130,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithinNamespace
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithinNamespace()
+    public function testRuleAppliesToMethodWithinNamespace(): void
     {
         $rule = $this->getRule();
         $rule->addProperty('ignore-namespaces', 'true');
@@ -164,10 +141,8 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithinNamespaceByDefault
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithinNamespaceByDefault()
+    public function testRuleNotAppliesToMethodWithinNamespaceByDefault(): void
     {
         $rule = $this->getRule();
         $rule->setReport($this->getReportWithNoViolation());

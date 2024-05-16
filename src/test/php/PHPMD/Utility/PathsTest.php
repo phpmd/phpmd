@@ -13,7 +13,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::getRelativePath
      */
-    public function testGetRelativePathShouldSubtractBasePath()
+    public function testGetRelativePathShouldSubtractBasePath(): void
     {
         static::assertSame('bar/', Paths::getRelativePath('/foo', '/foo/bar/'));
     }
@@ -21,7 +21,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::getRelativePath
      */
-    public function testGetRelativePathShouldTreatForwardAndBackwardSlashes()
+    public function testGetRelativePathShouldTreatForwardAndBackwardSlashes(): void
     {
         static::assertSame('text.txt', Paths::getRelativePath('\\foo/bar\\', '/foo\\bar/text.txt'));
     }
@@ -29,7 +29,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::getRelativePath
      */
-    public function testGetRelativePathShouldNotSubtractOnInfixPath()
+    public function testGetRelativePathShouldNotSubtractOnInfixPath(): void
     {
         static::assertSame('/foo/bar/text.txt', Paths::getRelativePath('/bar', '/foo/bar/text.txt'));
     }
@@ -37,7 +37,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::concat
      */
-    public function testConcat()
+    public function testConcat(): void
     {
         static::assertSame('pathA/pathB', Paths::concat('pathA', 'pathB'));
         static::assertSame('pathA/pathB', Paths::concat('pathA', '/pathB'));
@@ -48,7 +48,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::getRealPath
      */
-    public function testGetRealPathShouldReturnTheRealPath()
+    public function testGetRealPathShouldReturnTheRealPath(): void
     {
         $path = static::createResourceUriForTest('resource.txt');
         static::assertSame(realpath($path), Paths::getRealPath($path));
@@ -57,7 +57,7 @@ class PathsTest extends AbstractTestCase
     /**
      * @covers ::getRealPath
      */
-    public function testGetRealPathShouldThrowExceptionOnFailure()
+    public function testGetRealPathShouldThrowExceptionOnFailure(): void
     {
         self::expectExceptionObject(new RuntimeException(
             'Unable to determine the realpath for: unknown/path',

@@ -33,7 +33,7 @@ class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
         return ['foo', 'bar', 'baz'];
     }
 
-    public function apply(\PHPMD\AbstractNode $node)
+    public function apply(\PHPMD\AbstractNode $node): void
     {
 
     }

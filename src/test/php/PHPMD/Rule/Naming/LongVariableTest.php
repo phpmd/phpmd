@@ -28,10 +28,8 @@ class LongVariableTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold()
+    public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 21);
@@ -41,10 +39,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold()
+    public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
@@ -54,10 +50,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold()
+    public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
@@ -67,10 +61,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionParameterWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold()
+    public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -80,10 +72,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold()
+    public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -93,10 +83,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold()
+    public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -112,10 +100,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold()
+    public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
@@ -125,10 +111,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold()
+    public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -138,10 +122,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodParameterWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold()
+    public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 3);
@@ -157,10 +139,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold()
+    public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -170,10 +150,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToFieldWithNameLongerThanThreshold()
+    public function testRuleAppliesToFieldWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -183,10 +161,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameEqualToThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFieldWithNameEqualToThreshold()
+    public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 6);
@@ -196,10 +172,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameShorterThanThreshold
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFieldWithNameShorterThanThreshold()
+    public function testRuleNotAppliesToFieldWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 8);
@@ -209,10 +183,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
-     *
-     * @return void
      */
-    public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold()
+    public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 3);
@@ -228,10 +200,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToStaticMembersAccessedInMethod
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToStaticMembersAccessedInMethod()
+    public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 3);
@@ -241,10 +211,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariableOnlyOneTime
-     *
-     * @return void
      */
-    public function testRuleAppliesToIdenticalVariableOnlyOneTime()
+    public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -254,10 +222,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
-     *
-     * @return void
      */
-    public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes()
+    public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -274,10 +240,9 @@ class LongVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesForLongPrivateProperty
      *
-     * @return void
      * @since 1.1.0
      */
-    public function testRuleAppliesForLongPrivateProperty()
+    public function testRuleAppliesForLongPrivateProperty(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -288,10 +253,9 @@ class LongVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesForLongPrivateStaticProperty
      *
-     * @return void
      * @since 1.1.0
      */
-    public function testRuleAppliesForLongPrivateStaticProperty()
+    public function testRuleAppliesForLongPrivateStaticProperty(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 17);
@@ -301,10 +265,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted()
+    public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 10);
@@ -315,10 +277,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted
-     *
-     * @return void
      */
-    public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted()
+    public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 9);
@@ -329,10 +289,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined
-     *
-     * @return void
      */
-    public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined()
+    public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 19);
@@ -343,10 +301,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix
-     *
-     * @return void
      */
-    public function testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix()
+    public function testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 24);
@@ -357,10 +313,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameWithEmptySubtractSuffixes
-     *
-     * @return void
      */
-    public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes()
+    public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 20);
@@ -371,10 +325,8 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameFollowingHungarianNotation
-     *
-     * @return void
      */
-    public function testRuleAppliesToVariableNameFollowingHungarianNotation()
+    public function testRuleAppliesToVariableNameFollowingHungarianNotation(): void
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', 12);

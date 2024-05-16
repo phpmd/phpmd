@@ -27,13 +27,13 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
 
     /**
      * @covers ::create
-     * @covers ::getBaselineHash
      * @covers ::createRuleHashes
+     * @covers ::getBaselineHash
      * @covers ::getComposerHashes
      */
-    public function testCreate()
+    public function testCreate(): void
     {
-        $rule    = new DuplicatedArrayKey();
+        $rule = new DuplicatedArrayKey();
         $ruleSet = new RuleSet();
         $ruleSet->addRule($rule);
 
@@ -46,7 +46,7 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
 
         static::assertTrue($keyData['strict']);
         static::assertNotNull($keyData['baselineHash']);
-        static::assertSame(['PHPMD\Rule\CleanCode\DuplicatedArrayKey'], array_keys($keyData['rules']));
+        static::assertSame([DuplicatedArrayKey::class], array_keys($keyData['rules']));
         static::assertSame(['composer.json', 'composer.lock'], array_keys($keyData['composer']));
         static::assertSame(PHP_VERSION_ID, $keyData['phpVersion']);
     }

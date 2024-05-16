@@ -2,15 +2,13 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\PHPMD;
 use PHPMD\Report;
-use PHPMD\Renderer\XMLRenderer;
 
 /**
  * This class will render a Java-checkstyle compatible xml-report.
  * for use with cs2pr and others
  */
-class CheckStyleRenderer extends XMLRenderer
+final class CheckStyleRenderer extends XMLRenderer
 {
     /**
      * Temporary property that holds the name of the last rendered file, it is
@@ -23,29 +21,28 @@ class CheckStyleRenderer extends XMLRenderer
     /**
      * Get a violation severity level according to the priority
      * of the rule that's being broken
+     *
+     * @param int $priority priority of the broken rule
+     * @return string either error, warning or info
      * @see https://checkstyle.sourceforge.io/version/4.4/property_types.html#severity
      * - priority 1 maps to error level severity
      * - priority 2 maps to warning level severity
      * - priority > 2 maps to info level severity
-     *
-     * @param integer $priority priority of the broken rule
-     * @return string either error, warning or info
      */
-    protected function mapPriorityToSeverity($priority)
+    private function mapPriorityToSeverity($priority)
     {
         if ($priority > 2) {
             return 'info';
         }
 
-        return (int)$priority === 2 ? 'warning' : 'error';
+        return (int) $priority === 2 ? 'warning' : 'error';
     }
+
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
         $writer->write('<checkstyle>');
@@ -83,7 +80,7 @@ class CheckStyleRenderer extends XMLRenderer
             $this->maybeAdd('function', $violation->getFunctionName());
             $this->maybeAdd('class', $violation->getClassName());
             $this->maybeAdd('method', $violation->getMethodName());
-            //$this->_maybeAdd('variable', $violation->getVariableName());
+            // $this->_maybeAdd('variable', $violation->getVariableName());
 
             $writer->write(' />' . \PHP_EOL);
         }

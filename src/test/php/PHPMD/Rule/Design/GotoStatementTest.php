@@ -22,18 +22,15 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
  *
- * @link https://www.pivotaltracker.com/story/show/10474873
- *
  * @covers \PHPMD\Rule\Design\GotoStatement
+ * @link https://www.pivotaltracker.com/story/show/10474873
  */
 class GotoStatementTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutGotoStatement
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToMethodWithoutGotoStatement()
+    public function testRuleNotAppliesToMethodWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithNoViolation());
@@ -42,10 +39,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithGotoStatement
-     *
-     * @return void
      */
-    public function testRuleAppliesToMethodWithGotoStatement()
+    public function testRuleAppliesToMethodWithGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithOneViolation());
@@ -54,10 +49,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutGotoStatement
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToFunctionWithoutGotoStatement()
+    public function testRuleNotAppliesToFunctionWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithNoViolation());
@@ -66,10 +59,8 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithGotoStatement
-     *
-     * @return void
      */
-    public function testRuleAppliesToFunctionWithGotoStatement()
+    public function testRuleAppliesToFunctionWithGotoStatement(): void
     {
         $rule = new GotoStatement();
         $rule->setReport($this->getReportWithOneViolation());

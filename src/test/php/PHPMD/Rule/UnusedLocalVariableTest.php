@@ -22,8 +22,8 @@ use PHPMD\AbstractTestCase;
 /**
  * Test case for the unused local variable rule.
  *
- * @covers \PHPMD\Rule\UnusedLocalVariable
  * @covers \PHPMD\Rule\AbstractLocalVariable
+ * @covers \PHPMD\Rule\UnusedLocalVariable
  */
 class UnusedLocalVariableTest extends AbstractTestCase
 {
@@ -57,10 +57,9 @@ class UnusedLocalVariableTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
-     * @return void
      * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesTo($file)
+    public function testRuleAppliesTo($file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule($file), static::ONE_VIOLATION, $file);
     }
@@ -69,10 +68,9 @@ class UnusedLocalVariableTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
-     * @return void
      * @dataProvider getNotApplyingCases
      */
-    public function testRuleDoesNotApplyTo($file)
+    public function testRuleDoesNotApplyTo($file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule($file), static::NO_VIOLATION, $file);
     }

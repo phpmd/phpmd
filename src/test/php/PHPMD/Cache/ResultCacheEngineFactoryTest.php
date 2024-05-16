@@ -5,10 +5,11 @@ namespace PHPMD\Cache;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
 
 /**
@@ -20,10 +21,10 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /** @var CommandLineOptions&MockObject */
     private $options;
 
-    /** @var ResultCacheKeyFactory&MockObject */
+    /** @var MockObject&ResultCacheKeyFactory */
     private $keyFactory;
 
-    /** @var ResultCacheStateFactory&MockObject */
+    /** @var MockObject&ResultCacheStateFactory */
     private $stateFactory;
 
     /** @var ResultCacheUpdater */
@@ -31,14 +32,14 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
 
     protected function setUp(): void
     {
-        $this->options      = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\TextUI\CommandLineOptions')->disableOriginalConstructor()
+        $this->options = $this->getMockFromBuilder(
+            $this->getMockBuilder(CommandLineOptions::class)->disableOriginalConstructor()
         );
-        $this->keyFactory   = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheKeyFactory')->disableOriginalConstructor()
+        $this->keyFactory = $this->getMockFromBuilder(
+            $this->getMockBuilder(ResultCacheKeyFactory::class)->disableOriginalConstructor()
         );
         $this->stateFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder('\PHPMD\Cache\ResultCacheStateFactory')->disableOriginalConstructor()
+            $this->getMockBuilder(ResultCacheStateFactory::class)->disableOriginalConstructor()
         );
 
         $this->engineFactory = new ResultCacheEngineFactory(new NullOutput(), $this->keyFactory, $this->stateFactory);
@@ -47,10 +48,10 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateNotEnabledShouldReturnNull()
+    public function testCreateNotEnabledShouldReturnNull(): void
     {
-        $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(false);
-        $this->keyFactory->expects(self::never())->method('create');
+        $this->options->expects(static::once())->method('isCacheEnabled')->willReturn(false);
+        $this->keyFactory->expects(static::never())->method('create');
 
         static::assertNull($this->engineFactory->create('/base/path/', $this->options, []));
     }
@@ -58,19 +59,20 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateCacheMissShouldHaveNoOriginalState()
+    public function testCreateCacheMissShouldHaveNoOriginalState(): void
     {
         $ruleSetList = [new RuleSet()];
-        $cacheKeyA   = new ResultCacheKey(true, 'baseline', [], [], 123);
-        $cacheKeyB   = new ResultCacheKey(false, 'baseline', [], [], 321);
-        $state       = new ResultCacheState($cacheKeyB, []);
+        $cacheKeyA = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $cacheKeyB = new ResultCacheKey(false, 'baseline', [], [], 321);
+        $state = new ResultCacheState($cacheKeyB, []);
 
-        $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
-        $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
-        $this->options->expects(self::exactly(2))->method('cacheFile')->willReturn('/path/to/cache');
+        $this->options->expects(static::once())->method('cacheStrategy')->willReturn(ResultCacheStrategy::Content);
+        $this->options->expects(static::once())->method('isCacheEnabled')->willReturn(true);
+        $this->options->expects(static::once())->method('hasStrict')->willReturn(true);
+        $this->options->expects(static::exactly(2))->method('cacheFile')->willReturn('/path/to/cache');
 
-        $this->keyFactory->expects(self::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKeyA);
-        $this->stateFactory->expects(self::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
+        $this->keyFactory->expects(static::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKeyA);
+        $this->stateFactory->expects(static::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
 
         $engine = $this->engineFactory->create('/base/path/', $this->options, $ruleSetList);
         static::assertNotNull($engine);
@@ -80,18 +82,19 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /**
      * @covers ::create
      */
-    public function testCreateCacheHitShouldHaveOriginalState()
+    public function testCreateCacheHitShouldHaveOriginalState(): void
     {
         $ruleSetList = [new RuleSet()];
-        $cacheKey    = new ResultCacheKey(true, 'baseline', [], [], 123);
-        $state       = new ResultCacheState($cacheKey, []);
+        $cacheKey = new ResultCacheKey(true, 'baseline', [], [], 123);
+        $state = new ResultCacheState($cacheKey, []);
 
-        $this->options->expects(self::once())->method('isCacheEnabled')->willReturn(true);
-        $this->options->expects(self::once())->method('hasStrict')->willReturn(true);
-        $this->options->expects(self::exactly(3))->method('cacheFile')->willReturn('/path/to/cache');
+        $this->options->expects(static::once())->method('cacheStrategy')->willReturn(ResultCacheStrategy::Content);
+        $this->options->expects(static::once())->method('isCacheEnabled')->willReturn(true);
+        $this->options->expects(static::once())->method('hasStrict')->willReturn(true);
+        $this->options->expects(static::exactly(3))->method('cacheFile')->willReturn('/path/to/cache');
 
-        $this->keyFactory->expects(self::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKey);
-        $this->stateFactory->expects(self::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
+        $this->keyFactory->expects(static::once())->method('create')->with(true, $ruleSetList)->willReturn($cacheKey);
+        $this->stateFactory->expects(static::once())->method('fromFile')->with('/path/to/cache')->willReturn($state);
 
         $engine = $this->engineFactory->create('/base/path/', $this->options, $ruleSetList);
         static::assertNotNull($engine);

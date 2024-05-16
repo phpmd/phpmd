@@ -15,9 +15,8 @@ class TestOutput extends Output
 
     /**
      * @param string $message
-     * @return void
      */
-    protected function doWrite($message)
+    protected function doWrite($message): void
     {
         fwrite($this->stream, $message);
     }
@@ -25,6 +24,7 @@ class TestOutput extends Output
     public function getOutput()
     {
         fseek($this->stream, 0);
+
         return fread($this->stream, 1024);
     }
 }

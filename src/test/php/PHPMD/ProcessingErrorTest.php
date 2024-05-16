@@ -20,21 +20,18 @@ namespace PHPMD;
 /**
  * Test case for the processing error class.
  *
- * @since 1.2.1
- *
  * @covers \PHPMD\ProcessingError
+ * @since 1.2.1
  */
 class ProcessingErrorTest extends AbstractTestCase
 {
     /**
      * testGetMessageReturnsTheExpectedValue
-     *
-     * @return void
      */
-    public function testGetMessageReturnsTheExpectedValue()
+    public function testGetMessageReturnsTheExpectedValue(): void
     {
         $processingError = new ProcessingError('Hello World.');
-        $this->assertEquals('Hello World.', $processingError->getMessage());
+        static::assertEquals('Hello World.', $processingError->getMessage());
     }
 
     /**
@@ -42,13 +39,12 @@ class ProcessingErrorTest extends AbstractTestCase
      * a given exception message,
      *
      * @param string $message The original exception message
-     * @return void
      * @dataProvider getParserExceptionMessages
      */
-    public function testGetFileReturnsExpectedFileName($message)
+    public function testGetFileReturnsExpectedFileName($message): void
     {
         $processingError = new ProcessingError($message);
-        $this->assertEquals('/tmp/foo.php', $processingError->getFile());
+        static::assertEquals('/tmp/foo.php', $processingError->getFile());
     }
 
     /**

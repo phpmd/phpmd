@@ -17,39 +17,37 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PHPMD\AbstractNode;
 use PHPMD\Rule;
 
 /**
  * Wrapper around a PHP_Depend ast node.
+ *
+ * @template-covariant TNode of PDependNode
+ *
+ * @extends AbstractNode<TNode>
  */
-class ASTNode extends \PHPMD\AbstractNode
+final class ASTNode extends AbstractNode
 {
-    /**
-     * The source file of this node.
-     *
-     * @var string
-     */
-    private $fileName = null;
-
     /**
      * Constructs a new ast node instance.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
-     * @param string $fileName
+     * @param TNode $node
+     * @param string $fileName The source file of this node.
      */
-    public function __construct(\PDepend\Source\AST\ASTNode $node, $fileName)
-    {
+    public function __construct(
+        PDependNode $node,
+        private ?string $fileName,
+    ) {
         parent::__construct($node);
-
-        $this->fileName = $fileName;
     }
 
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @return boolean
+     * @return bool
      * @SuppressWarnings("PMD.UnusedFormalParameter")
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
@@ -93,7 +91,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {
@@ -102,10 +100,8 @@ class ASTNode extends \PHPMD\AbstractNode
 
     /**
      * Returns the name of the parent namespace.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return null;
     }
@@ -114,7 +110,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
      *
-     * @return string
+     * @return ?string
      */
     public function getFullQualifiedName()
     {

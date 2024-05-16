@@ -2,31 +2,22 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\AbstractRule;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
 
 class ResultCacheKeyFactory
 {
-    /** @var string */
-    private $basePath;
-    /** @var string|null */
-    private $baselineFile;
-
-    /**
-     * @param string      $basePath
-     * @param string|null $baselineFile
-     */
-    public function __construct($basePath, $baselineFile)
-    {
-        $this->basePath     = $basePath;
-        $this->baselineFile = $baselineFile;
+    public function __construct(
+        private string $basePath,
+        private ?string $baselineFile,
+    ) {
     }
 
     /**
      * @param bool      $strict
      * @param RuleSet[] $ruleSetList
+     * @return ResultCacheKey
      */
     public function create($strict, array $ruleSetList)
     {
@@ -51,9 +42,8 @@ class ResultCacheKeyFactory
     {
         $result = [];
         foreach ($ruleSetList as $ruleSet) {
-            /** @var AbstractRule $rule */
             foreach ($ruleSet->getRules() as $rule) {
-                $result[get_class($rule)] = hash('sha1', serialize($rule));
+                $result[$rule::class] = hash('sha1', serialize($rule));
             }
         }
 
@@ -67,11 +57,11 @@ class ResultCacheKeyFactory
      */
     private function getBaselineHash()
     {
-        if ($this->baselineFile === null || file_exists($this->baselineFile) === false) {
+        if (!$this->baselineFile || !file_exists($this->baselineFile)) {
             return null;
         }
 
-        return sha1_file($this->baselineFile);
+        return sha1_file($this->baselineFile) ?: null;
     }
 
     /**
@@ -84,7 +74,10 @@ class ResultCacheKeyFactory
         foreach (['composer.json', 'composer.lock'] as $file) {
             $filePath = Paths::concat($this->basePath, $file);
             if (file_exists($filePath)) {
-                $result[$file] = sha1_file($filePath);
+                $hash = sha1_file($filePath);
+                if ($hash) {
+                    $result[$file] = $hash;
+                }
             }
         }
 

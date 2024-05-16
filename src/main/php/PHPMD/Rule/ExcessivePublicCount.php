@@ -24,16 +24,13 @@ use PHPMD\AbstractRule;
  * This rule checks the number of public methods and fields in a given class.
  * Then it compares the number of public members against a configured threshold.
  */
-class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAware
+final class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAware
 {
     /**
      * This method checks the number of public fields and methods in the given
      * class and checks that value against a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
         $cis = $node->getMetric('cis');
@@ -45,8 +42,8 @@ class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAwar
             [
                 $node->getType(),
                 $node->getName(),
-                $cis,
-                $threshold,
+                (string) $cis,
+                (string) $threshold,
             ]
         );
     }

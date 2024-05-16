@@ -5,7 +5,7 @@ $input = __DIR__ . '/../../..';
 // The output directory
 $output = __DIR__ . '/../rst/rules';
 
-if (file_exists($input) === false) {
+if (!file_exists($input)) {
     fwrite(STDOUT, 'Cannot locate rules, skipping here...' . PHP_EOL);
     exit(1);
 }

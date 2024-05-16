@@ -17,6 +17,7 @@
 
 namespace PHPMD\Rule\Design;
 
+use PDepend\Source\AST\ASTExitExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
@@ -25,18 +26,15 @@ use PHPMD\Rule\MethodAware;
 /**
  * This rule class detects the usage of PHP's exit statement.
  */
-class ExitExpression extends AbstractRule implements MethodAware, FunctionAware
+final class ExitExpression extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an exit-expression
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('ExitExpression') as $exit) {
+        foreach ($node->findChildrenOfType(ASTExitExpression::class) as $exit) {
             $this->addViolation($exit, [$node->getType(), $node->getName()]);
         }
     }

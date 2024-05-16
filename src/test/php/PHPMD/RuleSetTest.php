@@ -36,48 +36,42 @@ class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
-     *
-     * @return void
      */
-    public function testGetRuleByNameReturnsNullWhenNoMatchingRuleExists()
+    public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists(): void
     {
+        self::expectException(RuleByNameNotFoundException::class);
+
         $ruleSet = $this->createRuleSetFixture();
-        $this->assertNull($ruleSet->getRuleByName(__FUNCTION__));
+        self::assertNull($ruleSet->getRuleByName(__FUNCTION__));
     }
 
     /**
      * testGetRuleByNameReturnsMatchingRuleInstance
-     *
-     * @return void
      */
-    public function testGetRuleByNameReturnsMatchingRuleInstance()
+    public function testGetRuleByNameReturnsMatchingRuleInstance(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
         $rule = $ruleSet->getRuleByName(__CLASS__);
 
-        $this->assertEquals(__CLASS__, $rule->getName());
+        self::assertEquals(__CLASS__, $rule->getName());
     }
 
     /**
      * testApplyNotInvokesRuleWhenSuppressAnnotationExists
-     *
-     * @return void
      */
-    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists()
+    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
         $ruleSet->apply($this->getClass());
 
-        $this->assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
+        self::assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
     }
 
     /**
      * testApplyInvokesRuleWhenStrictModeIsSet
-     *
-     * @return void
      */
-    public function testApplyInvokesRuleWhenStrictModeIsSet()
+    public function testApplyInvokesRuleWhenStrictModeIsSet(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
@@ -86,32 +80,32 @@ class RuleSetTest extends AbstractTestCase
         $class = $this->getClass();
         $ruleSet->apply($class);
 
-        $this->assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
+        self::assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
     }
 
-    public function testDescriptionCanBeChanged()
+    public function testDescriptionCanBeChanged(): void
     {
         $ruleSet = new RuleSet();
 
-        $this->assertSame('', $ruleSet->getDescription());
+        self::assertSame('', $ruleSet->getDescription());
 
         $ruleSet->setDescription('foobar');
 
-        $this->assertSame('foobar', $ruleSet->getDescription());
+        self::assertSame('foobar', $ruleSet->getDescription());
     }
 
-    public function testStrictnessCanBeEnabled()
+    public function testStrictnessCanBeEnabled(): void
     {
         $ruleSet = new RuleSet();
 
-        $this->assertFalse($ruleSet->isStrict());
+        self::assertFalse($ruleSet->isStrict());
 
         $ruleSet->setStrict();
 
-        $this->assertTrue($ruleSet->isStrict());
+        self::assertTrue($ruleSet->isStrict());
     }
 
-    public function testReport()
+    public function testReport(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->setReport(new Report());
@@ -123,11 +117,11 @@ class RuleSetTest extends AbstractTestCase
             $iteration[] = $rule;
         }
 
-        $this->assertSame([$else], $iteration);
+        self::assertSame([$else], $iteration);
         // With a node ElseExpression is not aware (since its implements only MethodAware and FunctionAware)
         $ruleSet->apply(new ClassNode(new ASTClass('FooBar')));
 
-        $this->assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        self::assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
         // With a node not registered at all
         $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
@@ -164,16 +158,14 @@ class RuleSetTest extends AbstractTestCase
         // With a node ElseExpression is aware of (thanks to FunctionAware)
         $ruleSet->apply(new FunctionNode($function));
 
-        $this->assertCount(1, $ruleSet->getReport()->getRuleViolations());
+        self::assertCount(1, $ruleSet->getReport()->getRuleViolations());
     }
 
     /**
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
-     *
-     * @return RuleSet
      */
-    private function createRuleSetFixture()
+    private function createRuleSetFixture(): RuleSet
     {
         $ruleSet = new RuleSet();
 

@@ -8,34 +8,31 @@ namespace PHPMD\Console;
  */
 interface OutputInterface
 {
-    const VERBOSITY_QUIET        = 16;
-    const VERBOSITY_NORMAL       = 32;
-    const VERBOSITY_VERBOSE      = 64;
-    const VERBOSITY_VERY_VERBOSE = 128;
-    const VERBOSITY_DEBUG        = 256;
+    final public const VERBOSITY_QUIET = 16;
+    final public const VERBOSITY_NORMAL = 32;
+    final public const VERBOSITY_VERBOSE = 64;
+    final public const VERBOSITY_VERY_VERBOSE = 128;
+    final public const VERBOSITY_DEBUG = 256;
 
     /**
      * @param string|string[] $messages
      * @param bool            $newline
      * @param int             $options A bitmask of options (one of the VERBOSITY constants),
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
-     * @return void
      */
-    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL);
+    public function write($messages, $newline = false, $options = self::VERBOSITY_NORMAL): void;
 
     /**
      * @param string|string[] $messages
      * @param int             $options A bitmask of options (one of the VERBOSITY constants),
      *                                 0 is considered the same as self::VERBOSITY_NORMAL
-     * @return void
      */
-    public function writeln($messages, $options = self::VERBOSITY_NORMAL);
+    public function writeln($messages, $options = self::VERBOSITY_NORMAL): void;
 
     /**
      * @param int $level
-     * @return void
      */
-    public function setVerbosity($level);
+    public function setVerbosity($level): void;
 
     /**
      * @return int

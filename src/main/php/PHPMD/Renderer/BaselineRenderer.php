@@ -6,20 +6,14 @@ use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 use PHPMD\Utility\Paths;
 
-class BaselineRenderer extends AbstractRenderer
+final class BaselineRenderer extends AbstractRenderer
 {
-    /** @var string */
-    private $basePath;
-
-    /**
-     * @param string $basePath
-     */
-    public function __construct($basePath)
-    {
-        $this->basePath = $basePath;
+    public function __construct(
+        private string $basePath,
+    ) {
     }
 
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         // keep track of which violations have been written, to avoid duplicates in the baseline
         $registered = [];
@@ -29,8 +23,8 @@ class BaselineRenderer extends AbstractRenderer
         $writer->write('<phpmd-baseline>' . PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            $ruleName   = get_class($violation->getRule());
-            $filePath   = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $ruleName = $violation->getRule()::class;
+            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
             $methodName = $violation->getMethodName();
 
             // deduplicate similar violations

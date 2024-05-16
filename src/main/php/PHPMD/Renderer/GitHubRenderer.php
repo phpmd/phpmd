@@ -24,16 +24,13 @@ use PHPMD\Report;
  * This renderer outputs all violations in a format that GitHub Actions
  * understands to display and highlight as problems.
  */
-class GitHubRenderer extends AbstractRenderer
+final class GitHubRenderer extends AbstractRenderer
 {
     /**
      * This method will be called when the engine has finished the source analysis
      * phase.
-     *
-     * @param \PHPMD\Report $report
-     * @return void
      */
-    public function renderReport(Report $report)
+    public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
 
@@ -41,7 +38,7 @@ class GitHubRenderer extends AbstractRenderer
             $writer->write('::warning file=');
             $writer->write($violation->getFileName());
             $writer->write(',line=');
-            $writer->write($violation->getBeginLine());
+            $writer->write((string) $violation->getBeginLine());
             $writer->write('::');
             $writer->write($violation->getDescription());
             $writer->write(PHP_EOL);

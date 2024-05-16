@@ -25,57 +25,32 @@ use PHPMD\Node\NodeInfo;
  */
 class RuleViolation
 {
-    /**
-     * The rule that causes this violation.
-     *
-     * @var \PHPMD\Rule
-     */
-    private $rule;
-
-    /**
-     * The AST Node information for this rule violation.
-     *
-     * @var NodeInfo
-     */
-    private $nodeInfo;
-
-    /**
-     * The description/message text that describes the violation.
-     *
-     * @var string
-     */
-    private $description;
+    /** The description/message text that describes the violation. */
+    private string $description;
 
     /**
      * The arguments for the description/message text or <b>null</b>
      * when the arguments are unknown.
      *
-     * @var array|null
+     * @var array<int, string>|null
      */
     private $args = null;
 
     /**
-     * The raw metric value which caused this rule violation.
-     *
-     * @var mixed
-     */
-    private $metric;
-
-    /**
      * Constructs a new rule violation instance.
      *
-     * @param \PHPMD\Rule $rule
-     * @param NodeInfo $nodeInfo
-     * @param string|array $violationMessage
-     * @param mixed $metric
+     * @param Rule $rule The rule that causes this violation.
+     * @param NodeInfo $nodeInfo The AST Node information for this rule violation.
+     * @param array<string, mixed>|string $violationMessage
+     * @param ?numeric $metric The raw metric value which caused this rule violation.
      */
-    public function __construct(Rule $rule, NodeInfo $nodeInfo, $violationMessage, $metric = null)
-    {
-        $this->rule = $rule;
-        $this->metric = $metric;
-        $this->nodeInfo = $nodeInfo;
-
-        if (is_array($violationMessage) === true) {
+    public function __construct(
+        private Rule $rule,
+        private NodeInfo $nodeInfo,
+        array|string $violationMessage,
+        private mixed $metric = null,
+    ) {
+        if (is_array($violationMessage)) {
             $search = [];
             $replace = [];
             foreach ($violationMessage['args'] as $index => $value) {
@@ -93,7 +68,7 @@ class RuleViolation
     /**
      * Returns the rule that causes this violation.
      *
-     * @return \PHPMD\Rule
+     * @return Rule
      */
     public function getRule()
     {
@@ -114,7 +89,7 @@ class RuleViolation
      * Returns the arguments for the description/message text or <b>null</b>
      * when the arguments are unknown.
      *
-     * @return array|null
+     * @return array<int, string>|null
      */
     public function getArgs()
     {
@@ -144,7 +119,7 @@ class RuleViolation
     /**
      * Returns the first line of the node that causes this rule violation.
      *
-     * @return integer
+     * @return int
      */
     public function getBeginLine()
     {
@@ -154,7 +129,7 @@ class RuleViolation
     /**
      * Returns the last line of the node that causes this rule violation.
      *
-     * @return integer
+     * @return int
      */
     public function getEndLine()
     {
@@ -163,10 +138,8 @@ class RuleViolation
 
     /**
      * Returns the name of the package that contains this violation.
-     *
-     * @return string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->nodeInfo->namespaceName;
     }

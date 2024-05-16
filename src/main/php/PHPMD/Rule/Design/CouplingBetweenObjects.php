@@ -26,21 +26,18 @@ use PHPMD\Rule\ClassAware;
  *
  * @since 1.1.0
  */
-class CouplingBetweenObjects extends AbstractRule implements ClassAware
+final class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {
     /**
      * This method should implement the violation analysis algorithm of concrete
      * rule implementations. All extending classes must implement this method.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $cbo = $node->getMetric('cbo');
         $threshold = $this->getIntProperty('maximum');
         if ($cbo >= $threshold) {
-            $this->addViolation($node, [$node->getName(), $cbo, $threshold]);
+            $this->addViolation($node, [$node->getName(), (string) $cbo, (string) $threshold]);
         }
     }
 }

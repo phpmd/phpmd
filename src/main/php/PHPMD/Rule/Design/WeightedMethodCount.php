@@ -27,22 +27,19 @@ use PHPMD\Rule\ClassAware;
  *
  * @since 0.2.5
  */
-class WeightedMethodCount extends AbstractRule implements ClassAware
+final class WeightedMethodCount extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the weighted method count for the given class against
      * a configured threshold.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');
         $actual = $node->getMetric('wmc');
 
         if ($actual >= $threshold) {
-            $this->addViolation($node, [$node->getName(), $actual, $threshold]);
+            $this->addViolation($node, [$node->getName(), (string) $actual, (string) $threshold]);
         }
     }
 }

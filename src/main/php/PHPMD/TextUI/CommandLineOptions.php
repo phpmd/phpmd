@@ -18,6 +18,7 @@
 namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
+use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
@@ -35,6 +36,8 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 use PHPMD\Utility\ArgumentsValidator;
+use TypeError;
+use ValueError;
 
 /**
  * This is a helper class that collects the specified cli arguments and puts them
@@ -44,87 +47,85 @@ use PHPMD\Utility\ArgumentsValidator;
  */
 class CommandLineOptions
 {
-    /**
-     * Error code for invalid input
-     */
-    const INPUT_ERROR = 23;
+    /** Error code for invalid input */
+    private const INPUT_ERROR = 23;
 
     /**
      * The minimum rule priority.
      *
-     * @var integer
+     * @var int
      */
-    protected $minimumPriority = Rule::LOWEST_PRIORITY;
+    private $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /**
      * The maximum rule priority.
      *
-     * @var integer
+     * @var int
      */
-    protected $maximumPriority = Rule::HIGHEST_PRIORITY;
+    private $maximumPriority = Rule::HIGHEST_PRIORITY;
 
     /**
      * A php source code filename or directory.
      *
      * @var string
      */
-    protected $inputPath;
+    private $inputPath;
 
     /**
      * The specified report format.
      *
-     * @var string
+     * @var ?class-string<AbstractRenderer>
      */
-    protected $reportFormat;
+    private $reportFormat;
 
     /**
      * An optional filename for the generated report.
      *
      * @var string
      */
-    protected $reportFile;
+    private $reportFile;
 
     /**
      * An optional filename to collect errors.
      *
      * @var string
      */
-    protected $errorFile;
+    private $errorFile;
 
     /**
      * Additional report files.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $reportFiles = [];
+    private $reportFiles = [];
 
     /**
      * List of deprecations.
      *
-     * @var array
+     * @var list<string>
      */
-    protected $deprecations = [];
+    private $deprecations = [];
 
     /**
      * A ruleset filename or a comma-separated string of ruleset filenames.
      *
      * @var string
      */
-    protected $ruleSets;
+    private $ruleSets;
 
     /**
      * File name of a PHPUnit code coverage report.
      *
      * @var string
      */
-    protected $coverageReport;
+    private $coverageReport;
 
     /**
      * A string of comma-separated extensions for valid php source code filenames.
      *
      * @var string
      */
-    protected $extensions;
+    private $extensions;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
@@ -133,106 +134,96 @@ class CommandLineOptions
      *
      * @var string
      */
-    protected $ignore;
+    private $ignore;
 
     /**
      * Should the shell show the current phpmd version?
      *
-     * @var boolean
+     * @var bool
      */
-    protected $version = false;
+    private $version = false;
 
     /**
      * Should PHPMD run in strict mode?
      *
-     * @var boolean
+     * @var bool
      * @since 1.2.0
      */
-    protected $strict = false;
+    private $strict = false;
 
     /** @var int */
-    protected $verbosity = OutputInterface::VERBOSITY_NORMAL;
+    private $verbosity = OutputInterface::VERBOSITY_NORMAL;
 
     /**
      * Should PHPMD exit without error code even if error is found?
      *
-     * @var boolean
+     * @var bool
      * @since 2.10.0
      */
-    protected $ignoreErrorsOnExit = false;
+    private $ignoreErrorsOnExit = false;
 
     /**
      * Should PHPMD exit without error code even if violation is found?
      *
-     * @var boolean
+     * @var bool
      */
-    protected $ignoreViolationsOnExit = false;
+    private $ignoreViolationsOnExit = false;
 
-    /**
-     * List of available rule-sets.
-     *
-     * @var array(string)
-     */
-    protected $availableRuleSets = [];
-
-    /**
-     * Should PHPMD baseline the existing violations and write them to the $baselineFile
-     * @var string allowed modes: NONE, GENERATE or UPDATE
-     */
-    protected $generateBaseline = BaselineMode::NONE;
+    /** Should PHPMD baseline the existing violations and write them to the $baselineFile */
+    private BaselineMode $generateBaseline = BaselineMode::None;
 
     /**
      * The baseline source file to read the baseline violations from.
      * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
      * @var string|null
      */
-    protected $baselineFile;
+    private $baselineFile;
 
     /**
      * Should PHPMD read or write the result cache state from the cache file
      * @var bool
      */
-    protected $cacheEnabled = false;
+    private $cacheEnabled = false;
 
     /**
      * If set the path to read and write the result cache state from and to.
      * @var string|null
      */
-    protected $cacheFile;
+    private $cacheFile;
 
-    /**
-     * If set determine the cache strategy. Either `content` or `timestamp`. Defaults to `content`.
-     * @var string|null
-     */
-    protected $cacheStrategy;
+    /** Determine the cache strategy. */
+    private ResultCacheStrategy $cacheStrategy = ResultCacheStrategy::Content;
 
     /**
      * Either the output should be colored.
      *
      * @var bool
      */
-    protected $colored = false;
+    private $colored = false;
 
     /**
      * Specify how many extra lines are added to a code snippet
      * @var int|null
      */
-    protected $extraLineInExcerpt;
+    private $extraLineInExcerpt;
 
     /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
-     * @param string[] $availableRuleSets
+     * @param array<int, string> $availableRuleSets List of available rule-sets.
      * @throws InvalidArgumentException
+     * @throws ValueError
+     * @throws TypeError
      */
-    public function __construct(array $args, array $availableRuleSets = [])
-    {
+    public function __construct(
+        array $args,
+        private array $availableRuleSets = [],
+    ) {
         // Remove current file name
         array_shift($args);
 
         $originalArguments = $args;
-        $this->availableRuleSets = $availableRuleSets;
 
         $arguments = [];
         $listenOptions = true;
@@ -251,107 +242,159 @@ class CommandLineOptions
                 case '--':
                     $this->refuseValue($equalChunk);
                     $listenOptions = false;
+
                     break;
+
                 case '--verbose':
                 case '-v':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
+
                     break;
+
                 case '-vv':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
+
                     break;
+
                 case '-vvv':
                     $this->refuseValue($equalChunk);
                     $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
+
                     break;
+
                 case '--min-priority':
                 case '--minimum-priority':
                 case '--minimumpriority':
-                    $this->minimumPriority = (int)$this->readValue($equalChunk, $args);
+                    $this->minimumPriority = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--max-priority':
                 case '--maximum-priority':
                 case '--maximumpriority':
-                    $this->maximumPriority = (int)$this->readValue($equalChunk, $args);
+                    $this->maximumPriority = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--report-file':
                 case '--reportfile':
                     $this->reportFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--error-file':
                 case '--errorfile':
                     $this->errorFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--input-file':
                 case '--inputfile':
                     array_unshift($arguments, $this->readInputFile($this->readValue($equalChunk, $args)));
+
                     break;
+
                 case '--coverage':
                     $this->coverageReport = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
-                    /* Deprecated: We use the suffixes option now */
+                    // Deprecated: We use the suffixes option now
                     $this->extensions = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--suffixes':
                     $this->extensions = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
-                    /* Deprecated: We use the exclude option now */
+                    // Deprecated: We use the exclude option now
                     $this->ignore = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--exclude':
                     $this->ignore = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--color':
                     $this->refuseValue($equalChunk);
                     $this->colored = true;
+
                     break;
+
                 case '--version':
                     $this->refuseValue($equalChunk);
                     $this->version = true;
 
                     return;
+
                 case '--strict':
                     $this->refuseValue($equalChunk);
                     $this->strict = true;
+
                     break;
+
                 case '--not-strict':
                     $this->refuseValue($equalChunk);
                     $this->strict = false;
+
                     break;
+
                 case '--generate-baseline':
                     $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::GENERATE;
+                    $this->generateBaseline = BaselineMode::Generate;
+
                     break;
+
                 case '--update-baseline':
                     $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::UPDATE;
+                    $this->generateBaseline = BaselineMode::Update;
+
                     break;
+
                 case '--baseline-file':
                     $this->baselineFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--cache':
                     $this->refuseValue($equalChunk);
                     $this->cacheEnabled = true;
+
                     break;
+
                 case '--cache-file':
                     $this->cacheFile = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--cache-strategy':
-                    $this->cacheStrategy = $this->readValue($equalChunk, $args);
+                    $strategy = $this->readValue($equalChunk, $args);
+                    $this->cacheStrategy = ResultCacheStrategy::from($strategy);
+
                     break;
+
                 case '--ignore-errors-on-exit':
                     $this->refuseValue($equalChunk);
                     $this->ignoreErrorsOnExit = true;
+
                     break;
+
                 case '--ignore-violations-on-exit':
                     $this->refuseValue($equalChunk);
                     $this->ignoreViolationsOnExit = true;
+
                     break;
+
                 case '--reportfile-checkstyle':
                 case '--reportfile-github':
                 case '--reportfile-gitlab':
@@ -362,13 +405,18 @@ class CommandLineOptions
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
                     $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
+
                     break;
+
                 case '--extra-line-in-excerpt':
-                    $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
+                    $this->extraLineInExcerpt = (int) $this->readValue($equalChunk, $args);
+
                     break;
+
                 default:
                     $hasImplicitArguments = true;
                     $arguments[] = $arg;
+
                     break;
             }
         }
@@ -382,11 +430,11 @@ class CommandLineOptions
 
         $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
 
-        $ruleSets = (string)array_pop($arguments);
+        $ruleSets = (string) array_pop($arguments);
         $this->ruleSets = $ruleSets === 'all' ? InternalRuleSet::getNamesConcatenated() : $ruleSets;
         $validator->validate('ruleset', $this->ruleSets);
 
-        $this->reportFormat = (string)array_pop($arguments);
+        $this->reportFormat = array_pop($arguments);
         $validator->validate('report format', $this->reportFormat);
 
         $this->inputPath = implode(',', $arguments);
@@ -426,7 +474,7 @@ class CommandLineOptions
      * Returns the output filename for a generated report or <b>null</b> when
      * the report should be displayed in STDOUT.
      *
-     * @return string
+     * @return string|null
      */
     public function getReportFile()
     {
@@ -437,7 +485,7 @@ class CommandLineOptions
      * Returns the output filename for the errors or <b>null</b> when
      * the report should be displayed in STDERR.
      *
-     * @return string
+     * @return string|null
      */
     public function getErrorFile()
     {
@@ -458,7 +506,7 @@ class CommandLineOptions
      * Returns a hash with report files specified for different renderers. The
      * key represents the report format and the value the report file location.
      *
-     * @return array
+     * @return array<string, string|null>
      */
     public function getReportFiles()
     {
@@ -478,7 +526,7 @@ class CommandLineOptions
     /**
      * Returns the minimum rule priority.
      *
-     * @return integer
+     * @return int
      */
     public function getMinimumPriority()
     {
@@ -488,7 +536,7 @@ class CommandLineOptions
     /**
      * Returns the maximum rule priority.
      *
-     * @return integer
+     * @return int
      */
     public function getMaximumPriority()
     {
@@ -499,7 +547,7 @@ class CommandLineOptions
      * Returns the file name of a supplied code coverage report or <b>NULL</b>
      * if the user has not supplied the --coverage option.
      *
-     * @return string
+     * @return string|null
      */
     public function getCoverageReport()
     {
@@ -510,7 +558,7 @@ class CommandLineOptions
      * Returns a string of comma-separated extensions for valid php source code
      * filenames or <b>null</b> when this argument was not set.
      *
-     * @return string
+     * @return string|null
      */
     public function getExtensions()
     {
@@ -521,7 +569,7 @@ class CommandLineOptions
      * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
      *
-     * @return string
+     * @return string|null
      */
     public function getIgnore()
     {
@@ -531,7 +579,7 @@ class CommandLineOptions
     /**
      * Was the <b>--version</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      */
     public function hasVersion()
     {
@@ -541,7 +589,7 @@ class CommandLineOptions
     /**
      * Was the <b>--strict</b> option passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      * @since 1.2.0
      */
     public function hasStrict()
@@ -559,10 +607,8 @@ class CommandLineOptions
 
     /**
      * Should the current violations be baselined
-     *
-     * @return string
      */
-    public function generateBaseline()
+    public function generateBaseline(): BaselineMode
     {
         return $this->generateBaseline;
     }
@@ -596,26 +642,17 @@ class CommandLineOptions
     }
 
     /**
-     * The caching strategy to determine if a file should be (re)inspected. Either
-     * `content` or last modified `timestamp` based.
-     *
-     * @return string
+     * The caching strategy to determine if a file should be (re)inspected.
      */
-    public function cacheStrategy()
+    public function cacheStrategy(): ResultCacheStrategy
     {
-        switch ($this->cacheStrategy) {
-            case ResultCacheStrategy::CONTENT:
-            case ResultCacheStrategy::TIMESTAMP:
-                return $this->cacheStrategy;
-            default:
-                return ResultCacheStrategy::CONTENT;
-        }
+        return $this->cacheStrategy;
     }
 
     /**
      * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      * @since 2.10.0
      */
     public function ignoreErrorsOnExit()
@@ -626,7 +663,7 @@ class CommandLineOptions
     /**
      * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
      *
-     * @return boolean
+     * @return bool
      */
     public function ignoreViolationsOnExit()
     {
@@ -642,6 +679,7 @@ class CommandLineOptions
     {
         return $this->extraLineInExcerpt;
     }
+
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
@@ -655,7 +693,7 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
     public function createRenderer($reportFormat = null)
@@ -675,116 +713,106 @@ class CommandLineOptions
 
     /**
      * @param string $reportFormat
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    protected function createRendererWithoutOptions($reportFormat = null)
+    private function createRendererWithoutOptions($reportFormat = null)
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
-        switch ($reportFormat) {
-            case 'ansi':
-                return $this->createAnsiRenderer();
-            case 'checkstyle':
-                return $this->createCheckStyleRenderer();
-            case 'gitlab':
-                return $this->createGitLabRenderer();
-            case 'github':
-                return $this->createGitHubRenderer();
-            case 'html':
-                return $this->createHtmlRenderer();
-            case 'json':
-                return $this->createJsonRenderer();
-            case 'sarif':
-                return $this->createSarifRenderer();
-            case 'text':
-                return $this->createTextRenderer();
-            case 'xml':
-                return $this->createXmlRenderer();
-            default:
-                return $this->createCustomRenderer();
-        }
+        return match ($reportFormat) {
+            'ansi' => $this->createAnsiRenderer(),
+            'checkstyle' => $this->createCheckStyleRenderer(),
+            'gitlab' => $this->createGitLabRenderer(),
+            'github' => $this->createGitHubRenderer(),
+            'html' => $this->createHtmlRenderer(),
+            'json' => $this->createJsonRenderer(),
+            'sarif' => $this->createSarifRenderer(),
+            'text' => $this->createTextRenderer(),
+            'xml' => $this->createXmlRenderer(),
+            default => $this->createCustomRenderer(),
+        };
     }
 
     /**
-     * @return \PHPMD\Renderer\XMLRenderer
+     * @return XMLRenderer
      */
-    protected function createXmlRenderer()
+    private function createXmlRenderer()
     {
         return new XMLRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\TextRenderer
+     * @return TextRenderer
      */
-    protected function createTextRenderer()
+    private function createTextRenderer()
     {
         return new TextRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\AnsiRenderer
+     * @return AnsiRenderer
      */
-    protected function createAnsiRenderer()
+    private function createAnsiRenderer()
     {
         return new AnsiRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\GitLabRenderer
+     * @return GitLabRenderer
      */
-    protected function createGitLabRenderer()
+    private function createGitLabRenderer()
     {
         return new GitLabRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\GitHubRenderer
+     * @return GitHubRenderer
      */
-    protected function createGitHubRenderer()
+    private function createGitHubRenderer()
     {
         return new GitHubRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\HTMLRenderer
+     * @return HTMLRenderer
      */
-    protected function createHtmlRenderer()
+    private function createHtmlRenderer()
     {
         return new HTMLRenderer($this->extraLineInExcerpt);
     }
 
     /**
-     * @return \PHPMD\Renderer\JSONRenderer
+     * @return JSONRenderer
      */
-    protected function createJsonRenderer()
+    private function createJsonRenderer()
     {
         return new JSONRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\CheckStyleRenderer
+     * @return CheckStyleRenderer
      */
-    protected function createCheckStyleRenderer()
+    private function createCheckStyleRenderer()
     {
         return new CheckStyleRenderer();
     }
 
     /**
-     * @return \PHPMD\Renderer\SARIFRenderer
+     * @return SARIFRenderer
      */
-    protected function createSarifRenderer()
+    private function createSarifRenderer()
     {
         return new SARIFRenderer();
     }
 
     /**
-     * @return \PHPMD\AbstractRenderer
+     * @return AbstractRenderer
      * @throws InvalidArgumentException
      */
-    protected function createCustomRenderer()
+    private function createCustomRenderer()
     {
-        if ('' === $this->reportFormat) {
+        if (!$this->reportFormat) {
             throw new InvalidArgumentException(
                 'Can\'t create report with empty format.',
                 self::INPUT_ERROR
@@ -798,8 +826,8 @@ class CommandLineOptions
         // Try to load a custom renderer
         $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
 
-        $fileHandle = @fopen($fileName, 'r', true);
-        if (is_resource($fileHandle) === false) {
+        $fileHandle = @fopen($fileName, 'rb', true);
+        if (!is_resource($fileHandle)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Can\'t find the custom report class: %s',
@@ -819,6 +847,7 @@ class CommandLineOptions
      * Returns usage information for the PHPMD command line interface.
      *
      * @return string
+     * @throws InvalidArgumentException
      */
     public function usage()
     {
@@ -877,13 +906,19 @@ class CommandLineOptions
      * Get a list of available renderers
      *
      * @return string|null The list of renderers found separated by comma, or null if none.
+     * @throws InvalidArgumentException
      */
-    protected function getListOfAvailableRenderers()
+    private function getListOfAvailableRenderers()
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers            = [];
+        $renderers = [];
 
-        foreach (scandir($renderersDirPathName) as $rendererFileName) {
+        $filesPaths = scandir($renderersDirPathName);
+        if ($filesPaths === false) {
+            throw new InvalidArgumentException("Unable to access directory: '{$renderersDirPathName}'.");
+        }
+
+        foreach ($filesPaths as $rendererFileName) {
             $rendererName = [];
             if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
                 $renderers[] = strtolower($rendererName[1]);
@@ -900,9 +935,8 @@ class CommandLineOptions
      *
      * @param string $deprecatedName
      * @param string $newName
-     * @return void
      */
-    protected function logDeprecated($deprecatedName, $newName)
+    private function logDeprecated($deprecatedName, $newName): void
     {
         $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
@@ -922,12 +956,14 @@ class CommandLineOptions
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    protected function readInputFile($inputFile)
+    private function readInputFile($inputFile)
     {
-        if (file_exists($inputFile)) {
-            return implode(',', array_map('trim', file($inputFile)));
+        $content = file($inputFile);
+        if ($content === false) {
+            throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
-        throw new InvalidArgumentException("Input file '{$inputFile}' not exists.");
+
+        return implode(',', array_map(trim(...), $content));
     }
 
     /**
@@ -937,7 +973,7 @@ class CommandLineOptions
      *
      * @throws InvalidArgumentException if a boolean option has a value (is followed by equal)
      */
-    private function refuseValue(array $equalChunk)
+    private function refuseValue(array $equalChunk): void
     {
         if (count($equalChunk) > 1) {
             throw new InvalidArgumentException($equalChunk[0] . ' option does not accept a value');

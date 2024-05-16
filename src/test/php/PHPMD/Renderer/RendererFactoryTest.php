@@ -13,7 +13,7 @@ class RendererFactoryTest extends AbstractTestCase
     /**
      * @covers ::createBaselineRenderer
      */
-    public function testCreateBaselineRendererSuccessfully()
+    public function testCreateBaselineRendererSuccessfully(): void
     {
         $writer = new StreamWriter(tmpfile());
         $renderer = RendererFactory::createBaselineRenderer($writer);

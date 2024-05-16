@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Design;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTFunctionPostfix;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -30,27 +32,24 @@ use PHPMD\Rule\MethodAware;
  * @link https://github.com/phpmd/phpmd/issues/265
  * @since 2.3.0
  */
-class DevelopmentCodeFragment extends AbstractRule implements MethodAware, FunctionAware
+final class DevelopmentCodeFragment extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * This method checks if a given function or method contains an eval-expression
      * and emits a rule violation when it exists.
-     *
-     * @param \PHPMD\AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         $ignoreNS = $this->getBooleanProperty('ignore-namespaces');
         $namespace = $node->getNamespaceName();
-        foreach ($node->findChildrenOfType('FunctionPostfix') as $postfix) {
+        foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $postfix) {
             $fragment = $postfix->getImage();
             if ($ignoreNS) {
-                $fragment = str_replace("{$namespace}\\", "", $fragment);
+                $fragment = str_replace("{$namespace}\\", '', $fragment);
             }
             $fragment = strtolower($fragment);
-            $fragment = trim($fragment, "\\");
-            if (false === in_array($fragment, $this->getSuspectImages())) {
+            $fragment = trim($fragment, '\\');
+            if (!in_array($fragment, $this->getSuspectImages(), true)) {
                 continue;
             }
 
@@ -67,14 +66,15 @@ class DevelopmentCodeFragment extends AbstractRule implements MethodAware, Funct
      * Returns an array with function images that are normally only used during
      * development.
      *
-     * @return array
+     * @return list<string>
+     * @throws OutOfBoundsException
      */
-    protected function getSuspectImages()
+    private function getSuspectImages()
     {
         return array_map(
             'strtolower',
             array_map(
-                'trim',
+                trim(...),
                 explode(
                     ',',
                     $this->getStringProperty('unwanted-functions')

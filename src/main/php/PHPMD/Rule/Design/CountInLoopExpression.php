@@ -17,16 +17,23 @@
 
 namespace PHPMD\Rule\Design;
 
-use PDepend\Source\AST\AbstractASTNode;
+use InvalidArgumentException;
+use PDepend\Source\AST\ASTDoWhileStatement;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTForStatement;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTStatement;
+use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\EnumAware;
 use PHPMD\Rule\TraitAware;
+use RuntimeException;
 
 /**
  * Count In Loop Expression Rule
@@ -40,37 +47,38 @@ use PHPMD\Rule\TraitAware;
  * - do-while() loops
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAware, EnumAware
+final class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
 {
     /**
      * List of functions to search against
      *
-     * @var array
+     * @var list<string>
      */
-    protected $unwantedFunctions = ['count', 'sizeof'];
+    private $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
-     * @var array
+     * @var array<string, bool>
      */
-    protected $processedFunctions = [];
+    private $processedFunctions = [];
 
     /**
      * Functions in classes tends to be name-spaced
      *
      * @var string
      */
-    protected $currentNamespace = '';
+    private $currentNamespace = '';
 
     /**
      * Gets a list of loops in a node and iterates over them
      *
-     * @param AbstractNode $node
-     * @return void
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
         if ($node instanceof ClassNode || $node instanceof TraitNode || $node instanceof EnumNode) {
             $this->applyOnClassMethods($node);
@@ -79,13 +87,12 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
         }
 
         $this->currentNamespace = $node->getNamespaceName() . '\\';
-        $loops = array_merge(
-            $node->findChildrenOfType('ForStatement'),
-            $node->findChildrenOfType('WhileStatement'),
-            $node->findChildrenOfType('DoWhileStatement')
-        );
+        $loops = [
+            ...$node->findChildrenOfType(ASTForStatement::class),
+            ...$node->findChildrenOfType(ASTWhileStatement::class),
+            ...$node->findChildrenOfType(ASTDoWhileStatement::class),
+        ];
 
-        /** @var AbstractNode $loop */
         foreach ($loops as $loop) {
             $this->findViolations($loop);
         }
@@ -95,16 +102,16 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * Scans for expressions and count() or sizeof() functions inside,
      * if found, triggers a violation
      *
-     * @param AbstractNode $loop Loop statement to look against
+     * @param AbstractNode<ASTStatement> $loop Loop statement to look against
      */
-    protected function findViolations(AbstractNode $loop)
+    private function findViolations(AbstractNode $loop): void
     {
-        foreach ($loop->findChildrenOfType('Expression') as $expression) {
+        foreach ($loop->findChildrenOfType(ASTExpression::class) as $expression) {
             if ($this->isDirectChild($loop, $expression)) {
                 continue;
             }
 
-            foreach ($expression->findChildrenOfType('FunctionPostfix') as $function) {
+            foreach ($expression->findChildrenOfType(ASTFunctionPostfix::class) as $function) {
                 if (!$this->isUnwantedFunction($function)) {
                     continue;
                 }
@@ -123,11 +130,11 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks whether node in a direct child of the loop
      *
-     * @param AbstractNode $loop
-     * @param ASTNode $expression
+     * @param AbstractNode<ASTStatement> $loop
+     * @param AbstractNode<ASTExpression> $expression
      * @return bool
      */
-    protected function isDirectChild(AbstractNode $loop, ASTNode $expression)
+    private function isDirectChild(AbstractNode $loop, AbstractNode $expression)
     {
         return $this->getHash($expression->getParent()->getNode()) !== $this->getHash($loop->getNode());
     }
@@ -143,10 +150,9 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
      * Example hash:
      * 22:22:10:15:PHPMD\count
      *
-     * @param AbstractASTNode $node
      * @return string
      */
-    protected function getHash(AbstractASTNode $node)
+    private function getHash(PDependNode $node)
     {
         return sprintf(
             '%s:%s:%s:%s:%s',
@@ -161,13 +167,13 @@ class CountInLoopExpression extends AbstractRule implements ClassAware, TraitAwa
     /**
      * Checks the given function against the list of unwanted functions
      *
-     * @param ASTNode $function
+     * @param AbstractNode<ASTFunctionPostfix> $function
      * @return bool
      */
-    protected function isUnwantedFunction(ASTNode $function)
+    private function isUnwantedFunction(AbstractNode $function)
     {
         $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 
-        return in_array($functionName, $this->unwantedFunctions);
+        return in_array($functionName, $this->unwantedFunctions, true);
     }
 }

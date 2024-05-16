@@ -15,9 +15,9 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
-
-/**
- * @deprecated 3.0.0 Use PHPMD\Exception\RuleSetNotFoundException instead.
- */
-class_alias('PHPMD\Exception\RuleSetNotFoundException', 'PHPMD\RuleSetNotFoundException');
+class testRuleDoesNotApplyForCamelcaseAbbreviation
+{
+    public function validCapitalParameterName($validParameterUrl)
+    {
+    }
+}

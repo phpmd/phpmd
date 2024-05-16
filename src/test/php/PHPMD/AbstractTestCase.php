@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -48,13 +49,24 @@ use Traversable;
 abstract class AbstractTestCase extends AbstractStaticTestCase
 {
     /** @var int At least one violation is expected */
-    const AL_LEAST_ONE_VIOLATION = -1;
+    protected const AL_LEAST_ONE_VIOLATION = -1;
 
     /** @var int No violation is expected */
-    const NO_VIOLATION = 0;
+    protected const NO_VIOLATION = 0;
 
     /** @var int One violation is expected */
-    const ONE_VIOLATION = 1;
+    protected const ONE_VIOLATION = 1;
+
+    /**
+     * Resets a changed working directory.
+     */
+    protected function tearDown(): void
+    {
+        static::returnToOriginalWorkingDirectory();
+        static::cleanupTempFiles();
+
+        parent::tearDown();
+    }
 
     /**
      * Get a list of files that should trigger a rule violation.
@@ -98,19 +110,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     public static function getNotApplyingCases()
     {
         return static::getValuesAsArrays(static::getNotApplyingFiles());
-    }
-
-    /**
-     * Resets a changed working directory.
-     *
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        static::returnToOriginalWorkingDirectory();
-        static::cleanupTempFiles();
-
-        parent::tearDown();
     }
 
     /**
@@ -218,27 +217,26 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first method or function node for a given test file.
      *
      * @param string $file
-     * @return MethodNode|FunctionNode
+     * @return FunctionNode|MethodNode
      * @since 2.8.3
      */
     protected function getNodeForTestFile($file)
     {
         $source = $this->parseSource($file);
-        $class = $source
-            ->getTypes()
-            ->current();
-        $nodeClassName = 'PHPMD\\Node\\FunctionNode';
+        $type = $source
+            ->getTypes();
+        $nodeClassName = FunctionNode::class;
         $getter = 'getFunctions';
 
-        if ($class) {
-            $source = $class;
-            $nodeClassName = 'PHPMD\\Node\\MethodNode';
+        if ($type->count()) {
+            $source = $type->current();
+            $nodeClassName = MethodNode::class;
             $getter = 'getMethods';
         }
 
         return new $nodeClassName(
             $this->getNodeByName(
-                $source->$getter(),
+                $source->{$getter}(),
                 pathinfo($file, PATHINFO_FILENAME)
             )
         );
@@ -253,10 +251,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
-     * @return void
      * @throws ExpectationFailedException
      */
-    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file)
+    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file): void
     {
         $report = new Report();
         $rule->setReport($report);
@@ -273,7 +270,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             );
         }
 
-        $this->assertTrue($assertion);
+        static::assertTrue($assertion);
     }
 
     /**
@@ -288,11 +285,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
     {
-        return basename($file)." failed:\n".
-            "Expected $expectedInvokes violation".($expectedInvokes !== 1 ? 's' : '')."\n".
-            "But $actualInvokes violation".($actualInvokes !== 1 ? 's' : '')." raised".
-            ($actualInvokes > 0
-                ? ":\n".$this->getViolationsSummary($violations)
+        return basename($file) . " failed:\n" .
+            "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
+            "But $actualInvokes violation" . ($actualInvokes !== 1 ? 's' : '') . ' raised' .
+            (
+                $actualInvokes > 0
+                ? ":\n" . $this->getViolationsSummary($violations)
                 : '.'
             );
     }
@@ -310,15 +308,15 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         }
 
         return implode("\n", array_map(function (RuleViolation $violation) {
-            $nodeExtractor = new ReflectionProperty('PHPMD\\RuleViolation', 'node');
+            $nodeExtractor = new ReflectionProperty(RuleViolation::class, 'node');
             $nodeExtractor->setAccessible(true);
             $node = $nodeExtractor->getValue($violation);
             $node = $node ? $node->getNode() : null;
-            $message = '  - line '.$violation->getBeginLine();
+            $message = '  - line ' . $violation->getBeginLine();
 
             if ($node) {
-                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', get_class($node));
-                $message .= ' on '.$type.' '.$node->getImage();
+                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', $node::class);
+                $message .= ' on ' . $type . ' ' . $node->getImage();
             }
 
             return $message;
@@ -378,20 +376,20 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked class node instance.
      *
      * @param string $metric
-     * @param integer $value
+     * @param int $value
      * @return ClassNode
      */
     protected function getClassMock($metric = null, $value = null)
     {
         $class = $this->getMockFromBuilder(
-            $this->getMockBuilder('PHPMD\\Node\\ClassNode')
+            $this->getMockBuilder(ClassNode::class)
                 ->setConstructorArgs([new ASTClass('FooBar')])
         );
 
         if ($metric !== null) {
-            $class->expects($this->atLeastOnce())
+            $class->expects(static::atLeastOnce())
                 ->method('getMetric')
-                ->with($this->equalTo($metric))
+                ->with(static::equalTo($metric))
                 ->willReturn($value);
         }
 
@@ -402,12 +400,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked method node instance.
      *
      * @param string $metric
-     * @param integer $value
+     * @param int $value
      * @return MethodNode
      */
     protected function getMethodMock($metric = null, $value = null)
     {
-        return $this->createFunctionOrMethodMock('PHPMD\\Node\\MethodNode', new ASTMethod('fooBar'), $metric, $value);
+        return $this->createFunctionOrMethodMock(MethodNode::class, new ASTMethod('fooBar'), $metric, $value);
     }
 
     /**
@@ -420,7 +418,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected function createFunctionMock($metric = null, $value = null)
     {
         return $this->createFunctionOrMethodMock(
-            'PHPMD\\Node\\FunctionNode',
+            FunctionNode::class,
             new ASTFunction('fooBar'),
             $metric,
             $value
@@ -432,7 +430,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param FunctionNode|MethodNode|PHPUnit_Framework_MockObject_MockObject $mock
      * @param string $metric
-     * @param mixed $value
      * @return FunctionNode|MethodNode
      */
     protected function initFunctionOrMethod($mock, $metric, $value)
@@ -441,9 +438,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             return $mock;
         }
 
-        $mock->expects($this->atLeastOnce())
+        $mock->expects(static::atLeastOnce())
             ->method('getMetric')
-            ->with($this->equalTo($metric))
+            ->with(static::equalTo($metric))
             ->willReturn($value);
 
         return $mock;
@@ -452,22 +449,22 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked report instance.
      *
-     * @param integer $expectedInvokes Number of expected invokes.
-     * @return Report|PHPUnit_Framework_MockObject_MockObject
+     * @param int $expectedInvokes Number of expected invokes.
+     * @return PHPUnit_Framework_MockObject_MockObject|Report
      */
     protected function getReportMock($expectedInvokes = -1)
     {
         if ($expectedInvokes === self::AL_LEAST_ONE_VIOLATION) {
-            $expects = $this->atLeastOnce();
+            $expects = static::atLeastOnce();
         } elseif ($expectedInvokes === self::NO_VIOLATION) {
-            $expects = $this->never();
+            $expects = static::never();
         } elseif ($expectedInvokes === self::ONE_VIOLATION) {
-            $expects = $this->once();
+            $expects = static::once();
         } else {
-            $expects = $this->exactly($expectedInvokes);
+            $expects = static::exactly($expectedInvokes);
         }
 
-        $report = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\\Report'));
+        $report = $this->getMockFromBuilder($this->getMockBuilder(Report::class));
         $report->expects($expects)
             ->method('addRuleViolation');
 
@@ -517,37 +514,37 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected function getRuleMock()
     {
         if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
-            return $this->getMockForAbstractClass('PHPMD\\AbstractRule');
+            return $this->getMockForAbstractClass(AbstractRule::class);
         }
 
-        return @$this->getMockForAbstractClass('PHPMD\\AbstractRule');
+        return @$this->getMockForAbstractClass(AbstractRule::class);
     }
 
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param string $expectedClass Optional class name for apply() expected at least once.
+     * @param class-string<ASTNode> $expectedClass Optional class name for apply() expected at least once.
      * @param int|string $count How often should apply() be called?
-     * @return RuleSet|MockObject
+     * @return MockObject|RuleSet
      */
     protected function getRuleSetMock($expectedClass = null, $count = '*')
     {
-        $ruleSet = $this->getMockFromBuilder($this->getMockBuilder('PHPMD\RuleSet'));
+        $ruleSet = $this->getMockFromBuilder($this->getMockBuilder(RuleSet::class));
         if ($expectedClass === null) {
-            $ruleSet->expects($this->never())->method('apply');
+            $ruleSet->expects(static::never())->method('apply');
 
             return $ruleSet;
         }
 
         if ($count === '*') {
-            $count = $this->atLeastOnce();
+            $count = static::atLeastOnce();
         } else {
-            $count = $this->exactly($count);
+            $count = static::exactly($count);
         }
 
         $ruleSet->expects($count)
             ->method('apply')
-            ->with($this->isInstanceOf($expectedClass));
+            ->with(static::isInstanceOf($expectedClass));
 
         return $ruleSet;
     }
@@ -556,10 +553,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked rule violation instance.
      *
      * @param string $fileName The filename to use.
-     * @param integer $beginLine The begin of violation line number to use.
-     * @param integer $endLine The end of violation line number to use.
-     * @param null|object $rule The rule object to use.
-     * @param null|string $description The violation description to use.
+     * @param int $beginLine The begin of violation line number to use.
+     * @param int $endLine The end of violation line number to use.
+     * @param object|null $rule The rule object to use.
+     * @param string|null $description The violation description to use.
      * @return MockObject
      */
     protected function getRuleViolationMock(
@@ -570,7 +567,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         $description = null
     ) {
         $ruleViolation = $this->getMockFromBuilder(
-            $this->getMockBuilder('PHPMD\\RuleViolation')
+            $this->getMockBuilder(RuleViolation::class)
                 ->setConstructorArgs(
                     [new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello']
                 )
@@ -611,16 +608,15 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param string $file
      * @param string $message
-     * @return ProcessingError|MockObject
+     * @return MockObject|ProcessingError
      */
     protected function getErrorMock(
         $file = '/foo/baz.php',
         $message = 'Error in file "/foo/baz.php"'
     ) {
-
         $processingError = $this->getMockFromBuilder(
-            $this->getMockBuilder('PHPMD\\ProcessingError')
-                ->setConstructorArgs([null])
+            $this->getMockBuilder(ProcessingError::class)
+                ->setConstructorArgs([$message])
                 ->onlyMethods(['getFile', 'getMessage'])
         );
 
@@ -667,7 +663,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the PHP_Depend node having the given name.
      *
-     * @param Iterator $nodes
      * @return PHP_Depend_Code_AbstractItem
      * @throws ErrorException
      */
@@ -678,13 +673,13 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
                 return $node;
             }
         }
+
         throw new ErrorException("Cannot locate node named $name.");
     }
 
     /**
      * Returns the PHP_Depend node for the calling test case.
      *
-     * @param Iterator $nodes
      * @return PHP_Depend_Code_AbstractItem
      * @throws ErrorException
      */
@@ -705,7 +700,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     private function parseSource($sourceFile)
     {
-        if (file_exists($sourceFile) === false) {
+        if (!file_exists($sourceFile)) {
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);
         }
 

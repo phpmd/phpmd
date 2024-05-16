@@ -25,17 +25,13 @@ use PHPMD\RuleSet;
  *
  * @link https://www.pivotaltracker.com/story/show/14990109
  * @since 1.1.0
- *
- * @covers \stdClass
  */
-class UnusedParameterArgvTicket14990109RegressionTestCase extends AbstractRegressionTestCase
+class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegressionTestCase
 {
     /**
      * testRuleDoesNotApplyToFunctionParameterNamedArgv
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToFunctionParameterNamedArgv()
+    public function testRuleDoesNotApplyToFunctionParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());
@@ -46,10 +42,8 @@ class UnusedParameterArgvTicket14990109RegressionTestCase extends AbstractRegres
 
     /**
      * testRuleDoesNotApplyToMethodParameterNamedArgv
-     *
-     * @return void
      */
-    public function testRuleDoesNotApplyToMethodParameterNamedArgv()
+    public function testRuleDoesNotApplyToMethodParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedFormalParameter());

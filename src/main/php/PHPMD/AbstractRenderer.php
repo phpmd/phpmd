@@ -17,6 +17,8 @@
 
 namespace PHPMD;
 
+use Exception;
+
 /**
  * Abstract base class for PHPMD rendering engines.
  */
@@ -25,14 +27,14 @@ abstract class AbstractRenderer
     /**
      * The associated output writer instance.
      *
-     * @var \PHPMD\AbstractWriter
+     * @var AbstractWriter
      */
     private $writer = null;
 
     /**
      * Returns the associated output writer instance.
      *
-     * @return \PHPMD\AbstractWriter
+     * @return AbstractWriter
      */
     public function getWriter()
     {
@@ -41,11 +43,8 @@ abstract class AbstractRenderer
 
     /**
      * Returns the associated output writer instance.
-     *
-     * @param \PHPMD\AbstractWriter $writer
-     * @return void
      */
-    public function setWriter(AbstractWriter $writer)
+    public function setWriter(AbstractWriter $writer): void
     {
         $this->writer = $writer;
     }
@@ -53,10 +52,8 @@ abstract class AbstractRenderer
     /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
-     *
-     * @return void
      */
-    public function start()
+    public function start(): void
     {
         // Just a hook
     }
@@ -65,18 +62,15 @@ abstract class AbstractRenderer
      * This method will be called when the engine has finished the source analysis
      * phase.
      *
-     * @param \PHPMD\Report $report
-     * @return void
+     * @throws Exception
      */
-    abstract public function renderReport(Report $report);
+    abstract public function renderReport(Report $report): void;
 
     /**
      * This method will be called the engine has finished the report processing
      * for all registered renderers.
-     *
-     * @return void
      */
-    public function end()
+    public function end(): void
     {
         // Just a hook
     }

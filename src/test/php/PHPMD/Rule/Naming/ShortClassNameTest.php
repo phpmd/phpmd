@@ -28,10 +28,8 @@ class ShortClassNameTest extends AbstractTestCase
 {
     /**
      * Tests that rule does not apply to class name length (43) above threshold (43)
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassNameAboveThreshold()
+    public function testRuleNotAppliesToClassNameAboveThreshold(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 43);
@@ -41,10 +39,8 @@ class ShortClassNameTest extends AbstractTestCase
 
     /**
      * Tests that rule applies to class name length (40) below threshold (41)
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameBelowThreshold()
+    public function testRuleAppliesToClassNameBelowThreshold(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 41);
@@ -54,10 +50,8 @@ class ShortClassNameTest extends AbstractTestCase
 
     /**
      * Tests that rule does not apply to interface name length (47) above threshold (47)
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToInterfaceNameAboveThreshold()
+    public function testRuleNotAppliesToInterfaceNameAboveThreshold(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 47);
@@ -67,10 +61,8 @@ class ShortClassNameTest extends AbstractTestCase
 
     /**
      * Tests that rule applies for interface name length (44) below threshold (45)
-     *
-     * @return void
      */
-    public function testRuleAppliesToInterfaceNameBelowThreshold()
+    public function testRuleAppliesToInterfaceNameBelowThreshold(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 45);
@@ -80,10 +72,8 @@ class ShortClassNameTest extends AbstractTestCase
 
     /**
      * Tests that rule does not apply for class name length (55) below threshold (61) when set in exceptions
-     *
-     * @return void
      */
-    public function testRuleNotAppliesToClassNameBelowThresholdInExceptions()
+    public function testRuleNotAppliesToClassNameBelowThresholdInExceptions(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 61);
@@ -94,10 +84,8 @@ class ShortClassNameTest extends AbstractTestCase
 
     /**
      * Tests that rule applies to class name length (55) below threshold (56) when not set in exceptions
-     *
-     * @return void
      */
-    public function testRuleAppliesToClassNameBelowThresholdNotInExceptions()
+    public function testRuleAppliesToClassNameBelowThresholdNotInExceptions(): void
     {
         $rule = new ShortClassName();
         $rule->addProperty('minimum', 56);

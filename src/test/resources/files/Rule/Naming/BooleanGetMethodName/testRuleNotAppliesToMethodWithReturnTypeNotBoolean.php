@@ -18,7 +18,7 @@
 class testRuleNotAppliesToMethodWithReturnTypeNotBoolean
 {
     /**
-     * @return array(boolean)
+     * @return array<boolean>
      */
     function getFooBar()
     {

@@ -17,12 +17,13 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -34,18 +35,14 @@ use PHPMD\Rule\MethodAware;
  * @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  */
-class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAware
+final class DuplicatedArrayKey extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Retrieves all arrays from single node and performs comparison logic on it
-     *
-     * @param AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('Array') as $arrayNode) {
-            /** @var ASTNode $arrayNode */
+        foreach ($node->findChildrenOfType(ASTArray::class) as $arrayNode) {
             $this->checkForDuplicatedArrayKeys($arrayNode);
         }
     }
@@ -54,14 +51,16 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      * This method checks if a given function or method contains an array literal
      * with duplicated entries for any key and emits a rule violation if so.
      *
-     * @param ASTNode $node Array node.
-     * @return void
+     * @param AbstractNode<ASTArray> $node Array node.
+     * @throws OutOfBoundsException
      */
-    protected function checkForDuplicatedArrayKeys(ASTNode $node)
+    private function checkForDuplicatedArrayKeys(AbstractNode $node): void
     {
         $keys = [];
-        /** @var ASTArrayElement $arrayElement */
         foreach ($node->getChildren() as $index => $arrayElement) {
+            if (!$arrayElement instanceof AbstractASTNode) {
+                continue;
+            }
             $arrayElement = $this->normalizeKey($arrayElement, $index);
             if (null === $arrayElement) {
                 // skip everything that can't be resolved easily
@@ -70,7 +69,8 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
 
             $key = $arrayElement->getImage();
             if (isset($keys[$key])) {
-                $this->addViolation($node, [$key, $arrayElement->getStartLine()]);
+                $this->addViolation($node, [$key, (string) $arrayElement->getStartLine()]);
+
                 continue;
             }
             $keys[$key] = $arrayElement;
@@ -88,9 +88,10 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
      *
      * @param AbstractASTNode $node Array key to evaluate.
      * @param int $index Fallback in case of non-associative arrays
-     * @return AbstractASTNode Key name
+     * @return ?AbstractASTNode Key name
+     * @throws OutOfBoundsException
      */
-    protected function normalizeKey(AbstractASTNode $node, $index)
+    private function normalizeKey(AbstractASTNode $node, $index)
     {
         $childCount = count($node->getChildren());
         // Skip, if there is no array key, just an array value
@@ -99,7 +100,7 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
         }
         // non-associative - key name equals to its index
         if ($childCount === 0) {
-            $node->setImage((string)$index);
+            $node->setImage((string) $index);
 
             return $node;
         }
@@ -117,21 +118,17 @@ class DuplicatedArrayKey extends AbstractRule implements MethodAware, FunctionAw
     /**
      * Cleans string literals and casts boolean and null values as PHP engine does
      *
-     * @param PDependASTNode $key
      * @return string
      */
-    protected function castStringFromLiteral(PDependASTNode $key)
+    private function castStringFromLiteral(PDependASTNode $key)
     {
         $value = $key->getImage();
-        switch ($value) {
-            case 'false':
-                return '0';
-            case 'true':
-                return '1';
-            case 'null':
-                return '';
-            default:
-                return trim($value, '\'""');
-        }
+
+        return match ($value) {
+            'false' => '0',
+            'true' => '1',
+            'null' => '',
+            default => trim($value, '\'""'),
+        };
     }
 }

@@ -17,9 +17,9 @@
 
 namespace PHPMD\Rule\CleanCode;
 
+use PDepend\Source\AST\ASTUnaryExpression;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
@@ -31,19 +31,16 @@ use PHPMD\Rule\MethodAware;
  * @author Kamil Szymanaski <kamil.szymanski@gmail.com>
  * @link http://php.net/manual/en/language.operators.errorcontrol.php
  */
-class ErrorControlOperator extends AbstractRule implements MethodAware, FunctionAware
+final class ErrorControlOperator extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
      * Loops trough all class or function nodes and looks for '@' sign.
-     *
-     * @param AbstractNode $node
-     * @return void
      */
-    public function apply(AbstractNode $node)
+    public function apply(AbstractNode $node): void
     {
-        foreach ($node->findChildrenOfType('UnaryExpression') as $unaryExpression) {
+        foreach ($node->findChildrenOfType(ASTUnaryExpression::class) as $unaryExpression) {
             if ($unaryExpression->getImage() === '@') {
-                $this->addViolation($node, [$unaryExpression->getBeginLine()]);
+                $this->addViolation($node, [(string) $unaryExpression->getBeginLine()]);
             }
         }
     }

@@ -4,7 +4,7 @@ namespace PHPMD\Baseline;
 
 use RuntimeException;
 
-class BaselineSetFactory
+final class BaselineSetFactory
 {
     /**
      * Read the baseline violations from the given filename path. Append the baseDir to all the filepaths within
@@ -16,12 +16,12 @@ class BaselineSetFactory
      */
     public static function fromFile($fileName)
     {
-        if (file_exists($fileName) === false) {
-            throw new RuntimeException('Unable to locate the baseline file at: ' . $fileName);
+        $content = file_get_contents($fileName);
+        if ($content === false) {
+            throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
         }
-
-        $xml = @simplexml_load_string(file_get_contents($fileName));
-        if ($xml === false) {
+        $xml = @simplexml_load_string($content);
+        if (!$xml) {
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
@@ -31,20 +31,20 @@ class BaselineSetFactory
                 continue;
             }
 
-            if (isset($node['rule']) === false) {
+            if (!isset($node['rule'])) {
                 throw new RuntimeException('Missing `rule` attribute in `violation` in ' . $fileName);
             }
 
-            if (isset($node['file']) === false) {
+            if (!isset($node['file'])) {
                 throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
             }
 
             $methodName = null;
-            if (isset($node['method']) === true && ((string)$node['method']) !== '') {
-                $methodName = (string)($node['method']);
+            if (isset($node['method']) && ((string) $node['method']) !== '') {
+                $methodName = (string) $node['method'];
             }
 
-            $baselineSet->addEntry(new ViolationBaseline((string)$node['rule'], (string)$node['file'], $methodName));
+            $baselineSet->addEntry(new ViolationBaseline((string) $node['rule'], (string) $node['file'], $methodName));
         }
 
         return $baselineSet;
