@@ -19,8 +19,12 @@ namespace PHPMD;
 
 final class InternalRuleSet
 {
+    /** @var list<string>|null */
     private static ?array $names = null;
 
+    /**
+     * @return list<string>
+     */
     public static function getNames(): array
     {
         return self::$names ??= array_map(

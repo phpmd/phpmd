@@ -24,6 +24,7 @@ use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
 use SimpleXMLElement;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -197,6 +198,7 @@ class RuleSetFactory
      * xml node this method delegates the parsing process to another method in
      * this class.
      *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $node
      * @throws RuleClassNotFoundException
      * @throws RuntimeException
      */
@@ -223,6 +225,7 @@ class RuleSetFactory
      * This method parses a complete rule set that was includes a reference in
      * the currently parsed ruleset.
      *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleSetNode
      * @throws RuntimeException
      */
     private function parseRuleSetReferenceNode(
@@ -239,6 +242,7 @@ class RuleSetFactory
     /**
      * Parses a rule-set xml file referenced by the given rule-set xml element.
      *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleSetNode
      * @throws RuntimeException
      * @since 0.2.3
      */
@@ -255,6 +259,7 @@ class RuleSetFactory
      * Checks if the given rule is included/not excluded by the given rule-set
      * reference node.
      *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleSetNode
      * @since 0.2.3
      */
     private function isIncluded(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleSetNode): bool
@@ -278,6 +283,7 @@ class RuleSetFactory
      * This method will create a single rule instance and add it to the given
      * {@link \PHPMD\RuleSet} object.
      *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
      * @throws RuleClassFileNotFoundException
      * @throws RuleClassNotFoundException
      */
@@ -342,7 +348,13 @@ class RuleSetFactory
     }
 
     /**
-     * This method parses a single rule that was included from a different rule-set.
+     * This method parses a single rule that was included from a different
+     * rule-set.
+     *
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     * @throws RuleSetNotFoundException
+     * @throws RuleByNameNotFoundException
+     * @throws RuntimeException
      */
     private function parseRuleReferenceNode(
         RuleSet $ruleSet,
@@ -360,7 +372,7 @@ class RuleSetFactory
             ? $this->findFileForRule($ruleName)
             : $this->createSingleRuleSet($this->createRuleSetFileName($fileName));
 
-        $rule = $ruleSetRef->getRuleByName($ruleName) ?? throw new RuleNotFoundException($ruleName);
+        $rule = $ruleSetRef->getRuleByName($ruleName);
 
         $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
         $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
@@ -373,6 +385,9 @@ class RuleSetFactory
         }
     }
 
+    /**
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $config
+     */
     private function withNonEmptyStringAtKey(
         array|ArrayAccess|SimpleXMLElement $config,
         string $key,
@@ -385,6 +400,9 @@ class RuleSetFactory
         }
     }
 
+    /**
+     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     */
     private function parseRuleProperties(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleNode): void
     {
         $this->withNonEmptyStringAtKey($ruleNode, 'description', [$rule, 'setDescription']);
@@ -428,6 +446,8 @@ class RuleSetFactory
      *   </properties>
      *   ...
      * </code>
+     *
+     * @param array<string, mixed>|SimpleXMLElement $propertiesNode
      */
     private function parsePropertiesNode(Rule $rule, array|SimpleXMLElement $propertiesNode): void
     {
@@ -562,6 +582,8 @@ class RuleSetFactory
 
     /**
      * Load rule-set config from a .php file.
+     *
+     * @throws RuntimeException
      */
     private function getConfigFromPhpFile(string $fileName): RuleSet
     {
@@ -570,6 +592,9 @@ class RuleSetFactory
 
     /**
      * Load rule-set config from a .yaml file.
+     *
+     * @throws ParseException
+     * @throws RuntimeException
      */
     private function getConfigFromYamlFile(string $fileName): RuleSet
     {
@@ -578,6 +603,8 @@ class RuleSetFactory
 
     /**
      * Load rule-set config from a .json file.
+     *
+     * @throws RuntimeException
      */
     private function getConfigFromJsonFile(string $fileName): RuleSet
     {
@@ -586,6 +613,9 @@ class RuleSetFactory
 
     /**
      * Load rule-set config from filename and array.
+     *
+     * @param array<string, mixed> $config
+     * @throws RuntimeException
      */
     private function getConfigFromArray(string $fileName, array $config): RuleSet
     {
@@ -634,6 +664,9 @@ class RuleSetFactory
 
     /**
      * Configure RuleSet according to given array config.
+     *
+     * @param array<string, mixed> $config
+     * @throws RuntimeException
      */
     private function configRuleSetWith(RuleSet $ruleSet, array $config): void
     {
@@ -683,6 +716,8 @@ class RuleSetFactory
      * Return the first file in the internal ruleset having a given rule name.
      *
      * @throws RuleNotFoundException
+     * @throws RuleSetNotFoundException
+     * @throws RuntimeException
      */
     private function findFileForRule(string $ruleName): RuleSet
     {
@@ -696,6 +731,6 @@ class RuleSetFactory
             }
         }
 
-        throw new RuleNotFoundException($rule);
+        throw new RuleNotFoundException($ruleName);
     }
 }

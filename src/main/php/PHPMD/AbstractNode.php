@@ -56,7 +56,7 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend AST node.
      *
-     * @param array<mixed> $args
+     * @param list<mixed> $args
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
