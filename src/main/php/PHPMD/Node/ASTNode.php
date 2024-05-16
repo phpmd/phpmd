@@ -35,7 +35,7 @@ final class ASTNode extends AbstractNode
      * Constructs a new ast node instance.
      *
      * @param TNode $node
-     * @param string $fileName The source file of this node.
+     * @param ?string $fileName The source file of this node.
      */
     public function __construct(
         PDependNode $node,
@@ -101,8 +101,6 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return ?string
      */
     public function getFullQualifiedName(): ?string
     {
