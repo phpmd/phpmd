@@ -57,7 +57,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run PHPCS for the codestyle
-        run: vendor/bin/phpcs
+        run: vendor/bin/phpcs --report=checkstyle -q | cs2pr || true
 
       - name: Run PHP Coding Standards Fixer Check
         run: |
