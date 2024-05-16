@@ -586,7 +586,8 @@ class RuleSetFactoryTest extends AbstractTestCase
         $shortMethodName = $rules[1];
         self::assertInstanceOf(ShortMethodName::class, $shortMethodName);
         self::assertSame(
-            'Avoid using short method names like {0}::{1}(). The configured threshold (minimum allowed) method name length is {2}.',
+            'Avoid using short method names like {0}::{1}(). ' .
+            'The configured threshold (minimum allowed) method name length is {2}.',
             $shortMethodName->getMessage(),
         );
         self::assertSame(
