@@ -55,6 +55,7 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend AST node.
      *
+     * @param list<mixed> $args
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
@@ -298,7 +299,7 @@ abstract class AbstractNode
     /**
      * This method will set the metrics for this node.
      *
-     * @param array<string, mixed> $metrics The collected node metrics.
+     * @param array<string, null|float|int> $metrics The collected node metrics.
      */
     public function setMetrics(array $metrics): void
     {
