@@ -129,7 +129,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return AbstractNode<T>|null
      */
-    public function getFirstChildOfType($type): ?self
+    public function getFirstChildOfType(string $type): ?self
     {
         $node = $this->node->getFirstChildOfType($type);
 

@@ -216,7 +216,7 @@ class RuleSetFactory
             return;
         }
 
-        $this->parseRuleReferenceNode($ruleSet, $node);
+        $this->parseRuleReferenceNode($ruleSet, $node, $ref);
     }
 
     /**
@@ -344,10 +344,11 @@ class RuleSetFactory
     /**
      * This method parses a single rule that was included from a different rule-set.
      */
-    private function parseRuleReferenceNode(RuleSet $ruleSet, array|ArrayAccess|SimpleXMLElement $ruleNode): void
-    {
-        $ref = (string) $ruleNode['ref'];
-
+    private function parseRuleReferenceNode(
+        RuleSet $ruleSet,
+        array|ArrayAccess|SimpleXMLElement $ruleNode,
+        string $ref,
+    ): void {
         [
             'file' => $fileName,
             'rule' => $ruleName,
@@ -683,13 +684,15 @@ class RuleSetFactory
      *
      * @throws RuleNotFoundException
      */
-    private function findFileForRule(string $rule): RuleSet
+    private function findFileForRule(string $ruleName): RuleSet
     {
         foreach (InternalRuleSet::getNames() as $setName) {
             $ruleSet = $this->createSingleRuleSet($this->createRuleSetFileName($setName));
 
-            if ($ruleSet->getRuleByName($rule)) {
-                return $ruleSet;
+            foreach ($ruleSet->getRules() as $rule) {
+                if ($rule->getName() === $ruleName) {
+                    return $ruleSet;
+                }
             }
         }
 
