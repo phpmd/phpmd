@@ -701,6 +701,53 @@ class RuleSetFactoryTest extends AbstractTestCase
         }
     }
 
+    public function testCreateRuleSetFromYamlFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet(__DIR__ . '/../../resources/files/rulesets/phpmd.yml');
+
+        self::assertSame('MethodChecks', $ruleSet->getName());
+        self::assertSame('Check stuff on methods', $ruleSet->getDescription());
+
+        $rules = $ruleSet->getRules()->getArrayCopy();
+
+        self::assertCount(2, $rules);
+
+        /** @var CyclomaticComplexity $cyclomaticComplexity */
+        $cyclomaticComplexity = $rules[0];
+        self::assertInstanceOf(CyclomaticComplexity::class, $cyclomaticComplexity);
+        self::assertSame(
+            'The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}.',
+            $cyclomaticComplexity->getMessage(),
+        );
+
+        /** @var ShortMethodName $shortMethodName */
+        $shortMethodName = $rules[1];
+        self::assertInstanceOf(ShortMethodName::class, $shortMethodName);
+        self::assertSame(
+            'Avoid using short method names like {0}::{1}(). ' .
+            'The configured threshold (minimum allowed) method name length is {2}.',
+            $shortMethodName->getMessage(),
+        );
+        self::assertSame(
+            4,
+            $shortMethodName->getIntProperty('threshold'),
+        );
+        self::assertSame(
+            [
+                <<<'EOS'
+                class ShortMethod
+                {
+                    public function ab($index) // Violation
+                    {
+                    }
+                }
+                EOS,
+            ],
+            $shortMethodName->getExamples(),
+        );
+    }
+
     /**
      * Provides an array of the file paths to rule sets provided with PHPMD
      *

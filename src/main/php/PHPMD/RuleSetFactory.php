@@ -324,9 +324,9 @@ class RuleSetFactory
         }
 
         $rule = new $className();
-        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', $rule->setExternalInfoUrl(...));
 
         $rule->setRuleSetName($ruleSet->getName());
 
@@ -359,10 +359,9 @@ class RuleSetFactory
 
         $rule = $ruleSetRef->getRuleByName($ruleName) ?? throw new RuleNotFoundException($ruleName);
 
-        // When dropping PHP < 8.1, replace [$rule, 'setName'] with $rule->setName(...) syntax
-        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
-        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', $rule->setExternalInfoUrl(...));
 
         $this->parseRuleProperties($rule, $ruleNode);
 
@@ -595,6 +594,8 @@ class RuleSetFactory
 
     /**
      * Load rule-set config from a .xml file.
+     *
+     * @throws RuntimeException
      */
     private function getConfigFromXmlFile(string $fileName): RuleSet
     {
@@ -677,6 +678,8 @@ class RuleSetFactory
 
     /**
      * Return the first file in the internal ruleset having a given rule name.
+     *
+     * @throws RuleNotFoundException
      */
     private function findFileForRule(string $rule): RuleSet
     {
