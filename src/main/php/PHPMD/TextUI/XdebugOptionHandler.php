@@ -25,8 +25,10 @@ class XdebugOptionHandler extends XdebugHandler
                 unset($command[$noConfigKey]);
             }
             if (($configKey = array_search('-c', $command, true)) !== false) {
-                unset($command[$configKey + 1]);
-                unset($command[$configKey]);
+                unset(
+                    $command[$configKey + 1],
+                    $command[$configKey]
+                );
             }
 
             // The PHP INI entries to enable Xdebug
