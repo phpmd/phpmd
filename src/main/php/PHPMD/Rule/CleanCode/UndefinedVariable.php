@@ -122,7 +122,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
 
         foreach ($node->getProperties() as $property) {
             if ($property->isStatic()) {
-                $this->images['::' . $property->getName()] = $property;
+                $this->images['::' . $property->getImage()] = $property;
             }
         }
     }
