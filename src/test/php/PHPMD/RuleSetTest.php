@@ -32,7 +32,7 @@ use PHPMD\Stubs\RuleStub;
  *
  * @covers \PHPMD\RuleSet
  */
-class RuleSetTest extends AbstractTestCase
+final class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
@@ -146,7 +146,7 @@ class RuleSetTest extends AbstractTestCase
             }
         });
 
-        $this->assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        self::assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
         $function = new ASTFunction('fooBar');
         $statement = new ASTIfStatement('if');

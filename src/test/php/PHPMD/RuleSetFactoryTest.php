@@ -33,7 +33,7 @@ use RuntimeException;
  *
  * @covers \PHPMD\RuleSetFactory
  */
-class RuleSetFactoryTest extends AbstractTestCase
+final class RuleSetFactoryTest extends AbstractTestCase
 {
     /**
      * Used to test files/directories access for ignore code rule
@@ -47,7 +47,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('codesize');
 
-        static::assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
+        self::assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory(): void
@@ -63,7 +63,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsReturnsArray(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertIsArray($ruleSets);
+        self::assertIsArray($ruleSets);
     }
 
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
@@ -75,7 +75,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertInstanceOf(RuleSet::class, $ruleSets[0]);
+        self::assertInstanceOf(RuleSet::class, $ruleSets[0]);
     }
 
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
@@ -105,8 +105,8 @@ class RuleSetFactoryTest extends AbstractTestCase
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        static::assertInstanceOf(RuleSet::class, $ruleSets[0]);
-        static::assertInstanceOf(RuleSet::class, $ruleSets[1]);
+        self::assertInstanceOf(RuleSet::class, $ruleSets[0]);
+        self::assertInstanceOf(RuleSet::class, $ruleSets[1]);
     }
 
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames(): void
@@ -134,7 +134,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        static::assertIsArray($ruleSets);
+        self::assertIsArray($ruleSets);
     }
 
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void
@@ -200,7 +200,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1');
 
-        static::assertInstanceOf(RuleSet::class, $ruleSet);
+        self::assertInstanceOf(RuleSet::class, $ruleSet);
     }
 
     /**
@@ -243,7 +243,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory->setMaximumPriority(2);
 
         $ruleSet = $factory->createSingleRuleSet('set1');
-        static::assertCount(0, $ruleSet->getRules());
+        self::assertCount(0, $ruleSet->getRules());
     }
 
     public function testCreateRuleWithExcludePattern(): void
@@ -470,7 +470,7 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         $ruleSets = $factory->createRuleSets($fileName);
 
-        static::assertTrue($ruleSets[0]->isStrict());
+        self::assertTrue($ruleSets[0]->isStrict());
     }
 
     /**
@@ -502,7 +502,7 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         set_include_path($includePathBefore);
 
-        static::assertTrue(
+        self::assertTrue(
             $isIncludePathPresent,
             "The include-path from '{$rulesetFilepath}' was not set!"
         );
@@ -558,7 +558,7 @@ class RuleSetFactoryTest extends AbstractTestCase
                 $ruleSet->getName()
             );
 
-            static::assertNotEmpty($rule->getExternalInfoUrl(), $message);
+            self::assertNotEmpty($rule->getExternalInfoUrl(), $message);
         }
     }
 
@@ -596,14 +596,14 @@ class RuleSetFactoryTest extends AbstractTestCase
         );
         self::assertSame(
             [
-                <<<'EOS'
-                class ShortMethod
-                {
-                    public function ab($index) // Violation
+                <<<'EOD'
+                    class ShortMethod
                     {
+                        public function ab($index) // Violation
+                        {
+                        }
                     }
-                }
-                EOS,
+                    EOD,
             ],
             $shortMethodName->getExamples(),
         );
@@ -614,7 +614,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     public static function getDefaultRuleSets(): array
     {
-        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
+        return self::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
     }
 
     /**
@@ -623,11 +623,11 @@ class RuleSetFactoryTest extends AbstractTestCase
      *
      * @param string $files At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
-     * @return \PHPMD\RuleSet[]
+     * @return RuleSet[]
      */
-    private function createRuleSetsFromAbsoluteFiles(string $file): array
+    private function createRuleSetsFromAbsoluteFiles(string ...$files): array
     {
-        $files = array_map(static::createFileUri(...), $files);
+        $files = array_map(self::createFileUri(...), $files);
 
         return $this->createRuleSetsFromFiles(...$files);
     }
@@ -636,18 +636,16 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
-     * @param string $file At least one rule configuration file name. You can
+     * @param string $files At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
-     * @return \PHPMD\RuleSet[]
+     * @return RuleSet[]
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    private function createRuleSetsFromFiles(string $file): array
+    private function createRuleSetsFromFiles(string ...$files): array
     {
-        $args = func_get_args();
-
         $factory = new RuleSetFactory();
 
-        return $factory->createRuleSets(implode(',', $args));
+        return $factory->createRuleSets(implode(',', $files));
     }
 
     /**
