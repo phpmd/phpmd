@@ -24,7 +24,7 @@ final class InternalRuleSet
     public static function getNames(): array
     {
         return self::$names ??= array_map(
-            static fn (string $path) => pathinfo($path, PATHINFO_FILENAME),
+            static fn(string $path) => pathinfo($path, PATHINFO_FILENAME),
             glob(__DIR__ . '/../../resources/rulesets/*.xml'),
         );
     }
