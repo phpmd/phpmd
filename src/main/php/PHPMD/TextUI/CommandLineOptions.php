@@ -22,6 +22,7 @@ use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
+use PHPMD\InternalRuleSet;
 use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\GitHubRenderer;
@@ -420,13 +421,17 @@ class CommandLineOptions
             }
         }
 
-        if (count($arguments) < 3) {
-            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
-        }
+        array_push($arguments, ...match (count($arguments)) {
+            0 => [file_exists('src') ? 'src' : '.', 'text', $this->getDefaultConfig()],
+            1 => ['text', $this->getDefaultConfig()],
+            2 => [$this->getDefaultConfig()],
+            default => [],
+        });
 
         $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
 
-        $this->ruleSets = (string) array_pop($arguments);
+        $ruleSets = (string) array_pop($arguments);
+        $this->ruleSets = $ruleSets === 'all' ? InternalRuleSet::getNamesConcatenated() : $ruleSets;
         $validator->validate('ruleset', $this->ruleSets);
 
         $this->reportFormat = array_pop($arguments);
@@ -953,7 +958,8 @@ class CommandLineOptions
      */
     private function readInputFile($inputFile)
     {
-        $content = file($inputFile);
+        $content = @file($inputFile);
+
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
@@ -980,15 +986,39 @@ class CommandLineOptions
      *
      * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
      * @param string[] &$args      The remaining CLI parameters not yet parsed
-     *
-     * @return string|null
      */
-    private function readValue(array $equalChunk, array &$args)
+    private function readValue(array $equalChunk, array &$args): ?string
     {
         if (count($equalChunk) > 1) {
             return $equalChunk[1];
         }
 
         return array_shift($args);
+    }
+
+    private function getDefaultConfig(): string
+    {
+        // Files to be used as config automatically
+        // Ordered by priority
+        $files = [
+            'phpmd.php',
+            'phpmd.yml',
+            'phpmd.yaml',
+            'phpmd.json',
+            'phpmd.xml',
+        ];
+
+        foreach ($files as $file) {
+            // Search for phpmd.yml, .phpmd.yml and phpmd.yml.dist
+            foreach ([$file, ".$file", "$file.dist"] as $path) {
+                if (file_exists($path)) {
+                    return $path;
+                }
+            }
+        }
+
+        // If there is no file, return "all" to mean all the rules from PHPMD core package
+        // with their default config
+        return 'all';
     }
 }

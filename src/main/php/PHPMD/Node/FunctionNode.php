@@ -31,16 +31,14 @@ class FunctionNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getNamespace()->getName();
+        return $this->getNode()->getNamespace()->getImage();
     }
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    public function getParentName()
+    public function getParentName(): ?string
     {
         return null;
     }
@@ -48,10 +46,8 @@ class FunctionNode extends AbstractCallableNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return string
      */
-    public function getFullQualifiedName()
+    public function getFullQualifiedName(): string
     {
         return sprintf('%s\\%s()', $this->getNamespaceName(), $this->getName());
     }

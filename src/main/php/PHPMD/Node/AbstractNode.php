@@ -30,24 +30,16 @@ use PHPMD\Rule;
  */
 abstract class AbstractNode extends BaseNode
 {
-    /**
-     * Annotations associated with node instance.
-     *
-     * @var Annotations
-     */
-    private $annotations = null;
+    /** Annotations associated with node instance. */
+    private ?Annotations $annotations = null;
 
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
-     *
-     * @return bool
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule)
+    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
     {
-        if ($this->annotations === null) {
-            $this->annotations = new Annotations($this);
-        }
+        $this->annotations ??= new Annotations($this);
 
         return $this->annotations->suppresses($rule);
     }

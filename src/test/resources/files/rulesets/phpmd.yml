@@ -1,0 +1,20 @@
+name: MethodChecks
+description: Check stuff on methods
+rules:
+  - ref: CyclomaticComplexity
+  - name: ShortMethodName
+    class: PHPMD\Rule\Naming\ShortMethodName
+    since: 3.0.0
+    message: Avoid using short method names like {0}::{1}(). The configured threshold (minimum allowed) method name length is {2}.
+    externalInfoUrl: https://phpmd.org/rules/naming.html#shortmethodname
+    description: Detects when very short method names are used.
+    priority: 3
+    properties:
+      threshold: 4 # Minimum length for a method or function name
+    example: |
+      class ShortMethod
+      {
+          public function ab($index) // Violation
+          {
+          }
+      }

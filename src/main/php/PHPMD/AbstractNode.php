@@ -37,9 +37,9 @@ abstract class AbstractNode
     /**
      * The collected metrics for this node.
      *
-     * @var array<string, mixed>
+     * @var array<string, float|int|null>
      */
-    private $metrics = null;
+    private ?array $metrics = null;
 
     /**
      * Constructs a new PHPMD node.
@@ -47,7 +47,7 @@ abstract class AbstractNode
      * @param TNode $node
      */
     public function __construct(
-        private PDependNode $node,
+        private readonly PDependNode $node,
     ) {
     }
 
@@ -55,12 +55,11 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend AST node.
      *
-     * @param string $name
-     * @param array<mixed> $args
+     * @param list<mixed> $args
      * @throws BadMethodCallException When the underlying PDepend node
      *         does not contain a method named <b>$name</b>.
      */
-    public function __call($name, array $args): mixed
+    public function __call(string $name, array $args): mixed
     {
         $node = $this->getNode();
         if (!method_exists($node, $name)) {
@@ -78,9 +77,10 @@ abstract class AbstractNode
      *
      * @return AbstractNode<PDependNode>|null
      */
-    public function getParent()
+    public function getParent(): ?self
     {
         $node = $this->node->getParent();
+
         if ($node === null) {
             return null;
         }
@@ -96,7 +96,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched parent type.
      * @return AbstractNode<T>|null
      */
-    public function getParentOfType($type)
+    public function getParentOfType(string $type): ?self
     {
         $parent = $this->node->getParent();
 
@@ -104,6 +104,7 @@ abstract class AbstractNode
             if ($parent instanceof $type) {
                 return new ASTNode($parent, $this->getFileName());
             }
+
             $parent = $parent->getParent();
         }
 
@@ -117,7 +118,7 @@ abstract class AbstractNode
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    public function getChild($index)
+    public function getChild(int $index): self
     {
         return new ASTNode(
             $this->node->getChild($index),
@@ -134,7 +135,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return AbstractNode<T>|null
      */
-    public function getFirstChildOfType($type)
+    public function getFirstChildOfType(string $type): ?self
     {
         $node = $this->node->getFirstChildOfType($type);
 
@@ -153,7 +154,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return list<AbstractNode<T>>
      */
-    public function findChildrenOfType($type)
+    public function findChildrenOfType(string $type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -173,7 +174,7 @@ abstract class AbstractNode
      * @param class-string<PDependNode> $type The searched child type.
      * @return list<PDependNode>
      */
-    public function findChildrenWithParentType($type)
+    public function findChildrenWithParentType(string $type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -191,16 +192,16 @@ abstract class AbstractNode
     /**
      * Searches recursive for all children of this node that are of variable.
      *
-     * @return array<int, AbstractNode<ASTVariable>>
+     * @return list<AbstractNode<ASTVariable>>
      * @todo Cover by a test.
      */
-    public function findChildrenOfTypeVariable()
+    public function findChildrenOfTypeVariable(): array
     {
         return $this->findChildrenOfType(ASTVariable::class);
     }
 
     /**
-     * Tests if this node represents the the given type.
+     * Tests if this node represents the given type.
      *
      * @template T of PDependNode
      *
@@ -208,17 +209,15 @@ abstract class AbstractNode
      *
      * @phpstan-assert-if-true static<T> $this
      */
-    public function isInstanceOf($class): bool
+    public function isInstanceOf(string $class): bool
     {
         return $this->node instanceof $class;
     }
 
     /**
      * Returns the image of the underlying node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->node->getImage();
     }
@@ -226,10 +225,8 @@ abstract class AbstractNode
     /**
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
-     *
-     * @return string|null
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->node->getImage();
     }
@@ -252,10 +249,8 @@ abstract class AbstractNode
 
     /**
      * Returns the name of the declaring source file.
-     *
-     * @return string|null
      */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         $compilationUnit = $this->node instanceof AbstractASTArtifact
             ? $this->node->getCompilationUnit()
@@ -271,17 +266,15 @@ abstract class AbstractNode
      *
      * @return TNode
      */
-    public function getNode()
+    public function getNode(): PDependNode
     {
         return $this->node;
     }
 
     /**
      * Returns a textual representation/name for the concrete node type.
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         $type = explode('\\', $this::class);
 
@@ -293,52 +286,39 @@ abstract class AbstractNode
      * <b>null</b> when no such metric exists.
      *
      * @param string $name The metric name or abbreviation.
-     * @return ?numeric $name
      */
-    public function getMetric($name)
+    public function getMetric(string $name): null|float|int
     {
-        if (isset($this->metrics[$name])) {
-            return $this->metrics[$name];
-        }
-
-        return null;
+        return $this->metrics[$name] ?? null;
     }
 
     /**
      * This method will set the metrics for this node.
      *
-     * @param array<string, mixed> $metrics The collected node metrics.
+     * @param array<string, float|int|null> $metrics The collected node metrics.
      */
     public function setMetrics(array $metrics): void
     {
-        if ($this->metrics === null) {
-            $this->metrics = $metrics;
-        }
+        $this->metrics ??= $metrics;
     }
 
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
-     *
-     * @return bool
      */
-    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule);
+    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule): bool;
 
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return ?string
      */
-    abstract public function getFullQualifiedName();
+    abstract public function getFullQualifiedName(): ?string;
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    abstract public function getParentName();
+    abstract public function getParentName(): ?string;
 
     /**
      * Returns the name of the parent package.
