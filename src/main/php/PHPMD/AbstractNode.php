@@ -289,17 +289,13 @@ abstract class AbstractNode
      */
     public function getMetric(string $name): null|float|int
     {
-        if (isset($this->metrics[$name])) {
-            return $this->metrics[$name];
-        }
-
-        return null;
+        return $this->metrics[$name] ?? null;
     }
 
     /**
      * This method will set the metrics for this node.
      *
-     * @param array<string, null|float|int> $metrics The collected node metrics.
+     * @param array<string, float|int|null> $metrics The collected node metrics.
      */
     public function setMetrics(array $metrics): void
     {
