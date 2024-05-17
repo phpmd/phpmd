@@ -22,6 +22,7 @@ use Exception;
 use org\bovigo\vfs\vfsStream;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
 use Throwable;
@@ -699,6 +700,17 @@ final class RuleSetFactoryTest extends AbstractTestCase
 
             self::assertNotEmpty($rule->getExternalInfoUrl(), $message);
         }
+    }
+
+    /**
+     * @covers \PHPMD\Exception\RuleNotFoundException
+     */
+    public function testCreateRuleSetFromYamlFileWithWrongRef(): void
+    {
+        self::expectExceptionObject(new RuleNotFoundException('CyclomaticComplexityPoof'));
+
+        $factory = new RuleSetFactory();
+        $factory->createSingleRuleSet(__DIR__ . '/../../resources/files/rulesets/phpmd-incorrect-ref.yml');
     }
 
     public function testCreateRuleSetFromYamlFile(): void
