@@ -218,13 +218,13 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         try {
             return new ReflectionFunction($functionName);
-        } catch (ReflectionException $exception) {
+        } catch (ReflectionException) {
             $chunks = explode('\\', $functionName);
 
             if (count($chunks) > 1) {
                 try {
                     return new ReflectionFunction(end($chunks));
-                } catch (ReflectionException $exception) {
+                } catch (ReflectionException) {
                 }
                 // @TODO: Find a way to handle user-land functions
                 // @TODO: Find a way to handle methods
