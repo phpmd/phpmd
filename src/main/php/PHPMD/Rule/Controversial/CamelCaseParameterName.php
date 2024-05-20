@@ -44,11 +44,11 @@ final class CamelCaseParameterName extends AbstractRule implements FunctionAware
         }
 
         foreach ($node->getParameters() as $parameter) {
-            if (!$this->isValid($parameter->getName())) {
+            if (!$this->isValid($parameter->getImage())) {
                 $this->addViolation(
                     $node,
                     [
-                        $parameter->getName(),
+                        $parameter->getImage(),
                     ]
                 );
             }

@@ -64,7 +64,7 @@ final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, M
         if (
             $parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
-            ($name = $parent->getName()) &&
+            ($name = $parent->getImage()) &&
             $this->getExceptionsList()->contains($name)
         ) {
             return;

@@ -670,7 +670,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     private function getNodeByName(Iterator $nodes, $name)
     {
         foreach ($nodes as $node) {
-            if ($node->getName() === $name) {
+            if ($node->getImage() === $name) {
                 return $node;
             }
         }
