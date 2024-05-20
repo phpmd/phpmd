@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -76,8 +77,10 @@ final class CamelCaseMethodName extends AbstractRule implements MethodAware
     private function isValid(string $methodName): bool
     {
         // disallow any consecutive uppercase letters
-        if ($this->getBooleanProperty('camelcase-abbreviations', false)
-            && preg_match('/[A-Z]{2}/', $methodName) === 1) {
+        if (
+            $this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $methodName) === 1
+        ) {
             return false;
         }
 

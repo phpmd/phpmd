@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -60,8 +61,10 @@ final class CamelCaseParameterName extends AbstractRule implements FunctionAware
     private function isValid(string $parameterName): bool
     {
         // disallow any consecutive uppercase letters
-        if ($this->getBooleanProperty('camelcase-abbreviations', false)
-            && preg_match('/[A-Z]{2}/', $parameterName) === 1) {
+        if (
+            $this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $parameterName) === 1
+        ) {
             return false;
         }
 

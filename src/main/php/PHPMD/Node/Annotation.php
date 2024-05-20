@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -66,10 +67,12 @@ final class Annotation
         if (in_array($this->value, ['PHPMD', 'PMD'], true)) {
             return true;
         }
-        if (preg_match(
-            '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
-            $this->value
-        )) {
+        if (
+            preg_match(
+                '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
+                $this->value
+            )
+        ) {
             return true;
         }
 

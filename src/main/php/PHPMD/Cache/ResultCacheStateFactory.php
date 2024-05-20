@@ -36,7 +36,8 @@ class ResultCacheStateFactory
      */
     private function createCacheKey(array $data)
     {
-        if (!array_key_exists('strict', $data) ||
+        if (
+            !array_key_exists('strict', $data) ||
             !array_key_exists('baselineHash', $data) ||
             !array_key_exists('rules', $data) ||
             !array_key_exists('composer', $data) ||

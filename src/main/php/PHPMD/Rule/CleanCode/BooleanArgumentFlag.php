@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -60,7 +61,8 @@ final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, M
         $currNode = $node->getNode();
         $parent = $currNode->getParent();
 
-        if ($parent &&
+        if (
+            $parent &&
             ($parent instanceof AbstractASTClassOrInterface) &&
             ($name = $parent->getImage()) &&
             $this->getExceptionsList()->contains($name)
