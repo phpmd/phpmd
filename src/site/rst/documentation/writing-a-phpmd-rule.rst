@@ -400,7 +400,7 @@ __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAw
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/InterfaceAware.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
-__ http://pmd.sf.net/
+__ https://pmd.github.io/
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
 __ https://phpmd.org/documentation/creating-a-ruleset.html
 
