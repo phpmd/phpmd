@@ -146,7 +146,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
         ini_set('xdebug.max_nesting_level', 8192);
 
         foreach ($this->artifacts as $node) {
-            $node->accept($this);
+            $this->dispatch($node);
         }
     }
 
