@@ -474,7 +474,7 @@ class RuleSetFactory
      */
     private function addProperty(Rule $rule, SimpleXMLElement $node): void
     {
-        $name = trim($node['name']);
+        $name = trim((string) $node['name']);
         $value = trim($this->getPropertyValue($node));
         if ($name !== '' && $value !== '') {
             $rule->addProperty($name, $value);

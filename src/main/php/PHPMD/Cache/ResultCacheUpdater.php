@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use OutOfBoundsException;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Report;
@@ -19,6 +20,7 @@ class ResultCacheUpdater
     /**
      * @param RuleSet[] $ruleSetList
      * @return ResultCacheState
+     * @throws OutOfBoundsException
      */
     public function update(array $ruleSetList, ResultCacheState $state, Report $report)
     {

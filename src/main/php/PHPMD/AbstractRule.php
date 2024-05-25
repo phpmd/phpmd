@@ -73,7 +73,7 @@ abstract class AbstractRule implements Rule
     private array $properties = [];
 
     /** The report for object for this rule. */
-    private ?Report $report = null;
+    private Report $report;
 
     /** Should this rule force the strict mode. */
     private bool $strict = false;
@@ -225,7 +225,7 @@ abstract class AbstractRule implements Rule
     /**
      * Returns the violation report for this rule.
      */
-    public function getReport(): ?Report
+    public function getReport(): Report
     {
         return $this->report;
     }
@@ -233,7 +233,7 @@ abstract class AbstractRule implements Rule
     /**
      * Sets the violation report for this rule.
      */
-    public function setReport(?Report $report): void
+    public function setReport(Report $report): void
     {
         $this->report = $report;
     }

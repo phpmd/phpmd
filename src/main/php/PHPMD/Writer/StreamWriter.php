@@ -29,9 +29,9 @@ final class StreamWriter extends AbstractWriter
     /**
      * The stream resource handle
      *
-     * @var ?resource
+     * @var resource
      */
-    private $stream = null;
+    private $stream;
 
     /**
      * Constructs a new stream writer instance.
@@ -56,7 +56,12 @@ final class StreamWriter extends AbstractWriter
             throw new RuntimeException($message);
         }
 
-        $this->stream = fopen($streamResourceOrUri, 'wb') ?: null;
+        $stream = fopen($streamResourceOrUri, 'wb');
+        if (!$stream) {
+            throw new RuntimeException('Cannot open "' . $streamResourceOrUri . '".');
+        }
+
+        $this->stream = $stream;
     }
 
     /**
@@ -67,7 +72,6 @@ final class StreamWriter extends AbstractWriter
         if ($this->stream !== STDOUT && $this->stream !== STDERR && is_resource($this->stream)) {
             @fclose($this->stream);
         }
-        $this->stream = null;
     }
 
     /**

@@ -121,12 +121,12 @@ interface Rule
     /**
      * Returns the violation report for this rule.
      */
-    public function getReport(): ?Report;
+    public function getReport(): Report;
 
     /**
      * Sets the violation report for this rule.
      */
-    public function setReport(?Report $report): void;
+    public function setReport(Report $report): void;
 
     /**
      * Adds a configuration property to this rule instance.
