@@ -43,7 +43,10 @@ final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumA
 
         $exceptions = $this->getExceptionsList();
         $fullNamespace = $node->getNamespaceName();
-        $namespaceNames = $fullNamespace === '' ? [] : explode('\\', $fullNamespace);
+        if (!$fullNamespace) {
+            return;
+        }
+        $namespaceNames = explode('\\', $fullNamespace);
 
         foreach ($namespaceNames as $namespaceName) {
             if (isset($exceptions[$namespaceName])) {

@@ -137,7 +137,9 @@ final class CountInLoopExpression extends AbstractRule implements ClassAware, En
      */
     private function isDirectChild(AbstractNode $loop, AbstractNode $expression)
     {
-        return $this->getHash($expression->getParent()->getNode()) !== $this->getHash($loop->getNode());
+        $parent = $expression->getParent();
+
+        return $parent && $this->getHash($parent->getNode()) !== $this->getHash($loop->getNode());
     }
 
     /**

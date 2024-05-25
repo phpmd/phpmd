@@ -137,7 +137,7 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
         $child = $postfix->getFirstChildOfType(ASTIdentifier::class);
 
         $parent = $postfix->getParent();
-        if ($parent->isInstanceOf(ASTMemberPrimaryPrefix::class) && $parent->isStatic()) {
+        if ($parent?->isInstanceOf(ASTMemberPrimaryPrefix::class) && $parent->isStatic()) {
             $image = '';
             $child = $postfix->getFirstChildOfType(ASTVariable::class);
         }
@@ -157,12 +157,12 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
     private function isValidPropertyNode(AbstractNode $node)
     {
         $parent = $node->getParent();
-        while (!$parent->isInstanceOf(ASTPropertyPostfix::class)) {
-            if ($parent->isInstanceOf(ASTCompoundVariable::class)) {
+        while (!$parent?->isInstanceOf(ASTPropertyPostfix::class)) {
+            if ($parent?->isInstanceOf(ASTCompoundVariable::class)) {
                 return false;
             }
-            $parent = $parent->getParent();
-            if (is_null($parent)) {
+            $parent = $parent?->getParent();
+            if (!$parent) {
                 return false;
             }
         }
@@ -198,13 +198,18 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     private function getOwner(AbstractNode $postfix)
     {
-        $owner = $postfix->getParent()->getChild(0);
-        if ($owner->isInstanceOf(ASTPropertyPostfix::class)) {
-            $owner = $owner->getParent()->getParent()->getChild(0);
+        $owner = $postfix->getParent()?->getChild(0);
+
+        if ($owner?->isInstanceOf(ASTPropertyPostfix::class)) {
+            $owner = $owner->getParent()?->getParent()?->getChild(0);
         }
 
-        if ($owner->getParent()->isInstanceOf(ASTArrayIndexExpression::class)) {
-            $owner = $owner->getParent()->getParent()->getChild(0);
+        $parent = $owner?->getParent();
+        if ($parent?->isInstanceOf(ASTArrayIndexExpression::class)) {
+            $owner = $parent->getParent()?->getChild(0);
+        }
+        if (!$owner) {
+            throw new OutOfBoundsException();
         }
 
         return $owner;

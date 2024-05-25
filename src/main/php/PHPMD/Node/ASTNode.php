@@ -85,7 +85,7 @@ final class ASTNode extends AbstractNode
      */
     public function getFileName()
     {
-        return $this->fileName;
+        return $this->fileName ?? '';
     }
 
     /**

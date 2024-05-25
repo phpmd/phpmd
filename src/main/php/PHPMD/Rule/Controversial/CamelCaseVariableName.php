@@ -99,7 +99,7 @@ final class CamelCaseVariableName extends AbstractRule implements FunctionAware,
             return true;
         }
 
-        if ($variable->getParent()->isInstanceOf(ASTPropertyPostfix::class)) {
+        if ($variable->getParent()?->isInstanceOf(ASTPropertyPostfix::class)) {
             return true;
         }
 

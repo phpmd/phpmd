@@ -41,7 +41,7 @@ final class EmptyCatchBlock extends AbstractRule implements FunctionAware, Metho
     {
         foreach ($node->findChildrenOfType(ASTCatchStatement::class) as $catchBlock) {
             $scope = $catchBlock->getFirstChildOfType(ASTScopeStatement::class);
-            if (count($scope->getChildren()) === 0) {
+            if (!$scope || count($scope->getChildren()) === 0) {
                 $this->addViolation($catchBlock, [$node->getName()]);
             }
         }

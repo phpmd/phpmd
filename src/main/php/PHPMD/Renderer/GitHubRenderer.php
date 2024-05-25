@@ -37,7 +37,7 @@ final class GitHubRenderer extends AbstractRenderer
 
         foreach ($report->getRuleViolations() as $violation) {
             $writer->write('::warning file=');
-            $writer->write($violation->getFileName());
+            $writer->write((string) $violation->getFileName());
             $writer->write(',line=');
             $writer->write((string) $violation->getBeginLine());
             $writer->write('::');

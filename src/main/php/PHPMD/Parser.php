@@ -233,7 +233,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitFunction(ASTFunction $node): void
     {
-        if ($node->getCompilationUnit()->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null) {
             return;
         }
 
@@ -267,7 +267,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitMethod(ASTMethod $node): void
     {
-        if ($node->getCompilationUnit()->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null) {
             return;
         }
 

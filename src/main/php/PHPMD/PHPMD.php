@@ -208,7 +208,7 @@ class PHPMD
      * argument. The result will be passed to all given renderer instances.
      *
      * @param string             $inputPath
-     * @param string[]|null      $ignorePattern
+     * @param string[]      $ignorePattern
      * @param AbstractRenderer[] $renderers
      * @param RuleSet[]          $ruleSetList
      * @throws Exception

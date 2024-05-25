@@ -19,7 +19,7 @@ class BaselineValidator
     {
         $contains = $this->baselineSet->contains(
             $violation->getRule()::class,
-            $violation->getFileName(),
+            (string) $violation->getFileName(),
             $violation->getMethodName()
         );
 
