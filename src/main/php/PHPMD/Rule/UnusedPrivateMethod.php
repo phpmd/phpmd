@@ -204,7 +204,10 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     private function isClassScope(ClassNode $class, AbstractNode $postfix)
     {
-        $owner = $postfix->getParent()->getChild(0);
+        $owner = $postfix->getParent()?->getChild(0);
+        if (!$owner) {
+            return false;
+        }
 
         return (
             $owner->isInstanceOf(ASTMethodPostfix::class) ||

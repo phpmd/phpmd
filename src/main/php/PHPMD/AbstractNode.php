@@ -228,7 +228,7 @@ abstract class AbstractNode
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
      *
-     * @return string|null
+     * @return string
      */
     public function getName()
     {
@@ -286,7 +286,9 @@ abstract class AbstractNode
     {
         $type = explode('\\', $this::class);
 
-        return preg_replace('(node$)', '', strtolower(array_pop($type)));
+        $type = strtolower(array_pop($type));
+
+        return preg_replace('(node$)', '', $type) ?? $type;
     }
 
     /**

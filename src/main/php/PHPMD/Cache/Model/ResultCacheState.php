@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache\Model;
 
+use OutOfBoundsException;
 use PHPMD\Node\NodeInfo;
 use PHPMD\Rule;
 use PHPMD\RuleSet;
@@ -72,6 +73,7 @@ class ResultCacheState
      * @param string $basePath
      * @param list<RuleSet> $ruleSetList
      * @return list<RuleViolation>
+     * @throws OutOfBoundsException
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
@@ -146,7 +148,8 @@ class ResultCacheState
     /**
      * @param string    $ruleClassName
      * @param RuleSet[] $ruleSetList
-     * @return Rule|null
+     * @return Rule
+     * @throws OutOfBoundsException
      */
     private static function findRuleIn($ruleClassName, array $ruleSetList)
     {
@@ -158,6 +161,6 @@ class ResultCacheState
             }
         }
 
-        return null;
+        throw new OutOfBoundsException();
     }
 }

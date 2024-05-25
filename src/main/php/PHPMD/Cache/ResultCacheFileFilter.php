@@ -53,7 +53,7 @@ class ResultCacheFileFilter implements Filter
         if ($hash !== false) {
             $this->newState->setFileState($filePath, $hash);
         }
-        if (!$isModified) {
+        if (!$isModified && $this->state) {
             // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
         }

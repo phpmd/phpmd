@@ -502,7 +502,7 @@ class CommandLineOptions
      * Returns a hash with report files specified for different renderers. The
      * key represents the report format and the value the report file location.
      *
-     * @return array<string, string|null>
+     * @return array<string, string>
      */
     public function getReportFiles()
     {
