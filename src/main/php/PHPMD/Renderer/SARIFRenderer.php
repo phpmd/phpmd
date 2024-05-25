@@ -135,7 +135,7 @@ final class SARIFRenderer extends JSONRenderer
                 'locations' => [
                     [
                         'physicalLocation' => [
-                            'artifactLocation' => self::pathToArtifactLocation($violation->getFileName()),
+                            'artifactLocation' => self::pathToArtifactLocation((string) $violation->getFileName()),
                             'region' => [
                                 'startLine' => $violation->getBeginLine(),
                                 'endLine' => $violation->getEndLine(),

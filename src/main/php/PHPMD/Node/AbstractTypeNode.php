@@ -76,7 +76,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getNamespace()->getImage();
+        return $this->getNode()->getNamespace()?->getImage();
     }
 
     /**

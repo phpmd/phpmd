@@ -46,7 +46,7 @@ final class ConstructorWithNameAsEnclosingClass extends AbstractRule implements 
         if ($node->getNode()->getParent() instanceof ASTTrait) {
             return;
         }
-        if (strcasecmp($node->getName(), $node->getParentName()) !== 0) {
+        if (strcasecmp($node->getName(), (string) $node->getParentName()) !== 0) {
             return;
         }
         if ($node->getParentType() instanceof InterfaceNode) {

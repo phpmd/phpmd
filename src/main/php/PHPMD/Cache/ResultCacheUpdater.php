@@ -37,7 +37,7 @@ class ResultCacheUpdater
 
         // add violations from the report to the result cache
         foreach ($newViolations as $violation) {
-            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $filePath = Paths::getRelativePath($this->basePath, (string) $violation->getFileName());
             $state->addRuleViolation($filePath, $violation);
         }
 

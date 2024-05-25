@@ -32,7 +32,7 @@ class FunctionNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getNamespace()->getImage();
+        return $this->getNode()->getNamespace()?->getImage();
     }
 
     /**

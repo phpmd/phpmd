@@ -91,11 +91,15 @@ abstract class AbstractLocalVariable extends AbstractRule
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
-        if ($parent->isInstanceOf(ASTPropertyPostfix::class)) {
+        if ($parent?->isInstanceOf(ASTPropertyPostfix::class)) {
             $primaryPrefix = $parent->getParent();
-            $primaryPrefixParent = $primaryPrefix->getParent();
-            if ($primaryPrefixParent->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
+            $primaryPrefixParent = $primaryPrefix?->getParent();
+            if ($primaryPrefixParent?->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
                 return !$primaryPrefixParent->isStatic();
+            }
+
+            if (!$primaryPrefix) {
+                return false;
             }
 
             return ($parent->getChild(0)->getNode() !== $node->getNode()
@@ -136,9 +140,13 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function isWrappedByIndexExpression(AbstractNode $node)
     {
-        return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
-            || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)
-        );
+        $parent = $node->getParent();
+        if (!$parent) {
+            return false;
+        }
+
+        return $parent->isInstanceOf(ASTArrayIndexExpression::class)
+            || $parent->isInstanceOf(ASTStringIndexExpression::class);
     }
 
     /**
@@ -195,7 +203,7 @@ abstract class AbstractLocalVariable extends AbstractRule
             $postfix = $postfix->getParent();
         } while ($postfix?->getChildren() && $postfix->getChild(0)->getImage() === $image);
 
-        $previousChildImage = $postfix->getChild(0)->getImage();
+        $previousChildImage = $postfix?->getChild(0)->getImage();
 
         if (
             $postfix instanceof ASTMemberPrimaryPrefix &&

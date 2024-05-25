@@ -377,7 +377,7 @@ final class HTMLRenderer extends AbstractRenderer
             // Get excerpt of the code from validated file.
             $excerptHtml = null;
             $excerpt = self::getLineExcerpt(
-                $violation->getFileName(),
+                (string) $violation->getFileName(),
                 $violation->getBeginLine(),
                 $this->extraLineInExcerpt
             );
@@ -390,7 +390,7 @@ final class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . '</a>';
+            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile((string) $filePath) . '</a>';
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
@@ -500,7 +500,7 @@ final class HTMLRenderer extends AbstractRenderer
             $definition = reset($definition);
 
             return "<span class='hlt-info {$definition}'>{$matches[0]}</span>";
-        }, $message);
+        }, $message) ?? $message;
     }
 
     /**

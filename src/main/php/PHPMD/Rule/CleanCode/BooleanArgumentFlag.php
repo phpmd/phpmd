@@ -99,9 +99,9 @@ final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, M
     {
         foreach ($node->findChildrenOfType(ASTFormalParameter::class) as $param) {
             $declarator = $param->getFirstChildOfType(ASTVariableDeclarator::class);
-            $value = $declarator->getValue();
+            $value = $declarator?->getValue();
 
-            if (!$this->isBooleanValue($value)) {
+            if (!$value || !$this->isBooleanValue($value)) {
                 continue;
             }
 

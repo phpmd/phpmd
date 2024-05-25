@@ -505,7 +505,7 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     * @return list<string>|null
+     * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
@@ -542,7 +542,7 @@ class RuleSetFactory
             return $excludes;
         }
 
-        return null;
+        return [];
     }
 
     /**
