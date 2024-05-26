@@ -21,7 +21,6 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PHPMD\AbstractTestCase;
-use Sindelfingen\MyTrait;
 
 /**
  * Test case for the trait node implementation.
@@ -41,7 +40,7 @@ class TraitNodeTest extends AbstractTestCase
 
         $node = new TraitNode($trait);
 
-        static::assertSame(MyTrait::class, $node->getFullQualifiedName());
+        static::assertSame('Sindelfingen\\MyTrait', $node->getFullQualifiedName());
     }
 
     public function testGetConstantCountReturnsZeroByDefault(): void

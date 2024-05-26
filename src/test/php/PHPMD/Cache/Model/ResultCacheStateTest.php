@@ -40,7 +40,19 @@ class ResultCacheStateTest extends TestCase
      */
     public function testGetSetViolations(): void
     {
-        $violations = ['violations'];
+        $violations = [[
+            'metric' => null,
+            'violations' => 100,
+            'namespaceName' => null,
+            'className' => null,
+            'methodName' => null,
+            'functionName' => null,
+            'description' => '',
+            'beginLine' => 0,
+            'endLine' => 0,
+            'rule' => '',
+            'args' => null,
+        ]];
 
         static::assertCount(0, $this->state->getViolations('/file/path'));
 
@@ -63,7 +75,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -104,7 +116,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -131,7 +143,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation(
             $rule,
@@ -175,7 +187,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
         $this->state->setFileState('/file/path', 'hash');

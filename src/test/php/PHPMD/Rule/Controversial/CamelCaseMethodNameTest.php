@@ -249,7 +249,9 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     protected function getMethod()
     {
         $methods = $this->getClass()->getMethods();
+        $method = reset($methods);
+        static::assertNotFalse($method);
 
-        return reset($methods);
+        return $method;
     }
 }

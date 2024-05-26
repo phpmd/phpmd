@@ -35,7 +35,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, '1');
 
@@ -50,7 +49,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'on');
 
@@ -65,7 +63,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'true');
 
@@ -80,7 +77,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'True');
 
@@ -95,7 +91,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetBooleanPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
         static::assertTrue($rule->getBooleanProperty(__FUNCTION__, true));
@@ -109,7 +104,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetIntPropertyReturnsValueOfTypeInteger(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, '42.3');
 
@@ -126,7 +120,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getIntProperty(__FUNCTION__);
     }
@@ -139,10 +132,9 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetIntPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
-        static::assertSame(123, $rule->getIntProperty(__FUNCTION__, '123'));
+        static::assertSame(123, $rule->getIntProperty(__FUNCTION__, 123));
     }
 
     /**
@@ -155,7 +147,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getBooleanProperty(__FUNCTION__);
     }
@@ -170,7 +161,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getStringProperty(__FUNCTION__);
     }
@@ -183,7 +173,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetStringPropertyReturnsString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'Forty Two');
 
@@ -198,7 +187,6 @@ class RuleTest extends AbstractTestCase
      */
     public function testGetStringPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
         static::assertSame('fallback', $rule->getStringProperty(__FUNCTION__, 'fallback'));

@@ -180,10 +180,8 @@ class ReportTest extends AbstractTestCase
 
     public function testReportShouldIgnoreBaselineViolation(): void
     {
-        /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
 
-        /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline
@@ -204,10 +202,8 @@ class ReportTest extends AbstractTestCase
 
     public function testReportShouldIgnoreNewViolationsOnBaselineUpdate(): void
     {
-        /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
 
-        /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline

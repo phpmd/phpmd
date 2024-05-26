@@ -144,15 +144,15 @@ class TooManyPublicMethodsTest extends AbstractTestCase
 
         static::assertCount(1, $violations);
 
-        static::assertSame(6, $violations[0]->getBeginLine());
+        static::assertSame(6, $violations[0]?->getBeginLine());
     }
 
     /**
      * Creates a prepared class node mock
      *
      * @param int $numberOfMethods
-     * @param array|null $publicMethods
-     * @param array|null $privateMethods
+     * @param array<string> $publicMethods
+     * @param array<string> $privateMethods
      * @return ClassNode
      */
     private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = [])
@@ -162,8 +162,8 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $class->expects(static::any())
             ->method('getMethods')
             ->will(static::returnValue([
-                ...array_map([$this, 'createPublicMethod'], $publicMethods),
-                ...array_map([$this, 'createPrivateMethod'], $privateMethods),
+                ...array_map($this->createPublicMethod(...), $publicMethods),
+                ...array_map($this->createPrivateMethod(...), $privateMethods),
             ]));
 
         return $class;
@@ -172,7 +172,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     /**
      * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
      */
-    private function createPublicMethod($methodName)
+    private function createPublicMethod(string $methodName): MethodNode
     {
         $astMethod = new ASTMethod($methodName);
         $astMethod->setModifiers(State::IS_PUBLIC);
@@ -183,7 +183,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     /**
      * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
      */
-    private function createPrivateMethod($methodName)
+    private function createPrivateMethod(string $methodName): MethodNode
     {
         $astMethod = new ASTMethod($methodName);
 

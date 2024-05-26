@@ -78,6 +78,9 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
             ]
         );
 
-        return file_get_contents($reportfile);
+        $content = file_get_contents($reportfile);
+        static::assertNotFalse($content);
+
+        return $content;
     }
 }

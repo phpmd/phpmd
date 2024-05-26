@@ -16,7 +16,9 @@ class OutputTest extends AbstractTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->output = new TestOutput();
+        $stream = fopen('php://memory', 'w+b');
+        static::assertIsResource($stream);
+        $this->output = new TestOutput($stream);
     }
 
     /**
@@ -73,7 +75,10 @@ class OutputTest extends AbstractTestCase
         static::assertSame($expected, $this->output->getOutput(), $msg);
     }
 
-    public static function verbosityProvider()
+    /**
+     * @return list<mixed>
+     */
+    public static function verbosityProvider(): array
     {
         return [
             [

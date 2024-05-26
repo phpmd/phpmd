@@ -23,8 +23,6 @@ use org\bovigo\vfs\vfsStream;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
-use PHPMD\Stubs\ClassFileNotFoundRule;
-use PHPMD\Stubs\ClassNotFoundRule;
 use RuntimeException;
 
 /**
@@ -514,7 +512,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath(): void
     {
         self::expectExceptionObject(new RuleClassFileNotFoundException(
-            ClassFileNotFoundRule::class,
+            'PHPMD\\Stubs\\ClassFileNotFoundRule',
         ));
 
         $fileName = self::createFileUri('rulesets/set-class-file-not-found.xml');
@@ -532,7 +530,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass(): void
     {
         self::expectExceptionObject(new RuleClassNotFoundException(
-            ClassNotFoundRule::class,
+            'PHPMD\\Stubs\\ClassNotFoundRule',
         ));
         $fileName = self::createFileUri('rulesets/set-class-not-found.xml');
         $factory = new RuleSetFactory();
@@ -648,7 +646,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $this->createRuleSetsFromFiles($file);
         $ruleSet = $ruleSets[0];
 
-        /** @var Rule $rule */
         foreach ($ruleSet->getRules() as $rule) {
             $message = sprintf(
                 '%s in rule set %s should provide an externalInfoUrl',
@@ -662,10 +659,12 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * Provides an array of the file paths to rule sets provided with PHPMD
+     *
+     * @return array<array<string>>
      */
     public static function getDefaultRuleSets(): array
     {
-        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml'));
+        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml') ?: []);
     }
 
     /**
@@ -704,7 +703,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     /**
      * Sets up files and directories for XML rule file access test
      *
-     * @return array Paths to test against
+     * @return list<string> Paths to test against
      */
     public function getPathsForFileAccessTest()
     {

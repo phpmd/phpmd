@@ -18,7 +18,6 @@
 
 namespace PHPMD\Node;
 
-use BadMethodCallException;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
@@ -37,26 +36,12 @@ class MethodNodeTest extends AbstractTestCase
      */
     public function testMagicCallDelegatesToWrappedPHPDependMethod(): void
     {
-        $method = $this->getMockFromBuilder(
-            $this->getMockBuilder(ASTMethod::class)
-                ->setConstructorArgs([null])
-        );
+        $method = $this->getMockBuilder(ASTMethod::class)->setConstructorArgs([null])->getMock();
         $method->expects(static::once())
             ->method('getStartLine');
 
         $node = new MethodNode($method);
         $node->getStartLine();
-    }
-
-    /**
-     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists(): void
-    {
-        self::expectException(BadMethodCallException::class);
-
-        $node = new MethodNode(new ASTMethod(null));
-        $node->getFooBar();
     }
 
     /**

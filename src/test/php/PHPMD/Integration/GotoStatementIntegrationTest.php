@@ -47,7 +47,9 @@ class GotoStatementIntegrationTest extends AbstractTestCase
                 $file,
             ]
         );
+        $content = file_get_contents($file);
 
-        static::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
+        static::assertNotFalse($content);
+        static::assertStringContainsString('utilizes a goto statement.', $content);
     }
 }

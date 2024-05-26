@@ -36,10 +36,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn($uri);
@@ -60,10 +57,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri));
@@ -85,10 +79,7 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri1 . ',' . $uri2));
@@ -110,7 +101,7 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File/Test.php');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder($this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput']));
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri1 . ',' . $uri2));
@@ -131,10 +122,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getIgnorePatterns', 'getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getIgnorePatterns', 'getInput'])->getMock();
         $phpmd->expects(static::exactly(2))
             ->method('getIgnorePatterns')
             ->willReturn(['Test']);
@@ -154,10 +142,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getFileExtensions', 'getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getFileExtensions', 'getInput'])->getMock();
         $phpmd->expects(static::exactly(2))
             ->method('getFileExtensions')
             ->willReturn(['.php']);

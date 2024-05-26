@@ -29,7 +29,7 @@ final class RuleClassFileNotFoundException extends RuntimeException
     /**
      * Constructs a new class file not found exception.
      *
-     * @param class-string $className The rule class name.
+     * @param string $className The rule class name.
      */
     public function __construct(string $className)
     {

@@ -33,7 +33,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToClassNameAboveThreshold(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 43);
+        $rule->addProperty('minimum', '43');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -44,7 +44,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameBelowThreshold(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 41);
+        $rule->addProperty('minimum', '41');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
@@ -55,7 +55,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToInterfaceNameAboveThreshold(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 47);
+        $rule->addProperty('minimum', '47');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getInterface());
     }
@@ -66,7 +66,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleAppliesToInterfaceNameBelowThreshold(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 45);
+        $rule->addProperty('minimum', '45');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getInterface());
     }
@@ -77,7 +77,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToClassNameBelowThresholdInExceptions(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 61);
+        $rule->addProperty('minimum', '61');
         $rule->addProperty('exceptions', 'testRuleNotAppliesToClassNameBelowThresholdInExceptions');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
@@ -89,7 +89,7 @@ class ShortClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameBelowThresholdNotInExceptions(): void
     {
         $rule = new ShortClassName();
-        $rule->addProperty('minimum', 56);
+        $rule->addProperty('minimum', '56');
         $rule->addProperty('exceptions', 'RandomClassName');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());

@@ -28,9 +28,9 @@ class WriterStub extends AbstractWriter
     /**
      * The written data chunks.
      *
-     * @var array
+     * @var array<string>
      */
-    public $chunks = [];
+    public array $chunks = [];
 
     /**
      * Writes a data string to the concrete output.
@@ -55,7 +55,7 @@ class WriterStub extends AbstractWriter
     /**
      * Returns the written data chunks.
      *
-     * @return array
+     * @return array<string>
      */
     public function getChunks()
     {

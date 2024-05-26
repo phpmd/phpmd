@@ -336,7 +336,9 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply(reset($methods));
+        $method = reset($methods);
+        static::assertNotFalse($method);
+        $rule->apply($method);
     }
 
     /**

@@ -39,7 +39,7 @@ class LongMethodTest extends AbstractTestCase
         $rule = new LongMethod();
         $rule->setReport($report);
         $rule->addProperty('minimum', '41');
-        $rule->addProperty('ignore-whitespace', false);
+        $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($method);
     }
 
@@ -55,7 +55,7 @@ class LongMethodTest extends AbstractTestCase
         $rule = new LongMethod();
         $rule->setReport($report);
         $rule->addProperty('minimum', '42');
-        $rule->addProperty('ignore-whitespace', false);
+        $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($method);
     }
 
@@ -71,7 +71,7 @@ class LongMethodTest extends AbstractTestCase
         $rule = new LongMethod();
         $rule->setReport($report);
         $rule->addProperty('minimum', '23');
-        $rule->addProperty('ignore-whitespace', false);
+        $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($method);
     }
 
@@ -86,7 +86,7 @@ class LongMethodTest extends AbstractTestCase
         $rule = new LongMethod();
         $rule->setReport($report);
         $rule->addProperty('minimum', '23');
-        $rule->addProperty('ignore-whitespace', true);
+        $rule->addProperty('ignore-whitespace', '1');
         $rule->apply($class);
     }
 }

@@ -27,20 +27,19 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /** @var MockObject&ResultCacheStateFactory */
     private $stateFactory;
 
-    /** @var ResultCacheUpdater */
-    private $engineFactory;
+    private ResultCacheEngineFactory $engineFactory;
 
     protected function setUp(): void
     {
-        $this->options = $this->getMockFromBuilder(
-            $this->getMockBuilder(CommandLineOptions::class)->disableOriginalConstructor()
-        );
-        $this->keyFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheKeyFactory::class)->disableOriginalConstructor()
-        );
-        $this->stateFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheStateFactory::class)->disableOriginalConstructor()
-        );
+        $this->options = $this->getMockBuilder(CommandLineOptions::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->keyFactory = $this->getMockBuilder(ResultCacheKeyFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->stateFactory = $this->getMockBuilder(ResultCacheStateFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->engineFactory = new ResultCacheEngineFactory(new NullOutput(), $this->keyFactory, $this->stateFactory);
     }

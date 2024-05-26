@@ -71,13 +71,13 @@ class SARIFRendererTest extends AbstractTestCase
         $actual = json_decode($writer->getData(), true);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
-        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
+        $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
+        $expected = file_get_contents(__DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif');
 
+        static::assertNotFalse($expected);
         static::assertSame(
-            json_encode($actual, $flags),
-            json_encode(json_decode(file_get_contents(
-                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif'
-            )), $flags)
+            json_encode(json_decode($expected), $flags),
+            json_encode($actual, $flags)
         );
     }
 
@@ -109,19 +109,20 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+
         $data = strtr($writer->getData(), [
-            substr(json_encode(realpath(__DIR__ . '/../../../resources/files')), 1, -1) => '#{rootDirectory}',
+            substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1) => '#{rootDirectory}',
             'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
         ]);
         $actual = json_decode($data, true);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
-        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
+        $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
+        $expected = file_get_contents(__DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif');
 
+        static::assertNotFalse($expected);
         static::assertSame(
-            json_encode(json_decode(file_get_contents(
-                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
-            )), $flags),
+            json_encode(json_decode($expected), $flags),
             json_encode($actual, $flags)
         );
     }

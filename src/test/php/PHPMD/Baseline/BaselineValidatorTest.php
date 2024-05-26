@@ -14,27 +14,21 @@ use Throwable;
  */
 class BaselineValidatorTest extends AbstractTestCase
 {
-    /** @var BaselineSet|MockObject */
+    /** @var BaselineSet&MockObject */
     private $baselineSet;
 
-    /** @var MockObject|RuleViolation */
+    /** @var MockObject&RuleViolation */
     private $violation;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $rule = $this->getMockFromBuilder(
-            $this->getMockBuilder(Rule::class)->disableOriginalConstructor()
-        );
-        $this->violation = $this->getMockFromBuilder(
-            $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()
-        );
+        $rule = $this->getMockBuilder(Rule::class)->disableOriginalConstructor()->getMock();
+        $this->violation = $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()->getMock();
         $this->violation
             ->method('getRule')
             ->willReturn($rule);
-        $this->baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
-        );
+        $this->baselineSet = $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
@@ -49,6 +43,9 @@ class BaselineValidatorTest extends AbstractTestCase
         static::assertSame($isBaselined, $validator->isBaselined($this->violation));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public static function dataProvider(): array
     {
         return [

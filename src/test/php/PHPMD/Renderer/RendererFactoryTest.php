@@ -15,7 +15,9 @@ class RendererFactoryTest extends AbstractTestCase
      */
     public function testCreateBaselineRendererSuccessfully(): void
     {
-        $writer = new StreamWriter(tmpfile());
+        $path = tmpfile();
+        static::assertIsResource($path);
+        $writer = new StreamWriter($path);
         $renderer = RendererFactory::createBaselineRenderer($writer);
 
         static::assertSame($writer, $renderer->getWriter());

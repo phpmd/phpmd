@@ -33,7 +33,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToClassNameBelowThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 44);
+        $rule->addProperty('maximum', '44');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -44,7 +44,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameAboveThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 39);
+        $rule->addProperty('maximum', '39');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
@@ -55,7 +55,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToInterfaceNameBelowThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 47);
+        $rule->addProperty('maximum', '47');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getInterface());
     }
@@ -66,7 +66,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToInterfaceNameAboveThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 43);
+        $rule->addProperty('maximum', '43');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getInterface());
     }
@@ -77,7 +77,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToTraitNameAboveThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 39);
+        $rule->addProperty('maximum', '39');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getTrait());
     }
@@ -88,7 +88,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToEnumNameAboveThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 38);
+        $rule->addProperty('maximum', '38');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getEnum());
     }
@@ -100,7 +100,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleNotAppliesToClassNameLengthWithSuffixSubtractedBelowThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 60);
+        $rule->addProperty('maximum', '60');
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
@@ -112,7 +112,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 56);
+        $rule->addProperty('maximum', '56');
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -125,7 +125,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameLengthWithoutSuffixSubtracted(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 54);
+        $rule->addProperty('maximum', '54');
         $rule->addProperty('subtract-suffixes', 'Threshold');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -138,7 +138,7 @@ class LongClassNameTest extends AbstractTestCase
     public function testRuleAppliesToClassNameWithPrefixMatched(): void
     {
         $rule = new LongClassName();
-        $rule->addProperty('maximum', 45);
+        $rule->addProperty('maximum', '45');
         $rule->addProperty('subtract-prefixes', 'testRule,testRuleApplies');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());

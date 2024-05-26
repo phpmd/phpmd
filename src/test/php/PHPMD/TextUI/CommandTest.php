@@ -28,7 +28,7 @@ use PHPMD\Utility\Paths;
  */
 class CommandTest extends AbstractTestCase
 {
-    /** @var resource */
+    /** @var ?resource */
     private $stderrStreamFilter;
 
     protected function tearDown(): void
@@ -42,6 +42,7 @@ class CommandTest extends AbstractTestCase
     }
 
     /**
+     * @param ?array<string> $options
      * @dataProvider dataProviderTestMainWithOption
      */
     public function testMainStrictOptionIsOfByDefault(
@@ -65,6 +66,9 @@ class CommandTest extends AbstractTestCase
         static::assertEquals($expectedExitCode, $exitCode);
     }
 
+    /**
+     * @return list<list<mixed>>
+     */
     public static function dataProviderTestMainWithOption(): array
     {
         return [
@@ -167,6 +171,7 @@ class CommandTest extends AbstractTestCase
     public function testOutput(): void
     {
         $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        static::assertIsString($uri);
         $temp = self::createTempFileUri();
         $exitCode = Command::main([
             __FILE__,
@@ -207,6 +212,9 @@ class CommandTest extends AbstractTestCase
         static::assertEquals(ExitCode::Success, $exitCode);
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function dataProviderWithFilter(): array
     {
         return [
@@ -217,7 +225,9 @@ class CommandTest extends AbstractTestCase
 
     public function testMainGenerateBaseline(): void
     {
-        $uri = str_replace('\\', '/', realpath(self::createFileUri('source/source_with_anonymous_class.php')));
+        $path = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
+        static::assertIsString($path);
+        $uri = str_replace('\\', '/', $path);
         $temp = self::createTempFileUri();
         $exitCode = Command::main([
             __FILE__,
@@ -231,7 +241,11 @@ class CommandTest extends AbstractTestCase
 
         static::assertSame(ExitCode::Success, $exitCode);
         static::assertFileExists($temp);
-        static::assertStringContainsString(Paths::getRelativePath(getcwd(), $uri), file_get_contents($temp));
+        $cwd = getcwd();
+        static::assertIsString($cwd);
+        $tempData = file_get_contents($temp);
+        static::assertIsString($tempData);
+        static::assertStringContainsString(Paths::getRelativePath($cwd, $uri), $tempData);
     }
 
     /**
@@ -264,16 +278,19 @@ class CommandTest extends AbstractTestCase
         ]);
 
         static::assertSame(ExitCode::Success, $exitCode);
-        static::assertXmlStringEqualsXmlString(
-            file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml')),
-            file_get_contents($baselineTemp)
-        );
+        $expectedXml = file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml'));
+        static::assertIsString($expectedXml);
+        $actualXml = file_get_contents($baselineTemp);
+        static::assertIsString($actualXml);
+        static::assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
     public function testMainBaselineViolationShouldBeIgnored(): void
     {
         $sourceFile = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
+        static::assertIsString($sourceFile);
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
+        static::assertIsString($baselineFile);
         $exitCode = Command::main([
             __FILE__,
             $sourceFile,
@@ -290,7 +307,9 @@ class CommandTest extends AbstractTestCase
     {
         stream_filter_register('stderr_stream', StreamFilter::class);
 
-        $this->stderrStreamFilter = stream_filter_prepend(STDERR, 'stderr_stream');
+        $stream = stream_filter_prepend(STDERR, 'stderr_stream');
+        static::assertIsResource($stream);
+        $this->stderrStreamFilter = $stream;
 
         Command::main(
             [
@@ -310,6 +329,7 @@ class CommandTest extends AbstractTestCase
     public function testMainWritesExceptionMessageToErrorFileIfSpecified(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
+        static::assertIsString($file);
 
         Command::main(
             [
@@ -328,6 +348,7 @@ class CommandTest extends AbstractTestCase
         static::assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
 
         $file = tempnam(sys_get_temp_dir(), 'err');
+        static::assertIsString($file);
 
         Command::main(
             [
@@ -366,6 +387,7 @@ class CommandTest extends AbstractTestCase
     public function testOutputDeprecation(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
+        static::assertIsString($file);
 
         Command::main(
             [
@@ -393,7 +415,9 @@ class CommandTest extends AbstractTestCase
     {
         stream_filter_register('stderr_stream', StreamFilter::class);
 
-        $this->stderrStreamFilter = stream_filter_prepend(STDOUT, 'stderr_stream');
+        $stream = stream_filter_prepend(STDOUT, 'stderr_stream');
+        static::assertIsResource($stream);
+        $this->stderrStreamFilter = $stream;
 
         Command::main(
             [
@@ -403,6 +427,7 @@ class CommandTest extends AbstractTestCase
         );
 
         $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        static::assertIsArray($data);
         $version = $data['project.version'];
 
         static::assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));

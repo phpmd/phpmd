@@ -51,6 +51,8 @@ class ProcessingErrorTest extends AbstractTestCase
     /**
      * Data provider that returns common exception messages used by PHP_Depend's
      * parser.
+     *
+     * @return list<mixed>
      */
     public static function getParserExceptionMessages(): array
     {

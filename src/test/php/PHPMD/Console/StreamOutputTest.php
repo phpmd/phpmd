@@ -16,6 +16,7 @@ class StreamOutputTest extends TestCase
     public function testDoWrite(): void
     {
         $stream = fopen('php://memory', 'w+b');
+        static::assertIsResource($stream);
         $output = new StreamOutput($stream);
         $output->write('message');
 

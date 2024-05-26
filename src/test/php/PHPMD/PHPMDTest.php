@@ -23,7 +23,6 @@ use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the main PHPMD class.
@@ -181,10 +180,7 @@ class PHPMDTest extends AbstractTestCase
     {
         self::changeWorkingDirectory();
 
-        /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject $baselineSet */
-        $baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
-        );
+        $baselineSet = $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()->getMock();
         $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 
         $renderer = new XMLRenderer();

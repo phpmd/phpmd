@@ -65,8 +65,10 @@ class RuleSetTest extends AbstractTestCase
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
         $ruleSet->apply($this->getClass());
+        $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
+        static::assertInstanceOf(RuleStub::class, $rule);
+        static::assertNull($rule->node);
     }
 
     /**
@@ -80,8 +82,10 @@ class RuleSetTest extends AbstractTestCase
 
         $class = $this->getClass();
         $ruleSet->apply($class);
+        $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
+        static::assertInstanceOf(RuleStub::class, $rule);
+        static::assertSame($class, $rule->node);
     }
 
     public function testDescriptionCanBeChanged(): void

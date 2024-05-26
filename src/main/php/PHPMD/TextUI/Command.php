@@ -94,7 +94,9 @@ final class Command
         $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::Generate) {
             // overwrite any renderer with the baseline renderer
-            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter((string) $finder->notNull()->find()))];
+            $renderers = [
+                RendererFactory::createBaselineRenderer(new StreamWriter((string) $finder->notNull()->find())),
+            ];
         } elseif ($opts->generateBaseline() === BaselineMode::Update) {
             $baselineFile = (string) $finder->notNull()->existingFile()->find();
             $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));

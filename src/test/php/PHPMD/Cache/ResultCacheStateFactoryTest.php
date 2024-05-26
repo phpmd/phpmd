@@ -63,11 +63,11 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
             ['composer.json' => 'hash1', 'composer.lock' => 'hash2'],
             70000
         );
-        $cacheKey = $state->getCacheKey();
+        $cacheKey = $state?->getCacheKey();
         static::assertEquals($expectedKey, $cacheKey);
 
         // assert file state
-        static::assertFalse($state->isFileModified('file1', 'file1-hash'));
+        static::assertFalse($state?->isFileModified('file1', 'file1-hash'));
         static::assertTrue($state->isFileModified('file2', 'file1-hash'));
         static::assertSame(['violations'], $state->getViolations('file2'));
     }

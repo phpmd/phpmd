@@ -3,7 +3,6 @@
 namespace PHPMD\Node;
 
 use PHPMD\AbstractTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @coversDefaultClass \PHPMD\Node\NodeInfoFactory
@@ -15,10 +14,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
      */
     public function testFromNodeForAbstractTypeNode(): void
     {
-        /** @var AbstractTypeNode&MockObject $node */
-        $node = $this->getMockFromBuilder(
-            $this->getMockBuilder(AbstractTypeNode::class)->disableOriginalConstructor()
-        );
+        $node = $this->getMockBuilder(AbstractTypeNode::class)->disableOriginalConstructor()->getMock();
         $node->method('getName')->willReturn('className');
         $node->method('getFileName')->willReturn('/file/path');
         $node->method('getNamespaceName')->willReturn('namespace');
@@ -40,10 +36,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
      */
     public function testFromNodeForMethodNode(): void
     {
-        /** @var MethodNode&MockObject $node */
-        $node = $this->getMockFromBuilder(
-            $this->getMockBuilder(MethodNode::class)->disableOriginalConstructor()
-        );
+        $node = $this->getMockBuilder(MethodNode::class)->disableOriginalConstructor()->getMock();
         $node->method('getName')->willReturn('methodName');
         $node->method('getParentName')->willReturn('className');
         $node->method('getFileName')->willReturn('/file/path');
@@ -66,10 +59,7 @@ class NodeInfoFactoryTest extends AbstractTestCase
      */
     public function testFromNodeForFunctionNode(): void
     {
-        /** @var MethodNode&MockObject $node */
-        $node = $this->getMockFromBuilder(
-            $this->getMockBuilder(FunctionNode::class)->disableOriginalConstructor()
-        );
+        $node = $this->getMockBuilder(FunctionNode::class)->disableOriginalConstructor()->getMock();
         $node->method('getName')->willReturn('functionName');
         $node->method('getFileName')->willReturn('/file/path');
         $node->method('getNamespaceName')->willReturn('namespace');

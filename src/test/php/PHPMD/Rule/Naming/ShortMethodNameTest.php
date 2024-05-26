@@ -33,7 +33,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleAppliesToFunctionWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 54);
+        $rule->addProperty('minimum', '54');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
@@ -45,7 +45,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleNotAppliesToFunctionWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 52);
+        $rule->addProperty('minimum', '52');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
@@ -57,7 +57,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 54);
+        $rule->addProperty('minimum', '54');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
@@ -69,7 +69,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleAppliesToMethodWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 52);
+        $rule->addProperty('minimum', '52');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
@@ -81,7 +81,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleNotAppliesToMethodWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 50);
+        $rule->addProperty('minimum', '50');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
@@ -93,7 +93,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleNotAppliesToMethodWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 52);
+        $rule->addProperty('minimum', '52');
         $rule->addProperty('exceptions', '');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
@@ -105,7 +105,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleNotAppliesToMethodWithShortNameWhenException(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 100);
+        $rule->addProperty('minimum', '100');
         $rule->addProperty('exceptions', 'testRuleNotAppliesToMethodWithShortNameWhenException,another');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
@@ -121,7 +121,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleAppliesAlsoWithoutExceptionListConfiguredOnMock(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 100);
+        $rule->addProperty('minimum', '100');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethodMock());
     }
@@ -129,7 +129,7 @@ class ShortMethodNameTest extends AbstractTestCase
     public function testRuleAppliesAlsoWithoutExceptionListConfigured(): void
     {
         $rule = new ShortMethodName();
-        $rule->addProperty('minimum', 100);
+        $rule->addProperty('minimum', '100');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }

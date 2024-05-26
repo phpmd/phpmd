@@ -27,12 +27,8 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     protected function setUp(): void
     {
         $this->output = new NullOutput();
-        $this->key = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()
-        );
-        $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
-        );
+        $this->key = $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()->getMock();
+        $this->state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
     }
 
     /**

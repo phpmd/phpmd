@@ -28,14 +28,12 @@ use PHPMD\Renderer\AnsiRenderer;
 use PHPMD\Renderer\CheckStyleRenderer;
 use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
-use PHPMD\Renderer\HtmlRenderer;
+use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
-use PHPMD\Renderer\XmlRenderer;
+use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
-use PHPMD\Test\Renderer\NamespaceRenderer;
-use PHPMD\Test\Renderer\NotExistsRenderer;
 use ReflectionProperty;
 
 /**
@@ -448,7 +446,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     public function testCliOptionsAcceptsMinimumpriorityArgument(): void
     {
-        $args = [__FILE__, '--minimumpriority', 42, __FILE__, 'text', 'codesize'];
+        $args = [__FILE__, '--minimumpriority', '42', __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         static::assertSame(42, $opts->getMinimumPriority());
@@ -456,7 +454,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     public function testCliOptionsAcceptsMaximumpriorityArgument(): void
     {
-        $args = [__FILE__, '--maximumpriority', 42, __FILE__, 'text', 'codesize'];
+        $args = [__FILE__, '--maximumpriority', '42', __FILE__, 'text', 'codesize'];
         $opts = new CommandLineOptions($args);
 
         static::assertSame(42, $opts->getMaximumPriority());
@@ -624,7 +622,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @param string $reportFormat
-     * @param string $expectedClass
+     * @param class-string $expectedClass
      * @dataProvider dataProviderCreateRenderer
      */
     public function testCreateRenderer($reportFormat, $expectedClass): void
@@ -635,12 +633,15 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertInstanceOf($expectedClass, $opts->createRenderer($reportFormat));
     }
 
+    /**
+     * @return list<mixed>
+     */
     public static function dataProviderCreateRenderer(): array
     {
         return [
-            ['html', HtmlRenderer::class],
+            ['html', HTMLRenderer::class],
             ['text', TextRenderer::class],
-            ['xml', XmlRenderer::class],
+            ['xml', XMLRenderer::class],
             ['ansi', AnsiRenderer::class],
             ['github', GitHubRenderer::class],
             ['gitlab', GitLabRenderer::class],
@@ -648,9 +649,9 @@ class CommandLineOptionsTest extends AbstractTestCase
             ['checkstyle', CheckStyleRenderer::class],
             ['sarif', SARIFRenderer::class],
             ['PHPMD_Test_Renderer_PEARRenderer', 'PHPMD_Test_Renderer_PEARRenderer'],
-            [NamespaceRenderer::class, NamespaceRenderer::class],
+            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
             // Test what happens when class already exists.
-            [NamespaceRenderer::class, NamespaceRenderer::class],
+            ['PHPMD\\Test\\Renderer\\NamespaceRenderer', 'PHPMD\\Test\\Renderer\\NamespaceRenderer'],
         ];
     }
 
@@ -669,11 +670,14 @@ class CommandLineOptionsTest extends AbstractTestCase
         $opts->createRenderer();
     }
 
+    /**
+     * @return list<mixed>
+     */
     public static function dataProviderCreateRendererThrowsException(): array
     {
         return [
             [''],
-            [NotExistsRenderer::class],
+            ['PHPMD\\Test\\Renderer\\NotExistsRenderer'],
         ];
     }
 
@@ -709,6 +713,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         $result($opts);
     }
 
+    /**
+     * @return list<mixed>
+     */
     public static function dataProviderDeprecatedCliOptions(): array
     {
         return [
@@ -722,6 +729,8 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @param list<mixed> $options
+     * @param list<mixed> $expected
      * @dataProvider dataProviderGetReportFiles
      */
     public function testGetReportFiles(array $options, array $expected): void
@@ -739,6 +748,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(5, $opts->extraLineInExcerpt());
     }
 
+    /**
+     * @return list<list<mixed>>
+     */
     public static function dataProviderGetReportFiles(): array
     {
         return [

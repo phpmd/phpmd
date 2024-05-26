@@ -39,7 +39,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @return void
      */
-    private static $originalWorkingDirectory = null;
+    private static ?string $originalWorkingDirectory = null;
 
     /**
      * Temporary files created by a test.
@@ -54,7 +54,9 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$filesDirectory = realpath(__DIR__ . '/../../resources/files');
+        $path = realpath(__DIR__ . '/../../resources/files');
+        static::assertNotFalse($path);
+        self::$filesDirectory = $path;
 
         if (!str_contains(get_include_path(), self::$filesDirectory)) {
             set_include_path(
@@ -115,14 +117,15 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Convert [1, 'a', $any] into [[1], ['a'], [$any]].
      *
-     * @param mixed $values list of values.
-     * @return array
+     * @param array<string> $values list of values.
+     * @return array<string, array<string>>
      */
     protected static function getValuesAsArrays($values)
     {
-        array_walk($values, static function ($value, $key) use (&$valuesAsArray): void {
+        $valuesAsArray = [];
+        foreach ($values as $value) {
             $valuesAsArray[$value] = [$value];
-        });
+        }
 
         return $valuesAsArray;
     }
@@ -150,6 +153,7 @@ abstract class AbstractStaticTestCase extends TestCase
     public static function assertXmlEquals($actualOutput, $expectedFileName): void
     {
         $actual = simplexml_load_string($actualOutput);
+        static::assertNotFalse($actual);
         // Remove dynamic timestamp and duration attribute
         if (isset($actual['timestamp'])) {
             $actual['timestamp'] = '';
@@ -161,15 +165,15 @@ abstract class AbstractStaticTestCase extends TestCase
             $actual['version'] = '@package_version@';
         }
 
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
-        );
+        $content = file_get_contents(self::createFileUri($expectedFileName));
+        static::assertNotFalse($content);
+        $expected = str_replace('#{rootDirectory}', self::$filesDirectory, $content);
 
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
+        $xml = $actual->saveXML();
 
-        static::assertXmlStringEqualsXmlString($expected, $actual->saveXML());
+        static::assertNotFalse($xml);
+        static::assertXmlStringEqualsXmlString($expected, $xml);
     }
 
     /**
@@ -177,10 +181,10 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $actualOutput Generated JSON output.
      * @param string $expectedFileName File with expected JSON result.
-     * @param bool|Closure $removeDynamicValues If set to `false`, the actual output is not normalized,
+     * @param bool $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName, $removeDynamicValues = true): void
+    public static function assertJsonEquals($actualOutput, $expectedFileName, bool $removeDynamicValues = true): void
     {
         $actual = json_decode($actualOutput, true);
         // Remove dynamic timestamp and duration attribute
@@ -194,20 +198,19 @@ abstract class AbstractStaticTestCase extends TestCase
             if (isset($actual['version'])) {
                 $actual['version'] = '@package_version@';
             }
-        } elseif ($removeDynamicValues instanceof Closure) {
-            $actual = $removeDynamicValues($actual);
         }
 
-        $expected = str_replace(
-            '#{rootDirectory}',
-            self::$filesDirectory,
-            file_get_contents(self::createFileUri($expectedFileName))
-        );
+        $content = file_get_contents(self::createFileUri($expectedFileName));
+        static::assertNotFalse($content);
+        $expected = str_replace('#{rootDirectory}', self::$filesDirectory, $content);
 
-        $expected = str_replace('#{workingDirectory}', getcwd(), $expected);
+        $cwd = getcwd();
+        static::assertNotFalse($cwd);
+
+        $expected = str_replace('#{workingDirectory}', $cwd, $expected);
         $expected = str_replace('_DS_', DIRECTORY_SEPARATOR, $expected);
 
-        static::assertJsonStringEqualsJsonString($expected, json_encode($actual));
+        static::assertJsonStringEqualsJsonString($expected, json_encode($actual, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -217,7 +220,7 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     protected static function changeWorkingDirectory($localPath = ''): void
     {
-        self::$originalWorkingDirectory = getcwd();
+        self::$originalWorkingDirectory = getcwd() ?: null;
 
         if (0 === preg_match('(^([A-Z]:|/))', $localPath)) {
             $localPath = self::createFileUri($localPath);
@@ -248,6 +251,7 @@ abstract class AbstractStaticTestCase extends TestCase
             $filePath = sys_get_temp_dir() . '/' . $fileName;
         } else {
             $filePath = tempnam(sys_get_temp_dir(), 'phpmd.');
+            static::assertNotFalse($filePath);
         }
 
         return (self::$tempFiles[] = $filePath);
@@ -256,10 +260,10 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Returns the trace frame of the calling test case.
      *
-     * @return array
+     * @return array<string, mixed>
      * @throws ErrorException
      */
-    protected static function getCallingTestCase()
+    protected static function getCallingTestCase(): array
     {
         foreach (debug_backtrace() as $frame) {
             if (str_starts_with($frame['function'], 'test')) {
@@ -270,12 +274,12 @@ abstract class AbstractStaticTestCase extends TestCase
         throw new ErrorException('Cannot locate calling test case.');
     }
 
-    protected static function getResourceFilePathFromClassName($className, $localPath)
+    protected static function getResourceFilePathFromClassName(string $className, string $localPath): string
     {
         return self::getResourceFilePath(self::getTestPathFromClassName($className), $localPath);
     }
 
-    private static function getTestPathFromClassName($className)
+    private static function getTestPathFromClassName(string $className): string
     {
         $regexp = '([a-z]([0-9]+)Test$)i';
 
@@ -288,7 +292,7 @@ abstract class AbstractStaticTestCase extends TestCase
         return strtr(substr($className, 6, -4), '\\', '/');
     }
 
-    private static function getResourceFilePath($directory, $file)
+    private static function getResourceFilePath(string $directory, string $file): string
     {
         return sprintf(
             '%s/../../resources/files/%s/%s',

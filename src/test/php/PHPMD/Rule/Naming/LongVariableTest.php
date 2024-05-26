@@ -33,7 +33,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 21);
+        $rule->addProperty('maximum', '21');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
@@ -44,7 +44,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 6);
+        $rule->addProperty('maximum', '6');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
@@ -55,7 +55,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 6);
+        $rule->addProperty('maximum', '6');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
@@ -66,7 +66,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getFunction());
     }
@@ -77,7 +77,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getFunction());
     }
@@ -88,7 +88,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithOneViolation());
 
         $class = $this->getClass();
@@ -105,7 +105,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 6);
+        $rule->addProperty('maximum', '6');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -116,7 +116,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -127,7 +127,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 3);
+        $rule->addProperty('maximum', '3');
         $rule->setReport($this->getReportWithOneViolation());
 
         $class = $this->getClass();
@@ -144,7 +144,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -155,7 +155,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToFieldWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
@@ -166,7 +166,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 6);
+        $rule->addProperty('maximum', '6');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -177,7 +177,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToFieldWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 8);
+        $rule->addProperty('maximum', '8');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
@@ -188,7 +188,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 3);
+        $rule->addProperty('maximum', '3');
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();
@@ -205,7 +205,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 3);
+        $rule->addProperty('maximum', '3');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getMethod());
     }
@@ -216,7 +216,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportMock(2));
         $rule->apply($this->getMethod());
     }
@@ -227,7 +227,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportMock(2));
 
         $class = $this->getClass();
@@ -246,7 +246,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesForLongPrivateProperty(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
@@ -259,7 +259,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesForLongPrivateStaticProperty(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 17);
+        $rule->addProperty('maximum', '17');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
     }
@@ -270,7 +270,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 10);
+        $rule->addProperty('maximum', '10');
         $rule->addProperty('subtract-suffixes', 'Repository');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
@@ -282,7 +282,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 9);
+        $rule->addProperty('maximum', '9');
         $rule->addProperty('subtract-suffixes', 'Repository');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -294,7 +294,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 19);
+        $rule->addProperty('maximum', '19');
         $rule->addProperty('subtract-suffixes', 'Repository,Factory');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -306,7 +306,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 24);
+        $rule->addProperty('maximum', '24');
         $rule->addProperty('subtract-suffixes', 'Factory');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -318,7 +318,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 20);
+        $rule->addProperty('maximum', '20');
         $rule->addProperty('subtract-suffixes', ',');
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getClass());
@@ -330,7 +330,7 @@ class LongVariableTest extends AbstractTestCase
     public function testRuleAppliesToVariableNameFollowingHungarianNotation(): void
     {
         $rule = new LongVariable();
-        $rule->addProperty('maximum', 12);
+        $rule->addProperty('maximum', '12');
         $rule->addProperty('subtract-prefixes', 'arru8');
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());

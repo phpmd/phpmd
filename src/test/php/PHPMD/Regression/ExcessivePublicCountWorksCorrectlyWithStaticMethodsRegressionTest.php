@@ -34,7 +34,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
     /** @var string Beginning of the violation message */
     private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
-    /** @var PHPUnit_Framework_MockObject_MockObject|TextRenderer */
+    /** @var MockObject&TextRenderer */
     private $renderer;
 
     /**
@@ -42,11 +42,10 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      */
     protected function setUp(): void
     {
-        $this->renderer = $this->getMockFromBuilder(
-            $this->getMockBuilder(TextRenderer::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['renderReport', 'start', 'end'])
-        );
+        $this->renderer = $this->getMockBuilder(TextRenderer::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['renderReport', 'start', 'end'])
+            ->getMock();
     }
 
     /**

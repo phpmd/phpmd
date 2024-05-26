@@ -21,6 +21,7 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractTestCase;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the excessive long parameter list rule.
@@ -103,7 +104,10 @@ class LongParameterListTest extends AbstractTestCase
      */
     private function createMethod($parameterCount)
     {
-        return $this->initFunctionOrMethodMock($this->getMethodMock(), $parameterCount);
+        $method = $this->initFunctionOrMethodMock($this->getMethodMock(), $parameterCount);
+        static::assertInstanceOf(MethodNode::class, $method);
+
+        return $method;
     }
 
     /**
@@ -115,13 +119,16 @@ class LongParameterListTest extends AbstractTestCase
      */
     private function createFunction($parameterCount)
     {
-        return $this->initFunctionOrMethodMock($this->createFunctionMock(), $parameterCount);
+        $function = $this->initFunctionOrMethodMock($this->createFunctionMock(), $parameterCount);
+        static::assertInstanceOf(FunctionNode::class, $function);
+
+        return $function;
     }
 
     /**
      * Initializes the getParameterCount() method of the given callable.
      *
-     * @param FunctionNode|MethodNode $mock
+     * @param (FunctionNode|MethodNode)&MockObject $mock
      * @param int $parameterCount
      * @return FunctionNode|MethodNode
      */

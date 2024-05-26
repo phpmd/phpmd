@@ -22,9 +22,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
 
     protected function setUp(): void
     {
-        $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
-        );
+        $this->state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
 
         $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');
     }
