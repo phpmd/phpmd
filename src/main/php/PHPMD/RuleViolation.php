@@ -42,7 +42,7 @@ class RuleViolation
      *
      * @param Rule $rule The rule that causes this violation.
      * @param NodeInfo $nodeInfo The AST Node information for this rule violation.
-     * @param array<string, mixed>|string $violationMessage
+     * @param array{args: array<int, string>, message: string}|string $violationMessage
      * @param ?numeric $metric The raw metric value which caused this rule violation.
      */
     public function __construct(

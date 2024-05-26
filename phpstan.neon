@@ -2,7 +2,7 @@ parameters:
     paths:
         - src/main
     rememberPossiblyImpureFunctionValues: false
-    level: 8
+    level: max
     exceptions:
         reportUncheckedExceptionDeadCatch: true
         implicitThrows: false
