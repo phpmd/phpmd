@@ -20,6 +20,7 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTFunction;
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the function node implementation.
@@ -31,6 +32,7 @@ class FunctionTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependFunction
+     * @throws Throwable
      */
     public function testMagicCallDelegatesToWrappedPHPDependFunction(): void
     {

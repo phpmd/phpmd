@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Duplicated Array Key Test.
@@ -30,6 +31,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutArrayDefinition
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutArrayDefinition(): void
     {
@@ -40,6 +42,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition(): void
     {
@@ -50,6 +53,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
@@ -60,6 +64,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
@@ -70,6 +75,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
@@ -80,6 +86,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
@@ -90,6 +97,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
@@ -100,6 +108,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutArrayDefinition
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithoutArrayDefinition(): void
     {
@@ -110,6 +119,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition(): void
     {
@@ -120,6 +130,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
@@ -130,6 +141,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
@@ -140,6 +152,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
@@ -150,6 +163,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
@@ -160,6 +174,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
@@ -170,6 +185,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenKeyIsDeclaredInNonStandardWay
+     * @throws Throwable
      */
     public function testRuleAppliesWhenKeyIsDeclaredInNonStandardWay(): void
     {
@@ -180,6 +196,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesCorrectlyWithNestedArrays
+     * @throws Throwable
      */
     public function testRuleAppliesCorrectlyWithNestedArrays(): void
     {
@@ -190,6 +207,7 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
 
     /**
      * testRuleAppliesCorrectlyToMultipleArrays
+     * @throws Throwable
      */
     public function testRuleAppliesCorrectlyToMultipleArrays(): void
     {

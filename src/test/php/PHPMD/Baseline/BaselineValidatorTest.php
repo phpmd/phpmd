@@ -20,6 +20,9 @@ class BaselineValidatorTest extends AbstractTestCase
     /** @var MockObject&RuleViolation */
     private $violation;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
         parent::setUp();

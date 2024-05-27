@@ -20,6 +20,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\ExcessivePublicCount;
 use PHPMD\RuleSet;
+use Throwable;
 
 /**
  * Regression test for issue 015.
@@ -28,6 +29,7 @@ class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends Abstr
 {
     /**
      * testRuleSetInvokesRuleForClassInstance
+     * @throws Throwable
      */
     public function testRuleSetInvokesRuleForClassInstance(): void
     {

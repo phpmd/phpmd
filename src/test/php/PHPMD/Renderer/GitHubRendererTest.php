@@ -22,6 +22,7 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the GitHub renderer implementation.
@@ -32,6 +33,7 @@ class GitHubRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
@@ -69,6 +71,7 @@ class GitHubRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
+     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {

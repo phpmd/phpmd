@@ -24,6 +24,7 @@ use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the text renderer implementation.
@@ -34,6 +35,7 @@ class TextRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
@@ -72,6 +74,9 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRendererSupportVerbose(): void
     {
         // Create a writer instance.
@@ -108,6 +113,9 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRendererSupportColor(): void
     {
         // Create a writer instance.
@@ -144,6 +152,7 @@ class TextRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToTextReport
+     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {

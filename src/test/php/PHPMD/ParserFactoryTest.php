@@ -19,6 +19,7 @@
 namespace PHPMD;
 
 use PHPMD\Node\ClassNode;
+use Throwable;
 
 /**
  * Test case for the parser factory class.
@@ -29,6 +30,7 @@ class ParserFactoryTest extends AbstractTestCase
 {
     /**
      * testFactoryConfiguresInputDirectory
+     * @throws Throwable
      */
     public function testFactoryConfiguresInputDirectory(): void
     {
@@ -50,6 +52,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresInputFile
+     * @throws Throwable
      */
     public function testFactoryConfiguresInputFile(): void
     {
@@ -71,6 +74,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputDirectories
+     * @throws Throwable
      */
     public function testFactoryConfiguresMultipleInputDirectories(): void
     {
@@ -93,6 +97,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputFilesAndDirectories
+     * @throws Throwable
      */
     public function testFactoryConfiguresMultipleInputFilesAndDirectories(): void
     {
@@ -115,6 +120,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresIgnorePattern
+     * @throws Throwable
      */
     public function testFactoryConfiguresIgnorePattern(): void
     {
@@ -135,6 +141,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresFileExtensions
+     * @throws Throwable
      */
     public function testFactoryConfiguresFileExtensions(): void
     {

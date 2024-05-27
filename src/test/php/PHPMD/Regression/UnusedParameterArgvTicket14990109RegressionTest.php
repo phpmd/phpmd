@@ -20,6 +20,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedFormalParameter;
 use PHPMD\RuleSet;
+use Throwable;
 
 /**
  * Regression test for issue 14990109.
@@ -31,6 +32,7 @@ class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegression
 {
     /**
      * testRuleDoesNotApplyToFunctionParameterNamedArgv
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToFunctionParameterNamedArgv(): void
     {
@@ -43,6 +45,7 @@ class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegression
 
     /**
      * testRuleDoesNotApplyToMethodParameterNamedArgv
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodParameterNamedArgv(): void
     {

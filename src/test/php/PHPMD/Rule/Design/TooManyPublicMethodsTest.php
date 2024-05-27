@@ -24,6 +24,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Report;
+use Throwable;
 
 /**
  * Test case for the too many public methods rule.
@@ -32,6 +33,9 @@ use PHPMD\Report;
  */
 class TooManyPublicMethodsTest extends AbstractTestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold(): void
     {
         $rule = new TooManyPublicMethods();
@@ -41,6 +45,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(23));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold(): void
     {
         $rule = new TooManyPublicMethods();
@@ -50,6 +57,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold(): void
     {
         $rule = new TooManyPublicMethods();
@@ -59,6 +69,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresGetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
@@ -68,6 +81,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresSetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
@@ -77,6 +93,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven(): void
     {
         $rule = new TooManyPublicMethods();
@@ -86,6 +105,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresGetterAndSetterMethodsInTest(): void
     {
         $rule = new TooManyPublicMethods();
@@ -95,6 +117,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(3, ['foo', 'bar'], ['baz', 'bah']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresPrivateMethods(): void
     {
         $rule = new TooManyPublicMethods();
@@ -104,6 +129,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass', 'setClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresHassers(): void
     {
         $rule = new TooManyPublicMethods();
@@ -113,6 +141,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresIssers(): void
     {
         $rule = new TooManyPublicMethods();
@@ -122,6 +153,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleIgnoresWithers(): void
     {
         $rule = new TooManyPublicMethods();
@@ -131,6 +165,9 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleApplyToBasicClass(): void
     {
         $class = $this->getClass();
@@ -154,6 +191,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
      * @param array<string> $publicMethods
      * @param array<string> $privateMethods
      * @return ClassNode
+     * @throws Throwable
      */
     private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = [])
     {
@@ -170,6 +208,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @phpcsSuppress SlevomatCodingStandard.Classes.UnusedPrivateElements
      */
     private function createPublicMethod(string $methodName): MethodNode

@@ -21,6 +21,7 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the ansi renderer implementation.
@@ -31,6 +32,7 @@ class AnsiRendererTest extends AbstractTestCase
 {
     /**
      * testRendererOutputsForReportWithContents
+     * @throws Throwable
      */
     public function testRendererOutputsForReportWithContents(): void
     {
@@ -94,6 +96,7 @@ class AnsiRendererTest extends AbstractTestCase
 
     /**
      * testRendererOutputsForReportWithoutContents
+     * @throws Throwable
      */
     public function testRendererOutputsForReportWithoutContents(): void
     {

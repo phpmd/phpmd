@@ -8,6 +8,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy as Strategy;
 use PHPMD\Console\NullOutput;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheFileFilter
@@ -24,6 +25,9 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     /** @var MockObject&ResultCacheState */
     private $state;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
         $this->output = new NullOutput();
@@ -32,6 +36,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -47,6 +52,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -63,6 +69,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -79,6 +86,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -94,6 +102,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      */
     public function testAcceptShouldCacheResults(): void

@@ -44,6 +44,7 @@ class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDelegatesClassNodeToRuleSet(): void
     {
@@ -61,6 +62,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet(): void
     {
@@ -77,6 +79,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDelegatesMethodNodeToRuleSet(): void
     {
@@ -89,6 +92,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet(): void
     {
@@ -100,6 +104,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet(): void
     {
@@ -112,6 +117,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
+     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet(): void
     {
@@ -124,6 +130,7 @@ class ParserTest extends AbstractTestCase
     /**
      * testParserStoreParsingExceptionsInReport
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testParserStoreParsingExceptionsInReport(): void
@@ -147,6 +154,7 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PDepend instance.
      *
      * @return Engine&MockObject
+     * @throws Throwable
      */
     private function getPHPDependMock()
     {
@@ -165,6 +173,7 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PDepend class instance.
      *
      * @return ASTClass&MockObject
+     * @throws Throwable
      */
     protected function getPHPDependClassMock()
     {

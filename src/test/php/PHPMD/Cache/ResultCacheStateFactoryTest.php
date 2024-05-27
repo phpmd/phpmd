@@ -4,6 +4,7 @@ namespace PHPMD\Cache;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheStateFactory
@@ -19,6 +20,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileNonExisting(): void
@@ -28,6 +30,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -38,6 +41,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -48,6 +52,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -73,6 +78,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */

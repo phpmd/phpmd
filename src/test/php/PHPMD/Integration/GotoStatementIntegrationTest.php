@@ -20,6 +20,7 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Throwable;
 
 /**
  * Test case for the goto statement GotoStatementIntegrationTest.
@@ -32,6 +33,7 @@ class GotoStatementIntegrationTest extends AbstractTestCase
      * testReportContainsGotoStatementWarning
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testReportContainsGotoStatementWarning(): void
     {

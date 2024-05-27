@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the very short method and function name rule.
@@ -29,6 +30,7 @@ class ShortMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionWithNameShorterThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithNameShorterThanThreshold(): void
     {
@@ -41,6 +43,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNameEqualToThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithNameEqualToThreshold(): void
     {
@@ -53,6 +56,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNameLongerThanThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold(): void
     {
@@ -65,6 +69,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithNameShorterThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithNameShorterThanThreshold(): void
     {
@@ -77,6 +82,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithNameEqualToThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithNameEqualToThreshold(): void
     {
@@ -89,6 +95,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithNameLongerThanThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithNameLongerThanThreshold(): void
     {
@@ -101,6 +108,7 @@ class ShortMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithNameLongerThanThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithShortNameWhenException(): void
     {
@@ -114,6 +122,7 @@ class ShortMethodNameTest extends AbstractTestCase
     /**
      * testRuleAlsoWorksWithoutExceptionListConfigured
      *
+     * @throws Throwable
      * @link https://github.com/phpmd/phpmd/issues/80
      * @link https://github.com/phpmd/phpmd/issues/270
      * @since 2.2.2
@@ -126,6 +135,9 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethodMock());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesAlsoWithoutExceptionListConfigured(): void
     {
         $rule = new ShortMethodName();

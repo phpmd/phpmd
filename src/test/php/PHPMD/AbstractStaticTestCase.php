@@ -21,6 +21,7 @@ namespace PHPMD;
 use Closure;
 use ErrorException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -51,6 +52,8 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
+     *
+     * @throws Throwable
      */
     public static function setUpBeforeClass(): void
     {
@@ -105,6 +108,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @return string
+     * @throws Throwable
      * @since 1.1.0
      */
     protected static function createCodeResourceUriForTest()
@@ -135,6 +139,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $localPath The local/relative file location
      * @return string
+     * @throws Throwable
      * @since 1.1.0
      */
     protected static function createResourceUriForTest($localPath)
@@ -149,6 +154,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
+     * @throws Throwable
      */
     public static function assertXmlEquals($actualOutput, $expectedFileName): void
     {
@@ -183,6 +189,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param string $expectedFileName File with expected JSON result.
      * @param bool $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
+     * @throws Throwable
      */
     public static function assertJsonEquals($actualOutput, $expectedFileName, bool $removeDynamicValues = true): void
     {
@@ -244,6 +251,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string|null $fileName
      * @return string
+     * @throws Throwable
      */
     protected static function createTempFileUri($fileName = null)
     {

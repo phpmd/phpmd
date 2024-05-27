@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the camel case parameter name rule.
@@ -29,6 +30,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid parameter name
+     * @throws Throwable
      */
     public function testRuleDoesApplyForInParameterNameWithUnderscore(): void
     {
@@ -44,6 +46,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does apply for all caps abbreviation when not allowed
+     * @throws Throwable
      */
     public function testRuleDoesApplyForAllCapsAbbreviation(): void
     {
@@ -60,6 +63,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does not apply for camelcase abbreviation
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForCamelcaseAbbreviation(): void
     {
@@ -77,6 +81,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for an invalid parameter name
      * starting with a capital.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForParameterNameWithCapital(): void
     {
@@ -92,6 +97,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a valid parameter name
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidParameterName(): void
     {
@@ -108,6 +114,7 @@ class CamelCaseParameterNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid parameter name
      * with an underscore at the beginning when it is allowed.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidParameterNameWithUnderscoreWhenAllowed(): void
     {

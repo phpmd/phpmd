@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the weighted method count rule.
@@ -30,6 +31,7 @@ class WeightedMethodCountTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesForValueGreaterThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
@@ -44,6 +46,7 @@ class WeightedMethodCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesForValueEqualToThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesForValueEqualToThreshold(): void
     {
@@ -58,6 +61,7 @@ class WeightedMethodCountTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesForValueLowerThanThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesForValueLowerThanThreshold(): void
     {

@@ -35,6 +35,7 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Rule;
 use ReflectionProperty;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\CommandLineOptions} class.
@@ -46,6 +47,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsInputArgumentToInputProperty
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsInputArgumentToInputProperty(): void
@@ -57,6 +59,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.14.0
      */
     public function testVerbose(): void
@@ -74,6 +77,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.14.0
      */
     public function testColored(): void
@@ -91,6 +95,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.14.0
      */
     public function testStdInDashShortCut(): void
@@ -102,6 +107,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.14.0
      */
     public function testMultipleFiles(): void
@@ -118,6 +124,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsFormatArgumentToReportFormatProperty
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsFormatArgumentToReportFormatProperty(): void
@@ -131,6 +138,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsRuleSetsArgumentToRuleSetProperty
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsRuleSetsArgumentToRuleSetProperty(): void
@@ -144,6 +152,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testThrowsExpectedExceptionWhenRequiredArgumentsNotSet
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testThrowsExpectedExceptionWhenRequiredArgumentsNotSet(): void
@@ -155,6 +164,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFound(): void
@@ -172,6 +182,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundInFront(): void
@@ -189,6 +200,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenOptionNotFoundUsingArgumentSeparator(): void
@@ -206,6 +218,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testThrowsExpectedExceptionWhenBooleanOptionReceiveValue(): void
@@ -219,6 +232,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testOptionEqualSyntax(): void
@@ -230,6 +244,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers \PHPMD\Utility\ArgumentsValidator
      */
     public function testArgumentSeparatorEnforced(): void
@@ -243,6 +258,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsInputFileOptionToInputPathProperty
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsInputFileOptionToInputPathProperty(): void
@@ -258,6 +274,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsFormatArgumentCorrectWhenCalledWithInputFile
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsFormatArgumentCorrectWhenCalledWithInputFile(): void
@@ -273,6 +290,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testAssignsRuleSetsArgumentCorrectWhenCalledWithInputFile(): void
@@ -288,6 +306,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testThrowsExpectedExceptionWhenInputFileNotExists
      *
+     * @throws Throwable
      * @since 1.1.0
      */
     public function testThrowsExpectedExceptionWhenInputFileNotExists(): void
@@ -302,6 +321,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * testHasVersionReturnsFalseByDefault
+     * @throws Throwable
      */
     public function testHasVersionReturnsFalseByDefault(): void
     {
@@ -313,6 +333,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * testCliOptionsAcceptsVersionArgument
+     * @throws Throwable
      */
     public function testCliOptionsAcceptsVersionArgument(): void
     {
@@ -324,6 +345,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if ignoreErrorsOnExit returns false by default
+     * @throws Throwable
      */
     public function testIgnoreErrorsOnExitReturnsFalseByDefault(): void
     {
@@ -335,6 +357,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if CLI options accepts ignoreErrorsOnExit argument
+     * @throws Throwable
      */
     public function testCliOptionsAcceptsIgnoreErrorsOnExitArgument(): void
     {
@@ -346,6 +369,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if CLI usage contains ignoreErrorsOnExit option
+     * @throws Throwable
      */
     public function testCliUsageContainsIgnoreErrorsOnExitOption(): void
     {
@@ -357,6 +381,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if ignoreViolationsOnExit returns false by default
+     * @throws Throwable
      */
     public function testIgnoreViolationsOnExitReturnsFalseByDefault(): void
     {
@@ -368,6 +393,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if CLI options accepts ignoreViolationsOnExit argument
+     * @throws Throwable
      */
     public function testCliOptionsAcceptsIgnoreViolationsOnExitArgument(): void
     {
@@ -379,6 +405,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if CLI usage contains ignoreViolationsOnExit option
+     * @throws Throwable
      */
     public function testCliUsageContainsIgnoreViolationsOnExitOption(): void
     {
@@ -390,6 +417,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * Tests if CLI usage contains the auto-discovered renderers
+     * @throws Throwable
      */
     public function testCliUsageContainsAutoDiscoveredRenderers(): void
     {
@@ -404,6 +432,7 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * testCliUsageContainsStrictOption
+     * @throws Throwable
      */
     public function testCliUsageContainsStrictOption(): void
     {
@@ -416,6 +445,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testCliOptionsIsStrictReturnsFalseByDefault
      *
+     * @throws Throwable
      * @since 1.2.0
      */
     public function testCliOptionsIsStrictReturnsFalseByDefault(): void
@@ -429,6 +459,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * testCliOptionsAcceptsStrictArgument
      *
+     * @throws Throwable
      * @since 1.2.0
      */
     public function testCliOptionsAcceptsStrictArgument(): void
@@ -444,6 +475,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertFalse($opts->hasStrict());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionsAcceptsMinimumpriorityArgument(): void
     {
         $args = [__FILE__, '--minimumpriority', '42', __FILE__, 'text', 'codesize'];
@@ -452,6 +486,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(42, $opts->getMinimumPriority());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionsAcceptsMaximumpriorityArgument(): void
     {
         $args = [__FILE__, '--maximumpriority', '42', __FILE__, 'text', 'codesize'];
@@ -460,6 +497,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(42, $opts->getMaximumPriority());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionGenerateBaselineFalseByDefault(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
@@ -467,6 +507,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(BaselineMode::None, $opts->generateBaseline());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionVerbosityNormal(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
@@ -474,6 +517,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(OutputInterface::VERBOSITY_NORMAL, $opts->getVerbosity());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionVerbosityVerbose(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '-v'];
@@ -481,6 +527,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(OutputInterface::VERBOSITY_VERBOSE, $opts->getVerbosity());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionVerbosityVeryVerbose(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '-vv'];
@@ -488,6 +537,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(OutputInterface::VERBOSITY_VERY_VERBOSE, $opts->getVerbosity());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionVerbosityDebug(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '-vvv'];
@@ -495,6 +547,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(OutputInterface::VERBOSITY_DEBUG, $opts->getVerbosity());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionGenerateBaselineShouldBeSet(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--generate-baseline'];
@@ -502,6 +557,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(BaselineMode::Generate, $opts->generateBaseline());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionUpdateBaselineShouldBeSet(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--update-baseline'];
@@ -509,6 +567,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(BaselineMode::Update, $opts->generateBaseline());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionBaselineFileShouldBeNullByDefault(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
@@ -516,6 +577,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertNull($opts->baselineFile());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionBaselineFileShouldBeWithFilename(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--baseline-file', 'foobar.txt'];
@@ -523,6 +587,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame('foobar.txt', $opts->baselineFile());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetMinimumPriorityReturnsLowestValueByDefault(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
@@ -531,6 +598,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(Rule::LOWEST_PRIORITY, $opts->getMinimumPriority());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetCoverageReportReturnsNullByDefault(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize'];
@@ -539,6 +609,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertNull($opts->getCoverageReport());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetCoverageReportWithCliOption(): void
     {
         $opts = new CommandLineOptions(
@@ -555,6 +628,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertSame(__METHOD__, $opts->getCoverageReport());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetCacheWithCliOption(): void
     {
         $opts = new CommandLineOptions(
@@ -603,6 +679,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertTrue($opts->isCacheEnabled());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testExcludeOption(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--ignore', 'foo/bar', '--error-file', 'abc'];
@@ -623,6 +702,8 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param string $reportFormat
      * @param class-string $expectedClass
+     * @throws Throwable
+     * @throws Throwable
      * @dataProvider dataProviderCreateRenderer
      */
     public function testCreateRenderer($reportFormat, $expectedClass): void
@@ -656,6 +737,8 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
+     * @throws Throwable
      * @dataProvider dataProviderCreateRendererThrowsException
      */
     public function testCreateRendererThrowsException(string $reportFormat): void
@@ -684,6 +767,8 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param string $deprecatedName
      * @param string $newName
+     * @throws Throwable
+     * @throws Throwable
      * @dataProvider dataProviderDeprecatedCliOptions
      */
     public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result): void
@@ -731,6 +816,8 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param list<mixed> $options
      * @param list<mixed> $expected
+     * @throws Throwable
+     * @throws Throwable
      * @dataProvider dataProviderGetReportFiles
      */
     public function testGetReportFiles(array $options, array $expected): void
@@ -741,6 +828,9 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertEquals($expected, $opts->getReportFiles());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testCliOptionExtraLineInExcerptShouldBeWithNumber(): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5'];

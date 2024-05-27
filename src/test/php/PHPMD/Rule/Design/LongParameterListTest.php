@@ -22,6 +22,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * Test case for the excessive long parameter list rule.
@@ -32,6 +33,7 @@ class LongParameterListTest extends AbstractTestCase
 {
     /**
      * testApplyIgnoresMethodsWithLessParametersThanMinimum
+     * @throws Throwable
      */
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
     {
@@ -43,6 +45,7 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsMethodsWithIdenticalParametersAndMinimum
+     * @throws Throwable
      */
     public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
     {
@@ -54,6 +57,7 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsMethodsWithMoreParametersThanMinimum
+     * @throws Throwable
      */
     public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
     {
@@ -65,6 +69,7 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyIgnoresFunctionsWithLessParametersThanMinimum
+     * @throws Throwable
      */
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
     {
@@ -76,6 +81,7 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsFunctionsWithIdenticalParametersAndMinimum
+     * @throws Throwable
      */
     public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
     {
@@ -87,6 +93,7 @@ class LongParameterListTest extends AbstractTestCase
 
     /**
      * testApplyReportsFunctionsWithMoreParametersThanMinimum
+     * @throws Throwable
      */
     public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
     {
@@ -101,6 +108,7 @@ class LongParameterListTest extends AbstractTestCase
      *
      * @param int $parameterCount
      * @return MethodNode
+     * @throws Throwable
      */
     private function createMethod($parameterCount)
     {
@@ -114,8 +122,8 @@ class LongParameterListTest extends AbstractTestCase
      * Creates a mocked function node instance.
      *
      * @param int $parameterCount Number of function parameters.
-     *
      * @return FunctionNode
+     * @throws Throwable
      */
     private function createFunction($parameterCount)
     {
@@ -131,6 +139,7 @@ class LongParameterListTest extends AbstractTestCase
      * @param (FunctionNode|MethodNode)&MockObject $mock
      * @param int $parameterCount
      * @return FunctionNode|MethodNode
+     * @throws Throwable
      */
     private function initFunctionOrMethodMock($mock, $parameterCount)
     {

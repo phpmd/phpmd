@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test cases for LongClassName.
@@ -29,6 +30,7 @@ class LongClassNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply to class name length (43) below threshold (44)
+     * @throws Throwable
      */
     public function testRuleNotAppliesToClassNameBelowThreshold(): void
     {
@@ -40,6 +42,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (40) below threshold (39)
+     * @throws Throwable
      */
     public function testRuleAppliesToClassNameAboveThreshold(): void
     {
@@ -51,6 +54,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does not apply to interface name length (47) below threshold (47)
+     * @throws Throwable
      */
     public function testRuleNotAppliesToInterfaceNameBelowThreshold(): void
     {
@@ -62,6 +66,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (44) above threshold (43)
+     * @throws Throwable
      */
     public function testRuleAppliesToInterfaceNameAboveThreshold(): void
     {
@@ -73,6 +78,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to trait name length (40) above threshold (39)
+     * @throws Throwable
      */
     public function testRuleAppliesToTraitNameAboveThreshold(): void
     {
@@ -84,6 +90,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to enum name length (39) above threshold (38)
+     * @throws Throwable
      */
     public function testRuleAppliesToEnumNameAboveThreshold(): void
     {
@@ -96,6 +103,7 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply to class name length (69) below threshold (60)
      * with configured suffix length (9)
+     * @throws Throwable
      */
     public function testRuleNotAppliesToClassNameLengthWithSuffixSubtractedBelowThreshold(): void
     {
@@ -108,6 +116,7 @@ class LongClassNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule applies to class name length (66) above threshold (56) with configured suffix length (9)
+     * @throws Throwable
      */
     public function testRuleAppliesToClassNameLengthWithSuffixSubtractedAboveThreshold(): void
     {
@@ -121,6 +130,7 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply to class name length (55) below threshold (54)
      * not matching configured suffix length (9)
+     * @throws Throwable
      */
     public function testRuleAppliesToClassNameLengthWithoutSuffixSubtracted(): void
     {
@@ -134,6 +144,7 @@ class LongClassNameTest extends AbstractTestCase
     /**
      * Tests that the rule applies to class name length (43) below threshold (40)
      * not matching configured prefix length (15)
+     * @throws Throwable
      */
     public function testRuleAppliesToClassNameWithPrefixMatched(): void
     {

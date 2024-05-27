@@ -4,6 +4,7 @@ namespace PHPMD\Renderer;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Writer\StreamWriter;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\RendererFactory
@@ -11,6 +12,7 @@ use PHPMD\Writer\StreamWriter;
 class RendererFactoryTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::createBaselineRenderer
      */
     public function testCreateBaselineRendererSuccessfully(): void

@@ -24,6 +24,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractRule;
 use PHPMD\AbstractTestCase;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use Throwable;
 
 /**
  * Test case for the class node implementation.
@@ -35,6 +36,7 @@ class ClassNodeTest extends AbstractTestCase
 {
     /**
      * testGetMethodNamesReturnsExpectedResult
+     * @throws Throwable
      */
     public function testGetMethodNamesReturnsExpectedResult(): void
     {
@@ -48,6 +50,7 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForReturnsTrue
+     * @throws Throwable
      */
     public function testHasSuppressWarningsAnnotationForReturnsTrue(): void
     {
@@ -63,6 +66,7 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsWithRuleNameContainingSlashes
+     * @throws Throwable
      */
     public function testHasSuppressWarningsWithRuleNameContainingSlashes(): void
     {
@@ -89,6 +93,7 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
@@ -100,18 +105,27 @@ class ClassNodeTest extends AbstractTestCase
         static::assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
         static::assertSame(0, $class->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCount(): void
     {
         $class = $this->getClass();
         static::assertSame(3, $class->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetParentNameReturnsNull(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));

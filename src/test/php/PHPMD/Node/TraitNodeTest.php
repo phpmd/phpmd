@@ -21,6 +21,7 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the trait node implementation.
@@ -32,6 +33,7 @@ class TraitNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
@@ -43,12 +45,18 @@ class TraitNodeTest extends AbstractTestCase
         static::assertSame('Sindelfingen\\MyTrait', $node->getFullQualifiedName());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
         static::assertSame(0, $trait->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetParentNameReturnsNull(): void
     {
         $trait = new TraitNode(new ASTTrait('MyTrait'));
