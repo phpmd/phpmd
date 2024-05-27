@@ -13,10 +13,8 @@ final class CheckStyleRenderer extends XMLRenderer
     /**
      * Temporary property that holds the name of the last rendered file, it is
      * used to detect the next processed file.
-     *
-     * @var string
      */
-    private $fileName;
+    private ?string $fileName = null;
 
     /**
      * Get a violation severity level according to the priority

@@ -38,12 +38,8 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class StaticAccess extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * Temporary cache of configured exceptions.
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * Method checks for use of static access and warns about it.
@@ -121,9 +117,7 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this, '\\');
-        }
+        $this->exceptions ??= new ExceptionsList($this, '\\');
 
         return $this->exceptions;
     }

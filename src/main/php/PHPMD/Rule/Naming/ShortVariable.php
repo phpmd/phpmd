@@ -49,12 +49,8 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      */
     private $processedVariables = [];
 
-    /**
-     * Temporary cache of configured exceptions.
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -170,9 +166,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this);
-        }
+        $this->exceptions ??= new ExceptionsList($this);
 
         return $this->exceptions;
     }

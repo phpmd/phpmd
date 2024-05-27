@@ -30,8 +30,8 @@ use PHPMD\Utility\Strings;
  */
 final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
-    /** @var array<string, int>|null */
-    private $exceptions;
+    /** @var array<string, int> */
+    private array $exceptions;
 
     public function apply(AbstractNode $node): void
     {
@@ -67,11 +67,9 @@ final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumA
      */
     private function getExceptionsList(): array
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = array_flip(
-                Strings::splitToList($this->getStringProperty('exceptions', ''), ',')
-            );
-        }
+        $this->exceptions ??= array_flip(
+            Strings::splitToList($this->getStringProperty('exceptions', ''), ',')
+        );
 
         return $this->exceptions;
     }

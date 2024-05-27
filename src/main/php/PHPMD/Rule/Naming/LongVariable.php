@@ -41,16 +41,16 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     /**
      * Temporary cache of configured prefixes to subtract
      *
-     * @var string[]|null
+     * @var string[]
      */
-    private $subtractPrefixes;
+    private array $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
-     * @var string[]|null
+     * @var string[]
      */
-    private $subtractSuffixes;
+    private array $subtractSuffixes;
 
     /**
      * Temporary map holding variables that were already processed in the
@@ -184,9 +184,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      */
     private function getSubtractPrefixList(): array
     {
-        if ($this->subtractPrefixes === null) {
-            $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
-        }
+        $this->subtractPrefixes ??= Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
 
         return $this->subtractPrefixes;
     }
@@ -200,9 +198,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      */
     private function getSubtractSuffixList(): array
     {
-        if ($this->subtractSuffixes === null) {
-            $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''));
-        }
+        $this->subtractSuffixes ??= Strings::splitToList($this->getStringProperty('subtract-suffixes', ''));
 
         return $this->subtractSuffixes;
     }

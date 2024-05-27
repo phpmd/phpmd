@@ -53,12 +53,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      */
     private $images = [];
 
-    /**
-     * Temporary cache of configured exceptions.
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * This method checks that all local variables within the given function or
@@ -340,9 +336,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this);
-        }
+        $this->exceptions ??= new ExceptionsList($this);
 
         return $this->exceptions;
     }

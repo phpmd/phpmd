@@ -31,12 +31,8 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class ShortClassName extends AbstractRule implements ClassAware, EnumAware, InterfaceAware, TraitAware
 {
-    /**
-     * Temporary cache of configured exceptions. Have name as key
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. Have name as key */
+    private ExceptionsList $exceptions;
 
     /**
      * Check if a class or interface name is below the minimum configured length and emit a rule violation
@@ -61,9 +57,7 @@ final class ShortClassName extends AbstractRule implements ClassAware, EnumAware
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this, '\\');
-        }
+        $this->exceptions ??= new ExceptionsList($this, '\\');
 
         return $this->exceptions;
     }

@@ -59,8 +59,7 @@ class PHPMD
      */
     private $input;
 
-    /** @var ResultCacheEngine|null */
-    private $resultCache;
+    private ?ResultCacheEngine $resultCache = null;
 
     /**
      * This property will be set to <b>true</b> when a violation
