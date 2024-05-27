@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
@@ -42,7 +43,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
         $violationA = $this->getRuleViolationMock('/base/path/violation/a');
         $violationB = $this->getRuleViolationMock('/base/path/violation/b');
 
-        $report->expects(static::once())->method('getRuleViolations')->willReturn([$violationA]);
+        $report->expects(static::once())->method('getRuleViolations')->willReturn(new ArrayIterator([$violationA]));
         $this->state->expects(static::once())
             ->method('getRuleViolations')
             ->with('/base/path/', [$ruleSet])

@@ -100,9 +100,9 @@ class RuleViolation
     /**
      * Returns the raw metric value which caused this rule violation.
      *
-     * @return mixed|null
+     * @return ?numeric
      */
-    public function getMetric()
+    public function getMetric(): mixed
     {
         return $this->metric;
     }
