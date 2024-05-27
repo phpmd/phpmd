@@ -272,7 +272,7 @@ abstract class AbstractNode
      *
      * @return TNode
      */
-    public function getNode()
+    public function getNode(): PDependNode
     {
         return $this->node;
     }
@@ -298,7 +298,7 @@ abstract class AbstractNode
      * @param string $name The metric name or abbreviation.
      * @return ?numeric $name
      */
-    public function getMetric($name)
+    public function getMetric($name): mixed
     {
         return $this->metrics[$name] ?? null;
     }

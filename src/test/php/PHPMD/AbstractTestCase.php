@@ -675,7 +675,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @return PHP_Depend_Code_AbstractItem
      * @throws ErrorException
      */
-    private function getNodeByName(Iterator $nodes, $name)
+    private function getNodeByName(Iterator $nodes, string $name): ASTNode
     {
         foreach ($nodes as $node) {
             if ($node->getImage() === $name) {
@@ -692,7 +692,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @return PHP_Depend_Code_AbstractItem
      * @throws ErrorException
      */
-    private function getNodeForCallingTestCase(Iterator $nodes)
+    private function getNodeForCallingTestCase(Iterator $nodes): ASTNode
     {
         $frame = $this->getCallingTestCase();
 
