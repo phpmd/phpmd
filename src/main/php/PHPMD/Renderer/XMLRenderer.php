@@ -30,10 +30,8 @@ class XMLRenderer extends AbstractRenderer
     /**
      * Temporary property that holds the name of the last rendered file, it is
      * used to detect the next processed file.
-     *
-     * @var string
      */
-    private $fileName = null;
+    private ?string $fileName = null;
 
     /**
      * This method will be called on all renderers before the engine starts the

@@ -29,12 +29,8 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class ShortMethodName extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * Temporary cache of configured exceptions.
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -73,9 +69,7 @@ final class ShortMethodName extends AbstractRule implements FunctionAware, Metho
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this);
-        }
+        $this->exceptions ??= new ExceptionsList($this);
 
         return $this->exceptions;
     }

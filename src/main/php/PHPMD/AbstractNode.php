@@ -18,6 +18,7 @@
 
 namespace PHPMD;
 
+use LogicException;
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTNode as PDependNode;
@@ -39,7 +40,7 @@ abstract class AbstractNode
      *
      * @var array<string, numeric>
      */
-    private $metrics = null;
+    private array $metrics;
 
     /**
      * Constructs a new PHPMD node.
@@ -288,12 +289,15 @@ abstract class AbstractNode
      * This method will set the metrics for this node.
      *
      * @param array<string, numeric> $metrics The collected node metrics.
+     * @throws LogicException
      */
     public function setMetrics(array $metrics): void
     {
-        if ($this->metrics === null) {
-            $this->metrics = $metrics;
+        if (isset($this->metrics)) {
+            throw new LogicException('Metrics cannot be overridden');
         }
+
+        $this->metrics = $metrics;
     }
 
     /**

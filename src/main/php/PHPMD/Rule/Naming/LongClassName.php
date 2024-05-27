@@ -37,16 +37,16 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
     /**
      * Temporary cache of configured prefixes to subtract
      *
-     * @var string[]|null
+     * @var string[]
      */
-    private $subtractPrefixes;
+    private array $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
-     * @var string[]|null
+     * @var string[]
      */
-    private $subtractSuffixes;
+    private array $subtractSuffixes;
 
     /**
      * Check if a class name exceeds the configured maximum length and emit a rule violation
@@ -76,12 +76,10 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
      */
     private function getSubtractPrefixList(): array
     {
-        if ($this->subtractPrefixes === null) {
-            $this->subtractPrefixes = Strings::splitToList(
-                $this->getStringProperty('subtract-prefixes', ''),
-                ','
-            );
-        }
+        $this->subtractPrefixes ??= Strings::splitToList(
+            $this->getStringProperty('subtract-prefixes', ''),
+            ','
+        );
 
         return $this->subtractPrefixes;
     }
@@ -95,11 +93,9 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
      */
     private function getSubtractSuffixList(): array
     {
-        if ($this->subtractSuffixes === null) {
-            $this->subtractSuffixes = Strings::splitToList(
-                $this->getStringProperty('subtract-suffixes', '')
-            );
-        }
+        $this->subtractSuffixes ??= Strings::splitToList(
+            $this->getStringProperty('subtract-suffixes', '')
+        );
 
         return $this->subtractSuffixes;
     }

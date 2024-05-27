@@ -36,12 +36,8 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, MethodAware
 {
-    /**
-     * Temporary cache of configured exceptions.
-     *
-     * @var ExceptionsList|null
-     */
-    private $exceptions;
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * This method checks if a method/function has boolean flag arguments and warns about them.
@@ -83,9 +79,7 @@ final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, M
      */
     private function getExceptionsList(): ExceptionsList
     {
-        if ($this->exceptions === null) {
-            $this->exceptions = new ExceptionsList($this);
-        }
+        $this->exceptions ??= new ExceptionsList($this);
 
         return $this->exceptions;
     }

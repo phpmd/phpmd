@@ -25,12 +25,8 @@ use Exception;
  */
 abstract class AbstractRenderer
 {
-    /**
-     * The associated output writer instance.
-     *
-     * @var AbstractWriter
-     */
-    private $writer = null;
+    /** The associated output writer instance. */
+    private AbstractWriter $writer;
 
     /**
      * Returns the associated output writer instance.

@@ -78,19 +78,11 @@ class CommandLineOptions
      */
     private $reportFormat;
 
-    /**
-     * An optional filename for the generated report.
-     *
-     * @var string
-     */
-    private $reportFile;
+    /** An optional filename for the generated report. */
+    private ?string $reportFile = null;
 
-    /**
-     * An optional filename to collect errors.
-     *
-     * @var string
-     */
-    private $errorFile;
+    /** An optional filename to collect errors. */
+    private ?string $errorFile = null;
 
     /**
      * Additional report files.
@@ -113,28 +105,18 @@ class CommandLineOptions
      */
     private $ruleSets;
 
-    /**
-     * File name of a PHPUnit code coverage report.
-     *
-     * @var string
-     */
-    private $coverageReport;
+    /** File name of a PHPUnit code coverage report. */
+    private ?string $coverageReport = null;
 
-    /**
-     * A string of comma-separated extensions for valid php source code filenames.
-     *
-     * @var string
-     */
-    private $extensions;
+    /** A string of comma-separated extensions for valid php source code filenames. */
+    private ?string $extensions = null;
 
     /**
      * A string of comma-separated pattern that is used to exclude directories.
      *
      * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
-     *
-     * @var string
      */
-    private $ignore;
+    private ?string $ignore = null;
 
     /**
      * Should the shell show the current phpmd version?
@@ -175,9 +157,8 @@ class CommandLineOptions
     /**
      * The baseline source file to read the baseline violations from.
      * Defaults to the path of the (first) ruleset file as phpmd.baseline.xml
-     * @var string|null
      */
-    private $baselineFile;
+    private ?string $baselineFile = null;
 
     /**
      * Should PHPMD read or write the result cache state from the cache file
@@ -201,11 +182,8 @@ class CommandLineOptions
      */
     private $colored = false;
 
-    /**
-     * Specify how many extra lines are added to a code snippet
-     * @var int|null
-     */
-    private $extraLineInExcerpt;
+    /** Specify how many extra lines are added to a code snippet */
+    private ?int $extraLineInExcerpt = null;
 
     /**
      * Constructs a new command line options instance.
