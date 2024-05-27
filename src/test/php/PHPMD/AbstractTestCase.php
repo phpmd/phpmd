@@ -234,6 +234,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
+     * @throws ExpectationFailedException
      * @throws Throwable
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file): void
@@ -294,8 +295,11 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         return implode("\n", array_map(function (RuleViolation $violation) {
             $nodeExtractor = new ReflectionProperty(RuleViolation::class, 'node');
             $nodeExtractor->setAccessible(true);
-            $node = $nodeExtractor->getValue($violation);
-            $node = $node ? $node->getNode() : null;
+            $value = $nodeExtractor->getValue($violation);
+            $node = null;
+            if ($value instanceof AbstractNode) {
+                $node = $value->getNode();
+            }
             $message = '  - line ' . $violation->getBeginLine();
 
             if ($node) {
@@ -332,6 +336,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     protected static function createResourceUriForTest($localPath)
     {
         $frame = static::getCallingTestCase();
+        static::assertIsString($frame['class']);
 
         return static::getResourceFilePathFromClassName($frame['class'], $localPath);
     }
@@ -402,7 +407,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked function node instance.
      *
      * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed $value The expected metric return value.
+     * @param ?numeric $value The expected metric return value.
      * @return FunctionNode&MockObject
      * @throws Throwable
      */
@@ -496,7 +501,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked rule-set instance.
      *
-     * @param ?class-string<AbstractNode<ASTNode>> $expectedClass Optional class name for apply() expected at least once.
+     * @param ?class-string<AbstractNode<ASTNode>> $expectedClass Optional class name for apply() expected at least
+     *                                                            once.
      * @param int|string $count How often should apply() be called?
      * @return MockObject&RuleSet
      * @throws Throwable
@@ -668,10 +674,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Iterator<T> $nodes
      * @return T
      * @throws ErrorException
+     * @throws Throwable
      */
     private function getNodeForCallingTestCase(Iterator $nodes): ASTNode
     {
         $frame = $this->getCallingTestCase();
+        static::assertIsString($frame['function']);
 
         return $this->getNodeByName($nodes, $frame['function']);
     }
@@ -682,6 +690,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param string $sourceFile
      * @return ASTNamespace
+     * @throws ErrorException
      * @throws Throwable
      */
     private function parseSource($sourceFile)

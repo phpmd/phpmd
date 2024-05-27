@@ -1,6 +1,7 @@
 parameters:
     paths:
         - src/main
+        - src/test/php
     rememberPossiblyImpureFunctionValues: false
     level: max
     exceptions:

@@ -145,6 +145,7 @@ abstract class AbstractStaticTestCase extends TestCase
     protected static function createResourceUriForTest($localPath)
     {
         $frame = static::getCallingTestCase();
+        static::assertIsString($frame['class']);
 
         return static::getResourceFilePathFromClassName($frame['class'], $localPath);
     }
@@ -194,6 +195,7 @@ abstract class AbstractStaticTestCase extends TestCase
     public static function assertJsonEquals($actualOutput, $expectedFileName, bool $removeDynamicValues = true): void
     {
         $actual = json_decode($actualOutput, true);
+        static::assertIsArray($actual);
         // Remove dynamic timestamp and duration attribute
         if ($removeDynamicValues) {
             if (isset($actual['timestamp'])) {

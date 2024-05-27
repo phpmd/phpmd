@@ -814,7 +814,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
-     * @param list<mixed> $options
+     * @param list<string> $options
      * @param list<mixed> $expected
      * @throws Throwable
      * @throws Throwable

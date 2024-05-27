@@ -71,6 +71,7 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
         $actual = json_decode($writer->getData(), true);
+        static::assertIsArray($actual);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
@@ -113,15 +114,19 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
+        $key = substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1);
         $data = strtr($writer->getData(), [
-            substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1) => '#{rootDirectory}',
+            $key => '#{rootDirectory}',
             'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
         ]);
         $actual = json_decode($data, true);
+        static::assertIsArray($actual);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
-        $expected = file_get_contents(__DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif');
+        $expected = file_get_contents(
+            __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
+        );
 
         static::assertNotFalse($expected);
         static::assertSame(

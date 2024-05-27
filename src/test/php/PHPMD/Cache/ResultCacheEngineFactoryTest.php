@@ -116,6 +116,12 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
         $property = new ReflectionProperty($filter, 'state');
         $property->setAccessible(true);
 
-        return $property->getValue($filter);
+        $value = $property->getValue($filter);
+        if (!$value) {
+            return null;
+        }
+        static::assertInstanceOf(ResultCacheState::class, $value);
+
+        return $value;
     }
 }

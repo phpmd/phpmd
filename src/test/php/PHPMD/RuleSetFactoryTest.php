@@ -615,6 +615,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Also implicitly tests (by parsing the ruleset) that
      * reference-by-includepath and explicit-classfile-declaration works.
      *
+     * @throws Exception
      * @throws Throwable
      */
     public function testAddPHPIncludePath(): void

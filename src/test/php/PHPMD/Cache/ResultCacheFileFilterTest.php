@@ -48,6 +48,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertCount(1, $state['state']['files']);
     }
 
@@ -65,6 +66,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertFalse($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertCount(1, $state['state']['files']['ResultCacheFileFilterTest.php']['violations']);
     }
 
@@ -82,6 +84,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertSame($timestamp, $state['state']['files']['ResultCacheFileFilterTest.php']['hash']);
     }
 
@@ -98,6 +101,8 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
+        static::assertIsArray($state['state']['files']['ResultCacheFileFilterTest.php']);
         static::assertArrayHasKey('hash', $state['state']['files']['ResultCacheFileFilterTest.php']);
     }
 

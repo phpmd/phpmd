@@ -157,12 +157,14 @@ class RuleSetTest extends AbstractTestCase
      * objects.
      *
      * @return RuleSet
+     * @throws Throwable
      */
     private function createRuleSetFixture()
     {
         $ruleSet = new RuleSet();
 
         foreach (func_get_args() as $name) {
+            static::assertIsString($name);
             $ruleSet->addRule(new RuleStub($name));
         }
 

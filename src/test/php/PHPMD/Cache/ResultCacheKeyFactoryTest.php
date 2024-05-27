@@ -43,7 +43,9 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
 
         static::assertArrayHasKey('strict', $keyData);
         static::assertArrayHasKey('composer', $keyData);
+        static::assertIsArray($keyData['composer']);
         static::assertArrayHasKey('rules', $keyData);
+        static::assertIsArray($keyData['rules']);
         static::assertArrayHasKey('phpVersion', $keyData);
 
         static::assertTrue($keyData['strict']);
