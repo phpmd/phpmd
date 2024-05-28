@@ -340,7 +340,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function isFieldDeclaration($variable, $image = '$')
     {
-        return substr($image, 0, 1) === '$' &&
+        return str_starts_with($image, '$') &&
             $variable->getParent() instanceof ASTFieldDeclaration;
     }
 }

@@ -30,7 +30,7 @@ foreach ($files as $file) {
 
     $cmd = sprintf(
         'xsltproc %s/pmd.xsl %s > %s',
-        escapeshellarg(dirname(__FILE__)),
+        escapeshellarg(__DIR__),
         escapeshellarg($file),
         escapeshellarg($path)
     );
