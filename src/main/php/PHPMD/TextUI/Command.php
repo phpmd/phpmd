@@ -158,7 +158,7 @@ final class Command
             $ignorePattern,
             $renderers,
             $ruleSetList,
-            $report !== null ? $report : new Report()
+            $report ?? new Report()
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
