@@ -634,7 +634,7 @@ class CommandLineOptions
      */
     public function cacheFile()
     {
-        return $this->cacheFile === null ? '.phpmd.result-cache.php' : $this->cacheFile;
+        return $this->cacheFile ?? '.phpmd.result-cache.php';
     }
 
     /**
