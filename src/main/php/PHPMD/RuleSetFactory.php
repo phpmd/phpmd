@@ -264,7 +264,7 @@ class RuleSetFactory
             return;
         }
 
-        if (substr($ref, -3, 3) === 'xml') {
+        if (str_ends_with($ref, 'xml')) {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;

@@ -278,7 +278,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
 
         $image = $this->getVariableImage($node);
 
-        if (substr($image, 0, 2) === '::' || $this->getExceptionsList()->contains(substr($image, 1))) {
+        if (str_starts_with($image, '::') || $this->getExceptionsList()->contains(substr($image, 1))) {
             return;
         }
 

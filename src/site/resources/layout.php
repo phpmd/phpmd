@@ -67,7 +67,7 @@
     <?php
 
     $uri ??= '';
-    $sourceUri = ltrim(substr($uri, -5) === '.html' ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
+    $sourceUri = ltrim(str_ends_with($uri, '.html') ? substr($uri, 0, -5).'.rst' : rtrim($uri, '/').'/index.rst', '/');
 
     ?>
     <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/<?php echo $sourceUri; ?>">Source</a>

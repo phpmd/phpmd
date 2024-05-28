@@ -284,7 +284,7 @@ abstract class AbstractNode
      */
     public function getType()
     {
-        $type = explode('\\', $this::class);
+        $type = explode('\\', static::class);
 
         $type = strtolower(array_pop($type));
 

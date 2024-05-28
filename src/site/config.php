@@ -38,7 +38,7 @@ class PhpMdEnvironment extends Environment
 
     public function relativeUrl($url)
     {
-        $root = substr($url, 0, 1) === '/';
+        $root = str_starts_with($url, '/');
 
         return ($root ? $this->getBaseHref().'/' : '').parent::relativeUrl($url);
     }

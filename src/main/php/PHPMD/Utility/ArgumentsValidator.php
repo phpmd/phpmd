@@ -31,7 +31,7 @@ final class ArgumentsValidator
             return;
         }
 
-        if (substr($value, 0, 1) !== '-') {
+        if (!str_starts_with($value, '-')) {
             return;
         }
 
