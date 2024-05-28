@@ -35,7 +35,7 @@ final class CheckStyleRenderer extends XMLRenderer
             return 'info';
         }
 
-        return (int) $priority === 2 ? 'warning' : 'error';
+        return $priority === 2 ? 'warning' : 'error';
     }
 
     /**

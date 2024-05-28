@@ -119,9 +119,8 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     private function removeUsedMethods(ClassNode $class, array $methods): array
     {
         $methods = $this->removeExplicitCalls($class, $methods);
-        $methods = $this->removeCallableArrayRepresentations($class, $methods);
 
-        return $methods;
+        return $this->removeCallableArrayRepresentations($class, $methods);
     }
 
     /**

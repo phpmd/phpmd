@@ -50,13 +50,11 @@ class JSONRenderer extends AbstractRenderer
      */
     protected function initReportData(): array
     {
-        $data = [
+        return [
             'version' => PHPMD::VERSION,
             'package' => 'phpmd',
             'timestamp' => date('c'),
         ];
-
-        return $data;
     }
 
     /**

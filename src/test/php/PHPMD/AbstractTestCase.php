@@ -475,10 +475,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     protected function getRuleMock()
     {
-        if (version_compare(PHP_VERSION, '7.4.0-dev', '<')) {
-            return $this->getMockForAbstractClass(AbstractRule::class);
-        }
-
         return @$this->getMockForAbstractClass(AbstractRule::class);
     }
 
