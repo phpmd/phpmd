@@ -252,9 +252,10 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
+     * @template T
      * @param string $name The name of the property, e.g. "ignore-whitespace".
-     * @param mixed $default An optional default value to fall back instead of throwing an exception.
-     * @return mixed The value of a configured property.
+     * @param ?T $default An optional default value to fall back instead of throwing an exception.
+     * @return string|T The value of a configured property.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
@@ -333,6 +334,7 @@ abstract class AbstractRule implements Rule
      *
      * @param AbstractNode<ASTNode> $node
      * @param array<int, string> $args
+     * @param numeric $metric
      */
     protected function addViolation(
         AbstractNode $node,

@@ -19,7 +19,6 @@
 namespace PHPMD;
 
 use ArrayIterator;
-use Iterator;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
@@ -144,7 +143,7 @@ class Report
      * Returns an iterator with all {@link \PHPMD\ProcessingError} that were
      * added to this report.
      *
-     * @return Iterator
+     * @return ArrayIterator<int, ProcessingError>
      * @since 1.2.1
      */
     public function getErrors()

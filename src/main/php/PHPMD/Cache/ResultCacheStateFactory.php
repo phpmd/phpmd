@@ -46,6 +46,12 @@ class ResultCacheStateFactory
             return null;
         }
 
+        assert(is_bool($data['strict']));
+        assert(is_string($data['baselineHash']) || $data['baselineHash'] === null);
+        assert(is_array($data['rules']));
+        assert(is_array($data['composer']));
+        assert(is_int($data['phpVersion']));
+
         return new ResultCacheKey(
             $data['strict'],
             $data['baselineHash'],
