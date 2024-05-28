@@ -83,7 +83,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * @param Engine $pdepend The wrapped PDepend Engine instance.
      */
     public function __construct(
-        private Engine $pdepend,
+        private readonly Engine $pdepend,
     ) {
     }
 

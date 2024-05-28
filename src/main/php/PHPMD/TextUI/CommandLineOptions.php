@@ -218,7 +218,7 @@ class CommandLineOptions
      */
     public function __construct(
         array $args,
-        private array $availableRuleSets = [],
+        private readonly array $availableRuleSets = [],
     ) {
         // Remove current file name
         array_shift($args);

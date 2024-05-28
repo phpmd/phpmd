@@ -45,7 +45,7 @@ use ValueError;
 final class Command
 {
     public function __construct(
-        private Output $output,
+        private readonly Output $output,
     ) {
     }
 

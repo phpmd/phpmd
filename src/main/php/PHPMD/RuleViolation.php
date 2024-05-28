@@ -46,10 +46,10 @@ class RuleViolation
      * @param ?numeric $metric The raw metric value which caused this rule violation.
      */
     public function __construct(
-        private Rule $rule,
-        private NodeInfo $nodeInfo,
+        private readonly Rule $rule,
+        private readonly NodeInfo $nodeInfo,
         array|string $violationMessage,
-        private mixed $metric = null,
+        private readonly mixed $metric = null,
     ) {
         if (is_array($violationMessage)) {
             $search = [];

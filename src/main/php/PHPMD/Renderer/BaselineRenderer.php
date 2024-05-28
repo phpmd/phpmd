@@ -9,7 +9,7 @@ use PHPMD\Utility\Paths;
 final class BaselineRenderer extends AbstractRenderer
 {
     public function __construct(
-        private string $basePath,
+        private readonly string $basePath,
     ) {
     }
 

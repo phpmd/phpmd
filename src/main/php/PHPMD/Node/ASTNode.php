@@ -39,7 +39,7 @@ final class ASTNode extends AbstractNode
      */
     public function __construct(
         PDependNode $node,
-        private ?string $fileName,
+        private readonly ?string $fileName,
     ) {
         parent::__construct($node);
     }

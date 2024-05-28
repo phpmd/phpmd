@@ -48,7 +48,7 @@ abstract class AbstractNode
      * @param TNode $node
      */
     public function __construct(
-        private PDependNode $node,
+        private readonly PDependNode $node,
     ) {
     }
 

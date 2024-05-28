@@ -4,12 +4,12 @@ namespace PHPMD\Baseline;
 
 class ViolationBaseline
 {
-    private int $fileNameLength;
+    private readonly int $fileNameLength;
 
     public function __construct(
-        private string $ruleName,
-        private string $fileName,
-        private ?string $methodName,
+        private readonly string $ruleName,
+        private readonly string $fileName,
+        private readonly ?string $methodName,
     ) {
         $this->fileNameLength = strlen($fileName);
     }

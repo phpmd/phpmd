@@ -5,9 +5,9 @@ namespace PHPMD\Cache;
 class ResultCacheEngine
 {
     public function __construct(
-        private ResultCacheFileFilter $fileFilter,
-        private ResultCacheUpdater $updater,
-        private ResultCacheWriter $writer,
+        private readonly ResultCacheFileFilter $fileFilter,
+        private readonly ResultCacheUpdater $updater,
+        private readonly ResultCacheWriter $writer,
     ) {
     }
 
