@@ -156,7 +156,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @return string[]
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return [
             'pdepend.analyzer.cyclomatic_complexity',

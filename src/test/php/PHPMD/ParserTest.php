@@ -18,9 +18,9 @@
 
 namespace PHPMD;
 
-use ArrayIterator;
 use PDepend\Engine;
 use PDepend\Metrics\AnalyzerFactory;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -177,13 +177,13 @@ class ParserTest extends AbstractTestCase
             ->will(static::returnValue($this->getPHPDependFileMock('foo.php')));
         $class->expects(static::any())
             ->method('getConstants')
-            ->will(static::returnValue(new ArrayIterator([])));
+            ->will(static::returnValue([]));
         $class->expects(static::any())
             ->method('getProperties')
-            ->will(static::returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ASTArtifactList([])));
         $class->expects(static::any())
             ->method('getMethods')
-            ->will(static::returnValue(new ArrayIterator([])));
+            ->will(static::returnValue(new ASTArtifactList([])));
 
         return $class;
     }
