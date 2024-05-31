@@ -627,9 +627,9 @@ class RuleSetFactoryTest extends AbstractTestCase
                     ],
                     $factory->getIgnorePattern($path . self::DIR_UNDER_TESTS)
                 );
-            } catch (RuleSetNotFoundException $e) {
+            } catch (RuleSetNotFoundException) {
                 $ruleSetNotFoundExceptionCount++;
-            } catch (RuntimeException $e) {
+            } catch (RuntimeException) {
                 $runtimeExceptionCount++;
             }
         }
