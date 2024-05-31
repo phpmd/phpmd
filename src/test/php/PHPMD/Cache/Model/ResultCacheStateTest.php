@@ -136,7 +136,7 @@ class ResultCacheStateTest extends TestCase
         $ruleViolation = new RuleViolation(
             $rule,
             $nodeInfo,
-            ['args' => ['foo' => 'bar'], 'message' => 'violation'],
+            ['args' => ['bar'], 'message' => 'violation'],
             $metric
         );
 
