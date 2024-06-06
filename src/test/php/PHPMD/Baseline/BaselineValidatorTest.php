@@ -6,6 +6,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Rule;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
@@ -37,13 +38,11 @@ class BaselineValidatorTest extends AbstractTestCase
     }
 
     /**
-     * @param bool   $contains
-     * @param string $baselineMode
-     * @param bool   $isBaselined
+     * @throws Throwable
      * @dataProvider dataProvider
      * @covers ::isBaselined
      */
-    public function testIsBaselined($contains, $baselineMode, $isBaselined): void
+    public function testIsBaselined(bool $contains, BaselineMode $baselineMode, bool $isBaselined): void
     {
         $this->baselineSet->method('contains')->willReturn($contains);
         $validator = new BaselineValidator($this->baselineSet, $baselineMode);

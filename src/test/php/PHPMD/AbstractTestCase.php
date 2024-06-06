@@ -643,22 +643,30 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
-     * @param string $mockBuilder
-     * @param ASTFunction|ASTMethod $mock
-     * @param string $metric The metric acronym used by PHP_Depend.
-     * @param mixed $value The expected metric return value.
-     * @return FunctionNode|MethodNode
+     * @param class-string<FunctionNode|MethodNode> $mockBuilder
+     * @param ?string $metric The metric acronym used by PHP_Depend.
+     * @param ?numeric $value The expected metric return value.
+     * @return (FunctionNode|MethodNode)&MockObject
+     * @throws Throwable
      */
-    private function createFunctionOrMethodMock($mockBuilder, $mock, $metric = null, $value = null)
-    {
-        return $this->initFunctionOrMethod(
-            $this->getMockFromBuilder(
-                $this->getMockBuilder($mockBuilder)
-                    ->setConstructorArgs([$mock])
-            ),
-            $metric,
-            $value
-        );
+    private function createFunctionOrMethodMock(
+        string $mockBuilder,
+        ASTFunction|ASTMethod $astMock,
+        ?string $metric = null,
+        mixed $value = null
+    ): MockObject {
+        $mock = $this->getMockBuilder($mockBuilder)
+            ->setConstructorArgs([$astMock])
+            ->getMock();
+
+        if ($metric !== null) {
+            $mock->expects(static::atLeastOnce())
+                ->method('getMetric')
+                ->with(static::equalTo($metric))
+                ->willReturn($value);
+        }
+
+        return $mock;
     }
 
     /**

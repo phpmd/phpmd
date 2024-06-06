@@ -63,8 +63,5 @@ abstract class Output implements OutputInterface
         return $this->verbosity;
     }
 
-    /**
-     * @param string $message
-     */
-    abstract protected function doWrite($message): void;
+    abstract protected function doWrite(string $message): void;
 }

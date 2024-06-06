@@ -90,12 +90,12 @@ class TextRenderer extends AbstractRenderer implements Color, Verbose
         }
     }
 
-    public function setVerbosityLevel($level): void
+    public function setVerbosityLevel(int $level): void
     {
-        $this->verbosityLevel = (int) $level;
+        $this->verbosityLevel = $level;
     }
 
-    public function setColored($colored): void
+    public function setColored(bool $colored): void
     {
         $this->colored = $colored;
     }

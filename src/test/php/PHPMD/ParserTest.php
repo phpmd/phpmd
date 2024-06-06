@@ -31,7 +31,9 @@ use PDepend\Util\Configuration;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
+use Throwable;
 
 /**
  * Test case for the PHP_Depend backend adapter class.
@@ -191,10 +193,10 @@ class ParserTest extends AbstractTestCase
     /**
      * Creates a mocked PHP_Depend function instance.
      *
-     * @param string $fileName Optional file name for the source file.
-     * @return PHP_Depend_Code_Function
+     * @param ?string $fileName Optional file name for the source file.
+     * @throws Throwable
      */
-    protected function getPHPDependFunctionMock($fileName = '/foo/bar.php')
+    protected function getPHPDependFunctionMock(?string $fileName = '/foo/bar.php'): ASTFunction&MockObject
     {
         $function = $this->getMockFromBuilder(
             $this->getMockBuilder(ASTFunction::class)
@@ -210,10 +212,10 @@ class ParserTest extends AbstractTestCase
     /**
      * Creates a mocked PHP_Depend method instance.
      *
-     * @param string $fileName Optional file name for the source file.
-     * @return PHP_Depend_Code_CodeMethod
+     * @param ?string $fileName Optional file name for the source file.
+     * @throws Throwable
      */
-    protected function getPHPDependMethodMock($fileName = '/foo/bar.php')
+    protected function getPHPDependMethodMock(?string $fileName = '/foo/bar.php'): ASTMethod&MockObject
     {
         $method = $this->getMockFromBuilder(
             $this->getMockBuilder(ASTMethod::class)
@@ -229,10 +231,10 @@ class ParserTest extends AbstractTestCase
     /**
      * Creates a mocked PHP_Depend file instance.
      *
-     * @param string $fileName The temporary file name.
-     * @return PHP_Depend_Code_File
+     * @param ?string $fileName The temporary file name.
+     * @throws Throwable
      */
-    protected function getPHPDependFileMock($fileName)
+    protected function getPHPDependFileMock(?string $fileName): ASTCompilationUnit&MockObject
     {
         $file = $this->getMockFromBuilder(
             $this->getMockBuilder(ASTCompilationUnit::class)
