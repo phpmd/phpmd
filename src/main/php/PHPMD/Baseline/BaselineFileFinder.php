@@ -45,10 +45,9 @@ final class BaselineFileFinder
     /**
      * Find the violation baseline file
      *
-     * @return string|null
      * @throws RuntimeException
      */
-    public function find()
+    public function find(): ?string
     {
         // read baseline file from cli arguments
         $file = $this->options->baselineFile();

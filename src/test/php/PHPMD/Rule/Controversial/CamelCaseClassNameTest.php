@@ -107,10 +107,8 @@ class CamelCaseClassNameTest extends AbstractTestCase
 
     /**
      * @param string $className
-     *
-     * @return ClassNode
      */
-    private function createClassNode($className)
+    private function createClassNode($className): ClassNode
     {
         $astClass = new ASTClass($className);
         $astClass->setNamespace(new ASTNamespace('phpmd'));

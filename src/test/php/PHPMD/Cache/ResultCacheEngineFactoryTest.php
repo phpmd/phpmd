@@ -108,10 +108,9 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @return ResultCacheState|null
      * @throws Throwable
      */
-    private function getFileFilterState(ResultCacheFileFilter $filter)
+    private function getFileFilterState(ResultCacheFileFilter $filter): ?ResultCacheState
     {
         $property = new ReflectionProperty($filter, 'state');
         $property->setAccessible(true);

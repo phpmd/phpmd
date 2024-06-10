@@ -72,10 +72,7 @@ class ResultCacheFileFilter implements Filter
         return $this->fileIsModified[$filePath] = $isModified;
     }
 
-    /**
-     * @return ResultCacheState
-     */
-    public function getState()
+    public function getState(): ResultCacheState
     {
         return $this->newState;
     }

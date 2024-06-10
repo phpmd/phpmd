@@ -70,7 +70,7 @@ final class DevelopmentCodeFragment extends AbstractRule implements FunctionAwar
      * @return list<string>
      * @throws OutOfBoundsException
      */
-    private function getSuspectImages()
+    private function getSuspectImages(): array
     {
         return array_map(
             'strtolower',

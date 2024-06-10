@@ -73,10 +73,8 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
 
     /**
      * Counts public methods within the given class/interface node.
-     *
-     * @return int
      */
-    private function countMethods(ClassNode $node)
+    private function countMethods(ClassNode $node): int
     {
         $count = 0;
         foreach ($node->getMethods() as $method) {
@@ -94,9 +92,8 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
      * ignoreRegexp is given to the rule using ignorepattern option.
      *
      * @param string $methodName
-     * @return bool
      */
-    private function isIgnoredMethodName($methodName)
+    private function isIgnoredMethodName($methodName): bool
     {
         return !empty($this->ignoreRegexp) &&
             preg_match($this->ignoreRegexp, $methodName) === 1;

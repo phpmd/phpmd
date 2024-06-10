@@ -30,10 +30,8 @@ class UndefinedVariableTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.
-     *
-     * @return UndefinedVariable
      */
-    public function getRule()
+    public function getRule(): UndefinedVariable
     {
         return new UndefinedVariable();
     }

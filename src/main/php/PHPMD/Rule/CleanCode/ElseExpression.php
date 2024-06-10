@@ -64,10 +64,9 @@ final class ElseExpression extends AbstractRule implements FunctionAware, Method
      *
      * @param AbstractNode<ASTScopeStatement> $scope
      * @param AbstractNode<PDependNode> $parent
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isElseScope(AbstractNode $scope, AbstractNode $parent)
+    private function isElseScope(AbstractNode $scope, AbstractNode $parent): bool
     {
         return (
             count($parent->getChildren()) === 3 &&
@@ -79,9 +78,8 @@ final class ElseExpression extends AbstractRule implements FunctionAware, Method
      * Whether the parent node is an if or an elseif clause
      *
      * @param AbstractNode<PDependNode> $parent
-     * @return bool
      */
-    private function isIfOrElseIfStatement(AbstractNode $parent)
+    private function isIfOrElseIfStatement(AbstractNode $parent): bool
     {
         return ($parent->getName() === 'if' || $parent->getName() === 'elseif');
     }

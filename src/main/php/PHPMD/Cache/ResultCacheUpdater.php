@@ -19,10 +19,9 @@ class ResultCacheUpdater
 
     /**
      * @param RuleSet[] $ruleSetList
-     * @return ResultCacheState
      * @throws OutOfBoundsException
      */
-    public function update(array $ruleSetList, ResultCacheState $state, Report $report)
+    public function update(array $ruleSetList, ResultCacheState $state, Report $report): ResultCacheState
     {
         // grab a copy of the new violations
         $newViolations = $report->getRuleViolations();

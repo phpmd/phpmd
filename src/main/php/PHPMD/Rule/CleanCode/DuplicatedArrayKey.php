@@ -92,7 +92,7 @@ final class DuplicatedArrayKey extends AbstractRule implements FunctionAware, Me
      * @return ?AbstractASTNode Key name
      * @throws OutOfBoundsException
      */
-    private function normalizeKey(AbstractASTNode $node, $index)
+    private function normalizeKey(AbstractASTNode $node, $index): ?AbstractASTNode
     {
         $childCount = count($node->getChildren());
         // Skip, if there is no array key, just an array value
@@ -118,10 +118,8 @@ final class DuplicatedArrayKey extends AbstractRule implements FunctionAware, Me
 
     /**
      * Cleans string literals and casts boolean and null values as PHP engine does
-     *
-     * @return string
      */
-    private function castStringFromLiteral(PDependASTNode $key)
+    private function castStringFromLiteral(PDependASTNode $key): string
     {
         $value = $key->getImage();
 

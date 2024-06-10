@@ -9,9 +9,8 @@ final class NodeInfoFactory
 {
     /**
      * @param PHPMDAbstractNode<ASTNode> $node
-     * @return NodeInfo
      */
-    public static function fromNode(PHPMDAbstractNode $node)
+    public static function fromNode(PHPMDAbstractNode $node): NodeInfo
     {
         $className = null;
         $methodName = null;

@@ -9,9 +9,8 @@ class ResultCacheStateFactory
 {
     /**
      * @param string $filePath
-     * @return ResultCacheState|null
      */
-    public function fromFile($filePath)
+    public function fromFile($filePath): ?ResultCacheState
     {
         if (!file_exists($filePath)) {
             return null;
@@ -32,9 +31,8 @@ class ResultCacheStateFactory
 
     /**
      * @param array<string, mixed> $data
-     * @return ResultCacheKey|null
      */
-    private function createCacheKey(array $data)
+    private function createCacheKey(array $data): ?ResultCacheKey
     {
         if (
             !array_key_exists('strict', $data) ||

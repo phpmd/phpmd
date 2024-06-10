@@ -48,11 +48,10 @@ final class ASTNode extends AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @return bool
      * @SuppressWarnings("PMD.UnusedFormalParameter")
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule)
+    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
     {
         return false;
     }
@@ -60,30 +59,24 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getImage();
     }
 
     /**
      * Returns the image of the underlying node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->getNode()->getImage();
     }
 
     /**
      * Returns the name of the declaring source file.
-     *
-     * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName ?? '';
     }
@@ -91,10 +84,8 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    public function getParentName()
+    public function getParentName(): ?string
     {
         return null;
     }
@@ -113,7 +104,7 @@ final class ASTNode extends AbstractNode
      *
      * @return ?string
      */
-    public function getFullQualifiedName()
+    public function getFullQualifiedName(): ?string
     {
         return null;
     }

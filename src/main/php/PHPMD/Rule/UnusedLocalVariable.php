@@ -87,10 +87,9 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * a static object property or something similar.
      *
      * @param AbstractNode<ASTVariable> $variable The variable to check.
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isLocal(AbstractNode $variable)
+    private function isLocal(AbstractNode $variable): bool
     {
         return (!$variable->isThis()
             && $this->isNotSuperGlobal($variable)
@@ -103,9 +102,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * that are available in scopes.
      *
      * @param AbstractNode<ASTVariable> $variable
-     * @return bool
      */
-    private function isNotSuperGlobal(AbstractNode $variable)
+    private function isNotSuperGlobal(AbstractNode $variable): bool
     {
         return !$this->isSuperGlobal($variable);
     }
@@ -114,9 +112,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * Return true if one of the passed nodes contains variables usages.
      *
      * @param array<int, AbstractNode<AbstractASTNode>> $nodes
-     * @return bool
      */
-    private function containsUsages(array $nodes)
+    private function containsUsages(array $nodes): bool
     {
         if (count($nodes) === 1) {
             return false;
@@ -298,9 +295,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * variable names in catch-statements.
      *
      * @param AbstractNode<AbstractASTNode> $node
-     * @return bool
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node): bool
     {
         return $this->isChildOf($node, ASTCatchStatement::class);
     }
@@ -314,7 +310,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * @return bool True if allowed, else false.
      * @throws OutOfBoundsException
      */
-    private function isUnusedForeachVariableAllowed(AbstractNode $variable)
+    private function isUnusedForeachVariableAllowed(AbstractNode $variable): bool
     {
         $isForeachVariable = $this->isChildOf($variable, ASTForeachStatement::class);
 
@@ -331,9 +327,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      *
      * @param AbstractNode<AbstractASTNode> $node
      * @param class-string<AbstractASTNode> $type
-     * @return bool
      */
-    private function isChildOf(AbstractNode $node, $type)
+    private function isChildOf(AbstractNode $node, $type): bool
     {
         $parent = $node->getParent();
 
@@ -342,10 +337,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
 
     /**
      * Gets exceptions from property
-     *
-     * @return ExceptionsList
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): ExceptionsList
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);

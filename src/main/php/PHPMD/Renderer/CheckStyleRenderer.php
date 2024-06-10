@@ -29,7 +29,7 @@ final class CheckStyleRenderer extends XMLRenderer
      * - priority 2 maps to warning level severity
      * - priority > 2 maps to info level severity
      */
-    private function mapPriorityToSeverity($priority)
+    private function mapPriorityToSeverity($priority): string
     {
         if ($priority > 2) {
             return 'info';

@@ -34,10 +34,8 @@ abstract class AbstractRenderer
 
     /**
      * Returns the associated output writer instance.
-     *
-     * @return AbstractWriter
      */
-    public function getWriter()
+    public function getWriter(): AbstractWriter
     {
         return $this->writer;
     }

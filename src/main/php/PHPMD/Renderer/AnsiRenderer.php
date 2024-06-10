@@ -41,10 +41,7 @@ final class AnsiRenderer extends AbstractRenderer
         }
     }
 
-    /**
-     * @return int|null
-     */
-    private function getMaxLineNumberLength(Report $report)
+    private function getMaxLineNumberLength(Report $report): ?int
     {
         $maxLength = null;
         foreach ($report->getRuleViolations() as $violation) {

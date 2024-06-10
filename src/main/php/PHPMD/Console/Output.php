@@ -55,10 +55,7 @@ abstract class Output implements OutputInterface
         $this->verbosity = $level;
     }
 
-    /**
-     * @return int
-     */
-    public function getVerbosity()
+    public function getVerbosity(): int
     {
         return $this->verbosity;
     }

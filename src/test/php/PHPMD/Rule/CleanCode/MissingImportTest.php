@@ -30,10 +30,8 @@ class MissingImportTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.
-     *
-     * @return MissingImport
      */
-    public function getRule()
+    public function getRule(): MissingImport
     {
         $rule = new MissingImport();
         $rule->addProperty('ignore-global', 'false');

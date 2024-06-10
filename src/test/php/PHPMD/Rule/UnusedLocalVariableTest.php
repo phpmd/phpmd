@@ -33,9 +33,8 @@ class UnusedLocalVariableTest extends AbstractTestCase
      * Get the rule under test.
      *
      * @param string $file
-     * @return UnusedLocalVariable
      */
-    public function getRule($file)
+    public function getRule($file): UnusedLocalVariable
     {
         $rule = new UnusedLocalVariable();
 

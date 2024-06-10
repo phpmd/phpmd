@@ -133,9 +133,8 @@ final class CountInLoopExpression extends AbstractRule implements ClassAware, En
      *
      * @param AbstractNode<ASTStatement> $loop
      * @param AbstractNode<ASTExpression> $expression
-     * @return bool
      */
-    private function isDirectChild(AbstractNode $loop, AbstractNode $expression)
+    private function isDirectChild(AbstractNode $loop, AbstractNode $expression): bool
     {
         $parent = $expression->getParent();
 
@@ -152,10 +151,8 @@ final class CountInLoopExpression extends AbstractRule implements ClassAware, En
      *
      * Example hash:
      * 22:22:10:15:PHPMD\count
-     *
-     * @return string
      */
-    private function getHash(PDependNode $node)
+    private function getHash(PDependNode $node): string
     {
         return sprintf(
             '%s:%s:%s:%s:%s',
@@ -171,9 +168,8 @@ final class CountInLoopExpression extends AbstractRule implements ClassAware, En
      * Checks the given function against the list of unwanted functions
      *
      * @param AbstractNode<ASTFunctionPostfix> $function
-     * @return bool
      */
-    private function isUnwantedFunction(AbstractNode $function)
+    private function isUnwantedFunction(AbstractNode $function): bool
     {
         $functionName = str_replace($this->currentNamespace, '', $function->getImage());
 

@@ -50,10 +50,9 @@ final class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the given method matches all criteria to be an invalid
      * boolean get method.
      *
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isBooleanGetMethod(MethodNode $node)
+    private function isBooleanGetMethod(MethodNode $node): bool
     {
         return $this->isGetterMethodName($node)
             && $this->isReturnTypeBoolean($node)
@@ -62,20 +61,16 @@ final class BooleanGetMethodName extends AbstractRule implements MethodAware
 
     /**
      * Tests if the given method starts with <b>get</b> or <b>_get</b>.
-     *
-     * @return bool
      */
-    private function isGetterMethodName(MethodNode $node)
+    private function isGetterMethodName(MethodNode $node): bool
     {
         return (preg_match('(^_?get)i', $node->getImage()) > 0);
     }
 
     /**
      * Tests if the given method is declared with return type boolean.
-     *
-     * @return bool
      */
-    private function isReturnTypeBoolean(MethodNode $node)
+    private function isReturnTypeBoolean(MethodNode $node): bool
     {
         $comment = $node->getComment();
         if ($comment === null) {
@@ -89,10 +84,9 @@ final class BooleanGetMethodName extends AbstractRule implements MethodAware
      * Tests if the property <b>$checkParameterizedMethods</b> is set to <b>true</b>
      * or has no parameters.
      *
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isParameterizedOrIgnored(MethodNode $node)
+    private function isParameterizedOrIgnored(MethodNode $node): bool
     {
         if ($this->getBooleanProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;

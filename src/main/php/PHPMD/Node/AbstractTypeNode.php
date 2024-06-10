@@ -35,7 +35,7 @@ abstract class AbstractTypeNode extends AbstractNode
      *
      * @return list<MethodNode>
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         $methods = [];
         foreach ($this->getNode()->getMethods() as $method) {
@@ -51,7 +51,7 @@ abstract class AbstractTypeNode extends AbstractNode
      *
      * @return list<string>
      */
-    public function getMethodNames()
+    public function getMethodNames(): array
     {
         $names = [];
         foreach ($this->getNode()->getMethods() as $method) {
@@ -63,10 +63,8 @@ abstract class AbstractTypeNode extends AbstractNode
 
     /**
      * Returns the number of constants declared in this type.
-     *
-     * @return int
      */
-    public function getConstantCount()
+    public function getConstantCount(): int
     {
         return count($this->getNode()->getConstants());
     }
@@ -82,10 +80,8 @@ abstract class AbstractTypeNode extends AbstractNode
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    public function getParentName()
+    public function getParentName(): ?string
     {
         return null;
     }
@@ -93,10 +89,8 @@ abstract class AbstractTypeNode extends AbstractNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return string
      */
-    public function getFullQualifiedName()
+    public function getFullQualifiedName(): string
     {
         return sprintf('%s\\%s', $this->getNamespaceName(), $this->getName());
     }

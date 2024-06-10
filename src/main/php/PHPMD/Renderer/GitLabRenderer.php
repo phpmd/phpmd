@@ -47,7 +47,7 @@ final class GitLabRenderer extends AbstractRenderer
      *
      * @return list<array<string, mixed>> The report output with violations, if any.
      */
-    private function addViolationsToReport(Report $report)
+    private function addViolationsToReport(Report $report): array
     {
         $data = [];
 
@@ -89,7 +89,7 @@ final class GitLabRenderer extends AbstractRenderer
      * @param array<int, array<string, mixed>> $data The report output to add the errors to.
      * @return array<int, array<string, mixed>> The report output with errors, if any.
      */
-    private function addErrorsToReport(Report $report, array $data)
+    private function addErrorsToReport(Report $report, array $data): array
     {
         $errors = $report->getErrors();
         foreach ($errors as $error) {
@@ -115,10 +115,9 @@ final class GitLabRenderer extends AbstractRenderer
      * Encode report data to the JSON representation string
      *
      * @param array<mixed> $data The report data
-     * @return string
      * @throws JsonException
      */
-    private function encodeReport($data)
+    private function encodeReport($data): string
     {
         $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
             | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;

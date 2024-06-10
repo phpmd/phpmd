@@ -58,10 +58,8 @@ final class ShortClassName extends AbstractRule implements ClassAware, EnumAware
 
     /**
      * Gets exceptions from property
-     *
-     * @return ExceptionsList
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): ExceptionsList
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this, '\\');
