@@ -393,12 +393,11 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked function node instance.
      *
-     * @param string $metric The metric acronym used by PHP_Depend.
+     * @param ?string $metric The metric acronym used by PHP_Depend.
      * @param ?numeric $value The expected metric return value.
-     * @return FunctionNode&MockObject
      * @throws Throwable
      */
-    protected function createFunctionMock($metric = null, $value = null)
+    protected function createFunctionMock(?string $metric = null, mixed $value = null): FunctionNode&MockObject
     {
         $function = $this->createFunctionOrMethodMock(
             FunctionNode::class,
