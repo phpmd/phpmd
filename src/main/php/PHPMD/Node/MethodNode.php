@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -43,7 +44,7 @@ class MethodNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getParent()->getNamespace()->getName();
+        return $this->getNode()->getParent()?->getNamespace()?->getImage();
     }
 
     /**
@@ -54,7 +55,7 @@ class MethodNode extends AbstractCallableNode
      */
     public function getParentName()
     {
-        return $this->getNode()->getParent()->getName();
+        return $this->getNode()->getParent()?->getImage();
     }
 
     /**
@@ -126,7 +127,9 @@ class MethodNode extends AbstractCallableNode
             return new InterfaceNode($parentNode);
         }
 
-        throw new RuntimeException('Unexpected method parent type: ' . $parentNode::class);
+        $name = $parentNode ? $parentNode::class : 'null';
+
+        throw new RuntimeException('Unexpected method parent type: ' . $name);
     }
 
     /**
@@ -146,15 +149,15 @@ class MethodNode extends AbstractCallableNode
         $methodName = strtolower($this->getName());
 
         $parentNode = $this->getNode()->getParent();
-        foreach ($parentNode->getInterfaces() as $parentType) {
+        foreach ($parentNode?->getInterfaces() ?? [] as $parentType) {
             $methods = $parentType->getAllMethods();
             if (isset($methods[$methodName])) {
                 return false;
             }
         }
 
-        $parentType = $parentNode->getParentClass();
-        if (is_object($parentType)) {
+        $parentType = $parentNode?->getParentClass();
+        if ($parentType) {
             $methods = $parentType->getAllMethods();
             if (isset($methods[$methodName])) {
                 return false;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\ExcessivePublicCount;
 use PHPMD\RuleSet;
+use Throwable;
 
 /**
  * Regression test for issue 015.
@@ -27,11 +29,12 @@ class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends Abstr
 {
     /**
      * testRuleSetInvokesRuleForClassInstance
+     * @throws Throwable
      */
     public function testRuleSetInvokesRuleForClassInstance(): void
     {
         $rule = new ExcessivePublicCount();
-        $rule->addProperty('minimum', 3);
+        $rule->addProperty('minimum', '3');
 
         $class = $this->getClass();
         $class->setMetrics(['cis' => 4]);

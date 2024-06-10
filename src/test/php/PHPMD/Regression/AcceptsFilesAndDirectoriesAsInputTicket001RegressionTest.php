@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -22,6 +23,7 @@ use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Regression test for issue 001.
@@ -30,6 +32,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
 {
     /**
      * testCliAcceptsDirectoryAsInput
+     * @throws Throwable
      */
     public function testCliAcceptsDirectoryAsInput(): void
     {
@@ -55,6 +58,7 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
 
     /**
      * testCliAcceptsSingleFileAsInput
+     * @throws Throwable
      */
     public function testCliAcceptsSingleFileAsInput(): void
     {

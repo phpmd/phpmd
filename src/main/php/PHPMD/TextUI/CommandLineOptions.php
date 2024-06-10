@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -217,7 +218,7 @@ class CommandLineOptions
      */
     public function __construct(
         array $args,
-        private array $availableRuleSets = [],
+        private readonly array $availableRuleSets = [],
     ) {
         // Remove current file name
         array_shift($args);
@@ -279,48 +280,48 @@ class CommandLineOptions
 
                 case '--report-file':
                 case '--reportfile':
-                    $this->reportFile = $this->readValue($equalChunk, $args);
+                    $this->reportFile = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--error-file':
                 case '--errorfile':
-                    $this->errorFile = $this->readValue($equalChunk, $args);
+                    $this->errorFile = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--input-file':
                 case '--inputfile':
-                    array_unshift($arguments, $this->readInputFile($this->readValue($equalChunk, $args)));
+                    array_unshift($arguments, $this->readInputFile((string) $this->readValue($equalChunk, $args)));
 
                     break;
 
                 case '--coverage':
-                    $this->coverageReport = $this->readValue($equalChunk, $args);
+                    $this->coverageReport = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--extensions':
                     $this->logDeprecated('extensions', 'suffixes');
                     // Deprecated: We use the suffixes option now
-                    $this->extensions = $this->readValue($equalChunk, $args);
+                    $this->extensions = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--suffixes':
-                    $this->extensions = $this->readValue($equalChunk, $args);
+                    $this->extensions = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--ignore':
                     $this->logDeprecated('ignore', 'exclude');
                     // Deprecated: We use the exclude option now
-                    $this->ignore = $this->readValue($equalChunk, $args);
+                    $this->ignore = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
                 case '--exclude':
-                    $this->ignore = $this->readValue($equalChunk, $args);
+                    $this->ignore = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
@@ -377,7 +378,7 @@ class CommandLineOptions
                     break;
 
                 case '--cache-strategy':
-                    $strategy = $this->readValue($equalChunk, $args);
+                    $strategy = (string) $this->readValue($equalChunk, $args);
                     $this->cacheStrategy = ResultCacheStrategy::from($strategy);
 
                     break;
@@ -403,7 +404,7 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
-                    $this->reportFiles[$match[1]] = $this->readValue($equalChunk, $args);
+                    $this->reportFiles[$match[1]] = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
@@ -458,7 +459,7 @@ class CommandLineOptions
     /**
      * Returns the specified report format.
      *
-     * @return string
+     * @return class-string<AbstractRenderer>|null
      */
     public function getReportFormat()
     {
@@ -501,7 +502,7 @@ class CommandLineOptions
      * Returns a hash with report files specified for different renderers. The
      * key represents the report format and the value the report file location.
      *
-     * @return array<string, string|null>
+     * @return array<string, string>
      */
     public function getReportFiles()
     {
@@ -633,7 +634,7 @@ class CommandLineOptions
      */
     public function cacheFile()
     {
-        return $this->cacheFile === null ? '.phpmd.result-cache.php' : $this->cacheFile;
+        return $this->cacheFile ?? '.phpmd.result-cache.php';
     }
 
     /**
@@ -954,7 +955,7 @@ class CommandLineOptions
      */
     private function readInputFile($inputFile)
     {
-        $content = file($inputFile);
+        $content = @file($inputFile);
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
@@ -979,7 +980,7 @@ class CommandLineOptions
     /**
      * Return value for an option either what is after "=" sign if present, else take the next CLI parameter.
      *
-     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
+     * @param list<string> $equalChunk The CLI parameter split in 2 by "=" sign
      * @param string[] &$args      The remaining CLI parameters not yet parsed
      *
      * @return string|null

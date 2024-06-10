@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -54,7 +55,7 @@ abstract class AbstractTypeNode extends AbstractNode
     {
         $names = [];
         foreach ($this->getNode()->getMethods() as $method) {
-            $names[] = $method->getName();
+            $names[] = $method->getImage();
         }
 
         return $names;
@@ -75,7 +76,7 @@ abstract class AbstractTypeNode extends AbstractNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getNamespace()->getName();
+        return $this->getNode()->getNamespace()?->getImage();
     }
 
     /**

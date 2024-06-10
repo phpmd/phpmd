@@ -4,6 +4,7 @@ namespace PHPMD\Cache;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheStateFactory
@@ -19,6 +20,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileNonExisting(): void
@@ -28,6 +30,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -38,6 +41,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -48,6 +52,7 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */
@@ -63,16 +68,17 @@ class ResultCacheStateFactoryTest extends AbstractTestCase
             ['composer.json' => 'hash1', 'composer.lock' => 'hash2'],
             70000
         );
-        $cacheKey = $state->getCacheKey();
+        $cacheKey = $state?->getCacheKey();
         static::assertEquals($expectedKey, $cacheKey);
 
         // assert file state
-        static::assertFalse($state->isFileModified('file1', 'file1-hash'));
+        static::assertFalse($state?->isFileModified('file1', 'file1-hash'));
         static::assertTrue($state->isFileModified('file2', 'file1-hash'));
         static::assertSame(['violations'], $state->getViolations('file2'));
     }
 
     /**
+     * @throws Throwable
      * @covers ::createCacheKey
      * @covers ::fromFile
      */

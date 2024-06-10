@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache;
 
+use OutOfBoundsException;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\OutputInterface;
 use PHPMD\Report;
@@ -11,14 +12,15 @@ use PHPMD\Utility\Paths;
 class ResultCacheUpdater
 {
     public function __construct(
-        private OutputInterface $output,
-        private string $basePath,
+        private readonly OutputInterface $output,
+        private readonly string $basePath,
     ) {
     }
 
     /**
      * @param RuleSet[] $ruleSetList
      * @return ResultCacheState
+     * @throws OutOfBoundsException
      */
     public function update(array $ruleSetList, ResultCacheState $state, Report $report)
     {
@@ -35,7 +37,7 @@ class ResultCacheUpdater
 
         // add violations from the report to the result cache
         foreach ($newViolations as $violation) {
-            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $filePath = Paths::getRelativePath($this->basePath, (string) $violation->getFileName());
             $state->addRuleViolation($filePath, $violation);
         }
 

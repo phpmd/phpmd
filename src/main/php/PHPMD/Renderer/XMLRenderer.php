@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -57,7 +58,7 @@ class XMLRenderer extends AbstractRenderer
         $writer->write(PHP_EOL);
 
         foreach ($report->getRuleViolations() as $violation) {
-            $fileName = $violation->getFileName();
+            $fileName = $violation->getFileName() ?: '(unknown file)';
 
             if ($this->fileName !== $fileName) {
                 // Not first file

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -22,7 +23,7 @@ use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Stubs\WriterStub;
-use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * Test case for the main PHPMD class.
@@ -41,6 +42,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * Tests the main PHPMD interface with default settings an a xml-renderer.
+     * @throws Throwable
      */
     public function testRunWithDefaultSettingsAndXmlRenderer(): void
     {
@@ -66,6 +68,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
+     * @throws Throwable
      */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory(): void
     {
@@ -90,6 +93,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
+     * @throws Throwable
      */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile(): void
     {
@@ -114,6 +118,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasErrorsReturnsFalseByDefault
+     * @throws Throwable
      */
     public function testHasErrorsReturnsFalseByDefault(): void
     {
@@ -123,6 +128,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasViolationsReturnsFalseByDefault
+     * @throws Throwable
      */
     public function testHasViolationsReturnsFalseByDefault(): void
     {
@@ -132,6 +138,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasViolationsReturnsFalseForSourceWithoutViolations
+     * @throws Throwable
      */
     public function testHasViolationsReturnsFalseForSourceWithoutViolations(): void
     {
@@ -155,6 +162,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasViolationsReturnsTrueForSourceWithViolation
+     * @throws Throwable
      */
     public function testHasViolationsReturnsTrueForSourceWithViolation(): void
     {
@@ -176,14 +184,14 @@ class PHPMDTest extends AbstractTestCase
         static::assertTrue($phpmd->hasViolations());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testHasViolationsReturnsFalseWhenViolationIsBaselined(): void
     {
         self::changeWorkingDirectory();
 
-        /** @var BaselineSet|PHPUnit_Framework_MockObject_MockObject $baselineSet */
-        $baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
-        );
+        $baselineSet = $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()->getMock();
         $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 
         $renderer = new XMLRenderer();
@@ -203,6 +211,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testHasErrorsReturnsTrueForSourceWithError
+     * @throws Throwable
      */
     public function testHasErrorsReturnsTrueForSourceWithError(): void
     {
@@ -226,6 +235,7 @@ class PHPMDTest extends AbstractTestCase
 
     /**
      * testIgnorePattern
+     * @throws Throwable
      */
     public function testIgnorePattern(): void
     {

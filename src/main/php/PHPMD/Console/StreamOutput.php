@@ -14,10 +14,7 @@ final class StreamOutput extends Output
         parent::__construct($verbosity);
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function doWrite($message): void
+    protected function doWrite(string $message): void
     {
         fwrite($this->stream, $message);
     }

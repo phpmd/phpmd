@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,7 +19,6 @@
 namespace PHPMD;
 
 use ArrayIterator;
-use Iterator;
 use PHPMD\Baseline\BaselineValidator;
 
 /**
@@ -57,7 +57,7 @@ class Report
     private $errors = [];
 
     public function __construct(
-        private ?BaselineValidator $baselineValidator = null,
+        private readonly ?BaselineValidator $baselineValidator = null,
     ) {
     }
 
@@ -143,7 +143,7 @@ class Report
      * Returns an iterator with all {@link \PHPMD\ProcessingError} that were
      * added to this report.
      *
-     * @return Iterator
+     * @return ArrayIterator<int, ProcessingError>
      * @since 1.2.1
      */
     public function getErrors()

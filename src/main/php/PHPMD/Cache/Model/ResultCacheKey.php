@@ -9,11 +9,11 @@ class ResultCacheKey
      * @param array<string, string> $composer
      */
     public function __construct(
-        private bool $strict,
-        private ?string $baselineHash,
-        private array $rules,
-        private array $composer,
-        private int $phpVersion
+        private readonly bool $strict,
+        private readonly ?string $baselineHash,
+        private readonly array $rules,
+        private readonly array $composer,
+        private readonly int $phpVersion
     ) {
     }
 

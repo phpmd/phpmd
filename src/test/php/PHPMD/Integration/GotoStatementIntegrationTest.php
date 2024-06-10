@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Throwable;
 
 /**
  * Test case for the goto statement GotoStatementIntegrationTest.
@@ -31,6 +33,7 @@ class GotoStatementIntegrationTest extends AbstractTestCase
      * testReportContainsGotoStatementWarning
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testReportContainsGotoStatementWarning(): void
     {
@@ -46,7 +49,9 @@ class GotoStatementIntegrationTest extends AbstractTestCase
                 $file,
             ]
         );
+        $content = file_get_contents($file);
 
-        static::assertStringContainsString('utilizes a goto statement.', file_get_contents($file));
+        static::assertNotFalse($content);
+        static::assertStringContainsString('utilizes a goto statement.', $content);
     }
 }

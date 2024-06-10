@@ -1,8 +1,9 @@
 parameters:
     paths:
         - src/main
+        - src/test/php
     rememberPossiblyImpureFunctionValues: false
-    level: 6
+    level: max
     exceptions:
         reportUncheckedExceptionDeadCatch: true
         implicitThrows: false

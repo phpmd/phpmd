@@ -8,6 +8,7 @@
 $config = new PhpCsFixer\Config();
 return $config
     ->setRiskyAllowed(true)
+    ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRules([
         '@PhpCsFixer' => true, // Gets overwritten by rules below
         '@PER-CS2.0' => true,

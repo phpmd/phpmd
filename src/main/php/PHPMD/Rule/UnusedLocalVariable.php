@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -124,7 +125,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
         foreach ($nodes as $node) {
             $parent = $node->getParent();
 
-            if (!$parent->isInstanceOf(ASTAssignmentExpression::class)) {
+            if (!$parent?->isInstanceOf(ASTAssignmentExpression::class)) {
                 return true;
             }
 
@@ -150,7 +151,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
         $parameters = $node->getFirstChildOfType(ASTFormalParameters::class);
 
         // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType(ASTVariableDeclarator::class);
+        $declarators = $parameters?->findChildrenOfType(ASTVariableDeclarator::class) ?: [];
 
         foreach ($declarators as $declarator) {
             unset($this->images[$this->getVariableImage($declarator)]);
@@ -179,7 +180,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
 
         foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $variable) {
             $parent = $variable->getParentOfType(AbstractASTCallable::class);
-            if ($parent->getNode() === $node->getNode()) {
+            if ($parent?->getNode() === $node->getNode()) {
                 $this->collectVariable($variable);
             }
         }
@@ -201,7 +202,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      */
     private function collectCompoundVariableInString(AbstractNode $node): void
     {
-        $parentNode = $node->getParent()->getNode();
+        $parentNode = $node->getParent()?->getNode();
         $candidateParentNodes = $node->getParentsOfType(ASTString::class);
 
         if (in_array($parentNode, $candidateParentNodes, true)) {
@@ -277,7 +278,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
 
         $image = $this->getVariableImage($node);
 
-        if (substr($image, 0, 2) === '::' || $this->getExceptionsList()->contains(substr($image, 1))) {
+        if (str_starts_with($image, '::') || $this->getExceptionsList()->contains(substr($image, 1))) {
             return;
         }
 
@@ -336,7 +337,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
     {
         $parent = $node->getParent();
 
-        return $parent->isInstanceOf($type);
+        return $parent && $parent->isInstanceOf($type);
     }
 
     /**

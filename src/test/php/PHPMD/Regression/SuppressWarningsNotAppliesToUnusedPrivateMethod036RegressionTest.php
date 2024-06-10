@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedPrivateMethod;
 use PHPMD\RuleSet;
+use Throwable;
 
 /**
  * Regression test for issue 036.
@@ -27,6 +29,7 @@ class SuppressWarningsNotAppliesToUnusedPrivateMethod036RegressionTest extends A
 {
     /**
      * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation(): void
     {

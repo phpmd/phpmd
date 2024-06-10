@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
@@ -42,7 +43,10 @@ final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumA
 
         $exceptions = $this->getExceptionsList();
         $fullNamespace = $node->getNamespaceName();
-        $namespaceNames = $fullNamespace === '' ? [] : explode('\\', $fullNamespace);
+        if (!$fullNamespace) {
+            return;
+        }
+        $namespaceNames = explode('\\', $fullNamespace);
 
         foreach ($namespaceNames as $namespaceName) {
             if (isset($exceptions[$namespaceName])) {

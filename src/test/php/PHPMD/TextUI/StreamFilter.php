@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -24,7 +25,7 @@ use php_user_filter;
  */
 class StreamFilter extends php_user_filter
 {
-    public static $streamHandle;
+    public static string $streamHandle;
 
     /**
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the camel case property name rule.
@@ -28,6 +30,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid property name.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidPropertyName(): void
     {
@@ -41,6 +44,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does apply for all caps abbreviation in property name.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForAllCapsAbbreviationInProperty(): void
     {
@@ -55,6 +59,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does not apply for a camelcase abbreviation in property name.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForCamelcaseAbbreviationInProperty(): void
     {
@@ -70,6 +75,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a property name
      * starting with a capital.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForPropertyNameWithCapital(): void
     {
@@ -85,6 +91,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a property name
      * with underscores.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForPropertyNameWithUnderscores(): void
     {
@@ -100,6 +107,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid property name
      * with an underscore at the beginning when it is allowed.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed(): void
     {
@@ -114,6 +122,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid property name
      * with no underscore at the beginning when it is allowed.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed(): void
     {
@@ -128,6 +137,7 @@ class CamelCasePropertyNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid property name
      * with an underscore at the beginning when it is allowed.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed(): void
     {

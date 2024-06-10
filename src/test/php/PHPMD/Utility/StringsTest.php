@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Utility;
 
 use InvalidArgumentException;
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test cases for the Strings utility class.
@@ -29,6 +31,8 @@ class StringsTest extends AbstractTestCase
 {
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesEmptyString(): void
     {
@@ -37,6 +41,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method with an empty string with list of suffixes
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix(): void
     {
@@ -45,6 +51,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string not in the list of suffixes
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch(): void
     {
@@ -53,6 +61,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string in the list of suffixes
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch(): void
     {
@@ -61,6 +71,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method with a string that should match only once for two potential matches
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce(): void
     {
@@ -69,6 +81,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method that a Prefix should not be matched
+     *
+     * @throws Throwable
      */
     public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract(): void
     {
@@ -77,6 +91,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutSuffixes() method that a Prefix should be matched
+     *
+     * @throws Throwable
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract(): void
     {
@@ -86,6 +102,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched in order
+     *
+     * @throws Throwable
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixesMatchShouldSubtractInOrder(): void
     {
@@ -97,6 +115,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with an empty separator
+     *
+     * @throws Throwable
      */
     public function testSplitToListEmptySeparatorThrowsException(): void
     {
@@ -109,6 +129,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with an empty string
+     *
+     * @throws Throwable
      */
     public function testSplitToListEmptyString(): void
     {
@@ -117,6 +139,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with a non-matching separator
+     *
+     * @throws Throwable
      */
     public function testSplitToListStringWithoutMatchingSeparator(): void
     {
@@ -125,6 +149,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with a matching separator
+     *
+     * @throws Throwable
      */
     public function testSplitToListStringWithMatchingSeparator(): void
     {
@@ -133,6 +159,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method with trailing whitespace
+     *
+     * @throws Throwable
      */
     public function testSplitToListStringTrimsLeadingAndTrailingWhitespace(): void
     {
@@ -141,6 +169,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method that it removes empty strings from list
+     *
+     * @throws Throwable
      */
     public function testSplitToListStringRemoveEmptyStringValues(): void
     {
@@ -149,6 +179,8 @@ class StringsTest extends AbstractTestCase
 
     /**
      * Tests the splitToList() method that it does not remove zero values from list
+     *
+     * @throws Throwable
      */
     public function testSplitToListStringShouldNotRemoveAZeroValue(): void
     {

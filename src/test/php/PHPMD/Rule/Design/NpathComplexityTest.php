@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * This is a test case for the NPath complexity rule.
@@ -29,6 +31,7 @@ class NpathComplexityTest extends AbstractTestCase
     /**
      * Tests that the rule applies for a value greater than the configured
      * threshold.
+     * @throws Throwable
      */
     public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
@@ -44,6 +47,7 @@ class NpathComplexityTest extends AbstractTestCase
     /**
      * Test that the rule applies for a value that is equal with the configured
      * threshold.
+     * @throws Throwable
      */
     public function testRuleAppliesForValueEqualToThreshold(): void
     {
@@ -59,6 +63,7 @@ class NpathComplexityTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply when the value is at least one lower
      * than the threshold.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold(): void
     {

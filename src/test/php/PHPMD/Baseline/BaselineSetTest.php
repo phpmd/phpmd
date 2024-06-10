@@ -3,6 +3,7 @@
 namespace PHPMD\Baseline;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineSet
@@ -10,6 +11,7 @@ use PHPMD\AbstractTestCase;
 class BaselineSetTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::addEntry
      * @covers ::contains
      */
@@ -22,6 +24,7 @@ class BaselineSetTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::addEntry
      * @covers ::contains
      */
@@ -34,6 +37,7 @@ class BaselineSetTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::addEntry
      * @covers ::contains
      */
@@ -51,6 +55,7 @@ class BaselineSetTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::addEntry
      * @covers ::contains
      */
@@ -63,6 +68,7 @@ class BaselineSetTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::addEntry
      * @covers ::contains
      */

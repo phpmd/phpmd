@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -20,6 +21,7 @@ namespace PHPMD\Renderer;
 use JsonException;
 use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
+use PHPMD\ProcessingError;
 use PHPMD\Report;
 
 /**
@@ -100,11 +102,13 @@ class JSONRenderer extends AbstractRenderer
     protected function addErrorsToReport(Report $report, array $data)
     {
         $errors = $report->getErrors();
-        foreach ($errors as $error) {
-            $data['errors'][] = [
-                'fileName' => $error->getFile(),
-                'message' => $error->getMessage(),
-            ];
+        if (count($errors)) {
+            $data['errors'] = array_map(function (ProcessingError $error): array {
+                return [
+                    'fileName' => $error->getFile(),
+                    'message' => $error->getMessage(),
+                ];
+            }, $errors->getArrayCopy());
         }
 
         return $data;

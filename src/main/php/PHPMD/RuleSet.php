@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -61,7 +62,7 @@ class RuleSet implements IteratorAggregate
     private string $description = '';
 
     /** The violation report used by the rule-set. */
-    private ?Report $report = null;
+    private Report $report;
 
     /**
      * Mapping between marker interfaces and concrete context code node classes.
@@ -166,7 +167,7 @@ class RuleSet implements IteratorAggregate
     /**
      * Returns the violation report used by the rule-set.
      */
-    public function getReport(): ?Report
+    public function getReport(): Report
     {
         return $this->report;
     }

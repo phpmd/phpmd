@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Count In Loop Expression Test
@@ -28,6 +30,7 @@ class CountInLoopExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToAllTypesOfLoops
+     * @throws Throwable
      */
     public function testRuleAppliesToAllTypesOfLoops(): void
     {
@@ -38,6 +41,7 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotApplyToExpressionElsewhere
+     * @throws Throwable
      */
     public function testRuleNotApplyToExpressionElsewhere(): void
     {
@@ -48,6 +52,7 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testRuleApplyToNestedLoops
+     * @throws Throwable
      */
     public function testRuleApplyToNestedLoops(): void
     {
@@ -58,6 +63,7 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testMutedRuleAtClassLevel
+     * @throws Throwable
      */
     public function testMutedRuleAtClassLevel(): void
     {
@@ -68,6 +74,7 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     /**
      * testMutedRuleAtMethodLevel
+     * @throws Throwable
      */
     public function testMutedRuleAtMethodLevel(): void
     {

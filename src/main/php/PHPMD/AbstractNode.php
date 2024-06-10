@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,7 +18,6 @@
 
 namespace PHPMD;
 
-use BadMethodCallException;
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTNode as PDependNode;
@@ -37,7 +37,7 @@ abstract class AbstractNode
     /**
      * The collected metrics for this node.
      *
-     * @var array<string, mixed>
+     * @var array<string, numeric>
      */
     private $metrics = null;
 
@@ -47,7 +47,7 @@ abstract class AbstractNode
      * @param TNode $node
      */
     public function __construct(
-        private PDependNode $node,
+        private readonly PDependNode $node,
     ) {
     }
 
@@ -57,19 +57,10 @@ abstract class AbstractNode
      *
      * @param string $name
      * @param array<mixed> $args
-     * @throws BadMethodCallException When the underlying PDepend node
-     *         does not contain a method named <b>$name</b>.
      */
     public function __call($name, array $args): mixed
     {
-        $node = $this->getNode();
-        if (!method_exists($node, $name)) {
-            throw new BadMethodCallException(
-                sprintf('Invalid method %s() called.', $name)
-            );
-        }
-
-        return $node->{$name}(...$args);
+        return $this->node->{$name}(...$args);
     }
 
     /**
@@ -227,7 +218,7 @@ abstract class AbstractNode
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
      *
-     * @return string|null
+     * @return string
      */
     public function getName()
     {
@@ -271,7 +262,7 @@ abstract class AbstractNode
      *
      * @return TNode
      */
-    public function getNode()
+    public function getNode(): PDependNode
     {
         return $this->node;
     }
@@ -283,9 +274,11 @@ abstract class AbstractNode
      */
     public function getType()
     {
-        $type = explode('\\', $this::class);
+        $type = explode('\\', static::class);
 
-        return preg_replace('(node$)', '', strtolower(array_pop($type)));
+        $type = strtolower(array_pop($type));
+
+        return preg_replace('(node$)', '', $type) ?? $type;
     }
 
     /**
@@ -295,19 +288,15 @@ abstract class AbstractNode
      * @param string $name The metric name or abbreviation.
      * @return ?numeric $name
      */
-    public function getMetric($name)
+    public function getMetric($name): mixed
     {
-        if (isset($this->metrics[$name])) {
-            return $this->metrics[$name];
-        }
-
-        return null;
+        return $this->metrics[$name] ?? null;
     }
 
     /**
      * This method will set the metrics for this node.
      *
-     * @param array<string, mixed> $metrics The collected node metrics.
+     * @param array<string, numeric> $metrics The collected node metrics.
      */
     public function setMetrics(array $metrics): void
     {

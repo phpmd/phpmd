@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -60,7 +61,7 @@ final class MissingImport extends AbstractRule implements FunctionAware, MethodA
             $className = $classNode->getImage();
             $fqcnLength = strlen($className);
 
-            if ($classNameLength === $fqcnLength && substr($className, 0, 1) !== '$') {
+            if ($classNameLength === $fqcnLength && !str_starts_with($className, '$')) {
                 $this->addViolation(
                     $classNode,
                     [(string) $classNode->getBeginLine(), (string) $classNode->getStartColumn()]

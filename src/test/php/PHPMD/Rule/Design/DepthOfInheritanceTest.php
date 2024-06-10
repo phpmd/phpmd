@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DepthOfInheritance} class.
@@ -28,6 +30,7 @@ class DepthOfInheritanceTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold
+     * @throws Throwable
      */
     public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold(): void
     {
@@ -39,6 +42,7 @@ class DepthOfInheritanceTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold(): void
     {
@@ -50,6 +54,7 @@ class DepthOfInheritanceTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold(): void
     {

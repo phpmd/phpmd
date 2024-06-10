@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -37,12 +38,8 @@ class RuleSetFactory
      */
     private $strict = false;
 
-    /**
-     * The data directory set within the class constructor.
-     *
-     * @var string
-     */
-    private $location;
+    /** The data directory set within the class constructor. */
+    private readonly string $location;
 
     /**
      * The minimum priority for rules to load.
@@ -263,7 +260,7 @@ class RuleSetFactory
             return;
         }
 
-        if (substr($ref, -3, 3) === 'xml') {
+        if (str_ends_with($ref, 'xml')) {
             $this->parseRuleSetReferenceNode($ruleSet, $node);
 
             return;
@@ -473,7 +470,7 @@ class RuleSetFactory
      */
     private function addProperty(Rule $rule, SimpleXMLElement $node): void
     {
-        $name = trim($node['name']);
+        $name = trim((string) $node['name']);
         $value = trim($this->getPropertyValue($node));
         if ($name !== '' && $value !== '') {
             $rule->addProperty($name, $value);
@@ -504,7 +501,7 @@ class RuleSetFactory
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
      * @param string $fileName The filename of a rule-set definition.
-     * @return list<string>|null
+     * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      */
     public function getIgnorePattern($fileName)
@@ -541,7 +538,7 @@ class RuleSetFactory
             return $excludes;
         }
 
-        return null;
+        return [];
     }
 
     /**

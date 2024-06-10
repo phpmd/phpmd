@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -21,6 +22,7 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the JSON renderer implementation.
@@ -31,6 +33,7 @@ class GitLabRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfGitLabElements
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfGitLabElements(): void
     {
@@ -65,6 +68,7 @@ class GitLabRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToGitLabReport
+     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToGitLabReport(): void
     {

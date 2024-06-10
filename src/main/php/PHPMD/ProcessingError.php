@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -24,12 +25,8 @@ namespace PHPMD;
  */
 class ProcessingError
 {
-    /**
-     * The source file where the processing error occurred.
-     *
-     * @var string
-     */
-    private $file;
+    /** The source file where the processing error occurred. */
+    private readonly string $file;
 
     /**
      * Constructs a new processing error instance.
@@ -37,7 +34,7 @@ class ProcessingError
      * @param string $message The original processing error message.
      */
     public function __construct(
-        private string $message,
+        private readonly string $message,
     ) {
         $this->file = $this->extractFile($message);
     }

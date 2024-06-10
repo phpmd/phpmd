@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,6 +18,7 @@
 
 namespace PHPMD\Stubs;
 
+use PDepend\Source\AST\ASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -26,7 +28,8 @@ use PHPMD\Rule\ClassAware;
  */
 class RuleStub extends AbstractRule implements ClassAware
 {
-    public $node = null;
+    /** @var ?AbstractNode<ASTNode> */
+    public ?AbstractNode $node = null;
 
     /**
      * Constructs a new rule stub instance.

@@ -4,13 +4,12 @@ namespace PHPMD\Console;
 
 class TestOutput extends Output
 {
-    /** @var resource */
-    private $stream;
-
-    public function __construct()
+    /**
+     * @param resource $stream
+     */
+    public function __construct(private $stream)
     {
         parent::__construct();
-        $this->stream = fopen('php://memory', 'w+b');
     }
 
     /**
@@ -21,10 +20,10 @@ class TestOutput extends Output
         fwrite($this->stream, $message);
     }
 
-    public function getOutput()
+    public function getOutput(): string
     {
         fseek($this->stream, 0);
 
-        return fread($this->stream, 1024);
+        return fread($this->stream, 1024) ?: '';
     }
 }

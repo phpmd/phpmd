@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -48,6 +49,7 @@ use PHPMD\Rule\MethodAware;
  * that are used by any code in the analyzed source artifact.
  *
  * @SuppressWarnings("PMD.CouplingBetweenObjects")
+ * @SuppressWarnings("PMD.CyclomaticComplexity")
  */
 final class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
@@ -71,7 +73,10 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         $this->images = [];
 
         if ($node instanceof MethodNode) {
-            $this->collectProperties($node->getNode()->getParent());
+            $parent = $node->getNode()->getParent();
+            if ($parent) {
+                $this->collectProperties($parent);
+            }
         }
 
         $this->collect($node);
@@ -122,7 +127,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
 
         foreach ($node->getProperties() as $property) {
             if ($property->isStatic()) {
-                $this->images['::' . $property->getName()] = $property;
+                $this->images['::' . $property->getImage()] = $property;
             }
         }
     }
@@ -235,7 +240,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         $parameters = $node->getFirstChildOfType(ASTFormalParameters::class);
 
         // Now get all declarators in the formal parameters container
-        $declarators = $parameters->findChildrenOfType(ASTVariableDeclarator::class);
+        $declarators = $parameters?->findChildrenOfType(ASTVariableDeclarator::class) ?? [];
 
         foreach ($declarators as $declarator) {
             $this->addVariableDefinition($declarator->getNode());

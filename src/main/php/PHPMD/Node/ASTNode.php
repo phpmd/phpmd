@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -38,7 +39,7 @@ final class ASTNode extends AbstractNode
      */
     public function __construct(
         PDependNode $node,
-        private ?string $fileName,
+        private readonly ?string $fileName,
     ) {
         parent::__construct($node);
     }
@@ -84,7 +85,7 @@ final class ASTNode extends AbstractNode
      */
     public function getFileName()
     {
-        return $this->fileName;
+        return $this->fileName ?? '';
     }
 
     /**

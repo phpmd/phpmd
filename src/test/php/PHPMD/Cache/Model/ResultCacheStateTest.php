@@ -7,6 +7,7 @@ use PHPMD\Rule\CleanCode\BooleanArgumentFlag;
 use PHPMD\RuleSet;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheState
@@ -27,6 +28,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getCacheKey
      */
     public function testGetCacheKey(): void
@@ -35,12 +37,25 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getViolations
      * @covers ::setViolations
      */
     public function testGetSetViolations(): void
     {
-        $violations = ['violations'];
+        $violations = [[
+            'metric' => null,
+            'violations' => 100,
+            'namespaceName' => null,
+            'className' => null,
+            'methodName' => null,
+            'functionName' => null,
+            'description' => '',
+            'beginLine' => 0,
+            'endLine' => 0,
+            'rule' => '',
+            'args' => null,
+        ]];
 
         static::assertCount(0, $this->state->getViolations('/file/path'));
 
@@ -49,6 +64,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::addRuleViolation
      */
     public function testAddRuleViolation(): void
@@ -63,7 +79,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -87,6 +103,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::findRuleIn
      * @covers ::getRuleViolations
      */
@@ -104,7 +121,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
 
@@ -114,6 +131,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::findRuleIn
      * @covers ::getRuleViolations
      */
@@ -131,12 +149,12 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation(
             $rule,
             $nodeInfo,
-            ['args' => ['foo' => 'bar'], 'message' => 'violation'],
+            ['args' => ['bar'], 'message' => 'violation'],
             $metric
         );
 
@@ -146,6 +164,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isFileModified
      * @covers ::setFileState
      */
@@ -159,6 +178,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::toArray
      */
     public function testToArray(): void
@@ -175,7 +195,7 @@ class ResultCacheStateTest extends TestCase
             123,
             456
         );
-        $metric = ['line' => 100];
+        $metric = 100;
 
         $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', $metric);
         $this->state->setFileState('/file/path', 'hash');

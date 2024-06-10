@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -81,8 +82,10 @@ final class CamelCaseVariableName extends AbstractRule implements FunctionAware,
         }
 
         // disallow any consecutive uppercase letters
-        if ($this->getBooleanProperty('camelcase-abbreviations', false)
-            && preg_match('/[A-Z]{2}/', $image) === 1) {
+        if (
+            $this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $image) === 1
+        ) {
             return false;
         }
 
@@ -96,7 +99,7 @@ final class CamelCaseVariableName extends AbstractRule implements FunctionAware,
             return true;
         }
 
-        if ($variable->getParent()->isInstanceOf(ASTPropertyPostfix::class)) {
+        if ($variable->getParent()?->isInstanceOf(ASTPropertyPostfix::class)) {
             return true;
         }
 

@@ -3,6 +3,7 @@
 namespace PHPMD\Baseline;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\ViolationBaseline
@@ -10,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 class ViolationBaselineTest extends TestCase
 {
     /**
+     * @throws Throwable
      * @covers ::__construct
      * @covers ::getRuleName
      */
@@ -22,6 +24,7 @@ class ViolationBaselineTest extends TestCase
     /**
      * Test the give file matches the baseline correctly
      *
+     * @throws Throwable
      * @covers ::__construct
      * @covers ::matches
      */
@@ -37,6 +40,7 @@ class ViolationBaselineTest extends TestCase
     /**
      * Test the give file matches the baseline correctly
      *
+     * @throws Throwable
      * @covers ::__construct
      * @covers ::matches
      */

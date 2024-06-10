@@ -4,9 +4,8 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\Report;
 use PHPMD\Stubs\WriterStub;
-use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
@@ -15,6 +14,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 class BaselineRendererTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReport(): void
@@ -25,7 +25,6 @@ class BaselineRendererTest extends AbstractTestCase
             $this->getRuleViolationMock('/src/php/foo.php'),
         ];
 
-        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -44,6 +43,7 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReportShouldWriteMethodName(): void
@@ -52,7 +52,6 @@ class BaselineRendererTest extends AbstractTestCase
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
 
-        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -71,6 +70,7 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReportShouldDeduplicateSimilarViolations(): void
@@ -80,7 +80,6 @@ class BaselineRendererTest extends AbstractTestCase
         $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
 
         // add the same violation twice
-        /** @var MockObject|Report $report */
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -99,6 +98,7 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderEmptyReport(): void
@@ -109,7 +109,6 @@ class BaselineRendererTest extends AbstractTestCase
             ->method('getRuleViolations')
             ->willReturn(new ArrayIterator([]));
 
-        /** @var MockObject|Report $report */
         $renderer = new BaselineRenderer('/src');
         $renderer->setWriter($writer);
         $renderer->start();

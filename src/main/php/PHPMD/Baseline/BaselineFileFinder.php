@@ -16,7 +16,7 @@ final class BaselineFileFinder
     private $notNull = false;
 
     public function __construct(
-        private CommandLineOptions $options,
+        private readonly CommandLineOptions $options,
     ) {
     }
 

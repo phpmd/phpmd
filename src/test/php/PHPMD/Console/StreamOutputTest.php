@@ -3,6 +3,7 @@
 namespace PHPMD\Console;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Console\StreamOutput
@@ -10,12 +11,14 @@ use PHPUnit\Framework\TestCase;
 class StreamOutputTest extends TestCase
 {
     /**
+     * @throws Throwable
      * @covers ::__construct
      * @covers ::doWrite
      */
     public function testDoWrite(): void
     {
         $stream = fopen('php://memory', 'w+b');
+        static::assertIsResource($stream);
         $output = new StreamOutput($stream);
         $output->write('message');
 

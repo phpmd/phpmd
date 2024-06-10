@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the too many methods rule.
@@ -28,6 +30,7 @@ class TooManyFieldsTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold(): void
     {
@@ -39,6 +42,7 @@ class TooManyFieldsTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold(): void
     {
@@ -50,6 +54,7 @@ class TooManyFieldsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMoreFieldsThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToClassesWithMoreFieldsThanThreshold(): void
     {

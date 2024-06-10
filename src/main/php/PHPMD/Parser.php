@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -82,7 +83,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * @param Engine $pdepend The wrapped PDepend Engine instance.
      */
     public function __construct(
-        private Engine $pdepend,
+        private readonly Engine $pdepend,
     ) {
     }
 
@@ -145,7 +146,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
         ini_set('xdebug.max_nesting_level', 8192);
 
         foreach ($this->artifacts as $node) {
-            $node->accept($this);
+            $this->dispatch($node);
         }
     }
 
@@ -155,7 +156,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @return string[]
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return [
             'pdepend.analyzer.cyclomatic_complexity',
@@ -232,7 +233,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitFunction(ASTFunction $node): void
     {
-        if ($node->getCompilationUnit()->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null) {
             return;
         }
 
@@ -266,7 +267,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitMethod(ASTMethod $node): void
     {
-        if ($node->getCompilationUnit()->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null) {
             return;
         }
 

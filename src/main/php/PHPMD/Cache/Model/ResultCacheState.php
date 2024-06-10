@@ -2,6 +2,7 @@
 
 namespace PHPMD\Cache\Model;
 
+use OutOfBoundsException;
 use PHPMD\Node\NodeInfo;
 use PHPMD\Rule;
 use PHPMD\RuleSet;
@@ -11,10 +12,10 @@ use PHPMD\Utility\Paths;
 class ResultCacheState
 {
     /**
-     * @param array{files?: array<string, array{hash: string, violations?: list<array<string, mixed>>}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} $state
      */
     public function __construct(
-        private ResultCacheKey $cacheKey,
+        private readonly ResultCacheKey $cacheKey,
         private array $state = [],
     ) {
     }
@@ -29,7 +30,7 @@ class ResultCacheState
 
     /**
      * @param string $filePath
-     * @return list<array<string, mixed>>
+     * @return list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>
      */
     public function getViolations($filePath)
     {
@@ -42,7 +43,7 @@ class ResultCacheState
 
     /**
      * @param string $filePath
-     * @param list<array<string, mixed>> $violations
+     * @param list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}> $violations
      */
     public function setViolations($filePath, array $violations): void
     {
@@ -72,6 +73,7 @@ class ResultCacheState
      * @param string $basePath
      * @param list<RuleSet> $ruleSetList
      * @return list<RuleViolation>
+     * @throws OutOfBoundsException
      */
     public function getRuleViolations($basePath, array $ruleSetList)
     {
@@ -102,6 +104,7 @@ class ResultCacheState
                 } else {
                     $violationMessage = ['args' => $violation['args'], 'message' => $violation['description']];
                 }
+                assert(is_numeric($violation['metric']));
                 $ruleViolations[] = new RuleViolation($rule, $nodeInfo, $violationMessage, $violation['metric']);
             }
         }
@@ -146,7 +149,8 @@ class ResultCacheState
     /**
      * @param string    $ruleClassName
      * @param RuleSet[] $ruleSetList
-     * @return Rule|null
+     * @return Rule
+     * @throws OutOfBoundsException
      */
     private static function findRuleIn($ruleClassName, array $ruleSetList)
     {
@@ -158,6 +162,6 @@ class ResultCacheState
             }
         }
 
-        return null;
+        throw new OutOfBoundsException();
     }
 }

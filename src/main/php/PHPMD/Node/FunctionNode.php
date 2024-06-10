@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -31,7 +32,7 @@ class FunctionNode extends AbstractCallableNode
      */
     public function getNamespaceName(): ?string
     {
-        return $this->getNode()->getNamespace()->getName();
+        return $this->getNode()->getNamespace()?->getImage();
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -23,7 +24,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractRule;
 use PHPMD\AbstractTestCase;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
-use Sindelfingen\MyClass;
+use Throwable;
 
 /**
  * Test case for the class node implementation.
@@ -35,6 +36,7 @@ class ClassNodeTest extends AbstractTestCase
 {
     /**
      * testGetMethodNamesReturnsExpectedResult
+     * @throws Throwable
      */
     public function testGetMethodNamesReturnsExpectedResult(): void
     {
@@ -48,13 +50,14 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForReturnsTrue
+     * @throws Throwable
      */
     public function testHasSuppressWarningsAnnotationForReturnsTrue(): void
     {
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings("PMD") */');
 
-        $rule = $this->getMockFromBuilder($this->getMockBuilder(AbstractRule::class));
+        $rule = $this->getMockBuilder(AbstractRule::class)->getMock();
 
         $node = new ClassNode($class);
 
@@ -63,6 +66,7 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsWithRuleNameContainingSlashes
+     * @throws Throwable
      */
     public function testHasSuppressWarningsWithRuleNameContainingSlashes(): void
     {
@@ -89,6 +93,7 @@ class ClassNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
@@ -97,21 +102,30 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        static::assertSame(MyClass::class, $node->getFullQualifiedName());
+        static::assertSame('Sindelfingen\\MyClass', $node->getFullQualifiedName());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));
         static::assertSame(0, $class->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCount(): void
     {
         $class = $this->getClass();
         static::assertSame(3, $class->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetParentNameReturnsNull(): void
     {
         $class = new ClassNode(new ASTClass('MyClass'));

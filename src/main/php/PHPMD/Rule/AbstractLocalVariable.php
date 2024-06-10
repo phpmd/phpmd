@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -90,11 +91,15 @@ abstract class AbstractLocalVariable extends AbstractRule
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
 
-        if ($parent->isInstanceOf(ASTPropertyPostfix::class)) {
+        if ($parent?->isInstanceOf(ASTPropertyPostfix::class)) {
             $primaryPrefix = $parent->getParent();
-            $primaryPrefixParent = $primaryPrefix->getParent();
-            if ($primaryPrefixParent->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
+            $primaryPrefixParent = $primaryPrefix?->getParent();
+            if ($primaryPrefixParent?->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
                 return !$primaryPrefixParent->isStatic();
+            }
+
+            if (!$primaryPrefix) {
+                return false;
             }
 
             return ($parent->getChild(0)->getNode() !== $node->getNode()
@@ -135,9 +140,13 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function isWrappedByIndexExpression(AbstractNode $node)
     {
-        return ($node->getParent()->isInstanceOf(ASTArrayIndexExpression::class)
-            || $node->getParent()->isInstanceOf(ASTStringIndexExpression::class)
-        );
+        $parent = $node->getParent();
+        if (!$parent) {
+            return false;
+        }
+
+        return $parent->isInstanceOf(ASTArrayIndexExpression::class)
+            || $parent->isInstanceOf(ASTStringIndexExpression::class);
     }
 
     /**
@@ -194,9 +203,10 @@ abstract class AbstractLocalVariable extends AbstractRule
             $postfix = $postfix->getParent();
         } while ($postfix?->getChildren() && $postfix->getChild(0)->getImage() === $image);
 
-        $previousChildImage = $postfix->getChild(0)->getImage();
+        $previousChildImage = $postfix?->getChild(0)->getImage();
 
-        if ($postfix instanceof ASTMemberPrimaryPrefix &&
+        if (
+            $postfix instanceof ASTMemberPrimaryPrefix &&
             in_array($previousChildImage, $this->selfReferences, true)
         ) {
             return $previousChildImage;
@@ -216,13 +226,13 @@ abstract class AbstractLocalVariable extends AbstractRule
     {
         try {
             return new ReflectionFunction($functionName);
-        } catch (ReflectionException $exception) {
+        } catch (ReflectionException) {
             $chunks = explode('\\', $functionName);
 
             if (count($chunks) > 1) {
                 try {
                     return new ReflectionFunction(end($chunks));
-                } catch (ReflectionException $exception) {
+                } catch (ReflectionException) {
                 }
                 // @TODO: Find a way to handle user-land functions
                 // @TODO: Find a way to handle methods
@@ -330,7 +340,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      */
     private function isFieldDeclaration($variable, $image = '$')
     {
-        return substr($image, 0, 1) === '$' &&
+        return str_starts_with($image, '$') &&
             $variable->getParent() instanceof ASTFieldDeclaration;
     }
 }

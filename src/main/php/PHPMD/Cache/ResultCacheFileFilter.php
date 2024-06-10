@@ -11,18 +11,17 @@ use PHPMD\Utility\Paths;
 
 class ResultCacheFileFilter implements Filter
 {
-    /** @var ResultCacheState */
-    private $newState;
+    private readonly ResultCacheState $newState;
 
     /** @var array<string, bool> */
     private $fileIsModified = [];
 
     public function __construct(
-        private OutputInterface $output,
-        private string $basePath,
-        private ResultCacheStrategy $strategy,
+        private readonly OutputInterface $output,
+        private readonly string $basePath,
+        private readonly ResultCacheStrategy $strategy,
         ResultCacheKey $cacheKey,
-        private ?ResultCacheState $state,
+        private readonly ?ResultCacheState $state,
     ) {
         $this->newState = new ResultCacheState($cacheKey);
     }
@@ -53,7 +52,7 @@ class ResultCacheFileFilter implements Filter
         if ($hash !== false) {
             $this->newState->setFileState($filePath, $hash);
         }
-        if (!$isModified) {
+        if (!$isModified && $this->state) {
             // File was not modified, transfer previous violations
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
         }

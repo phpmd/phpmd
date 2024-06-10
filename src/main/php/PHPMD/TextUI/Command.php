@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -44,7 +45,7 @@ use ValueError;
 final class Command
 {
     public function __construct(
-        private Output $output,
+        private readonly Output $output,
     ) {
     }
 
@@ -93,9 +94,11 @@ final class Command
         $baselineFile = null;
         if ($opts->generateBaseline() === BaselineMode::Generate) {
             // overwrite any renderer with the baseline renderer
-            $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($finder->notNull()->find()))];
+            $renderers = [
+                RendererFactory::createBaselineRenderer(new StreamWriter((string) $finder->notNull()->find())),
+            ];
         } elseif ($opts->generateBaseline() === BaselineMode::Update) {
-            $baselineFile = $finder->notNull()->existingFile()->find();
+            $baselineFile = (string) $finder->notNull()->existingFile()->find();
             $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
             $renderers = [RendererFactory::createBaselineRenderer(new StreamWriter($baselineFile))];
             $report = new Report(new BaselineValidator($baseline, BaselineMode::Update));
@@ -146,7 +149,10 @@ final class Command
                 new ResultCacheKeyFactory($cwd, $baselineFile),
                 new ResultCacheStateFactory()
             );
-            $phpmd->setResultCache($cacheEngineFactory->create($cwd, $opts, $ruleSetList));
+            $cacheEngine = $cacheEngineFactory->create($cwd, $opts, $ruleSetList);
+            if ($cacheEngine) {
+                $phpmd->setResultCache($cacheEngine);
+            }
         }
 
         $phpmd->processFiles(
@@ -154,16 +160,18 @@ final class Command
             $ignorePattern,
             $renderers,
             $ruleSetList,
-            $report !== null ? $report : new Report()
+            $report ?? new Report()
         );
 
         if ($phpmd->hasErrors() && !$opts->ignoreErrorsOnExit()) {
             return ExitCode::Error;
         }
 
-        if ($phpmd->hasViolations()
+        if (
+            $phpmd->hasViolations()
             && !$opts->ignoreViolationsOnExit()
-            && $opts->generateBaseline() === BaselineMode::None) {
+            && $opts->generateBaseline() === BaselineMode::None
+        ) {
             return ExitCode::Violation;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -44,7 +45,7 @@ final class CamelCasePropertyName extends AbstractRule implements ClassAware, Tr
         }
 
         foreach ($node->getProperties() as $property) {
-            $propertyName = $property->getName();
+            $propertyName = $property->getImage();
 
             if (!$this->isValid($propertyName)) {
                 $this->addViolation(
@@ -63,8 +64,10 @@ final class CamelCasePropertyName extends AbstractRule implements ClassAware, Tr
     private function isValid(string $propertyName): bool
     {
         // disallow any consecutive uppercase letters
-        if ($this->getBooleanProperty('camelcase-abbreviations', false)
-            && preg_match('/[A-Z]{2}/', $propertyName) === 1) {
+        if (
+            $this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $propertyName) === 1
+        ) {
             return false;
         }
 

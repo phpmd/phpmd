@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -188,7 +189,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
         // First collect the formal parameters containers
         foreach ($node->findChildrenOfType(ASTFormalParameters::class) as $parameters) {
             $parent = $parameters->getParentOfType(AbstractASTCallable::class);
-            if ($parent->getNode() !== $node->getNode()) {
+            if ($parent?->getNode() !== $node->getNode()) {
                 continue;
             }
 

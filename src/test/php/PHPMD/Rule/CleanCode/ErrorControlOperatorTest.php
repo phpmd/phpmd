@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Error Control Operator Test
@@ -29,6 +31,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply to unary operators in functions
      *
+     * @throws Throwable
      * @covers ::apply
      */
     public function testDoesNotApplyToOtherUnaryOperatorsInFunction(): void
@@ -41,6 +44,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
     /**
      * Tests that the rule applies error control operators to functions
      *
+     * @throws Throwable
      * @covers ::apply
      */
     public function testAppliesToErrorControlOperatorInFunction(): void
@@ -53,6 +57,7 @@ class ErrorControlOperatorTest extends AbstractTestCase
     /**
      * Tests that the rule applies error control operators to classes and methods
      *
+     * @throws Throwable
      * @covers ::apply
      */
     public function testAppliedToClassesAndMethods(): void

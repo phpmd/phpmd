@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the constructor name rule.
@@ -28,6 +30,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClass
+     * @throws Throwable
      */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass(): void
     {
@@ -38,6 +41,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive
+     * @throws Throwable
      */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive(): void
     {
@@ -48,6 +52,7 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodNamedSimilarToEnclosingClass
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass(): void
     {
@@ -56,6 +61,9 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToMethodNamedAsEnclosingInterface(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
@@ -63,6 +71,9 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToMethodInNamespaces(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();

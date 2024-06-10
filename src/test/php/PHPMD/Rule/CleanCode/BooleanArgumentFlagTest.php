@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Rule\CleanCode\BooleanArgumentFlag
@@ -43,6 +45,7 @@ class BooleanArgumentFlagTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
+     * @throws Throwable
      * @dataProvider getApplyingCases
      */
     public function testRuleAppliesTo($file): void
@@ -54,6 +57,7 @@ class BooleanArgumentFlagTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
+     * @throws Throwable
      * @dataProvider getNotApplyingCases
      */
     public function testRuleDoesNotApplyTo($file): void

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Throwable;
 
 /**
  * Integration tests for the command line option <em>--inputfile</em>.
@@ -31,6 +33,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
      * testReportContainsExpectedRuleViolationWarning
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testReportContainsExpectedRuleViolationWarning(): void
     {
@@ -44,6 +47,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
      * testReportNotContainsRuleViolationWarningForFileNotInList
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testReportNotContainsRuleViolationWarningForFileNotInList(): void
     {
@@ -57,6 +61,7 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
      * Runs the PHPMD command line interface and returns the report content.
      *
      * @return string
+     * @throws Throwable
      */
     protected static function runCommandLine()
     {
@@ -77,6 +82,9 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
             ]
         );
 
-        return file_get_contents($reportfile);
+        $content = file_get_contents($reportfile);
+        static::assertNotFalse($content);
+
+        return $content;
     }
 }

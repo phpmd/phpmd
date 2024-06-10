@@ -16,7 +16,7 @@ final class BaselineSetFactory
      */
     public static function fromFile($fileName)
     {
-        $content = file_get_contents($fileName);
+        $content = @file_get_contents($fileName);
         if ($content === false) {
             throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
         }

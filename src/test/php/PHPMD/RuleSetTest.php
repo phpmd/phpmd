@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -26,6 +27,7 @@ use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Rule\CleanCode\ElseExpression;
 use PHPMD\Stubs\RuleStub;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\RuleSet} class.
@@ -36,6 +38,7 @@ class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
+     * @throws Throwable
      */
     public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists(): void
     {
@@ -47,6 +50,7 @@ class RuleSetTest extends AbstractTestCase
 
     /**
      * testGetRuleByNameReturnsMatchingRuleInstance
+     * @throws Throwable
      */
     public function testGetRuleByNameReturnsMatchingRuleInstance(): void
     {
@@ -58,18 +62,22 @@ class RuleSetTest extends AbstractTestCase
 
     /**
      * testApplyNotInvokesRuleWhenSuppressAnnotationExists
+     * @throws Throwable
      */
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
         $ruleSet->setReport($this->getReportWithNoViolation());
         $ruleSet->apply($this->getClass());
+        $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertNull($ruleSet->getRuleByName(__FUNCTION__)->node);
+        static::assertInstanceOf(RuleStub::class, $rule);
+        static::assertNull($rule->node);
     }
 
     /**
      * testApplyInvokesRuleWhenStrictModeIsSet
+     * @throws Throwable
      */
     public function testApplyInvokesRuleWhenStrictModeIsSet(): void
     {
@@ -79,10 +87,15 @@ class RuleSetTest extends AbstractTestCase
 
         $class = $this->getClass();
         $ruleSet->apply($class);
+        $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertSame($class, $ruleSet->getRuleByName(__FUNCTION__)->node);
+        static::assertInstanceOf(RuleStub::class, $rule);
+        static::assertSame($class, $rule->node);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testDescriptionCanBeChanged(): void
     {
         $ruleSet = new RuleSet();
@@ -94,6 +107,9 @@ class RuleSetTest extends AbstractTestCase
         static::assertSame('foobar', $ruleSet->getDescription());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testStrictnessCanBeEnabled(): void
     {
         $ruleSet = new RuleSet();
@@ -105,6 +121,9 @@ class RuleSetTest extends AbstractTestCase
         static::assertTrue($ruleSet->isStrict());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReport(): void
     {
         $ruleSet = new RuleSet();
@@ -138,12 +157,14 @@ class RuleSetTest extends AbstractTestCase
      * objects.
      *
      * @return RuleSet
+     * @throws Throwable
      */
     private function createRuleSetFixture()
     {
         $ruleSet = new RuleSet();
 
         foreach (func_get_args() as $name) {
+            static::assertIsString($name);
             $ruleSet->addRule(new RuleStub($name));
         }
 

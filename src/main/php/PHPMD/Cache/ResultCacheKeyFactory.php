@@ -9,8 +9,8 @@ use PHPMD\Utility\Paths;
 class ResultCacheKeyFactory
 {
     public function __construct(
-        private string $basePath,
-        private ?string $baselineFile,
+        private readonly string $basePath,
+        private readonly ?string $baselineFile,
     ) {
     }
 

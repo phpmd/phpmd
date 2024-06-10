@@ -2,11 +2,13 @@
 
 namespace PHPMD\Cache;
 
+use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater
@@ -20,16 +22,18 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     /** @var ResultCacheUpdater */
     private $updater;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
-        $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
-        );
+        $this->state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
 
         $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');
     }
 
     /**
+     * @throws Throwable
      * @covers ::update
      */
     public function testUpdate(): void
@@ -39,7 +43,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
         $violationA = $this->getRuleViolationMock('/base/path/violation/a');
         $violationB = $this->getRuleViolationMock('/base/path/violation/b');
 
-        $report->expects(static::once())->method('getRuleViolations')->willReturn([$violationA]);
+        $report->expects(static::once())->method('getRuleViolations')->willReturn(new ArrayIterator([$violationA]));
         $this->state->expects(static::once())
             ->method('getRuleViolations')
             ->with('/base/path/', [$ruleSet])

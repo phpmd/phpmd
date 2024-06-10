@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD;
 
 use OutOfBoundsException;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\AbstractRule} class.
@@ -29,12 +31,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, '1');
 
@@ -44,12 +46,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'on');
 
@@ -59,12 +61,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'true');
 
@@ -74,12 +76,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'True');
 
@@ -89,12 +91,12 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getBooleanProperty method with a fallback value
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
     public function testGetBooleanPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
         static::assertTrue($rule->getBooleanProperty(__FUNCTION__, true));
@@ -103,12 +105,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
+     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
     public function testGetIntPropertyReturnsValueOfTypeInteger(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, '42.3');
 
@@ -118,6 +120,7 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
+     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -125,7 +128,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getIntProperty(__FUNCTION__);
     }
@@ -133,20 +135,21 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getIntProperty method with a fallback value
      *
+     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
     public function testGetIntPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
-        static::assertSame(123, $rule->getIntProperty(__FUNCTION__, '123'));
+        static::assertSame(123, $rule->getIntProperty(__FUNCTION__, 123));
     }
 
     /**
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
+     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -154,7 +157,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getBooleanProperty(__FUNCTION__);
     }
@@ -162,6 +164,7 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
+     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */
@@ -169,7 +172,6 @@ class RuleTest extends AbstractTestCase
     {
         self::expectException(OutOfBoundsException::class);
 
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->getStringProperty(__FUNCTION__);
     }
@@ -177,12 +179,12 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetStringPropertyReturnsStringValue
      *
+     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */
     public function testGetStringPropertyReturnsString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
         $rule->addProperty(__FUNCTION__, 'Forty Two');
 
@@ -192,12 +194,12 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getStringProperty method with a fallback value
      *
+     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */
     public function testGetStringPropertyReturnsFallbackString(): void
     {
-        /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass(AbstractRule::class);
 
         static::assertSame('fallback', $rule->getStringProperty(__FUNCTION__, 'fallback'));

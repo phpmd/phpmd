@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\ExitExpression} class.
@@ -28,6 +30,7 @@ class ExitExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutExitExpression
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutExitExpression(): void
     {
@@ -38,6 +41,7 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithExitExpression
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithExitExpression(): void
     {
@@ -48,6 +52,7 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithExitExpression
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToMethodWithExitExpression(): void
     {
@@ -58,6 +63,7 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutExitExpression
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithoutExitExpression(): void
     {
@@ -68,6 +74,7 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithExitExpression
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithExitExpression(): void
     {
@@ -78,6 +85,7 @@ class ExitExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithExitExpression
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToFunctionWithExitExpression(): void
     {

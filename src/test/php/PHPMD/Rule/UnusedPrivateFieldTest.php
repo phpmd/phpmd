@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the unused private field rule.
@@ -28,6 +30,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToUnusedPrivateField
+     * @throws Throwable
      */
     public function testRuleAppliesToUnusedPrivateField(): void
     {
@@ -38,6 +41,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToUnusedPrivateStaticField
+     * @throws Throwable
      */
     public function testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject(): void
     {
@@ -48,6 +52,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToUnusedPrivateStaticField
+     * @throws Throwable
      */
     public function testRuleAppliesToUnusedPrivateStaticField(): void
     {
@@ -58,6 +63,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass
+     * @throws Throwable
      */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass(): void
     {
@@ -68,6 +74,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent
+     * @throws Throwable
      */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent(): void
     {
@@ -88,6 +95,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleAppliesWhenLocalVariableIsUsedInStaticMemberPrefix(): void
     {
@@ -108,6 +116,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotResultInFatalErrorByCallingNonObject(): void
     {
@@ -118,6 +127,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToUnusedPublicField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToUnusedPublicField(): void
     {
@@ -128,6 +138,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToUnusedProtectedField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToUnusedProtectedField(): void
     {
@@ -138,6 +149,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToThisAccessedPrivateField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToThisAccessedPrivateField(): void
     {
@@ -148,6 +160,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToSelfAccessedPrivateField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToSelfAccessedPrivateField(): void
     {
@@ -158,6 +171,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToStaticAccessedPrivateField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToStaticAccessedPrivateField(): void
     {
@@ -168,6 +182,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassNameAccessedPrivateField
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassNameAccessedPrivateField(): void
     {
@@ -188,6 +203,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateFieldInChainedMethodCall(): void
     {
@@ -208,6 +224,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateArrayFieldAccess(): void
     {
@@ -228,6 +245,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateStringIndexFieldAccess(): void
     {
@@ -238,6 +256,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToFieldWithMethodsThatReturnArray
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToFieldWithMethodsThatReturnArray(): void
     {

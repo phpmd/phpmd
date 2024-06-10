@@ -9,9 +9,9 @@ use PHPMD\TextUI\CommandLineOptions;
 final class ResultCacheEngineFactory
 {
     public function __construct(
-        private OutputInterface $output,
-        private ResultCacheKeyFactory $cacheKeyFactory,
-        private ResultCacheStateFactory $cacheStateFactory,
+        private readonly OutputInterface $output,
+        private readonly ResultCacheKeyFactory $cacheKeyFactory,
+        private readonly ResultCacheStateFactory $cacheStateFactory,
     ) {
     }
 

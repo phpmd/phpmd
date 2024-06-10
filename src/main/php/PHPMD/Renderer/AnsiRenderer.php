@@ -36,7 +36,7 @@ final class AnsiRenderer extends AbstractRenderer
                 $this->writeViolationFileHeader($violation);
             }
 
-            $this->writeViolationLine($violation, $padding);
+            $this->writeViolationLine($violation, (int) $padding);
             $previousFile = $violation->getFileName();
         }
     }

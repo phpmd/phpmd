@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,6 +18,8 @@
 
 namespace PHPMD;
 
+use Throwable;
+
 /**
  * Test case for the processing error class.
  *
@@ -27,6 +30,7 @@ class ProcessingErrorTest extends AbstractTestCase
 {
     /**
      * testGetMessageReturnsTheExpectedValue
+     * @throws Throwable
      */
     public function testGetMessageReturnsTheExpectedValue(): void
     {
@@ -39,6 +43,7 @@ class ProcessingErrorTest extends AbstractTestCase
      * a given exception message,
      *
      * @param string $message The original exception message
+     * @throws Throwable
      * @dataProvider getParserExceptionMessages
      */
     public function testGetFileReturnsExpectedFileName($message): void
@@ -50,6 +55,8 @@ class ProcessingErrorTest extends AbstractTestCase
     /**
      * Data provider that returns common exception messages used by PHP_Depend's
      * parser.
+     *
+     * @return list<mixed>
      */
     public static function getParserExceptionMessages(): array
     {

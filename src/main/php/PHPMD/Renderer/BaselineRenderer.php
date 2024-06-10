@@ -9,7 +9,7 @@ use PHPMD\Utility\Paths;
 final class BaselineRenderer extends AbstractRenderer
 {
     public function __construct(
-        private string $basePath,
+        private readonly string $basePath,
     ) {
     }
 
@@ -24,7 +24,7 @@ final class BaselineRenderer extends AbstractRenderer
 
         foreach ($report->getRuleViolations() as $violation) {
             $ruleName = $violation->getRule()::class;
-            $filePath = Paths::getRelativePath($this->basePath, $violation->getFileName());
+            $filePath = Paths::getRelativePath($this->basePath, (string) $violation->getFileName());
             $methodName = $violation->getMethodName();
 
             // deduplicate similar violations

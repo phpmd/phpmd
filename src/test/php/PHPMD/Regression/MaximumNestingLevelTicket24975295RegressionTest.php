@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -22,6 +23,7 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPMD\Writer\StreamWriter;
+use Throwable;
 
 /**
  * Regression test for issue 14990109.
@@ -35,6 +37,7 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {

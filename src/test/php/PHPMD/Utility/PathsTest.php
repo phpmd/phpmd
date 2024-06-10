@@ -4,6 +4,7 @@ namespace PHPMD\Utility;
 
 use PHPMD\AbstractTestCase;
 use RuntimeException;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Utility\Paths
@@ -11,6 +12,7 @@ use RuntimeException;
 class PathsTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::getRelativePath
      */
     public function testGetRelativePathShouldSubtractBasePath(): void
@@ -19,6 +21,7 @@ class PathsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getRelativePath
      */
     public function testGetRelativePathShouldTreatForwardAndBackwardSlashes(): void
@@ -27,6 +30,7 @@ class PathsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getRelativePath
      */
     public function testGetRelativePathShouldNotSubtractOnInfixPath(): void
@@ -35,6 +39,7 @@ class PathsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::concat
      */
     public function testConcat(): void
@@ -46,6 +51,7 @@ class PathsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getRealPath
      */
     public function testGetRealPathShouldReturnTheRealPath(): void
@@ -55,6 +61,7 @@ class PathsTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::getRealPath
      */
     public function testGetRealPathShouldThrowExceptionOnFailure(): void

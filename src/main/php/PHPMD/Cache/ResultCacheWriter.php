@@ -7,7 +7,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 class ResultCacheWriter
 {
     public function __construct(
-        private string $filePath,
+        private readonly string $filePath,
     ) {
     }
 

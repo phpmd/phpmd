@@ -36,7 +36,8 @@ class ResultCacheStateFactory
      */
     private function createCacheKey(array $data)
     {
-        if (!array_key_exists('strict', $data) ||
+        if (
+            !array_key_exists('strict', $data) ||
             !array_key_exists('baselineHash', $data) ||
             !array_key_exists('rules', $data) ||
             !array_key_exists('composer', $data) ||
@@ -44,6 +45,12 @@ class ResultCacheStateFactory
         ) {
             return null;
         }
+
+        assert(is_bool($data['strict']));
+        assert(is_string($data['baselineHash']) || $data['baselineHash'] === null);
+        assert(is_array($data['rules']));
+        assert(is_array($data['composer']));
+        assert(is_int($data['phpVersion']));
 
         return new ResultCacheKey(
             $data['strict'],

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the unused formal parameter rule.
@@ -29,6 +31,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToFunctionUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionUnusedFormalParameter(): void
     {
@@ -39,6 +42,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMultipleFunctionUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToMultipleFunctionUnusedFormalParameter(): void
     {
@@ -49,6 +53,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodUnusedFormalParameter(): void
     {
@@ -59,6 +64,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToEnumMethodUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToEnumMethodUnusedFormalParameter(): void
     {
@@ -69,6 +75,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClosureUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToClosureUnusedFormalParameter(): void
     {
@@ -79,6 +86,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMultipleMethodUnusedFormalParameter
+     * @throws Throwable
      */
     public function testRuleAppliesToMultipleMethodUnusedFormalParameter(): void
     {
@@ -98,6 +106,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleAppliesToFormalParameterWhenSimilarStaticMemberIsAccessed(): void
     {
@@ -116,6 +125,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFormalParameterUsedInPropertyCompoundVariable(): void
     {
@@ -134,6 +144,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFormalParameterUsedInMethodCompoundVariable(): void
     {
@@ -144,6 +155,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToAbstractMethodFormalParameter
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToAbstractMethodFormalParameter(): void
     {
@@ -154,6 +166,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToInterfaceMethodFormalParameter
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToInterfaceMethodFormalParameter(): void
     {
@@ -164,6 +177,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToInnerFunctionDeclaration
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToInnerFunctionDeclaration(): void
     {
@@ -183,6 +197,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToFormalParameterUsedInCompoundExpression(): void
     {
@@ -201,6 +216,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodArgument(): void
     {
@@ -211,6 +227,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex(): void
     {
@@ -229,6 +246,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToParameterUsedAsArrayIndex(): void
     {
@@ -247,6 +265,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToParameterUsedAsStringIndex(): void
     {
@@ -269,6 +288,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodWithFuncGetArgs(): void
     {
@@ -278,6 +298,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.0
      */
     public function testFuncGetArgsRuleWorksCaseInsensitive(): void
@@ -290,6 +311,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToInheritMethod
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToInheritMethod(): void
@@ -302,6 +324,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToImplementedAbstractMethod
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToImplementedAbstractMethod(): void
@@ -314,6 +337,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     /**
      * testRuleDoesNotApplyToImplementedInterfaceMethod
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testRuleDoesNotApplyToImplementedInterfaceMethod(): void
@@ -325,6 +349,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMagicMethod
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMagicMethod(): void
     {
@@ -335,11 +360,14 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
         $rule = new UnusedFormalParameter();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply(reset($methods));
+        $method = reset($methods);
+        static::assertNotFalse($method);
+        $rule->apply($method);
     }
 
     /**
      * testRuleDoesNotApplyToMethodWithInheritdocAnnotation
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation(): void
     {
@@ -350,6 +378,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase(): void
     {
@@ -359,6 +388,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.0
      */
     public function testCompactFunctionRuleDoesNotApply(): void
@@ -369,6 +399,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.0
      */
     public function testCompactFunctionRuleOnlyAppliesToUsedParameters(): void
@@ -379,6 +410,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.0
      */
     public function testCompactFunctionRuleWorksCaseInsensitive(): void
@@ -389,6 +421,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleDoesNotApply(): void
@@ -399,6 +432,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleOnlyAppliesToUsedParameters(): void
@@ -409,6 +443,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @since 2.0.1
      */
     public function testNamespacedCompactFunctionRuleWorksCaseInsensitive(): void
@@ -428,6 +463,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToFormalParameterUsedInStringCompoundVariable(): void
     {
@@ -450,6 +486,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     }
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToFormalParameterUsedAsParameterInStringCompoundVariable(): void
     {
@@ -466,6 +503,7 @@ class UnusedFormalParameterTest extends AbstractTestCase
      *     public function __construct(private string $foo) {}
      * }
      * </code>
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPropertyPromotionParameters(): void
     {

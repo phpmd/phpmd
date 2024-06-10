@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -22,6 +23,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the SARIF renderer implementation.
@@ -32,6 +34,7 @@ class SARIFRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
@@ -68,20 +71,22 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
         $actual = json_decode($writer->getData(), true);
+        static::assertIsArray($actual);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
-        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
+        $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
+        $expected = file_get_contents(__DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif');
 
+        static::assertNotFalse($expected);
         static::assertSame(
-            json_encode($actual, $flags),
-            json_encode(json_decode(file_get_contents(
-                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif'
-            )), $flags)
+            json_encode(json_decode($expected), $flags),
+            json_encode($actual, $flags)
         );
     }
 
     /**
      * testRendererAddsProcessingErrorsToJsonReport
+     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
@@ -108,19 +113,24 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
+
+        $key = substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1);
         $data = strtr($writer->getData(), [
-            substr(json_encode(realpath(__DIR__ . '/../../../resources/files')), 1, -1) => '#{rootDirectory}',
+            $key => '#{rootDirectory}',
             'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
         ]);
         $actual = json_decode($data, true);
+        static::assertIsArray($actual);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
-        $flags = defined('JSON_PRETTY_PRINT') ? constant('JSON_PRETTY_PRINT') : 0;
+        $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
+        $expected = file_get_contents(
+            __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
+        );
 
+        static::assertNotFalse($expected);
         static::assertSame(
-            json_encode(json_decode(file_get_contents(
-                __DIR__ . '/../../../resources/files/renderer/sarif_renderer_processing_errors.sarif'
-            )), $flags),
+            json_encode(json_decode($expected), $flags),
             json_encode($actual, $flags)
         );
     }

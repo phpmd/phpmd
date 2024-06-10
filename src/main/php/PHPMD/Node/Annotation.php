@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -28,7 +29,7 @@ final class Annotation
     private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
     /** The annotation value. */
-    private string $value;
+    private readonly string $value;
 
     /**
      * Constructs a new annotation instance.
@@ -36,7 +37,7 @@ final class Annotation
      * @param string $name The annotation name.
      */
     public function __construct(
-        private string $name,
+        private readonly string $name,
         string $value,
     ) {
         $this->value = trim($value, '" ');
@@ -66,10 +67,12 @@ final class Annotation
         if (in_array($this->value, ['PHPMD', 'PMD'], true)) {
             return true;
         }
-        if (preg_match(
-            '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
-            $this->value
-        )) {
+        if (
+            preg_match(
+                '/^(PH)?PMD\.' . preg_replace('/^.*\/([^\/]*)$/', '$1', $rule->getName()) . '/',
+                $this->value
+            )
+        ) {
             return true;
         }
 

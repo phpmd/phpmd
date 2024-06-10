@@ -6,6 +6,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Rule;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineValidator
@@ -13,43 +14,41 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class BaselineValidatorTest extends AbstractTestCase
 {
-    /** @var BaselineSet|MockObject */
+    /** @var BaselineSet&MockObject */
     private $baselineSet;
 
-    /** @var MockObject|RuleViolation */
+    /** @var MockObject&RuleViolation */
     private $violation;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
         parent::setUp();
-        $rule = $this->getMockFromBuilder(
-            $this->getMockBuilder(Rule::class)->disableOriginalConstructor()
-        );
-        $this->violation = $this->getMockFromBuilder(
-            $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()
-        );
+        $rule = $this->getMockBuilder(Rule::class)->disableOriginalConstructor()->getMock();
+        $this->violation = $this->getMockBuilder(RuleViolation::class)->disableOriginalConstructor()->getMock();
         $this->violation
             ->method('getRule')
             ->willReturn($rule);
-        $this->baselineSet = $this->getMockFromBuilder(
-            $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()
-        );
+        $this->baselineSet = $this->getMockBuilder(BaselineSet::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
-     * @param bool   $contains
-     * @param string $baselineMode
-     * @param bool   $isBaselined
+     * @throws Throwable
      * @dataProvider dataProvider
      * @covers ::isBaselined
      */
-    public function testIsBaselined($contains, $baselineMode, $isBaselined): void
+    public function testIsBaselined(bool $contains, BaselineMode $baselineMode, bool $isBaselined): void
     {
         $this->baselineSet->method('contains')->willReturn($contains);
         $validator = new BaselineValidator($this->baselineSet, $baselineMode);
         static::assertSame($isBaselined, $validator->isBaselined($this->violation));
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public static function dataProvider(): array
     {
         return [

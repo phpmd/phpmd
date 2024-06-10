@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -19,6 +20,7 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Node\ASTNode} class.
@@ -29,12 +31,14 @@ class ASTNodeTest extends AbstractTestCase
 {
     /**
      * testGetImageDelegatesToGetImageMethodOfWrappedNode
+     * @throws Throwable
      */
     public function testGetImageDelegatesToGetImageMethodOfWrappedNode(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $mock->expects(static::once())
-            ->method('getImage');
+            ->method('getImage')
+            ->will(static::returnValue(''));
 
         $node = new ASTNode($mock, __FILE__);
         $node->getImage();
@@ -42,12 +46,14 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNameDelegatesToGetImageMethodOfWrappedNode
+     * @throws Throwable
      */
     public function testGetNameDelegatesToGetImageMethodOfWrappedNode(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $mock->expects(static::once())
-            ->method('getImage');
+            ->method('getImage')
+            ->will(static::returnValue(''));
 
         $node = new ASTNode($mock, __FILE__);
         $node->getName();
@@ -55,10 +61,11 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
+     * @throws Throwable
      */
     public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
 
         $node = new ASTNode($mock, __FILE__);
         $rule = $this->getRuleMock();
@@ -68,10 +75,11 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetParentNameReturnsNull
+     * @throws Throwable
      */
     public function testGetParentNameReturnsNull(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $node = new ASTNode($mock, __FILE__);
 
         static::assertNull($node->getParentName());
@@ -79,10 +87,11 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNamespaceNameReturnsNull
+     * @throws Throwable
      */
     public function testGetNamespaceNameReturnsNull(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $node = new ASTNode($mock, __FILE__);
 
         static::assertNull($node->getNamespaceName());
@@ -90,10 +99,11 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsNull
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsNull(): void
     {
-        $mock = $this->getMockFromBuilder($this->getMockBuilder(PDependNode::class));
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $node = new ASTNode($mock, __FILE__);
 
         static::assertNull($node->getFullQualifiedName());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -134,7 +135,7 @@ final class SARIFRenderer extends JSONRenderer
                 'locations' => [
                     [
                         'physicalLocation' => [
-                            'artifactLocation' => self::pathToArtifactLocation($violation->getFileName()),
+                            'artifactLocation' => self::pathToArtifactLocation((string) $violation->getFileName()),
                             'region' => [
                                 'startLine' => $violation->getBeginLine(),
                                 'endLine' => $violation->getEndLine(),
@@ -193,7 +194,7 @@ final class SARIFRenderer extends JSONRenderer
     private static function pathToArtifactLocation($path)
     {
         $workingDir = getcwd() ?: '';
-        if (substr($path, 0, strlen($workingDir)) === $workingDir) {
+        if (str_starts_with($path, $workingDir)) {
             // relative path
             return [
                 'uri' => substr($path, strlen($workingDir) + 1),
@@ -218,7 +219,7 @@ final class SARIFRenderer extends JSONRenderer
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 
         // file:///C:/... on Windows systems
-        if (substr($path, 0, 1) !== '/') {
+        if (!str_starts_with($path, '/')) {
             $path = '/' . $path;
         }
 

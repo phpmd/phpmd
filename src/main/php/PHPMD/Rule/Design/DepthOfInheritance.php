@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -42,7 +43,8 @@ final class DepthOfInheritance extends AbstractRule implements ClassAware
         }
 
         $dit = $node->getMetric('dit');
-        if (($comparison === 1 && $dit > $threshold) ||
+        if (
+            ($comparison === 1 && $dit > $threshold) ||
             ($comparison === 2 && $dit >= $threshold)
         ) {
             $this->addViolation(

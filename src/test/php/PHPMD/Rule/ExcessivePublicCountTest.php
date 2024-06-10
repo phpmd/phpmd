@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -18,6 +19,7 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the excessive use of public members rule.
@@ -28,6 +30,7 @@ class ExcessivePublicCountTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold(): void
     {
@@ -39,6 +42,7 @@ class ExcessivePublicCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold(): void
     {
@@ -50,6 +54,7 @@ class ExcessivePublicCountTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
+     * @throws Throwable
      */
     public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold(): void
     {
