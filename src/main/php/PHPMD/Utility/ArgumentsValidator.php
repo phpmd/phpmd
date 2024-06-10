@@ -11,9 +11,9 @@ final class ArgumentsValidator
      * @param string[] $arguments
      */
     public function __construct(
-        private bool $hasImplicitArguments,
-        private array $originalArguments,
-        private array $arguments,
+        private readonly bool $hasImplicitArguments,
+        private readonly array $originalArguments,
+        private readonly array $arguments,
     ) {
     }
 

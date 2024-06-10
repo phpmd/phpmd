@@ -15,7 +15,7 @@ class ResultCacheState
      * @param array{files?: array<string, array{hash: string, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} $state
      */
     public function __construct(
-        private ResultCacheKey $cacheKey,
+        private readonly ResultCacheKey $cacheKey,
         private array $state = [],
     ) {
     }

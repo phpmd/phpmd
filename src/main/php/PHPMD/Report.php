@@ -57,7 +57,7 @@ class Report
     private $errors = [];
 
     public function __construct(
-        private ?BaselineValidator $baselineValidator = null,
+        private readonly ?BaselineValidator $baselineValidator = null,
     ) {
     }
 

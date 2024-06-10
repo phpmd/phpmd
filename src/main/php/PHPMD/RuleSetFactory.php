@@ -38,12 +38,8 @@ class RuleSetFactory
      */
     private $strict = false;
 
-    /**
-     * The data directory set within the class constructor.
-     *
-     * @var string
-     */
-    private $location;
+    /** The data directory set within the class constructor. */
+    private readonly string $location;
 
     /**
      * The minimum priority for rules to load.

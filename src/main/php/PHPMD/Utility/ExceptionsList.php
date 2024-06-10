@@ -45,9 +45,9 @@ final class ExceptionsList implements ArrayAccess, IteratorAggregate
      * @param string $separator Separator used to join exception in the property string.
      */
     public function __construct(
-        private Rule $rule,
-        private string $trim = '',
-        private string $separator = ',',
+        private readonly Rule $rule,
+        private readonly string $trim = '',
+        private readonly string $separator = ',',
     ) {
     }
 

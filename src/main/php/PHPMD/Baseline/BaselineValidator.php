@@ -7,8 +7,8 @@ use PHPMD\RuleViolation;
 class BaselineValidator
 {
     public function __construct(
-        private BaselineSet $baselineSet,
-        private BaselineMode $baselineMode,
+        private readonly BaselineSet $baselineSet,
+        private readonly BaselineMode $baselineMode,
     ) {
     }
 

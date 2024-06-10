@@ -29,7 +29,7 @@ final class Annotation
     private const SUPPRESS_ANNOTATION = 'suppressWarnings';
 
     /** The annotation value. */
-    private string $value;
+    private readonly string $value;
 
     /**
      * Constructs a new annotation instance.
@@ -37,7 +37,7 @@ final class Annotation
      * @param string $name The annotation name.
      */
     public function __construct(
-        private string $name,
+        private readonly string $name,
         string $value,
     ) {
         $this->value = trim($value, '" ');

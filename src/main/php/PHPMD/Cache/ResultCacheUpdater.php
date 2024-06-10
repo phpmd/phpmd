@@ -12,8 +12,8 @@ use PHPMD\Utility\Paths;
 class ResultCacheUpdater
 {
     public function __construct(
-        private OutputInterface $output,
-        private string $basePath,
+        private readonly OutputInterface $output,
+        private readonly string $basePath,
     ) {
     }
 
