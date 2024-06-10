@@ -12,7 +12,9 @@ use Composer\XdebugHandler\XdebugHandler;
 class XdebugOptionHandler extends XdebugHandler
 {
     /**
-     * Rebuilds the run command with Xdebug enabled, instead, if CLI option "--xdebug" is used
+     * Rebuilds the run command with Xdebug enabled, instead, if CLI option "--xdebug" is used.
+     *
+     * @param list<string> $command
      */
     protected function restart(array $command): void
     {
