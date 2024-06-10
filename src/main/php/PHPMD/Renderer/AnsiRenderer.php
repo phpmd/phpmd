@@ -65,10 +65,7 @@ final class AnsiRenderer extends AbstractRenderer
         );
     }
 
-    /**
-     * @param int $padding
-     */
-    private function writeViolationLine(RuleViolation $violation, $padding): void
+    private function writeViolationLine(RuleViolation $violation, int $padding): void
     {
         $this->getWriter()->write(sprintf(
             " %s | \e[31mVIOLATION\e[0m | %s" . PHP_EOL,

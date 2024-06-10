@@ -7,10 +7,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 
 class ResultCacheStateFactory
 {
-    /**
-     * @param string $filePath
-     */
-    public function fromFile($filePath): ?ResultCacheState
+    public function fromFile(string $filePath): ?ResultCacheState
     {
         if (!file_exists($filePath)) {
             return null;

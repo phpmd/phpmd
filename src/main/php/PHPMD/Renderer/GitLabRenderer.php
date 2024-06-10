@@ -117,7 +117,7 @@ final class GitLabRenderer extends AbstractRenderer
      * @param array<mixed> $data The report data
      * @throws JsonException
      */
-    private function encodeReport($data): string
+    private function encodeReport(array $data): string
     {
         $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
             | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;

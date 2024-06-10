@@ -187,12 +187,11 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     /**
      * Creates a prepared class node mock
      *
-     * @param int $numberOfMethods
      * @param array<string> $publicMethods
      * @param array<string> $privateMethods
      * @throws Throwable
      */
-    private function createClassMock($numberOfMethods, array $publicMethods = [], array $privateMethods = []): ClassNode
+    private function createClassMock(int $numberOfMethods, array $publicMethods = [], array $privateMethods = []): ClassNode
     {
         $class = $this->getClassMock('npm', $numberOfMethods);
 

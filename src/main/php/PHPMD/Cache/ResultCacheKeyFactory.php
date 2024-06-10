@@ -15,10 +15,9 @@ class ResultCacheKeyFactory
     }
 
     /**
-     * @param bool      $strict
      * @param RuleSet[] $ruleSetList
      */
-    public function create($strict, array $ruleSetList): ResultCacheKey
+    public function create(bool $strict, array $ruleSetList): ResultCacheKey
     {
         return new ResultCacheKey(
             $strict,

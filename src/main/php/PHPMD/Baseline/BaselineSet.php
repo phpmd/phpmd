@@ -12,12 +12,7 @@ class BaselineSet
         $this->violations[$entry->getRuleName()][] = $entry;
     }
 
-    /**
-     * @param string      $ruleName
-     * @param string      $fileName
-     * @param string|null $methodName
-     */
-    public function contains($ruleName, $fileName, $methodName): bool
+    public function contains(string $ruleName, string $fileName, ?string $methodName): bool
     {
         if (!isset($this->violations[$ruleName])) {
             return false;

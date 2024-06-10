@@ -90,9 +90,8 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * insensitive.
      *
      * @param AbstractNode<PDependNode> $node
-     * @param string $name
      */
-    private function isFunctionNameEqual(AbstractNode $node, $name): bool
+    private function isFunctionNameEqual(AbstractNode $node, string $name): bool
     {
         return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
     }

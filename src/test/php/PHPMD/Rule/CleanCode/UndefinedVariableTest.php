@@ -43,7 +43,7 @@ class UndefinedVariableTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesTo($file): void
+    public function testRuleAppliesTo(string $file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule(), static::ONE_VIOLATION, $file);
     }
@@ -55,7 +55,7 @@ class UndefinedVariableTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getNotApplyingCases
      */
-    public function testRuleDoesNotApplyTo($file): void
+    public function testRuleDoesNotApplyTo(string $file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule(), static::NO_VIOLATION, $file);
     }

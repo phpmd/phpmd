@@ -78,7 +78,7 @@ class RuleSetFactory
      *
      * @param int $minimumPriority The minimum priority value.
      */
-    public function setMinimumPriority($minimumPriority): void
+    public function setMinimumPriority(int $minimumPriority): void
     {
         $this->minimumPriority = $minimumPriority;
     }
@@ -88,7 +88,7 @@ class RuleSetFactory
      *
      * @param int $maximumPriority The maximum priority value.
      */
-    public function setMaximumPriority($maximumPriority): void
+    public function setMaximumPriority(int $maximumPriority): void
     {
         $this->maximumPriority = $maximumPriority;
     }
@@ -100,7 +100,7 @@ class RuleSetFactory
      * @return list<RuleSet>
      * @throws RuntimeException
      */
-    public function createRuleSets($ruleSetFileNames): array
+    public function createRuleSets(string $ruleSetFileNames): array
     {
         $ruleSets = [];
 
@@ -121,7 +121,7 @@ class RuleSetFactory
      * @throws RuleSetNotFoundException
      * @throws RuntimeException
      */
-    public function createSingleRuleSet($ruleSetOrFileName): RuleSet
+    public function createSingleRuleSet(string $ruleSetOrFileName): RuleSet
     {
         $fileName = $this->createRuleSetFileName($ruleSetOrFileName);
 
@@ -149,7 +149,7 @@ class RuleSetFactory
      * @return string Path to rule set file name
      * @throws RuleSetNotFoundException Thrown if no readable file found
      */
-    private function createRuleSetFileName($ruleSetOrFileName): string
+    private function createRuleSetFileName(string $ruleSetOrFileName): string
     {
         foreach ($this->filePaths($ruleSetOrFileName) as $filePath) {
             if ($this->isReadableFile($filePath)) {
@@ -166,7 +166,7 @@ class RuleSetFactory
      * @param string $directory The directory to scan for rule-sets.
      * @return list<string>
      */
-    private static function listRuleSetsInDirectory($directory): array
+    private static function listRuleSetsInDirectory(string $directory): array
     {
         $ruleSets = [];
         if (is_dir($directory)) {
@@ -185,10 +185,9 @@ class RuleSetFactory
     /**
      * This method parses the rule-set definition in the given file.
      *
-     * @param string $fileName
      * @throws RuntimeException When loading the XML file fails.
      */
-    private function parseRuleSetNode($fileName): RuleSet
+    private function parseRuleSetNode(string $fileName): RuleSet
     {
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
@@ -499,7 +498,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      */
-    public function getIgnorePattern($fileName): array
+    public function getIgnorePattern(string $fileName): array
     {
         $excludes = [];
         $files = array_map(trim(...), explode(',', $fileName));
@@ -543,7 +542,7 @@ class RuleSetFactory
      * @param string $filePath File path to check against
      * @return bool True if file exists and is readable, false otherwise
      */
-    private function isReadableFile($filePath): bool
+    private function isReadableFile(string $filePath): bool
     {
         return is_readable($filePath) && is_file($filePath);
     }
@@ -554,7 +553,7 @@ class RuleSetFactory
      * @param string $fileName Rule set file name
      * @return list<string> Array of possible file locations
      */
-    private function filePaths($fileName): array
+    private function filePaths(string $fileName): array
     {
         $filePathParts = [
             [$fileName],

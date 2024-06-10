@@ -116,10 +116,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         $this->collectGlobalStatements($node);
     }
 
-    /**
-     * @param AbstractASTClassOrInterface $node
-     */
-    private function collectProperties($node): void
+    private function collectProperties(AbstractASTClassOrInterface $node): void
     {
         if (!($node instanceof ASTClass)) {
             return;
@@ -292,10 +289,9 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
     /**
      * Add the variable to images.
      *
-     * @param PDependNode $variable
      * @throws OutOfBoundsException
      */
-    private function addVariableDefinition($variable): void
+    private function addVariableDefinition(PDependNode $variable): void
     {
         $image = $this->getVariableImage($variable);
 

@@ -31,10 +31,8 @@ class UnusedLocalVariableTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.
-     *
-     * @param string $file
      */
-    public function getRule($file): UnusedLocalVariable
+    public function getRule(string $file): UnusedLocalVariable
     {
         $rule = new UnusedLocalVariable();
 
@@ -61,7 +59,7 @@ class UnusedLocalVariableTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getApplyingCases
      */
-    public function testRuleAppliesTo($file): void
+    public function testRuleAppliesTo(string $file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule($file), static::ONE_VIOLATION, $file);
     }
@@ -73,7 +71,7 @@ class UnusedLocalVariableTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getNotApplyingCases
      */
-    public function testRuleDoesNotApplyTo($file): void
+    public function testRuleDoesNotApplyTo(string $file): void
     {
         $this->expectRuleHasViolationsForFile($this->getRule($file), static::NO_VIOLATION, $file);
     }

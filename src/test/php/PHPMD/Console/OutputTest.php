@@ -64,14 +64,11 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
-     * @param int    $verbosity
-     * @param string $expected
-     * @param string $msg
      * @throws Throwable
      * @dataProvider verbosityProvider
      * @covers ::write
      */
-    public function testWriteWithVerbosityOption($verbosity, $expected, $msg): void
+    public function testWriteWithVerbosityOption(int $verbosity, string $expected, string $msg): void
     {
         $this->output->setVerbosity($verbosity);
         $this->output->write('1', false);

@@ -186,10 +186,9 @@ final class SARIFRenderer extends JSONRenderer
      * if possible, otherwise prepends the `file://` protocol
      * and returns the result as a SARIF `artifactLocation`
      *
-     * @param string $path
      * @return array<string, string>
      */
-    private static function pathToArtifactLocation($path): array
+    private static function pathToArtifactLocation(string $path): array
     {
         $workingDir = getcwd() ?: '';
         if (str_starts_with($path, $workingDir)) {
@@ -208,10 +207,8 @@ final class SARIFRenderer extends JSONRenderer
 
     /**
      * Converts an absolute path to a file:// URI
-     *
-     * @param string $path
      */
-    private static function pathToUri($path): string
+    private static function pathToUri(string $path): string
     {
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 

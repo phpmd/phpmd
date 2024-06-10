@@ -25,8 +25,6 @@ abstract class AbstractWriter
 {
     /**
      * Writes a data string to the concrete output.
-     *
-     * @param string $data
      */
-    abstract public function write($data): void;
+    abstract public function write(string $data): void;
 }

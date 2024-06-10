@@ -92,7 +92,7 @@ final class DuplicatedArrayKey extends AbstractRule implements FunctionAware, Me
      * @return ?AbstractASTNode Key name
      * @throws OutOfBoundsException
      */
-    private function normalizeKey(AbstractASTNode $node, $index): ?AbstractASTNode
+    private function normalizeKey(AbstractASTNode $node, int $index): ?AbstractASTNode
     {
         $childCount = count($node->getChildren());
         // Skip, if there is no array key, just an array value

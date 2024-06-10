@@ -198,11 +198,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first method or function node for a given test file.
      *
-     * @param string $file
      * @throws Throwable
      * @since 2.8.3
      */
-    protected function getNodeForTestFile($file): FunctionNode|MethodNode
+    protected function getNodeForTestFile(string $file): FunctionNode|MethodNode
     {
         $source = $this->parseSource($file);
         $type = $source->getTypes();
@@ -230,7 +229,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @throws ExpectationFailedException
      * @throws Throwable
      */
-    protected function expectRuleHasViolationsForFile(Rule $rule, $expectedInvokes, $file): void
+    protected function expectRuleHasViolationsForFile(Rule $rule, int $expectedInvokes, string $file): void
     {
         $report = new Report();
         $rule->setReport($report);
@@ -253,12 +252,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Return a human-friendly failure message for a given list of violations and the actual/expected counts.
      *
-     * @param string $file
-     * @param int $expectedInvokes
-     * @param int $actualInvokes
      * @param iterable<RuleViolation> $violations
      */
-    protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations): string
+    protected function getViolationFailureMessage(string $file, int $expectedInvokes, int $actualInvokes, iterable $violations): string
     {
         return basename($file) . " failed:\n" .
             "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
@@ -276,7 +272,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param iterable<RuleViolation> $violations
      * @throws Throwable
      */
-    protected function getViolationsSummary($violations): string
+    protected function getViolationsSummary(iterable $violations): string
     {
         if (!is_array($violations)) {
             $violations = iterator_to_array($violations);
@@ -321,7 +317,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createResourceUriForTest($localPath): string
+    protected static function createResourceUriForTest(string $localPath): string
     {
         $frame = static::getCallingTestCase();
         static::assertIsString($frame['class']);
@@ -331,10 +327,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
     /**
      * Return URI for a given pattern with directory based on the current called class name.
-     *
-     * @param string $pattern
      */
-    protected static function createResourceUriForCalledClass($pattern): string
+    protected static function createResourceUriForCalledClass(string $pattern): string
     {
         return static::getResourceFilePathFromClassName(static::class, $pattern);
     }
@@ -342,10 +336,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Return list of files matching a given pattern with directory based on the current called class name.
      *
-     * @param string $pattern
      * @return string[]
      */
-    protected static function getFilesForCalledClass($pattern = '*'): array
+    protected static function getFilesForCalledClass(string $pattern = '*'): array
     {
         return glob(static::createResourceUriForCalledClass($pattern)) ?: [];
     }
@@ -353,12 +346,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked class node instance.
      *
-     * @param string $metric
-     * @param int $value
      * @return ClassNode&MockObject
      * @throws Throwable
      */
-    protected function getClassMock($metric = null, $value = null)
+    protected function getClassMock(?string $metric = null, ?int $value = null)
     {
         $class = $this->getMockBuilder(ClassNode::class)
             ->setConstructorArgs([new ASTClass('FooBar')])
@@ -377,12 +368,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked method node instance.
      *
-     * @param string $metric
-     * @param int $value
      * @return MethodNode&MockObject
      * @throws Throwable
      */
-    protected function getMethodMock($metric = null, $value = null)
+    protected function getMethodMock(?string $metric = null, ?int $value = null)
     {
         $method = $this->createFunctionOrMethodMock(MethodNode::class, new ASTMethod('fooBar'), $metric, $value);
         static::assertInstanceOf(MethodNode::class, $method);
@@ -417,7 +406,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @return MockObject&Report
      * @throws Throwable
      */
-    protected function getReportMock($expectedInvokes = -1)
+    protected function getReportMock(int $expectedInvokes = -1)
     {
         if ($expectedInvokes === self::AL_LEAST_ONE_VIOLATION) {
             $expects = static::atLeastOnce();
@@ -487,7 +476,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @return MockObject&RuleSet
      * @throws Throwable
      */
-    protected function getRuleSetMock($expectedClass = null, $count = '*')
+    protected function getRuleSetMock($expectedClass = null, int|string $count = '*')
     {
         $ruleSet = $this->getMockBuilder(RuleSet::class)->getMock();
         if ($expectedClass === null) {
@@ -522,11 +511,11 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @throws Throwable
      */
     protected function getRuleViolationMock(
-        $fileName = '/foo/bar.php',
-        $beginLine = 23,
-        $endLine = 42,
-        $rule = null,
-        $description = null
+        string $fileName = '/foo/bar.php',
+        int $beginLine = 23,
+        int $endLine = 42,
+        ?object $rule = null,
+        ?string $description = null
     ) {
         $ruleViolation = $this->getMockBuilder(RuleViolation::class)
             ->setConstructorArgs(
@@ -566,14 +555,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Creates a mocked rule violation instance.
      *
-     * @param string $file
-     * @param string $message
      * @return MockObject&ProcessingError
      * @throws Throwable
      */
     protected function getErrorMock(
-        $file = '/foo/baz.php',
-        $message = 'Error in file "/foo/baz.php"'
+        string $file = '/foo/baz.php',
+        string $message = 'Error in file "/foo/baz.php"'
     ) {
         $processingError = $this->getMockBuilder(ProcessingError::class)
             ->setConstructorArgs([$message])
@@ -666,11 +653,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Parses the source of the given file and returns the first package found
      * in that file.
      *
-     * @param string $sourceFile
      * @throws ErrorException
      * @throws Throwable
      */
-    private function parseSource($sourceFile): ASTNamespace
+    private function parseSource(string $sourceFile): ASTNamespace
     {
         if (!file_exists($sourceFile)) {
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);

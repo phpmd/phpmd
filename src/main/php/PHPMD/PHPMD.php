@@ -165,10 +165,9 @@ class PHPMD
     }
 
     /**
-     * @param ResultCacheEngine $resultCache
      * @return $this;
      */
-    public function setResultCache($resultCache)
+    public function setResultCache(ResultCacheEngine $resultCache)
     {
         $this->resultCache = $resultCache;
 
@@ -200,15 +199,14 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string             $inputPath
      * @param string[]      $ignorePattern
      * @param AbstractRenderer[] $renderers
      * @param RuleSet[]          $ruleSetList
      * @throws Exception
      */
     public function processFiles(
-        $inputPath,
-        $ignorePattern,
+        string $inputPath,
+        array $ignorePattern,
         array $renderers,
         array $ruleSetList,
         Report $report

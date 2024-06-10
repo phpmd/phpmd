@@ -199,12 +199,10 @@ class CommandTest extends AbstractTestCase
     }
 
     /**
-     * @param string $option
-     * @param string $value
      * @throws Throwable
      * @dataProvider dataProviderWithFilter
      */
-    public function testWithFilter($option, $value): void
+    public function testWithFilter(string $option, string $value): void
     {
         $args = [
             __FILE__,

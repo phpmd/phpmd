@@ -26,10 +26,9 @@ class ResultCacheState
     }
 
     /**
-     * @param string $filePath
      * @return list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>
      */
-    public function getViolations($filePath): array
+    public function getViolations(string $filePath): array
     {
         if (!isset($this->state['files'][$filePath]['violations'])) {
             return [];
@@ -39,18 +38,14 @@ class ResultCacheState
     }
 
     /**
-     * @param string $filePath
      * @param list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}> $violations
      */
-    public function setViolations($filePath, array $violations): void
+    public function setViolations(string $filePath, array $violations): void
     {
         $this->state['files'][$filePath]['violations'] = $violations;
     }
 
-    /**
-     * @param string $filePath
-     */
-    public function addRuleViolation($filePath, RuleViolation $violation): void
+    public function addRuleViolation(string $filePath, RuleViolation $violation): void
     {
         $this->state['files'][$filePath]['violations'][] = [
             'rule' => $violation->getRule()::class,
@@ -67,12 +62,11 @@ class ResultCacheState
     }
 
     /**
-     * @param string $basePath
      * @param list<RuleSet> $ruleSetList
      * @return list<RuleViolation>
      * @throws OutOfBoundsException
      */
-    public function getRuleViolations($basePath, array $ruleSetList): array
+    public function getRuleViolations(string $basePath, array $ruleSetList): array
     {
         if (!isset($this->state['files'])) {
             return [];
@@ -109,11 +103,7 @@ class ResultCacheState
         return $ruleViolations;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $hash
-     */
-    public function isFileModified($filePath, $hash): bool
+    public function isFileModified(string $filePath, string $hash): bool
     {
         if (!isset($this->state['files'][$filePath]['hash'])) {
             return true;
@@ -122,11 +112,7 @@ class ResultCacheState
         return $this->state['files'][$filePath]['hash'] !== $hash;
     }
 
-    /**
-     * @param string $filePath
-     * @param string $hash
-     */
-    public function setFileState($filePath, $hash): void
+    public function setFileState(string $filePath, string $hash): void
     {
         $this->state['files'][$filePath]['hash'] = $hash;
     }
@@ -143,11 +129,10 @@ class ResultCacheState
     }
 
     /**
-     * @param string    $ruleClassName
      * @param RuleSet[] $ruleSetList
      * @throws OutOfBoundsException
      */
-    private static function findRuleIn($ruleClassName, array $ruleSetList): Rule
+    private static function findRuleIn(string $ruleClassName, array $ruleSetList): Rule
     {
         foreach ($ruleSetList as $ruleSet) {
             foreach ($ruleSet->getRules() as $rule) {
