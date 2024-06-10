@@ -107,11 +107,10 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Returns the absolute path for a test resource for the current test.
      *
-     * @return string
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createCodeResourceUriForTest()
+    protected static function createCodeResourceUriForTest(): string
     {
         $frame = static::getCallingTestCase();
 
@@ -124,7 +123,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param array<string> $values list of values.
      * @return array<string, array<string>>
      */
-    protected static function getValuesAsArrays($values)
+    protected static function getValuesAsArrays($values): array
     {
         $valuesAsArray = [];
         foreach ($values as $value) {
@@ -138,11 +137,10 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
-     * @return string
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createResourceUriForTest($localPath)
+    protected static function createResourceUriForTest($localPath): string
     {
         $frame = static::getCallingTestCase();
         static::assertIsString($frame['class']);
@@ -241,9 +239,8 @@ abstract class AbstractStaticTestCase extends TestCase
      * Creates a full filename for a test content in the <em>_files</b> directory.
      *
      * @param string $localPath
-     * @return string
      */
-    protected static function createFileUri($localPath = '')
+    protected static function createFileUri($localPath = ''): string
     {
         return self::$filesDirectory . '/' . $localPath;
     }
@@ -252,10 +249,9 @@ abstract class AbstractStaticTestCase extends TestCase
      * Creates a file uri for a temporary test file.
      *
      * @param string|null $fileName
-     * @return string
      * @throws Throwable
      */
-    protected static function createTempFileUri($fileName = null)
+    protected static function createTempFileUri($fileName = null): string
     {
         if ($fileName !== null) {
             $filePath = sys_get_temp_dir() . '/' . $fileName;

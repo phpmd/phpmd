@@ -180,10 +180,8 @@ final class Command
 
     /**
      * Returns the current version number.
-     *
-     * @return string
      */
-    private function getVersion()
+    private function getVersion(): string
     {
         $build = __DIR__ . '/../../../../../build.properties';
 

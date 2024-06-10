@@ -45,10 +45,8 @@ final class Annotation
 
     /**
      * Checks if this annotation suppresses the given rule.
-     *
-     * @return bool
      */
-    public function suppresses(Rule $rule)
+    public function suppresses(Rule $rule): bool
     {
         if (lcfirst($this->name) === self::SUPPRESS_ANNOTATION) {
             return $this->isSuppressed($rule);
@@ -59,10 +57,8 @@ final class Annotation
 
     /**
      * Checks if this annotation suppresses the given rule.
-     *
-     * @return bool
      */
-    private function isSuppressed(Rule $rule)
+    private function isSuppressed(Rule $rule): bool
     {
         if (in_array($this->value, ['PHPMD', 'PMD'], true)) {
             return true;

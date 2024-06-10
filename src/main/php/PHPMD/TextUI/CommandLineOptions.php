@@ -448,10 +448,8 @@ class CommandLineOptions
 
     /**
      * Returns a php source code filename or directory.
-     *
-     * @return string
      */
-    public function getInputPath()
+    public function getInputPath(): string
     {
         return $this->inputPath;
     }
@@ -469,10 +467,8 @@ class CommandLineOptions
     /**
      * Returns the output filename for a generated report or <b>null</b> when
      * the report should be displayed in STDOUT.
-     *
-     * @return string|null
      */
-    public function getReportFile()
+    public function getReportFile(): ?string
     {
         return $this->reportFile;
     }
@@ -480,10 +476,8 @@ class CommandLineOptions
     /**
      * Returns the output filename for the errors or <b>null</b> when
      * the report should be displayed in STDERR.
-     *
-     * @return string|null
      */
-    public function getErrorFile()
+    public function getErrorFile(): ?string
     {
         return $this->errorFile;
     }
@@ -493,7 +487,7 @@ class CommandLineOptions
      *
      * @return list<string>
      */
-    public function getDeprecations()
+    public function getDeprecations(): array
     {
         return $this->deprecations;
     }
@@ -504,37 +498,31 @@ class CommandLineOptions
      *
      * @return array<string, string>
      */
-    public function getReportFiles()
+    public function getReportFiles(): array
     {
         return $this->reportFiles;
     }
 
     /**
      * Returns a ruleset filename or a comma-separated string of ruleset
-     *
-     * @return string
      */
-    public function getRuleSets()
+    public function getRuleSets(): string
     {
         return $this->ruleSets;
     }
 
     /**
      * Returns the minimum rule priority.
-     *
-     * @return int
      */
-    public function getMinimumPriority()
+    public function getMinimumPriority(): int
     {
         return $this->minimumPriority;
     }
 
     /**
      * Returns the maximum rule priority.
-     *
-     * @return int
      */
-    public function getMaximumPriority()
+    public function getMaximumPriority(): int
     {
         return $this->maximumPriority;
     }
@@ -542,10 +530,8 @@ class CommandLineOptions
     /**
      * Returns the file name of a supplied code coverage report or <b>NULL</b>
      * if the user has not supplied the --coverage option.
-     *
-     * @return string|null
      */
-    public function getCoverageReport()
+    public function getCoverageReport(): ?string
     {
         return $this->coverageReport;
     }
@@ -553,10 +539,8 @@ class CommandLineOptions
     /**
      * Returns a string of comma-separated extensions for valid php source code
      * filenames or <b>null</b> when this argument was not set.
-     *
-     * @return string|null
      */
-    public function getExtensions()
+    public function getExtensions(): ?string
     {
         return $this->extensions;
     }
@@ -564,20 +548,16 @@ class CommandLineOptions
     /**
      * Returns string of comma-separated pattern that is used to exclude
      * directories or <b>null</b> when this argument was not set.
-     *
-     * @return string|null
      */
-    public function getIgnore()
+    public function getIgnore(): ?string
     {
         return $this->ignore;
     }
 
     /**
      * Was the <b>--version</b> passed to PHPMD's command line interface?
-     *
-     * @return bool
      */
-    public function hasVersion()
+    public function hasVersion(): bool
     {
         return $this->version;
     }
@@ -585,18 +565,14 @@ class CommandLineOptions
     /**
      * Was the <b>--strict</b> option passed to PHPMD's command line interface?
      *
-     * @return bool
      * @since 1.2.0
      */
-    public function hasStrict()
+    public function hasStrict(): bool
     {
         return $this->strict;
     }
 
-    /**
-     * @return int
-     */
-    public function getVerbosity()
+    public function getVerbosity(): int
     {
         return $this->verbosity;
     }
@@ -611,28 +587,21 @@ class CommandLineOptions
 
     /**
      * The filepath of the baseline violations xml
-     *
-     * @return string|null
      */
-    public function baselineFile()
+    public function baselineFile(): ?string
     {
         return $this->baselineFile;
     }
 
-    /**
-     * @return bool
-     */
-    public function isCacheEnabled()
+    public function isCacheEnabled(): bool
     {
         return $this->cacheEnabled;
     }
 
     /**
      * The filepath to the result cache state file
-     *
-     * @return string
      */
-    public function cacheFile()
+    public function cacheFile(): string
     {
         return $this->cacheFile ?? '.phpmd.result-cache.php';
     }
@@ -648,30 +617,25 @@ class CommandLineOptions
     /**
      * Was the <b>--ignore-errors-on-exit</b> passed to PHPMD's command line interface?
      *
-     * @return bool
      * @since 2.10.0
      */
-    public function ignoreErrorsOnExit()
+    public function ignoreErrorsOnExit(): bool
     {
         return $this->ignoreErrorsOnExit;
     }
 
     /**
      * Was the <b>--ignore-violations-on-exit</b> passed to PHPMD's command line interface?
-     *
-     * @return bool
      */
-    public function ignoreViolationsOnExit()
+    public function ignoreViolationsOnExit(): bool
     {
         return $this->ignoreViolationsOnExit;
     }
 
     /**
      * Specify how many extra lines are added to a code snippet
-     *
-     * @return int|null
      */
-    public function extraLineInExcerpt()
+    public function extraLineInExcerpt(): ?int
     {
         return $this->extraLineInExcerpt;
     }
@@ -689,10 +653,9 @@ class CommandLineOptions
      * </ul>
      *
      * @param string $reportFormat
-     * @return AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer($reportFormat = null)
+    public function createRenderer($reportFormat = null): AbstractRenderer
     {
         $renderer = $this->createRendererWithoutOptions($reportFormat);
 
@@ -709,10 +672,9 @@ class CommandLineOptions
 
     /**
      * @param string $reportFormat
-     * @return AbstractRenderer
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    private function createRendererWithoutOptions($reportFormat = null)
+    private function createRendererWithoutOptions($reportFormat = null): AbstractRenderer
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
@@ -730,83 +692,55 @@ class CommandLineOptions
         };
     }
 
-    /**
-     * @return XMLRenderer
-     */
-    private function createXmlRenderer()
+    private function createXmlRenderer(): XMLRenderer
     {
         return new XMLRenderer();
     }
 
-    /**
-     * @return TextRenderer
-     */
-    private function createTextRenderer()
+    private function createTextRenderer(): TextRenderer
     {
         return new TextRenderer();
     }
 
-    /**
-     * @return AnsiRenderer
-     */
-    private function createAnsiRenderer()
+    private function createAnsiRenderer(): AnsiRenderer
     {
         return new AnsiRenderer();
     }
 
-    /**
-     * @return GitLabRenderer
-     */
-    private function createGitLabRenderer()
+    private function createGitLabRenderer(): GitLabRenderer
     {
         return new GitLabRenderer();
     }
 
-    /**
-     * @return GitHubRenderer
-     */
-    private function createGitHubRenderer()
+    private function createGitHubRenderer(): GitHubRenderer
     {
         return new GitHubRenderer();
     }
 
-    /**
-     * @return HTMLRenderer
-     */
-    private function createHtmlRenderer()
+    private function createHtmlRenderer(): HTMLRenderer
     {
         return new HTMLRenderer($this->extraLineInExcerpt);
     }
 
-    /**
-     * @return JSONRenderer
-     */
-    private function createJsonRenderer()
+    private function createJsonRenderer(): JSONRenderer
     {
         return new JSONRenderer();
     }
 
-    /**
-     * @return CheckStyleRenderer
-     */
-    private function createCheckStyleRenderer()
+    private function createCheckStyleRenderer(): CheckStyleRenderer
     {
         return new CheckStyleRenderer();
     }
 
-    /**
-     * @return SARIFRenderer
-     */
-    private function createSarifRenderer()
+    private function createSarifRenderer(): SARIFRenderer
     {
         return new SARIFRenderer();
     }
 
     /**
-     * @return AbstractRenderer
      * @throws InvalidArgumentException
      */
-    private function createCustomRenderer()
+    private function createCustomRenderer(): AbstractRenderer
     {
         if (!$this->reportFormat) {
             throw new InvalidArgumentException(
@@ -842,10 +776,9 @@ class CommandLineOptions
     /**
      * Returns usage information for the PHPMD command line interface.
      *
-     * @return string
      * @throws InvalidArgumentException
      */
-    public function usage()
+    public function usage(): string
     {
         $availableRenderers = $this->getListOfAvailableRenderers();
         $noRenderers = ($availableRenderers === null);
@@ -904,7 +837,7 @@ class CommandLineOptions
      * @return string|null The list of renderers found separated by comma, or null if none.
      * @throws InvalidArgumentException
      */
-    private function getListOfAvailableRenderers()
+    private function getListOfAvailableRenderers(): ?string
     {
         $renderersDirPathName = __DIR__ . '/../Renderer';
         $renderers = [];
@@ -948,11 +881,10 @@ class CommandLineOptions
      * exception.
      *
      * @param string $inputFile Specified input file name.
-     * @return string
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    private function readInputFile($inputFile)
+    private function readInputFile($inputFile): string
     {
         $content = @file($inputFile);
         if ($content === false) {
@@ -981,10 +913,8 @@ class CommandLineOptions
      *
      * @param list<string> $equalChunk The CLI parameter split in 2 by "=" sign
      * @param string[] &$args      The remaining CLI parameters not yet parsed
-     *
-     * @return string|null
      */
-    private function readValue(array $equalChunk, array &$args)
+    private function readValue(array $equalChunk, array &$args): ?string
     {
         if (count($equalChunk) > 1) {
             return $equalChunk[1];

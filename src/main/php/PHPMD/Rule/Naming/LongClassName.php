@@ -74,7 +74,7 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    private function getSubtractPrefixList()
+    private function getSubtractPrefixList(): array
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList(
@@ -93,7 +93,7 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    private function getSubtractSuffixList()
+    private function getSubtractSuffixList(): array
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList(

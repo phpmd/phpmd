@@ -41,20 +41,16 @@ class ProcessingError
 
     /**
      * Returns the source file where the processing error occurred.
-     *
-     * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
 
     /**
      * Returns the original processing error message.
-     *
-     * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }

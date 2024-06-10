@@ -20,7 +20,7 @@ class ResultCacheKey
     /**
      * @return array<string, mixed>
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'strict' => $this->strict,
@@ -31,10 +31,7 @@ class ResultCacheKey
         ];
     }
 
-    /**
-     * @return bool
-     */
-    public function isEqualTo(self $other)
+    public function isEqualTo(self $other): bool
     {
         return $this->strict === $other->strict
             && $this->baselineHash === $other->baselineHash

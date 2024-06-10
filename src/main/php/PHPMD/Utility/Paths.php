@@ -11,9 +11,8 @@ final class Paths
      *
      * @param string $basePath
      * @param string $filePath
-     * @return string
      */
-    public static function getRelativePath($basePath, $filePath)
+    public static function getRelativePath($basePath, $filePath): string
     {
         // normalize slashes and ensure base path ends with slash
         $basePath = rtrim(str_replace('\\', '/', $basePath), '/') . '/';
@@ -32,9 +31,8 @@ final class Paths
      *
      * @param string $pathA
      * @param string $pathB
-     * @return string
      */
-    public static function concat($pathA, $pathB)
+    public static function concat($pathA, $pathB): string
     {
         return rtrim(str_replace('\\', '/', $pathA), '/') . '/' . ltrim(str_replace('\\', '/', $pathB), '/');
     }
@@ -42,10 +40,9 @@ final class Paths
     /**
      * Get the realpath of the given path or exception on failure
      * @param string $path
-     * @return string
      * @throws RuntimeException
      */
-    public static function getRealPath($path)
+    public static function getRealPath($path): string
     {
         $absolutePath = realpath($path);
         if (!$absolutePath) {

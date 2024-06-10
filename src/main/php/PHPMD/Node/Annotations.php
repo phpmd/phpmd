@@ -64,10 +64,8 @@ final class Annotations
 
     /**
      * Checks if one of the annotations suppresses the given rule.
-     *
-     * @return bool
      */
-    public function suppresses(Rule $rule)
+    public function suppresses(Rule $rule): bool
     {
         foreach ($this->annotations as $annotation) {
             if ($annotation->suppresses($rule)) {

@@ -34,8 +34,5 @@ interface OutputInterface
      */
     public function setVerbosity($level): void;
 
-    /**
-     * @return int
-     */
-    public function getVerbosity();
+    public function getVerbosity(): int;
 }

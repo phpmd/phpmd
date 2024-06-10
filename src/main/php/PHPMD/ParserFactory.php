@@ -48,10 +48,9 @@ final class ParserFactory
     /**
      * Creates the used {@link \PHPMD\Parser} analyzer instance.
      *
-     * @return Parser
      * @throws Exception
      */
-    public function create(PHPMD $phpmd)
+    public function create(PHPMD $phpmd): Parser
     {
         $pdepend = $this->createInstance();
         $pdepend = $this->init($pdepend, $phpmd);
@@ -62,10 +61,9 @@ final class ParserFactory
     /**
      * Creates a clean php depend instance with some base settings.
      *
-     * @return Engine
      * @throws Exception
      */
-    private function createInstance()
+    private function createInstance(): Engine
     {
         $application = new Application();
 
@@ -82,10 +80,9 @@ final class ParserFactory
     /**
      * Configures the given PDepend\Engine instance based on some user settings.
      *
-     * @return Engine
      * @throws InvalidArgumentException
      */
-    private function init(Engine $pdepend, PHPMD $phpmd)
+    private function init(Engine $pdepend, PHPMD $phpmd): Engine
     {
         $this->initOptions($pdepend, $phpmd);
         $this->initInput($pdepend, $phpmd);

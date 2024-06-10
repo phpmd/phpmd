@@ -71,9 +71,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * that are available in scopes.
      *
      * @param AbstractNode<ASTVariable> $variable
-     * @return bool
      */
-    protected function isSuperGlobal(AbstractNode $variable)
+    protected function isSuperGlobal(AbstractNode $variable): bool
     {
         return isset(self::$superGlobals[$variable->getImage()]);
     }
@@ -83,10 +82,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * or method postfix.
      *
      * @param AbstractNode<ASTVariable> $variable
-     * @return bool
      * @throws OutOfBoundsException
      */
-    protected function isRegularVariable(AbstractNode $variable)
+    protected function isRegularVariable(AbstractNode $variable): bool
     {
         $node = $this->stripWrappedIndexExpression($variable);
         $parent = $node->getParent();
@@ -118,7 +116,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    private function stripWrappedIndexExpression(AbstractNode $node)
+    private function stripWrappedIndexExpression(AbstractNode $node): AbstractNode
     {
         if (!$this->isWrappedByIndexExpression($node)) {
             return $node;
@@ -136,9 +134,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Tests if the given variable node os part of an index expression.
      *
      * @param AbstractNode<PDependNode> $node
-     * @return bool
      */
-    private function isWrappedByIndexExpression(AbstractNode $node)
+    private function isWrappedByIndexExpression(AbstractNode $node): bool
     {
         $parent = $node->getParent();
         if (!$parent) {
@@ -155,9 +152,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @param AbstractNode<PDependNode> $node
      * @param string $name
-     * @return bool
      */
-    protected function isFunctionNameEndingWith(AbstractNode $node, $name)
+    protected function isFunctionNameEndingWith(AbstractNode $node, $name): bool
     {
         $parts = explode('\\', trim($node->getImage(), '\\'));
 
@@ -170,10 +166,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Prefix self:: and static:: properties with "::".
      *
      * @param AbstractNode<PDependNode>|PDependNode $variable
-     * @return string
      * @throws OutOfBoundsException
      */
-    protected function getVariableImage($variable)
+    protected function getVariableImage($variable): string
     {
         if ($variable instanceof AbstractNode) {
             $variable = $variable->getNode();
@@ -197,7 +192,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @return ?string
      * @throws OutOfBoundsException
      */
-    private function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix)
+    private function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix): ?string
     {
         do {
             $postfix = $postfix->getParent();
@@ -220,9 +215,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      * @param string $functionName
-     * @return ReflectionFunction|null
      */
-    private function getReflectionFunctionByName($functionName)
+    private function getReflectionFunctionByName($functionName): ?ReflectionFunction
     {
         try {
             return new ReflectionFunction($functionName);
@@ -246,9 +240,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Return true if the given variable is passed by reference in a native PHP function.
      *
      * @param ASTVariable $variable
-     * @return bool
      */
-    protected function isPassedByReference($variable)
+    protected function isPassedByReference($variable): bool
     {
         $parent = $variable->getParent();
 
@@ -301,10 +294,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * image is "$foo", second one is "::$foo".
      *
      * @param PDependNode $variable
-     * @return string
      * @throws OutOfBoundsException
      */
-    private function prependMemberPrimaryPrefix(string $image, $variable)
+    private function prependMemberPrimaryPrefix(string $image, $variable): string
     {
         $parent = $variable->getParent();
 
@@ -336,9 +328,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      *
      * @param PDependNode $variable
      * @param string $image
-     * @return bool
      */
-    private function isFieldDeclaration($variable, $image = '$')
+    private function isFieldDeclaration($variable, $image = '$'): bool
     {
         return str_starts_with($image, '$') &&
             $variable->getParent() instanceof ASTFieldDeclaration;

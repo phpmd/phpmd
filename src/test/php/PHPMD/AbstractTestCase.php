@@ -75,7 +75,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @return string[]
      */
-    public static function getApplyingFiles()
+    public static function getApplyingFiles(): array
     {
         return static::getFilesForCalledClass('testRuleApplies*');
     }
@@ -87,7 +87,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @return string[]
      */
-    public static function getNotApplyingFiles()
+    public static function getNotApplyingFiles(): array
     {
         return static::getFilesForCalledClass('testRuleDoesNotApply*');
     }
@@ -97,7 +97,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @return string[][]
      */
-    public static function getApplyingCases()
+    public static function getApplyingCases(): array
     {
         return static::getValuesAsArrays(static::getApplyingFiles());
     }
@@ -107,7 +107,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @return string[][]
      */
-    public static function getNotApplyingCases()
+    public static function getNotApplyingCases(): array
     {
         return static::getValuesAsArrays(static::getNotApplyingFiles());
     }
@@ -116,10 +116,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first class found in a source file related to the calling
      * test method.
      *
-     * @return ClassNode
      * @throws Throwable
      */
-    protected function getClass()
+    protected function getClass(): ClassNode
     {
         return new ClassNode(
             $this->getNodeForCallingTestCase(
@@ -132,10 +131,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first interface found in a source file related to the calling
      * test method.
      *
-     * @return InterfaceNode
      * @throws Throwable
      */
-    protected function getInterface()
+    protected function getInterface(): InterfaceNode
     {
         return new InterfaceNode(
             $this->getNodeForCallingTestCase(
@@ -145,10 +143,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
-     * @return TraitNode
      * @throws Throwable
      */
-    protected function getTrait()
+    protected function getTrait(): TraitNode
     {
         return new TraitNode(
             $this->getNodeForCallingTestCase(
@@ -158,10 +155,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
-     * @return EnumNode
      * @throws Throwable
      */
-    protected function getEnum()
+    protected function getEnum(): EnumNode
     {
         return new EnumNode(
             $this->getNodeForCallingTestCase(
@@ -174,10 +170,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return MethodNode
      * @throws Throwable
      */
-    protected function getMethod()
+    protected function getMethod(): MethodNode
     {
         $source = $this->parseTestCaseSource()->getTypes()->current();
         static::assertNotFalse($source);
@@ -189,10 +184,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first function found in a source files related to the calling
      * test method.
      *
-     * @return FunctionNode
      * @throws Throwable
      */
-    protected function getFunction()
+    protected function getFunction(): FunctionNode
     {
         return new FunctionNode(
             $this->getNodeForCallingTestCase(
@@ -205,11 +199,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the first method or function node for a given test file.
      *
      * @param string $file
-     * @return FunctionNode|MethodNode
      * @throws Throwable
      * @since 2.8.3
      */
-    protected function getNodeForTestFile($file)
+    protected function getNodeForTestFile($file): FunctionNode|MethodNode
     {
         $source = $this->parseSource($file);
         $type = $source->getTypes();
@@ -264,10 +257,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param int $expectedInvokes
      * @param int $actualInvokes
      * @param iterable<RuleViolation> $violations
-     *
-     * @return string
      */
-    protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
+    protected function getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations): string
     {
         return basename($file) . " failed:\n" .
             "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
@@ -283,10 +274,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return a human-friendly summary for a list of violations.
      *
      * @param iterable<RuleViolation> $violations
-     * @return string
      * @throws Throwable
      */
-    protected function getViolationsSummary($violations)
+    protected function getViolationsSummary($violations): string
     {
         if (!is_array($violations)) {
             $violations = iterator_to_array($violations);
@@ -314,11 +304,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the absolute path for a test resource for the current test.
      *
-     * @return string
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createCodeResourceUriForTest()
+    protected static function createCodeResourceUriForTest(): string
     {
         $frame = static::getCallingTestCase();
 
@@ -329,11 +318,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
-     * @return string
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createResourceUriForTest($localPath)
+    protected static function createResourceUriForTest($localPath): string
     {
         $frame = static::getCallingTestCase();
         static::assertIsString($frame['class']);
@@ -345,9 +333,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return URI for a given pattern with directory based on the current called class name.
      *
      * @param string $pattern
-     * @return string
      */
-    protected static function createResourceUriForCalledClass($pattern)
+    protected static function createResourceUriForCalledClass($pattern): string
     {
         return static::getResourceFilePathFromClassName(static::class, $pattern);
     }
@@ -358,7 +345,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param string $pattern
      * @return string[]
      */
-    protected static function getFilesForCalledClass($pattern = '*')
+    protected static function getFilesForCalledClass($pattern = '*'): array
     {
         return glob(static::createResourceUriForCalledClass($pattern)) ?: [];
     }
@@ -453,10 +440,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Get a mocked report with one violation
      *
-     * @return Report
      * @throws Throwable
      */
-    public function getReportWithOneViolation()
+    public function getReportWithOneViolation(): Report
     {
         return $this->getReportMock(self::ONE_VIOLATION);
     }
@@ -475,10 +461,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Get a mocked report with at least one violation
      *
-     * @return Report
      * @throws Throwable
      */
-    public function getReportWithAtLeastOneViolation()
+    public function getReportWithAtLeastOneViolation(): Report
     {
         return $this->getReportMock(self::AL_LEAST_ONE_VIOLATION);
     }
@@ -613,10 +598,8 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Parses the source code for the calling test method and returns the first
      * package node found in the parsed file.
-     *
-     * @return ASTNamespace
      */
-    private function parseTestCaseSource()
+    private function parseTestCaseSource(): ASTNamespace
     {
         return $this->parseSource($this->createCodeResourceUriForTest());
     }
@@ -689,11 +672,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * in that file.
      *
      * @param string $sourceFile
-     * @return ASTNamespace
      * @throws ErrorException
      * @throws Throwable
      */
-    private function parseSource($sourceFile)
+    private function parseSource($sourceFile): ASTNamespace
     {
         if (!file_exists($sourceFile)) {
             throw new ErrorException('Cannot locate source file: ' . $sourceFile);

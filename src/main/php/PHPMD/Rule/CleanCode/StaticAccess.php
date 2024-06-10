@@ -105,9 +105,8 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
     /**
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @param string $ignorePattern
-     * @return bool
      */
-    private function isMethodIgnored(AbstractNode $methodCall, $ignorePattern)
+    private function isMethodIgnored(AbstractNode $methodCall, $ignorePattern): bool
     {
         if ($ignorePattern === '') {
             return false;
@@ -120,10 +119,8 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
 
     /**
      * Gets exceptions from property
-     *
-     * @return ExceptionsList
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): ExceptionsList
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this, '\\');

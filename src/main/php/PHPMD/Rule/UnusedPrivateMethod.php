@@ -65,7 +65,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @throws OutOfBoundsException
      * @throws RuntimeException
      */
-    private function collectUnusedPrivateMethods(ClassNode $class)
+    private function collectUnusedPrivateMethods(ClassNode $class): array
     {
         $methods = $this->collectPrivateMethods($class);
 
@@ -78,7 +78,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @return array<string, MethodNode>
      * @throws RuntimeException
      */
-    private function collectPrivateMethods(ClassNode $class)
+    private function collectPrivateMethods(ClassNode $class): array
     {
         $methods = [];
 
@@ -95,10 +95,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
      *
-     * @return bool
      * @throws RuntimeException
      */
-    private function acceptMethod(ClassNode $class, MethodNode $method)
+    private function acceptMethod(ClassNode $class, MethodNode $method): bool
     {
         return (
             $method->isPrivate() &&
@@ -117,7 +116,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @return array<string, MethodNode>
      * @throws OutOfBoundsException
      */
-    private function removeUsedMethods(ClassNode $class, array $methods)
+    private function removeUsedMethods(ClassNode $class, array $methods): array
     {
         $methods = $this->removeExplicitCalls($class, $methods);
         $methods = $this->removeCallableArrayRepresentations($class, $methods);
@@ -132,7 +131,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @return array<string, MethodNode>
      * @throws OutOfBoundsException
      */
-    private function removeExplicitCalls(ClassNode $class, array $methods)
+    private function removeExplicitCalls(ClassNode $class, array $methods): array
     {
         foreach ($class->findChildrenOfType(ASTMethodPostfix::class) as $postfix) {
             if ($this->isClassScope($class, $postfix)) {
@@ -150,7 +149,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @return array<string, MethodNode>
      * @throws OutOfBoundsException
      */
-    private function removeCallableArrayRepresentations(ClassNode $class, array $methods)
+    private function removeCallableArrayRepresentations(ClassNode $class, array $methods): array
     {
         foreach ($class->findChildrenOfType(ASTVariable::class) as $variable) {
             $parent = $variable->getParent();
@@ -171,10 +170,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * and that the second one is a literal static string.
      *
      * @param AbstractNode<PDependNode> $parent
-     * @return string|null
      * @throws OutOfBoundsException
      */
-    private function getMethodNameFromArraySecondElement(AbstractNode $parent)
+    private function getMethodNameFromArraySecondElement(AbstractNode $parent): ?string
     {
         if ($parent->isInstanceOf(ASTArrayElement::class)) {
             $array = $parent->getParent();
@@ -199,10 +197,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * instance or static reference to the given class.
      *
      * @param AbstractNode<ASTExpression> $postfix
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isClassScope(ClassNode $class, AbstractNode $postfix)
+    private function isClassScope(ClassNode $class, AbstractNode $postfix): bool
     {
         $owner = $postfix->getParent()?->getChild(0);
         if (!$owner) {

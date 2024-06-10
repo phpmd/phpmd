@@ -167,10 +167,8 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
 
     /**
      * Gets exceptions from property
-     *
-     * @return ExceptionsList
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): ExceptionsList
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);
@@ -185,10 +183,9 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * variable names in catch-statements.
      *
      * @param AbstractNode<ASTNode> $node
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node): bool
     {
         $parent = $node->getParent();
 
@@ -205,10 +202,9 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * Checks if a short name is initialized within a foreach loop statement
      *
      * @param AbstractNode<ASTNode> $node
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function isInitializedInLoop(AbstractNode $node)
+    private function isInitializedInLoop(AbstractNode $node): bool
     {
         if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
             return false;
@@ -236,7 +232,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * @param class-string<T> $type
      * @return list<AbstractNode<T>>
      */
-    private function getParentsOfType(AbstractNode $node, $type)
+    private function getParentsOfType(AbstractNode $node, $type): array
     {
         $parents = [];
 
@@ -258,9 +254,8 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      *
      * @param AbstractNode<ASTNode> $node
      * @param class-string<ASTNode> $type
-     * @return bool
      */
-    private function isChildOf(AbstractNode $node, $type)
+    private function isChildOf(AbstractNode $node, $type): bool
     {
         return $node->getParentOfType($type) !== null;
     }
@@ -287,9 +282,8 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * Checks if the given node was already processed.
      *
      * @param AbstractNode<ASTNode> $node
-     * @return bool
      */
-    private function isNotProcessed(AbstractNode $node)
+    private function isNotProcessed(AbstractNode $node): bool
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }

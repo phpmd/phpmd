@@ -11,10 +11,9 @@ final class BaselineSetFactory
      * the baseline file.
      *
      * @param string $fileName
-     * @return BaselineSet
      * @throws RuntimeException
      */
-    public static function fromFile($fileName)
+    public static function fromFile($fileName): BaselineSet
     {
         $content = @file_get_contents($fileName);
         if ($content === false) {

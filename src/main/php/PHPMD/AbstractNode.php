@@ -69,7 +69,7 @@ abstract class AbstractNode
      *
      * @return AbstractNode<PDependNode>|null
      */
-    public function getParent()
+    public function getParent(): ?self
     {
         $node = $this->node->getParent();
         if ($node === null) {
@@ -87,7 +87,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched parent type.
      * @return AbstractNode<T>|null
      */
-    public function getParentOfType($type)
+    public function getParentOfType($type): ?self
     {
         $parent = $this->node->getParent();
 
@@ -108,7 +108,7 @@ abstract class AbstractNode
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    public function getChild($index)
+    public function getChild($index): self
     {
         return new ASTNode(
             $this->node->getChild($index),
@@ -125,7 +125,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return AbstractNode<T>|null
      */
-    public function getFirstChildOfType($type)
+    public function getFirstChildOfType($type): ?self
     {
         $node = $this->node->getFirstChildOfType($type);
 
@@ -144,7 +144,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return list<AbstractNode<T>>
      */
-    public function findChildrenOfType($type)
+    public function findChildrenOfType($type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -164,7 +164,7 @@ abstract class AbstractNode
      * @param class-string<PDependNode> $type The searched child type.
      * @return list<PDependNode>
      */
-    public function findChildrenWithParentType($type)
+    public function findChildrenWithParentType($type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -185,7 +185,7 @@ abstract class AbstractNode
      * @return array<int, AbstractNode<ASTVariable>>
      * @todo Cover by a test.
      */
-    public function findChildrenOfTypeVariable()
+    public function findChildrenOfTypeVariable(): array
     {
         return $this->findChildrenOfType(ASTVariable::class);
     }
@@ -206,10 +206,8 @@ abstract class AbstractNode
 
     /**
      * Returns the image of the underlying node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->node->getImage();
     }
@@ -217,10 +215,8 @@ abstract class AbstractNode
     /**
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->node->getImage();
     }
@@ -243,10 +239,8 @@ abstract class AbstractNode
 
     /**
      * Returns the name of the declaring source file.
-     *
-     * @return string|null
      */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         $compilationUnit = $this->node instanceof AbstractASTArtifact
             ? $this->node->getCompilationUnit()
@@ -269,10 +263,8 @@ abstract class AbstractNode
 
     /**
      * Returns a textual representation/name for the concrete node type.
-     *
-     * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         $type = explode('\\', static::class);
 
@@ -308,10 +300,8 @@ abstract class AbstractNode
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
-     *
-     * @return bool
      */
-    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule);
+    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule): bool;
 
     /**
      * Returns the full qualified name of a class, an interface, a method or
@@ -319,15 +309,13 @@ abstract class AbstractNode
      *
      * @return ?string
      */
-    abstract public function getFullQualifiedName();
+    abstract public function getFullQualifiedName(): ?string;
 
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    abstract public function getParentName();
+    abstract public function getParentName(): ?string;
 
     /**
      * Returns the name of the parent package.

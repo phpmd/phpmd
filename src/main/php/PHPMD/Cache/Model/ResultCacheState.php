@@ -20,10 +20,7 @@ class ResultCacheState
     ) {
     }
 
-    /**
-     * @return ResultCacheKey
-     */
-    public function getCacheKey()
+    public function getCacheKey(): ResultCacheKey
     {
         return $this->cacheKey;
     }
@@ -32,7 +29,7 @@ class ResultCacheState
      * @param string $filePath
      * @return list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>
      */
-    public function getViolations($filePath)
+    public function getViolations($filePath): array
     {
         if (!isset($this->state['files'][$filePath]['violations'])) {
             return [];
@@ -75,7 +72,7 @@ class ResultCacheState
      * @return list<RuleViolation>
      * @throws OutOfBoundsException
      */
-    public function getRuleViolations($basePath, array $ruleSetList)
+    public function getRuleViolations($basePath, array $ruleSetList): array
     {
         if (!isset($this->state['files'])) {
             return [];
@@ -115,9 +112,8 @@ class ResultCacheState
     /**
      * @param string $filePath
      * @param string $hash
-     * @return bool
      */
-    public function isFileModified($filePath, $hash)
+    public function isFileModified($filePath, $hash): bool
     {
         if (!isset($this->state['files'][$filePath]['hash'])) {
             return true;
@@ -138,7 +134,7 @@ class ResultCacheState
     /**
      * @return array<string, array<string, mixed>>
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'key' => $this->cacheKey->toArray(),
@@ -149,10 +145,9 @@ class ResultCacheState
     /**
      * @param string    $ruleClassName
      * @param RuleSet[] $ruleSetList
-     * @return Rule
      * @throws OutOfBoundsException
      */
-    private static function findRuleIn($ruleClassName, array $ruleSetList)
+    private static function findRuleIn($ruleClassName, array $ruleSetList): Rule
     {
         foreach ($ruleSetList as $ruleSet) {
             foreach ($ruleSet->getRules() as $rule) {
