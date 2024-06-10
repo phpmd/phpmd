@@ -685,7 +685,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getDefaultRuleSets
      */
-    public function testDefaultRuleSetsProvideExternalInfoUrls($file): void
+    public function testDefaultRuleSetsProvideExternalInfoUrls(string $file): void
     {
         $ruleSets = $this->createRuleSetsFromFiles($file);
         $ruleSet = $ruleSets[0];
@@ -736,7 +736,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * @throws Throwable
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    private function createRuleSetsFromFiles($file): array
+    private function createRuleSetsFromFiles(string $file): array
     {
         $args = func_get_args();
 

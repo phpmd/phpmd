@@ -79,12 +79,10 @@ final class BaselineFileFinder
     }
 
     /**
-     * @param string $message
-     *
      * @return null
      * @throws RuntimeException
      */
-    private function nullOrThrow($message)
+    private function nullOrThrow(string $message)
     {
         if ($this->notNull) {
             throw new RuntimeException($message);

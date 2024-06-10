@@ -30,7 +30,7 @@ final class RuleClassNotFoundException extends RuntimeException
      *
      * @param string $className The configured but not found ruke class name.
      */
-    public function __construct($className)
+    public function __construct(string $className)
     {
         parent::__construct('Cannot find rule class: ' . $className);
     }

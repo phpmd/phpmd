@@ -46,7 +46,7 @@ class ProcessingErrorTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider getParserExceptionMessages
      */
-    public function testGetFileReturnsExpectedFileName($message): void
+    public function testGetFileReturnsExpectedFileName(string $message): void
     {
         $processingError = new ProcessingError($message);
         static::assertEquals('/tmp/foo.php', $processingError->getFile());

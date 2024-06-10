@@ -700,13 +700,12 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
-     * @param string $reportFormat
      * @param class-string $expectedClass
      * @throws Throwable
      * @throws Throwable
      * @dataProvider dataProviderCreateRenderer
      */
-    public function testCreateRenderer($reportFormat, $expectedClass): void
+    public function testCreateRenderer(string $reportFormat, $expectedClass): void
     {
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
@@ -765,13 +764,11 @@ class CommandLineOptionsTest extends AbstractTestCase
     }
 
     /**
-     * @param string $deprecatedName
-     * @param string $newName
      * @throws Throwable
      * @throws Throwable
      * @dataProvider dataProviderDeprecatedCliOptions
      */
-    public function testDeprecatedCliOptions($deprecatedName, $newName, Closure $result): void
+    public function testDeprecatedCliOptions(string $deprecatedName, string $newName, Closure $result): void
     {
         $args = [__FILE__, __FILE__, 'text', 'codesize', sprintf('--%s', $deprecatedName), '42'];
         $opts = new CommandLineOptions($args);

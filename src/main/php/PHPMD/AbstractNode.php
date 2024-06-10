@@ -55,10 +55,9 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend AST node.
      *
-     * @param string $name
      * @param array<mixed> $args
      */
-    public function __call($name, array $args): mixed
+    public function __call(string $name, array $args): mixed
     {
         return $this->node->{$name}(...$args);
     }
@@ -108,7 +107,7 @@ abstract class AbstractNode
      * @return AbstractNode<PDependNode>
      * @throws OutOfBoundsException
      */
-    public function getChild($index): self
+    public function getChild(int $index): self
     {
         return new ASTNode(
             $this->node->getChild($index),
@@ -280,7 +279,7 @@ abstract class AbstractNode
      * @param string $name The metric name or abbreviation.
      * @return ?numeric $name
      */
-    public function getMetric($name): mixed
+    public function getMetric(string $name): mixed
     {
         return $this->metrics[$name] ?? null;
     }

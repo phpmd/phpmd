@@ -105,10 +105,7 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('invalidClass'));
     }
 
-    /**
-     * @param string $className
-     */
-    private function createClassNode($className): ClassNode
+    private function createClassNode(string $className): ClassNode
     {
         $astClass = new ASTClass($className);
         $astClass->setNamespace(new ASTNamespace('phpmd'));

@@ -652,10 +652,9 @@ class CommandLineOptions
      *   <li>json</li>
      * </ul>
      *
-     * @param string $reportFormat
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer($reportFormat = null): AbstractRenderer
+    public function createRenderer(?string $reportFormat = null): AbstractRenderer
     {
         $renderer = $this->createRendererWithoutOptions($reportFormat);
 
@@ -671,10 +670,9 @@ class CommandLineOptions
     }
 
     /**
-     * @param string $reportFormat
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    private function createRendererWithoutOptions($reportFormat = null): AbstractRenderer
+    private function createRendererWithoutOptions(?string $reportFormat = null): AbstractRenderer
     {
         $reportFormat = $reportFormat ?: $this->reportFormat;
 
@@ -861,11 +859,8 @@ class CommandLineOptions
 
     /**
      * Logs a deprecated option to the current user interface.
-     *
-     * @param string $deprecatedName
-     * @param string $newName
      */
-    private function logDeprecated($deprecatedName, $newName): void
+    private function logDeprecated(string $deprecatedName, string $newName): void
     {
         $this->deprecations[] = sprintf(
             'The --%s option is deprecated, please use --%s instead.',
@@ -884,7 +879,7 @@ class CommandLineOptions
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    private function readInputFile($inputFile): string
+    private function readInputFile(string $inputFile): string
     {
         $content = @file($inputFile);
         if ($content === false) {

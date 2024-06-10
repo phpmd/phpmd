@@ -20,12 +20,9 @@ final class ArgumentsValidator
     /**
      * Throw an exception if the given $value cannot be used as a value for the argument $name.
      *
-     * @param string $name
-     * @param string $value
-     *
      * @throws InvalidArgumentException if the given $value cannot be used as a value for the argument $name
      */
-    public function validate($name, $value): void
+    public function validate(string $name, string $value): void
     {
         if (!$this->hasImplicitArguments) {
             return;

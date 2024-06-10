@@ -16,10 +16,9 @@ final class ResultCacheEngineFactory
     }
 
     /**
-     * @param string    $basePath
      * @param RuleSet[] $ruleSetList
      */
-    public function create($basePath, CommandLineOptions $options, array $ruleSetList): ?ResultCacheEngine
+    public function create(string $basePath, CommandLineOptions $options, array $ruleSetList): ?ResultCacheEngine
     {
         if (!$options->isCacheEnabled()) {
             $this->output->writeln('ResultCache is not enabled.', OutputInterface::VERBOSITY_VERY_VERBOSE);

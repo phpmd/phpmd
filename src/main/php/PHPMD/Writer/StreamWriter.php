@@ -76,10 +76,8 @@ final class StreamWriter extends AbstractWriter
 
     /**
      * Writes the given <b>$data</b> fragment to the wrapper output stream.
-     *
-     * @param string $data
      */
-    public function write($data): void
+    public function write(string $data): void
     {
         fwrite($this->stream, $data);
     }
