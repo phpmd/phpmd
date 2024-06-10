@@ -319,10 +319,11 @@ class RuleSetFactory
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
         if (isset($ruleNode['file'])) {
-            if (is_readable((string) $ruleNode['file'])) {
-                $fileName = (string) $ruleNode['file'];
-            } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNode['file'])) {
-                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNode['file'];
+            $file = (string) $ruleNode['file'];
+            if (is_readable($file)) {
+                $fileName = $file;
+            } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . $file)) {
+                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . $file;
             }
         }
 
