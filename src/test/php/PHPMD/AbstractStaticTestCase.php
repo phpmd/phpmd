@@ -186,8 +186,11 @@ abstract class AbstractStaticTestCase extends TestCase
      *                                          if set to a closure, the closure is applied on the actual output array.
      * @throws Throwable
      */
-    public static function assertJsonEquals(string $actualOutput, string $expectedFileName, bool $removeDynamicValues = true): void
-    {
+    public static function assertJsonEquals(
+        string $actualOutput,
+        string $expectedFileName,
+        bool $removeDynamicValues = true
+    ): void {
         $actual = json_decode($actualOutput, true);
         static::assertIsArray($actual);
         // Remove dynamic timestamp and duration attribute
