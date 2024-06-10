@@ -44,10 +44,8 @@ class WriterStub extends AbstractWriter
 
     /**
      * Returns a concatenated string of all data chunks.
-     *
-     * @return string
      */
-    public function getData()
+    public function getData(): string
     {
         return implode('', $this->chunks);
     }
@@ -57,7 +55,7 @@ class WriterStub extends AbstractWriter
      *
      * @return array<string>
      */
-    public function getChunks()
+    public function getChunks(): array
     {
         return $this->chunks;
     }

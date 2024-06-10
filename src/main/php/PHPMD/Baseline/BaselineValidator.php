@@ -12,10 +12,7 @@ class BaselineValidator
     ) {
     }
 
-    /**
-     * @return bool
-     */
-    public function isBaselined(RuleViolation $violation)
+    public function isBaselined(RuleViolation $violation): bool
     {
         $contains = $this->baselineSet->contains(
             $violation->getRule()::class,

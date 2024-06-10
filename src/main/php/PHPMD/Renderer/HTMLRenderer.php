@@ -446,7 +446,7 @@ final class HTMLRenderer extends AbstractRenderer
      * @throws RuntimeException
      * @throws LogicException
      */
-    private static function getLineExcerpt($file, $lineNumber, $extra = 0)
+    private static function getLineExcerpt($file, $lineNumber, $extra = 0): array
     {
         if (!is_readable($file)) {
             return [];
@@ -478,9 +478,8 @@ final class HTMLRenderer extends AbstractRenderer
      * Based on self::$descHighlightRules config.
      *
      * @param string $message
-     * @return string
      */
-    private static function colorize($message)
+    private static function colorize($message): string
     {
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
@@ -508,9 +507,8 @@ final class HTMLRenderer extends AbstractRenderer
      * Take a file path and return a bit of HTML where the basename is wrapped in styled <span>.
      *
      * @param string $path
-     * @return string
      */
-    private static function highlightFile($path)
+    private static function highlightFile($path): string
     {
         $file = substr(strrchr($path, '/') ?: '', 1);
         $dir = str_replace($file, '', $path);
@@ -567,7 +565,7 @@ final class HTMLRenderer extends AbstractRenderer
      * @param iterable<RuleViolation> $violations
      * @return array<string, array<int, int>>
      */
-    private static function sumUpViolations($violations)
+    private static function sumUpViolations($violations): array
     {
         $result = [
             self::CATEGORY_PRIORITY => [],
@@ -612,9 +610,8 @@ final class HTMLRenderer extends AbstractRenderer
      *
      * @param string $input
      * @param bool $eol
-     * @return string
      */
-    private static function reduceWhitespace($input, $eol = true)
+    private static function reduceWhitespace($input, $eol = true): string
     {
         return preg_replace("#\s+#", ' ', $input) . ($eol ? PHP_EOL : null);
     }

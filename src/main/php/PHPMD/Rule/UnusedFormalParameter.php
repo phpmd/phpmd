@@ -91,9 +91,8 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      *
      * @param AbstractNode<PDependNode> $node
      * @param string $name
-     * @return bool
      */
-    private function isFunctionNameEqual(AbstractNode $node, $name)
+    private function isFunctionNameEqual(AbstractNode $node, $name): bool
     {
         return (0 === strcasecmp(trim($node->getImage(), '\\'), $name));
     }
@@ -102,9 +101,8 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * Returns <b>true</b> when the given node is an abstract method.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @return bool
      */
-    private function isAbstractMethod(AbstractCallableNode $node)
+    private function isAbstractMethod(AbstractCallableNode $node): bool
     {
         if ($node instanceof MethodNode) {
             return $node->isAbstract();
@@ -118,9 +116,8 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * {@inheritDoc} annotation.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @return bool
      */
-    private function isInheritedSignature(AbstractCallableNode $node)
+    private function isInheritedSignature(AbstractCallableNode $node): bool
     {
         if ($node instanceof MethodNode) {
             $comment = $node->getComment();
@@ -135,9 +132,8 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * Returns <b>true</b> when the given node is a magic method signature
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @return bool
      */
-    private function isMagicMethod(AbstractCallableNode $node)
+    private function isMagicMethod(AbstractCallableNode $node): bool
     {
         if (!($node instanceof MethodNode)) {
             return false;
@@ -165,11 +161,10 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * the initial declaration.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @return bool
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
-    private function isNotDeclaration(AbstractCallableNode $node)
+    private function isNotDeclaration(AbstractCallableNode $node): bool
     {
         if ($node instanceof MethodNode) {
             return !$node->isDeclaration();

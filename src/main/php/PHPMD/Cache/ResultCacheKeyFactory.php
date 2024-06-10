@@ -17,9 +17,8 @@ class ResultCacheKeyFactory
     /**
      * @param bool      $strict
      * @param RuleSet[] $ruleSetList
-     * @return ResultCacheKey
      */
-    public function create($strict, array $ruleSetList)
+    public function create($strict, array $ruleSetList): ResultCacheKey
     {
         return new ResultCacheKey(
             $strict,
@@ -38,7 +37,7 @@ class ResultCacheKeyFactory
      *
      * @return array<string, string>
      */
-    private function createRuleHashes(array $ruleSetList)
+    private function createRuleHashes(array $ruleSetList): array
     {
         $result = [];
         foreach ($ruleSetList as $ruleSet) {
@@ -52,10 +51,7 @@ class ResultCacheKeyFactory
         return $result;
     }
 
-    /**
-     * @return string|null
-     */
-    private function getBaselineHash()
+    private function getBaselineHash(): ?string
     {
         if (!$this->baselineFile || !file_exists($this->baselineFile)) {
             return null;
@@ -67,7 +63,7 @@ class ResultCacheKeyFactory
     /**
      * @return array<string, string>
      */
-    private function getComposerHashes()
+    private function getComposerHashes(): array
     {
         // read sha1 hash of composer.json and lock from current base directory
         $result = [];

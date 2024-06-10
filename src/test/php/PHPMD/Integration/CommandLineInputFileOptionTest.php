@@ -60,10 +60,9 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
     /**
      * Runs the PHPMD command line interface and returns the report content.
      *
-     * @return string
      * @throws Throwable
      */
-    protected static function runCommandLine()
+    protected static function runCommandLine(): string
     {
         $inputfile = self::createResourceUriForTest('inputfile.txt');
         $reportfile = self::createTempFileUri();

@@ -156,10 +156,9 @@ class RuleSetTest extends AbstractTestCase
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
      *
-     * @return RuleSet
      * @throws Throwable
      */
-    private function createRuleSetFixture()
+    private function createRuleSetFixture(): RuleSet
     {
         $ruleSet = new RuleSet();
 

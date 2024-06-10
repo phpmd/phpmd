@@ -6,10 +6,7 @@ use PHPMD\AbstractWriter;
 
 final class RendererFactory
 {
-    /**
-     * @return BaselineRenderer
-     */
-    public static function createBaselineRenderer(AbstractWriter $writer)
+    public static function createBaselineRenderer(AbstractWriter $writer): BaselineRenderer
     {
         // set base path to current working directory
         $renderer = new BaselineRenderer(getcwd() ?: '');

@@ -48,7 +48,7 @@ class JSONRenderer extends AbstractRenderer
      *
      * @return array<string, string>
      */
-    protected function initReportData()
+    protected function initReportData(): array
     {
         $data = [
             'version' => PHPMD::VERSION,
@@ -66,7 +66,7 @@ class JSONRenderer extends AbstractRenderer
      * @param array<string, mixed> $data The report output to add the violations to.
      * @return array<string, mixed> The report output with violations, if any.
      */
-    protected function addViolationsToReport(Report $report, array $data)
+    protected function addViolationsToReport(Report $report, array $data): array
     {
         $filesList = [];
         foreach ($report->getRuleViolations() as $violation) {
@@ -99,7 +99,7 @@ class JSONRenderer extends AbstractRenderer
      * @param array<string, mixed> $data The report output to add the errors to.
      * @return array<string, mixed> The report output with errors, if any.
      */
-    protected function addErrorsToReport(Report $report, array $data)
+    protected function addErrorsToReport(Report $report, array $data): array
     {
         $errors = $report->getErrors();
         if (count($errors)) {
@@ -118,10 +118,9 @@ class JSONRenderer extends AbstractRenderer
      * Encode report data to the JSON representation string
      *
      * @param array<mixed> $data The report data
-     * @return string
      * @throws JsonException
      */
-    private function encodeReport($data)
+    private function encodeReport($data): string
     {
         $encodeOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP
             | JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;

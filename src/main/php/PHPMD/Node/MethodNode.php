@@ -50,10 +50,8 @@ class MethodNode extends AbstractCallableNode
     /**
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
-     *
-     * @return string|null
      */
-    public function getParentName()
+    public function getParentName(): ?string
     {
         return $this->getNode()->getParent()?->getImage();
     }
@@ -61,10 +59,8 @@ class MethodNode extends AbstractCallableNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return string
      */
-    public function getFullQualifiedName()
+    public function getFullQualifiedName(): string
     {
         return sprintf(
             '%s\\%s::%s()',
@@ -77,10 +73,8 @@ class MethodNode extends AbstractCallableNode
     /**
      * Returns <b>true</b> when the underlying method is declared as abstract or
      * is declared as child of an interface.
-     *
-     * @return bool
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return $this->getNode()->isAbstract();
     }
@@ -89,10 +83,9 @@ class MethodNode extends AbstractCallableNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @return bool
      * @throws RuntimeException
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule)
+    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
     {
         if (parent::hasSuppressWarningsAnnotationFor($rule)) {
             return true;
@@ -107,7 +100,7 @@ class MethodNode extends AbstractCallableNode
      * @return AbstractTypeNode<AbstractASTClassOrInterface>
      * @throws RuntimeException
      */
-    public function getParentType()
+    public function getParentType(): AbstractTypeNode
     {
         $parentNode = $this->getNode()->getParent();
 
@@ -136,11 +129,10 @@ class MethodNode extends AbstractCallableNode
      * Returns <b>true</b> when this method is the initial method declaration.
      * Otherwise this method will return <b>false</b>.
      *
-     * @return bool
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since 1.2.1
      */
-    public function isDeclaration()
+    public function isDeclaration(): bool
     {
         if ($this->isPrivate()) {
             return true;

@@ -719,7 +719,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
      */
-    private function createRuleSetsFromAbsoluteFiles(string ...$files)
+    private function createRuleSetsFromAbsoluteFiles(string ...$files): array
     {
         $files = array_map(static::createFileUri(...), $files);
 
@@ -736,7 +736,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * @throws Throwable
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    private function createRuleSetsFromFiles($file)
+    private function createRuleSetsFromFiles($file): array
     {
         $args = func_get_args();
 
@@ -750,7 +750,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      *
      * @return list<string> Paths to test against
      */
-    public function getPathsForFileAccessTest()
+    public function getPathsForFileAccessTest(): array
     {
         $fileContent = file_get_contents(__DIR__ . '/../../resources/files/rulesets/exclude-pattern.xml');
         $structure = [

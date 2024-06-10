@@ -259,10 +259,9 @@ class CamelCaseMethodNameTest extends AbstractTestCase
      * Returns the first method found in a source file related to the calling
      * test method.
      *
-     * @return MethodNode
      * @throws Throwable
      */
-    protected function getMethod()
+    protected function getMethod(): MethodNode
     {
         $methods = $this->getClass()->getMethods();
         $method = reset($methods);

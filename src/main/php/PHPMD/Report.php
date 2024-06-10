@@ -86,10 +86,9 @@ class Report
     /**
      * Returns <b>true</b> when this report does not contain any errors.
      *
-     * @return bool
      * @since 0.2.5
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return (count($this->ruleViolations) === 0);
     }
@@ -99,7 +98,7 @@ class Report
      *
      * @return ArrayIterator<int, RuleViolation>
      */
-    public function getRuleViolations()
+    public function getRuleViolations(): ArrayIterator
     {
         // First sort by file name
         ksort($this->ruleViolations);
@@ -131,10 +130,9 @@ class Report
      * Returns <b>true</b> when the report contains at least one processing
      * error. Otherwise this method will return <b>false</b>.
      *
-     * @return bool
      * @since 1.2.1
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return count($this->errors) > 0;
     }
@@ -146,7 +144,7 @@ class Report
      * @return ArrayIterator<int, ProcessingError>
      * @since 1.2.1
      */
-    public function getErrors()
+    public function getErrors(): ArrayIterator
     {
         return new ArrayIterator($this->errors);
     }
@@ -169,10 +167,8 @@ class Report
 
     /**
      * Returns the total time elapsed for the source analysis.
-     *
-     * @return float
      */
-    public function getElapsedTimeInMillis()
+    public function getElapsedTimeInMillis(): float
     {
         return round($this->endTime - $this->startTime);
     }

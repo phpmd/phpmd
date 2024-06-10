@@ -76,7 +76,7 @@ final class MissingImport extends AbstractRule implements FunctionAware, MethodA
      * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is a self reference.
      */
-    private function isSelfReference(AbstractNode $classNode)
+    private function isSelfReference(AbstractNode $classNode): bool
     {
         return in_array($classNode->getImage(), $this->selfReferences, true);
     }
@@ -87,7 +87,7 @@ final class MissingImport extends AbstractRule implements FunctionAware, MethodA
      * @param AbstractNode<PDependNode> $classNode A class node to check.
      * @return bool Whether the given class node is in the global namespace.
      */
-    private function isGlobalNamespace(AbstractNode $classNode)
+    private function isGlobalNamespace(AbstractNode $classNode): bool
     {
         return $classNode->getImage() !== '' && !strpos($classNode->getImage(), '\\', 1);
     }

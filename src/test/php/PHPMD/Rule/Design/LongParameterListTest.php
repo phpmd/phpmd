@@ -107,10 +107,9 @@ class LongParameterListTest extends AbstractTestCase
      * Returns a mocked method instance.
      *
      * @param int $parameterCount
-     * @return MethodNode
      * @throws Throwable
      */
-    private function createMethod($parameterCount)
+    private function createMethod($parameterCount): MethodNode
     {
         $method = $this->initFunctionOrMethodMock($this->getMethodMock(), $parameterCount);
         static::assertInstanceOf(MethodNode::class, $method);
@@ -122,10 +121,9 @@ class LongParameterListTest extends AbstractTestCase
      * Creates a mocked function node instance.
      *
      * @param int $parameterCount Number of function parameters.
-     * @return FunctionNode
      * @throws Throwable
      */
-    private function createFunction($parameterCount)
+    private function createFunction($parameterCount): FunctionNode
     {
         $function = $this->initFunctionOrMethodMock($this->createFunctionMock(), $parameterCount);
         static::assertInstanceOf(FunctionNode::class, $function);
@@ -138,10 +136,9 @@ class LongParameterListTest extends AbstractTestCase
      *
      * @param (FunctionNode|MethodNode)&MockObject $mock
      * @param int $parameterCount
-     * @return FunctionNode|MethodNode
      * @throws Throwable
      */
-    private function initFunctionOrMethodMock($mock, $parameterCount)
+    private function initFunctionOrMethodMock($mock, $parameterCount): FunctionNode|MethodNode
     {
         $mock->expects(static::once())
             ->method('getParameterCount')

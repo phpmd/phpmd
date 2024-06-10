@@ -69,7 +69,7 @@ final class IfStatementAssignment extends AbstractRule implements FunctionAware,
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @return array<int, AbstractNode<ASTStatement>>
      */
-    private function getStatements(AbstractCallableNode $node)
+    private function getStatements(AbstractCallableNode $node): array
     {
         return [
             ...$node->findChildrenOfType(ASTIfStatement::class),
@@ -83,7 +83,7 @@ final class IfStatementAssignment extends AbstractRule implements FunctionAware,
      * @param array<AbstractNode<ASTStatement>> $statements Array of if and elseif clauses
      * @return list<AbstractNode<ASTExpression>>
      */
-    private function getExpressions(array $statements)
+    private function getExpressions(array $statements): array
     {
         $nodes = [];
 
@@ -104,7 +104,7 @@ final class IfStatementAssignment extends AbstractRule implements FunctionAware,
      * @param array<int, AbstractNode<ASTExpression>> $expressions Array of expressions
      * @return array<int, AbstractNode<ASTAssignmentExpression>>
      */
-    private function getAssignments(array $expressions)
+    private function getAssignments(array $expressions): array
     {
         $assignments = [];
         foreach ($expressions as $expression) {

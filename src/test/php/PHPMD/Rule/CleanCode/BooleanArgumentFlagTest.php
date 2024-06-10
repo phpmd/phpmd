@@ -28,10 +28,8 @@ class BooleanArgumentFlagTest extends AbstractTestCase
 {
     /**
      * Get the rule under test.
-     *
-     * @return BooleanArgumentFlag
      */
-    public function getRule()
+    public function getRule(): BooleanArgumentFlag
     {
         $rule = new BooleanArgumentFlag();
 

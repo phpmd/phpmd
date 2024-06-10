@@ -31,10 +31,8 @@ abstract class AbstractCallableNode extends AbstractNode
 {
     /**
      * Returns the number of parameters in the callable signature.
-     *
-     * @return int
      */
-    public function getParameterCount()
+    public function getParameterCount(): int
     {
         return count($this->getNode()->getParameters());
     }

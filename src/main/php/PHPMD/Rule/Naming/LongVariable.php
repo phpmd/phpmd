@@ -141,9 +141,8 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * moment the only context is a static member.
      *
      * @param AbstractNode<ASTNode> $node
-     * @return bool
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    private function isNameAllowedInContext(AbstractNode $node): bool
     {
         return $node->getParentOfType(ASTMemberPrimaryPrefix::class) !== null;
     }
@@ -170,9 +169,8 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * Checks if the given node was already processed.
      *
      * @param AbstractNode<ASTNode> $node
-     * @return bool
      */
-    private function isNotProcessed(AbstractNode $node)
+    private function isNotProcessed(AbstractNode $node): bool
     {
         return !isset($this->processedVariables[$node->getImage()]);
     }
@@ -184,7 +182,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    private function getSubtractPrefixList()
+    private function getSubtractPrefixList(): array
     {
         if ($this->subtractPrefixes === null) {
             $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
@@ -200,7 +198,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
-    private function getSubtractSuffixList()
+    private function getSubtractSuffixList(): array
     {
         if ($this->subtractSuffixes === null) {
             $this->subtractSuffixes = Strings::splitToList($this->getStringProperty('subtract-suffixes', ''));

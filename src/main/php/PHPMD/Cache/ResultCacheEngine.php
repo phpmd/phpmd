@@ -11,26 +11,17 @@ class ResultCacheEngine
     ) {
     }
 
-    /**
-     * @return ResultCacheFileFilter
-     */
-    public function getFileFilter()
+    public function getFileFilter(): ResultCacheFileFilter
     {
         return $this->fileFilter;
     }
 
-    /**
-     * @return ResultCacheUpdater
-     */
-    public function getUpdater()
+    public function getUpdater(): ResultCacheUpdater
     {
         return $this->updater;
     }
 
-    /**
-     * @return ResultCacheWriter
-     */
-    public function getWriter()
+    public function getWriter(): ResultCacheWriter
     {
         return $this->writer;
     }

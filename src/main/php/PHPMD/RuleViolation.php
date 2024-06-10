@@ -68,20 +68,16 @@ class RuleViolation
 
     /**
      * Returns the rule that causes this violation.
-     *
-     * @return Rule
      */
-    public function getRule()
+    public function getRule(): Rule
     {
         return $this->rule;
     }
 
     /**
      * Returns the description/message text that describes the violation.
-     *
-     * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -92,7 +88,7 @@ class RuleViolation
      *
      * @return array<int, string>|null
      */
-    public function getArgs()
+    public function getArgs(): ?array
     {
         return $this->args;
     }
@@ -109,30 +105,24 @@ class RuleViolation
 
     /**
      * Returns the file name where this rule violation was detected.
-     *
-     * @return string|null
      */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->nodeInfo->fileName;
     }
 
     /**
      * Returns the first line of the node that causes this rule violation.
-     *
-     * @return int
      */
-    public function getBeginLine()
+    public function getBeginLine(): int
     {
         return $this->nodeInfo->beginLine;
     }
 
     /**
      * Returns the last line of the node that causes this rule violation.
-     *
-     * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->nodeInfo->endLine;
     }
@@ -148,10 +138,8 @@ class RuleViolation
     /**
      * Returns the name of the parent class or interface or <b>null</b> when there
      * is no parent class.
-     *
-     * @return string|null
      */
-    public function getClassName()
+    public function getClassName(): ?string
     {
         return $this->nodeInfo->className;
     }
@@ -159,10 +147,8 @@ class RuleViolation
     /**
      * Returns the name of a method or <b>null</b> when this violation has no
      * method context.
-     *
-     * @return string|null
      */
-    public function getMethodName()
+    public function getMethodName(): ?string
     {
         return $this->nodeInfo->methodName;
     }
@@ -170,10 +156,8 @@ class RuleViolation
     /**
      * Returns the name of a function or <b>null</b> when this violation has no
      * function context.
-     *
-     * @return string|null
      */
-    public function getFunctionName()
+    public function getFunctionName(): ?string
     {
         return $this->nodeInfo->functionName;
     }

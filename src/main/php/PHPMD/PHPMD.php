@@ -83,10 +83,9 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains errors.
      *
-     * @return bool
      * @since 2.10.0
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return $this->errors;
     }
@@ -95,20 +94,17 @@ class PHPMD
      * This method will return <b>true</b> when the processed source code
      * contains violations.
      *
-     * @return bool
      * @since 0.2.5
      */
-    public function hasViolations()
+    public function hasViolations(): bool
     {
         return $this->violations;
     }
 
     /**
      * Returns the input source file or directory path.
-     *
-     * @return string
      */
-    public function getInput()
+    public function getInput(): string
     {
         return $this->input;
     }
@@ -119,7 +115,7 @@ class PHPMD
      * @return string[]
      * @since 0.2.0
      */
-    public function getFileExtensions()
+    public function getFileExtensions(): array
     {
         return $this->fileExtensions;
     }
@@ -140,7 +136,7 @@ class PHPMD
      * @return string[]
      * @since 2.9.0
      */
-    public function getIgnorePatterns()
+    public function getIgnorePatterns(): array
     {
         return $this->ignorePatterns;
     }
@@ -163,10 +159,7 @@ class PHPMD
         return $this;
     }
 
-    /**
-     * @return ResultCacheEngine|null
-     */
-    public function getResultCache()
+    public function getResultCache(): ?ResultCacheEngine
     {
         return $this->resultCache;
     }
@@ -187,7 +180,7 @@ class PHPMD
      *
      * @return array<string, string>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }

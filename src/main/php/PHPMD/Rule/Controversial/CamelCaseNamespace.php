@@ -65,7 +65,7 @@ final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumA
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): array
     {
         if ($this->exceptions === null) {
             $this->exceptions = array_flip(

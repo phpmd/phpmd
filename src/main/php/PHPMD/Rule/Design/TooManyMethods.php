@@ -68,10 +68,8 @@ final class TooManyMethods extends AbstractRule implements ClassAware
 
     /**
      * Counts all methods within the given class/interface node.
-     *
-     * @return int
      */
-    private function countMethods(ClassNode $node)
+    private function countMethods(ClassNode $node): int
     {
         $count = 0;
         foreach ($node->getMethodNames() as $name) {

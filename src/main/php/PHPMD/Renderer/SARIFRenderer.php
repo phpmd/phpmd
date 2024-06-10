@@ -32,7 +32,7 @@ final class SARIFRenderer extends JSONRenderer
      *
      * @return array<string, mixed>
      */
-    protected function initReportData()
+    protected function initReportData(): array
     {
         $data = [
             'version' => '2.1.0',
@@ -69,7 +69,7 @@ final class SARIFRenderer extends JSONRenderer
      *                                                                            violations to.
      * @return array<string, array<int, array<string, array<array<mixed>>>>> The report output with violations, if any.
      */
-    protected function addViolationsToReport(Report $report, array $data)
+    protected function addViolationsToReport(Report $report, array $data): array
     {
         $rules = [];
         $results = [];
@@ -161,7 +161,7 @@ final class SARIFRenderer extends JSONRenderer
      * @return array<string, array<int, array<string, list<array<string, mixed>>>>> The report output with errors, if
      *                                                                              any.
      */
-    protected function addErrorsToReport(Report $report, array $data)
+    protected function addErrorsToReport(Report $report, array $data): array
     {
         $errors = $report->getErrors();
         foreach ($errors as $error) {
@@ -191,7 +191,7 @@ final class SARIFRenderer extends JSONRenderer
      * @param string $path
      * @return array<string, string>
      */
-    private static function pathToArtifactLocation($path)
+    private static function pathToArtifactLocation($path): array
     {
         $workingDir = getcwd() ?: '';
         if (str_starts_with($path, $workingDir)) {
@@ -212,9 +212,8 @@ final class SARIFRenderer extends JSONRenderer
      * Converts an absolute path to a file:// URI
      *
      * @param string $path
-     * @return string
      */
-    private static function pathToUri($path)
+    private static function pathToUri($path): string
     {
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 

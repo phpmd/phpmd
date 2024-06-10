@@ -218,10 +218,9 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
      *
      * @param AbstractNode<ASTVariable> $variable
      * @param AbstractCallableNode<AbstractASTCallable> $parentNode
-     * @return bool
      * @throws OutOfBoundsException
      */
-    private function checkVariableDefined(AbstractNode $variable, AbstractCallableNode $parentNode)
+    private function checkVariableDefined(AbstractNode $variable, AbstractCallableNode $parentNode): bool
     {
         $image = $this->getVariableImage($variable);
 
@@ -310,9 +309,8 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
      * @param AbstractNode<ASTVariable> $variable
-     * @return bool
      */
-    private function isNameAllowedInContext(AbstractCallableNode $node, AbstractNode $variable)
+    private function isNameAllowedInContext(AbstractCallableNode $node, AbstractNode $variable): bool
     {
         return (
             $node instanceof MethodNode &&

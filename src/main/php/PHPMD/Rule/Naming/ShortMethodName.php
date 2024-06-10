@@ -70,10 +70,8 @@ final class ShortMethodName extends AbstractRule implements FunctionAware, Metho
 
     /**
      * Gets array of exceptions from property
-     *
-     * @return ExceptionsList
      */
-    private function getExceptionsList()
+    private function getExceptionsList(): ExceptionsList
     {
         if ($this->exceptions === null) {
             $this->exceptions = new ExceptionsList($this);

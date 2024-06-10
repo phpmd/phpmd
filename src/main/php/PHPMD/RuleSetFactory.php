@@ -100,7 +100,7 @@ class RuleSetFactory
      * @return list<RuleSet>
      * @throws RuntimeException
      */
-    public function createRuleSets($ruleSetFileNames)
+    public function createRuleSets($ruleSetFileNames): array
     {
         $ruleSets = [];
 
@@ -118,11 +118,10 @@ class RuleSetFactory
      * Creates a single rule-set instance for the given filename or identifier.
      *
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
-     * @return RuleSet
      * @throws RuleSetNotFoundException
      * @throws RuntimeException
      */
-    public function createSingleRuleSet($ruleSetOrFileName)
+    public function createSingleRuleSet($ruleSetOrFileName): RuleSet
     {
         $fileName = $this->createRuleSetFileName($ruleSetOrFileName);
 
@@ -134,7 +133,7 @@ class RuleSetFactory
      *
      * @return string[]
      */
-    public function listAvailableRuleSets()
+    public function listAvailableRuleSets(): array
     {
         return [
             ...self::listRuleSetsInDirectory($this->location . '/rulesets/'),
@@ -150,7 +149,7 @@ class RuleSetFactory
      * @return string Path to rule set file name
      * @throws RuleSetNotFoundException Thrown if no readable file found
      */
-    private function createRuleSetFileName($ruleSetOrFileName)
+    private function createRuleSetFileName($ruleSetOrFileName): string
     {
         foreach ($this->filePaths($ruleSetOrFileName) as $filePath) {
             if ($this->isReadableFile($filePath)) {
@@ -167,7 +166,7 @@ class RuleSetFactory
      * @param string $directory The directory to scan for rule-sets.
      * @return list<string>
      */
-    private static function listRuleSetsInDirectory($directory)
+    private static function listRuleSetsInDirectory($directory): array
     {
         $ruleSets = [];
         if (is_dir($directory)) {
@@ -187,10 +186,9 @@ class RuleSetFactory
      * This method parses the rule-set definition in the given file.
      *
      * @param string $fileName
-     * @return RuleSet
      * @throws RuntimeException When loading the XML file fails.
      */
-    private function parseRuleSetNode($fileName)
+    private function parseRuleSetNode($fileName): RuleSet
     {
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
@@ -288,11 +286,10 @@ class RuleSetFactory
     /**
      * Parses a rule-set xml file referenced by the given rule-set xml element.
      *
-     * @return RuleSet
      * @throws RuntimeException
      * @since 0.2.3
      */
-    private function parseRuleSetReference(SimpleXMLElement $ruleSetNode)
+    private function parseRuleSetReference(SimpleXMLElement $ruleSetNode): RuleSet
     {
         $ruleSetFactory = new self();
         $ruleSetFactory->setMinimumPriority($this->minimumPriority);
@@ -305,10 +302,9 @@ class RuleSetFactory
      * Checks if the given rule is included/not excluded by the given rule-set
      * reference node.
      *
-     * @return bool
      * @since 0.2.3
      */
-    private function isIncluded(Rule $rule, SimpleXMLElement $ruleSetNode)
+    private function isIncluded(Rule $rule, SimpleXMLElement $ruleSetNode): bool
     {
         foreach ($ruleSetNode->exclude as $exclude) {
             if ($rule->getName() === (string) $exclude['name']) {
@@ -483,10 +479,9 @@ class RuleSetFactory
      * and the second valid notation is a child element named <b>value</b> that
      * contains the value as character data.
      *
-     * @return string
      * @since 0.2.5
      */
-    private function getPropertyValue(SimpleXMLElement $propertyNode)
+    private function getPropertyValue(SimpleXMLElement $propertyNode): string
     {
         if (isset($propertyNode->value)) {
             return (string) $propertyNode->value;
@@ -504,7 +499,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      */
-    public function getIgnorePattern($fileName)
+    public function getIgnorePattern($fileName): array
     {
         $excludes = [];
         $files = array_map(trim(...), explode(',', $fileName));
@@ -548,7 +543,7 @@ class RuleSetFactory
      * @param string $filePath File path to check against
      * @return bool True if file exists and is readable, false otherwise
      */
-    private function isReadableFile($filePath)
+    private function isReadableFile($filePath): bool
     {
         return is_readable($filePath) && is_file($filePath);
     }
@@ -559,7 +554,7 @@ class RuleSetFactory
      * @param string $fileName Rule set file name
      * @return list<string> Array of possible file locations
      */
-    private function filePaths($fileName)
+    private function filePaths($fileName): array
     {
         $filePathParts = [
             [$fileName],

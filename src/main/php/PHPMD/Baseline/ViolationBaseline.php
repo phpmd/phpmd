@@ -14,10 +14,7 @@ class ViolationBaseline
         $this->fileNameLength = strlen($fileName);
     }
 
-    /**
-     * @return string
-     */
-    public function getRuleName()
+    public function getRuleName(): string
     {
         return $this->ruleName;
     }
@@ -27,10 +24,8 @@ class ViolationBaseline
      *
      * @param string      $filepath   the full filepath to match against
      * @param string|null $methodName the name of the method of the method, if any
-     *
-     * @return bool
      */
-    public function matches($filepath, $methodName)
+    public function matches($filepath, $methodName): bool
     {
         return $this->methodName === $methodName && substr($filepath, -$this->fileNameLength) === $this->fileName;
     }

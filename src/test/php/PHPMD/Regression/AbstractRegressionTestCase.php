@@ -29,9 +29,8 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Creates a full filename for a test content in the <em>_files</b> directory.
      *
      * @param string $localPath The local path within the <em>_files</b> dir.
-     * @return string
      */
-    protected static function createFileUri($localPath = '')
+    protected static function createFileUri($localPath = ''): string
     {
         $trace = debug_backtrace();
 
