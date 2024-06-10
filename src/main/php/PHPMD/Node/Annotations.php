@@ -32,14 +32,10 @@ final class Annotations
      *
      * @var list<Annotation>
      */
-    private $annotations = [];
+    private array $annotations = [];
 
-    /**
-     * Regexp used to extract code annotations.
-     *
-     * @var string
-     */
-    private $regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
+    /** Regexp used to extract code annotations. */
+    private string $regexp = '(@([a-z_][a-z0-9_]+)\(([^\)]+)\))i';
 
     /**
      * Constructs a new collection instance.

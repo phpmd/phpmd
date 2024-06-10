@@ -55,14 +55,14 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @var list<RuleSet>
      */
-    private $ruleSets = [];
+    private array $ruleSets = [];
 
     /**
      * The metric containing analyzer instances.
      *
      * @var list<AnalyzerNodeAware>
      */
-    private $analyzers = [];
+    private array $analyzers = [];
 
     /**
      * The raw PDepend code nodes.

@@ -33,31 +33,26 @@ class PHPMD
      * This property will be set to <b>true</b> when an error
      * was found in the processed source code.
      *
-     * @var bool
      * @since 2.10.0
      */
-    private $errors = false;
+    private bool $errors = false;
 
     /**
      * List of valid file extensions for analyzed files.
      *
      * @var list<string>
      */
-    private $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
+    private array $fileExtensions = ['php', 'php3', 'php4', 'php5', 'inc'];
 
     /**
      * List of exclude directory patterns.
      *
      * @var list<string>
      */
-    private $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
+    private array $ignorePatterns = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
 
-    /**
-     * The input source file or directory.
-     *
-     * @var string
-     */
-    private $input;
+    /** The input source file or directory. */
+    private string $input;
 
     private ?ResultCacheEngine $resultCache = null;
 
@@ -65,10 +60,9 @@ class PHPMD
      * This property will be set to <b>true</b> when a violation
      * was found in the processed source code.
      *
-     * @var bool
      * @since 0.2.5
      */
-    private $violations = false;
+    private bool $violations = false;
 
     /**
      * Additional options for PHPMD or one of it's parser backends.
@@ -76,7 +70,7 @@ class PHPMD
      * @var array<string, string>
      * @since 1.2.0
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * This method will return <b>true</b> when the processed source code

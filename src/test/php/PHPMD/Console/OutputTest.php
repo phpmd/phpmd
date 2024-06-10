@@ -11,8 +11,7 @@ use Throwable;
  */
 class OutputTest extends AbstractTestCase
 {
-    /** @var TestOutput */
-    private $output;
+    private TestOutput $output;
 
     /**
      * @throws Throwable

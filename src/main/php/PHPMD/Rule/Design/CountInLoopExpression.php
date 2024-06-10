@@ -57,21 +57,17 @@ final class CountInLoopExpression extends AbstractRule implements ClassAware, En
      *
      * @var list<string>
      */
-    private $unwantedFunctions = ['count', 'sizeof'];
+    private array $unwantedFunctions = ['count', 'sizeof'];
 
     /**
      * List of already processed functions
      *
      * @var array<string, bool>
      */
-    private $processedFunctions = [];
+    private array $processedFunctions = [];
 
-    /**
-     * Functions in classes tends to be name-spaced
-     *
-     * @var string
-     */
-    private $currentNamespace = '';
+    /** Functions in classes tends to be name-spaced */
+    private string $currentNamespace = '';
 
     /**
      * Gets a list of loops in a node and iterates over them

@@ -33,27 +33,18 @@ class RuleSetFactory
     /**
      * Is the strict mode active?
      *
-     * @var bool
      * @since 1.2.0
      */
-    private $strict = false;
+    private bool $strict = false;
 
     /** The data directory set within the class constructor. */
     private readonly string $location;
 
-    /**
-     * The minimum priority for rules to load.
-     *
-     * @var int
-     */
-    private $minimumPriority = Rule::LOWEST_PRIORITY;
+    /** The minimum priority for rules to load. */
+    private int $minimumPriority = Rule::LOWEST_PRIORITY;
 
-    /**
-     * The maximum priority for rules to load.
-     *
-     * @var int
-     */
-    private $maximumPriority = Rule::HIGHEST_PRIORITY;
+    /** The maximum priority for rules to load. */
+    private int $maximumPriority = Rule::HIGHEST_PRIORITY;
 
     /**
      * Constructs a new default rule-set factory instance.

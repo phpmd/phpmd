@@ -19,8 +19,7 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     /** @var MockObject&ResultCacheState */
     private $state;
 
-    /** @var ResultCacheUpdater */
-    private $updater;
+    private ResultCacheUpdater $updater;
 
     /**
      * @throws Throwable

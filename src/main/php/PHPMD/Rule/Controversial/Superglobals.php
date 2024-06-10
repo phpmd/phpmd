@@ -32,7 +32,7 @@ use PHPMD\Rule\MethodAware;
 final class Superglobals extends AbstractRule implements FunctionAware, MethodAware
 {
     /** @var list<string> */
-    private $superglobals = [
+    private array $superglobals = [
         '$GLOBALS',
         '$_SERVER',
         '$HTTP_SERVER_VARS',

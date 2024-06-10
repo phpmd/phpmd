@@ -51,7 +51,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      *
      * @var array<string, list<AbstractNode<AbstractASTNode>>>
      */
-    private $images = [];
+    private array $images = [];
 
     /** Temporary cache of configured exceptions. */
     private ExceptionsList $exceptions;

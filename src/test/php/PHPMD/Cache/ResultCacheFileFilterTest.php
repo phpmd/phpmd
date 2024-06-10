@@ -16,8 +16,7 @@ use Throwable;
  */
 class ResultCacheFileFilterTest extends AbstractTestCase
 {
-    /** @var NullOutput */
-    private $output;
+    private NullOutput $output;
 
     /** @var MockObject&ResultCacheKey */
     private $key;

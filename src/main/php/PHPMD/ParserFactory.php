@@ -41,7 +41,7 @@ final class ParserFactory
      *
      * @var array<string, string>
      */
-    private $phpmd2pdepend = [
+    private array $phpmd2pdepend = [
         'coverage' => 'coverage-report',
     ];
 

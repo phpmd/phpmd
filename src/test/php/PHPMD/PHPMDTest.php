@@ -32,8 +32,7 @@ use Throwable;
  */
 class PHPMDTest extends AbstractTestCase
 {
-    /** @var RuleSetFactory */
-    private $ruleSetFactory;
+    private RuleSetFactory $ruleSetFactory;
 
     protected function setUp(): void
     {

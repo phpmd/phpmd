@@ -14,11 +14,9 @@ use Throwable;
  */
 class ResultCacheWriterTest extends AbstractTestCase
 {
-    /** @var string */
-    private $filePath;
+    private string $filePath;
 
-    /** @var ResultCacheWriter */
-    private $writer;
+    private ResultCacheWriter $writer;
 
     protected function setUp(): void
     {

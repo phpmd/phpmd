@@ -83,7 +83,7 @@ class RuleSet implements IteratorAggregate
      *
      * @var array<class-string<AbstractNode<ASTArtifact>>, list<Rule>>
      */
-    private $rules = [
+    private array $rules = [
         ClassNode::class => [],
         TraitNode::class => [],
         EnumNode::class => [],

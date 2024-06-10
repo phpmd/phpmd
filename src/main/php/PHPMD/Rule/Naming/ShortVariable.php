@@ -47,7 +47,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      *
      * @var array<string, bool>
      */
-    private $processedVariables = [];
+    private array $processedVariables = [];
 
     /** Temporary cache of configured exceptions. */
     private ExceptionsList $exceptions;
