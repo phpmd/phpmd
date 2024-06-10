@@ -10,10 +10,9 @@ final class BaselineSetFactory
      * Read the baseline violations from the given filename path. Append the baseDir to all the filepaths within
      * the baseline file.
      *
-     * @param string $fileName
      * @throws RuntimeException
      */
-    public static function fromFile($fileName): BaselineSet
+    public static function fromFile(string $fileName): BaselineSet
     {
         $content = @file_get_contents($fileName);
         if ($content === false) {

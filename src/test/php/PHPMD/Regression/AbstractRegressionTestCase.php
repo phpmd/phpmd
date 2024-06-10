@@ -30,7 +30,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      *
      * @param string $localPath The local path within the <em>_files</b> dir.
      */
-    protected static function createFileUri($localPath = ''): string
+    protected static function createFileUri(string $localPath = ''): string
     {
         $trace = debug_backtrace();
 

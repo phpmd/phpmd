@@ -123,7 +123,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param array<string> $values list of values.
      * @return array<string, array<string>>
      */
-    protected static function getValuesAsArrays($values): array
+    protected static function getValuesAsArrays(array $values): array
     {
         $valuesAsArray = [];
         foreach ($values as $value) {
@@ -140,7 +140,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * @throws Throwable
      * @since 1.1.0
      */
-    protected static function createResourceUriForTest($localPath): string
+    protected static function createResourceUriForTest(string $localPath): string
     {
         $frame = static::getCallingTestCase();
         static::assertIsString($frame['class']);
@@ -155,7 +155,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param string $expectedFileName File with expected xml result.
      * @throws Throwable
      */
-    public static function assertXmlEquals($actualOutput, $expectedFileName): void
+    public static function assertXmlEquals(string $actualOutput, string $expectedFileName): void
     {
         $actual = simplexml_load_string($actualOutput);
         static::assertNotFalse($actual);
@@ -190,7 +190,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *                                          if set to a closure, the closure is applied on the actual output array.
      * @throws Throwable
      */
-    public static function assertJsonEquals($actualOutput, $expectedFileName, bool $removeDynamicValues = true): void
+    public static function assertJsonEquals(string $actualOutput, string $expectedFileName, bool $removeDynamicValues = true): void
     {
         $actual = json_decode($actualOutput, true);
         static::assertIsArray($actual);
@@ -225,7 +225,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $localPath The temporary working directory.
      */
-    protected static function changeWorkingDirectory($localPath = ''): void
+    protected static function changeWorkingDirectory(string $localPath = ''): void
     {
         self::$originalWorkingDirectory = getcwd() ?: null;
 
@@ -237,10 +237,8 @@ abstract class AbstractStaticTestCase extends TestCase
 
     /**
      * Creates a full filename for a test content in the <em>_files</b> directory.
-     *
-     * @param string $localPath
      */
-    protected static function createFileUri($localPath = ''): string
+    protected static function createFileUri(string $localPath = ''): string
     {
         return self::$filesDirectory . '/' . $localPath;
     }
@@ -248,10 +246,9 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Creates a file uri for a temporary test file.
      *
-     * @param string|null $fileName
      * @throws Throwable
      */
-    protected static function createTempFileUri($fileName = null): string
+    protected static function createTempFileUri(?string $fileName = null): string
     {
         if ($fileName !== null) {
             $filePath = sys_get_temp_dir() . '/' . $fileName;

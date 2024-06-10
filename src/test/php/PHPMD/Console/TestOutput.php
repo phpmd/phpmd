@@ -12,10 +12,7 @@ class TestOutput extends Output
         parent::__construct();
     }
 
-    /**
-     * @param string $message
-     */
-    protected function doWrite($message): void
+    protected function doWrite(string $message): void
     {
         fwrite($this->stream, $message);
     }

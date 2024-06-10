@@ -151,9 +151,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * This method checks if the last part of function fully qualified name is equal to $name
      *
      * @param AbstractNode<PDependNode> $node
-     * @param string $name
      */
-    protected function isFunctionNameEndingWith(AbstractNode $node, $name): bool
+    protected function isFunctionNameEndingWith(AbstractNode $node, string $name): bool
     {
         $parts = explode('\\', trim($node->getImage(), '\\'));
 
@@ -168,7 +167,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @param AbstractNode<PDependNode>|PDependNode $variable
      * @throws OutOfBoundsException
      */
-    protected function getVariableImage($variable): string
+    protected function getVariableImage(AbstractNode|PDependNode $variable): string
     {
         if ($variable instanceof AbstractNode) {
             $variable = $variable->getNode();
@@ -188,11 +187,10 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
-     * @param string $image
      * @return ?string
      * @throws OutOfBoundsException
      */
-    private function getParentMemberPrimaryPrefixImage($image, ASTPropertyPostfix $postfix): ?string
+    private function getParentMemberPrimaryPrefixImage(string $image, ASTPropertyPostfix $postfix): ?string
     {
         do {
             $postfix = $postfix->getParent();
@@ -214,9 +212,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      * Reflect function trying as namespaced function first, then global function.
      *
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
-     * @param string $functionName
      */
-    private function getReflectionFunctionByName($functionName): ?ReflectionFunction
+    private function getReflectionFunctionByName(string $functionName): ?ReflectionFunction
     {
         try {
             return new ReflectionFunction($functionName);
@@ -238,10 +235,8 @@ abstract class AbstractLocalVariable extends AbstractRule
 
     /**
      * Return true if the given variable is passed by reference in a native PHP function.
-     *
-     * @param ASTVariable $variable
      */
-    protected function isPassedByReference($variable): bool
+    protected function isPassedByReference(ASTVariable $variable): bool
     {
         $parent = $variable->getParent();
 
@@ -293,10 +288,9 @@ abstract class AbstractLocalVariable extends AbstractRule
      * same variable and won't overlap in a storage keyed by image as first one
      * image is "$foo", second one is "::$foo".
      *
-     * @param PDependNode $variable
      * @throws OutOfBoundsException
      */
-    private function prependMemberPrimaryPrefix(string $image, $variable): string
+    private function prependMemberPrimaryPrefix(string $image, PDependNode $variable): string
     {
         $parent = $variable->getParent();
 
@@ -325,11 +319,8 @@ abstract class AbstractLocalVariable extends AbstractRule
      *   public static $field = 9;
      * }
      * ```
-     *
-     * @param PDependNode $variable
-     * @param string $image
      */
-    private function isFieldDeclaration($variable, $image = '$'): bool
+    private function isFieldDeclaration(PDependNode $variable, string $image = '$'): bool
     {
         return str_starts_with($image, '$') &&
             $variable->getParent() instanceof ASTFieldDeclaration;

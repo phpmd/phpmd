@@ -37,7 +37,7 @@ class WriterStub extends AbstractWriter
      *
      * @param string $data The data to write.
      */
-    public function write($data): void
+    public function write(string $data): void
     {
         $this->chunks[] = $data;
     }

@@ -30,7 +30,7 @@ final class RuleByNameNotFoundException extends RuntimeException
      *
      * @param string $ruleName The name of the rule that was not found.
      */
-    public function __construct($ruleName)
+    public function __construct(string $ruleName)
     {
         parent::__construct('Cannot find rule by name: ' . $ruleName);
     }

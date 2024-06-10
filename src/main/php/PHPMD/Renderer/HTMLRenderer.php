@@ -439,14 +439,11 @@ final class HTMLRenderer extends AbstractRenderer
      * Return array of lines from a specified file:line, optionally with extra lines around
      * for additional cognitive context.
      *
-     * @param string $file
-     * @param int $lineNumber
-     * @param int $extra
      * @return array<int, string>
      * @throws RuntimeException
      * @throws LogicException
      */
-    private static function getLineExcerpt($file, $lineNumber, $extra = 0): array
+    private static function getLineExcerpt(string $file, int $lineNumber, int $extra = 0): array
     {
         if (!is_readable($file)) {
             return [];
@@ -476,10 +473,8 @@ final class HTMLRenderer extends AbstractRenderer
     /**
      * Take a rule description text and try to decorate/stylize parts of it with HTML.
      * Based on self::$descHighlightRules config.
-     *
-     * @param string $message
      */
-    private static function colorize($message): string
+    private static function colorize(string $message): string
     {
         // Compile final regex, if not done already.
         if (!self::$compiledHighlightRegex) {
@@ -505,10 +500,8 @@ final class HTMLRenderer extends AbstractRenderer
 
     /**
      * Take a file path and return a bit of HTML where the basename is wrapped in styled <span>.
-     *
-     * @param string $path
      */
-    private static function highlightFile($path): string
+    private static function highlightFile(string $path): string
     {
         $file = substr(strrchr($path, '/') ?: '', 1);
         $dir = str_replace($file, '', $path);
@@ -519,11 +512,9 @@ final class HTMLRenderer extends AbstractRenderer
     /**
      * Render a pretty informational table and send the HTML to the writer.
      *
-     * @param string $title
-     * @param string $itemsTitle
      * @param array<int, int> $items
      */
-    private function writeTable($title, $itemsTitle, $items): void
+    private function writeTable(string $title, string $itemsTitle, array $items): void
     {
         if (!$items) {
             return;
@@ -565,7 +556,7 @@ final class HTMLRenderer extends AbstractRenderer
      * @param iterable<RuleViolation> $violations
      * @return array<string, array<int, int>>
      */
-    private static function sumUpViolations($violations): array
+    private static function sumUpViolations(iterable $violations): array
     {
         $result = [
             self::CATEGORY_PRIORITY => [],
@@ -607,11 +598,8 @@ final class HTMLRenderer extends AbstractRenderer
 
     /**
      * Reduces two and more whitespaces in a row to a single whitespace to conserve space.
-     *
-     * @param string $input
-     * @param bool $eol
      */
-    private static function reduceWhitespace($input, $eol = true): string
+    private static function reduceWhitespace(string $input, bool $eol = true): string
     {
         return preg_replace("#\s+#", ' ', $input) . ($eol ? PHP_EOL : null);
     }

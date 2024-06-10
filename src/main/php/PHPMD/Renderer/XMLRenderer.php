@@ -115,7 +115,7 @@ class XMLRenderer extends AbstractRenderer
      * @param string $attr The xml attribute name.
      * @param ?string $value The attribute value.
      */
-    protected function maybeAdd($attr, $value): void
+    protected function maybeAdd(string $attr, ?string $value): void
     {
         if ($value === null || trim($value) === '') {
             return;

@@ -90,10 +90,8 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
      * Return true if the method name is ignored by the current ignoreRegexp pattern.
      *
      * ignoreRegexp is given to the rule using ignorepattern option.
-     *
-     * @param string $methodName
      */
-    private function isIgnoredMethodName($methodName): bool
+    private function isIgnoredMethodName(string $methodName): bool
     {
         return !empty($this->ignoreRegexp) &&
             preg_match($this->ignoreRegexp, $methodName) === 1;

@@ -25,7 +25,7 @@ class ViolationBaseline
      * @param string      $filepath   the full filepath to match against
      * @param string|null $methodName the name of the method of the method, if any
      */
-    public function matches($filepath, $methodName): bool
+    public function matches(string $filepath, ?string $methodName): bool
     {
         return $this->methodName === $methodName && substr($filepath, -$this->fileNameLength) === $this->fileName;
     }

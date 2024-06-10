@@ -32,7 +32,7 @@ final class Strings
      * @param array<int, string> $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.
      */
-    public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes): int
+    public static function lengthWithoutSuffixes(string $stringName, array $subtractSuffixes): int
     {
         return self::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
     }
@@ -46,7 +46,7 @@ final class Strings
      * @return int The length of the string, without suffix, if applicable.
      */
     public static function lengthWithoutPrefixesAndSuffixes(
-        $stringName,
+        string $stringName,
         array $subtractPrefixes,
         array $subtractSuffixes
     ): int {
@@ -82,7 +82,7 @@ final class Strings
      * @return array<int, string> The list of trimmed and filtered parts of the string.
      * @throws InvalidArgumentException When the separator is an empty string.
      */
-    public static function splitToList($listAsString, $separator = ',', $trim = ''): array
+    public static function splitToList(string $listAsString, string $separator = ',', string $trim = ''): array
     {
         if ($separator === '') {
             throw new InvalidArgumentException("Separator can't be empty string");
@@ -99,11 +99,8 @@ final class Strings
 
     /**
      * Trim " \t\n\r\0\x0B" and specified extra characters from start and end of a string.
-     *
-     * @param string $value
-     * @param string $trim
      */
-    public static function trim($value, $trim = ''): string
+    public static function trim(string $value, string $trim = ''): string
     {
         return trim($value, " \t\n\r\0\x0B$trim");
     }

@@ -231,7 +231,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      * @param string $imageName the name to store the node as
      * @param AbstractNode<AbstractASTNode> $node the node being stored
      */
-    private function storeImage($imageName, AbstractNode $node): void
+    private function storeImage(string $imageName, AbstractNode $node): void
     {
         if (!isset($this->images[$imageName])) {
             $this->images[$imageName] = [];
