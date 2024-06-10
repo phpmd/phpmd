@@ -22,6 +22,7 @@ use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Baseline\ViolationBaseline;
+use Throwable;
 
 /**
  * Test case for the report class.
@@ -33,6 +34,7 @@ class ReportTest extends AbstractTestCase
     /**
      * Tests that the report returns a linear/sorted list of all rule violation
      * files.
+     * @throws Throwable
      */
     public function testReportReturnsAListWithAllRuleViolations(): void
     {
@@ -56,6 +58,7 @@ class ReportTest extends AbstractTestCase
 
     /**
      * Tests that the report returns the result by the violation line number.
+     * @throws Throwable
      */
     public function testReportSortsResultByLineNumber(): void
     {
@@ -91,6 +94,7 @@ class ReportTest extends AbstractTestCase
 
     /**
      * Tests that the timer method returns the expected result.
+     * @throws Throwable
      */
     public function testReportTimerReturnsMilliSeconds(): void
     {
@@ -112,6 +116,7 @@ class ReportTest extends AbstractTestCase
 
     /**
      * testIsEmptyReturnsTrueByDefault
+     * @throws Throwable
      */
     public function testIsEmptyReturnsTrueByDefault(): void
     {
@@ -121,6 +126,7 @@ class ReportTest extends AbstractTestCase
 
     /**
      * testIsEmptyReturnsFalseWhenAtLeastOneViolationExists
+     * @throws Throwable
      */
     public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists(): void
     {
@@ -133,6 +139,7 @@ class ReportTest extends AbstractTestCase
     /**
      * testHasErrorsReturnsFalseByDefault
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testHasErrorsReturnsFalseByDefault(): void
@@ -144,6 +151,7 @@ class ReportTest extends AbstractTestCase
     /**
      * testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testHasErrorsReturnsTrueWhenReportContainsAtLeastOneError(): void
@@ -157,6 +165,7 @@ class ReportTest extends AbstractTestCase
     /**
      * testGetErrorsReturnsEmptyIteratorByDefault
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testGetErrorsReturnsEmptyIteratorByDefault(): void
@@ -168,6 +177,7 @@ class ReportTest extends AbstractTestCase
     /**
      * testGetErrorsReturnsPreviousAddedProcessingError
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testGetErrorsReturnsPreviousAddedProcessingError(): void
@@ -178,12 +188,13 @@ class ReportTest extends AbstractTestCase
         static::assertSame(1, iterator_count($report->getErrors()));
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReportShouldIgnoreBaselineViolation(): void
     {
-        /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
 
-        /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline
@@ -202,12 +213,13 @@ class ReportTest extends AbstractTestCase
         static::assertSame($ruleB, $violations[0]);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testReportShouldIgnoreNewViolationsOnBaselineUpdate(): void
     {
-        /** @var RuleViolation $ruleA */
         $ruleA = $this->getRuleViolationMock('foo.txt');
 
-        /** @var RuleViolation $ruleB */
         $ruleB = $this->getRuleViolationMock('bar.txt', 1, 2);
 
         // setup baseline

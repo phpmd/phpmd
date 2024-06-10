@@ -22,6 +22,7 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the xml renderer implementation.
@@ -32,6 +33,7 @@ class XMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfXmlElements
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfXmlElements(): void
     {
@@ -68,6 +70,7 @@ class XMLRendererTest extends AbstractTestCase
     /**
      * testRendererAddsProcessingErrorsToXmlReport
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testRendererAddsProcessingErrorsToXmlReport(): void

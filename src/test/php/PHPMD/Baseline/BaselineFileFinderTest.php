@@ -5,6 +5,7 @@ namespace PHPMD\Baseline;
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\CommandLineOptions;
 use RuntimeException;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineFileFinder
@@ -13,6 +14,7 @@ use RuntimeException;
 class BaselineFileFinderTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::find
      */
     public function testShouldFindFileFromCLI(): void
@@ -23,6 +25,7 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::existingFile
      * @covers ::find
      */
@@ -32,13 +35,16 @@ class BaselineFileFinderTest extends AbstractTestCase
         $finder = new BaselineFileFinder(new CommandLineOptions($args));
 
         // ensure consistent slashes
-        $expected = str_replace('\\', '/', realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml')));
-        $actual = str_replace('\\', '/', $finder->existingFile()->find());
+        $path = realpath(static::createResourceUriForTest('testA/phpmd.baseline.xml'));
+        static::assertNotFalse($path);
+        $expected = str_replace('\\', '/', $path);
+        $actual = str_replace('\\', '/', $finder->existingFile()->find() ?: '');
 
         static::assertSame($expected, $actual);
     }
 
     /**
+     * @throws Throwable
      * @covers ::find
      * @covers ::nullOrThrow
      */
@@ -54,6 +60,7 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::find
      * @covers ::nullOrThrow
      */
@@ -65,6 +72,7 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::existingFile
      * @covers ::find
      * @covers ::nullOrThrow
@@ -77,6 +85,7 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::find
      * @covers ::notNull
      * @covers ::nullOrThrow

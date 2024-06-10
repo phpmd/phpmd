@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\EvalExpression} class.
@@ -29,6 +30,7 @@ class EvalExpressionTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutEvalExpression
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutEvalExpression(): void
     {
@@ -39,6 +41,7 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithEvalExpression
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithEvalExpression(): void
     {
@@ -49,6 +52,7 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToMethodWithEvalExpression
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToMethodWithEvalExpression(): void
     {
@@ -59,6 +63,7 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutEvalExpression
+     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithoutEvalExpression(): void
     {
@@ -69,6 +74,7 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithEvalExpression
+     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithEvalExpression(): void
     {
@@ -79,6 +85,7 @@ class EvalExpressionTest extends AbstractTestCase
 
     /**
      * testRuleAppliesMultipleTimesToFunctionWithEvalExpression
+     * @throws Throwable
      */
     public function testRuleAppliesMultipleTimesToFunctionWithEvalExpression(): void
     {

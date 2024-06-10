@@ -20,6 +20,7 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Throwable;
 
 /**
  * Integration tests for the coupling between objects rule class.
@@ -32,6 +33,7 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
      * testReportContainsCouplingBetweenObjectsWarning
      *
      * @outputBuffering enabled
+     * @throws Throwable
      */
     public function testReportContainsCouplingBetweenObjectsWarning(): void
     {
@@ -47,11 +49,13 @@ class CouplingBetweenObjectsIntegrationTest extends AbstractTestCase
                 $file,
             ]
         );
+        $content = file_get_contents($file);
 
+        static::assertNotFalse($content);
         static::assertStringContainsString(
             'has a coupling between objects value of 14. ' .
             'Consider to reduce the number of dependencies under 13.',
-            file_get_contents($file)
+            $content
         );
     }
 }

@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the constructor name rule.
@@ -29,6 +30,7 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToClassConstantWithLowerCaseCharacters
+     * @throws Throwable
      */
     public function testRuleAppliesToClassConstantWithLowerCaseCharacters(): void
     {
@@ -39,6 +41,7 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToInterfaceConstantWithLowerCaseCharacters
+     * @throws Throwable
      */
     public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters(): void
     {
@@ -49,6 +52,7 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToClassConstantWithUpperCaseCharacters
+     * @throws Throwable
      */
     public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters(): void
     {
@@ -59,6 +63,7 @@ class ConstantNamingConventionsTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters
+     * @throws Throwable
      */
     public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters(): void
     {

@@ -19,9 +19,13 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 class ElseExpressionTest extends AbstractTestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToMethodWithoutElseExpression(): void
     {
         $rule = new ElseExpression();
@@ -29,6 +33,9 @@ class ElseExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesToMethodWithElseExpression(): void
     {
         $rule = new ElseExpression();
@@ -36,6 +43,9 @@ class ElseExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesMultipleTimesToMethodWithMultipleElseExpressions(): void
     {
         $rule = new ElseExpression();

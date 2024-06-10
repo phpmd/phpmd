@@ -18,11 +18,11 @@
 
 namespace PHPMD\Node;
 
-use BadMethodCallException;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the method node implementation.
@@ -34,13 +34,11 @@ class MethodNodeTest extends AbstractTestCase
 {
     /**
      * testMagicCallDelegatesToWrappedPHPDependMethod
+     * @throws Throwable
      */
     public function testMagicCallDelegatesToWrappedPHPDependMethod(): void
     {
-        $method = $this->getMockFromBuilder(
-            $this->getMockBuilder(ASTMethod::class)
-                ->setConstructorArgs([null])
-        );
+        $method = $this->getMockBuilder(ASTMethod::class)->setConstructorArgs([null])->getMock();
         $method->expects(static::once())
             ->method('getStartLine');
 
@@ -49,18 +47,8 @@ class MethodNodeTest extends AbstractTestCase
     }
 
     /**
-     * testMagicCallThrowsExceptionWhenNoMatchingMethodExists
-     */
-    public function testMagicCallThrowsExceptionWhenNoMatchingMethodExists(): void
-    {
-        self::expectException(BadMethodCallException::class);
-
-        $node = new MethodNode(new ASTMethod(null));
-        $node->getFooBar();
-    }
-
-    /**
      * testGetParentTypeReturnsInterfaceForInterfaceMethod
+     * @throws Throwable
      */
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod(): void
     {
@@ -72,6 +60,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testGetParentTypeReturnsClassForClassMethod
+     * @throws Throwable
      */
     public function testGetParentTypeReturnsClassForClassMethod(): void
     {
@@ -81,6 +70,9 @@ class MethodNodeTest extends AbstractTestCase
         );
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetParentTypeReturnsTrait(): void
     {
         static::assertInstanceOf(
@@ -91,6 +83,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsExecutesDefaultImplementation
+     * @throws Throwable
      */
     public function testHasSuppressWarningsExecutesDefaultImplementation(): void
     {
@@ -103,6 +96,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsDelegatesToParentClassMethod
+     * @throws Throwable
      */
     public function testHasSuppressWarningsDelegatesToParentClassMethod(): void
     {
@@ -115,6 +109,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsDelegatesToParentInterfaceMethod
+     * @throws Throwable
      */
     public function testHasSuppressWarningsDelegatesToParentInterfaceMethod(): void
     {
@@ -127,6 +122,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsIgnoresCaseFirstLetter
+     * @throws Throwable
      */
     public function testHasSuppressWarningsIgnoresCaseFirstLetter(): void
     {
@@ -140,6 +136,7 @@ class MethodNodeTest extends AbstractTestCase
     /**
      * testIsDeclarationReturnsTrueForMethodDeclaration
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsTrueForMethodDeclaration(): void
@@ -151,6 +148,7 @@ class MethodNodeTest extends AbstractTestCase
     /**
      * testIsDeclarationReturnsTrueForMethodDeclarationWithParent
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsTrueForMethodDeclarationWithParent(): void
@@ -162,6 +160,7 @@ class MethodNodeTest extends AbstractTestCase
     /**
      * testIsDeclarationReturnsFalseForInheritMethodDeclaration
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForInheritMethodDeclaration(): void
@@ -173,6 +172,7 @@ class MethodNodeTest extends AbstractTestCase
     /**
      * testIsDeclarationReturnsFalseForImplementedAbstractMethod
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForImplementedAbstractMethod(): void
@@ -184,6 +184,7 @@ class MethodNodeTest extends AbstractTestCase
     /**
      * testIsDeclarationReturnsFalseForImplementedInterfaceMethod
      *
+     * @throws Throwable
      * @since 1.2.1
      */
     public function testIsDeclarationReturnsFalseForImplementedInterfaceMethod(): void
@@ -192,6 +193,9 @@ class MethodNodeTest extends AbstractTestCase
         static::assertFalse($method->isDeclaration());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testIsDeclarationReturnsTrueForPrivateMethod(): void
     {
         $method = $this->getMethod();
@@ -200,6 +204,7 @@ class MethodNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {

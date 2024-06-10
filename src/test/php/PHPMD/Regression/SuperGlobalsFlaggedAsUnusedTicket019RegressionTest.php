@@ -19,6 +19,7 @@
 namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedLocalVariable;
+use Throwable;
 
 /**
  * Regression test for issue 019.
@@ -27,6 +28,7 @@ class SuperGlobalsFlaggedAsUnusedTicket019RegressionTest extends AbstractRegress
 {
     /**
      * testRuleDoesNotApplyToAnySuperGlobalVariable
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyToAnySuperGlobalVariable(): void
     {

@@ -3,6 +3,7 @@
 namespace PHPMD\Console;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass  \PHPMD\Console\Output
@@ -13,13 +14,19 @@ class OutputTest extends AbstractTestCase
     /** @var TestOutput */
     private $output;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
         parent::setUp();
-        $this->output = new TestOutput();
+        $stream = fopen('php://memory', 'w+b');
+        static::assertIsResource($stream);
+        $this->output = new TestOutput($stream);
     }
 
     /**
+     * @throws Throwable
      * @covers ::getVerbosity
      * @covers ::setVerbosity
      */
@@ -33,6 +40,7 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::write
      */
     public function testWriteSingleMessage(): void
@@ -44,6 +52,7 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::write
      */
     public function testWriteMultiMessageWithNewline(): void
@@ -58,6 +67,7 @@ class OutputTest extends AbstractTestCase
      * @param int    $verbosity
      * @param string $expected
      * @param string $msg
+     * @throws Throwable
      * @dataProvider verbosityProvider
      * @covers ::write
      */
@@ -73,7 +83,10 @@ class OutputTest extends AbstractTestCase
         static::assertSame($expected, $this->output->getOutput(), $msg);
     }
 
-    public static function verbosityProvider()
+    /**
+     * @return list<mixed>
+     */
+    public static function verbosityProvider(): array
     {
         return [
             [
@@ -105,6 +118,7 @@ class OutputTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::writeln
      */
     public function testWritelnMessage(): void

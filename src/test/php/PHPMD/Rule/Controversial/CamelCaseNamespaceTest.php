@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * Test case for the camel case namespace rule.
@@ -28,6 +29,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
 {
     /**
      * Rule does not apply for valid namespace.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidNamespace(): void
     {
@@ -40,6 +42,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
 
     /**
      * Rule does apply for incorrect namespace.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForIncorrectNamespace(): void
     {
@@ -52,6 +55,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
 
     /**
      * Rule does not apply for namespace with uppercase abbreviation.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForNamespaceWithUppercaseAbbreviation(): void
     {
@@ -64,6 +68,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
 
     /**
      * Rule does apply for namespace with uppercase abbreviation.
+     * @throws Throwable
      */
     public function testRuleDoesApplyForNamespaceWithUppercaseAbbreviation(): void
     {
@@ -77,6 +82,7 @@ class CamelCaseNamespaceTest extends AbstractTestCase
 
     /**
      * Rule does not apply for invalid namespace in exception list.
+     * @throws Throwable
      */
     public function testRuleDoesNotApplyForNamespaceInException(): void
     {

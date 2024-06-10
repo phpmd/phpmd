@@ -36,7 +36,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
         $trace = debug_backtrace();
 
         $ticket = '';
-        if (preg_match('(\D(\d+)Test$)', $trace[1]['class'], $match)) {
+        if (isset($trace[1]['class']) && preg_match('(\D(\d+)Test$)', $trace[1]['class'], $match)) {
             $ticket = $match[1];
         }
 

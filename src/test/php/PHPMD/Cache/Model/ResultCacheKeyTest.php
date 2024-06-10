@@ -3,6 +3,7 @@
 namespace PHPMD\Cache\Model;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheKey
@@ -11,6 +12,7 @@ use PHPMD\AbstractTestCase;
 class ResultCacheKeyTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::toArray
      */
     public function testToArray(): void
@@ -34,6 +36,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualTo(): void
@@ -58,6 +61,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualToDiffStrict(): void
@@ -82,6 +86,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualToDiffRules(): void
@@ -106,6 +111,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualToDiffComposer(): void
@@ -130,6 +136,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualToDiffPhpVersion(): void
@@ -154,6 +161,7 @@ class ResultCacheKeyTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::isEqualTo
      */
     public function testIsEqualToDiffBaselineHash(): void

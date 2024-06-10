@@ -19,12 +19,16 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Rule\CleanCode\StaticAccess
  */
 class StaticAccessTest extends AbstractTestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToParentStaticCall(): void
     {
         $rule = new StaticAccess();
@@ -32,6 +36,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToSelfStaticCall(): void
     {
         $rule = new StaticAccess();
@@ -39,6 +46,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToDynamicMethodCall(): void
     {
         $rule = new StaticAccess();
@@ -46,6 +56,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToStaticMethodAccessWhenExcluded(): void
     {
         $rule = new StaticAccess();
@@ -54,6 +67,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesToStaticMethodAccess(): void
     {
         $rule = new StaticAccess();
@@ -61,6 +77,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleAppliesToStaticMethodAccessWhenNotAllExcluded(): void
     {
         $rule = new StaticAccess();
@@ -69,6 +88,9 @@ class StaticAccessTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testRuleNotAppliesToConstantAccess(): void
     {
         $rule = new StaticAccess();
@@ -77,6 +99,7 @@ class StaticAccessTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::apply
      * @covers ::isMethodIgnored
      */
@@ -89,6 +112,7 @@ class StaticAccessTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::apply
      * @covers ::isMethodIgnored
      */

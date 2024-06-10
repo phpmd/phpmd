@@ -390,7 +390,8 @@ final class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile((string) $filePath) . '</a>';
+            $fileHtml = "<a href='file://$filePath' target='_blank'>"
+                . self::highlightFile((string) $filePath) . '</a>';
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;

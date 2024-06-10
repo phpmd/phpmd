@@ -23,6 +23,7 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * Regression test for issue 409.
@@ -34,19 +35,20 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
     /** @var string Beginning of the violation message */
     private const VIOLATION_MESSAGE = 'The class ExcessivePublicCountWorksForPublicStaticMethods has 71 public methods';
 
-    /** @var PHPUnit_Framework_MockObject_MockObject|TextRenderer */
+    /** @var MockObject&TextRenderer */
     private $renderer;
 
     /**
      * Sets up the renderer mock
+     *
+     * @throws Throwable
      */
     protected function setUp(): void
     {
-        $this->renderer = $this->getMockFromBuilder(
-            $this->getMockBuilder(TextRenderer::class)
-                ->disableOriginalConstructor()
-                ->onlyMethods(['renderReport', 'start', 'end'])
-        );
+        $this->renderer = $this->getMockBuilder(TextRenderer::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['renderReport', 'start', 'end'])
+            ->getMock();
     }
 
     /**
@@ -57,6 +59,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
+     * @throws Throwable
      */
     public function testReportIsGeneratedIWithNoSuppression(): void
     {
@@ -100,6 +103,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
+     * @throws Throwable
      */
     public function testReportIsNotGeneratedIWithSuppression(): void
     {

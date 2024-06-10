@@ -19,6 +19,7 @@
 namespace PHPMD;
 
 use PHPMD\Node\ClassNode;
+use Throwable;
 
 /**
  * Test case for the parser factory class.
@@ -29,6 +30,7 @@ class ParserFactoryTest extends AbstractTestCase
 {
     /**
      * testFactoryConfiguresInputDirectory
+     * @throws Throwable
      */
     public function testFactoryConfiguresInputDirectory(): void
     {
@@ -36,10 +38,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn($uri);
@@ -53,6 +52,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresInputFile
+     * @throws Throwable
      */
     public function testFactoryConfiguresInputFile(): void
     {
@@ -60,10 +60,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri));
@@ -77,6 +74,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputDirectories
+     * @throws Throwable
      */
     public function testFactoryConfiguresMultipleInputDirectories(): void
     {
@@ -85,10 +83,7 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri1 . ',' . $uri2));
@@ -102,6 +97,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresMultipleInputFilesAndDirectories
+     * @throws Throwable
      */
     public function testFactoryConfiguresMultipleInputFilesAndDirectories(): void
     {
@@ -110,7 +106,7 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File/Test.php');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockFromBuilder($this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput']));
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
             ->will(static::returnValue($uri1 . ',' . $uri2));
@@ -124,6 +120,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresIgnorePattern
+     * @throws Throwable
      */
     public function testFactoryConfiguresIgnorePattern(): void
     {
@@ -131,10 +128,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getIgnorePatterns', 'getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getIgnorePatterns', 'getInput'])->getMock();
         $phpmd->expects(static::exactly(2))
             ->method('getIgnorePatterns')
             ->willReturn(['Test']);
@@ -147,6 +141,7 @@ class ParserFactoryTest extends AbstractTestCase
 
     /**
      * testFactoryConfiguresFileExtensions
+     * @throws Throwable
      */
     public function testFactoryConfiguresFileExtensions(): void
     {
@@ -154,10 +149,7 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockFromBuilder(
-            $this->getMockBuilder(PHPMD::class)
-                ->onlyMethods(['getFileExtensions', 'getInput'])
-        );
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getFileExtensions', 'getInput'])->getMock();
         $phpmd->expects(static::exactly(2))
             ->method('getFileExtensions')
             ->willReturn(['.php']);

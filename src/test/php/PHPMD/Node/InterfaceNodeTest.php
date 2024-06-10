@@ -21,7 +21,7 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTestCase;
-use Sindelfingen\MyInterface;
+use Throwable;
 
 /**
  * Test case for the interface node implementation.
@@ -33,6 +33,7 @@ class InterfaceNodeTest extends AbstractTestCase
 {
     /**
      * testGetFullQualifiedNameReturnsExpectedValue
+     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
@@ -41,21 +42,30 @@ class InterfaceNodeTest extends AbstractTestCase
 
         $node = new InterfaceNode($interface);
 
-        static::assertSame(MyInterface::class, $node->getFullQualifiedName());
+        static::assertSame('Sindelfingen\\MyInterface', $node->getFullQualifiedName());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCountReturnsZeroByDefault(): void
     {
         $interface = new InterfaceNode(new ASTInterface('MyInterface'));
         static::assertSame(0, $interface->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetConstantCount(): void
     {
         $class = $this->getInterface();
         static::assertSame(3, $class->getConstantCount());
     }
 
+    /**
+     * @throws Throwable
+     */
     public function testGetParentNameReturnsNull(): void
     {
         $interface = new InterfaceNode(new ASTInterface('MyInterface'));

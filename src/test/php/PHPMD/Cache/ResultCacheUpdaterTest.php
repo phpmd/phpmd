@@ -7,6 +7,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater
@@ -20,16 +21,18 @@ class ResultCacheUpdaterTest extends AbstractTestCase
     /** @var ResultCacheUpdater */
     private $updater;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
-        $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
-        );
+        $this->state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
 
         $this->updater = new ResultCacheUpdater(new NullOutput(), '/base/path/');
     }
 
     /**
+     * @throws Throwable
      * @covers ::update
      */
     public function testUpdate(): void

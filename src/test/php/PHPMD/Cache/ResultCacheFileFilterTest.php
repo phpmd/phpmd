@@ -8,6 +8,7 @@ use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy as Strategy;
 use PHPMD\Console\NullOutput;
 use PHPUnit\Framework\MockObject\MockObject;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheFileFilter
@@ -24,18 +25,18 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     /** @var MockObject&ResultCacheState */
     private $state;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
         $this->output = new NullOutput();
-        $this->key = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()
-        );
-        $this->state = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()
-        );
+        $this->key = $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()->getMock();
+        $this->state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -47,10 +48,12 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertCount(1, $state['state']['files']);
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -63,10 +66,12 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertFalse($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertCount(1, $state['state']['files']['ResultCacheFileFilterTest.php']['violations']);
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -79,10 +84,12 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
         static::assertSame($timestamp, $state['state']['files']['ResultCacheFileFilterTest.php']['hash']);
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      * @covers ::getState
      */
@@ -94,10 +101,13 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
         $state = $filter->getState()->toArray();
+        static::assertIsArray($state['state']['files']);
+        static::assertIsArray($state['state']['files']['ResultCacheFileFilterTest.php']);
         static::assertArrayHasKey('hash', $state['state']['files']['ResultCacheFileFilterTest.php']);
     }
 
     /**
+     * @throws Throwable
      * @covers ::accept
      */
     public function testAcceptShouldCacheResults(): void

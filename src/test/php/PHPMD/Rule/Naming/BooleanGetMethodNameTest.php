@@ -20,6 +20,7 @@ namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Node\MethodNode;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Naming\BooleanGetMethodName} rule class.
@@ -30,6 +31,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToMethodStartingWithGetAndReturningBoolean
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBoolean(): void
     {
@@ -41,6 +43,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodStartingWithGetAndReturningBool
+     * @throws Throwable
      */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBool(): void
     {
@@ -52,6 +55,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean
+     * @throws Throwable
      */
     public function testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean(): void
     {
@@ -63,6 +67,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresParametersWhenNotExplicitConfigured
+     * @throws Throwable
      */
     public function testRuleIgnoresParametersWhenNotExplicitConfigured(): void
     {
@@ -74,6 +79,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesWhenParametersAreExplicitEnabled
+     * @throws Throwable
      */
     public function testRuleNotAppliesWhenParametersAreExplicitEnabled(): void
     {
@@ -86,6 +92,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodStartingWithIs
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodStartingWithIs(): void
     {
@@ -98,6 +105,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodStartingWithHas
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodStartingWithHas(): void
     {
@@ -110,6 +118,7 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithReturnTypeNotBoolean
+     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithReturnTypeNotBoolean(): void
     {
@@ -125,11 +134,14 @@ class BooleanGetMethodNameTest extends AbstractTestCase
      * test method.
      *
      * @return MethodNode
+     * @throws Throwable
      */
     protected function getMethod()
     {
         $methods = $this->getClass()->getMethods();
+        $method = reset($methods);
+        static::assertNotFalse($method);
 
-        return reset($methods);
+        return $method;
     }
 }

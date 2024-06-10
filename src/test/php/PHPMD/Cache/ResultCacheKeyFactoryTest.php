@@ -6,6 +6,7 @@ use org\bovigo\vfs\vfsStream;
 use PHPMD\AbstractTestCase;
 use PHPMD\Rule\CleanCode\DuplicatedArrayKey;
 use PHPMD\RuleSet;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheKeyFactory
@@ -26,6 +27,7 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::create
      * @covers ::createRuleHashes
      * @covers ::getBaselineHash
@@ -41,7 +43,9 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
 
         static::assertArrayHasKey('strict', $keyData);
         static::assertArrayHasKey('composer', $keyData);
+        static::assertIsArray($keyData['composer']);
         static::assertArrayHasKey('rules', $keyData);
+        static::assertIsArray($keyData['rules']);
         static::assertArrayHasKey('phpVersion', $keyData);
 
         static::assertTrue($keyData['strict']);

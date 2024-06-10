@@ -3,6 +3,7 @@
 namespace PHPMD\Cache;
 
 use PHPMD\AbstractTestCase;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngine
@@ -11,21 +12,16 @@ use PHPMD\AbstractTestCase;
 class ResultCacheEngineTest extends AbstractTestCase
 {
     /**
+     * @throws Throwable
      * @covers ::getFileFilter
      * @covers ::getUpdater
      * @covers ::getWriter
      */
     public function testGetters(): void
     {
-        $filter = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheFileFilter::class)->disableOriginalConstructor()
-        );
-        $updater = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheUpdater::class)->disableOriginalConstructor()
-        );
-        $writer = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheWriter::class)->disableOriginalConstructor()
-        );
+        $filter = $this->getMockBuilder(ResultCacheFileFilter::class)->disableOriginalConstructor()->getMock();
+        $updater = $this->getMockBuilder(ResultCacheUpdater::class)->disableOriginalConstructor()->getMock();
+        $writer = $this->getMockBuilder(ResultCacheWriter::class)->disableOriginalConstructor()->getMock();
 
         $engine = new ResultCacheEngine($filter, $updater, $writer);
 

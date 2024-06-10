@@ -19,6 +19,7 @@
 namespace PHPMD;
 
 use PHPMD\Node\NodeInfo;
+use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\RuleViolation} class.
@@ -28,6 +29,9 @@ use PHPMD\Node\NodeInfo;
  */
 class RuleViolationTest extends AbstractTestCase
 {
+    /**
+     * @throws Throwable
+     */
     public function testNodeInfoGetters(): void
     {
         $rule = $this->getRuleMock();

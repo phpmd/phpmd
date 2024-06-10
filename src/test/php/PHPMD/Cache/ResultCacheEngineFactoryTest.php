@@ -11,6 +11,7 @@ use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
+use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngineFactory
@@ -27,25 +28,28 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     /** @var MockObject&ResultCacheStateFactory */
     private $stateFactory;
 
-    /** @var ResultCacheUpdater */
-    private $engineFactory;
+    private ResultCacheEngineFactory $engineFactory;
 
+    /**
+     * @throws Throwable
+     */
     protected function setUp(): void
     {
-        $this->options = $this->getMockFromBuilder(
-            $this->getMockBuilder(CommandLineOptions::class)->disableOriginalConstructor()
-        );
-        $this->keyFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheKeyFactory::class)->disableOriginalConstructor()
-        );
-        $this->stateFactory = $this->getMockFromBuilder(
-            $this->getMockBuilder(ResultCacheStateFactory::class)->disableOriginalConstructor()
-        );
+        $this->options = $this->getMockBuilder(CommandLineOptions::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->keyFactory = $this->getMockBuilder(ResultCacheKeyFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->stateFactory = $this->getMockBuilder(ResultCacheStateFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->engineFactory = new ResultCacheEngineFactory(new NullOutput(), $this->keyFactory, $this->stateFactory);
     }
 
     /**
+     * @throws Throwable
      * @covers ::create
      */
     public function testCreateNotEnabledShouldReturnNull(): void
@@ -57,6 +61,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::create
      */
     public function testCreateCacheMissShouldHaveNoOriginalState(): void
@@ -80,6 +85,7 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @throws Throwable
      * @covers ::create
      */
     public function testCreateCacheHitShouldHaveOriginalState(): void
@@ -103,12 +109,19 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
 
     /**
      * @return ResultCacheState|null
+     * @throws Throwable
      */
     private function getFileFilterState(ResultCacheFileFilter $filter)
     {
         $property = new ReflectionProperty($filter, 'state');
         $property->setAccessible(true);
 
-        return $property->getValue($filter);
+        $value = $property->getValue($filter);
+        if (!$value) {
+            return null;
+        }
+        static::assertInstanceOf(ResultCacheState::class, $value);
+
+        return $value;
     }
 }

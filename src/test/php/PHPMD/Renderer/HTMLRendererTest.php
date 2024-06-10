@@ -21,6 +21,7 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Stubs\WriterStub;
+use Throwable;
 
 /**
  * Test case for the html renderer implementation.
@@ -31,6 +32,7 @@ class HTMLRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfTextEntries
+     * @throws Throwable
      */
     public function testRendererCreatesExpectedHtmlTableRow(): void
     {
