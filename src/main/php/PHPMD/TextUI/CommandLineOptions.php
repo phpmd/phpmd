@@ -50,26 +50,14 @@ class CommandLineOptions
     /** Error code for invalid input */
     private const INPUT_ERROR = 23;
 
-    /**
-     * The minimum rule priority.
-     *
-     * @var int
-     */
-    private $minimumPriority = Rule::LOWEST_PRIORITY;
+    /** The minimum rule priority. */
+    private int $minimumPriority = Rule::LOWEST_PRIORITY;
 
-    /**
-     * The maximum rule priority.
-     *
-     * @var int
-     */
-    private $maximumPriority = Rule::HIGHEST_PRIORITY;
+    /** The maximum rule priority. */
+    private int $maximumPriority = Rule::HIGHEST_PRIORITY;
 
-    /**
-     * A php source code filename or directory.
-     *
-     * @var string
-     */
-    private $inputPath;
+    /** A php source code filename or directory. */
+    private string $inputPath;
 
     /**
      * The specified report format.
@@ -89,21 +77,17 @@ class CommandLineOptions
      *
      * @var array<string, string>
      */
-    private $reportFiles = [];
+    private array $reportFiles = [];
 
     /**
      * List of deprecations.
      *
      * @var list<string>
      */
-    private $deprecations = [];
+    private array $deprecations = [];
 
-    /**
-     * A ruleset filename or a comma-separated string of ruleset filenames.
-     *
-     * @var string
-     */
-    private $ruleSets;
+    /** A ruleset filename or a comma-separated string of ruleset filenames. */
+    private string $ruleSets;
 
     /** File name of a PHPUnit code coverage report. */
     private ?string $coverageReport = null;
@@ -118,38 +102,27 @@ class CommandLineOptions
      */
     private ?string $ignore = null;
 
-    /**
-     * Should the shell show the current phpmd version?
-     *
-     * @var bool
-     */
-    private $version = false;
+    /** Should the shell show the current phpmd version? */
+    private bool $version = false;
 
     /**
      * Should PHPMD run in strict mode?
      *
-     * @var bool
      * @since 1.2.0
      */
-    private $strict = false;
+    private bool $strict = false;
 
-    /** @var int */
-    private $verbosity = OutputInterface::VERBOSITY_NORMAL;
+    private int $verbosity = OutputInterface::VERBOSITY_NORMAL;
 
     /**
      * Should PHPMD exit without error code even if error is found?
      *
-     * @var bool
      * @since 2.10.0
      */
-    private $ignoreErrorsOnExit = false;
+    private bool $ignoreErrorsOnExit = false;
 
-    /**
-     * Should PHPMD exit without error code even if violation is found?
-     *
-     * @var bool
-     */
-    private $ignoreViolationsOnExit = false;
+    /** Should PHPMD exit without error code even if violation is found? */
+    private bool $ignoreViolationsOnExit = false;
 
     /** Should PHPMD baseline the existing violations and write them to the $baselineFile */
     private BaselineMode $generateBaseline = BaselineMode::None;
@@ -160,27 +133,17 @@ class CommandLineOptions
      */
     private ?string $baselineFile = null;
 
-    /**
-     * Should PHPMD read or write the result cache state from the cache file
-     * @var bool
-     */
-    private $cacheEnabled = false;
+    /** Should PHPMD read or write the result cache state from the cache file */
+    private bool $cacheEnabled = false;
 
-    /**
-     * If set the path to read and write the result cache state from and to.
-     * @var string|null
-     */
-    private $cacheFile;
+    /** If set the path to read and write the result cache state from and to. */
+    private ?string $cacheFile;
 
     /** Determine the cache strategy. */
     private ResultCacheStrategy $cacheStrategy = ResultCacheStrategy::Content;
 
-    /**
-     * Either the output should be colored.
-     *
-     * @var bool
-     */
-    private $colored = false;
+    /** Either the output should be colored. */
+    private bool $colored = false;
 
     /** Specify how many extra lines are added to a code snippet */
     private ?int $extraLineInExcerpt = null;

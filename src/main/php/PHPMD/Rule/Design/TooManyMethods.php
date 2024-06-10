@@ -28,12 +28,8 @@ use PHPMD\Rule\ClassAware;
  */
 final class TooManyMethods extends AbstractRule implements ClassAware
 {
-    /**
-     * Regular expression that filters all methods that are ignored by this rule.
-     *
-     * @var string
-     */
-    private $ignoreRegexp;
+    /** Regular expression that filters all methods that are ignored by this rule. */
+    private string $ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks

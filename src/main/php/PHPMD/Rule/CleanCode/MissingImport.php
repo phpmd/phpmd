@@ -34,7 +34,7 @@ use PHPMD\Rule\MethodAware;
 final class MissingImport extends AbstractRule implements FunctionAware, MethodAware
 {
     /** @var list<string> Self reference class names. */
-    private $selfReferences = ['self', 'static'];
+    private array $selfReferences = ['self', 'static'];
 
     /**
      * Checks for missing class imports and warns about it

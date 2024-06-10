@@ -32,21 +32,13 @@ class Report
      *
      * @var array<string, array<int, list<RuleViolation>>>
      */
-    private $ruleViolations = [];
+    private array $ruleViolations = [];
 
-    /**
-     * The start time for this report.
-     *
-     * @var float
-     */
-    private $startTime = 0.0;
+    /** The start time for this report. */
+    private float $startTime = 0.0;
 
-    /**
-     * The end time for this report.
-     *
-     * @var float
-     */
-    private $endTime = 0.0;
+    /** The end time for this report. */
+    private float $endTime = 0.0;
 
     /**
      * Errors that occurred while parsing the source.
@@ -54,7 +46,7 @@ class Report
      * @var list<ProcessingError>
      * @since 1.2.1
      */
-    private $errors = [];
+    private array $errors = [];
 
     public function __construct(
         private readonly ?BaselineValidator $baselineValidator = null,

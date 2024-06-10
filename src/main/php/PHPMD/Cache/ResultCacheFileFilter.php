@@ -14,7 +14,7 @@ class ResultCacheFileFilter implements Filter
     private readonly ResultCacheState $newState;
 
     /** @var array<string, bool> */
-    private $fileIsModified = [];
+    private array $fileIsModified = [];
 
     public function __construct(
         private readonly OutputInterface $output,

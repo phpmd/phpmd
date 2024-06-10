@@ -9,11 +9,9 @@ final class BaselineFileFinder
 {
     private const DEFAULT_FILENAME = 'phpmd.baseline.xml';
 
-    /** @var bool */
-    private $existingFile = false;
+    private bool $existingFile = false;
 
-    /** @var bool */
-    private $notNull = false;
+    private bool $notNull = false;
 
     public function __construct(
         private readonly CommandLineOptions $options,

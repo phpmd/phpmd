@@ -48,7 +48,7 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
      *
      * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
-    private $fields = [];
+    private array $fields = [];
 
     /**
      * This method checks that all private class properties are at least accessed

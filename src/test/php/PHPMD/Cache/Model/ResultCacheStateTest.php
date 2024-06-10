@@ -15,11 +15,9 @@ use Throwable;
  */
 class ResultCacheStateTest extends TestCase
 {
-    /** @var ResultCacheKey */
-    private $key;
+    private ResultCacheKey $key;
 
-    /** @var ResultCacheState */
-    private $state;
+    private ResultCacheState $state;
 
     protected function setUp(): void
     {

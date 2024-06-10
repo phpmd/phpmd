@@ -58,7 +58,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
      *
      * @var array<string, PDependNode>
      */
-    private $images = [];
+    private array $images = [];
 
     /**
      * This method checks that all local variables within the given function or

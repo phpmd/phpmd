@@ -43,7 +43,7 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @var list<string>
      */
-    private static $tempFiles = [];
+    private static array $tempFiles = [];
 
     /**
      * This method initializes the test environment, it configures the files

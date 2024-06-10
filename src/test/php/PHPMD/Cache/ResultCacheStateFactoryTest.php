@@ -11,8 +11,7 @@ use Throwable;
  */
 class ResultCacheStateFactoryTest extends AbstractTestCase
 {
-    /** @var ResultCacheStateFactory */
-    private $factory;
+    private ResultCacheStateFactory $factory;
 
     protected function setUp(): void
     {

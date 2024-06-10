@@ -5,7 +5,7 @@ namespace PHPMD\Baseline;
 class BaselineSet
 {
     /** @var array<string, list<ViolationBaseline>> */
-    private $violations = [];
+    private array $violations = [];
 
     public function addEntry(ViolationBaseline $entry): void
     {

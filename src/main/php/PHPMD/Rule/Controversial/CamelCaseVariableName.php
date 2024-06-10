@@ -35,7 +35,7 @@ use PHPMD\Rule\MethodAware;
 final class CamelCaseVariableName extends AbstractRule implements FunctionAware, MethodAware
 {
     /** @var list<string> */
-    private $exceptions = [
+    private array $exceptions = [
         '$php_errormsg',
         '$http_response_header',
         '$GLOBALS',

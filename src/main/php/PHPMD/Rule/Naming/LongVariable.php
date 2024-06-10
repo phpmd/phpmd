@@ -58,7 +58,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      *
      * @var array<string, bool>
      */
-    private $processedVariables = [];
+    private array $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node

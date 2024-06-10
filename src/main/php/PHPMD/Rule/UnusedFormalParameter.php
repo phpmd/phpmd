@@ -46,7 +46,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      *
      * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
-    private $nodes = [];
+    private array $nodes = [];
 
     /**
      * This method checks that all parameters of a given function or method are

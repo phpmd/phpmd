@@ -35,7 +35,7 @@ class RuleViolation
      *
      * @var array<int, string>|null
      */
-    private $args = null;
+    private ?array $args = null;
 
     /**
      * Constructs a new rule violation instance.

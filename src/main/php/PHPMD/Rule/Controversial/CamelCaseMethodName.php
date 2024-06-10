@@ -32,7 +32,7 @@ use PHPMD\Rule\MethodAware;
 final class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
     /** @var list<string> */
-    private $ignoredMethods = [
+    private array $ignoredMethods = [
         '__construct',
         '__destruct',
         '__set',

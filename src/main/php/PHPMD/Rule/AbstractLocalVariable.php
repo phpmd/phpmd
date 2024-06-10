@@ -40,7 +40,7 @@ use ReflectionFunction;
 abstract class AbstractLocalVariable extends AbstractRule
 {
     /** @var list<string> Self reference class names. */
-    private $selfReferences = ['self', 'static'];
+    private array $selfReferences = ['self', 'static'];
 
     /**
      * PHP super globals that are available in all php scopes, so that they
@@ -49,7 +49,7 @@ abstract class AbstractLocalVariable extends AbstractRule
      * @var array<string, bool>
      * @link http://php.net/manual/en/reserved.variables.php
      */
-    private static $superGlobals = [
+    private static array $superGlobals = [
         '$argc' => true,
         '$argv' => true,
         '$_COOKIE' => true,
