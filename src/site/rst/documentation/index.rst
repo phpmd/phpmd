@@ -96,6 +96,8 @@ Command line options
   - ``--color`` - enable color in output, for instance text renderer
     will show rule name in yellow and error description in red.
 
+  - ``--xdebug`` - will enable Xdebug for debugging PHP Mess Detector.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml
