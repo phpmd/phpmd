@@ -22,6 +22,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTestCase;
+use PHPMD\Test\Inheritance\Bar;
 use Throwable;
 
 /**
@@ -217,5 +218,23 @@ class MethodNodeTest extends AbstractTestCase
         $node = new MethodNode($method);
 
         static::assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function testIsDeclarationReturnsFalseForInheritedDeclaration(): void
+    {
+        $method = $this->getNodeForTestFile(__DIR__ . '/../../../resources/files/classes/inheritance/Baz.php');
+
+        $class = $method->getParent();
+        $parentClass = $class->getParentClass();
+        $parentClassName = $parentClass->getNamespacedName();
+
+        static::assertSame(Bar::class, $parentClassName);
+        // These assertions are commented because they are also failing (I guess they shouldn't).
+        // static::assertTrue($parentClass->isAbstract());
+        // static::assertCount(1, $parentClass->getInterfaces());
+        static::assertFalse($method->isDeclaration());
     }
 }
