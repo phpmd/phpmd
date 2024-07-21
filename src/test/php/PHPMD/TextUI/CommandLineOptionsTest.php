@@ -30,6 +30,7 @@ use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\RendererInterface;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
@@ -739,7 +740,6 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @throws Throwable
-     * @throws Throwable
      * @dataProvider dataProviderCreateRendererThrowsException
      */
     public function testCreateRendererThrowsException(string $reportFormat): void
@@ -759,9 +759,21 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public static function dataProviderCreateRendererThrowsException(): array
     {
+        $defaultExceptionMessage = 'No renderer supports the format';
+
+        $invalidRendererClass = 'PHPMD\\Test\\Renderer\\InvalidRenderer';
+
         return [
-            [''],
-            ['PHPMD\\Test\\Renderer\\NotExistsRenderer'],
+            ['', $defaultExceptionMessage],
+            ['PHPMD\\Test\\Renderer\\NotExistsRenderer', $defaultExceptionMessage],
+            [
+                $invalidRendererClass,
+                sprintf(
+                    'Renderer class "%s" does not implement "%s".',
+                    $invalidRendererClass,
+                    RendererInterface::class
+                ),
+            ],
         ];
     }
 

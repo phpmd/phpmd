@@ -4,7 +4,6 @@ namespace PHPMD\Renderer;
 
 use InvalidArgumentException;
 use PHPMD\AbstractWriter;
-use PHPMD\TextUI\CommandLineOptions;
 
 final class RendererFactory
 {
@@ -17,18 +16,8 @@ final class RendererFactory
         return $renderer;
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
     public function getRenderer(string $format): RendererInterface
     {
-        if (class_exists($format)) {
-            $renderer = new $format();
-            if ($renderer instanceof RendererInterface) {
-                return $renderer;
-            }
-        }
-
         return match ($format) {
             'ansi' => new AnsiRenderer(),
             'checkstyle' => new CheckStyleRenderer(),
@@ -39,10 +28,31 @@ final class RendererFactory
             'sarif' => new SARIFRenderer(),
             'text' => new TextRenderer(),
             'xml' => new XMLRenderer(),
-            default => throw new InvalidArgumentException(
+            default => $this->getCustomRenderer($format),
+        };
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function getCustomRenderer(string $format): RendererInterface
+    {
+        if (!class_exists($format)) {
+            throw new InvalidArgumentException(
                 sprintf('No renderer supports the format "%s".', $format),
                 RendererInterface::INPUT_ERROR
-            ),
-        };
+            );
+        }
+
+        $renderer = new $format();
+
+        if (!$renderer instanceof RendererInterface) {
+            throw new InvalidArgumentException(
+                sprintf('Renderer class "%s" does not implement "%s".', $format, RendererInterface::class),
+                RendererInterface::INPUT_ERROR
+            );
+        }
+
+        return $renderer;
     }
 }
