@@ -29,7 +29,7 @@ use Throwable;
 abstract class AbstractStaticTestCase extends TestCase
 {
     /** Directory with test files. */
-    private static string $filesDirectory;
+    protected static string $filesDirectory;
 
     /**
      * Original directory is used to reset a changed working directory.
