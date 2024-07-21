@@ -18,9 +18,10 @@
 namespace PHPMD\Test\Renderer;
 
 use PHPMD\AbstractRenderer;
+use PHPMD\Renderer\RendererInterface;
 use PHPMD\Report;
 
-class NamespaceRenderer extends AbstractRenderer
+class NamespaceRenderer extends AbstractRenderer implements RendererInterface
 {
     public function renderReport(Report $report): void
     {

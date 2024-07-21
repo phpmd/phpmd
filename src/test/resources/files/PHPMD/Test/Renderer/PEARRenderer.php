@@ -17,7 +17,7 @@
 
 use PHPMD\Report;
 
-class PHPMD_Test_Renderer_PEARRenderer extends PHPMD\AbstractRenderer
+class PHPMD_Test_Renderer_PEARRenderer extends PHPMD\AbstractRenderer implements PHPMD\Renderer\RendererInterface
 {
     public function renderReport(Report $report): void
     {
