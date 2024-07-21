@@ -16,6 +16,9 @@ final class RendererFactory
         return $renderer;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function getRenderer(string $format): RendererInterface
     {
         return match ($format) {
