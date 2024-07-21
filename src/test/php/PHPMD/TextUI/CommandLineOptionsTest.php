@@ -66,12 +66,12 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $args = ['foo.php', __FILE__, 'text', 'design', '-vvv'];
         $opts = new CommandLineOptions($args);
-        $renbderer = $opts->createRenderer();
+        $renderer = $opts->createRenderer();
 
         $verbosityExtractor = new ReflectionProperty(TextRenderer::class, 'verbosityLevel');
         $verbosityExtractor->setAccessible(true);
 
-        $verbosityLevel = $verbosityExtractor->getValue($renbderer);
+        $verbosityLevel = $verbosityExtractor->getValue($renderer);
 
         static::assertSame(OutputInterface::VERBOSITY_DEBUG, $verbosityLevel);
     }
@@ -702,11 +702,13 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param class-string $expectedClass
      * @throws Throwable
-     * @throws Throwable
      * @dataProvider dataProviderCreateRenderer
      */
     public function testCreateRenderer(string $reportFormat, $expectedClass): void
     {
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/NamespaceRenderer.php';
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/PEARRenderer.php';
+
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
 
@@ -743,7 +745,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testCreateRendererThrowsException(string $reportFormat): void
     {
         self::expectExceptionObject(new InvalidArgumentException(
-            "Can't",
+            "No renderer supports the format",
             code: 23,
         ));
 

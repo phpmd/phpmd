@@ -329,17 +329,18 @@ class CommandTest extends AbstractTestCase
         static::assertIsResource($stream);
         $this->stderrStreamFilter = $stream;
 
+        $format = 'FORMAT';
         Command::main(
             [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
-                "''",
+                $format,
                 'naming',
             ]
         );
 
         static::assertStringContainsString(
-            'Can\'t find the custom report class: ',
+            sprintf('No renderer supports the format "%s"', $format),
             StreamFilter::$streamHandle
         );
     }
@@ -352,11 +353,12 @@ class CommandTest extends AbstractTestCase
         $file = tempnam(sys_get_temp_dir(), 'err');
         static::assertIsString($file);
 
+        $format = 'FORMAT';
         Command::main(
             [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
-                "''",
+                $format,
                 'naming',
                 '--error-file',
                 $file,
@@ -366,7 +368,7 @@ class CommandTest extends AbstractTestCase
         $errors = (string) file_get_contents($file);
         unlink($file);
 
-        static::assertSame("Can't find the custom report class: ''" . PHP_EOL, $errors);
+        static::assertSame(sprintf('No renderer supports the format "%s".' . PHP_EOL, $format), $errors);
 
         $file = tempnam(sys_get_temp_dir(), 'err');
         static::assertIsString($file);
@@ -375,7 +377,7 @@ class CommandTest extends AbstractTestCase
             [
                 __FILE__,
                 self::createFileUri('source/source_with_npath_violation.php'),
-                "''",
+                $format,
                 'naming',
                 '--error-file',
                 $file,
@@ -386,23 +388,7 @@ class CommandTest extends AbstractTestCase
         $errors = (string) file_get_contents($file);
         unlink($file);
 
-        static::assertStringStartsWith("Can't find the custom report class: ''" . PHP_EOL, $errors);
-        static::assertMatchesRegularExpression(
-            '`' . preg_quote(str_replace(
-                '/',
-                DIRECTORY_SEPARATOR,
-                'src/main/php/PHPMD/TextUI/CommandLineOptions.php:'
-            ), '`') . '\d+' . PHP_EOL . '`',
-            $errors
-        );
-        static::assertMatchesRegularExpression(
-            '`' . preg_quote(str_replace(
-                '/',
-                DIRECTORY_SEPARATOR,
-                'src/main/php/PHPMD/TextUI/CommandLineOptions.php'
-            ), '`') . '\(\d+\): PHPMD\\\\TextUI\\\\CommandLineOptions->createCustomRenderer\(\)`',
-            $errors
-        );
+        static::assertStringStartsWith(sprintf('No renderer supports the format "%s"', $format), $errors);
     }
 
     /**
