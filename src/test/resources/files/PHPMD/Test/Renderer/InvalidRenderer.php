@@ -2,10 +2,9 @@
 
 namespace PHPMD\Test\Renderer;
 
-use PHPMD\AbstractRenderer;
 use PHPMD\Report;
 
-class InvalidRenderer extends AbstractRenderer
+class InvalidRenderer
 {
     public function renderReport(Report $report): void
     {

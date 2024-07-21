@@ -742,12 +742,14 @@ class CommandLineOptionsTest extends AbstractTestCase
      * @throws Throwable
      * @dataProvider dataProviderCreateRendererThrowsException
      */
-    public function testCreateRendererThrowsException(string $reportFormat): void
+    public function testCreateRendererThrowsException(string $reportFormat, string $expectedExceptionMessage): void
     {
         self::expectExceptionObject(new InvalidArgumentException(
-            "No renderer supports the format",
-            code: 23,
+            $expectedExceptionMessage,
+            code: RendererInterface::INPUT_ERROR,
         ));
+
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/InvalidRenderer.php';
 
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
@@ -759,13 +761,14 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public static function dataProviderCreateRendererThrowsException(): array
     {
-        $defaultExceptionMessage = 'No renderer supports the format';
+        $defaultExceptionMessage = 'No renderer supports the format "%s".';
 
+        $notExistsRendererClass = 'PHPMD\\Test\\Renderer\\NotExistsRenderer';
         $invalidRendererClass = 'PHPMD\\Test\\Renderer\\InvalidRenderer';
 
         return [
-            ['', $defaultExceptionMessage],
-            ['PHPMD\\Test\\Renderer\\NotExistsRenderer', $defaultExceptionMessage],
+            ['', sprintf($defaultExceptionMessage, '')],
+            [$notExistsRendererClass, sprintf($defaultExceptionMessage, $notExistsRendererClass)],
             [
                 $invalidRendererClass,
                 sprintf(
