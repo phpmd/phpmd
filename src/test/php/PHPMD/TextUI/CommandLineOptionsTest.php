@@ -708,6 +708,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     public function testCreateRenderer(string $reportFormat, $expectedClass): void
     {
         require_once self::$filesDirectory . '/PHPMD/Test/Renderer/NamespaceRenderer.php';
+
         require_once self::$filesDirectory . '/PHPMD/Test/Renderer/PEARRenderer.php';
 
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
