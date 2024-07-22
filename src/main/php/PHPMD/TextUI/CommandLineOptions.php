@@ -616,7 +616,7 @@ class CommandLineOptions
      */
     private function createRendererWithoutOptions(?string $reportFormat = null): RendererInterface
     {
-        $reportFormat ??= $this->reportFormat ?? '';
+        $reportFormat = $reportFormat ?: $this->reportFormat ?: '';
 
         return (new RendererFactory())->getRenderer($reportFormat);
     }
