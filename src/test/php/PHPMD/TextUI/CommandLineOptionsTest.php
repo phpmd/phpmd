@@ -704,6 +704,7 @@ class CommandLineOptionsTest extends AbstractTestCase
      * @param class-string $expectedClass
      * @throws Throwable
      * @dataProvider dataProviderCreateRenderer
+     * @covers \PHPMD\Renderer\RendererFactory::getRenderer
      */
     public function testCreateRenderer(string $reportFormat, $expectedClass): void
     {
@@ -742,6 +743,7 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @throws Throwable
      * @dataProvider dataProviderCreateRendererThrowsException
+     * @covers \PHPMD\Renderer\RendererFactory::getCustomRenderer
      */
     public function testCreateRendererThrowsException(string $reportFormat, string $expectedExceptionMessage): void
     {
