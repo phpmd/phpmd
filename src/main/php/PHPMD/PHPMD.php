@@ -20,6 +20,7 @@ namespace PHPMD;
 
 use Exception;
 use PHPMD\Cache\ResultCacheEngine;
+use PHPMD\Renderer\RendererInterface;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -193,7 +194,7 @@ class PHPMD
      * argument. The result will be passed to all given renderer instances.
      *
      * @param string[]      $ignorePattern
-     * @param AbstractRenderer[] $renderers
+     * @param RendererInterface[] $renderers
      * @param RuleSet[]          $ruleSetList
      * @throws Exception
      */

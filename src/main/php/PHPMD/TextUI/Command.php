@@ -219,6 +219,11 @@ final class Command
                 $output->write($deprecation . PHP_EOL . PHP_EOL);
             }
 
+            $bootstrapFile = $options->getBootstrapFile();
+            if (is_string($bootstrapFile) && file_exists($bootstrapFile)) {
+                require_once $bootstrapFile;
+            }
+
             $exitCode = $command->run($options, $ruleSetFactory);
             unset($errorStream);
         } catch (Exception $e) {

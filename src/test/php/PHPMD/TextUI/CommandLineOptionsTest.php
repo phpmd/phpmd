@@ -30,6 +30,7 @@ use PHPMD\Renderer\GitHubRenderer;
 use PHPMD\Renderer\GitLabRenderer;
 use PHPMD\Renderer\HTMLRenderer;
 use PHPMD\Renderer\JSONRenderer;
+use PHPMD\Renderer\RendererInterface;
 use PHPMD\Renderer\SARIFRenderer;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Renderer\XMLRenderer;
@@ -66,12 +67,12 @@ class CommandLineOptionsTest extends AbstractTestCase
     {
         $args = ['foo.php', __FILE__, 'text', 'design', '-vvv'];
         $opts = new CommandLineOptions($args);
-        $renbderer = $opts->createRenderer();
+        $renderer = $opts->createRenderer();
 
         $verbosityExtractor = new ReflectionProperty(TextRenderer::class, 'verbosityLevel');
         $verbosityExtractor->setAccessible(true);
 
-        $verbosityLevel = $verbosityExtractor->getValue($renbderer);
+        $verbosityLevel = $verbosityExtractor->getValue($renderer);
 
         static::assertSame(OutputInterface::VERBOSITY_DEBUG, $verbosityLevel);
     }
@@ -702,11 +703,15 @@ class CommandLineOptionsTest extends AbstractTestCase
     /**
      * @param class-string $expectedClass
      * @throws Throwable
-     * @throws Throwable
      * @dataProvider dataProviderCreateRenderer
+     * @covers \PHPMD\Renderer\RendererFactory::getRenderer
      */
     public function testCreateRenderer(string $reportFormat, $expectedClass): void
     {
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/NamespaceRenderer.php';
+
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/PEARRenderer.php';
+
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
 
@@ -737,15 +742,17 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     /**
      * @throws Throwable
-     * @throws Throwable
      * @dataProvider dataProviderCreateRendererThrowsException
+     * @covers \PHPMD\Renderer\RendererFactory::getCustomRenderer
      */
-    public function testCreateRendererThrowsException(string $reportFormat): void
+    public function testCreateRendererThrowsException(string $reportFormat, string $expectedExceptionMessage): void
     {
         self::expectExceptionObject(new InvalidArgumentException(
-            "Can't",
-            code: 23,
+            $expectedExceptionMessage,
+            code: RendererInterface::INPUT_ERROR,
         ));
+
+        require_once self::$filesDirectory . '/PHPMD/Test/Renderer/InvalidRenderer.php';
 
         $args = [__FILE__, __FILE__, $reportFormat, 'codesize'];
         $opts = new CommandLineOptions($args);
@@ -757,9 +764,22 @@ class CommandLineOptionsTest extends AbstractTestCase
      */
     public static function dataProviderCreateRendererThrowsException(): array
     {
+        $defaultExceptionMessage = 'No renderer supports the format "%s".';
+
+        $notExistsRendererClass = 'PHPMD\\Test\\Renderer\\NotExistsRenderer';
+        $invalidRendererClass = 'PHPMD\\Test\\Renderer\\InvalidRenderer';
+
         return [
-            [''],
-            ['PHPMD\\Test\\Renderer\\NotExistsRenderer'],
+            ['', sprintf($defaultExceptionMessage, '')],
+            [$notExistsRendererClass, sprintf($defaultExceptionMessage, $notExistsRendererClass)],
+            [
+                $invalidRendererClass,
+                sprintf(
+                    'Renderer class "%s" does not implement "%s".',
+                    $invalidRendererClass,
+                    RendererInterface::class
+                ),
+            ],
         ];
     }
 

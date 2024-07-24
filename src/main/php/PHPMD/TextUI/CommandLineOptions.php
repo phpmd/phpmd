@@ -23,17 +23,10 @@ use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
-use PHPMD\Renderer\AnsiRenderer;
-use PHPMD\Renderer\CheckStyleRenderer;
-use PHPMD\Renderer\GitHubRenderer;
-use PHPMD\Renderer\GitLabRenderer;
-use PHPMD\Renderer\HTMLRenderer;
-use PHPMD\Renderer\JSONRenderer;
 use PHPMD\Renderer\Option\Color;
 use PHPMD\Renderer\Option\Verbose;
-use PHPMD\Renderer\SARIFRenderer;
-use PHPMD\Renderer\TextRenderer;
-use PHPMD\Renderer\XMLRenderer;
+use PHPMD\Renderer\RendererFactory;
+use PHPMD\Renderer\RendererInterface;
 use PHPMD\Rule;
 use PHPMD\Utility\ArgumentsValidator;
 use TypeError;
@@ -68,6 +61,9 @@ class CommandLineOptions
 
     /** An optional filename for the generated report. */
     private ?string $reportFile = null;
+
+    /** An optional script to load before running analysis */
+    private ?string $bootstrap = null;
 
     /** An optional filename to collect errors. */
     private ?string $errorFile = null;
@@ -222,6 +218,11 @@ class CommandLineOptions
                 case '--report-file':
                 case '--reportfile':
                     $this->reportFile = (string) $this->readValue($equalChunk, $args);
+
+                    break;
+
+                case '--bootstrap':
+                    $this->bootstrap = (string) $this->readValue($equalChunk, $args);
 
                     break;
 
@@ -415,6 +416,14 @@ class CommandLineOptions
     }
 
     /**
+     * Returns the current bootstrap file (if available) to load extra resources before analysis.
+     */
+    public function getBootstrapFile(): ?string
+    {
+        return $this->bootstrap;
+    }
+
+    /**
      * Returns the output filename for the errors or <b>null</b> when
      * the report should be displayed in STDERR.
      */
@@ -585,17 +594,9 @@ class CommandLineOptions
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
-     * Valid renderers are:
-     * <ul>
-     *   <li>xml</li>
-     *   <li>html</li>
-     *   <li>text</li>
-     *   <li>json</li>
-     * </ul>
-     *
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer(?string $reportFormat = null): AbstractRenderer
+    public function createRenderer(?string $reportFormat = null): RendererInterface
     {
         $renderer = $this->createRendererWithoutOptions($reportFormat);
 
@@ -613,103 +614,11 @@ class CommandLineOptions
     /**
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    private function createRendererWithoutOptions(?string $reportFormat = null): AbstractRenderer
+    private function createRendererWithoutOptions(?string $reportFormat = null): RendererInterface
     {
-        $reportFormat = $reportFormat ?: $this->reportFormat;
+        $reportFormat = $reportFormat ?: $this->reportFormat ?: '';
 
-        return match ($reportFormat) {
-            'ansi' => $this->createAnsiRenderer(),
-            'checkstyle' => $this->createCheckStyleRenderer(),
-            'gitlab' => $this->createGitLabRenderer(),
-            'github' => $this->createGitHubRenderer(),
-            'html' => $this->createHtmlRenderer(),
-            'json' => $this->createJsonRenderer(),
-            'sarif' => $this->createSarifRenderer(),
-            'text' => $this->createTextRenderer(),
-            'xml' => $this->createXmlRenderer(),
-            default => $this->createCustomRenderer(),
-        };
-    }
-
-    private function createXmlRenderer(): XMLRenderer
-    {
-        return new XMLRenderer();
-    }
-
-    private function createTextRenderer(): TextRenderer
-    {
-        return new TextRenderer();
-    }
-
-    private function createAnsiRenderer(): AnsiRenderer
-    {
-        return new AnsiRenderer();
-    }
-
-    private function createGitLabRenderer(): GitLabRenderer
-    {
-        return new GitLabRenderer();
-    }
-
-    private function createGitHubRenderer(): GitHubRenderer
-    {
-        return new GitHubRenderer();
-    }
-
-    private function createHtmlRenderer(): HTMLRenderer
-    {
-        return new HTMLRenderer($this->extraLineInExcerpt);
-    }
-
-    private function createJsonRenderer(): JSONRenderer
-    {
-        return new JSONRenderer();
-    }
-
-    private function createCheckStyleRenderer(): CheckStyleRenderer
-    {
-        return new CheckStyleRenderer();
-    }
-
-    private function createSarifRenderer(): SARIFRenderer
-    {
-        return new SARIFRenderer();
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     */
-    private function createCustomRenderer(): AbstractRenderer
-    {
-        if (!$this->reportFormat) {
-            throw new InvalidArgumentException(
-                'Can\'t create report with empty format.',
-                self::INPUT_ERROR
-            );
-        }
-
-        if (class_exists($this->reportFormat)) {
-            return new $this->reportFormat();
-        }
-
-        // Try to load a custom renderer
-        $fileName = strtr($this->reportFormat, '_\\', '//') . '.php';
-
-        $fileHandle = @fopen($fileName, 'rb', true);
-        if (!is_resource($fileHandle)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Can\'t find the custom report class: %s',
-                    $this->reportFormat
-                ),
-                self::INPUT_ERROR
-            );
-        }
-        @fclose($fileHandle);
-
-        include_once $fileName;
-
-        return new $this->reportFormat();
+        return (new RendererFactory())->getRenderer($reportFormat);
     }
 
     /**

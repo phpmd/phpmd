@@ -19,11 +19,12 @@
 namespace PHPMD;
 
 use Exception;
+use PHPMD\Renderer\RendererInterface;
 
 /**
  * Abstract base class for PHPMD rendering engines.
  */
-abstract class AbstractRenderer
+abstract class AbstractRenderer implements RendererInterface
 {
     /** The associated output writer instance. */
     private AbstractWriter $writer;
