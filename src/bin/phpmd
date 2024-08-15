@@ -16,8 +16,8 @@
  * @link http://phpmd.org/
  */
 
-use Composer\XdebugHandler\XdebugHandler;
 use PHPMD\TextUI\Command;
+use PHPMD\TextUI\XdebugOptionHandler;
 
 if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     // phpmd is part of a composer installation
@@ -26,24 +26,24 @@ if (file_exists(__DIR__ . '/../../../../autoload.php')) {
     require_once __DIR__ . '/../../vendor/autoload.php';
 }
 
-// Restart if xdebug is loading, unless the environment variable PHPMD_ALLOW_XDEBUG is set.
-$xdebug = new XdebugHandler('PHPMD');
-$xdebug->check();
-unset($xdebug);
-
-if (!ini_get('date.timezone')) {
-    date_default_timezone_set('UTC');
-}
-
-ini_set('memory_limit', -1);
-
-// Check php setup for cli arguments
+// Check PHP setup for CLI arguments
 if (!isset($_SERVER['argv']) && !isset($argv)) {
     fwrite(STDERR, 'Please enable the "register_argc_argv" directive in your php.ini', PHP_EOL);
     exit(1);
 } elseif (!isset($argv)) {
     $argv = $_SERVER['argv'];
 }
+
+// Restart if xdebug is loading, unless the environment variable PHPMD_ALLOW_XDEBUG is set.
+$xdebugHandler = new XdebugOptionHandler('PHPMD');
+$xdebugHandler->check();
+unset($xdebugHandler);
+
+if (!ini_get('date.timezone')) {
+    date_default_timezone_set('UTC');
+}
+
+ini_set('memory_limit', -1);
 
 // Run command line interface
 exit(Command::main($argv)->value);
