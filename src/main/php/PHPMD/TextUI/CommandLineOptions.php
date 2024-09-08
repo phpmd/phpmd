@@ -346,7 +346,9 @@ class CommandLineOptions
                 case '--reportfile-text':
                 case '--reportfile-xml':
                     preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
-                    $this->reportFiles[$match[1]] = (string) $this->readValue($equalChunk, $args);
+                    if (isset($match[1])) {
+                        $this->reportFiles[$match[1]] = (string) $this->readValue($equalChunk, $args);
+                    }
 
                     break;
 

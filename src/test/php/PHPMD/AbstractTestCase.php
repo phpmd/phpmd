@@ -254,8 +254,12 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param iterable<RuleViolation> $violations
      */
-    protected function getViolationFailureMessage(string $file, int $expectedInvokes, int $actualInvokes, iterable $violations): string
-    {
+    protected function getViolationFailureMessage(
+        string $file,
+        int $expectedInvokes,
+        int $actualInvokes,
+        iterable $violations
+    ): string {
         return basename($file) . " failed:\n" .
             "Expected $expectedInvokes violation" . ($expectedInvokes !== 1 ? 's' : '') . "\n" .
             "But $actualInvokes violation" . ($actualInvokes !== 1 ? 's' : '') . ' raised' .

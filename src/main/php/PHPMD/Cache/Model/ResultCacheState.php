@@ -12,7 +12,18 @@ use PHPMD\Utility\Paths;
 class ResultCacheState
 {
     /**
-     * @param array{files?: array<string, array{hash: string, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} $state
+     * @param array{files?: array<string, array{hash: string, violations?: list<array{
+     *  metric: mixed,
+     *  namespaceName: ?string,
+     *  className: ?string,
+     *  methodName: ?string,
+     *  functionName: ?string,
+     *  description: string,
+     *  beginLine: int,
+     *  endLine: int,
+     *  rule: string,
+     *  args: ?array<int, string>
+     * }>}>} $state
      */
     public function __construct(
         private readonly ResultCacheKey $cacheKey,
@@ -26,7 +37,18 @@ class ResultCacheState
     }
 
     /**
-     * @return list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>
+     * @return list<array{
+     *  metric: mixed,
+     *  namespaceName: ?string,
+     *  className: ?string,
+     *  methodName: ?string,
+     *  functionName: ?string,
+     *  description: string,
+     *  beginLine: int,
+     *  endLine: int,
+     *  rule: string,
+     *  args: ?array<int, string>
+     * }>
      */
     public function getViolations(string $filePath): array
     {
@@ -38,7 +60,18 @@ class ResultCacheState
     }
 
     /**
-     * @param list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}> $violations
+     * @param list<array{
+     *  metric: mixed,
+     *  namespaceName: ?string,
+     *  className: ?string,
+     *  methodName: ?string,
+     *  functionName: ?string,
+     *  description: string,
+     *  beginLine: int,
+     *  endLine: int,
+     *  rule: string,
+     *  args: ?array<int, string>
+     * }> $violations
      */
     public function setViolations(string $filePath, array $violations): void
     {

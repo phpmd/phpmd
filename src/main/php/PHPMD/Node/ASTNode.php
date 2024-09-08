@@ -101,8 +101,6 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return ?string
      */
     public function getFullQualifiedName(): ?string
     {

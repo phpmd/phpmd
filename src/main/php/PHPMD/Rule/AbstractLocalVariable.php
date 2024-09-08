@@ -187,7 +187,6 @@ abstract class AbstractLocalVariable extends AbstractRule
     }
 
     /**
-     * @return ?string
      * @throws OutOfBoundsException
      */
     private function getParentMemberPrimaryPrefixImage(string $image, ASTPropertyPostfix $postfix): ?string
