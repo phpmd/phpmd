@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\RuleProperty\RulePropertySetter;
 use Throwable;
 
 /**
@@ -28,10 +29,6 @@ use Throwable;
  */
 class ShortMethodNameTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToFunctionWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -41,10 +38,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameEqualToThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToFunctionWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -54,10 +47,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -67,10 +56,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToMethodWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -80,10 +65,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameEqualToThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToMethodWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -93,10 +74,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToMethodWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -106,10 +83,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToMethodWithShortNameWhenException(): void
     {
         $rule = new ShortMethodName();
@@ -120,8 +93,6 @@ class ShortMethodNameTest extends AbstractTestCase
     }
 
     /**
-     * testRuleAlsoWorksWithoutExceptionListConfigured
-     *
      * @throws Throwable
      * @link https://github.com/phpmd/phpmd/issues/80
      * @link https://github.com/phpmd/phpmd/issues/270
@@ -131,18 +102,17 @@ class ShortMethodNameTest extends AbstractTestCase
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', '100');
-        $rule->setReport($this->getReportWithNoViolation());
+        $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethodMock());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesAlsoWithoutExceptionListConfigured(): void
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', '100');
         $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethod());
     }
 }

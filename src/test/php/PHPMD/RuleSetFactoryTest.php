@@ -24,6 +24,8 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\Rule\CyclomaticComplexity;
+use PHPMD\Rule\Naming\ShortMethodName;
 use RuntimeException;
 use Throwable;
 
@@ -41,10 +43,6 @@ final class RuleSetFactoryTest extends AbstractTestCase
      */
     private const DIR_UNDER_TESTS = 'designăôü0汉字';
 
-    /**
-     * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
-     * @throws Throwable
-     */
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets(): void
     {
         $factory = new RuleSetFactory();
@@ -53,10 +51,6 @@ final class RuleSetFactoryTest extends AbstractTestCase
         self::assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
-    /**
-     * testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory
-     * @throws Throwable
-     */
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory(): void
     {
         self::changeWorkingDirectory('rulesets');
@@ -64,76 +58,48 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1.xml');
 
-        static::assertEquals('First description...', $ruleSet->getDescription());
+        self::assertSame('First description...', $ruleSet->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsReturnsArray
-     * @throws Throwable
-     */
     public function testCreateRuleSetsReturnsArray(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         self::assertIsArray($ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForSingleFileReturnsArrayWithOneElement
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertCount(1, $ruleSets);
+        self::assertSame(1, count($ruleSets));
     }
 
-    /**
-     * testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         self::assertInstanceOf(RuleSet::class, $ruleSets[0]);
     }
 
-    /**
-     * testCreateRuleSetsConfiguresExpectedRuleSetName
-     * @throws Throwable
-     */
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        self::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsConfiguresExpectedRuleSetName
-     * @throws Throwable
-     */
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertEquals('First description...', $ruleSets[0]->getDescription());
+        self::assertSame('First description...', $ruleSets[0]->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        static::assertCount(2, $ruleSets);
+        self::assertCount(2, $ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
@@ -144,38 +110,26 @@ final class RuleSetFactoryTest extends AbstractTestCase
         self::assertInstanceOf(RuleSet::class, $ruleSets[1]);
     }
 
-    /**
-     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
-        static::assertEquals('Second Test RuleSet', $ruleSets[1]->getName());
+        self::assertSame('First Test RuleSet', $ruleSets[0]->getName());
+        self::assertSame('Second Test RuleSet', $ruleSets[1]->getName());
     }
 
-    /**
-     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        static::assertSame('First description...', $ruleSets[0]->getDescription());
-        static::assertSame('Second description...', $ruleSets[1]->getDescription());
+        self::assertSame('First description...', $ruleSets[0]->getDescription());
+        self::assertSame('Second description...', $ruleSets[1]->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameReturnsArray
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForLocalFileNameReturnsArray(): void
     {
         self::changeWorkingDirectory();
@@ -184,70 +138,46 @@ final class RuleSetFactoryTest extends AbstractTestCase
         self::assertIsArray($ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameReturnsArrayWithOneElement
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void
     {
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        static::assertCount(1, $ruleSets);
+        self::assertCount(1, $ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameConfiguresExpectedRuleSetName
-     * @throws Throwable
-     */
     public function testCreateRuleSetsForLocalFileNameConfiguresExpectedRuleSetName(): void
     {
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        self::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedRuleSet
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedRuleSet(): void
     {
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        self::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules(): void
     {
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        static::assertEquals(4, iterator_count($ruleSets[0]));
+        self::assertCount(4, $ruleSets[0]);
     }
 
-    /**
-     * testCreateRuleSetsForLocalFileWithRuleSetReferenceNodes
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithReferenceContainsRuleInstances(): void
     {
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        static::assertInstanceOf(AbstractRule::class, $ruleSets[0]->getRules()->current());
+        self::assertInstanceOf(AbstractRule::class, $ruleSets[0]->getRules()->current());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedRules
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedRules(): void
     {
         self::changeWorkingDirectory();
@@ -261,13 +191,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
             $actual[] = $rule->getName();
         }
 
-        static::assertEquals($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
-    /**
-     * testCreateSingleRuleSetReturnsRuleSetInstance
-     * @throws Throwable
-     */
     public function testCreateSingleRuleSetReturnsRuleSetInstance(): void
     {
         self::changeWorkingDirectory();
@@ -280,7 +206,6 @@ final class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * Tests that the rule-set factory applies a set minimum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedMinimumPriorityOnlyContainsMatchingRules(): void
     {
@@ -290,12 +215,11 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $factory->setMinimumPriority(2);
 
         $ruleSet = $factory->createSingleRuleSet('set1');
-        static::assertSame(1, iterator_count($ruleSet->getRules()));
+        self::assertSame(1, iterator_count($ruleSet->getRules()));
     }
 
     /**
      * Tests that the rule-set factory applies a set maximum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedMaximumPriorityOnlyContainsMatchingRules(): void
     {
@@ -305,12 +229,11 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $factory->setMaximumPriority(2);
 
         $ruleSet = $factory->createSingleRuleSet('set1');
-        static::assertSame(1, iterator_count($ruleSet->getRules()));
+        self::assertSame(1, iterator_count($ruleSet->getRules()));
     }
 
     /**
      * Tests that the rule-set factory applies a set maximum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedPrioritiesOnlyContainsMatchingRules(): void
     {
@@ -324,10 +247,6 @@ final class RuleSetFactoryTest extends AbstractTestCase
         self::assertCount(0, $ruleSet->getRules());
     }
 
-    /**
-     * testCreateRuleWithExcludePattern
-     * @throws Throwable
-     */
     public function testCreateRuleWithExcludePattern(): void
     {
         self::changeWorkingDirectory();
@@ -340,13 +259,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
             '*sourceExcluded\*.php',
         ];
 
-        static::assertEquals($expected, $excludes);
+        self::assertSame($expected, $excludes);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting(): void
     {
         self::changeWorkingDirectory();
@@ -355,13 +270,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertSame(4, $rule->getPriority());
+        self::assertSame(4, $rule->getPriority());
     }
 
-    /**
-     * testCreateRuleWithExpectedExample
-     * @throws Throwable
-     */
     public function testCreateRuleWithExpectedExample(): void
     {
         self::changeWorkingDirectory();
@@ -370,13 +281,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('set1');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals([__FUNCTION__], $rule->getExamples());
+        self::assertSame([__FUNCTION__], $rule->getExamples());
     }
 
-    /**
-     * testCreateRuleWithExpectedMultipleExamples
-     * @throws Throwable
-     */
     public function testCreateRuleWithExpectedMultipleExamples(): void
     {
         self::changeWorkingDirectory();
@@ -385,13 +292,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('set2');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
+        self::assertSame([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting(): void
     {
         self::changeWorkingDirectory();
@@ -400,13 +303,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertSame('description 42', $rule->getDescription());
+        self::assertSame('description 42', $rule->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting(): void
     {
         self::changeWorkingDirectory();
@@ -415,13 +314,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset3');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertSame(42, $rule->getIntProperty('foo'));
+        self::assertSame(42, $rule->getIntProperty('foo'));
     }
 
-    /**
-     * testFactorySupportsAlternativeSyntaxForPropertyValue
-     * @throws Throwable
-     */
     public function testFactorySupportsAlternativeSyntaxForPropertyValue(): void
     {
         self::changeWorkingDirectory();
@@ -430,13 +325,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('alternative-property-value-syntax');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertSame(42, $rule->getIntProperty('foo'));
+        self::assertSame(42, $rule->getIntProperty('foo'));
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting(): void
     {
         self::changeWorkingDirectory();
@@ -447,13 +338,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $rule = $ruleSets[0]->getRules()->current();
 
         $examples = $rule->getExamples();
-        static::assertEquals('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
+        self::assertSame('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesNameSetting(): void
     {
         self::changeWorkingDirectory();
@@ -462,13 +349,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('Name overwritten', $rule->getName());
+        self::assertSame('Name overwritten', $rule->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting(): void
     {
         self::changeWorkingDirectory();
@@ -477,13 +360,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('Message overwritten', $rule->getMessage());
+        self::assertSame('Message overwritten', $rule->getMessage());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting(): void
     {
         self::changeWorkingDirectory();
@@ -492,13 +371,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset4');
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('http://example.com/overwritten', $rule->getExternalInfoUrl());
+        self::assertSame('http://example.com/overwritten', $rule->getExternalInfoUrl());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule(): void
     {
         self::changeWorkingDirectory();
@@ -507,13 +382,9 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset-exclude-one');
 
         $rules = $ruleSets[0]->getRules();
-        static::assertEquals(1, iterator_count($rules));
+        self::assertCount(1, $rules);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules
-     * @throws Throwable
-     */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules(): void
     {
         self::changeWorkingDirectory();
@@ -522,7 +393,7 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets('refset-exclude-all');
 
         $rules = $ruleSets[0]->getRules();
-        static::assertEquals(0, iterator_count($rules));
+        self::assertCount(0, $rules);
     }
 
     /**
@@ -595,10 +466,6 @@ final class RuleSetFactoryTest extends AbstractTestCase
         $factory->createRuleSets($fileName);
     }
 
-    /**
-     * testCreateRuleSetsActivatesStrictModeOnRuleSet
-     * @throws Throwable
-     */
     public function testCreateRuleSetsActivatesStrictModeOnRuleSet(): void
     {
         $fileName = self::createFileUri('rulesets/set1.xml');
@@ -662,7 +529,7 @@ final class RuleSetFactoryTest extends AbstractTestCase
 
         foreach ($this->getPathsForFileAccessTest() as $path) {
             try {
-                static::assertEquals(
+                self::assertSame(
                     [
                         '*sourceExcluded/*.php',
                         '*sourceExcluded\*.php',
@@ -675,8 +542,8 @@ final class RuleSetFactoryTest extends AbstractTestCase
                 $runtimeExceptionCount++;
             }
         }
-        static::assertEquals(0, $runtimeExceptionCount);
-        static::assertEquals(5, $ruleSetNotFoundExceptionCount);
+        self::assertSame(0, $runtimeExceptionCount);
+        self::assertSame(5, $ruleSetNotFoundExceptionCount);
     }
 
     /**
@@ -755,6 +622,52 @@ final class RuleSetFactoryTest extends AbstractTestCase
                         }
                     }
                     EOD,
+            ],
+            $shortMethodName->getExamples(),
+        );
+    }
+
+    public function testCreateRuleSetFromYamlFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet(__DIR__ . '/../../resources/files/rulesets/phpmd.yml');
+
+        self::assertSame('MethodChecks', $ruleSet->getName());
+        self::assertSame('Check stuff on methods', $ruleSet->getDescription());
+
+        $rules = $ruleSet->getRules()->getArrayCopy();
+
+        self::assertCount(2, $rules);
+
+        /** @var CyclomaticComplexity $cyclomaticComplexity */
+        $cyclomaticComplexity = $rules[0];
+        self::assertInstanceOf(CyclomaticComplexity::class, $cyclomaticComplexity);
+        self::assertSame(
+            'The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}.',
+            $cyclomaticComplexity->getMessage(),
+        );
+
+        /** @var ShortMethodName $shortMethodName */
+        $shortMethodName = $rules[1];
+        self::assertInstanceOf(ShortMethodName::class, $shortMethodName);
+        self::assertSame(
+            'Avoid using short method names like {0}::{1}(). The configured threshold (minimum allowed) method name length is {2}.',
+            $shortMethodName->getMessage(),
+        );
+        self::assertSame(
+            4,
+            $shortMethodName->getIntProperty('threshold'),
+        );
+        self::assertSame(
+            [
+                <<<'EOS'
+                class ShortMethod
+                {
+                    public function ab($index) // Violation
+                    {
+                    }
+                }
+                EOS,
             ],
             $shortMethodName->getExamples(),
         );

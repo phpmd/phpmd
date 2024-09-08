@@ -168,6 +168,31 @@ final class RuleSetTest extends AbstractTestCase
 
         self::assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
+        // With a node not registered at all
+        $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
+            public function hasSuppressWarningsAnnotationFor(Rule $rule)
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName()
+            {
+                return '';
+            }
+
+            public function getParentName()
+            {
+                return '';
+            }
+
+            public function getNamespaceName()
+            {
+                return '';
+            }
+        });
+
+        $this->assertCount(0, $ruleSet->getReport()->getRuleViolations());
+
         $function = new ASTFunction('fooBar');
         $statement = new ASTIfStatement('if');
         $statement->addChild(new ASTExpression());

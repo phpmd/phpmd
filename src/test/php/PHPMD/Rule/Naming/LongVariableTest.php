@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\Node\ClassNode;
 use Throwable;
 
 /**

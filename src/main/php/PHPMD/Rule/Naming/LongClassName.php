@@ -49,7 +49,7 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
     private array $subtractSuffixes;
 
     /**
-     * Check if a class name exceeds the configured maximum length and emit a rule violation
+     * Check if a class name exceeds the configured maximum length and emit a rule violation.
      */
     public function apply(AbstractNode $node): void
     {

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -15,23 +18,19 @@
  * @link http://phpmd.org/
  */
 
+namespace PHPMD\Exception;
+
+use RuntimeException;
+use Throwable;
+
 /**
- * Some class that stands as an example for classes not following PSR-0.
- *
- * @author Gerrit Addiks <gerrit@addiks.de>
+ * This type of exception is thrown when the class file for a configured rule
+ * does not exist within php's include path.
  */
-class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
+class InvalidRulePropertyTypeException extends RuntimeException
 {
-    /**
-     * A method that returns foo, bar and baz.
-     */
-    public function getFooBarBaz(): array
+    public function __construct(string $class, string $key, string $message, int $code = 0, ?Throwable $previous = null)
     {
-        return ['foo', 'bar', 'baz'];
-    }
-
-    public function apply(\PHPMD\AbstractNode $node): void
-    {
-
+        parent::__construct("Invalid type for $class::\$$key: $message", $code, $previous);
     }
 }
