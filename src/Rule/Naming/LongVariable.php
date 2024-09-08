@@ -31,6 +31,7 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Rule\TraitAware;
+use PHPMD\RuleProperty\Option;
 use PHPMD\Utility\Strings;
 
 /**
@@ -44,14 +45,16 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      *
      * @var array<int, string>
      */
-    private array $subtractPrefixes;
+    #[Option]
+    public array $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
      * @var array<int, string>
      */
-    private array $subtractSuffixes;
+    #[Option]
+    public array $subtractSuffixes;
 
     /**
      * Temporary map holding variables that were already processed in the
@@ -59,7 +62,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      *
      * @var array<string, bool>
      */
-    private array $processedVariables = [];
+    protected array $processedVariables = [];
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -72,23 +75,27 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
 
         if ($node->getType() === 'class') {
             $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
+
             foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType(ASTVariableDeclarator::class);
-                foreach ($declarators as $declarator) {
+                if ($field->hasSuppressWarningsFor($this)) {
+                    continue;
+                }
+
+                foreach ($field->findChildrenOfType(ASTVariableDeclarator::class) as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
             }
+
             $this->resetProcessed();
 
             return;
         }
-        $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
-        foreach ($declarators as $declarator) {
+
+        foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $declarator) {
             $this->checkNodeImage($declarator);
         }
 
-        $variables = $node->findChildrenOfTypeVariable();
-        foreach ($variables as $variable) {
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             $this->checkNodeImage($variable);
         }
 
@@ -121,19 +128,27 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     #[SuppressWarnings(self::class)]
     private function checkMaximumLength(AbstractNode $node): void
     {
+        if ($node->hasSuppressWarningsFor($this)) {
+            return;
+        }
+
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
+
         $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
             \ltrim($variableName, '$'),
             $this->getSubtractPrefixList(),
             $this->getSubtractSuffixList()
         );
+
         if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
+
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+
         $this->addViolation($node, [$variableName, (string) $threshold]);
     }
 

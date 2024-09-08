@@ -35,7 +35,7 @@ final class ShortClassName extends AbstractRule implements ClassAware, EnumAware
     private ExceptionsList $exceptions;
 
     /**
-     * Check if a class or interface name is below the minimum configured length and emit a rule violation
+     * Check if a class or interface name is below the minimum configured length and emit a rule violation.
      */
     public function apply(AbstractNode $node): void
     {

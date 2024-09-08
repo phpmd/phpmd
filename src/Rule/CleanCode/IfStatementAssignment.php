@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTElseIfStatement;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTIfStatement;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -49,6 +50,8 @@ final class IfStatementAssignment extends AbstractRule implements FunctionAware,
     /**
      * This method checks if method/function has if clauses
      * that use assignment instead of comparison.
+     *
+     * @param AbstractNode<PDependNode> $node An instance of MethodNode or FunctionNode class
      */
     public function apply(AbstractNode $node): void
     {

@@ -23,6 +23,7 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\RuleProperty\RulePropertySetter;
 use RuntimeException;
 use SimpleXMLElement;
 use Stringable;
@@ -404,9 +405,10 @@ class RuleSetFactory
 
         $rule = $ruleSetRef->getRuleByName($ruleName);
 
-        $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
-        $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
-        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', $rule->setExternalInfoUrl(...));
+        // When dropping PHP < 8.1, replace [$rule, 'setName'] with $rule->setName(...) syntax
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
 
         $this->parseRuleProperties($rule, $ruleNode);
 
@@ -517,6 +519,8 @@ class RuleSetFactory
                 $rule->addProperty($name, (string) $value);
             }
         }
+
+        RulePropertySetter::setDefaultValues($rule);
     }
 
     /**

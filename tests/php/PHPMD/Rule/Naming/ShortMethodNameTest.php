@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
+use PHPMD\RuleProperty\RulePropertySetter;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
@@ -122,7 +123,8 @@ class ShortMethodNameTest extends AbstractTestCase
     {
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', '100');
-        $rule->setReport($this->getReportWithNoViolation());
+        $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethodMock());
     }
 
@@ -131,6 +133,7 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule = new ShortMethodName();
         $rule->addProperty('minimum', '100');
         $rule->setReport($this->getReportWithOneViolation());
+        RulePropertySetter::setDefaultValues($rule);
         $rule->apply($this->getMethod());
     }
 }

@@ -45,7 +45,7 @@ final class Annotations
     public function __construct(AbstractNode $node)
     {
         $comment = $node->getComment();
-        if ($comment === null) {
+        if (!$comment) {
             return;
         }
 
