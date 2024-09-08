@@ -392,27 +392,27 @@ PHPMD. If you think one of your rules could be reusable for other projects and
 user, don't hesitate to propose your custom rules on the project's issue tracker
 at `GitHub`__ or open a pull request.
 
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/ClassAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/InterfaceAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/AbstractRule.php
+__ https://github.com/phpmd/phpmd/blob/master/src/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/ClassAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/FunctionAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/InterfaceAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/MethodAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/AbstractRule.php
 __ http://pmd.sf.net/
-__ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
+__ https://github.com/phpmd/phpmd/tree/master/rulesets
 __ https://phpmd.org/documentation/creating-a-ruleset.html
 
 __ http://pdepend.org
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/AbstractNode.php
 __ http://pdepend.org/documentation/software-metrics.html
 __ http://pdepend.org/documentation/software-metrics/number-of-public-methods.html
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/IClassAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/IClassAware.php
 __ http://pdepend.org/documentation/software-metrics.html
 
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractNode.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAware.php
-__ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
-__ https://github.com/pdepend/pdepend/tree/master/src/main/phpHP/Depend/Source/AST
+__ https://github.com/phpmd/phpmd/blob/master/src/AbstractNode.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/FunctionAware.php
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/MethodAware.php
+__ https://github.com/pdepend/pdepend/tree/master/src/main/php/PDepend/Source/AST
 __ https://github.com/phpmd/phpmd

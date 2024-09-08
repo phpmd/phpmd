@@ -51,7 +51,7 @@ class RuleSetFactory
      */
     public function __construct()
     {
-        $this->location = __DIR__ . '/../../resources';
+        $this->location = __DIR__ . '/..';
     }
 
     /**

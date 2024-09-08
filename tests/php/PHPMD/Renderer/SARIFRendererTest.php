@@ -117,7 +117,7 @@ class SARIFRendererTest extends AbstractTestCase
         $key = substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1);
         $data = strtr($writer->getData(), [
             $key => '#{rootDirectory}',
-            'src\\\\test\\\\resources\\\\files' => 'src/test/resources/files',
+            'tests\\\\resources\\\\files' => 'tests/resources/files',
         ]);
         $actual = json_decode($data, true);
         static::assertIsArray($actual);

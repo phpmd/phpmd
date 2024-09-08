@@ -183,7 +183,7 @@ final class Command
      */
     private function getVersion(): string
     {
-        $build = __DIR__ . '/../../../../../build.properties';
+        $build = __DIR__ . '/../../build.properties';
 
         $version = '@package_version@';
         if (file_exists($build)) {

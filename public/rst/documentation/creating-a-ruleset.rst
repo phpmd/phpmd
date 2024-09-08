@@ -258,4 +258,4 @@ own set of rules. Another good source of information are the rule set
 `files`__ that are shipped with PHPMD.
 
 __ /rules/index.html
-__ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
+__ https://github.com/phpmd/phpmd/tree/master/rulesets

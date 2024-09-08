@@ -133,7 +133,7 @@ to create one output for certain parts of your code ::
 
 Or use glob pattern: ::
 
-  ~ $ phpmd src/main/php/*/*/*{Renderer,Node}.php text my/rules.xml
+  ~ $ phpmd src/*/*{Renderer,Node}.php text my/rules.xml
 
 Scan input
 ``````````

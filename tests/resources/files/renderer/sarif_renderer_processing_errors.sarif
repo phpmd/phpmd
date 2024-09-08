@@ -56,7 +56,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "src\/test\/resources\/files\/foobar.php",
+                                    "uri": "tests\/resources\/files\/foobar.php",
                                     "uriBaseId": "WORKINGDIR"
                                 }
                             }

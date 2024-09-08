@@ -14,20 +14,20 @@ Please check this points before submitting your PR.
   
  ## Adding a New Rule
 
-- Add the new rule to the matching rule set XML, e.g. ``src/main/resources/rulesets/naming.xml``
-- Add documentation for the new rule, e.g. ``src/site/rst/rules/naming.rst``
-- Implement the new rule, e.g. ``src/main/php/PHPMD/Rule/Naming/LongVariable.php``
-- Cover cases for the new rule in the rule test, e.g. ``src/test/php/PHPMD/Rule/Naming/LongVariableTest.php``
+- Add the new rule to the matching rule set XML, e.g. ``resources/rulesets/naming.xml``
+- Add documentation for the new rule, e.g. ``public/rst/rules/naming.rst``
+- Implement the new rule, e.g. ``src/Rule/Naming/LongVariable.php``
+- Cover cases for the new rule in the rule test, e.g. ``tests/php/PHPMD/Rule/Naming/LongVariableTest.php``
 -- Cover the case when the new rule *should* apply
 -- Cover the case when the new rule *should not* apply
 -- Cover edge cases of the new rule
 
 ## Adding a New Rule Property
 
-- Add the new property to rule set XML, e.g. ``src/main/resources/rulesets/naming.xml``
-- Add documentation for the new property, e.g. ``src/site/rst/rules/naming.rst``
-- Implement new property in rule, e.g. ``src/main/php/PHPMD/Rule/Naming/LongVariable.php``
-- Cover cases for the new property in rule test, e.g. ``src/test/php/PHPMD/Rule/Naming/LongVariableTest.php``
+- Add the new property to rule set XML, e.g. ``resources/rulesets/naming.xml``
+- Add documentation for the new property, e.g. ``public/rst/rules/naming.rst``
+- Implement new property in rule, e.g. ``src/Rule/Naming/LongVariable.php``
+- Cover cases for the new property in rule test, e.g. ``tests/php/PHPMD/Rule/Naming/LongVariableTest.php``
 -- Cover the case when the new property is not set and the rule *should not* apply
 -- Cover the case when the new property is not set and the rule *should* apply
 -- Cover case when the new property is set and the rule *should not* apply

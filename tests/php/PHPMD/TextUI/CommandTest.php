@@ -439,7 +439,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
+        $data = @parse_ini_file(__DIR__ . '/../../../../build.properties');
         static::assertIsArray($data);
         $version = $data['project.version'];
 

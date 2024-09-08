@@ -708,7 +708,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     public static function getDefaultRuleSets(): array
     {
-        return static::getValuesAsArrays(glob(__DIR__ . '/../../../main/resources/rulesets/*.xml') ?: []);
+        return static::getValuesAsArrays(glob(__DIR__ . '/../../../rulesets/*.xml') ?: []);
     }
 
     /**

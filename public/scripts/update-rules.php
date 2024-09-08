@@ -12,7 +12,7 @@ if (!file_exists($input)) {
 
 $sets = [];
 
-$files = glob($input . '/src/main/resources/rulesets/*.xml');
+$files = glob($input . '/rulesets/*.xml');
 sort($files);
 
 $index = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL .

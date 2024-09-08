@@ -9,7 +9,7 @@
     
     <php-includepath>/foo/bar/baz</php-includepath>
     
-    <!-- this ref's set1.xml using the include-path '.../src/test/php'
+    <!-- this ref's set1.xml using the include-path '.../tests/php'
          It will cause an error if that feature does not work properly. -->
     <rule ref="../resources/files/rulesets/set1.xml" />
     

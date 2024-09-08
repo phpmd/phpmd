@@ -3,6 +3,6 @@ linters:
     standard: './phpcs.xml.dist'
     extensions: '.php'
     tab_width: 4
-    ignore: 'src/test/resources/*'
+    ignore: 'tests/resources/*'
 branches:
     ignore: ['1.5.x']

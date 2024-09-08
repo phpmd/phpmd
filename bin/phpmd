@@ -19,11 +19,11 @@
 use Composer\XdebugHandler\XdebugHandler;
 use PHPMD\TextUI\Command;
 
-if (file_exists(__DIR__ . '/../../../../autoload.php')) {
+if (file_exists(__DIR__ . '/../../../autoload.php')) {
     // phpmd is part of a composer installation
-    require_once __DIR__ . '/../../../../autoload.php';
+    require_once __DIR__ . '/../../../autoload.php';
 } else {
-    require_once __DIR__ . '/../../vendor/autoload.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
 }
 
 // Restart if xdebug is loading, unless the environment variable PHPMD_ALLOW_XDEBUG is set.
