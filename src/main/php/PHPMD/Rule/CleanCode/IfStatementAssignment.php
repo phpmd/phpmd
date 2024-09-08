@@ -49,6 +49,8 @@ final class IfStatementAssignment extends AbstractRule implements FunctionAware,
     /**
      * This method checks if method/function has if clauses
      * that use assignment instead of comparison.
+     *
+     * @param AbstractNode $node An instance of MethodNode or FunctionNode class
      */
     public function apply(AbstractNode $node): void
     {

@@ -22,6 +22,7 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\RuleProperty\RulePropertySetter;
 use RuntimeException;
 use SimpleXMLElement;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -264,12 +265,12 @@ class RuleSetFactory
      */
     private function isIncluded(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleSetNode): bool
     {
-        $excludes = (is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
+        $excludes = (\is_object($ruleSetNode) ? ($ruleSetNode->exclude ?? null) : null)
             ?? $ruleSetNode['exclude']
             ?? [];
 
         foreach ($excludes as $exclude) {
-            $name = is_string($exclude) ? $exclude : (string) ($exclude['name'] ?? '');
+            $name = \is_string($exclude) ? $exclude : (string) ($exclude['name'] ?? '');
 
             if ($rule->getName() === $name) {
                 return false;
@@ -294,7 +295,7 @@ class RuleSetFactory
         $ruleSetFolderPath = dirname($ruleSet->getFileName());
 
         if (isset($ruleNode['file'])) {
-            $ruleNodeFile = (string )$ruleNode['file'];
+            $ruleNodeFile = (string) $ruleNode['file'];
 
             if (is_readable($ruleNodeFile)) {
                 $fileName = $ruleNodeFile;
@@ -372,11 +373,12 @@ class RuleSetFactory
             ? $this->findFileForRule($ruleName)
             : $this->createSingleRuleSet($this->createRuleSetFileName($fileName));
 
-        $rule = $ruleSetRef->getRuleByName($ruleName);
+        $rule = $ruleSetRef->getRuleByName($ruleName) ?? throw new RuleNotFoundException($ruleName);
 
-        $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
-        $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
-        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', $rule->setExternalInfoUrl(...));
+        // When dropping PHP < 8.1, replace [$rule, 'setName'] with $rule->setName(...) syntax
+        $this->withNonEmptyStringAtKey($ruleNode, 'name', [$rule, 'setName']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'message', [$rule, 'setMessage']);
+        $this->withNonEmptyStringAtKey($ruleNode, 'externalInfoUrl', [$rule, 'setExternalInfoUrl']);
 
         $this->parseRuleProperties($rule, $ruleNode);
 
@@ -385,25 +387,19 @@ class RuleSetFactory
         }
     }
 
-    /**
-     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $config
-     */
     private function withNonEmptyStringAtKey(
-        array|ArrayAccess|SimpleXMLElement $config,
+        \SimpleXMLElement|\ArrayAccess|array $config,
         string $key,
         callable $setter,
     ): void {
-        $value = trim((string) ($config[$key] ?? ''));
+        $value = trim((string)($config[$key] ?? ''));
 
         if ($value !== '') {
             $setter($value);
         }
     }
 
-    /**
-     * @param array<string, mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
-     */
-    private function parseRuleProperties(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleNode): void
+    private function parseRuleProperties(Rule $rule, \SimpleXMLElement|\ArrayAccess|array $ruleNode): void
     {
         $this->withNonEmptyStringAtKey($ruleNode, 'description', [$rule, 'setDescription']);
         $this->withNonEmptyStringAtKey($ruleNode, 'example', [$rule, 'addExample']);
@@ -468,6 +464,8 @@ class RuleSetFactory
                 $this->addProperty($rule, $node);
             }
         }
+
+        RulePropertySetter::setDefaultValues($rule);
     }
 
     /**
@@ -677,7 +675,7 @@ class RuleSetFactory
         }
 
         foreach ((array) ($config['rules'] ?? []) as $rule) {
-            $this->parseRuleNode($ruleSet, $rule);
+            $this->parseRuleReferenceNode($ruleSet, $rule);
         }
     }
 
@@ -724,10 +722,8 @@ class RuleSetFactory
         foreach (InternalRuleSet::getNames() as $setName) {
             $ruleSet = $this->createSingleRuleSet($this->createRuleSetFileName($setName));
 
-            foreach ($ruleSet->getRules() as $rule) {
-                if ($rule->getName() === $ruleName) {
-                    return $ruleSet;
-                }
+            if ($ruleSet->getRuleByName($ruleName)) {
+                return $ruleSet;
             }
         }
 

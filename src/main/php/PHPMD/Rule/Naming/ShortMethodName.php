@@ -22,15 +22,20 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
-use PHPMD\Utility\ExceptionsList;
+use PHPMD\RuleProperty\Threshold;
+use PHPMD\RuleProperty\Matcher;
+use PHPMD\RuleProperty\MatchList;
 
 /**
  * This rule class will detect methods and functions with very short names.
  */
 final class ShortMethodName extends AbstractRule implements FunctionAware, MethodAware
 {
-    /** Temporary cache of configured exceptions. */
-    private ExceptionsList $exceptions;
+    #[Threshold(['threshold', 'minimum'])]
+    public int $threshold;
+
+    #[MatchList]
+    public Matcher $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -39,38 +44,19 @@ final class ShortMethodName extends AbstractRule implements FunctionAware, Metho
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
-        $name = $node->getName();
+        $name = (string) $node->getName();
 
-        if (!$name) {
-            return;
-        }
-
-        if ($threshold <= strlen($name)) {
-            return;
-        }
-
-        if ($this->getExceptionsList()->contains($name)) {
+        if (\strlen($name) >= $this->threshold || $this->exceptions->contains($name)) {
             return;
         }
 
         $this->addViolation(
             $node,
             [
-                (string) $node->getParentName(),
-                $node->getName(),
-                (string) $threshold,
-            ]
+                $node->getParentName(),
+                $name,
+                $this->threshold,
+            ],
         );
-    }
-
-    /**
-     * Gets array of exceptions from property
-     */
-    private function getExceptionsList(): ExceptionsList
-    {
-        $this->exceptions ??= new ExceptionsList($this);
-
-        return $this->exceptions;
     }
 }

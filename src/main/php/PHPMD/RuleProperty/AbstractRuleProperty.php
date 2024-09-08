@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -15,23 +18,21 @@
  * @link http://phpmd.org/
  */
 
-/**
- * Some class that stands as an example for classes not following PSR-0.
- *
- * @author Gerrit Addiks <gerrit@addiks.de>
- */
-class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
+namespace PHPMD\RuleProperty;
+
+abstract class AbstractRuleProperty implements RuleProperty
 {
-    /**
-     * A method that returns foo, bar and baz.
-     */
-    public function getFooBarBaz(): array
+    protected const DEFAULT_KEYS = [];
+
+    private ?array $keys;
+
+    public function __construct(array|string|null $keys = null)
     {
-        return ['foo', 'bar', 'baz'];
+        $this->keys = $keys === null ? null : (array)$keys;
     }
 
-    public function apply(\PHPMD\AbstractNode $node): void
+    public function getKeys(array|string|null $defaultKeys = null): array
     {
-
+        return $this->keys ?? (array)($defaultKeys ?? static::DEFAULT_KEYS);
     }
 }

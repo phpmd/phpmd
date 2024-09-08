@@ -53,7 +53,11 @@ final class ASTNode extends AbstractNode
      */
     public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
     {
-        return false;
+        if ($this->annotations === null) {
+            $this->annotations = new Annotations($this);
+        }
+
+        return $this->annotations->suppresses($rule);
     }
 
     /**

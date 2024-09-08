@@ -33,7 +33,10 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Rule\TraitAware;
-use PHPMD\Utility\ExceptionsList;
+use PHPMD\RuleProperty\Option;
+use PHPMD\RuleProperty\Threshold;
+use PHPMD\RuleProperty\Matcher;
+use PHPMD\RuleProperty\MatchList;
 
 /**
  * This rule class will detect variables, parameters and properties with short
@@ -41,6 +44,16 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class ShortVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
 {
+    #[Threshold(['threshold', 'minimum'])]
+    public int $threshold;
+
+    /** @SuppressWarnings(LongVariable) */
+    #[Option]
+    public bool $allowShortVariablesInLoop = true;
+
+    #[MatchList]
+    public Matcher $exceptions;
+
     /**
      * Temporary map holding variables that were already processed in the
      * current context.
@@ -48,9 +61,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * @var array<string, bool>
      */
     private array $processedVariables = [];
-
-    /** Temporary cache of configured exceptions. */
-    private ExceptionsList $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -142,9 +152,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      */
     private function checkMinimumLength(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
-
-        if ($threshold <= strlen($node->getImage()) - 1) {
+        if ($this->threshold <= \strlen($node->getImage()) - 1) {
             return;
         }
 
@@ -152,23 +160,11 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-
-        if ($exceptions->contains(substr($node->getImage(), 1))) {
+        if ($this->exceptions->contains(substr($node->getImage(), 1))) {
             return;
         }
 
-        $this->addViolation($node, [$node->getImage(), (string) $threshold]);
-    }
-
-    /**
-     * Gets exceptions from property
-     */
-    private function getExceptionsList(): ExceptionsList
-    {
-        $this->exceptions ??= new ExceptionsList($this);
-
-        return $this->exceptions;
+        $this->addViolation($node, [$node->getImage(), $this->threshold]);
     }
 
     /**
@@ -200,7 +196,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      */
     private function isInitializedInLoop(AbstractNode $node): bool
     {
-        if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
+        if (!$this->allowShortVariablesInLoop) {
             return false;
         }
 
@@ -232,7 +228,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
 
         $parent = $node->getParent();
 
-        while (is_object($parent)) {
+        while (\is_object($parent)) {
             if ($parent->isInstanceOf($type)) {
                 $parents[] = $parent;
             }

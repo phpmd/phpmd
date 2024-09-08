@@ -28,10 +28,6 @@ use Throwable;
  */
 class ShortVariableTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -41,10 +37,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToTryCatchBlocks
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToTryCatchBlocksInsideForeach(): void
     {
         $rule = new ShortVariable();
@@ -54,10 +46,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -67,10 +55,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
         $rule = new ShortVariable();
@@ -80,10 +64,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionParameterWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToFunctionParameterWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -93,10 +73,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -106,10 +82,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -125,10 +97,6 @@ class ShortVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
         $rule = new ShortVariable();
@@ -138,10 +106,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -151,10 +115,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToMethodParameterWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -170,10 +130,6 @@ class ShortVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -183,10 +139,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToFieldWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToFieldWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -196,10 +148,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToFieldWithNameEqualToThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
         $rule = new ShortVariable();
@@ -209,10 +157,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToFieldWithNameGreaterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToFieldWithNameGreaterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -222,10 +166,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold
-     * @throws Throwable
-     */
     public function testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold(): void
     {
         $rule = new ShortVariable();
@@ -241,10 +181,6 @@ class ShortVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToShortVariableNameAsForLoopIndex
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToShortVariableNameAsForLoopIndex(): void
     {
         $rule = new ShortVariable();
@@ -254,10 +190,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToShortVariableNameAsForeachLoopIndex
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToShortVariableNameAsForeachLoopIndex(): void
     {
         $rule = new ShortVariable();
@@ -267,10 +199,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToShortVariableNameInCatchStatement
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToShortVariableNameInCatchStatement(): void
     {
         $rule = new ShortVariable();
@@ -280,10 +208,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToStaticMembersAccessedInMethod
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
         $rule = new ShortVariable();
@@ -293,10 +217,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToIdenticalVariableOnlyOneTime
-     * @throws Throwable
-     */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
         $rule = new ShortVariable();
@@ -306,10 +226,6 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
-     * @throws Throwable
-     */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
         $rule = new ShortVariable();
@@ -325,10 +241,6 @@ class ShortVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToVariablesFromExceptionsList
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToVariablesFromExceptionsList(): void
     {
         $rule = new ShortVariable();
@@ -339,13 +251,20 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
+    public function testRuleNotAppliesToVariablesFromExceptionsPattern(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', 'foo*');
+        $rule->setReport($this->getReportWithNoViolation());
+
+        $rule->apply($this->getClass());
+    }
+
     /**
-     * testRuleAppliesToVariablesWithinForeach
-     *
-     * @throws Throwable
      * @dataProvider provideClassWithShortForeachVariables
      */
-    public function testRuleAppliesToVariablesWithinForeach(string $allowShortVarInLoop, int $expectedErrorsCount): void
+    public function testRuleAppliesToVariablesWithinForeach(bool $allowShortVarInLoop, int $expectedErrorsCount): void
     {
         $rule = new ShortVariable();
         $rule->addProperty('minimum', '3');

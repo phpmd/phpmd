@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -15,23 +18,17 @@
  * @link http://phpmd.org/
  */
 
+namespace PHPMD\RuleProperty;
+
+use Attribute;
+
 /**
- * Some class that stands as an example for classes not following PSR-0.
+ * Option to represent a threshold/limit/minimum/maximum.
  *
- * @author Gerrit Addiks <gerrit@addiks.de>
+ * @psalm-immutable
  */
-class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
+#[Attribute(Attribute::TARGET_PROPERTY)]
+final class Threshold extends AbstractRuleProperty
 {
-    /**
-     * A method that returns foo, bar and baz.
-     */
-    public function getFooBarBaz(): array
-    {
-        return ['foo', 'bar', 'baz'];
-    }
-
-    public function apply(\PHPMD\AbstractNode $node): void
-    {
-
-    }
+    protected const DEFAULT_KEYS = 'threshold';
 }
