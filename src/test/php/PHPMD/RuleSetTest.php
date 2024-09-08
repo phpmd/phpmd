@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTScopeStatement;
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Rule\CleanCode\ElseExpression;
@@ -34,7 +35,7 @@ use Throwable;
  *
  * @covers \PHPMD\RuleSet
  */
-class RuleSetTest extends AbstractTestCase
+final class RuleSetTest extends AbstractTestCase
 {
     /**
      * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
@@ -45,7 +46,7 @@ class RuleSetTest extends AbstractTestCase
         self::expectException(RuleByNameNotFoundException::class);
 
         $ruleSet = $this->createRuleSetFixture();
-        static::assertNull($ruleSet->getRuleByName(__FUNCTION__));
+        self::assertNull($ruleSet->getRuleByName(__FUNCTION__));
     }
 
     /**
@@ -57,7 +58,7 @@ class RuleSetTest extends AbstractTestCase
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
         $rule = $ruleSet->getRuleByName(__CLASS__);
 
-        static::assertEquals(__CLASS__, $rule->getName());
+        self::assertEquals(__CLASS__, $rule->getName());
     }
 
     /**
@@ -71,8 +72,8 @@ class RuleSetTest extends AbstractTestCase
         $ruleSet->apply($this->getClass());
         $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertInstanceOf(RuleStub::class, $rule);
-        static::assertNull($rule->node);
+        self::assertInstanceOf(RuleStub::class, $rule);
+        self::assertNull($rule->node);
     }
 
     /**
@@ -89,8 +90,8 @@ class RuleSetTest extends AbstractTestCase
         $ruleSet->apply($class);
         $rule = $ruleSet->getRuleByName(__FUNCTION__);
 
-        static::assertInstanceOf(RuleStub::class, $rule);
-        static::assertSame($class, $rule->node);
+        self::assertInstanceOf(RuleStub::class, $rule);
+        self::assertSame($class, $rule->node);
     }
 
     /**
@@ -100,11 +101,11 @@ class RuleSetTest extends AbstractTestCase
     {
         $ruleSet = new RuleSet();
 
-        static::assertSame('', $ruleSet->getDescription());
+        self::assertSame('', $ruleSet->getDescription());
 
         $ruleSet->setDescription('foobar');
 
-        static::assertSame('foobar', $ruleSet->getDescription());
+        self::assertSame('foobar', $ruleSet->getDescription());
     }
 
     /**
@@ -114,11 +115,11 @@ class RuleSetTest extends AbstractTestCase
     {
         $ruleSet = new RuleSet();
 
-        static::assertFalse($ruleSet->isStrict());
+        self::assertFalse($ruleSet->isStrict());
 
         $ruleSet->setStrict();
 
-        static::assertTrue($ruleSet->isStrict());
+        self::assertTrue($ruleSet->isStrict());
     }
 
     /**
@@ -136,10 +137,36 @@ class RuleSetTest extends AbstractTestCase
             $iteration[] = $rule;
         }
 
-        static::assertSame([$else], $iteration);
+        self::assertSame([$else], $iteration);
+        // With a node ElseExpression is not aware (since its implements only MethodAware and FunctionAware)
         $ruleSet->apply(new ClassNode(new ASTClass('FooBar')));
 
-        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        self::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+
+        // With a node not registered at all
+        $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
+            public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName(): string
+            {
+                return '';
+            }
+
+            public function getParentName(): string
+            {
+                return '';
+            }
+
+            public function getNamespaceName(): string
+            {
+                return '';
+            }
+        });
+
+        self::assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
         $function = new ASTFunction('fooBar');
         $statement = new ASTIfStatement('if');
@@ -147,9 +174,11 @@ class RuleSetTest extends AbstractTestCase
         $statement->addChild(new ASTScopeStatement());
         $statement->addChild(new ASTScopeStatement());
         $function->addChild($statement);
+
+        // With a node ElseExpression is aware of (thanks to FunctionAware)
         $ruleSet->apply(new FunctionNode($function));
 
-        static::assertCount(1, $ruleSet->getReport()->getRuleViolations());
+        self::assertCount(1, $ruleSet->getReport()->getRuleViolations());
     }
 
     /**
@@ -163,7 +192,7 @@ class RuleSetTest extends AbstractTestCase
         $ruleSet = new RuleSet();
 
         foreach (func_get_args() as $name) {
-            static::assertIsString($name);
+            self::assertIsString($name);
             $ruleSet->addRule(new RuleStub($name));
         }
 
