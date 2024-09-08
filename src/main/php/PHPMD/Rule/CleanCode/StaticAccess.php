@@ -72,9 +72,12 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
             return true;
         }
 
-        $wildcardExceptions = array_filter($exceptions, fn ($exception) => strpos($exception, '*') !== false);
+        $wildcardExceptions = array_filter($exceptions, function ($exception) {
+            return strpos($exception, '*') !== false;
+        });
         foreach ($wildcardExceptions as $wildcardException) {
-            $wildcardException = str_replace(['*', '\\'], ['.*', '\\\\'], $wildcardException);
+            $wildcardException = str_replace('*', '.*', $wildcardException);
+            $wildcardException = str_replace('\\', '\\\\', $wildcardException);
             if (preg_match('/' . $wildcardException . '/', $className)) {
                 return true;
             }
