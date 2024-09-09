@@ -41,7 +41,7 @@ final class StreamWriter extends AbstractWriter
      */
     public function __construct($streamResourceOrUri)
     {
-        if (is_resource($streamResourceOrUri)) {
+        if (!is_string($streamResourceOrUri)) {
             $this->stream = $streamResourceOrUri;
 
             return;

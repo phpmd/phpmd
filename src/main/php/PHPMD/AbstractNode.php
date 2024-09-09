@@ -309,8 +309,6 @@ abstract class AbstractNode
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
-     *
-     * @return ?string
      */
     abstract public function getFullQualifiedName(): ?string;
 
