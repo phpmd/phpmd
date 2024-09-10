@@ -43,13 +43,13 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --no-dev -o --prefer-dist --no-progress
 
-      - name: Git submodules
-        run: git submodule update --init
-
-      - name: Ant
-        run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
+      - name: Build
+        run: |
+          php -d phar.readonly=0 scripts/build.php;
+          chmod +x ./phpmd.phar;
+          ./phpmd.phar --version;
 
       - name: Sign phar
         if: github.repository == 'phpmd/phpmd' && github.event_name == 'release'
