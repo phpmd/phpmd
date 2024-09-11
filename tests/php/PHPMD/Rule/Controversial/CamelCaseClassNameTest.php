@@ -19,7 +19,6 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
 use PHPMD\AbstractTestCase;
 use PHPMD\Node\ClassNode;
-use Throwable;
 
 /**
  * Test case for the camel case class name rule.
@@ -27,9 +26,6 @@ use Throwable;
  */
 class CamelCaseClassNameTest extends AbstractTestCase
 {
-    /**
-     * @throws Throwable
-     */
     public function testRuleDoesNotApplyForValidClassName(): void
     {
         $report = $this->getReportWithNoViolation();
@@ -40,9 +36,6 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidClass'));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleDoesNotApplyForValidClassNameWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithNoViolation();
@@ -53,9 +46,6 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidURLClass'));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleDoesApplyForClassNameWithUppercaseAbbreviation(): void
     {
         $report = $this->getReportWithOneViolation();
@@ -66,9 +56,6 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidURLClass'));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleDoesNotApplyForClassNameWithCamelcaseAbbreviation(): void
     {
         $report = $this->getReportWithNoViolation();
@@ -79,9 +66,6 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('ValidUrlClass'));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesForClassNameWithLowerCase(): void
     {
         $report = $this->getReportWithOneViolation();
@@ -92,9 +76,6 @@ class CamelCaseClassNameTest extends AbstractTestCase
         $rule->apply($this->createClassNode('invalidClass'));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesForClassNameWithLowerCaseAndCamelcaseAbbreviation(): void
     {
         $report = $this->getReportWithOneViolation();

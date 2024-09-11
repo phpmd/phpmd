@@ -33,7 +33,6 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\DependencyInjection\Container;
-use Throwable;
 
 /**
  * Test case for the PHP_Depend backend adapter class.
@@ -44,7 +43,6 @@ class ParserTest extends AbstractTestCase
 {
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDelegatesClassNodeToRuleSet(): void
     {
@@ -62,7 +60,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceClassNodeToRuleSet(): void
     {
@@ -79,7 +76,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDelegatesMethodNodeToRuleSet(): void
     {
@@ -92,7 +88,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceMethodNodeToRuleSet(): void
     {
@@ -104,7 +99,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the metrics adapter delegates a node to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDelegatesFunctionNodeToRuleSet(): void
     {
@@ -117,7 +111,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the metrics adapter does not delegate a node without source
      * code file to a registered rule-set.
-     * @throws Throwable
      */
     public function testAdapterDoesNotDelegateNonSourceFunctionNodeToRuleSet(): void
     {
@@ -130,7 +123,6 @@ class ParserTest extends AbstractTestCase
     /**
      * testParserStoreParsingExceptionsInReport
      *
-     * @throws Throwable
      * @since 1.2.1
      */
     public function testParserStoreParsingExceptionsInReport(): void
@@ -154,7 +146,6 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PDepend instance.
      *
      * @return Engine&MockObject
-     * @throws Throwable
      */
     private function getPHPDependMock()
     {
@@ -173,7 +164,6 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PDepend class instance.
      *
      * @return ASTClass&MockObject
-     * @throws Throwable
      */
     protected function getPHPDependClassMock()
     {
@@ -200,7 +190,6 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PHP_Depend function instance.
      *
      * @param ?string $fileName Optional file name for the source file.
-     * @throws Throwable
      */
     protected function getPHPDependFunctionMock(?string $fileName = '/foo/bar.php'): ASTFunction&MockObject
     {
@@ -218,7 +207,6 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PHP_Depend method instance.
      *
      * @param ?string $fileName Optional file name for the source file.
-     * @throws Throwable
      */
     protected function getPHPDependMethodMock(?string $fileName = '/foo/bar.php'): ASTMethod&MockObject
     {
@@ -236,7 +224,6 @@ class ParserTest extends AbstractTestCase
      * Creates a mocked PHP_Depend file instance.
      *
      * @param ?string $fileName The temporary file name.
-     * @throws Throwable
      */
     protected function getPHPDependFileMock(?string $fileName): ASTCompilationUnit&MockObject
     {

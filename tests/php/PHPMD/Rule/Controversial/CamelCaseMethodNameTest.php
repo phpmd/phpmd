@@ -20,7 +20,6 @@ namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Node\MethodNode;
-use Throwable;
 
 /**
  * Test case for the camel case method name rule.
@@ -31,7 +30,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does not apply for a valid method name.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidMethodName(): void
     {
@@ -48,7 +46,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for method name
      * with all caps abbreviation.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForMethodNameWithAllCapsAbbreviation(): void
     {
@@ -65,7 +62,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for method name
      * with camelcase abbreviation.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForMethodNameWithCamelcaseAbbreviation(): void
     {
@@ -82,7 +78,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for an method name
      * starting with a capital.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForMethodNameWithCapital(): void
     {
@@ -100,7 +95,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a method name
      * with underscores.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForMethodNameWithUnderscores(): void
     {
@@ -118,7 +112,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid method name
      * with an underscore at the beginning when it is allowed.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForValidMethodNameWithUnderscoreWhenNotAllowed(): void
     {
@@ -135,7 +128,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid method name
      * with an underscore at the beginning when it is not allowed.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidMethodNameWithUnderscoreWhenAllowed(): void
     {
@@ -152,7 +144,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid method name
      * with an underscore at the beginning when it is not allowed.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForMagicMethods(): void
     {
@@ -172,7 +163,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid test method name
      * with an underscore.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForTestMethodWithUnderscoreWhenNotAllowed(): void
     {
@@ -189,7 +179,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid test method name
      * with an underscore when underscores are allowed.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForTestMethodWithUnderscoreWhenAllowed(): void
     {
@@ -206,7 +195,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for a valid test method name
      * with multiple underscores in different positions when underscores are allowed.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForTestMethodWithMultipleUnderscoresWhenAllowed(): void
     {
@@ -223,7 +211,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a test method name
      * with consecutive underscores even when underscores are allowed.
-     * @throws Throwable
      */
     public function testRuleAppliesToTestMethodWithTwoConsecutiveUnderscoresWhenAllowed(): void
     {
@@ -240,8 +227,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply to for test method names that
      * have a capital after their single allowed underscore.
-     *
-     * @throws Throwable
      */
     public function testRuleAppliesToTestMethodWithUnderscoreFollowedByCapital(): void
     {
@@ -258,8 +243,6 @@ class CamelCaseMethodNameTest extends AbstractTestCase
     /**
      * Returns the first method found in a source file related to the calling
      * test method.
-     *
-     * @throws Throwable
      */
     protected function getMethod(): MethodNode
     {

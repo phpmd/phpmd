@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the really long variable, parameter and property name rule.
@@ -30,7 +29,6 @@ class LongVariableTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
@@ -42,7 +40,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold(): void
     {
@@ -54,7 +51,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
@@ -66,7 +62,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionParameterWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
@@ -78,7 +73,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold(): void
     {
@@ -90,7 +84,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
@@ -108,7 +101,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
@@ -120,7 +112,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
@@ -132,7 +123,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodParameterWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
@@ -150,7 +140,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
@@ -162,7 +151,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFieldWithNameLongerThanThreshold(): void
     {
@@ -174,7 +162,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
@@ -186,7 +173,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFieldWithNameShorterThanThreshold(): void
     {
@@ -198,7 +184,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold(): void
     {
@@ -216,7 +201,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToStaticMembersAccessedInMethod
-     * @throws Throwable
      */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
@@ -228,7 +212,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariableOnlyOneTime
-     * @throws Throwable
      */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
@@ -240,7 +223,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
-     * @throws Throwable
      */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
@@ -259,7 +241,6 @@ class LongVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesForLongPrivateProperty
      *
-     * @throws Throwable
      * @since 1.1.0
      */
     public function testRuleAppliesForLongPrivateProperty(): void
@@ -273,7 +254,6 @@ class LongVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesForLongPrivateStaticProperty
      *
-     * @throws Throwable
      * @since 1.1.0
      */
     public function testRuleAppliesForLongPrivateStaticProperty(): void
@@ -286,7 +266,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted
-     * @throws Throwable
      */
     public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted(): void
     {
@@ -299,7 +278,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted
-     * @throws Throwable
      */
     public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted(): void
     {
@@ -312,7 +290,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined
-     * @throws Throwable
      */
     public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined(): void
     {
@@ -325,7 +302,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix
-     * @throws Throwable
      */
     public function testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix(): void
     {
@@ -338,7 +314,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameWithEmptySubtractSuffixes
-     * @throws Throwable
      */
     public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes(): void
     {
@@ -351,7 +326,6 @@ class LongVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToVariableNameFollowingHungarianNotation
-     * @throws Throwable
      */
     public function testRuleAppliesToVariableNameFollowingHungarianNotation(): void
     {

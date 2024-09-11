@@ -6,7 +6,6 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Rule\CleanCode\MissingImport;
 use PHPMD\Rule\CleanCode\UndefinedVariable;
 use RuntimeException;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineSetFactory
@@ -14,7 +13,6 @@ use Throwable;
 class BaselineSetFactoryTest extends AbstractTestCase
 {
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileShouldSucceed(): void
@@ -30,7 +28,6 @@ class BaselineSetFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileShouldSucceedWithBackAndForwardSlashes(): void
@@ -46,7 +43,6 @@ class BaselineSetFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileShouldThrowExceptionForMissingFile(): void
@@ -59,7 +55,6 @@ class BaselineSetFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileShouldThrowExceptionForOnInvalidXML(): void
@@ -72,7 +67,6 @@ class BaselineSetFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileViolationMissingRuleShouldThrowException(): void
@@ -85,7 +79,6 @@ class BaselineSetFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromFile
      */
     public function testFromFileViolationMissingFileShouldThrowException(): void

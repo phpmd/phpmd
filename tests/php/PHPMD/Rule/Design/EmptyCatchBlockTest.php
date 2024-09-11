@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Empty Catch Block Test
@@ -31,7 +30,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutTryCatchBlock
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutTryCatchBlock(): void
     {
@@ -42,7 +40,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithEmptyCatchBlock
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithEmptyCatchBlock(): void
     {
@@ -53,7 +50,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithNonEmptyCatchBlock
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock(): void
     {
@@ -64,7 +60,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToCatchBlockWithComments
-     * @throws Throwable
      */
     public function testRuleNotAppliesToCatchBlockWithComments(): void
     {
@@ -75,7 +70,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
 
     /**
      * testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions
-     * @throws Throwable
      */
     public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions(): void
     {

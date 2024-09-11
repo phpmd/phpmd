@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\DevelopmentCodeFragment} class.
@@ -32,7 +31,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall(): void
     {
@@ -43,7 +41,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithSuspectFunctionCall(): void
     {
@@ -54,7 +51,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithMultipleSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall(): void
     {
@@ -65,7 +61,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall(): void
     {
@@ -76,7 +71,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
@@ -87,7 +81,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall(): void
     {
@@ -98,7 +91,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithSuspectFunctionCall(): void
     {
@@ -109,7 +101,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithMultipleSuspectFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall(): void
     {
@@ -120,7 +111,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall(): void
     {
@@ -131,7 +121,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
@@ -142,7 +131,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithinNamespace
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithinNamespace(): void
     {
@@ -154,7 +142,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodWithinNamespaceByDefault
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault(): void
     {

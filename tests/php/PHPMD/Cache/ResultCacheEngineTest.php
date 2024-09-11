@@ -3,7 +3,6 @@
 namespace PHPMD\Cache;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngine
@@ -12,7 +11,6 @@ use Throwable;
 class ResultCacheEngineTest extends AbstractTestCase
 {
     /**
-     * @throws Throwable
      * @covers ::getFileFilter
      * @covers ::getUpdater
      * @covers ::getWriter

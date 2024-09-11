@@ -19,7 +19,6 @@
 namespace PHPMD\Node;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Node\Annotations} class.
@@ -30,7 +29,6 @@ class AnnotationsTest extends AbstractTestCase
 {
     /**
      * testCollectionReturnsFalseWhenNoAnnotationExists
-     * @throws Throwable
      */
     public function testCollectionReturnsFalseWhenNoAnnotationExists(): void
     {
@@ -40,7 +38,6 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsFalseWhenNoMatchingAnnotationExists
-     * @throws Throwable
      */
     public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists(): void
     {
@@ -64,7 +61,6 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsTrueWhenMatchingAnnotationExists
-     * @throws Throwable
      */
     public function testCollectionReturnsTrueWhenMatchingAnnotationExists(): void
     {
@@ -80,7 +76,6 @@ class AnnotationsTest extends AbstractTestCase
 
     /**
      * testCollectionReturnsTrueWhenOneMatchingAnnotationExists
-     * @throws Throwable
      */
     public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists(): void
     {

@@ -3,7 +3,6 @@
 namespace PHPMD\Node;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Node\NodeInfoFactory
@@ -11,7 +10,6 @@ use Throwable;
 class NodeInfoFactoryTest extends AbstractTestCase
 {
     /**
-     * @throws Throwable
      * @covers ::fromNode
      */
     public function testFromNodeForAbstractTypeNode(): void
@@ -34,7 +32,6 @@ class NodeInfoFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromNode
      */
     public function testFromNodeForMethodNode(): void
@@ -58,7 +55,6 @@ class NodeInfoFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::fromNode
      */
     public function testFromNodeForFunctionNode(): void

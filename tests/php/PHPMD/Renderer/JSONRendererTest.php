@@ -22,7 +22,6 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\WriterStub;
-use Throwable;
 
 /**
  * Test case for the JSON renderer implementation.
@@ -33,7 +32,6 @@ class JSONRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
-     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
@@ -68,7 +66,6 @@ class JSONRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToJsonReport
-     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {

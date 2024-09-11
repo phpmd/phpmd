@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the undefined variable rule.
@@ -40,7 +39,7 @@ class UndefinedVariableTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
-     * @throws Throwable
+     *
      * @dataProvider getApplyingCases
      */
     public function testRuleAppliesTo(string $file): void
@@ -52,7 +51,7 @@ class UndefinedVariableTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
-     * @throws Throwable
+     *
      * @dataProvider getNotApplyingCases
      */
     public function testRuleDoesNotApplyTo(string $file): void

@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the excessive long class rule.
@@ -31,7 +30,6 @@ class LongClassTest extends AbstractTestCase
     /**
      * Tests that the rule applies for a value greater than the configured
      * threshold.
-     * @throws Throwable
      */
     public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
@@ -48,7 +46,6 @@ class LongClassTest extends AbstractTestCase
     /**
      * Test that the rule applies for a value that is equal with the configured
      * threshold.
-     * @throws Throwable
      */
     public function testRuleAppliesForValueEqualToThreshold(): void
     {
@@ -65,7 +62,6 @@ class LongClassTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply when the value is at least one lower
      * than the threshold.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold(): void
     {
@@ -81,7 +77,6 @@ class LongClassTest extends AbstractTestCase
 
     /**
      * Tests that the rule uses eloc when ignore whitespace is set
-     * @throws Throwable
      */
     public function testRuleUsesElocWhenIgnoreWhitespaceSet(): void
     {

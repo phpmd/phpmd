@@ -3,7 +3,6 @@
 namespace PHPMD\Writer;
 
 use PHPUnit\Framework\TestCase;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Writer\StreamWriter
@@ -12,7 +11,6 @@ use Throwable;
 class StreamWriterTest extends TestCase
 {
     /**
-     * @throws Throwable
      * @covers ::getStream
      */
     public function testGetStream(): void

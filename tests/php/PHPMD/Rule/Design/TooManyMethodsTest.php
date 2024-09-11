@@ -20,7 +20,6 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Node\ClassNode;
-use Throwable;
 
 /**
  * Test case for the too many methods rule.
@@ -31,7 +30,6 @@ class TooManyMethodsTest extends AbstractTestCase
 {
     /**
      * testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold(): void
     {
@@ -44,7 +42,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold(): void
     {
@@ -57,7 +54,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassesWithMoreMethodsThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold(): void
     {
@@ -70,7 +66,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresGetterMethodsInTest
-     * @throws Throwable
      */
     public function testRuleIgnoresGetterMethodsInTest(): void
     {
@@ -83,7 +78,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresSetterMethodsInTest
-     * @throws Throwable
      */
     public function testRuleIgnoresSetterMethodsInTest(): void
     {
@@ -96,7 +90,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-     * @throws Throwable
      */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven(): void
     {
@@ -109,7 +102,6 @@ class TooManyMethodsTest extends AbstractTestCase
 
     /**
      * testRuleIgnoresGetterAndSetterMethodsInTest
-     * @throws Throwable
      */
     public function testRuleIgnoresGetterAndSetterMethodsInTest(): void
     {
@@ -120,9 +112,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(3, ['invoke', 'getClass', 'setClass']));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleIgnoresHassers(): void
     {
         $rule = new TooManyMethods();
@@ -132,9 +121,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleIgnoresIssers(): void
     {
         $rule = new TooManyMethods();
@@ -144,9 +130,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleIgnoresWithers(): void
     {
         $rule = new TooManyMethods();
@@ -160,7 +143,6 @@ class TooManyMethodsTest extends AbstractTestCase
      * Creates a prepared class node mock
      *
      * @param string[] $methodNames
-     * @throws Throwable
      */
     private function createClassMock(int $numberOfMethods, ?array $methodNames = null): ClassNode
     {

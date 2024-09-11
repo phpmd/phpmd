@@ -20,7 +20,6 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedFormalParameter;
 use PHPMD\Rule\UnusedLocalVariable;
-use Throwable;
 
 /**
  * Regression test for issue 007.
@@ -29,7 +28,6 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extend
 {
     /**
      * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
-     * @throws Throwable
      */
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
@@ -40,7 +38,6 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extend
 
     /**
      * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
-     * @throws Throwable
      */
     public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported(): void
     {

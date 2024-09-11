@@ -24,7 +24,6 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
 use RuntimeException;
-use Throwable;
 
 /**
  * Test case for the rule set factory class.
@@ -42,7 +41,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
-     * @throws Throwable
      */
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets(): void
     {
@@ -54,7 +52,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory
-     * @throws Throwable
      */
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory(): void
     {
@@ -68,7 +65,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsReturnsArray
-     * @throws Throwable
      */
     public function testCreateRuleSetsReturnsArray(): void
     {
@@ -78,7 +74,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForSingleFileReturnsArrayWithOneElement
-     * @throws Throwable
      */
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
     {
@@ -88,7 +83,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance
-     * @throws Throwable
      */
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance(): void
     {
@@ -98,7 +92,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsConfiguresExpectedRuleSetName
-     * @throws Throwable
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
     {
@@ -108,7 +101,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsConfiguresExpectedRuleSetName
-     * @throws Throwable
      */
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription(): void
     {
@@ -118,7 +110,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements
-     * @throws Throwable
      */
     public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements(): void
     {
@@ -131,7 +122,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances
-     * @throws Throwable
      */
     public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances(): void
     {
@@ -145,7 +135,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames
-     * @throws Throwable
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames(): void
     {
@@ -159,7 +148,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions
-     * @throws Throwable
      */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions(): void
     {
@@ -173,7 +161,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForSingleLocalFileNameReturnsArray
-     * @throws Throwable
      */
     public function testCreateRuleSetsForLocalFileNameReturnsArray(): void
     {
@@ -185,7 +172,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForSingleLocalFileNameReturnsArrayWithOneElement
-     * @throws Throwable
      */
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void
     {
@@ -197,7 +183,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForSingleLocalFileNameConfiguresExpectedRuleSetName
-     * @throws Throwable
      */
     public function testCreateRuleSetsForLocalFileNameConfiguresExpectedRuleSetName(): void
     {
@@ -209,7 +194,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithReferenceContainsExpectedRuleSet
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedRuleSet(): void
     {
@@ -221,7 +205,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules(): void
     {
@@ -233,7 +216,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsForLocalFileWithRuleSetReferenceNodes
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithReferenceContainsRuleInstances(): void
     {
@@ -245,7 +227,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithReferenceContainsExpectedRules
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithReferenceContainsExpectedRules(): void
     {
@@ -265,7 +246,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateSingleRuleSetReturnsRuleSetInstance
-     * @throws Throwable
      */
     public function testCreateSingleRuleSetReturnsRuleSetInstance(): void
     {
@@ -279,7 +259,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * Tests that the rule-set factory applies a set minimum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedMinimumPriorityOnlyContainsMatchingRules(): void
     {
@@ -294,7 +273,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * Tests that the rule-set factory applies a set maximum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedMaximumPriorityOnlyContainsMatchingRules(): void
     {
@@ -309,7 +287,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * Tests that the rule-set factory applies a set maximum priority filter correct.
-     * @throws Throwable
      */
     public function testCreateRuleSetWithSpecifiedPrioritiesOnlyContainsMatchingRules(): void
     {
@@ -325,7 +302,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleWithExcludePattern
-     * @throws Throwable
      */
     public function testCreateRuleWithExcludePattern(): void
     {
@@ -344,7 +320,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting(): void
     {
@@ -359,7 +334,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleWithExpectedExample
-     * @throws Throwable
      */
     public function testCreateRuleWithExpectedExample(): void
     {
@@ -374,7 +348,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleWithExpectedMultipleExamples
-     * @throws Throwable
      */
     public function testCreateRuleWithExpectedMultipleExamples(): void
     {
@@ -389,7 +362,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting(): void
     {
@@ -404,7 +376,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting(): void
     {
@@ -419,7 +390,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testFactorySupportsAlternativeSyntaxForPropertyValue
-     * @throws Throwable
      */
     public function testFactorySupportsAlternativeSyntaxForPropertyValue(): void
     {
@@ -434,7 +404,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting(): void
     {
@@ -451,7 +420,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesNameSetting(): void
     {
@@ -466,7 +434,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting(): void
     {
@@ -481,7 +448,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting(): void
     {
@@ -496,7 +462,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule(): void
     {
@@ -511,7 +476,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules
-     * @throws Throwable
      */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules(): void
     {
@@ -528,7 +492,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception for an invalid ruleset
      * identifier.
      *
-     * @throws Throwable
      * @covers \PHPMD\Exception\RuleSetNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionForInvalidIdentifier(): void
@@ -544,7 +507,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws an exception when the source code filename
      * for the configured rule does not exist.
      *
-     * @throws Throwable
      * @covers \PHPMD\Exception\RuleClassFileNotFoundException
      */
     public function testCreateRuleSetsThrowsExceptionWhenClassFileNotInIncludePath(): void
@@ -563,7 +525,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception when a rule class
      * cannot be found.
      *
-     * @throws Throwable
      * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetThrowsExceptionWhenFileNotContainsClass(): void
@@ -581,7 +542,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Tests that the factory throws the expected exception when a rule class
      * cannot be found.
      *
-     * @throws Throwable
      * @covers \PHPMD\Exception\RuleClassNotFoundException
      */
     public function testCreateRuleSetsThrowsExpectedExceptionForInvalidXmlFile(): void
@@ -596,7 +556,6 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     /**
      * testCreateRuleSetsActivatesStrictModeOnRuleSet
-     * @throws Throwable
      */
     public function testCreateRuleSetsActivatesStrictModeOnRuleSet(): void
     {
@@ -616,7 +575,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      * reference-by-includepath and explicit-classfile-declaration works.
      *
      * @throws Exception
-     * @throws Throwable
      */
     public function testAddPHPIncludePath(): void
     {
@@ -649,7 +607,6 @@ class RuleSetFactoryTest extends AbstractTestCase
     /**
      * Checks if PHPMD doesn't treat directories named as code rule as files
      *
-     * @throws Throwable
      * @link https://github.com/phpmd/phpmd/issues/47
      */
     public function testIfGettingRuleFilePathExcludeUnreadablePaths(): void
@@ -682,7 +639,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Checks the ruleset XML files provided with PHPMD all provide externalInfoUrls
      *
      * @param string $file The path to the ruleset xml to test
-     * @throws Throwable
+     *
      * @dataProvider getDefaultRuleSets
      */
     public function testDefaultRuleSetsProvideExternalInfoUrls(string $file): void
@@ -733,7 +690,7 @@ class RuleSetFactoryTest extends AbstractTestCase
      * @param string $file At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return \PHPMD\RuleSet[]
-     * @throws Throwable
+     *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     private function createRuleSetsFromFiles(string $file): array

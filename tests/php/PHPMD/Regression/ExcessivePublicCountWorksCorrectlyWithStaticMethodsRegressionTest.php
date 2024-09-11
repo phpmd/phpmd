@@ -23,7 +23,6 @@ use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
 use PHPUnit\Framework\MockObject\MockObject;
-use Throwable;
 
 /**
  * Regression test for issue 409.
@@ -40,8 +39,6 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
 
     /**
      * Sets up the renderer mock
-     *
-     * @throws Throwable
      */
     protected function setUp(): void
     {
@@ -59,7 +56,6 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     * @throws Throwable
      */
     public function testReportIsGeneratedIWithNoSuppression(): void
     {
@@ -103,7 +99,6 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
      * - TooManyMethods
      * - TooManyPublicMethods
      * - ExcessiveClassComplexity
-     * @throws Throwable
      */
     public function testReportIsNotGeneratedIWithSuppression(): void
     {

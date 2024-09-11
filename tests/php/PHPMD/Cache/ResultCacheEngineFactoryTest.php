@@ -11,7 +11,6 @@ use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngineFactory
@@ -30,9 +29,6 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
 
     private ResultCacheEngineFactory $engineFactory;
 
-    /**
-     * @throws Throwable
-     */
     protected function setUp(): void
     {
         $this->options = $this->getMockBuilder(CommandLineOptions::class)
@@ -49,7 +45,6 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::create
      */
     public function testCreateNotEnabledShouldReturnNull(): void
@@ -61,7 +56,6 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::create
      */
     public function testCreateCacheMissShouldHaveNoOriginalState(): void
@@ -85,7 +79,6 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::create
      */
     public function testCreateCacheHitShouldHaveOriginalState(): void
@@ -107,9 +100,6 @@ class ResultCacheEngineFactoryTest extends AbstractTestCase
         static::assertNotNull($this->getFileFilterState($engine->getFileFilter()));
     }
 
-    /**
-     * @throws Throwable
-     */
     private function getFileFilterState(ResultCacheFileFilter $filter): ?ResultCacheState
     {
         $property = new ReflectionProperty($filter, 'state');

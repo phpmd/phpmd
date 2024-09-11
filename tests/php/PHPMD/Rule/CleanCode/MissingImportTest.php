@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * MissingImport Tests
@@ -43,7 +42,7 @@ class MissingImportTest extends AbstractTestCase
      * Tests the rule for cases where it should apply.
      *
      * @param string $file The test file to test against.
-     * @throws Throwable
+     *
      * @dataProvider getApplyingCases
      */
     public function testRuleAppliesTo(string $file): void
@@ -58,7 +57,7 @@ class MissingImportTest extends AbstractTestCase
      * Tests the rule for cases where it should not apply.
      *
      * @param string $file The test file to test against.
-     * @throws Throwable
+     *
      * @dataProvider getNotApplyingCases
      */
     public function testRuleDoesNotApplyTo(string $file): void
@@ -69,7 +68,6 @@ class MissingImportTest extends AbstractTestCase
     /**
      * Tests that it applies to a class that has fully qualified class names
      *
-     * @throws Throwable
      * @covers ::apply
      * @covers ::isSelfReference
      */
@@ -83,7 +81,6 @@ class MissingImportTest extends AbstractTestCase
     /**
      * Tests that it does not apply to a class in root namespace when configured.
      *
-     * @throws Throwable
      * @covers ::apply
      * @covers ::isGlobalNamespace
      */

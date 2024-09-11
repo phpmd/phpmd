@@ -6,7 +6,6 @@ use org\bovigo\vfs\vfsStream;
 use PHPMD\AbstractTestCase;
 use PHPMD\Rule\CleanCode\DuplicatedArrayKey;
 use PHPMD\RuleSet;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheKeyFactory
@@ -26,7 +25,6 @@ class ResultCacheKeyFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::create
      * @covers ::createRuleHashes
      * @covers ::getBaselineHash

@@ -19,13 +19,9 @@
 namespace PHPMD\Rule\CleanCode;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 class IfStatementAssignmentTest extends AbstractTestCase
 {
-    /**
-     * @throws Throwable
-     */
     public function testRuleNotAppliesInsideClosure(): void
     {
         $rule = new IfStatementAssignment();
@@ -33,9 +29,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleNotAppliesInsideClosureCallbacks(): void
     {
         $rule = new IfStatementAssignment();
@@ -43,9 +36,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToIfsWithoutAssignment(): void
     {
         $rule = new IfStatementAssignment();
@@ -53,9 +43,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToIfsWithConditionsOnly(): void
     {
         $rule = new IfStatementAssignment();
@@ -63,9 +50,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleNotAppliesToLogicalOperators(): void
     {
         $rule = new IfStatementAssignment();
@@ -73,9 +57,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleWorksCorrectlyWhenExpressionContainsMath(): void
     {
         $rule = new IfStatementAssignment();
@@ -83,9 +64,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesToFunctions(): void
     {
         $rule = new IfStatementAssignment();
@@ -93,9 +71,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesMultipleIfConditions(): void
     {
         $rule = new IfStatementAssignment();
@@ -103,9 +78,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesToMultilevelIfConditions(): void
     {
         $rule = new IfStatementAssignment();
@@ -113,9 +85,6 @@ class IfStatementAssignmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testRuleAppliesMultipleTimesInOneIfCondition(): void
     {
         $rule = new IfStatementAssignment();

@@ -23,7 +23,6 @@ use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
-use Throwable;
 
 /**
  * Test case for the SARIF renderer implementation.
@@ -34,7 +33,6 @@ class SARIFRendererTest extends AbstractTestCase
 {
     /**
      * testRendererCreatesExpectedNumberOfJsonElements
-     * @throws Throwable
      */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
@@ -86,7 +84,6 @@ class SARIFRendererTest extends AbstractTestCase
 
     /**
      * testRendererAddsProcessingErrorsToJsonReport
-     * @throws Throwable
      */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
