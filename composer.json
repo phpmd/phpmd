@@ -59,7 +59,7 @@
     }
   },
   "bin": [
-    "src/bin/phpmd"
+    "bin/phpmd"
   ],
   "scripts": {
     "test": "paratest",
