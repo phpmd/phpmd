@@ -409,6 +409,6 @@ return $config
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
-            ->in(__DIR__ . '/src/main/php/PHPMD')
-            ->in(__DIR__ . '/src/test/php/')
+            ->in(__DIR__ . '/src')
+            ->in(__DIR__ . '/tests/php/')
     );
