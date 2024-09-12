@@ -3,7 +3,8 @@
 $root = realpath(__DIR__ . '/../') . '/';
 
 $archiveName = 'phpmd.phar';
-$version = parse_ini_file($root . 'build.properties')['project.version'] ?? '@package_version@';
+$changelog = file_get_contents($root . 'CHANGELOG', false, null, 0, 1024);
+$version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : '@package_version@';
 
 echo 'PHPMD ', $version, PHP_EOL, PHP_EOL;
 
