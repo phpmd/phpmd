@@ -183,12 +183,12 @@ final class Command
      */
     private function getVersion(): string
     {
-        $build = __DIR__ . '/../../build.properties';
+        $build = __DIR__ . '/../../CHANGELOG';
 
         $version = '@package_version@';
         if (file_exists($build)) {
-            $data = @parse_ini_file($build);
-            $version = $data['project.version'] ?? $version;
+            $changelog = file_get_contents($build, false, null, 0, 1024) ?: '';
+            $version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : $version;
         }
 
         return $version;

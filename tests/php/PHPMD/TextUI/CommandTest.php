@@ -439,9 +439,8 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $data = @parse_ini_file(__DIR__ . '/../../../../build.properties');
-        static::assertIsArray($data);
-        $version = $data['project.version'];
+        $changelog = file_get_contents(__DIR__ . '/../../../../CHANGELOG', false, null, 0, 1024) ?: '';
+        $version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : '@package_version@';
 
         static::assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));
     }
