@@ -17,6 +17,8 @@
 
 namespace PHPMD\Rule\Naming;
 
+use PDepend\Source\AST\ASTCallable;
+use PDepend\Source\AST\ASTScalarType;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -77,6 +79,16 @@ class BooleanGetMethodName extends AbstractRule implements MethodAware
      */
     protected function isReturnTypeBoolean(MethodNode $node)
     {
+        $wrappedNode = $node->getNode();
+        if ($wrappedNode instanceof ASTCallable) {
+            $returnType = $wrappedNode->getReturnType();
+            if ($returnType instanceof ASTScalarType
+                && in_array($returnType->getImage(), array('bool', 'true', 'false'), true)
+            ) {
+                return true;
+            }
+        }
+
         $comment = $node->getDocComment();
         if ($comment === null) {
             return false;
