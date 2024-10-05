@@ -19,6 +19,8 @@
 namespace PHPMD\Rule\Naming;
 
 use OutOfBoundsException;
+use PDepend\Source\AST\ASTCallable;
+use PDepend\Source\AST\ASTScalarType;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\MethodNode;
@@ -72,6 +74,17 @@ final class BooleanGetMethodName extends AbstractRule implements MethodAware
      */
     private function isReturnTypeBoolean(MethodNode $node): bool
     {
+        $wrappedNode = $node->getNode();
+        if ($wrappedNode instanceof ASTCallable) {
+            $returnType = $wrappedNode->getReturnType();
+            if (
+                $returnType instanceof ASTScalarType
+                && in_array($returnType->getImage(), ['bool', 'true', 'false'], true)
+            ) {
+                return true;
+            }
+        }
+
         $comment = $node->getComment();
         if ($comment === null) {
             return false;
