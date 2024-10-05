@@ -122,8 +122,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToReturnDeclarationBool
-     *
-     * @throws Throwable
      */
     public function testRuleAppliesToReturnDeclarationBool(): void
     {
@@ -137,7 +135,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
      * testRuleAppliesToReturnDeclarationTrue
      *
      * @requires PHP 8.2.0
-     * @throws Throwable
      */
     public function testRuleAppliesToReturnDeclarationTrue(): void
     {
@@ -151,7 +148,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
      * testRuleAppliesToReturnDeclarationFalse
      *
      * @requires PHP 8.2.0
-     * @throws Throwable
      */
     public function testRuleAppliesToReturnDeclarationFalse(): void
     {
