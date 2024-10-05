@@ -11,11 +11,7 @@ echo 'PHPMD ', $version, PHP_EOL, PHP_EOL;
 $phar = new Phar($archiveName);
 $phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'src/');
 $phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'rulesets/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor\/autoload\.php/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor\/composer/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor\/pdepend/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor\/psr/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor\/symfony(?!.*\/.*\/Test\/).*$/');
+$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor/');
 
 $patchList = [
     'src/PHPMD.php',
