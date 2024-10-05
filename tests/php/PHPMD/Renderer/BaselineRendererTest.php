@@ -5,7 +5,6 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Stubs\WriterStub;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
@@ -14,7 +13,6 @@ use Throwable;
 class BaselineRendererTest extends AbstractTestCase
 {
     /**
-     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReport(): void
@@ -43,7 +41,6 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReportShouldWriteMethodName(): void
@@ -70,7 +67,6 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderReportShouldDeduplicateSimilarViolations(): void
@@ -98,7 +94,6 @@ class BaselineRendererTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::renderReport
      */
     public function testRenderEmptyReport(): void

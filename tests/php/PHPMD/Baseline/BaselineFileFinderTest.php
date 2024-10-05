@@ -5,7 +5,6 @@ namespace PHPMD\Baseline;
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\CommandLineOptions;
 use RuntimeException;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Baseline\BaselineFileFinder
@@ -14,7 +13,6 @@ use Throwable;
 class BaselineFileFinderTest extends AbstractTestCase
 {
     /**
-     * @throws Throwable
      * @covers ::find
      */
     public function testShouldFindFileFromCLI(): void
@@ -25,7 +23,6 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::existingFile
      * @covers ::find
      */
@@ -44,7 +41,6 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::find
      * @covers ::nullOrThrow
      */
@@ -60,7 +56,6 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::find
      * @covers ::nullOrThrow
      */
@@ -72,7 +67,6 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::existingFile
      * @covers ::find
      * @covers ::nullOrThrow
@@ -85,7 +79,6 @@ class BaselineFileFinderTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::find
      * @covers ::notNull
      * @covers ::nullOrThrow

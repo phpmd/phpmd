@@ -3,7 +3,6 @@
 namespace PHPMD\Console;
 
 use PHPUnit\Framework\TestCase;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Console\StreamOutput
@@ -11,7 +10,6 @@ use Throwable;
 class StreamOutputTest extends TestCase
 {
     /**
-     * @throws Throwable
      * @covers ::__construct
      * @covers ::doWrite
      */

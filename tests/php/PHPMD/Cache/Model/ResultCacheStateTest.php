@@ -7,7 +7,6 @@ use PHPMD\Rule\CleanCode\BooleanArgumentFlag;
 use PHPMD\RuleSet;
 use PHPMD\RuleViolation;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\Model\ResultCacheState
@@ -26,7 +25,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::getCacheKey
      */
     public function testGetCacheKey(): void
@@ -35,7 +33,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::getViolations
      * @covers ::setViolations
      */
@@ -62,7 +59,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::addRuleViolation
      */
     public function testAddRuleViolation(): void
@@ -101,7 +97,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::findRuleIn
      * @covers ::getRuleViolations
      */
@@ -129,7 +124,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::findRuleIn
      * @covers ::getRuleViolations
      */
@@ -162,7 +156,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::isFileModified
      * @covers ::setFileState
      */
@@ -176,7 +169,6 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::toArray
      */
     public function testToArray(): void

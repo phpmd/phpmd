@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\GotoStatement} class.
@@ -31,7 +30,6 @@ class GotoStatementTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToMethodWithoutGotoStatement
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodWithoutGotoStatement(): void
     {
@@ -42,7 +40,6 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodWithGotoStatement
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodWithGotoStatement(): void
     {
@@ -53,7 +50,6 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionWithoutGotoStatement
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionWithoutGotoStatement(): void
     {
@@ -64,7 +60,6 @@ class GotoStatementTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionWithGotoStatement
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionWithGotoStatement(): void
     {

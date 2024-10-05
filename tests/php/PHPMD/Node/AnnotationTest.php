@@ -19,7 +19,6 @@
 namespace PHPMD\Node;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Node\Annotation} class.
@@ -30,7 +29,6 @@ class AnnotationTest extends AbstractTestCase
 {
     /**
      * testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists
-     * @throws Throwable
      */
     public function testAnnotationReturnsFalseWhenNoSuppressWarningAnnotationExists(): void
     {
@@ -40,7 +38,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue
-     * @throws Throwable
      */
     public function testAnnotationReturnsFalseWhenSuppressWarningContainsInvalidValue(): void
     {
@@ -50,7 +47,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPMD(): void
     {
@@ -60,7 +56,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMD(): void
     {
@@ -70,7 +65,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsWithPHPMDLCFirst(): void
     {
@@ -80,7 +74,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPMDPlusRuleName(): void
     {
@@ -93,7 +86,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPHPMDPlusRuleName(): void
     {
@@ -106,7 +98,6 @@ class AnnotationTest extends AbstractTestCase
 
     /**
      * testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName
-     * @throws Throwable
      */
     public function testAnnotationReturnsTrueWhenSuppressWarningContainsPartialRuleName(): void
     {

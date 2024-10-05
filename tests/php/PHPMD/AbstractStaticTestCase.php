@@ -21,7 +21,6 @@ namespace PHPMD;
 use Closure;
 use ErrorException;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -48,8 +47,6 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * This method initializes the test environment, it configures the files
      * directory and sets the include_path for svn versions.
-     *
-     * @throws Throwable
      */
     public static function setUpBeforeClass(): void
     {
@@ -103,7 +100,6 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Returns the absolute path for a test resource for the current test.
      *
-     * @throws Throwable
      * @since 1.1.0
      */
     protected static function createCodeResourceUriForTest(): string
@@ -133,7 +129,7 @@ abstract class AbstractStaticTestCase extends TestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
-     * @throws Throwable
+     *
      * @since 1.1.0
      */
     protected static function createResourceUriForTest(string $localPath): string
@@ -149,7 +145,6 @@ abstract class AbstractStaticTestCase extends TestCase
      *
      * @param string $actualOutput Generated xml output.
      * @param string $expectedFileName File with expected xml result.
-     * @throws Throwable
      */
     public static function assertXmlEquals(string $actualOutput, string $expectedFileName): void
     {
@@ -184,7 +179,6 @@ abstract class AbstractStaticTestCase extends TestCase
      * @param string $expectedFileName File with expected JSON result.
      * @param bool $removeDynamicValues If set to `false`, the actual output is not normalized,
      *                                          if set to a closure, the closure is applied on the actual output array.
-     * @throws Throwable
      */
     public static function assertJsonEquals(
         string $actualOutput,
@@ -244,8 +238,6 @@ abstract class AbstractStaticTestCase extends TestCase
 
     /**
      * Creates a file uri for a temporary test file.
-     *
-     * @throws Throwable
      */
     protected static function createTempFileUri(?string $fileName = null): string
     {

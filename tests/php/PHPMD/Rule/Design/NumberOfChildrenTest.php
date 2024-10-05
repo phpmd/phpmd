@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\NumberOfChildren} class.
@@ -30,7 +29,6 @@ class NumberOfChildrenTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithChildrenLessThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToClassWithChildrenLessThanThreshold(): void
     {
@@ -42,7 +40,6 @@ class NumberOfChildrenTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithChildrenIdenticalToThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToClassWithChildrenIdenticalToThreshold(): void
     {
@@ -54,7 +51,6 @@ class NumberOfChildrenTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithChildrenGreaterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToClassWithChildrenGreaterThanThreshold(): void
     {

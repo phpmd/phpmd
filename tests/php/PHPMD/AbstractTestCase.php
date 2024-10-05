@@ -41,7 +41,6 @@ use PHPMD\Stubs\RuleStub;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
-use Throwable;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -115,8 +114,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first class found in a source file related to the calling
      * test method.
-     *
-     * @throws Throwable
      */
     protected function getClass(): ClassNode
     {
@@ -130,8 +127,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first interface found in a source file related to the calling
      * test method.
-     *
-     * @throws Throwable
      */
     protected function getInterface(): InterfaceNode
     {
@@ -142,9 +137,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         );
     }
 
-    /**
-     * @throws Throwable
-     */
     protected function getTrait(): TraitNode
     {
         return new TraitNode(
@@ -154,9 +146,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         );
     }
 
-    /**
-     * @throws Throwable
-     */
     protected function getEnum(): EnumNode
     {
         return new EnumNode(
@@ -169,8 +158,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first method found in a source file related to the calling
      * test method.
-     *
-     * @throws Throwable
      */
     protected function getMethod(): MethodNode
     {
@@ -183,8 +170,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first function found in a source files related to the calling
      * test method.
-     *
-     * @throws Throwable
      */
     protected function getFunction(): FunctionNode
     {
@@ -198,7 +183,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the first method or function node for a given test file.
      *
-     * @throws Throwable
      * @since 2.8.3
      */
     protected function getNodeForTestFile(string $file): FunctionNode|MethodNode
@@ -227,7 +211,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
      * @throws ExpectationFailedException
-     * @throws Throwable
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, int $expectedInvokes, string $file): void
     {
@@ -274,7 +257,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Return a human-friendly summary for a list of violations.
      *
      * @param iterable<RuleViolation> $violations
-     * @throws Throwable
      */
     protected function getViolationsSummary(iterable $violations): string
     {
@@ -304,7 +286,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Returns the absolute path for a test resource for the current test.
      *
-     * @throws Throwable
      * @since 1.1.0
      */
     protected static function createCodeResourceUriForTest(): string
@@ -318,7 +299,7 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Returns the absolute path for a test resource for the current test.
      *
      * @param string $localPath The local/relative file location
-     * @throws Throwable
+     *
      * @since 1.1.0
      */
     protected static function createResourceUriForTest(string $localPath): string
@@ -351,7 +332,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked class node instance.
      *
      * @return ClassNode&MockObject
-     * @throws Throwable
      */
     protected function getClassMock(?string $metric = null, ?int $value = null)
     {
@@ -373,7 +353,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked method node instance.
      *
      * @return MethodNode&MockObject
-     * @throws Throwable
      */
     protected function getMethodMock(?string $metric = null, ?int $value = null)
     {
@@ -388,7 +367,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param ?string $metric The metric acronym used by PHP_Depend.
      * @param ?numeric $value The expected metric return value.
-     * @throws Throwable
      */
     protected function createFunctionMock(?string $metric = null, mixed $value = null): FunctionNode&MockObject
     {
@@ -408,7 +386,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *
      * @param int $expectedInvokes Number of expected invokes.
      * @return MockObject&Report
-     * @throws Throwable
      */
     protected function getReportMock(int $expectedInvokes = -1)
     {
@@ -431,8 +408,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
     /**
      * Get a mocked report with one violation
-     *
-     * @throws Throwable
      */
     public function getReportWithOneViolation(): Report
     {
@@ -443,7 +418,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Get a mocked report with no violation
      *
      * @return MockObject&Report
-     * @throws Throwable
      */
     public function getReportWithNoViolation()
     {
@@ -452,8 +426,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
 
     /**
      * Get a mocked report with at least one violation
-     *
-     * @throws Throwable
      */
     public function getReportWithAtLeastOneViolation(): Report
     {
@@ -464,7 +436,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked {@link \PHPMD\AbstractRule} instance.
      *
      * @return AbstractRule&MockObject
-     * @throws Throwable
      */
     protected function getRuleMock()
     {
@@ -478,7 +449,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      *                                                            once.
      * @param int|string $count How often should apply() be called?
      * @return MockObject&RuleSet
-     * @throws Throwable
      */
     protected function getRuleSetMock($expectedClass = null, int|string $count = '*')
     {
@@ -512,7 +482,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param object|null $rule The rule object to use.
      * @param string|null $description The violation description to use.
      * @return MockObject&RuleViolation
-     * @throws Throwable
      */
     protected function getRuleViolationMock(
         string $fileName = '/foo/bar.php',
@@ -560,7 +529,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * Creates a mocked rule violation instance.
      *
      * @return MockObject&ProcessingError
-     * @throws Throwable
      */
     protected function getErrorMock(
         string $file = '/foo/baz.php',
@@ -595,7 +563,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param ?string $metric The metric acronym used by PHP_Depend.
      * @param ?numeric $value The expected metric return value.
      * @return (FunctionNode|MethodNode)&MockObject
-     * @throws Throwable
      */
     private function createFunctionOrMethodMock(
         string $mockBuilder,
@@ -643,7 +610,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * @param Iterator<T> $nodes
      * @return T
      * @throws ErrorException
-     * @throws Throwable
      */
     private function getNodeForCallingTestCase(Iterator $nodes): ASTNode
     {
@@ -658,7 +624,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      * in that file.
      *
      * @throws ErrorException
-     * @throws Throwable
      */
     private function parseSource(string $sourceFile): ASTNamespace
     {

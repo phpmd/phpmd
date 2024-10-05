@@ -19,7 +19,6 @@
 namespace PHPMD;
 
 use OutOfBoundsException;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\AbstractRule} class.
@@ -31,7 +30,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -46,7 +44,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -61,7 +58,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -76,7 +72,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -91,7 +86,6 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getBooleanProperty method with a fallback value
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -105,7 +99,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetIntPropertyReturnsValueOfTypeInteger
      *
-     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -120,7 +113,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetIntPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
-     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -135,7 +127,6 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getIntProperty method with a fallback value
      *
-     * @throws Throwable
      * @covers ::getIntProperty
      * @covers ::getProperty
      */
@@ -149,7 +140,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
-     * @throws Throwable
      * @covers ::getBooleanProperty
      * @covers ::getProperty
      */
@@ -164,7 +154,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetStringPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
-     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */
@@ -179,7 +168,6 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetStringPropertyReturnsStringValue
      *
-     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */
@@ -194,7 +182,6 @@ class RuleTest extends AbstractTestCase
     /**
      * Tests the getStringProperty method with a fallback value
      *
-     * @throws Throwable
      * @covers ::getProperty
      * @covers ::getStringProperty
      */

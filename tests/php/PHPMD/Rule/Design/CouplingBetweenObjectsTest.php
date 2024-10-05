@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Rule\Design\CouplingBetweenObjects} class.
@@ -31,7 +30,6 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 {
     /**
      * testRuleNotAppliesToClassWithCboLessThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToClassWithCboLessThanThreshold(): void
     {
@@ -43,7 +41,6 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithCboEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToClassWithCboEqualToThreshold(): void
     {
@@ -55,7 +52,6 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToClassWithCboGreaterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToClassWithCboGreaterThanThreshold(): void
     {

@@ -6,7 +6,6 @@ use org\bovigo\vfs\vfsStream;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
-use Throwable;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheWriter
@@ -25,7 +24,6 @@ class ResultCacheWriterTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @covers ::write
      */
     public function testWrite(): void

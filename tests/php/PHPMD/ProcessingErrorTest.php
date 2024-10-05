@@ -18,8 +18,6 @@
 
 namespace PHPMD;
 
-use Throwable;
-
 /**
  * Test case for the processing error class.
  *
@@ -30,7 +28,6 @@ class ProcessingErrorTest extends AbstractTestCase
 {
     /**
      * testGetMessageReturnsTheExpectedValue
-     * @throws Throwable
      */
     public function testGetMessageReturnsTheExpectedValue(): void
     {
@@ -43,7 +40,7 @@ class ProcessingErrorTest extends AbstractTestCase
      * a given exception message,
      *
      * @param string $message The original exception message
-     * @throws Throwable
+     *
      * @dataProvider getParserExceptionMessages
      */
     public function testGetFileReturnsExpectedFileName(string $message): void

@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Naming;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the really short variable, parameter and property name rule.
@@ -30,7 +29,6 @@ class ShortVariableTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToLocalVariableInFunctionWithNameShorterThanThreshold(): void
     {
@@ -43,7 +41,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToTryCatchBlocks
-     * @throws Throwable
      */
     public function testRuleNotAppliesToTryCatchBlocksInsideForeach(): void
     {
@@ -56,7 +53,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
@@ -69,7 +65,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
@@ -82,7 +77,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFunctionParameterWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFunctionParameterWithNameShorterThanThreshold(): void
     {
@@ -95,7 +89,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
@@ -108,7 +101,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
@@ -127,7 +119,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
@@ -140,7 +131,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
@@ -153,7 +143,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToMethodParameterWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
@@ -172,7 +161,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
@@ -185,7 +173,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFieldWithNameShorterThanThreshold(): void
     {
@@ -198,7 +185,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameEqualToThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
@@ -211,7 +197,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToFieldWithNameGreaterThanThreshold
-     * @throws Throwable
      */
     public function testRuleNotAppliesToFieldWithNameGreaterThanThreshold(): void
     {
@@ -224,7 +209,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold
-     * @throws Throwable
      */
     public function testRuleAppliesToFieldAndParameterWithNameShorterThanThreshold(): void
     {
@@ -243,7 +227,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToShortVariableNameAsForLoopIndex
-     * @throws Throwable
      */
     public function testRuleNotAppliesToShortVariableNameAsForLoopIndex(): void
     {
@@ -256,7 +239,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToShortVariableNameAsForeachLoopIndex
-     * @throws Throwable
      */
     public function testRuleNotAppliesToShortVariableNameAsForeachLoopIndex(): void
     {
@@ -269,7 +251,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToShortVariableNameInCatchStatement
-     * @throws Throwable
      */
     public function testRuleNotAppliesToShortVariableNameInCatchStatement(): void
     {
@@ -282,7 +263,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToStaticMembersAccessedInMethod
-     * @throws Throwable
      */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
@@ -295,7 +275,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariableOnlyOneTime
-     * @throws Throwable
      */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
@@ -308,7 +287,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
-     * @throws Throwable
      */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
@@ -327,7 +305,6 @@ class ShortVariableTest extends AbstractTestCase
 
     /**
      * testRuleNotAppliesToVariablesFromExceptionsList
-     * @throws Throwable
      */
     public function testRuleNotAppliesToVariablesFromExceptionsList(): void
     {
@@ -342,7 +319,6 @@ class ShortVariableTest extends AbstractTestCase
     /**
      * testRuleAppliesToVariablesWithinForeach
      *
-     * @throws Throwable
      * @dataProvider provideClassWithShortForeachVariables
      */
     public function testRuleAppliesToVariablesWithinForeach(string $allowShortVarInLoop, int $expectedErrorsCount): void

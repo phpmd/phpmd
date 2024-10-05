@@ -19,7 +19,6 @@
 namespace PHPMD\Rule\Controversial;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the camel case variable name rule.
@@ -30,7 +29,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 {
     /**
      * Tests that the rule does apply for an invalid variable name
-     * @throws Throwable
      */
     public function testRuleDoesApplyForInvariableNameWithUnderscore(): void
     {
@@ -45,7 +43,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for variable name
      * with all caps abbreviation.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForAllCapsAbbreviation(): void
     {
@@ -61,7 +58,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     /**
      * Tests that the rule does not apply for variable name
      * with camelcase abbreviation.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForCamelcaseAbbreviation(): void
     {
@@ -77,7 +73,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for an invalid variable name
      * starting with a capital.
-     * @throws Throwable
      */
     public function testRuleDoesApplyForVariableNameWithCapital(): void
     {
@@ -91,7 +86,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a valid variable name
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidVariableName(): void
     {
@@ -105,7 +99,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply for a statically accessed variable
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForStaticVariableAccess(): void
     {
@@ -119,7 +112,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
 
     /**
      * Tests that the rule does NOT apply if name allowed by config
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyIfExcluded(): void
     {
@@ -134,7 +126,6 @@ class CamelCaseVariableNameTest extends AbstractTestCase
     /**
      * Tests that the rule does apply for a valid variable name
      * with an underscore at the beginning when it is allowed.
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed(): void
     {

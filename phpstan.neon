@@ -10,3 +10,7 @@ parameters:
         check:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
+    ignoreErrors:
+        -
+            identifier: missingType.checkedException
+            path: tests/*

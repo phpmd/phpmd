@@ -20,7 +20,6 @@ namespace PHPMD\TextUI;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Paths;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\Command} class.
@@ -44,7 +43,7 @@ class CommandTest extends AbstractTestCase
 
     /**
      * @param ?array<string> $options
-     * @throws Throwable
+     *
      * @dataProvider dataProviderTestMainWithOption
      */
     public function testMainStrictOptionIsOfByDefault(
@@ -137,9 +136,6 @@ class CommandTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testWithMultipleReportFiles(): void
     {
         $args = [
@@ -173,9 +169,6 @@ class CommandTest extends AbstractTestCase
         static::assertFileExists($sarif);
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testOutput(): void
     {
         $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
@@ -199,7 +192,6 @@ class CommandTest extends AbstractTestCase
     }
 
     /**
-     * @throws Throwable
      * @dataProvider dataProviderWithFilter
      */
     public function testWithFilter(string $option, string $value): void
@@ -230,9 +222,6 @@ class CommandTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testMainGenerateBaseline(): void
     {
         $path = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
@@ -266,8 +255,6 @@ class CommandTest extends AbstractTestCase
      * - LongClassName violation should be removed
      * - ShortVariable violation should still exist
      * - BooleanGetMethodName shouldn't be added
-     *
-     * @throws Throwable
      */
     public function testMainUpdateBaseline(): void
     {
@@ -297,9 +284,6 @@ class CommandTest extends AbstractTestCase
         static::assertXmlStringEqualsXmlString($expectedXml, $actualXml);
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testMainBaselineViolationShouldBeIgnored(): void
     {
         $sourceFile = realpath(static::createResourceUriForTest('Baseline/ClassWithShortVariable.php'));
@@ -318,9 +302,6 @@ class CommandTest extends AbstractTestCase
         static::assertSame(ExitCode::Success, $exitCode);
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testMainWritesExceptionMessageToStderr(): void
     {
         stream_filter_register('stderr_stream', StreamFilter::class);
@@ -345,9 +326,6 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testMainWritesExceptionMessageToErrorFileIfSpecified(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
@@ -391,9 +369,6 @@ class CommandTest extends AbstractTestCase
         static::assertStringStartsWith(sprintf('No renderer supports the format "%s"', $format), $errors);
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testOutputDeprecation(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
@@ -421,9 +396,6 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testMainPrintsVersionToStdout(): void
     {
         stream_filter_register('stderr_stream', StreamFilter::class);

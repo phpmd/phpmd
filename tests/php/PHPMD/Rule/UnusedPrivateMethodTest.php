@@ -19,7 +19,6 @@
 namespace PHPMD\Rule;
 
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the unused private method rule.
@@ -30,7 +29,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesToUnusedPrivateMethod
-     * @throws Throwable
      */
     public function testRuleAppliesToUnusedPrivateMethod(): void
     {
@@ -41,7 +39,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToUnusedStaticPrivateMethod
-     * @throws Throwable
      */
     public function testRuleAppliesToUnusedStaticPrivateMethod(): void
     {
@@ -52,7 +49,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleAppliesToParentReferencedUnusedPrivateMethod
-     * @throws Throwable
      */
     public function testRuleAppliesToParentReferencedUnusedPrivateMethod(): void
     {
@@ -63,7 +59,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenMethodIsReferencedOnDifferentObject
-     * @throws Throwable
      */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentObject(): void
     {
@@ -74,7 +69,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenMethodIsReferencedOnDifferentClass
-     * @throws Throwable
      */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentClass(): void
     {
@@ -85,7 +79,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleAppliesWhenPropertyWithSimilarNameIsReferenced
-     * @throws Throwable
      */
     public function testRuleAppliesWhenPropertyWithSimilarNameIsReferenced(): void
     {
@@ -106,7 +99,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     * @throws Throwable
      */
     public function testRuleAppliesWhenMethodWithSimilarNameIsInInvocationChain(): void
     {
@@ -117,7 +109,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToMethodUsedViaCallable
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToMethodUsedViaCallable(): void
     {
@@ -128,7 +119,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToPrivateConstructor
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateConstructor(): void
     {
@@ -139,7 +129,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToPrivatePhp4Constructor
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivatePhp4Constructor(): void
     {
@@ -150,7 +139,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToPrivateCloneMethod
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateCloneMethod(): void
     {
@@ -161,7 +149,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToThisReferencedMethod
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToThisReferencedMethod(): void
     {
@@ -172,7 +159,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToSelfReferencedMethod
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToSelfReferencedMethod(): void
     {
@@ -183,7 +169,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToStaticReferencedMethod
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToStaticReferencedMethod(): void
     {
@@ -194,7 +179,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToClassNameReferencedMethod
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToClassNameReferencedMethod(): void
     {
@@ -216,7 +200,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
      *     }
      * }
      * </code>
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCall(): void
     {
@@ -227,7 +210,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
 
     /**
      * testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo
-     * @throws Throwable
      */
     public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo(): void
     {

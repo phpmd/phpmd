@@ -20,7 +20,6 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractTestCase;
-use Throwable;
 
 /**
  * Test case for the {@link \PHPMD\Node\ASTNode} class.
@@ -31,7 +30,6 @@ class ASTNodeTest extends AbstractTestCase
 {
     /**
      * testGetImageDelegatesToGetImageMethodOfWrappedNode
-     * @throws Throwable
      */
     public function testGetImageDelegatesToGetImageMethodOfWrappedNode(): void
     {
@@ -46,7 +44,6 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNameDelegatesToGetImageMethodOfWrappedNode
-     * @throws Throwable
      */
     public function testGetNameDelegatesToGetImageMethodOfWrappedNode(): void
     {
@@ -61,7 +58,6 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
-     * @throws Throwable
      */
     public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse(): void
     {
@@ -75,7 +71,6 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetParentNameReturnsNull
-     * @throws Throwable
      */
     public function testGetParentNameReturnsNull(): void
     {
@@ -87,7 +82,6 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetNamespaceNameReturnsNull
-     * @throws Throwable
      */
     public function testGetNamespaceNameReturnsNull(): void
     {
@@ -99,7 +93,6 @@ class ASTNodeTest extends AbstractTestCase
 
     /**
      * testGetFullQualifiedNameReturnsNull
-     * @throws Throwable
      */
     public function testGetFullQualifiedNameReturnsNull(): void
     {
