@@ -130,6 +130,47 @@ class BooleanGetMethodNameTest extends AbstractTestCase
     }
 
     /**
+     * testRuleAppliesToReturnDeclarationBool
+     *
+     * @throws Throwable
+     */
+    public function testRuleAppliesToReturnDeclarationBool(): void
+    {
+        $rule = new BooleanGetMethodName();
+        $rule->addProperty('checkParameterizedMethods', 'false');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToReturnDeclarationTrue
+     *
+     * @requires PHP 8.2.0
+     * @throws Throwable
+     */
+    public function testRuleAppliesToReturnDeclarationTrue(): void
+    {
+        $rule = new BooleanGetMethodName();
+        $rule->addProperty('checkParameterizedMethods', 'false');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToReturnDeclarationFalse
+     *
+     * @requires PHP 8.2.0
+     * @throws Throwable
+     */
+    public function testRuleAppliesToReturnDeclarationFalse(): void
+    {
+        $rule = new BooleanGetMethodName();
+        $rule->addProperty('checkParameterizedMethods', 'false');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
      * Returns the first method found in a source file related to the calling
      * test method.
      *
