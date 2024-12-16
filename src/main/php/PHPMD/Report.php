@@ -58,7 +58,7 @@ class Report
     /** @var BaselineValidator|null */
     private $baselineValidator;
 
-    public function __construct(BaselineValidator $baselineValidator = null)
+    public function __construct(?BaselineValidator $baselineValidator = null)
     {
         $this->baselineValidator = $baselineValidator;
     }

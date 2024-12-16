@@ -72,7 +72,7 @@ class testReportContainsCouplingBetweenObjectsWarning
      * @return void
      * @throws \InvalidArgumentException
      */
-    public function traverse(\DOMNode $node = null)
+    public function traverse(?\DOMNode $node = null)
     {
 
     }
