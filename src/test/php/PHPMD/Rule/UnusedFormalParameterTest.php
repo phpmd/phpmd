@@ -537,4 +537,64 @@ class UnusedFormalParameterTest extends AbstractTest
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($methods[0]);
     }
+
+    /**
+     * testRuleDoesNotApplyToMethodWithOverrideAttribute
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToMethodWithOverrideAttribute()
+    {
+        if (\PHP_VERSION_ID < 80300) {
+            $this->markTestSkipped('This test requires PHP >= 8.3 beceuase it uses the `\Override` PHP attribute.');
+        }
+
+        require_once __DIR__ . '/../../../resources/files/Rule/UnusedFormalParameter/FooInterfaceWithOverride.php';
+        require_once static::createCodeResourceUriForTest();
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToMethodWithoutOverrideAttribute
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithoutOverrideAttribute()
+    {
+        if (\PHP_VERSION_ID < 80300) {
+            $this->markTestSkipped('This test requires PHP >= 8.3 beceuase it uses the `\Override` PHP attribute.');
+        }
+
+        require_once __DIR__ . '/../../../resources/files/Rule/UnusedFormalParameter/FooInterfaceWithoutOverride.php';
+        require_once static::createCodeResourceUriForTest();
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleDoesNotApplyToMethodWithOverrideAttribute
+     *
+     * @requires PHP < 8.3
+     *
+     * @return void
+     */
+    public function testRuleAppliesToMethodWithOverrideAttributeBeforePhp83()
+    {
+        if (\PHP_VERSION_ID >= 80300) {
+            $this->markTestSkipped(
+                'This test requires PHP < 8.3 beceuase it checks the absence of the `\Override` PHP attribute.'
+            );
+        }
+
+        require_once static::createCodeResourceUriForTest();
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
 }
