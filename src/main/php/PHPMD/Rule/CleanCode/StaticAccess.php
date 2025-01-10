@@ -66,7 +66,23 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
 
     protected function isExcludedFromAnalysis($className, $exceptions)
     {
-        return in_array(trim($className, " \t\n\r\0\x0B\\"), $exceptions);
+        $className = trim($className, " \t\n\r\0\x0B\\");
+
+        if (in_array($className, $exceptions)) {
+            return true;
+        }
+
+        $wildcardExceptions = array_filter($exceptions, function ($exception) {
+            return strpos($exception, '*') !== false;
+        });
+        foreach ($wildcardExceptions as $wildcardException) {
+            $wildcardException = str_replace(array('*', '\\'), array('.*', '\\\\'), $wildcardException);
+            if (preg_match('/' . $wildcardException . '/', $className)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected function isStaticMethodCall(AbstractNode $methodCall)
