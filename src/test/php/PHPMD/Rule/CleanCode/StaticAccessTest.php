@@ -122,4 +122,36 @@ class StaticAccessTest extends AbstractTest
         $rule->addProperty('ignorepattern', '/^foobar/');
         $rule->apply($this->getMethod());
     }
+
+    /**
+     * testRuleNotAppliesToEnumTranslationStaticCall
+     *
+     * @requires PHP 8.1.0
+     *
+     * @return void
+     */
+    public function testRuleNotAppliesToEnumTranslationStaticCall()
+    {
+        require_once(__DIR__.'/../../../../resources/files/classes/SuitEnum.php');
+
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * testRuleAppliesToEnumStaticCall
+     *
+     * @requires PHP 8.1.0
+     *
+     * @return void
+     */
+    public function testRuleAppliesToEnumStaticCall()
+    {
+        require_once(__DIR__.'/../../../../resources/files/classes/SuitEnum.php');
+
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
 }

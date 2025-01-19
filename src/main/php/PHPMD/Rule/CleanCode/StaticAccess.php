@@ -90,7 +90,8 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
         return $methodCall->getChild(0)->getNode() instanceof ASTClassOrInterfaceReference &&
             $methodCall->getChild(1)->getNode() instanceof ASTMethodPostfix &&
             !$this->isCallingParent($methodCall) &&
-            !$this->isCallingSelf($methodCall);
+            !$this->isCallingSelf($methodCall) &&
+            !$this->isCallingEnumTranslator($methodCall);
     }
 
     protected function isCallingParent(AbstractNode $methodCall)
@@ -101,6 +102,26 @@ class StaticAccess extends AbstractRule implements MethodAware, FunctionAware
     protected function isCallingSelf(AbstractNode $methodCall)
     {
         return $methodCall->getChild(0)->getNode() instanceof ASTSelfReference;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCallingEnumTranslator(AbstractNode $methodCall)
+    {
+        if (PHP_VERSION_ID < 80100) {
+            return false;
+        }
+
+        $enumName = $methodCall->getChild(0)->getName();
+
+        if (!enum_exists($enumName)) {
+            return false;
+        }
+
+        $methodName = $methodCall->getChild(1)->getName();
+
+        return in_array($methodName, array('cases', 'from', 'tryFrom'), true);
     }
 
     /**
