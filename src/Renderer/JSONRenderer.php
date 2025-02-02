@@ -101,12 +101,10 @@ class JSONRenderer extends AbstractRenderer
     {
         $errors = $report->getErrors();
         if (count($errors)) {
-            $data['errors'] = array_map(function (ProcessingError $error): array {
-                return [
-                    'fileName' => $error->getFile(),
-                    'message' => $error->getMessage(),
-                ];
-            }, $errors->getArrayCopy());
+            $data['errors'] = array_map(fn(ProcessingError $error): array => [
+                'fileName' => $error->getFile(),
+                'message' => $error->getMessage(),
+            ], $errors->getArrayCopy());
         }
 
         return $data;
