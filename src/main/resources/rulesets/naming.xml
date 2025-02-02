@@ -147,6 +147,29 @@ class ShortMethod {
         </example>
     </rule>
 
+    <rule name="LongMethodName"
+          since="2.15.0"
+          message="Avoid using long method names like {0}::{1}(). The configured maximum method name length is {2}."
+          class="PHPMD\Rule\Naming\LongMethodName"
+          externalInfoUrl="https://phpmd.org/rules/naming.html#longmethodname">
+        <description>
+            Detects when very long method names are used.
+        </description>
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="Maximum length for a method or function name" value="20"/>
+            <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
+        </properties>
+        <example>
+            <![CDATA[
+class LongMethod {
+    public function iAmWayTooLongNotToMixWithSomethingElse() { // Violation
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
     <rule name="ConstructorWithNameAsEnclosingClass"
           since="0.2"
           message="Classes should not have a constructor method with the same name as the class"
