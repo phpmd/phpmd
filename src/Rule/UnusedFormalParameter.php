@@ -19,6 +19,7 @@
 namespace PHPMD\Rule;
 
 use OutOfBoundsException;
+use Override;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTCompoundVariable;
@@ -32,6 +33,9 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
+use ReflectionException;
+use ReflectionMethod;
+use RuntimeException;
 
 /**
  * This rule collects all formal parameters of a given function or method that
@@ -51,6 +55,9 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
     /**
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
+     *
+     * @throws ReflectionException
+     * @throws RuntimeException
      */
     public function apply(AbstractNode $node): void
     {
@@ -112,16 +119,36 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
     /**
      * Returns <b>true</b> when the given node is method with signature declared as inherited using
-     * {@inheritDoc} annotation.
+     * \Override attribute or the {@inheritDoc} annotation.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
+     * @throws ReflectionException
+     * @throws RuntimeException
      */
     private function isInheritedSignature(AbstractCallableNode $node): bool
     {
-        if ($node instanceof MethodNode) {
-            $comment = $node->getComment();
+        if (!$node instanceof MethodNode) {
+            return false;
+        }
 
-            return $comment && preg_match('/@inheritdoc/i', $comment);
+        $comment = $node->getComment();
+
+        if ($comment && preg_match('/@inheritdoc/i', $comment)) {
+            return true;
+        }
+
+        if (\PHP_VERSION_ID < 80300 || !class_exists($node->getParentType()->getFullQualifiedName())) {
+            return false;
+        }
+
+        // Remove the "()" at the end of method's name.
+        $methodName = substr($node->getFullQualifiedName(), 0, -2);
+        $reflectionMethod = new ReflectionMethod($methodName);
+
+        foreach ($reflectionMethod->getAttributes() as $reflectionAttribute) {
+            if ($reflectionAttribute->getName() === Override::class) {
+                return true;
+            }
         }
 
         return false;

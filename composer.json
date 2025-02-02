@@ -60,9 +60,9 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "PHPMD\\": "tests/php/PHPMD/"
-    },
-    "classmap": ["tests/resources/"]
+      "PHPMD\\": "tests/php/PHPMD/",
+      "": "tests/resources/"
+    }
   },
   "bin": [
     "bin/phpmd"
