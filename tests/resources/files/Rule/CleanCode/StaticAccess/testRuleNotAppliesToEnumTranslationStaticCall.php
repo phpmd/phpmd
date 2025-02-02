@@ -17,10 +17,12 @@
 
 namespace tests\resources\files\Rule\CleanCode\StaticAccess;
 
-class Foo
+use files\classes\SuitEnum;
+
+final class Foo
 {
-    static public function testRuleNotAppliesToSelfStaticCall()
+    static public function testRuleNotAppliesToEnumTranslationStaticCall(): void
     {
-        self::bar();
+        SuitEnum::cases();
     }
 }

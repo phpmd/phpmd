@@ -99,4 +99,25 @@ class StaticAccessTest extends AbstractTestCase
         $rule->addProperty('ignorepattern', '/^foobar/');
         $rule->apply($this->getMethod());
     }
+
+    public function testRuleNotAppliesToEnumTranslationStaticCall(): void
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleAppliesToEnumMethodsFromOtherClasses(): void
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleAppliesToEnumStaticCall(): void
+    {
+        $rule = new StaticAccess();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
 }
