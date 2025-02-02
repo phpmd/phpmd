@@ -18,15 +18,6 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-spl_autoload_register(
-    function ($class): void {
-        $file = __DIR__ . '/' . strtr($class, '\\', '/') . '.php';
-        if (file_exists($file)) {
-            include $file;
-        }
-    }
-);
-
 /*
  * If the test suite runs with coverage, it needs all the tokens to exist.
  * load-coverage-tokens.php will load the tokens that can be missing,
