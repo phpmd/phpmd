@@ -58,6 +58,12 @@
       "PHPMD\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "PHPMD\\": "tests/php/PHPMD/"
+    },
+    "classmap": ["tests/resources/"]
+  },
   "bin": [
     "bin/phpmd"
   ],
