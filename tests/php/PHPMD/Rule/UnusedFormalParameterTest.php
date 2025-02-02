@@ -481,4 +481,48 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($methods[0]);
     }
+
+    /**
+     * @requires PHP >= 8.3
+     */
+    public function testRuleDoesNotApplyToMethodWithOverrideAttribute(): void
+    {
+        if (\PHP_VERSION_ID < 80300) {
+            static::markTestSkipped('This test requires PHP >= 8.3 beceuase it uses the `\Override` PHP attribute.');
+        }
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @requires PHP >= 8.3
+     */
+    public function testRuleAppliesToMethodWithoutOverrideAttribute(): void
+    {
+        if (\PHP_VERSION_ID < 80300) {
+            static::markTestSkipped('This test requires PHP >= 8.3 beceuase it uses the `\Override` PHP attribute.');
+        }
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    /**
+     * @requires PHP < 8.3
+     */
+    public function testRuleAppliesToMethodWithOverrideAttributeBeforePhp83(): void
+    {
+        if (\PHP_VERSION_ID >= 80300) {
+            static::markTestSkipped(
+                'This test requires PHP < 8.3 beceuase it checks the absence of the `\Override` PHP attribute.'
+            );
+        }
+
+        $rule = new UnusedFormalParameter();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
 }
