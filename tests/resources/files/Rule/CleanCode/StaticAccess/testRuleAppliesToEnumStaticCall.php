@@ -15,12 +15,14 @@
  * @link http://phpmd.org/
  */
 
-namespace tests\resources\files\Rule\CleanCode\StaticAccess;
+namespace test\resources\files\Rule\CleanCode\StaticAccess;
 
-class Foo
+use files\classes\SuitEnum;
+
+final class Foo
 {
-    static public function testRuleNotAppliesToSelfStaticCall()
+    static public function testRuleAppliesToEnumStaticCall(): void
     {
-        self::bar();
+        SuitEnum::bar();
     }
 }

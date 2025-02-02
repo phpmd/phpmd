@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -15,12 +16,12 @@
  * @link http://phpmd.org/
  */
 
-namespace tests\resources\files\Rule\CleanCode\StaticAccess;
+namespace files\classes;
 
-class Foo
+enum SuitEnum: string
 {
-    static public function testRuleNotAppliesToSelfStaticCall()
-    {
-        self::bar();
-    }
+    case Clubs = 'Clubs';
+    case Diamonds = 'Diamonds';
+    case Hearts = 'Hearts';
+    case Spades = 'Spades';
 }
