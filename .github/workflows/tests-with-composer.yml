@@ -47,6 +47,10 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer up
 
+      - name: Dump Composer autoload
+        if: steps.composer-cache.outputs.cache-hit == 'true'
+        run: composer dump-autoload
+
       - name: Run `composer test` twice
         run: |
           composer test

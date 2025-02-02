@@ -46,6 +46,10 @@ jobs:
           composer require scrutinizer/ocular --no-update --no-interaction
           composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
+      - name: Dump Composer autoload
+        if: steps.composer-cache.outputs.cache-hit == 'true'
+        run: composer dump-autoload
+
       - name: Execute Unit Tests
         run: vendor/bin/paratest --coverage-text --coverage-clover=coverage.xml
         env:

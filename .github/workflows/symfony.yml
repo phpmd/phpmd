@@ -55,5 +55,9 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer update --prefer-dist --no-progress --prefer-stable
 
+      - name: Dump Composer autoload
+        if: steps.composer-cache.outputs.cache-hit == 'true'
+        run: composer dump-autoload
+
       - name: Run test suite
         run: vendor/bin/paratest --display-deprecations

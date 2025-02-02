@@ -51,6 +51,10 @@ jobs:
         if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php == '8.4'
         run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
 
+      - name: Dump Composer autoload
+        if: steps.composer-cache.outputs.cache-hit == 'true'
+        run: composer dump-autoload
+
       - name: Execute Unit Tests
         run: composer test
 
