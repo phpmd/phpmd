@@ -78,7 +78,7 @@ jobs:
           sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@phpmd.org --batch --detach-sign --output phpmd.phar.asc phpmd.phar";
 
       - name: Archive generated phar
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: |
             phpmd.phar
