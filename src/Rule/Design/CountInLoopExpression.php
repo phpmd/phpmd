@@ -48,7 +48,7 @@ use RuntimeException;
  * - do-while() loops
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings(CouplingBetweenObjects)
  */
 final class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
 {

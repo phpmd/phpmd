@@ -18,7 +18,7 @@ class ResultCacheUpdater
     }
 
     /**
-     * @param RuleSet[] $ruleSetList
+     * @param list<RuleSet> $ruleSetList
      * @throws OutOfBoundsException
      */
     public function update(array $ruleSetList, ResultCacheState $state, Report $report): ResultCacheState

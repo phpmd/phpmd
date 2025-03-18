@@ -38,7 +38,6 @@ use PHPMD\Node\NodeInfo;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
-use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
 
@@ -204,13 +203,9 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     /**
      * Assert that a given file trigger N times the given rule.
      *
-     * Rethrows the PHPUnit ExpectationFailedException with the base name
-     * of the file for better readability.
-     *
      * @param Rule $rule Rule to test.
      * @param int $expectedInvokes Count of expected invocations.
      * @param string $file Test file containing a method with the same name to be tested.
-     * @throws ExpectationFailedException
      */
     protected function expectRuleHasViolationsForFile(Rule $rule, int $expectedInvokes, string $file): void
     {
@@ -223,13 +218,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
             ? $actualInvokes > 0
             : $actualInvokes === $expectedInvokes;
 
-        if (!$assertion) {
-            throw new ExpectationFailedException(
-                $this->getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
-            );
-        }
-
-        static::assertTrue($assertion);
+        static::assertTrue(
+            $assertion,
+            $assertion ? '' : $this->getViolationFailureMessage($file, $expectedInvokes, $actualInvokes, $violations)
+        );
     }
 
     /**
@@ -304,10 +296,10 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     protected static function createResourceUriForTest(string $localPath): string
     {
-        $frame = static::getCallingTestCase();
-        static::assertIsString($frame['class']);
+        $class = static::getCallingTestCase()['class'] ?? null;
+        static::assertIsString($class);
 
-        return static::getResourceFilePathFromClassName($frame['class'], $localPath);
+        return static::getResourceFilePathFromClassName($class, $localPath);
     }
 
     /**
@@ -614,7 +606,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     private function getNodeForCallingTestCase(Iterator $nodes): ASTNode
     {
         $frame = $this->getCallingTestCase();
-        static::assertIsString($frame['function']);
 
         return $this->getNodeByName($nodes, $frame['function']);
     }
