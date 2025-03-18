@@ -117,7 +117,7 @@ class PHPMD
     /**
      * Sets a list of filename extensions for valid php source code files.
      *
-     * @param array<string> $fileExtensions Extensions without leading dot.
+     * @param list<string> $fileExtensions Extensions without leading dot.
      */
     public function setFileExtensions(array $fileExtensions): void
     {
@@ -139,7 +139,7 @@ class PHPMD
      * Add a list of ignore patterns which is used to exclude directories from
      * the source analysis.
      *
-     * @param array<string> $ignorePatterns List of ignore patterns.
+     * @param list<string> $ignorePatterns List of ignore patterns.
      * @return $this
      * @since 2.9.0
      */
@@ -159,7 +159,7 @@ class PHPMD
     }
 
     /**
-     * @return $this;
+     * @return $this
      */
     public function setResultCache(ResultCacheEngine $resultCache)
     {
@@ -193,9 +193,9 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string[]      $ignorePattern
+     * @param list<string>        $ignorePattern
      * @param RendererInterface[] $renderers
-     * @param RuleSet[]          $ruleSetList
+     * @param list<RuleSet>       $ruleSetList
      * @throws Exception
      */
     public function processFiles(

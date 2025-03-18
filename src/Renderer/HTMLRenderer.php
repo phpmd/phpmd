@@ -81,7 +81,7 @@ final class HTMLRenderer extends AbstractRenderer
 
     public function __construct(?int $extraLineInExcerpt = null)
     {
-        if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
+        if ($extraLineInExcerpt) {
             $this->extraLineInExcerpt = $extraLineInExcerpt;
         }
     }

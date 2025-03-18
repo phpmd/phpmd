@@ -116,7 +116,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
-     * @SuppressWarnings(PHPMD.LongVariable)
+     * @SuppressWarnings(LongVariable)
      */
     private function checkMaximumLength(AbstractNode $node): void
     {
