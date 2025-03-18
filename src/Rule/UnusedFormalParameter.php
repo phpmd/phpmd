@@ -178,6 +178,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
                 'set_state',
             ]) . ')/i';
         }
+        assert(is_string($magicMethodRegExp));
 
         return preg_match($magicMethodRegExp, $node->getName()) === 1;
     }
