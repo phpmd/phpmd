@@ -41,14 +41,14 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     /**
      * Temporary cache of configured prefixes to subtract
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private array $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private array $subtractSuffixes;
 
@@ -178,7 +178,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     /**
      * Gets array of suffixes from property
      *
-     * @return string[]
+     * @return array<int, string>
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */
@@ -192,7 +192,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     /**
      * Gets array of suffixes from property
      *
-     * @return string[]
+     * @return array<int, string>
      * @throws OutOfBoundsException
      * @throws InvalidArgumentException
      */

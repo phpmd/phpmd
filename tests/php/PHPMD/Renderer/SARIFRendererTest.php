@@ -70,7 +70,13 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->end();
         $actual = json_decode($writer->getData(), true);
         static::assertIsArray($actual);
+        static::assertIsArray($actual['runs']);
+        static::assertIsArray($actual['runs'][0]);
+        static::assertIsArray($actual['runs'][0]['tool']);
+        static::assertIsArray($actual['runs'][0]['tool']['driver']);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        static::assertIsArray($actual['runs'][0]['originalUriBaseIds']);
+        static::assertIsArray($actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']);
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
         $expected = file_get_contents(__DIR__ . '/../../../resources/files/renderer/sarif_renderer_expected.sarif');
@@ -118,7 +124,13 @@ class SARIFRendererTest extends AbstractTestCase
         ]);
         $actual = json_decode($data, true);
         static::assertIsArray($actual);
+        static::assertIsArray($actual['runs']);
+        static::assertIsArray($actual['runs'][0]);
+        static::assertIsArray($actual['runs'][0]['tool']);
+        static::assertIsArray($actual['runs'][0]['tool']['driver']);
         $actual['runs'][0]['tool']['driver']['version'] = '@package_version@';
+        static::assertIsArray($actual['runs'][0]['originalUriBaseIds']);
+        static::assertIsArray($actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']);
         $actual['runs'][0]['originalUriBaseIds']['WORKINGDIR']['uri'] = 'file://#{workingDirectory}/';
         $flags = JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR;
         $expected = file_get_contents(

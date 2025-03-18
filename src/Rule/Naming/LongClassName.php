@@ -37,14 +37,14 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
     /**
      * Temporary cache of configured prefixes to subtract
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private array $subtractPrefixes;
 
     /**
      * Temporary cache of configured suffixes to subtract
      *
-     * @var string[]
+     * @var array<int, string>
      */
     private array $subtractSuffixes;
 
@@ -70,7 +70,7 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
     /**
      * Gets array of prefixes from property
      *
-     * @return string[]
+     * @return array<int, string>
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
@@ -87,7 +87,7 @@ final class LongClassName extends AbstractRule implements ClassAware, EnumAware,
     /**
      * Gets array of suffixes from property
      *
-     * @return string[]
+     * @return array<int, string>
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */

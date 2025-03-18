@@ -571,7 +571,7 @@ final class HTMLRenderer extends AbstractRenderer
             $namespaceName = $v->getNamespaceName();
             if ($namespaceName) {
                 $ref = &$result[self::CATEGORY_NAMESPACE][$namespaceName];
-                $ref = isset($ref) ? $ref + 1 : 1;
+                $ref = is_int($ref) ? $ref + 1 : 1;
             }
 
             $rule = $v->getRule();
@@ -579,13 +579,13 @@ final class HTMLRenderer extends AbstractRenderer
             // Friendly priority -> Add a describing word to "just number".
             $friendlyPriority = self::$priorityTitles[$rule->getPriority()];
             $ref = &$result[self::CATEGORY_PRIORITY][$friendlyPriority];
-            $ref = isset($ref) ? $ref + 1 : 1;
+            $ref = is_int($ref) ? $ref + 1 : 1;
 
             $ref = &$result[self::CATEGORY_RULESET][$rule->getRuleSetName()];
-            $ref = isset($ref) ? $ref + 1 : 1;
+            $ref = is_int($ref) ? $ref + 1 : 1;
 
             $ref = &$result[self::CATEGORY_RULE][$rule->getName()];
-            $ref = isset($ref) ? $ref + 1 : 1;
+            $ref = is_int($ref) ? $ref + 1 : 1;
         }
 
         // Sort numbers in each category from high to low.

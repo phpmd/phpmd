@@ -14,16 +14,26 @@ class ResultCacheStateFactory
         }
 
         $resultCache = require $filePath;
-        if (!isset($resultCache['state'], $resultCache['key'])) {
+        if (
+            !is_array($resultCache)
+            || !isset($resultCache['state'], $resultCache['key'])
+            || !is_array($resultCache['state'])
+            || !is_array($resultCache['key'])
+        ) {
             return null;
         }
 
-        $cacheKey = $this->createCacheKey($resultCache['key']);
+        /** @var array<string, mixed> */
+        $key = $resultCache['key'];
+        $cacheKey = $this->createCacheKey($key);
         if ($cacheKey === null) {
             return null;
         }
 
-        return new ResultCacheState($cacheKey, $resultCache['state']);
+        /** @var array{files?: array<string, array{hash: string, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} */
+        $state = $resultCache['state'];
+
+        return new ResultCacheState($cacheKey, $state);
     }
 
     /**

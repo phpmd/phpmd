@@ -122,7 +122,7 @@ class RuleSetFactory
     /**
      * Lists available rule-set identifiers.
      *
-     * @return string[]
+     * @return list<string>
      */
     public function listAvailableRuleSets(): array
     {

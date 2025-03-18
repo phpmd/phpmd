@@ -3,7 +3,7 @@ parameters:
         - src/
         - tests/php/
     rememberPossiblyImpureFunctionValues: false
-    level: 9
+    level: max
     exceptions:
         reportUncheckedExceptionDeadCatch: true
         implicitThrows: false
