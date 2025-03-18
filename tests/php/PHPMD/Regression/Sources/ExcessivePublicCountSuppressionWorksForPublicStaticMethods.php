@@ -19,7 +19,7 @@
 namespace PHPMD\Regression\Sources;
 
 /**
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(ExcessivePublicCount)
  */
 class ExcessivePublicCountSuppressionWorksForPublicStaticMethods
 {

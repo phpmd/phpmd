@@ -36,7 +36,7 @@ use ValueError;
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
  *
- * @SuppressWarnings(PHPMD.LongVariable)
+ * @SuppressWarnings(LongVariable)
  */
 class CommandLineOptions
 {
