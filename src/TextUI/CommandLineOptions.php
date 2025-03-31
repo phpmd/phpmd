@@ -19,7 +19,6 @@
 namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
-use PHPMD\AbstractRenderer;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
@@ -36,7 +35,7 @@ use ValueError;
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
  *
- * @SuppressWarnings(PHPMD.LongVariable)
+ * @SuppressWarnings(LongVariable)
  */
 class CommandLineOptions
 {
@@ -55,7 +54,7 @@ class CommandLineOptions
     /**
      * The specified report format.
      *
-     * @var ?class-string<AbstractRenderer>
+     * @var ?string
      */
     private $reportFormat;
 
@@ -375,7 +374,7 @@ class CommandLineOptions
         $validator->validate('ruleset', $this->ruleSets);
 
         $this->reportFormat = array_pop($arguments);
-        $validator->validate('report format', $this->reportFormat);
+        $validator->validate('report format', $this->reportFormat ?? '');
 
         $this->inputPath = implode(',', $arguments);
 
@@ -401,7 +400,7 @@ class CommandLineOptions
     /**
      * Returns the specified report format.
      *
-     * @return class-string<AbstractRenderer>|null
+     * @return ?string
      */
     public function getReportFormat()
     {

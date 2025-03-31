@@ -762,13 +762,6 @@ class CommandLineOptionsTest extends AbstractTestCase
         static::assertEquals($expected, $opts->getReportFiles());
     }
 
-    public function testCliOptionExtraLineInExcerptShouldBeWithNumber(): void
-    {
-        $args = [__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5'];
-        $opts = new CommandLineOptions($args);
-        static::assertSame(5, $opts->extraLineInExcerpt());
-    }
-
     /**
      * @return list<list<mixed>>
      */
@@ -817,5 +810,12 @@ class CommandLineOptionsTest extends AbstractTestCase
                 ],
             ],
         ];
+    }
+
+    public function testCliOptionExtraLineInExcerptShouldBeWithNumber(): void
+    {
+        $args = [__FILE__, __FILE__, 'text', 'codesize', '--extra-line-in-excerpt', '5'];
+        $opts = new CommandLineOptions($args);
+        static::assertSame(5, $opts->extraLineInExcerpt());
     }
 }

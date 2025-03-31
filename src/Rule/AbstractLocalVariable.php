@@ -91,8 +91,8 @@ abstract class AbstractLocalVariable extends AbstractRule
 
         if ($parent?->isInstanceOf(ASTPropertyPostfix::class)) {
             $primaryPrefix = $parent->getParent();
-            $primaryPrefixParent = $primaryPrefix?->getParent();
-            if ($primaryPrefixParent?->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
+            $primaryPrefixParent = $primaryPrefix?->getParent()?->getNode();
+            if ($primaryPrefixParent instanceof ASTMemberPrimaryPrefix) {
                 return !$primaryPrefixParent->isStatic();
             }
 
@@ -100,8 +100,10 @@ abstract class AbstractLocalVariable extends AbstractRule
                 return false;
             }
 
+            $primaryPrefix = $primaryPrefix->getNode();
+
             return ($parent->getChild(0)->getNode() !== $node->getNode()
-                || ($primaryPrefix->isInstanceOf(ASTMemberPrimaryPrefix::class) && !$primaryPrefix->isStatic())
+                || ($primaryPrefix instanceof ASTMemberPrimaryPrefix && !$primaryPrefix->isStatic())
             );
         }
 
@@ -210,7 +212,7 @@ abstract class AbstractLocalVariable extends AbstractRule
     /**
      * Reflect function trying as namespaced function first, then global function.
      *
-     * @SuppressWarnings(PHPMD.EmptyCatchBlock)
+     * @SuppressWarnings(EmptyCatchBlock)
      */
     private function getReflectionFunctionByName(string $functionName): ?ReflectionFunction
     {

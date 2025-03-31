@@ -136,8 +136,8 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
         $image = '$';
         $child = $postfix->getFirstChildOfType(ASTIdentifier::class);
 
-        $parent = $postfix->getParent();
-        if ($parent?->isInstanceOf(ASTMemberPrimaryPrefix::class) && $parent->isStatic()) {
+        $parent = $postfix->getParent()?->getNode();
+        if ($parent instanceof ASTMemberPrimaryPrefix && $parent->isStatic()) {
             $image = '';
             $child = $postfix->getFirstChildOfType(ASTVariable::class);
         }

@@ -44,14 +44,20 @@ class ResultCacheStateFactory
         assert(is_bool($data['strict']));
         assert(is_string($data['baselineHash']) || $data['baselineHash'] === null);
         assert(is_array($data['rules']));
+
+        /** @var array<string, string> */
+        $rules = $data['rules'];
         assert(is_array($data['composer']));
+
+        /** @var array<string, string> */
+        $composer = $data['composer'];
         assert(is_int($data['phpVersion']));
 
         return new ResultCacheKey(
             $data['strict'],
             $data['baselineHash'],
-            $data['rules'],
-            $data['composer'],
+            $rules,
+            $composer,
             $data['phpVersion']
         );
     }

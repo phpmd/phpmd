@@ -134,10 +134,10 @@ abstract class AbstractStaticTestCase extends TestCase
      */
     protected static function createResourceUriForTest(string $localPath): string
     {
-        $frame = static::getCallingTestCase();
-        static::assertIsString($frame['class']);
+        $class = static::getCallingTestCase()['class'] ?? null;
+        static::assertIsString($class);
 
-        return static::getResourceFilePathFromClassName($frame['class'], $localPath);
+        return static::getResourceFilePathFromClassName($class, $localPath);
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class AbstractStaticTestCase extends TestCase
     /**
      * Returns the trace frame of the calling test case.
      *
-     * @return array<string, mixed>
+     * @return array{function: string, class?: class-string}
      * @throws ErrorException
      */
     protected static function getCallingTestCase(): array
