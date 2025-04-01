@@ -512,7 +512,7 @@ final class HTMLRenderer extends AbstractRenderer
     /**
      * Render a pretty informational table and send the HTML to the writer.
      *
-     * @param array<int, int> $items
+     * @param array<string, int> $items
      */
     private function writeTable(string $title, string $itemsTitle, array $items): void
     {
@@ -554,10 +554,11 @@ final class HTMLRenderer extends AbstractRenderer
      * Go through passed violations and count occurrences based on pre-specified conditions.
      *
      * @param iterable<RuleViolation> $violations
-     * @return array<string, array<int, int>>
+     * @return array<string, array<string, int>>
      */
     private static function sumUpViolations(iterable $violations): array
     {
+        /** @var array<string, array<string, int>> */
         $result = [
             self::CATEGORY_PRIORITY => [],
             self::CATEGORY_NAMESPACE => [],
@@ -570,22 +571,16 @@ final class HTMLRenderer extends AbstractRenderer
             // Also, using a reference to non-existing array index doesn't throw a notice.
             $namespaceName = $v->getNamespaceName();
             if ($namespaceName) {
-                $ref = &$result[self::CATEGORY_NAMESPACE][$namespaceName];
-                $ref = is_int($ref) ? $ref + 1 : 1;
+                $result[self::CATEGORY_NAMESPACE][$namespaceName]++;
             }
 
             $rule = $v->getRule();
 
             // Friendly priority -> Add a describing word to "just number".
             $friendlyPriority = self::$priorityTitles[$rule->getPriority()];
-            $ref = &$result[self::CATEGORY_PRIORITY][$friendlyPriority];
-            $ref = is_int($ref) ? $ref + 1 : 1;
-
-            $ref = &$result[self::CATEGORY_RULESET][$rule->getRuleSetName()];
-            $ref = is_int($ref) ? $ref + 1 : 1;
-
-            $ref = &$result[self::CATEGORY_RULE][$rule->getName()];
-            $ref = is_int($ref) ? $ref + 1 : 1;
+            $result[self::CATEGORY_PRIORITY][$friendlyPriority]++;
+            $result[self::CATEGORY_RULESET][$rule->getRuleSetName()]++;
+            $result[self::CATEGORY_RULE][$rule->getName()]++;
         }
 
         // Sort numbers in each category from high to low.
