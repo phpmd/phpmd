@@ -143,7 +143,11 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
         // Remove the "()" at the end of method's name.
         $methodName = substr($node->getFullQualifiedName(), 0, -2);
-        $reflectionMethod = new ReflectionMethod($methodName);
+        if (\PHP_VERSION_ID < 80300) {
+            $reflectionMethod = new ReflectionMethod($methodName);
+        } else {
+            $reflectionMethod = ReflectionMethod::createFromMethodName($methodName);
+        }
 
         foreach ($reflectionMethod->getAttributes() as $reflectionAttribute) {
             if ($reflectionAttribute->getName() === Override::class) {
