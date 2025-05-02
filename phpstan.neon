@@ -1,6 +1,6 @@
 parameters:
-	phpVersion:
-		min: 80100
+        phpVersion:
+            min: 80100
     paths:
         - src/
         - tests/php/
