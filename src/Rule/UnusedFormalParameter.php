@@ -141,8 +141,10 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
         // Remove the "()" at the end of method's name.
         $methodName = substr($node->getFullQualifiedName(), 0, -2);
-        /** @phpstan-ignore function.alreadyNarrowedType function.alreadyNarrowedType */
-        /** @var ReflectionMethod */
+        /**
+         * @var ReflectionMethod
+         * @phpstan-ignore function.alreadyNarrowedType function.alreadyNarrowedType
+         */
         $reflectionMethod = method_exists('ReflectionMethod', 'createFromMethodName')
             ? ReflectionMethod::createFromMethodName($methodName)
             : new ReflectionMethod($methodName); // @codeCoverageIgnore
