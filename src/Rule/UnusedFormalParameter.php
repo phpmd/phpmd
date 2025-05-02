@@ -33,7 +33,6 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
-use ReflectionException;
 use ReflectionMethod;
 use RuntimeException;
 
@@ -141,9 +140,10 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
         // Remove the "()" at the end of method's name.
         $methodName = substr($node->getFullQualifiedName(), 0, -2);
+
         /**
          * @var ReflectionMethod
-         * @phpstan-ignore function.alreadyNarrowedType, function.alreadyNarrowedType
+         * @phpstan-ignore function.alreadyNarrowedTyp, emissingType.checkedException
          */
         $reflectionMethod = method_exists('ReflectionMethod', 'createFromMethodName')
             ? ReflectionMethod::createFromMethodName($methodName)
