@@ -143,7 +143,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
         /**
          * @var ReflectionMethod
-         * @phpstan-ignore function.alreadyNarrowedTyp, missingType.checkedException
+         * @phpstan-ignore function.alreadyNarrowedType, missingType.checkedException
          */
         $reflectionMethod = method_exists('ReflectionMethod', 'createFromMethodName')
             ? ReflectionMethod::createFromMethodName($methodName)
