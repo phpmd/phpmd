@@ -56,7 +56,6 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
      *
-     * @throws ReflectionException
      * @throws RuntimeException
      */
     public function apply(AbstractNode $node): void
@@ -122,7 +121,6 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * \Override attribute or the {@inheritDoc} annotation.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @throws ReflectionException
      * @throws RuntimeException
      */
     private function isInheritedSignature(AbstractCallableNode $node): bool
@@ -143,11 +141,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
 
         // Remove the "()" at the end of method's name.
         $methodName = substr($node->getFullQualifiedName(), 0, -2);
-        if (\PHP_VERSION_ID < 80300) {
-            $reflectionMethod = new ReflectionMethod($methodName);
-        } else {
-            $reflectionMethod = ReflectionMethod::createFromMethodName($methodName);
-        }
+        $reflectionMethod = ReflectionMethod::createFromMethodName($methodName);
 
         foreach ($reflectionMethod->getAttributes() as $reflectionAttribute) {
             if ($reflectionAttribute->getName() === Override::class) {
