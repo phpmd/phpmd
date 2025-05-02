@@ -143,7 +143,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
         $methodName = substr($node->getFullQualifiedName(), 0, -2);
         /**
          * @var ReflectionMethod
-         * @phpstan-ignore function.alreadyNarrowedType function.alreadyNarrowedType
+         * @phpstan-ignore function.alreadyNarrowedType, function.alreadyNarrowedType
          */
         $reflectionMethod = method_exists('ReflectionMethod', 'createFromMethodName')
             ? ReflectionMethod::createFromMethodName($methodName)
