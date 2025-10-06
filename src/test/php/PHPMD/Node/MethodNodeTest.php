@@ -239,4 +239,20 @@ class MethodNodeTest extends AbstractTest
 
         $this->assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
     }
+
+    /**
+     * @return void
+     */
+    public function testIsDeclarationReturnsFalseForInheritedDeclaration()
+    {
+        $class = $this->getClassNodeForTestFile(__DIR__.'/../../../resources/files/classes/inheritance/Baz.php');
+        $methods = $class->getMethods();
+
+        $this->assertCount(1, $methods);
+        $this->assertArrayHasKey(0, $methods);
+
+        $method = $methods[0];
+
+        $this->assertFalse($method->isDeclaration());
+    }
 }
