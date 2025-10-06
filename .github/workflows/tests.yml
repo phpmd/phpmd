@@ -40,7 +40,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-          tools: composer:v2
+          tools: composer
 
       - name: Cache library packages
         id: composer-cache
@@ -56,17 +56,21 @@ jobs:
           path: src/test/vendor
           key: ${{ runner.os }}-php-test-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('src/test/composer.json') }}
 
+      - name: Downgrade PHPUnit
+        if: matrix.php < 5.6
+        run: cd src/test && composer require phpunit/phpunit:^4.8.36 --no-update --no-interaction --dev
+
       - name: Upgrade PHPUnit
         if: matrix.php >= 7.2
         run: cd src/test && composer require phpunit/phpunit:^5.7.27 --no-update --no-interaction --dev
 
       - name: Install dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress --ignore-platform-req=php+
+        run: composer update --no-progress --prefer-${{ matrix.setup }} --prefer-dist --no-progress${{ matrix.php >= 8 && ' --ignore-platform-req=php+' || '' }}
 
       - name: Install test dependencies
         if: steps.composer-test-cache.outputs.cache-hit != 'true'
-        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable --ignore-platform-req=php+
+        run: cd src/test && composer update --no-progress --prefer-dist --prefer-stable${{ matrix.php >= 8 && ' --ignore-platform-req=php+' || '' }}
 
       - name: Fix PHP compatibility
         run: php src/test/php/fix-php-compatibility.php

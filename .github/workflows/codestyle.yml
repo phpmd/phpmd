@@ -39,7 +39,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: none
-          tools: composer:v2
+          tools: composer
 
       - name: Cache Composer packages
         id: composer-cache

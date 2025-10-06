@@ -17,6 +17,8 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractTest;
 
 /**
@@ -108,5 +110,26 @@ class ASTNodeTest extends AbstractTest
         $node = new ASTNode($mock, __FILE__);
 
         $this->assertNull($node->getFullQualifiedName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindChildrenOfTypeVariable()
+    {
+        $node = new ASTExpression();
+        $variable1 = new ASTVariable();
+        $variable2 = new ASTVariable();
+        $expression = new ASTExpression();
+        $node->addChild($variable1);
+        $node->addChild($expression);
+        $node->addChild($variable2);
+        $node = new ASTNode($node, __FILE__);
+
+        $children = $node->findChildrenOfTypeVariable();
+
+        $this->assertCount(2, $children);
+        $this->assertSame($variable1, $children[0]->getNode());
+        $this->assertSame($variable2, $children[1]->getNode());
     }
 }
