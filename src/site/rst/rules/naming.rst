@@ -161,6 +161,30 @@ This rule has the following properties:
 | exceptions                        |               | Comma-separated list of exceptions                         |
 +-----------------------------------+---------------+------------------------------------------------------------+
 
+LongMethodName
+===============
+
+Since: PHPMD 2.15.0
+
+Detects when very long method names are used.
+
+Example: ::
+
+  class LongMethod {
+      public function iAmWayTooLongNotToMixWithSomethingElse() { // Violation
+      }
+  }
+
+This rule has the following properties:
+
++-----------------------------------+---------------+------------------------------------------------------------+
+| Name                              | Default Value | Description                                                |
++===================================+===============+============================================================+
+| maximum                           | 20            | Maximum length for a method or function name               |
++-----------------------------------+---------------+------------------------------------------------------------+
+| exceptions                        |               | Comma-separated list of exceptions                         |
++-----------------------------------+---------------+------------------------------------------------------------+
+
 ConstructorWithNameAsEnclosingClass
 ===================================
 

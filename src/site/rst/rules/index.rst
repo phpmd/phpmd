@@ -70,6 +70,7 @@ Naming Rules
 - `ShortVariable <naming.html#shortvariable>`_: Detects when a field, local, or parameter has a very short name.
 - `LongVariable <naming.html#longvariable>`_: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName <naming.html#shortmethodname>`_: Detects when very short method names are used.
+- `LongMethodName <naming.html#longmethodname>`_: Detects when very long method names are used.
 - `ConstructorWithNameAsEnclosingClass <naming.html#constructorwithnameasenclosingclass>`_: A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
 - `ConstantNamingConventions <naming.html#constantnamingconventions>`_: Class/Interface constant names should always be defined in uppercase.
 - `BooleanGetMethodName <naming.html#booleangetmethodname>`_: Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
