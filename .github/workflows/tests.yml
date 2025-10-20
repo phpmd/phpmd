@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [ 8.1, 8.2, 8.3, 8.4 ]
+        php: [ 8.1, 8.2, 8.3, 8.4, 8.5 ]
         setup: [ lowest, stable ]
 
     name: PHP ${{ matrix.php }} - prefer-${{ matrix.setup }}
@@ -43,17 +43,17 @@ jobs:
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php != '8.4'
+        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php != '8.5'
         run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
-      # For now we need to overwrite the PHP version check on the 8.4 beta as paratest has not been releasd for it yet
-      - name: Install dependencies (PHP 8.4 beta)
-        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php == '8.4'
+      # For now we need to overwrite the PHP version check on the 8.5 beta as paratest has not been releasd for it yet
+      - name: Install dependencies (PHP 8.5 beta)
+        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php == '8.5'
         run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
 
       - name: Execute Unit Tests
         run: composer test
 
       - name: Run PHPStan
-        if: matrix.php != '8.4'
+        if: matrix.php != '8.5'
         run: vendor/bin/phpstan
