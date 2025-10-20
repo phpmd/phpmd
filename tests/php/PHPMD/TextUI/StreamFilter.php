@@ -35,10 +35,13 @@ class StreamFilter extends php_user_filter
         self::$streamHandle = '';
 
         while ($bucket = stream_bucket_make_writeable($in)) {
-            assert(is_string($bucket->data));
-            self::$streamHandle .= $bucket->data;
-            assert(is_int($bucket->datalen));
-            $consumed += $bucket->datalen;
+            /** @var string */
+            $data = $bucket->data;
+            self::$streamHandle .= $data;
+
+            /** @var int */
+            $datalen = $bucket->datalen;
+            $consumed += $datalen;
         }
 
         return PSFS_PASS_ON;
