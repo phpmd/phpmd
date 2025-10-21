@@ -39,7 +39,7 @@
     "php": "^8.1",
     "ext-xml": "*",
     "composer/xdebug-handler": "^3.0",
-    "pdepend/pdepend": "3.x-dev#5fddc0476146acf1455bd4cccf83f20439a0335b"
+    "pdepend/pdepend": "3.x-dev#b4646098599162a3c171c7e0b544c8fa86a87638"
   },
   "require-dev": {
     "ext-json": "*",
@@ -49,8 +49,8 @@
     "friendsofphp/php-cs-fixer": "^3.57",
     "gregwar/rst": "^1.0",
     "mikey179/vfsstream": "^1.6.8",
-    "phpstan/phpstan": "~2.1.0",
-    "phpunit/phpunit": "^10.5.20,<10.5.32",
+    "phpstan/phpstan": "~2.1.31",
+    "phpunit/phpunit": "^10.5.20,<10.5.32|^11.0.0",
     "squizlabs/php_codesniffer": "^3.8.0"
   },
   "autoload": {
