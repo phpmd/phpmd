@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined static method ReflectionMethod\:\:createFromMethodName\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Rule/UnusedFormalParameter.php
