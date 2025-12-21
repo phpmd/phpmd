@@ -28,7 +28,7 @@ class StreamWriter extends AbstractWriter
     /**
      * The stream resource handle
      *
-     * @var resource
+     * @var ?resource
      */
     private $stream = null;
 
@@ -62,7 +62,7 @@ class StreamWriter extends AbstractWriter
      */
     public function __destruct()
     {
-        if ($this->stream !== STDOUT && is_resource($this->stream) === true) {
+        if ($this->stream !== STDOUT && $this->stream !== STDERR && is_resource($this->stream) === true) {
             @fclose($this->stream);
         }
         $this->stream = null;

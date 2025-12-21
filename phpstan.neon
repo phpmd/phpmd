@@ -1,0 +1,5 @@
+parameters:
+    paths:
+        - src/main
+    rememberPossiblyImpureFunctionValues: false
+    level: 1

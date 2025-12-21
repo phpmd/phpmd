@@ -190,9 +190,9 @@ class RuleTest extends AbstractTest
     {
         /** @var AbstractRule $rule */
         $rule = $this->getMockForAbstractClass('PHPMD\\AbstractRule');
-        $rule->addProperty(__FUNCTION__, 'Fourty Two');
+        $rule->addProperty(__FUNCTION__, 'Forty Two');
 
-        $this->assertSame('Fourty Two', $rule->getStringProperty(__FUNCTION__));
+        $this->assertSame('Forty Two', $rule->getStringProperty(__FUNCTION__));
     }
 
     /**

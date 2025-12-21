@@ -42,6 +42,38 @@ class CamelCasePropertyNameTest extends AbstractTest
     }
 
     /**
+     * Tests that the rule does apply for all caps abbreviation in property name.
+     *
+     * @return void
+     */
+    public function testRuleDoesApplyForAllCapsAbbreviationInProperty()
+    {
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CamelCasePropertyName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * Tests that the rule does not apply for a camelcase abbreviation in property name.
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyForCamelcaseAbbreviationInProperty()
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCasePropertyName();
+        $rule->setReport($report);
+        $rule->addProperty('camelcase-abbreviations', 'true');
+        $rule->addProperty('allow-underscore', 'false');
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * Tests that the rule does apply for a property name
      * starting with a capital.
      *

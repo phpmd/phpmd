@@ -48,6 +48,8 @@
         <copy todir="${output.dir}/src/main/resources/rulesets">
             <fileset dir="${commons.srcdir.resource}/rulesets" />
         </copy>
+        <copy file="${basedir}/composer.json" todir="${output.dir}/" />
+        <copy file="${basedir}/composer.lock" todir="${output.dir}/" />
     </target>
 
     <!--

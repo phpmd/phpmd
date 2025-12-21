@@ -93,7 +93,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     public function getParentName()
     {
@@ -103,7 +103,7 @@ class ASTNode extends \PHPMD\AbstractNode
     /**
      * Returns the name of the parent namespace.
      *
-     * @return string
+     * @return ?string
      */
     public function getNamespaceName()
     {
@@ -114,7 +114,7 @@ class ASTNode extends \PHPMD\AbstractNode
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
      *
-     * @return string
+     * @return ?string
      */
     public function getFullQualifiedName()
     {

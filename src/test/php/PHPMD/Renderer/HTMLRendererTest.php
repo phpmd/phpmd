@@ -49,7 +49,8 @@ class HTMLRendererTest extends AbstractTest
             ->method('getRuleViolations')
             ->will($this->returnValue(new \ArrayIterator($violations)));
 
-        $renderer = new HTMLRenderer();
+        $extraLineInExcerpt = 2;
+        $renderer = new HTMLRenderer($extraLineInExcerpt);
         $renderer->setWriter($writer);
 
         $renderer->start();

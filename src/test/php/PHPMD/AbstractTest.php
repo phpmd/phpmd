@@ -28,9 +28,11 @@ use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\NodeInfo;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
@@ -149,6 +151,18 @@ abstract class AbstractTest extends AbstractStaticTest
         return new TraitNode(
             $this->getNodeForCallingTestCase(
                 $this->parseTestCaseSource()->getTraits()
+            )
+        );
+    }
+
+    /**
+     * @return EnumNode
+     */
+    protected function getEnum()
+    {
+        return new EnumNode(
+            $this->getNodeForCallingTestCase(
+                $this->parseTestCaseSource()->getEnums()
             )
         );
     }
@@ -561,7 +575,9 @@ abstract class AbstractTest extends AbstractStaticTest
     ) {
         $ruleViolation = $this->getMockFromBuilder(
             $this->getMockBuilder('PHPMD\\RuleViolation')
-                ->setConstructorArgs(array(new TooManyFields(), new FunctionNode(new ASTFunction('fooBar')), 'Hello'))
+                ->setConstructorArgs(
+                    array(new TooManyFields(), new NodeInfo('fileName', 'namespace', null, null, null, 1, 2), 'Hello')
+                )
         );
 
         if ($rule === null) {
@@ -595,7 +611,7 @@ abstract class AbstractTest extends AbstractStaticTest
     }
 
     /**
-     * Creates a mocked rul violation instance.
+     * Creates a mocked rule violation instance.
      *
      * @param string $file
      * @param string $message

@@ -9,7 +9,7 @@ CyclomaticComplexity
 
 Since: PHPMD 0.1
 
-Complexity is determined by the number of decision points in a method plus one for the method entry. The decision points are 'if', 'while', 'for', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.
+Complexity is determined by the number of decision points in a method plus one for the method entry. The decision points are 'if', 'while', 'for', 'catch', and 'case labels'. Generally, 1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.
 
 Example: ::
 
@@ -70,7 +70,7 @@ Since: PHPMD 0.1
 
 The NPath complexity of a method is the number of acyclic execution paths through that method, that is how many possible outcomes it has.
 
-A threshold of 200 is generally considered the point where measures should be taken to reduce complexity. 
+A threshold of 200 is generally considered the point where measures should be taken to reduce complexity.
 
 Example: ::
 
@@ -193,7 +193,7 @@ Example: ::
       public $something;
       public $var;
       // [... more more public attributes ...]
-  
+
       public function doWork() {}
       public function doMoreWork() {}
       public function doWorkAgain() {}

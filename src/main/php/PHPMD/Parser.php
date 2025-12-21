@@ -19,6 +19,8 @@ namespace PHPMD;
 
 use PDepend\Engine;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PDepend\Metrics\Analyzer;
 use PDepend\Source\AST\ASTClass;
@@ -27,9 +29,11 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTArtifactList;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\TraitNode;
 
 /**
  * Simple wrapper around the php depend engine.
@@ -186,6 +190,38 @@ class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
         $this->apply(new ClassNode($node));
         parent::visitClass($node);
+    }
+
+    /**
+     * Visits a trait node.
+     *
+     * @param \PDepend\Source\AST\ASTTrait $node
+     * @return void
+     */
+    public function visitTrait(ASTTrait $node)
+    {
+        if (!$node->isUserDefined()) {
+            return;
+        }
+
+        $this->apply(new TraitNode($node));
+        parent::visitTrait($node);
+    }
+
+    /**
+     * Visits a enum node.
+     *
+     * @param \PDepend\Source\AST\ASTEnum $node
+     * @return void
+     */
+    public function visitEnum(ASTEnum $node)
+    {
+        if (!$node->isUserDefined()) {
+            return;
+        }
+
+        $this->apply(new EnumNode($node));
+        parent::visitEnum($node);
     }
 
     /**

@@ -95,10 +95,10 @@ rule. The most important elements of a rule configuration are:
 ::
 
   <ruleset name="example.com rules"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
 
       <rule name="FunctionRule"
             message = "Please do not use functions."
@@ -194,10 +194,10 @@ to a rule set file.
 ::
 
   <ruleset name="example.com rules"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
 
       <!-- ... -->
 
@@ -218,10 +218,10 @@ and ``MAXIMUM`` with properties that can be configured in the rule set file.
 So let us start with the modified rule set file. ::
 
   <ruleset name="example.com rules"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
 
       <!-- ... -->
 
@@ -278,10 +278,10 @@ define violation messages with placeholders, that will be replaced with actual
 values. The format for such placeholders is ``'{' + \d+ '}'``. ::
 
   <ruleset name="example.com rules"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
 
       <!-- ... -->
 
@@ -400,7 +400,7 @@ __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/FunctionAw
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/InterfaceAware.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule/MethodAware.php
 __ https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/AbstractRule.php
-__ http://pmd.sf.net/
+__ https://pmd.github.io/
 __ https://github.com/phpmd/phpmd/tree/master/src/main/resources/rulesets
 __ https://phpmd.org/documentation/creating-a-ruleset.html
 

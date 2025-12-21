@@ -22,14 +22,22 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 use PHPMD\Utility\Strings;
 
 /**
  * This rule class will detect variables, parameters and properties with really
  * long names.
  */
-class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class LongVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
+    /**
+     * Temporary cache of configured prefixes to subtract
+     *
+     * @var string[]|null
+     */
+    protected $subtractPrefixes;
+
     /**
      * Temporary cache of configured suffixes to subtract
      *
@@ -108,7 +116,11 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     {
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
-        $lengthWithoutDollarSign = Strings::lengthWithoutSuffixes($variableName, $this->getSubtractSuffixList()) - 1;
+        $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
+            \ltrim($variableName, '$'),
+            $this->getSubtractPrefixList(),
+            $this->getSubtractSuffixList()
+        );
         if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
@@ -181,6 +193,20 @@ class LongVariable extends AbstractRule implements ClassAware, MethodAware, Func
     protected function isNotProcessed(AbstractNode $node)
     {
         return !isset($this->processedVariables[$node->getImage()]);
+    }
+
+    /**
+     * Gets array of suffixes from property
+     *
+     * @return string[]
+     */
+    protected function getSubtractPrefixList()
+    {
+        if ($this->subtractPrefixes === null) {
+            $this->subtractPrefixes = Strings::splitToList($this->getStringProperty('subtract-prefixes', ''), ',');
+        }
+
+        return $this->subtractPrefixes;
     }
 
     /**

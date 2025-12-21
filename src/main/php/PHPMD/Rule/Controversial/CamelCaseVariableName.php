@@ -56,14 +56,16 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
      */
     public function apply(AbstractNode $node)
     {
+        $variables = array();
+
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable)) {
-                $this->addViolation(
-                    $node,
-                    array(
-                        $variable->getImage(),
-                    )
-                );
+                $variableName = $variable->getImage();
+
+                if (!isset($variables[$variableName])) {
+                    $variables[$variableName] = true;
+                    $this->addViolation($variable, array($variableName));
+                }
             }
         }
     }
@@ -74,6 +76,12 @@ class CamelCaseVariableName extends AbstractRule implements MethodAware, Functio
 
         if (in_array($image, $this->exceptions)) {
             return true;
+        }
+
+        // disallow any consecutive uppercase letters
+        if ($this->getBooleanProperty('camelcase-abbreviations', false)
+            && preg_match('/[A-Z]{2}/', $image) === 1) {
+            return false;
         }
 
         if ($this->getBooleanProperty('allow-underscore')) {

@@ -33,12 +33,37 @@ class Strings
      */
     public static function lengthWithoutSuffixes($stringName, array $subtractSuffixes)
     {
+        return static::lengthWithoutPrefixesAndSuffixes($stringName, array(), $subtractSuffixes);
+    }
+
+    /**
+     * Returns the length of the given string, excluding at most one suffix
+     *
+     * @param string $stringName String to calculate the length for.
+     * @param array $subtractPrefixes List of prefixes to exclude from the calculated length.
+     * @param array $subtractSuffixes List of suffixes to exclude from the calculated length.
+     * @return int The length of the string, without suffix, if applicable.
+     */
+    public static function lengthWithoutPrefixesAndSuffixes(
+        $stringName,
+        array $subtractPrefixes,
+        array $subtractSuffixes
+    ) {
+
         $stringLength = strlen($stringName);
 
         foreach ($subtractSuffixes as $suffix) {
             $suffixLength = strlen($suffix);
             if (substr($stringName, -$suffixLength) === $suffix) {
                 $stringLength -= $suffixLength;
+                break;
+            }
+        }
+
+        foreach ($subtractPrefixes as $prefix) {
+            $prefixLength = strlen($prefix);
+            if (strncmp($stringName, $prefix, $prefixLength) === 0) {
+                $stringLength -= $prefixLength;
                 break;
             }
         }

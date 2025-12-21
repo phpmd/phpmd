@@ -19,6 +19,7 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTest;
+use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
 use PHPMD\Stubs\WriterStub;
@@ -68,6 +69,82 @@ class TextRendererTest extends AbstractTest
             "/bar.php:1      LongerNamedRule  An other description for this rule" . PHP_EOL .
             "/foo-biz.php:2  RuleStub         Test description" . PHP_EOL .
             "/foo.php:34     RuleStub         Test description" . PHP_EOL,
+            $writer->getData()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRendererSupportVerbose()
+    {
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $rule = new RuleStub();
+        $rule->setName('LongerNamedRule');
+        $rule->setDescription('An other description for this rule');
+
+        $renderer = new TextRenderer();
+        $renderer->setWriter($writer);
+        $renderer->setVerbosityLevel(OutputInterface::VERBOSITY_VERBOSE);
+
+        $violations = array(
+            $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
+        );
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator(array())));
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            'LongerNamedRule  An other description for this rule' . PHP_EOL .
+            '📁 in /bar.php on line 1' . PHP_EOL .
+            '🔗 testruleset.xml https://phpmd.org/rules/testruleset.html#longernamedrule' . PHP_EOL . PHP_EOL,
+            $writer->getData()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testRendererSupportColor()
+    {
+        // Create a writer instance.
+        $writer = new WriterStub();
+        $rule = new RuleStub();
+        $rule->setName('LongerNamedRule');
+        $rule->setDescription('An other description for this rule');
+
+        $renderer = new TextRenderer();
+        $renderer->setWriter($writer);
+        $renderer->setColored(true);
+
+        $violations = array(
+            $this->getRuleViolationMock('/bar.php', 1, 42, $rule, $rule->getDescription()),
+        );
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new ArrayIterator($violations)));
+        $report->expects($this->once())
+            ->method('getErrors')
+            ->will($this->returnValue(new ArrayIterator(array())));
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertEquals(
+            "/bar.php:1  \033[33mLongerNamedRule\033[0m  \033[31mAn other description for this rule\033[0m" . PHP_EOL,
             $writer->getData()
         );
     }

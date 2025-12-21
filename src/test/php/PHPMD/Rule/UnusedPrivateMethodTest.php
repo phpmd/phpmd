@@ -121,6 +121,18 @@ class UnusedPrivateMethodTest extends AbstractTest
     }
 
     /**
+     * testRuleDoesNotApplyToMethodUsedViaCallable
+     *
+     * @return void
+     */
+    public function testRuleDoesNotApplyToMethodUsedViaCallable()
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * testRuleDoesNotApplyToPrivateConstructor
      *
      * @return void

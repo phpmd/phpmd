@@ -17,7 +17,12 @@
 
 namespace PHPMD;
 
+use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
+use PHPMD\Node\EnumNode;
+use PHPMD\Node\InterfaceNode;
+use PHPMD\Node\NodeInfoFactory;
+use PHPMD\Node\TraitNode;
 
 /**
  * This is the abstract base class for pmd rules.
@@ -95,6 +100,13 @@ abstract class AbstractRule implements Rule
      * @var \PHPMD\Report
      */
     private $report = null;
+
+    /**
+     * Should this rule force the strict mode.
+     *
+     * @var boolean
+     */
+    private $strict = false;
 
     /**
      * Returns the name for this rule instance.
@@ -374,6 +386,15 @@ abstract class AbstractRule implements Rule
     }
 
     /**
+     * @param bool $strict
+     * @return void
+     */
+    public function setStrict($strict)
+    {
+        $this->strict = $strict;
+    }
+
+    /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
      *
@@ -392,19 +413,19 @@ abstract class AbstractRule implements Rule
             'args' => $args,
         );
 
-        $ruleViolation = new RuleViolation($this, $node, $message, $metric);
+        $ruleViolation = new RuleViolation($this, NodeInfoFactory::fromNode($node), $message, $metric);
         $this->report->addRuleViolation($ruleViolation);
     }
 
     /**
      * Apply the current rule on each method of a class node.
      *
-     * @param ClassNode $node class node containing methods.
+     * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node class node containing methods.
      */
-    protected function applyOnClassMethods(ClassNode $node)
+    protected function applyOnClassMethods(AbstractTypeNode $node)
     {
         foreach ($node->getMethods() as $method) {
-            if ($method->hasSuppressWarningsAnnotationFor($this)) {
+            if (!$this->strict && $method->hasSuppressWarningsAnnotationFor($this)) {
                 continue;
             }
 

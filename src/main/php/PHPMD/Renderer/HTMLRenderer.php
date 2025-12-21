@@ -65,6 +65,20 @@ class HTMLRenderer extends AbstractRenderer
     protected static $compiledHighlightRegex = null;
 
     /**
+     * Specify how many extra lines are added to a code snippet
+     * By default 2
+     * @var int
+     */
+    protected $extraLineInExcerpt = 2;
+
+    public function __construct($extraLineInExcerpt = null)
+    {
+        if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
+            $this->extraLineInExcerpt = $extraLineInExcerpt;
+        }
+    }
+
+    /**
      * This method will be called on all renderers before the engine starts the
      * real report processing.
      *
@@ -362,7 +376,7 @@ class HTMLRenderer extends AbstractRenderer
             $excerpt = self::getLineExcerpt(
                 $violation->getFileName(),
                 $violation->getBeginLine(),
-                2
+                $this->extraLineInExcerpt
             );
 
             foreach ($excerpt as $line => $code) {
@@ -487,7 +501,7 @@ class HTMLRenderer extends AbstractRenderer
     protected static function highlightFile($path)
     {
         $file = substr(strrchr($path, "/"), 1);
-        $dir = str_replace($file, null, $path);
+        $dir = str_replace($file, '', $path);
 
         return $dir . "<span class='path-basename'>" . $file . '</span>';
     }
@@ -511,7 +525,7 @@ class HTMLRenderer extends AbstractRenderer
         $sum = array_sum($items);
 
         foreach ($items as $name => $count) {
-            // Calculate chart/bar's percentage width relative to the highest occuring item.
+            // Calculate chart/bar's percentage width relative to the highest occurring item.
             $width = $max !== 0 ? $count / $max * 100 : 0; // Avoid division by zero.
 
             $bar = sprintf(

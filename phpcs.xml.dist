@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="PHPMD">
     <description>The coding standard for PHPMD.</description>
-<file>./src/main/php</file>
-<file>./src/test/php</file>
+    <file>./src/main/php/PHPMD</file>
+    <file>./src/test/php/PHPMD</file>
     <!-- Include Slevomat standard -->
 
 <!--    <config name="installed_paths" value="../../slevomat/coding-standard,../../../slevomat/coding-standard,../vendor/slevomat/coding-standard"/>-->

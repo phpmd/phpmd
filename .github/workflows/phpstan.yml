@@ -1,4 +1,4 @@
-name: Unit Tests with coverage
+name: PHPStan
 
 on:
   push:
@@ -9,22 +9,24 @@ on:
       - "*"
 
 jobs:
-  php-tests:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
+      fail-fast: false
       matrix:
-        php: [7.4]
-        dependency-version: [prefer-stable]
+        php: [ '7.4' ]
+        setup: [ 'stable' ]
+        phpstan: [1.10.25]
 
-    name: P${{ matrix.php }}
+    name: PHP ${{ matrix.php }} - ${{ matrix.setup }} - ${{ matrix.phpstan }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -35,7 +37,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('**/composer.json') }}
@@ -43,10 +45,9 @@ jobs:
             ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.dependency-version }}
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+        run: |
+          composer require phpstan/phpstan:${{ matrix.phpstan }} --no-interaction --dev --no-update;
+          composer update --prefer-dist --no-progress --no-suggest --prefer-${{ matrix.setup }};
 
-      - name: Execute Unit Tests
-        run: phpdbg -qrr vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml --coverage-html=coverage_html
-
-      - name: Archive code coverage results
-        uses: codecov/codecov-action@v3
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyze

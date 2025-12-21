@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the really short variable, parameter and property name rule.
  *
- * @covers PHPMD\Rule\Naming\ShortVariable
+ * @covers \PHPMD\Rule\Naming\ShortVariable
  */
 class ShortVariableTest extends AbstractTest
 {

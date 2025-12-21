@@ -37,15 +37,15 @@ class DepthOfInheritance extends AbstractRule implements ClassAware
     {
         try {
             $threshold = $this->getIntProperty('maximum');
-            $comparision = 1;
+            $comparison = 1;
         } catch (\OutOfBoundsException $e) {
             $threshold = $this->getIntProperty('minimum');
-            $comparision = 2;
+            $comparison = 2;
         }
 
         $dit = $node->getMetric('dit');
-        if (($comparision === 1 && $dit > $threshold) ||
-            ($comparision === 2 && $dit >= $threshold)
+        if (($comparison === 1 && $dit > $threshold) ||
+            ($comparison === 2 && $dit >= $threshold)
         ) {
             $this->addViolation(
                 $node,

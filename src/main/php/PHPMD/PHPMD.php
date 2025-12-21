@@ -9,13 +9,15 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  *
- * @author Manuel Pichler <mapi@phpmd.org>
+ * @author    Manuel Pichler <mapi@phpmd.org>
  * @copyright Manuel Pichler. All rights reserved.
- * @license https://opensource.org/licenses/bsd-license.php BSD License
- * @link http://phpmd.org/
+ * @license   https://opensource.org/licenses/bsd-license.php BSD License
+ * @link      http://phpmd.org/
  */
 
 namespace PHPMD;
+
+use PHPMD\Cache\ResultCacheEngine;
 
 /**
  * This is the main facade of the PHP PMD application
@@ -56,6 +58,9 @@ class PHPMD
      * @var string
      */
     private $input;
+
+    /** @var ResultCacheEngine|null */
+    private $resultCache;
 
     /**
      * This property will be set to <b>true</b> when a violation
@@ -134,7 +139,7 @@ class PHPMD
      * Returns an array with string patterns that mark a file path as invalid.
      *
      * @return string[]
-     * @since 0.2.0
+     * @since      0.2.0
      * @deprecated 3.0.0 Use getIgnorePatterns() instead, you always get a list of patterns.
      */
     public function getIgnorePattern()
@@ -185,6 +190,25 @@ class PHPMD
     }
 
     /**
+     * @return ResultCacheEngine|null
+     */
+    public function getResultCache()
+    {
+        return $this->resultCache;
+    }
+
+    /**
+     * @param ResultCacheEngine $resultCache
+     * @return $this;
+     */
+    public function setResultCache($resultCache)
+    {
+        $this->resultCache = $resultCache;
+
+        return $this;
+    }
+
+    /**
      * Returns additional options for PHPMD or one of it's parser backends.
      *
      * @return array
@@ -210,34 +234,39 @@ class PHPMD
      * path. It will apply rules defined in the comma-separated <b>$ruleSets</b>
      * argument. The result will be passed to all given renderer instances.
      *
-     * @param string $inputPath
-     * @param string $ruleSets
+     * @param string                    $inputPath
+     * @param array|null                $ignorePattern
      * @param \PHPMD\AbstractRenderer[] $renderers
-     * @param \PHPMD\RuleSetFactory $ruleSetFactory
-     * @param \PHPMD\Report $report
+     * @param \PHPMD\RuleSet[]          $ruleSetList
+     * @param \PHPMD\Report             $report
      * @return void
      */
     public function processFiles(
         $inputPath,
-        $ruleSets,
+        $ignorePattern,
         array $renderers,
-        RuleSetFactory $ruleSetFactory,
+        array $ruleSetList,
         Report $report
     ) {
         // Merge parsed excludes
-        $this->addIgnorePatterns($ruleSetFactory->getIgnorePattern($ruleSets));
+        $this->addIgnorePatterns($ignorePattern);
 
         $this->input = $inputPath;
 
         $factory = new ParserFactory();
-        $parser = $factory->create($this);
+        $parser  = $factory->create($this);
 
-        foreach ($ruleSetFactory->createRuleSets($ruleSets) as $ruleSet) {
+        foreach ($ruleSetList as $ruleSet) {
             $parser->addRuleSet($ruleSet);
         }
 
         $report->start();
         $parser->parse($report);
+        if ($this->resultCache !== null) {
+            $state = $this->resultCache->getFileFilter()->getState();
+            $state = $this->resultCache->getUpdater()->update($ruleSetList, $state, $report);
+            $this->resultCache->getWriter()->write($state);
+        }
         $report->end();
 
         foreach ($renderers as $renderer) {
@@ -252,7 +281,7 @@ class PHPMD
             $renderer->end();
         }
 
-        $this->errors = $report->hasErrors();
+        $this->errors     = $report->hasErrors();
         $this->violations = !$report->isEmpty();
     }
 }

@@ -35,6 +35,17 @@ class PathsTest extends AbstractTest
     }
 
     /**
+     * @covers ::concat
+     */
+    public function testConcat()
+    {
+        static::assertSame('pathA/pathB', Paths::concat('pathA', 'pathB'));
+        static::assertSame('pathA/pathB', Paths::concat('pathA', '/pathB'));
+        static::assertSame('pathA/pathB', Paths::concat('pathA/', '/pathB'));
+        static::assertSame('/file/pathA/pathB/example.txt', Paths::concat('\\file\\pathA\\', '\\pathB\\example.txt'));
+    }
+
+    /**
      * @covers ::getRealPath
      */
     public function testGetRealPathShouldReturnTheRealPath()

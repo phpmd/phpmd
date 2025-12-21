@@ -22,7 +22,7 @@ use PHPMD\AbstractTest;
 /**
  * Test case for the constructor name rule.
  *
- * @covers PHPMD\Rule\Naming\ConstructorWithNameAsEnclosingClass
+ * @covers \PHPMD\Rule\Naming\ConstructorWithNameAsEnclosingClass
  */
 class ConstructorWithNameAsEnclosingClassTest extends AbstractTest
 {

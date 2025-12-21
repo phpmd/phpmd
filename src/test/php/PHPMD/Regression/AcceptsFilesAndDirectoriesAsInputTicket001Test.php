@@ -42,12 +42,14 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $renderer = new XMLRenderer();
         $renderer->setWriter(new WriterStub());
 
+        $ruleSetFactory = new RuleSetFactory();
+
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             self::createFileUri('source'),
-            'pmd-refset1',
+            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             array($renderer),
-            new RuleSetFactory(),
+            $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
     }
@@ -64,12 +66,14 @@ class AcceptsFilesAndDirectoriesAsInputTicket001Test extends AbstractTest
         $renderer = new XMLRenderer();
         $renderer->setWriter(new WriterStub());
 
+        $ruleSetFactory = new RuleSetFactory();
+
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             self::createFileUri('source/FooBar.php'),
-            'pmd-refset1',
+            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
             array($renderer),
-            new RuleSetFactory(),
+            $ruleSetFactory->createRuleSets('pmd-refset1'),
             new Report()
         );
     }

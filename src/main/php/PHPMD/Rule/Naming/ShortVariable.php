@@ -22,12 +22,13 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\TraitAware;
 
 /**
  * This rule class will detect variables, parameters and properties with short
  * names.
  */
-class ShortVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware
+class ShortVariable extends AbstractRule implements ClassAware, MethodAware, FunctionAware, TraitAware
 {
     /**
      * Temporary map holding variables that were already processed in the

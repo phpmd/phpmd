@@ -244,7 +244,7 @@ class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAwa
      *
      * If the given method calls func_get_args() then all parameters are automatically referenced.
      *
-     * @param \PHPMD\AbstractNode $node The node to remove the referneced variables from.
+     * @param \PHPMD\AbstractNode $node The node to remove the referenced variables from.
      * @return void
      */
     protected function removeVariablesUsedByFuncGetArgs(AbstractNode $node)

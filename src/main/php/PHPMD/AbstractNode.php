@@ -76,7 +76,7 @@ abstract class AbstractNode
      * Returns the parent of this node or <b>null</b> when no parent node
      * exists.
      *
-     * @return ASTNode
+     * @return ASTNode|null
      */
     public function getParent()
     {
@@ -200,7 +200,7 @@ abstract class AbstractNode
      * Returns the source name for this node, maybe a class or interface name,
      * or a package, method, function name.
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -315,7 +315,7 @@ abstract class AbstractNode
      * Returns the name of the parent type or <b>null</b> when this node has no
      * parent type.
      *
-     * @return string
+     * @return string|null
      */
     abstract public function getParentName();
 

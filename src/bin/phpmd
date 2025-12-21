@@ -51,7 +51,7 @@ if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) 
 
 // Check php setup for cli arguments
 if (!isset($_SERVER['argv']) && !isset($argv)) {
-    fwrite(STDERR, 'Please enable the "register_argc_argv" directive in your php.ini', PHP_EOL);
+    fwrite(STDERR, 'Please enable the "register_argc_argv" directive in your php.ini' . PHP_EOL);
     exit(1);
 } elseif (!isset($argv)) {
     $argv = $_SERVER['argv'];
