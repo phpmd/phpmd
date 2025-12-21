@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sat, 04 Oct 2025 12:36:23 +0000" />
+    <meta name="date" content="Sun, 21 Dec 2025 15:26:40 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sat, 04 Oct 2025 12:36:23 +0000" />
+    <meta name="DC.date" content="Sun, 21 Dec 2025 15:26:40 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -78,7 +78,7 @@ interface Fo {
     private $q = 15; // VIOLATION - Field
     public static function main( array $as ) { // VIOLATION - Formal
         $r = 20 + $this-&gt;q; // VIOLATION - Local
-        for ($i = 0; $i &lt; 10; $i++) { // Not a Violation (inside FOR)
+        for (int $i = 0; $i &lt; 10; $i++) { // Not a Violation (inside FOR)
             $r += $this-&gt;q;
         }
     }
