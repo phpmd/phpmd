@@ -18,9 +18,10 @@
 
 namespace PHPMD\Regression\Sources;
 
-/**
- * @SuppressWarnings(ExcessivePublicCount)
- */
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\ExcessivePublicCount;
+
+#[SuppressWarnings(ExcessivePublicCount::class)]
 class ExcessivePublicCountSuppressionWorksForPublicStaticMethods
 {
     public static function aMethod(): void

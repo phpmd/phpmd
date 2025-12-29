@@ -249,7 +249,7 @@ class RuleSet implements IteratorAggregate
 
         // Apply all rules to this node
         foreach ($this->rules[$className] as $rule) {
-            if ($node->hasSuppressWarningsAnnotationFor($rule) && !$this->strict) {
+            if ($node->hasSuppressWarningsFor($rule) && !$this->strict) {
                 continue;
             }
             $rule->setReport($this->report);

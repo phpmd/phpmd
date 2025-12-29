@@ -83,7 +83,7 @@ class MethodNodeTest extends AbstractTestCase
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
     /**
@@ -95,7 +95,7 @@ class MethodNodeTest extends AbstractTestCase
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
     /**
@@ -107,7 +107,7 @@ class MethodNodeTest extends AbstractTestCase
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
     /**
@@ -119,7 +119,7 @@ class MethodNodeTest extends AbstractTestCase
         $rule->setName('FooBar');
 
         $method = $this->getMethod();
-        static::assertTrue($method->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
     /**

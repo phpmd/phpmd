@@ -85,13 +85,13 @@ class MethodNode extends AbstractCallableNode
      *
      * @throws RuntimeException
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+    public function hasSuppressWarningsFor(Rule $rule): bool
     {
-        if (parent::hasSuppressWarningsAnnotationFor($rule)) {
+        if (parent::hasSuppressWarningsFor($rule)) {
             return true;
         }
 
-        return $this->getParentType()->hasSuppressWarningsAnnotationFor($rule);
+        return $this->getParentType()->hasSuppressWarningsFor($rule);
     }
 
     /**

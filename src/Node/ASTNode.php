@@ -20,7 +20,9 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractNode;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule;
+use PHPMD\Rule\UnusedFormalParameter;
 
 /**
  * Wrapper around a PHP_Depend ast node.
@@ -48,10 +50,10 @@ final class ASTNode extends AbstractNode
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      *
-     * @SuppressWarnings("PMD.UnusedFormalParameter")
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+    #[SuppressWarnings(UnusedFormalParameter::class)]
+    public function hasSuppressWarningsFor(Rule $rule): bool
     {
         return false;
     }

@@ -29,6 +29,8 @@ use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\EmptyCatchBlock;
 use ReflectionException;
 use ReflectionFunction;
 
@@ -211,9 +213,8 @@ abstract class AbstractLocalVariable extends AbstractRule
 
     /**
      * Reflect function trying as namespaced function first, then global function.
-     *
-     * @SuppressWarnings(EmptyCatchBlock)
      */
+    #[SuppressWarnings(EmptyCatchBlock::class)]
     private function getReflectionFunctionByName(string $functionName): ?ReflectionFunction
     {
         try {
@@ -267,7 +268,7 @@ abstract class AbstractLocalVariable extends AbstractRule
 
         $parameters = $reflectionFunction->getParameters();
 
-        if (PHP_VERSION_ID < 50600 || $reflectionFunction->isVariadic()) {
+        if ($reflectionFunction->isVariadic()) {
             $argumentPosition = min($argumentPosition, count($parameters) - 1);
         }
 

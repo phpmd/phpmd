@@ -32,14 +32,15 @@ use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\ClassNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 
 /**
  * This rule collects all private fields in a class that aren't used in any
  * method of the analyzed class.
- *
- * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedPrivateField extends AbstractRule implements ClassAware
 {
     /**

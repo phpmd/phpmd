@@ -19,6 +19,7 @@
 namespace PHPMD\TextUI;
 
 use InvalidArgumentException;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Console\OutputInterface;
@@ -27,6 +28,7 @@ use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Renderer\RendererInterface;
 use PHPMD\Rule;
+use PHPMD\Rule\Naming\LongVariable;
 use PHPMD\Utility\ArgumentsValidator;
 use TypeError;
 use ValueError;
@@ -34,9 +36,8 @@ use ValueError;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
- *
- * @SuppressWarnings(LongVariable)
  */
+#[SuppressWarnings(LongVariable::class)]
 class CommandLineOptions
 {
     /** Error code for invalid input */
@@ -656,8 +657,8 @@ class CommandLineOptions
             '--exclude: comma-separated string of patterns that are used to ' .
             'ignore directories. Use asterisks to exclude by pattern. ' .
             'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
-            '--strict: also report those nodes with a @SuppressWarnings ' .
-            'annotation' . \PHP_EOL .
+            '--strict: also report those nodes with a SuppressWarnings ' .
+            'attribute' . \PHP_EOL .
             '--ignore-errors-on-exit: will exit with a zero code, ' .
             'even on error' . \PHP_EOL .
             '--ignore-violations-on-exit: will exit with a zero code, ' .

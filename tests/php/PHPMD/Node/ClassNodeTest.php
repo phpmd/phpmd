@@ -58,7 +58,7 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        static::assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($node->hasSuppressWarningsFor($rule));
     }
 
     /**
@@ -74,7 +74,7 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        static::assertTrue($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertTrue($node->hasSuppressWarningsFor($rule));
 
         $class = new ASTClass(null);
         $class->setComment('/** @SuppressWarnings(PMD.TooManyFields) */');
@@ -84,7 +84,7 @@ class ClassNodeTest extends AbstractTestCase
 
         $node = new ClassNode($class);
 
-        static::assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertFalse($node->hasSuppressWarningsFor($rule));
     }
 
     /**

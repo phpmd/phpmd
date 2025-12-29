@@ -301,10 +301,10 @@ abstract class AbstractNode
     }
 
     /**
-     * Checks if this node has a suppressed annotation for the given rule
+     * Checks if this node has suppressed warninngs for the given rule
      * instance.
      */
-    abstract public function hasSuppressWarningsAnnotationFor(Rule $rule): bool;
+    abstract public function hasSuppressWarningsFor(Rule $rule): bool;
 
     /**
      * Returns the full qualified name of a class, an interface, a method or

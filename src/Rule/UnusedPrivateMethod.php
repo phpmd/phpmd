@@ -101,7 +101,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     {
         return (
             $method->isPrivate() &&
-            !$method->hasSuppressWarningsAnnotationFor($this) &&
+            !$method->hasSuppressWarningsFor($this) &&
             strcasecmp($method->getImage(), $class->getImage()) !== 0 &&
             strcasecmp($method->getImage(), '__construct') !== 0 &&
             strcasecmp($method->getImage(), '__destruct') !== 0 &&

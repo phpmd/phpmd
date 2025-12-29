@@ -26,6 +26,7 @@ use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
@@ -116,8 +117,8 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * @param AbstractNode<ASTNode> $node
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
-     * @SuppressWarnings(LongVariable)
      */
+    #[SuppressWarnings(self::class)]
     private function checkMaximumLength(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('maximum');

@@ -28,6 +28,7 @@ use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTWhileStatement;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\TraitNode;
@@ -48,8 +49,8 @@ use RuntimeException;
  * - do-while() loops
  *
  * @author Kamil Szymanski <kamilszymanski@gmail.com>
- * @SuppressWarnings(CouplingBetweenObjects)
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class CountInLoopExpression extends AbstractRule implements ClassAware, EnumAware, TraitAware
 {
     /**

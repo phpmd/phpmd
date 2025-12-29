@@ -31,17 +31,18 @@ use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 use ReflectionMethod;
 use RuntimeException;
 
 /**
  * This rule collects all formal parameters of a given function or method that
  * are not used in a statement of the artifact's body.
- *
- * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**

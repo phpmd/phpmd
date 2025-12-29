@@ -22,6 +22,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTNode;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -32,9 +33,8 @@ use RuntimeException;
 
 /**
  * This is the abstract base class for PHPMD rules.
- *
- * @SuppressWarnings(PHPMD)
  */
+#[SuppressWarnings]
 abstract class AbstractRule implements Rule
 {
     /** The name for this rule instance. */
@@ -362,7 +362,7 @@ abstract class AbstractRule implements Rule
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
         foreach ($node->getMethods() as $method) {
-            if (!$this->strict && $method->hasSuppressWarningsAnnotationFor($this)) {
+            if (!$this->strict && $method->hasSuppressWarningsFor($this)) {
                 continue;
             }
 

@@ -33,13 +33,20 @@ abstract class AbstractNode extends BaseNode
 {
     /** Annotations associated with node instance. */
     private Annotations $annotations;
+    private Attributes $attributes;
 
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
      */
-    public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+    public function hasSuppressWarningsFor(Rule $rule): bool
     {
+        $this->attributes ??= new Attributes($this);
+
+        if ($this->attributes->suppresses($rule)) {
+            return true;
+        }
+
         $this->annotations ??= new Annotations($this);
 
         return $this->annotations->suppresses($rule);

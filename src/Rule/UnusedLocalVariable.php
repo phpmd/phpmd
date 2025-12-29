@@ -35,15 +35,16 @@ use PDepend\Source\AST\ASTString;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule collects all local variables within a given function or method
  * that are not used by any code in the analyzed source artifact.
- *
- * @SuppressWarnings("PMD.CouplingBetweenObjects")
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**

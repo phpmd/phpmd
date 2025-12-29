@@ -71,6 +71,17 @@ class RuleSetTest extends AbstractTestCase
         static::assertNull($rule->node);
     }
 
+    public function testApplyNotInvokesRuleWhenSuppressAttributeExists(): void
+    {
+        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
+        $ruleSet->setReport($this->getReportWithNoViolation());
+        $ruleSet->apply($this->getClass());
+        $rule = $ruleSet->getRuleByName(__FUNCTION__);
+
+        static::assertInstanceOf(RuleStub::class, $rule);
+        static::assertNull($rule->node);
+    }
+
     /**
      * testApplyInvokesRuleWhenStrictModeIsSet
      */

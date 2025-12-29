@@ -66,7 +66,7 @@ class ASTNodeTest extends AbstractTestCase
         $node = new ASTNode($mock, __FILE__);
         $rule = $this->getRuleMock();
 
-        static::assertFalse($node->hasSuppressWarningsAnnotationFor($rule));
+        static::assertFalse($node->hasSuppressWarningsFor($rule));
     }
 
     /**
