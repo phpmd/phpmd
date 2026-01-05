@@ -23,6 +23,7 @@ use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTIfStatement;
 use PDepend\Source\AST\ASTScopeStatement;
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Rule\CleanCode\ElseExpression;
@@ -134,7 +135,33 @@ class RuleSetTest extends AbstractTestCase
         }
 
         static::assertSame([$else], $iteration);
+        // With a node ElseExpression is not aware (since its implements only MethodAware and FunctionAware)
         $ruleSet->apply(new ClassNode(new ASTClass('FooBar')));
+
+        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+
+        // With a node not registered at all
+        $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
+            public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName(): string
+            {
+                return '';
+            }
+
+            public function getParentName(): string
+            {
+                return '';
+            }
+
+            public function getNamespaceName(): string
+            {
+                return '';
+            }
+        });
 
         static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
 
@@ -144,6 +171,8 @@ class RuleSetTest extends AbstractTestCase
         $statement->addChild(new ASTScopeStatement());
         $statement->addChild(new ASTScopeStatement());
         $function->addChild($statement);
+
+        // With a node ElseExpression is aware of (thanks to FunctionAware)
         $ruleSet->apply(new FunctionNode($function));
 
         static::assertCount(1, $ruleSet->getReport()->getRuleViolations());
@@ -153,12 +182,11 @@ class RuleSetTest extends AbstractTestCase
      * Creates a rule set instance with a variable amount of appended rule
      * objects.
      */
-    private function createRuleSetFixture(): RuleSet
+    private function createRuleSetFixture(string ...$names): RuleSet
     {
         $ruleSet = new RuleSet();
 
-        foreach (func_get_args() as $name) {
-            static::assertIsString($name);
+        foreach ($names as $name) {
             $ruleSet->addRule(new RuleStub($name));
         }
 

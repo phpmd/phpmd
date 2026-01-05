@@ -22,7 +22,10 @@ use Exception;
 use org\bovigo\vfs\vfsStream;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
+use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\Rule\CyclomaticComplexity;
+use PHPMD\Rule\Naming\ShortMethodName;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
@@ -667,6 +670,64 @@ class RuleSetFactoryTest extends AbstractTestCase
     }
 
     /**
+     * @covers \PHPMD\Exception\RuleNotFoundException
+     */
+    public function testCreateRuleSetFromYamlFileWithWrongRef(): void
+    {
+        self::expectExceptionObject(new RuleNotFoundException('CyclomaticComplexityPoof'));
+
+        $factory = new RuleSetFactory();
+        $factory->createSingleRuleSet(__DIR__ . '/../../resources/files/rulesets/phpmd-incorrect-ref.yml');
+    }
+
+    public function testCreateRuleSetFromYamlFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $ruleSet = $factory->createSingleRuleSet(__DIR__ . '/../../resources/files/rulesets/phpmd.yml');
+
+        static::assertSame('MethodChecks', $ruleSet->getName());
+        static::assertSame('Check stuff on methods', $ruleSet->getDescription());
+
+        $rules = $ruleSet->getRules()->getArrayCopy();
+
+        static::assertCount(2, $rules);
+
+        /** @var CyclomaticComplexity $cyclomaticComplexity */
+        $cyclomaticComplexity = $rules[0];
+        static::assertInstanceOf(CyclomaticComplexity::class, $cyclomaticComplexity);
+        static::assertSame(
+            'The {0} {1}() has a Cyclomatic Complexity of {2}. The configured cyclomatic complexity threshold is {3}.',
+            $cyclomaticComplexity->getMessage(),
+        );
+
+        /** @var ShortMethodName $shortMethodName */
+        $shortMethodName = $rules[1];
+        static::assertInstanceOf(ShortMethodName::class, $shortMethodName);
+        static::assertSame(
+            'Avoid using short method names like {0}::{1}(). ' .
+            'The configured threshold (minimum allowed) method name length is {2}.',
+            $shortMethodName->getMessage(),
+        );
+        static::assertSame(
+            4,
+            $shortMethodName->getIntProperty('threshold'),
+        );
+        static::assertSame(
+            [
+                <<<'EOD'
+                    class ShortMethod
+                    {
+                        public function ab($index) // Violation
+                        {
+                        }
+                    }
+                    EOD,
+            ],
+            $shortMethodName->getExamples(),
+        );
+    }
+
+    /**
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
@@ -685,19 +746,17 @@ class RuleSetFactoryTest extends AbstractTestCase
      * Invokes the <b>createRuleSets()</b> of the {@link RuleSetFactory}
      * class.
      *
-     * @param string $file At least one rule configuration file name. You can
+     * @param string $files At least one rule configuration file name. You can
      *        also pass multiple parameters with ruleset configuration files.
      * @return RuleSet[]
      *
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    private function createRuleSetsFromFiles(string $file): array
+    private function createRuleSetsFromFiles(string ...$files): array
     {
-        $args = func_get_args();
-
         $factory = new RuleSetFactory();
 
-        return $factory->createRuleSets(implode(',', $args));
+        return $factory->createRuleSets(implode(',', $files));
     }
 
     /**

@@ -19,7 +19,11 @@
 namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\ASTVisitor\ASTVisitor;
+use PHPMD\AbstractNode;
 use PHPMD\AbstractTestCase;
+use PHPMD\Rule;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
@@ -28,9 +32,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ASTNode::class)]
 class ASTNodeTest extends AbstractTestCase
 {
-    /**
-     * testGetImageDelegatesToGetImageMethodOfWrappedNode
-     */
     public function testGetImageDelegatesToGetImageMethodOfWrappedNode(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
@@ -42,9 +43,6 @@ class ASTNodeTest extends AbstractTestCase
         $node->getImage();
     }
 
-    /**
-     * testGetNameDelegatesToGetImageMethodOfWrappedNode
-     */
     public function testGetNameDelegatesToGetImageMethodOfWrappedNode(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
@@ -56,9 +54,6 @@ class ASTNodeTest extends AbstractTestCase
         $node->getName();
     }
 
-    /**
-     * testHasSuppressWarningsAnnotationForAlwaysReturnsFalse
-     */
     public function testHasSuppressWarningsAnnotationForAlwaysReturnsFalse(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
@@ -69,9 +64,23 @@ class ASTNodeTest extends AbstractTestCase
         static::assertFalse($node->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testGetParentNameReturnsNull
-     */
+    public function testGetParentReturnsNull(): void
+    {
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
+        $node = new ASTNode($mock, __FILE__);
+
+        static::assertNull($node->getParent());
+        static::assertNull($node->getParentOfType(PDependNode::class));
+    }
+
+    public function testGetFirstChildOfTypeReturnsNull(): void
+    {
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
+        $node = new ASTNode($mock, __FILE__);
+
+        static::assertNull($node->getFirstChildOfType(PDependNode::class));
+    }
+
     public function testGetParentNameReturnsNull(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
@@ -80,9 +89,105 @@ class ASTNodeTest extends AbstractTestCase
         static::assertNull($node->getParentName());
     }
 
-    /**
-     * testGetNamespaceNameReturnsNull
-     */
+    public function testGetFileNameReturnsNull(): void
+    {
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
+        $node = new ASTNode($mock, null);
+
+        static::assertSame('', $node->getFileName());
+
+        $node = new class (new ASTVariable('$a')) extends AbstractNode {
+            /**
+             * @param mixed[] $data
+             */
+            public function accept(ASTVisitor $visitor, $data = []): mixed
+            {
+                return null;
+            }
+
+            public function getStartLine(): int
+            {
+                return 0;
+            }
+
+            public function getStartColumn(): int
+            {
+                return 0;
+            }
+
+            public function getEndColumn(): int
+            {
+                return 0;
+            }
+
+            /**
+             * @return list<AbstractNode<PDependNode>>
+             */
+            public function getChildren(): array
+            {
+                return [];
+            }
+
+            public function setParent(?PDependNode $node): void
+            {
+            }
+
+            /**
+             * @param class-string $parentType
+             * @templte T of ASTNode
+             * @return list<AbstractNode<PDependNode>>
+             */
+            public function getParentsOfType($parentType): array
+            {
+                return [];
+            }
+
+            public function getComment(): string
+            {
+                return '';
+            }
+
+            /**
+             * @param string $comment
+             */
+            public function setComment($comment): void
+            {
+            }
+
+            /**
+             * @param int $startLine
+             * @param int $endLine
+             * @param int $startColumn
+             * @param int $endColumn
+             */
+            public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
+            {
+            }
+
+            public function hasSuppressWarningsFor(Rule $rule): bool
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName(): ?string
+            {
+                return null;
+            }
+
+            public function getParentName(): ?string
+            {
+                return null;
+            }
+
+            public function getNamespaceName(): ?string
+            {
+                return null;
+            }
+        };
+
+        static::assertNull($node->getFileName());
+    }
+
     public function testGetNamespaceNameReturnsNull(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
@@ -91,9 +196,6 @@ class ASTNodeTest extends AbstractTestCase
         static::assertNull($node->getNamespaceName());
     }
 
-    /**
-     * testGetFullQualifiedNameReturnsNull
-     */
     public function testGetFullQualifiedNameReturnsNull(): void
     {
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();

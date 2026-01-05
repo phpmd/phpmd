@@ -56,7 +56,7 @@ abstract class AbstractNode
      * The magic call method is used to pipe requests from rules direct
      * to the underlying PDepend AST node.
      *
-     * @param array<mixed> $args
+     * @param list<mixed> $args
      */
     public function __call(string $name, array $args): mixed
     {
@@ -72,6 +72,7 @@ abstract class AbstractNode
     public function getParent(): ?self
     {
         $node = $this->node->getParent();
+
         if ($node === null) {
             return null;
         }
@@ -87,7 +88,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched parent type.
      * @return AbstractNode<T>|null
      */
-    public function getParentOfType($type): ?self
+    public function getParentOfType(string $type): ?self
     {
         $parent = $this->node->getParent();
 
@@ -95,6 +96,7 @@ abstract class AbstractNode
             if ($parent instanceof $type) {
                 return new ASTNode($parent, $this->getFileName());
             }
+
             $parent = $parent->getParent();
         }
 
@@ -125,7 +127,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return AbstractNode<T>|null
      */
-    public function getFirstChildOfType($type): ?self
+    public function getFirstChildOfType(string $type): ?self
     {
         $node = $this->node->getFirstChildOfType($type);
 
@@ -144,7 +146,7 @@ abstract class AbstractNode
      * @param class-string<T> $type The searched child type.
      * @return list<AbstractNode<T>>
      */
-    public function findChildrenOfType($type): array
+    public function findChildrenOfType(string $type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -164,7 +166,7 @@ abstract class AbstractNode
      * @param class-string<PDependNode> $type The searched child type.
      * @return list<PDependNode>
      */
-    public function findChildrenWithParentType($type): array
+    public function findChildrenWithParentType(string $type): array
     {
         $children = $this->node->findChildrenOfType($type);
 
@@ -182,7 +184,7 @@ abstract class AbstractNode
     /**
      * Searches recursive for all children of this node that are of variable.
      *
-     * @return array<int, AbstractNode<ASTVariable>>
+     * @return list<AbstractNode<ASTVariable>>
      * @todo Cover by a test.
      */
     public function findChildrenOfTypeVariable(): array
@@ -191,7 +193,7 @@ abstract class AbstractNode
     }
 
     /**
-     * Tests if this node represents the the given type.
+     * Tests if this node represents the given type.
      *
      * @template T of PDependNode
      *
@@ -199,7 +201,7 @@ abstract class AbstractNode
      *
      * @phpstan-assert-if-true static<T> $this
      */
-    public function isInstanceOf($class): bool
+    public function isInstanceOf(string $class): bool
     {
         return $this->node instanceof $class;
     }
