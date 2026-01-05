@@ -14,9 +14,11 @@
  * @license https://opensource.org/licenses/bsd-license.php BSD License
  * @link http://phpmd.org/
  */
+
 class testRuleDoesNotApplyToUsedReference
 {
-    public function testRuleDoesNotApplyToUsedReference() {
+    public function testRuleDoesNotApplyToUsedReference()
+    {
         $a = 1;
         $b = &$a;
         $b = 2;
