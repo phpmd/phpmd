@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="First Test RuleSet"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
+
+    <description>Test exclude-pattern</description>
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity" />
+    <rule ref="rulesets/codesize.xml/NPathComplexity">
+        <properties>
+            <property name="minimum" value="50" />
+        </properties>
+    </rule>
+
+    <!-- unix path -->
+    <exclude-pattern>*sourceExcluded/*.php</exclude-pattern>
+    <!-- windows path -->
+    <exclude-pattern>*sourceExcluded\*.php</exclude-pattern>
+</ruleset>
