@@ -39,7 +39,6 @@ use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Stubs\RuleStub;
 use PHPUnit\Framework\MockObject\MockObject;
-use ReflectionProperty;
 
 /**
  * Abstract base class for PHPMD test cases.
@@ -252,27 +251,17 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
      */
     protected function getViolationsSummary(iterable $violations): string
     {
-        if (!is_array($violations)) {
-            $violations = iterator_to_array($violations);
-        }
+        $violations = is_array($violations) ? $violations : iterator_to_array($violations);
 
-        return implode("\n", array_map(function (RuleViolation $violation) {
-            $nodeExtractor = new ReflectionProperty(RuleViolation::class, 'node');
-            $nodeExtractor->setAccessible(true);
-            $value = $nodeExtractor->getValue($violation);
-            $node = null;
-            if ($value instanceof AbstractNode) {
-                $node = $value->getNode();
-            }
-            $message = '  - line ' . $violation->getBeginLine();
-
-            if ($node) {
-                $type = preg_replace('/^PDepend\\\\Source\\\\AST\\\\AST/', '', $node::class);
-                $message .= ' on ' . $type . ' ' . $node->getImage();
-            }
-
-            return $message;
-        }, $violations));
+        return implode("\n", array_map(fn(RuleViolation $violation) => sprintf(
+            '  - line %d %s',
+            $violation->getBeginLine(),
+            $violation->getFunctionName()
+                ?? $violation->getMethodName()
+                ?? $violation->getClassName()
+                ?? $violation->getNamespaceName()
+                ?? $violation->getFileName()
+        ), $violations));
     }
 
     /**
