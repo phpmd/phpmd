@@ -52,7 +52,7 @@ jobs:
           CNAME: phpmd.org
 
       - name: Archive generated website
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Website
           path: dist/website/*
