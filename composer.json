@@ -41,7 +41,7 @@
     "composer/xdebug-handler": "^3.0",
     "pdepend/pdepend": "3.x-dev#9f22e169d1707a4e546077665eb7e9e9aef17e22",
     "symfony/console": "^6.4|^7.0|^8.0",
-    "symfony/yaml": "^5.4.31 || ^6.0 || ^7.0"
+    "symfony/yaml": "^5.4.31 || ^6.0 || ^7.0 || ^8.0"
   },
   "require-dev": {
     "ext-json": "*",
