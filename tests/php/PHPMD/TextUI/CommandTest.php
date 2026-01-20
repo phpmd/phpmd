@@ -198,7 +198,7 @@ class CommandTest extends AbstractTestCase
     public static function dataProviderWithFilter(): array
     {
         return [
-            ['--suffixe', ['.class.php']],
+            ['--suffixes', ['.class.php']],
             ['--exclude', ['ccn_', '*npath_', '*parse_error']],
         ];
     }

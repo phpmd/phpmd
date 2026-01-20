@@ -151,7 +151,7 @@ class CommandLineOptions
         $this->coverageReport = $this->readString($input, 'coverage');
 
         /** @var list<string> */
-        $extensions = $input->getOption('suffixe');
+        $extensions = $input->getOption('suffixes');
         $this->extensions = $extensions;
 
         /** @var list<string> */
