@@ -133,10 +133,10 @@ final class Command extends SymfonyCommand
             Rule::HIGHEST_PRIORITY
         );
         $this->addOption(
-            'suffixe',
+            'suffixes',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'Ssource code filename extension',
+            'Source code filename extensions',
             ['php', 'php3', 'php4', 'php5', 'inc']
         );
         $this->addOption(
