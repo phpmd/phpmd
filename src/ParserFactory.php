@@ -90,6 +90,8 @@ final class ParserFactory
         $this->initExtensions($pdepend, $phpmd);
         $this->initResultCache($pdepend, $phpmd);
 
+        $pdepend->setThreads($phpmd->getThreads());
+
         return $pdepend;
     }
 

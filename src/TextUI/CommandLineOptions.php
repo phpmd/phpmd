@@ -135,6 +135,9 @@ class CommandLineOptions
     /** Specify how many extra lines are added to a code snippet */
     private int $extraLineInExcerpt;
 
+    /** number of cores to use for parsing */
+    private ?int $threads = null;
+
     /**
      * Constructs a new command line options instance.
      *
@@ -196,6 +199,8 @@ class CommandLineOptions
         if ($this->inputPaths === ['-']) {
             $this->inputPaths = ['php://stdin'];
         }
+
+        $this->threads = $input->getOption('threads') ? (int) $input->getOption('threads') : null;
     }
 
     /**
@@ -290,6 +295,11 @@ class CommandLineOptions
     public function getIgnore(): array
     {
         return $this->ignore;
+    }
+
+    public function getThreads(): ?int
+    {
+        return $this->threads;
     }
 
     /**

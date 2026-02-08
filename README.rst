@@ -167,6 +167,8 @@ Command line options
     will show rule name in yellow and error description in red.
   - ``--extra-line-in-excerpt`` - specify how many extra lines are added to a code snippet in html format
 
+  - ``--threads`` - the number of threads to use to parse the files.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile "phpmd.xml" --suffixes "php,phtml"

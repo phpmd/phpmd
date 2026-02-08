@@ -69,6 +69,9 @@ class PHPMD
      */
     private bool $violations = false;
 
+    /** number of threads the engine should use */
+    private ?int $threads = null;
+
     /**
      * Additional options for PHPMD or one of it's parser backends.
      *
@@ -164,6 +167,16 @@ class PHPMD
     public function setResultCache(ResultCacheEngine $resultCache): void
     {
         $this->resultCache = $resultCache;
+    }
+
+    public function setThreads(?int $threads): void
+    {
+        $this->threads = $threads;
+    }
+
+    public function getThreads(): ?int
+    {
+        return $this->threads;
     }
 
     /**

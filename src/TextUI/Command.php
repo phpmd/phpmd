@@ -225,8 +225,9 @@ final class Command extends SymfonyCommand
             InputOption::VALUE_REQUIRED,
             'An optional script to load before running analysis'
         );
-        $this->addOption('input-file', null, InputOption::VALUE_REQUIRED, 'A file contaning paths to analyze');
+        $this->addOption('input-file', null, InputOption::VALUE_REQUIRED, 'A file containing paths to analyze');
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar, only results');
+        $this->addOption('threads', null, InputOption::VALUE_REQUIRED, 'Number of threads to use for parsing');
     }
 
     /**
@@ -342,6 +343,7 @@ final class Command extends SymfonyCommand
 
         $phpmd->setFileExtensions($options->getExtensions());
         $phpmd->addIgnorePatterns($options->getIgnore());
+        $phpmd->setThreads($options->getThreads());
 
         $ignorePattern = $ruleSetFactory->getIgnorePattern($options->getRuleSets());
         $ruleSetList = $ruleSetFactory->createRuleSets($options->getRuleSets());
