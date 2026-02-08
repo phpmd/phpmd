@@ -200,7 +200,7 @@ class CommandLineOptions
             $this->inputPaths = ['php://stdin'];
         }
 
-        $this->threads = $input->getOption('threads') ? (int) $input->getOption('threads') : null;
+        $this->threads = $this->readInt($input, 'threads');
     }
 
     /**
