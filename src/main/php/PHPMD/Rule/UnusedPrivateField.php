@@ -47,6 +47,9 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
     {
         /** @var ClassNode $field */
         foreach ($this->collectUnusedPrivateFields($node) as $field) {
+            if ($this->isExcepted($field)) {
+                continue;
+            }
             $this->addViolation($field, array($field->getImage()));
         }
     }
@@ -205,5 +208,26 @@ class UnusedPrivateField extends AbstractRule implements ClassAware
         }
 
         return $owner;
+    }
+
+    /**
+     * Checks if the given field is in the exceptions list.
+     *
+     * @param \PHPMD\Node\ASTNode $field
+     * @return boolean
+     */
+    protected function isExcepted(ASTNode $field)
+    {
+        return in_array(trim($field->getImage(), '$'), $this->getExceptionsList());
+    }
+
+    /**
+     * Gets array of exceptions from property
+     *
+     * @return array
+     */
+    protected function getExceptionsList()
+    {
+        return explode(',', $this->getStringProperty('exceptions', ''));
     }
 }
