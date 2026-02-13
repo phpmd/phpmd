@@ -197,7 +197,7 @@ tool: ::
 
   ~ $ phpmd /path/to/source text codesize,unusedcode,naming
 
-You can also mix custom `rule set files`__ with build-in rule sets: ::
+You can also mix custom `rule set files`__ with built-in rule sets: ::
 
   ~ $ phpmd /path/to/source text codesize,/my/rules.xml
 
