@@ -35,6 +35,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule collects all private fields in a class that aren't used in any
@@ -51,6 +52,9 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
      */
     private array $fields = [];
 
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
+
     /**
      * This method checks that all private class properties are at least accessed
      * by one method.
@@ -62,7 +66,14 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
         }
 
         foreach ($this->collectUnusedPrivateFields($node) as $field) {
-            $this->addViolation($field, [$field->getImage()]);
+            $fieldName = $field->getImage();
+
+            // Check if field name is in the exceptions list (without the $ prefix)
+            if ($this->getExceptionsList()->contains(ltrim($fieldName, '$'))) {
+                continue;
+            }
+
+            $this->addViolation($field, [$fieldName]);
         }
     }
 
@@ -212,5 +223,15 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
         }
 
         return $owner;
+    }
+
+    /**
+     * Gets exceptions from property
+     */
+    private function getExceptionsList(): ExceptionsList
+    {
+        $this->exceptions ??= new ExceptionsList($this);
+
+        return $this->exceptions;
     }
 }

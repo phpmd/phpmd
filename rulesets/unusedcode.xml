@@ -18,6 +18,12 @@ The Unused Code Ruleset contains a collection of rules that find unused code.
 Detects when a private field is declared and/or assigned a value, but not used.
         </description>
         <priority>3</priority>
+        <properties>
+            <property
+                    name="exceptions"
+                    description="Comma-separated list of field names that are allowed to be unused."
+                    value="" />
+        </properties>
         <example>
 <![CDATA[
 class Something
