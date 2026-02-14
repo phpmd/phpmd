@@ -495,4 +495,20 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
+
+    public function testRuleDoesNotApplyToExceptionParameter(): void
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->addProperty('exceptions', '$unused');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getFunction());
+    }
+
+    public function testRuleAppliesToParameterNotInExceptionsList(): void
+    {
+        $rule = new UnusedFormalParameter();
+        $rule->addProperty('exceptions', '$other');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getFunction());
+    }
 }

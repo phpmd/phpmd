@@ -38,6 +38,7 @@ use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Utility\ExceptionsList;
 use RuntimeException;
 
 /**
@@ -53,6 +54,9 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * @var array<string, AbstractNode<ASTVariableDeclarator>>
      */
     private array $nodes = [];
+
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
 
     /**
      * This method checks that all parameters of a given function or method are
@@ -89,7 +93,10 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
         $this->removeUsedParameters($node);
 
         foreach ($this->nodes as $node) {
-            $this->addViolation($node, [$node->getImage()]);
+            $parameterName = $node->getImage();
+            if (!$this->getExceptionsList()->contains($parameterName)) {
+                $this->addViolation($node, [$parameterName]);
+            }
         }
     }
 
@@ -342,5 +349,15 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
                 }
             }
         }
+    }
+
+    /**
+     * Gets array of exceptions from property
+     */
+    private function getExceptionsList(): ExceptionsList
+    {
+        $this->exceptions ??= new ExceptionsList($this, '$');
+
+        return $this->exceptions;
     }
 }

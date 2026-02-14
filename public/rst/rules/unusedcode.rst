@@ -81,10 +81,17 @@ Example: ::
       }
   }
 
+This rule has the following properties:
+
++-----------------------------------+---------------+---------------------------------------+
+| Name                              | Default Value | Description                           |
++===================================+===============+=======================================+
+| exceptions                        |               | Comma-separated list of exceptions    |
++-----------------------------------+---------------+---------------------------------------+
+
 Remark
 ======
 
   This document is based on a ruleset xml-file, that was taken from the original source of the `PMD`__ project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.
 
 __ http://pmd.sourceforge.net/
-        
