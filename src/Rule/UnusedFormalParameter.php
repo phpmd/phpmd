@@ -20,6 +20,7 @@ namespace PHPMD\Rule;
 
 use OutOfBoundsException;
 use Override;
+use InvalidArgumentException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAttribute;
@@ -63,6 +64,7 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * used at least one time within the artifacts body.
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public function apply(AbstractNode $node): void
     {
