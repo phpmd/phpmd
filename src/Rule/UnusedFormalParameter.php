@@ -18,9 +18,9 @@
 
 namespace PHPMD\Rule;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
 use Override;
-use InvalidArgumentException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAttribute;
