@@ -2,9 +2,13 @@ name: Generate phar
 
 on:
   push:
-    branches: [ 'master', '2.x', '3.x' ]
+    branches:
+      - master
+      - 2.x
+      - 3.x
   pull_request:
-    branches: [ '*' ]
+    branches:
+      - *
   release:
     types:
       - created
@@ -12,13 +16,15 @@ on:
 jobs:
   php-tests:
     runs-on: ubuntu-latest
+
     timeout-minutes: 15
+
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
       matrix:
-        php: [5.4]
+        php: [5.4, '8.3', '8.4', '8.5']
         dependency-version: [prefer-stable]
 
     name: Release phar
@@ -56,7 +62,7 @@ jobs:
         run: ant package -D-phar:filename=./phpmd.phar && ./phpmd.phar --version
 
       - name: Sign phar
-        if: github.repository == 'phpmd/phpmd' && github.event_name == 'release'
+        if: "github.repository == 'phpmd/phpmd' && github.event_name == 'release'"
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -85,7 +91,7 @@ jobs:
             phpmd.phar.asc
 
       - name: Release phpmd.phar
-        if: github.event_name == 'release'
+        if: "github.event_name == 'release'"
         uses: skx/github-action-publish-binaries@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

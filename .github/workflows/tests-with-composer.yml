@@ -1,13 +1,14 @@
 name: Composer test script
 
-# Ensure composer test can be run from both fresh build and with test/vendor
-# folder already installed, making sure contributors can rely on it to work locally.
-
 on:
   push:
-    branches: [ 'master', '2.x', '3.x' ]
+    branches:
+      - master
+      - 2.x
+      - 3.x
   pull_request:
-    branches: [ '*' ]
+    branches:
+      - *
 
 jobs:
   tests:
@@ -16,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '8.3' ]
+        php: ['8.3']
 
     name: PHP ${{ matrix.php }}
 
@@ -43,7 +44,7 @@ jobs:
           key: ${{ runner.os }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
+        if: "steps.composer-cache.outputs.cache-hit != 'true'"
         run: composer up
 
       - name: Run `composer test` twice

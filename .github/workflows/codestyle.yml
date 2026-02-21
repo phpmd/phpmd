@@ -2,30 +2,36 @@ name: Codestyle
 
 on:
   push:
-    branches: [ 'master', '2.x', '3.x' ]
+    branches:
+      - master
+      - 2.x
+      - 3.x
     paths:
-      - '**.php'
-      - 'composer.json'
-      - 'phpcs.xml.dist'
-      - '.github/workflows/codestyle.yml'
+      - **.php
+      - composer.json
+      - phpcs.xml.dist
+      - .github/workflows/codestyle.yml
   pull_request:
-    branches: [ '*' ]
+    branches:
+      - *
     paths:
-      - '**.php'
-      - 'composer.json'
-      - 'phpcs.xml.dist'
-      - '.github/workflows/codestyle.yml'
+      - **.php
+      - composer.json
+      - phpcs.xml.dist
+      - .github/workflows/codestyle.yml
 
 jobs:
   php-tests:
     runs-on: ubuntu-latest
+
     timeout-minutes: 15
+
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
       matrix:
-        php: [7.4]
+        php: [7.4, '8.3', '8.4', '8.5']
         dependency-version: [prefer-stable]
 
     name: Codestyle check

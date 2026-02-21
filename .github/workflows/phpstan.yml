@@ -3,24 +3,26 @@ name: PHPStan
 on:
   push:
     branches:
-      - "*"
+      - *
   pull_request:
     branches:
-      - "*"
+      - *
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+
     timeout-minutes: 15
+
     env:
       COMPOSER_NO_INTERACTION: 1
 
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.4' ]
-        setup: [ 'stable' ]
-        phpstan: [1.10.25]
+        php: ['7.4', '8.3', '8.4', '8.5']
+        setup: [stable]
+        phpstan: [1.10.25, '8.3', '8.4', '8.5']
 
     name: PHP ${{ matrix.php }} - ${{ matrix.setup }} - ${{ matrix.phpstan }}
 
