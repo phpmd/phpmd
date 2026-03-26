@@ -28,7 +28,7 @@ Coding Standard
 ---------------
 
 Make sure your code changes comply with the [coding standard](https://github.com/phpmd/phpmd/blob/master/phpcs.xml.dist) by
-using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+using [PHP Codesniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer)
 from within your PHPMD folder:
 
     vendor/bin/phpcs -p --extensions=php src > phpcs.txt
