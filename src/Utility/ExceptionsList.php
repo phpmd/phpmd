@@ -78,7 +78,6 @@ final class ExceptionsList implements ArrayAccess, IteratorAggregate
                 $this->trim
             );
 
-            // @phpstan-ignore-next-line
             $this->exceptions = array_combine($values, $values);
         }
 

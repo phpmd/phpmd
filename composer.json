@@ -46,13 +46,13 @@
   "require-dev": {
     "ext-json": "*",
     "ext-simplexml": "*",
-    "brianium/paratest": "^7.3",
+    "brianium/paratest": "~7.3.2|^7.8.5",
     "easy-doc/easy-doc": "^1.3.2",
     "friendsofphp/php-cs-fixer": "^3.57",
     "gregwar/rst": "^1.0",
     "mikey179/vfsstream": "^1.6.8",
-    "phpstan/phpstan": "~2.1.38",
-    "phpunit/phpunit": "^10.5.20,<10.5.32|^11.0.0",
+    "phpstan/phpstan": "~2.1.44",
+    "phpunit/phpunit": "^10.5.62|^11.5.50",
     "squizlabs/php_codesniffer": "^3.8.0"
   },
   "autoload": {
@@ -78,11 +78,6 @@
     "build-website": "easy-doc build src/site/config.php --verbose"
   },
   "config": {
-    "sort-packages": true,
-    "audit": {
-      "ignore": [
-        "PKSA-z3gr-8qht-p93v"
-      ]
-    }
+    "sort-packages": true
   }
 }
