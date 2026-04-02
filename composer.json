@@ -54,6 +54,11 @@
       "PHPMD\\": "src/main/php"
     }
   },
+  "config": {
+    "audit": {
+      "block-insecure": false
+    }
+  },
   "bin": [
     "src/bin/phpmd"
   ],
