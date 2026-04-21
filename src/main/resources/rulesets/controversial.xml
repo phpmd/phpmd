@@ -14,7 +14,7 @@ This ruleset contains a collection of controversial rules.
           since="0.2"
           message = "{0} accesses the super-global variable {1}."
           class="PHPMD\Rule\Controversial\Superglobals"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#superglobals">
         <description>
             <![CDATA[
 Accessing a super-global variable directly is considered a bad practice.
@@ -38,7 +38,7 @@ class Foo {
           since="0.2"
           message = "The class {0} is not named in CamelCase."
           class="PHPMD\Rule\Controversial\CamelCaseClassName"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcaseclassname">
         <description>
             <![CDATA[
 It is considered best practice to use the CamelCase notation to name classes.
@@ -62,7 +62,7 @@ class class_name {
           since="2.16"
           message = "The name {0} in namespace {1} is not named in CamelCase."
           class="PHPMD\Rule\Controversial\CamelCaseNamespace"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcasenamespace">
         <description>
             <![CDATA[
 A rule to use CamelCase notation to name namespaces.
@@ -91,7 +91,7 @@ class class_name {
           since="0.2"
           message = "The property {0} is not named in camelCase."
           class="PHPMD\Rule\Controversial\CamelCasePropertyName"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcasepropertyname">
         <description>
             <![CDATA[
 It is considered best practice to use the camelCase notation to name attributes.
@@ -122,7 +122,7 @@ class ClassName {
           since="0.2"
           message = "The method {0} is not named in camelCase."
           class="PHPMD\Rule\Controversial\CamelCaseMethodName"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcasemethodname">
         <description>
             <![CDATA[
 It is considered best practice to use the camelCase notation to name methods.
@@ -154,7 +154,7 @@ class ClassName {
           since="0.2"
           message = "The parameter {0} is not named in camelCase."
           class="PHPMD\Rule\Controversial\CamelCaseParameterName"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcaseparametername">
         <description>
             <![CDATA[
 It is considered best practice to use the camelCase notation to name parameters.
@@ -183,7 +183,7 @@ class ClassName {
           since="0.2"
           message = "The variable {0} is not named in camelCase."
           class="PHPMD\Rule\Controversial\CamelCaseVariableName"
-          externalInfoUrl="#">
+          externalInfoUrl="https://phpmd.org/rules/naming.html#camelcasevariablename">
         <description>
             <![CDATA[
 It is considered best practice to use the camelCase notation to name variables.

@@ -387,7 +387,7 @@ class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>" . self::highlightFile($filePath) . "</a>";
+            $fileHtml = "<a href='jetbrains://phpstorm/navigate/reference?project=vndash-backend&path=$filePath:{$violation->getBeginLine()}' target='_blank'>" . self::highlightFile($filePath) . "</a>";
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
