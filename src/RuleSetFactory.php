@@ -825,7 +825,7 @@ class RuleSetFactory
         }
 
         $name = isset($xml['name']) ? (string) $xml['name'] : null;
-        $ruleSet = $this->initRuleSet($fileName, $xml['name'] ?? null);
+        $ruleSet = $this->initRuleSet($fileName, $name);
 
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'php-includepath') {

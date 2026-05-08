@@ -58,6 +58,20 @@ final class Command extends SymfonyCommand
 {
     public const ERROR = 3;
 
+    private ?string $mainScript = null;
+
+    private ?string $workerCommandName = null;
+
+    public function setMainScript(string $mainScript): void
+    {
+        $this->mainScript = $mainScript;
+    }
+
+    public function setWorkerCommandName(string $workerCommandName): void
+    {
+        $this->workerCommandName = $workerCommandName;
+    }
+
     /**
      * @return ?list<string>
      */
@@ -360,6 +374,13 @@ final class Command extends SymfonyCommand
         $phpmd->setFileExtensions($options->getExtensions());
         $phpmd->addExcludePatterns($options->getExcludePatterns());
         $phpmd->setThreads($options->getThreads());
+
+        if (null !== $this->mainScript) {
+            $phpmd->setMainScript($this->mainScript);
+        }
+        if (null !== $this->workerCommandName) {
+            $phpmd->setWorkerCommandName($this->workerCommandName);
+        }
 
         $excludePatterns = $ruleSetFactory->getExcludePatterns($options->getRuleSets());
         $ruleSetList = $ruleSetFactory->createRuleSets($options->getRuleSets());

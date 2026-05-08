@@ -92,6 +92,16 @@ final class ParserFactory
 
         $pdepend->setThreads($phpmd->getThreads());
 
+        $mainScript = $phpmd->getMainScript();
+        if (null !== $mainScript) {
+            $pdepend->setMainScript($mainScript);
+        }
+
+        $workerCommandName = $phpmd->getWorkerCommandName();
+        if (null !== $workerCommandName) {
+            $pdepend->setWorkerCommandName($workerCommandName);
+        }
+
         return $pdepend;
     }
 

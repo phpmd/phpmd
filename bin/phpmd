@@ -18,6 +18,7 @@
 
 use PHPMD\TextUI\Command;
 use PHPMD\TextUI\XdebugOptionHandler;
+use PHPMD\TextUI\PdependWorkerCommand;
 use Symfony\Component\Console\Application;
 
 if (file_exists(__DIR__ . '/../../../autoload.php')) {
@@ -65,10 +66,17 @@ if (
 }
 $application = new Application('PHPMD', Command::getVersion());
 $command = new Command();
+if (isset($_SERVER['argv'][0]) && is_file($_SERVER['argv'][0])) {
+    $command->setMainScript($_SERVER['argv'][0]);
+    $command->setWorkerCommandName('pdepend:worker');
+}
+$workerCommand = new PdependWorkerCommand();
 if (method_exists($application, 'addCommand')) {
     $application->addCommand($command);
+    $application->addCommand($workerCommand);
 } else {
     $application->add($command);
+    $application->add($workerCommand);
 }
 $application->setDefaultCommand($command->getName());
 // Run command line interface
