@@ -23,12 +23,14 @@ use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTNode;
 use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Exception\InvalidRulePropertyTypeException;
 use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
+use PHPMD\RuleProperty\RulePropertySetter;
 use RuntimeException;
 
 /**
@@ -68,7 +70,7 @@ abstract class AbstractRule implements Rule
     /**
      * Configuration properties for this rule instance.
      *
-     * @var array<string, string>
+     * @var array<string, bool|int|string>
      */
     private array $properties = [];
 
@@ -239,10 +241,14 @@ abstract class AbstractRule implements Rule
     }
 
     /**
-     * Adds a configuration property to this rule instance.
+     * Add a configuration property to this rule instance.
+     *
+     * @throws InvalidRulePropertyTypeException
      */
-    public function addProperty(string $name, string $value): void
+    public function addProperty(string $name, bool|int|string $value): void
     {
+        RulePropertySetter::setValue($this, $name, $value);
+
         $this->properties[$name] = $value;
     }
 
@@ -252,14 +258,13 @@ abstract class AbstractRule implements Rule
      * Throws an exception when no property with <b>$name</b> exists
      * and no default value to fall back was given.
      *
-     * @template T
      * @param string $name The name of the property, e.g. "ignore-whitespace".
-     * @param ?T $default An optional default value to fall back instead of throwing an exception.
-     * @return string|T The value of a configured property.
+     * @param bool|int|string|null $default An optional default value to fall back instead of throwing an exception.
+     * @return bool|int|string The value of a configured property.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    private function getProperty(string $name, mixed $default = null): mixed
+    public function getProperty(string $name, null|bool|int|string $default = null): bool|int|string
     {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
@@ -369,4 +374,10 @@ abstract class AbstractRule implements Rule
             $this->apply($method);
         }
     }
+
+    /**
+     * This method should implement the violation analysis algorithm of concrete
+     * rule implementations. All extending classes must implement this method.
+     */
+    abstract public function apply(AbstractNode $node): void;
 }

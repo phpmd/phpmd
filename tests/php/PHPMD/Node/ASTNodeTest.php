@@ -94,7 +94,7 @@ class ASTNodeTest extends AbstractTestCase
         $mock = $this->getMockBuilder(PDependNode::class)->getMock();
         $node = new ASTNode($mock, null);
 
-        static::assertSame('', $node->getFileName());
+        static::assertNull($node->getFileName());
 
         $node = new class (new ASTVariable('$a')) extends AbstractNode {
             /**

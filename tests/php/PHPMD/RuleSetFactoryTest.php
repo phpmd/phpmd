@@ -64,7 +64,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory = new RuleSetFactory();
         $ruleSet = $factory->createSingleRuleSet('set1.xml');
 
-        static::assertEquals('First description...', $ruleSet->getDescription());
+        static::assertSame('First description...', $ruleSet->getDescription());
     }
 
     /**
@@ -99,7 +99,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
     /**
@@ -108,7 +108,7 @@ class RuleSetFactoryTest extends AbstractTestCase
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
-        static::assertEquals('First description...', $ruleSets[0]->getDescription());
+        static::assertSame('First description...', $ruleSets[0]->getDescription());
     }
 
     /**
@@ -123,9 +123,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertCount(2, $ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances
-     */
     public function testCreateRuleSetsForTwoFilesReturnsExpectedRuleSetInstances(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
@@ -145,8 +142,8 @@ class RuleSetFactoryTest extends AbstractTestCase
             'rulesets/set1.xml',
             'rulesets/set2.xml'
         );
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
-        static::assertEquals('Second Test RuleSet', $ruleSets[1]->getName());
+        static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
+        static::assertSame('Second Test RuleSet', $ruleSets[1]->getName());
     }
 
     /**
@@ -191,7 +188,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
     /**
@@ -202,7 +199,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        static::assertEquals('First Test RuleSet', $ruleSets[0]->getName());
+        static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
     /**
@@ -213,7 +210,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/refset1.xml');
-        static::assertEquals(4, iterator_count($ruleSets[0]));
+        static::assertCount(4, $ruleSets[0]);
     }
 
     /**
@@ -243,7 +240,7 @@ class RuleSetFactoryTest extends AbstractTestCase
             $actual[] = $rule->getName();
         }
 
-        static::assertEquals($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -317,7 +314,7 @@ class RuleSetFactoryTest extends AbstractTestCase
             '*sourceExcluded\*.php',
         ];
 
-        static::assertEquals($expected, $excludes);
+        static::assertSame($expected, $excludes);
     }
 
     /**
@@ -345,7 +342,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['set1']);
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals([__FUNCTION__], $rule->getExamples());
+        static::assertSame([__FUNCTION__], $rule->getExamples());
     }
 
     /**
@@ -359,7 +356,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['set2']);
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
+        static::assertSame([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
     }
 
     /**
@@ -417,7 +414,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $rule = $ruleSets[0]->getRules()->current();
 
         $examples = $rule->getExamples();
-        static::assertEquals('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
+        static::assertSame('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
     }
 
     /**
@@ -431,7 +428,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['refset4']);
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('Name overwritten', $rule->getName());
+        static::assertSame('Name overwritten', $rule->getName());
     }
 
     /**
@@ -445,7 +442,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['refset4']);
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('Message overwritten', $rule->getMessage());
+        static::assertSame('Message overwritten', $rule->getMessage());
     }
 
     /**
@@ -459,7 +456,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['refset4']);
 
         $rule = $ruleSets[0]->getRules()->current();
-        static::assertEquals('http://example.com/overwritten', $rule->getExternalInfoUrl());
+        static::assertSame('http://example.com/overwritten', $rule->getExternalInfoUrl());
     }
 
     /**
@@ -473,7 +470,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['refset-exclude-one']);
 
         $rules = $ruleSets[0]->getRules();
-        static::assertEquals(1, iterator_count($rules));
+        static::assertCount(1, $rules);
     }
 
     /**
@@ -487,7 +484,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $factory->createRuleSets(['refset-exclude-all']);
 
         $rules = $ruleSets[0]->getRules();
-        static::assertEquals(0, iterator_count($rules));
+        static::assertCount(0, $rules);
     }
 
     /**
@@ -620,7 +617,7 @@ class RuleSetFactoryTest extends AbstractTestCase
 
         foreach ($this->getPathsForFileAccessTest() as $path) {
             try {
-                static::assertEquals(
+                static::assertSame(
                     [
                         '*sourceExcluded/*.php',
                         '*sourceExcluded\*.php',
@@ -633,8 +630,8 @@ class RuleSetFactoryTest extends AbstractTestCase
                 $runtimeExceptionCount++;
             }
         }
-        static::assertEquals(0, $runtimeExceptionCount);
-        static::assertEquals(5, $ruleSetNotFoundExceptionCount);
+        static::assertSame(0, $runtimeExceptionCount);
+        static::assertSame(5, $ruleSetNotFoundExceptionCount);
     }
 
     /**

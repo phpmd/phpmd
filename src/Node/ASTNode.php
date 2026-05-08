@@ -20,9 +20,7 @@ namespace PHPMD\Node;
 
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\AbstractNode;
-use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule;
-use PHPMD\Rule\UnusedFormalParameter;
 
 /**
  * Wrapper around a PHP_Depend ast node.
@@ -33,6 +31,9 @@ use PHPMD\Rule\UnusedFormalParameter;
  */
 final class ASTNode extends AbstractNode
 {
+    private Annotations $annotations;
+    private Attributes $attributes;
+
     /**
      * Constructs a new ast node instance.
      *
@@ -49,13 +50,18 @@ final class ASTNode extends AbstractNode
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
-     *
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    #[SuppressWarnings(UnusedFormalParameter::class)]
     public function hasSuppressWarningsFor(Rule $rule): bool
     {
-        return false;
+        $this->attributes ??= new Attributes($this);
+
+        if ($this->attributes->suppresses($rule)) {
+            return true;
+        }
+
+        $this->annotations ??= new Annotations($this);
+
+        return $this->annotations->suppresses($rule);
     }
 
     /**
@@ -78,9 +84,9 @@ final class ASTNode extends AbstractNode
     /**
      * Returns the name of the declaring source file.
      */
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
-        return $this->fileName ?? '';
+        return $this->fileName;
     }
 
     /**

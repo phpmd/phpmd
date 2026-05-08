@@ -18,8 +18,6 @@
 
 namespace PHPMD\Rule\Naming;
 
-use InvalidArgumentException;
-use OutOfBoundsException;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTForeachStatement;
@@ -33,7 +31,10 @@ use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Rule\TraitAware;
-use PHPMD\Utility\ExceptionsList;
+use PHPMD\RuleProperty\Matcher;
+use PHPMD\RuleProperty\MatchList;
+use PHPMD\RuleProperty\Option;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class will detect variables, parameters and properties with short
@@ -41,6 +42,16 @@ use PHPMD\Utility\ExceptionsList;
  */
 final class ShortVariable extends AbstractRule implements ClassAware, FunctionAware, MethodAware, TraitAware
 {
+    #[Threshold(['threshold', 'minimum'])]
+    public int $threshold;
+
+    /** @SuppressWarnings(LongVariable) */
+    #[Option]
+    public bool $allowShortVariablesInLoop = true;
+
+    #[MatchList]
+    public ?Matcher $exceptions = null;
+
     /**
      * Temporary map holding variables that were already processed in the
      * current context.
@@ -48,9 +59,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * @var array<string, bool>
      */
     private array $processedVariables = [];
-
-    /** Temporary cache of configured exceptions. */
-    private ExceptionsList $exceptions;
 
     /**
      * Extracts all variable and variable declarator nodes from the given node
@@ -78,8 +86,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * length.
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
      */
     private function applyClass(AbstractNode $node): void
     {
@@ -100,8 +106,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * length.
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
      */
     private function applyNonClass(AbstractNode $node): void
     {
@@ -122,8 +126,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * configured threshold or if the given node is an allowed context.
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
      */
     private function checkNodeImage(AbstractNode $node): void
     {
@@ -137,14 +139,10 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * Template method that performs the real node image check.
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws InvalidArgumentException
-     * @throws OutOfBoundsException
      */
     private function checkMinimumLength(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
-
-        if ($threshold <= strlen($node->getImage()) - 1) {
+        if ($this->threshold <= \strlen($node->getImage()) - 1) {
             return;
         }
 
@@ -152,23 +150,11 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
             return;
         }
 
-        $exceptions = $this->getExceptionsList();
-
-        if ($exceptions->contains(substr($node->getImage(), 1))) {
+        if ($this->exceptions?->contains(substr($node->getImage(), 1))) {
             return;
         }
 
-        $this->addViolation($node, [$node->getImage(), (string) $threshold]);
-    }
-
-    /**
-     * Gets exceptions from property
-     */
-    private function getExceptionsList(): ExceptionsList
-    {
-        $this->exceptions ??= new ExceptionsList($this);
-
-        return $this->exceptions;
+        $this->addViolation($node, [$node->getImage(), (string) $this->threshold]);
     }
 
     /**
@@ -177,7 +163,6 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * variable names in catch-statements.
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws OutOfBoundsException
      */
     private function isNameAllowedInContext(AbstractNode $node): bool
     {
@@ -196,11 +181,10 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
      * Checks if a short name is initialized within a foreach loop statement
      *
      * @param AbstractNode<ASTNode> $node
-     * @throws OutOfBoundsException
      */
     private function isInitializedInLoop(AbstractNode $node): bool
     {
-        if (!$this->getBooleanProperty('allow-short-variables-in-loop', true)) {
+        if (!$this->allowShortVariablesInLoop) {
             return false;
         }
 
@@ -232,7 +216,7 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
 
         $parent = $node->getParent();
 
-        while (is_object($parent)) {
+        while (\is_object($parent)) {
             if ($parent->isInstanceOf($type)) {
                 $parents[] = $parent;
             }

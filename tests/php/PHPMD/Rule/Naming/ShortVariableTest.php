@@ -317,11 +317,18 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariablesWithinForeach
-     */
+    public function testRuleNotAppliesToVariablesFromExceptionsPattern(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', 3);
+        $rule->addProperty('exceptions', 'foo*');
+        $rule->setReport($this->getReportWithNoViolation());
+
+        $rule->apply($this->getClass());
+    }
+
     #[DataProvider('provideClassWithShortForeachVariables')]
-    public function testRuleAppliesToVariablesWithinForeach(string $allowShortVarInLoop, int $expectedErrorsCount): void
+    public function testRuleAppliesToVariablesWithinForeach(bool $allowShortVarInLoop, int $expectedErrorsCount): void
     {
         $rule = new ShortVariable();
         $rule->addProperty('minimum', '3');
@@ -343,8 +350,8 @@ class ShortVariableTest extends AbstractTestCase
     public static function provideClassWithShortForeachVariables(): array
     {
         return [
-            ['1', 2],
-            ['0', 5],
+            [true, 2],
+            [false, 5],
         ];
     }
 }

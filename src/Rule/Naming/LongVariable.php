@@ -72,23 +72,27 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
 
         if ($node->getType() === 'class') {
             $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
+
             foreach ($fields as $field) {
-                $declarators = $field->findChildrenOfType(ASTVariableDeclarator::class);
-                foreach ($declarators as $declarator) {
+                if ($field->hasSuppressWarningsFor($this)) {
+                    continue;
+                }
+
+                foreach ($field->findChildrenOfType(ASTVariableDeclarator::class) as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
             }
+
             $this->resetProcessed();
 
             return;
         }
-        $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
-        foreach ($declarators as $declarator) {
+
+        foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $declarator) {
             $this->checkNodeImage($declarator);
         }
 
-        $variables = $node->findChildrenOfTypeVariable();
-        foreach ($variables as $variable) {
+        foreach ($node->findChildrenOfTypeVariable() as $variable) {
             $this->checkNodeImage($variable);
         }
 
@@ -121,19 +125,27 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     #[SuppressWarnings(self::class)]
     private function checkMaximumLength(AbstractNode $node): void
     {
+        if ($node->hasSuppressWarningsFor($this)) {
+            return;
+        }
+
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
+
         $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
             \ltrim($variableName, '$'),
             $this->getSubtractPrefixList(),
             $this->getSubtractSuffixList()
         );
+
         if ($lengthWithoutDollarSign <= $threshold) {
             return;
         }
+
         if ($this->isNameAllowedInContext($node)) {
             return;
         }
+
         $this->addViolation($node, [$variableName, (string) $threshold]);
     }
 

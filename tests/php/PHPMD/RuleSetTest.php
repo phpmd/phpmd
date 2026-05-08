@@ -142,24 +142,49 @@ class RuleSetTest extends AbstractTestCase
 
         // With a node not registered at all
         $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
-            public function hasSuppressWarningsAnnotationFor(Rule $rule): bool
+            public function hasSuppressWarningsFor(Rule $rule): bool
             {
                 return false;
             }
 
-            public function getFullQualifiedName(): string
+            public function getFullQualifiedName(): ?string
             {
-                return '';
+                return null;
             }
 
-            public function getParentName(): string
+            public function getParentName(): ?string
             {
-                return '';
+                return null;
             }
 
-            public function getNamespaceName(): string
+            public function getNamespaceName(): ?string
             {
-                return '';
+                return null;
+            }
+        });
+
+        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+
+        // With a node not registered at all
+        $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
+            public function hasSuppressWarningsFor(Rule $rule): bool
+            {
+                return false;
+            }
+
+            public function getFullQualifiedName(): ?string
+            {
+                return null;
+            }
+
+            public function getParentName(): ?string
+            {
+                return null;
+            }
+
+            public function getNamespaceName(): ?string
+            {
+                return null;
             }
         });
 

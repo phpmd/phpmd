@@ -23,6 +23,7 @@ use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\RuleProperty\RulePropertySetter;
 use RuntimeException;
 use SimpleXMLElement;
 use Stringable;
@@ -519,6 +520,8 @@ class RuleSetFactory
                 $rule->addProperty($name, (string) $value);
             }
         }
+
+        RulePropertySetter::setDefaultValues($rule);
     }
 
     /**
