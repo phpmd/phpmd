@@ -342,10 +342,10 @@ final class Command extends SymfonyCommand
         );
 
         $phpmd->setFileExtensions($options->getExtensions());
-        $phpmd->addIgnorePatterns($options->getIgnore());
+        $phpmd->addExcludePatterns($options->getExcludePatterns());
         $phpmd->setThreads($options->getThreads());
 
-        $ignorePattern = $ruleSetFactory->getIgnorePattern($options->getRuleSets());
+        $excludePatterns = $ruleSetFactory->getExcludePatterns($options->getRuleSets());
         $ruleSetList = $ruleSetFactory->createRuleSets($options->getRuleSets());
 
         $cwd = getcwd() ?: '';
@@ -370,7 +370,7 @@ final class Command extends SymfonyCommand
 
         $phpmd->processFiles(
             $options->getInputPaths(),
-            $ignorePattern,
+            $excludePatterns,
             $renderers,
             $ruleSetList,
             $report ?? new Report(),

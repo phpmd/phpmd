@@ -83,7 +83,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
 
         $phpmd->processFiles(
             [__DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php'],
-            $ruleSetFactory->getIgnorePattern(['codesize']),
+            $ruleSetFactory->getExcludePatterns(['codesize']),
             [$this->renderer],
             $ruleSetFactory->createRuleSets(['codesize']),
             new Report()
@@ -123,7 +123,7 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
             );
         $phpmd->processFiles(
             [__DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php'],
-            $ruleSetFactory->getIgnorePattern(['codesize']),
+            $ruleSetFactory->getExcludePatterns(['codesize']),
             [$this->renderer],
             $ruleSetFactory->createRuleSets(['codesize']),
             new Report()

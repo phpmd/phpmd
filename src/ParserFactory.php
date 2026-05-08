@@ -118,9 +118,9 @@ final class ParserFactory
      */
     private function initIgnores(Engine $pdepend, PHPMD $phpmd): void
     {
-        if (count($phpmd->getIgnorePatterns()) > 0) {
+        if (count($phpmd->getExcludePatterns()) > 0) {
             $pdepend->addFileFilter(
-                new ExcludePathFilter($phpmd->getIgnorePatterns())
+                new ExcludePathFilter($phpmd->getExcludePatterns())
             );
         }
     }

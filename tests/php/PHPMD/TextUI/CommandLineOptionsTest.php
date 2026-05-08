@@ -433,7 +433,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = $this->createInput(['paths' => [__FILE__], '--format' => 'text', '--ruleset' => ['codesize'], '--exclude' => ['bar/biz']]);
         $opts = new CommandLineOptions($args);
 
-        static::assertSame(['bar/biz'], $opts->getIgnore());
+        static::assertSame(['bar/biz'], $opts->getExcludePatterns());
     }
 
     /**

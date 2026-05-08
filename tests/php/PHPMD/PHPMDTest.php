@@ -55,7 +55,7 @@ class PHPMDTest extends AbstractTestCase
 
         $phpmd->processFiles(
             [self::createFileUri('source/ccn_function.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -79,7 +79,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -103,7 +103,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source/ccn_function.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -143,7 +143,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source/source_without_violations.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -166,7 +166,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source/source_with_npath_violation.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -189,7 +189,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source/source_with_npath_violation.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report(new BaselineValidator($baselineSet, BaselineMode::None))
@@ -211,7 +211,7 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
         $phpmd->processFiles(
             [self::createFileUri('source/source_with_parse_error.php')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -233,7 +233,7 @@ class PHPMDTest extends AbstractTestCase
         // Process without exclusions, should result in violations.
         $phpmd->processFiles(
             [self::createFileUri('sourceExcluded/')],
-            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
+            $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
@@ -245,7 +245,7 @@ class PHPMDTest extends AbstractTestCase
         // Process with exclusions, should result in no violations.
         $phpmd->processFiles(
             [self::createFileUri('sourceExcluded/')],
-            $this->ruleSetFactory->getIgnorePattern(['exclude-pattern']),
+            $this->ruleSetFactory->getExcludePatterns(['exclude-pattern']),
             [],
             $this->ruleSetFactory->createRuleSets(['exclude-pattern']),
             new Report()

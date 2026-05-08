@@ -307,7 +307,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $factory = new RuleSetFactory();
-        $excludes = $factory->getIgnorePattern(['exclude-pattern']);
+        $excludes = $factory->getExcludePatterns(['exclude-pattern']);
 
         $expected = [
             '*sourceExcluded/*.php',
@@ -622,7 +622,7 @@ class RuleSetFactoryTest extends AbstractTestCase
                         '*sourceExcluded/*.php',
                         '*sourceExcluded\*.php',
                     ],
-                    $factory->getIgnorePattern([$path . self::DIR_UNDER_TESTS])
+                    $factory->getExcludePatterns([$path . self::DIR_UNDER_TESTS])
                 );
             } catch (RuleSetNotFoundException) {
                 $ruleSetNotFoundExceptionCount++;

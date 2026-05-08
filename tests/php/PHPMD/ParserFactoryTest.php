@@ -122,9 +122,9 @@ class ParserFactoryTest extends AbstractTestCase
 
         $uri = $this->createFileUri('ParserFactory/File/Test.php');
 
-        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getIgnorePatterns', 'getInput'])->getMock();
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getExcludePatterns', 'getInput'])->getMock();
         $phpmd->expects(static::exactly(2))
-            ->method('getIgnorePatterns')
+            ->method('getExcludePatterns')
             ->willReturn(['Test']);
         $phpmd->expects(static::once())
             ->method('getInput')

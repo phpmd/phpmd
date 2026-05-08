@@ -50,7 +50,7 @@ class PHPMD
      *
      * @var list<string>
      */
-    private array $ignorePatterns = [];
+    private array $excludePatterns = [];
 
     /**
      * The input source file or directory.
@@ -139,23 +139,23 @@ class PHPMD
      * @return string[]
      * @since 2.9.0
      */
-    public function getIgnorePatterns(): array
+    public function getExcludePatterns(): array
     {
-        return $this->ignorePatterns;
+        return $this->excludePatterns;
     }
 
     /**
-     * Add a list of ignore patterns which is used to exclude directories from
+     * Add a list of exclude patterns which is used to exclude directories from
      * the source analysis.
      *
-     * @param list<string> $ignorePatterns List of ignore patterns.
+     * @param list<string> $excludePatterns List of exclude patterns.
      * @since 2.9.0
      */
-    public function addIgnorePatterns(array $ignorePatterns): void
+    public function addExcludePatterns(array $excludePatterns): void
     {
-        $this->ignorePatterns = [
-            ...$this->ignorePatterns,
-            ...$ignorePatterns,
+        $this->excludePatterns = [
+            ...$this->excludePatterns,
+            ...$excludePatterns,
         ];
     }
 
@@ -205,21 +205,21 @@ class PHPMD
      * argument. The result will be passed to all given renderer instances.
      *
      * @param list<string>        $inputPath
-     * @param list<string>        $ignorePattern
+     * @param list<string>        $excludePatterns
      * @param RendererInterface[] $renderers
      * @param list<RuleSet>       $ruleSetList
      * @throws Exception
      */
     public function processFiles(
         array $inputPath,
-        array $ignorePattern,
+        array $excludePatterns,
         array $renderers,
         array $ruleSetList,
         Report $report,
         ?ProgressListener $progressListener = null
     ): void {
         // Merge parsed excludes
-        $this->addIgnorePatterns($ignorePattern);
+        $this->addExcludePatterns($excludePatterns);
 
         $this->input = $inputPath;
 

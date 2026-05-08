@@ -95,7 +95,7 @@ class CommandLineOptions
      *
      * @var list<string>
      */
-    private array $ignore = [];
+    private array $excludePatterns = [];
 
     /**
      * Should PHPMD run in strict mode?
@@ -159,7 +159,7 @@ class CommandLineOptions
 
         /** @var list<string> */
         $ignore = $input->getOption('exclude');
-        $this->ignore = $ignore;
+        $this->excludePatterns = $ignore;
         $this->strict = (bool) $input->getOption('strict');
         $this->generateBaseline = $input->getOption('update-baseline') ? BaselineMode::Update : BaselineMode::None;
         if ($input->getOption('generate-baseline')) {
@@ -292,9 +292,9 @@ class CommandLineOptions
      *
      * @return list<string>
      */
-    public function getIgnore(): array
+    public function getExcludePatterns(): array
     {
-        return $this->ignore;
+        return $this->excludePatterns;
     }
 
     public function getThreads(): ?int

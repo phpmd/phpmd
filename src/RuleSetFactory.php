@@ -562,7 +562,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      */
-    public function getIgnorePattern(array $fileName): array
+    public function getExcludePatterns(array $fileName): array
     {
         $excludes = [];
         $files = array_map(trim(...), $fileName);
