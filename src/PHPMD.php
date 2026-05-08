@@ -72,6 +72,10 @@ class PHPMD
     /** number of threads the engine should use */
     private ?int $threads = null;
 
+    private ?string $mainScript = null;
+
+    private ?string $workerCommandName = null;
+
     /**
      * Additional options for PHPMD or one of it's parser backends.
      *
@@ -177,6 +181,26 @@ class PHPMD
     public function getThreads(): ?int
     {
         return $this->threads;
+    }
+
+    public function setMainScript(string $mainScript): void
+    {
+        $this->mainScript = $mainScript;
+    }
+
+    public function getMainScript(): ?string
+    {
+        return $this->mainScript;
+    }
+
+    public function setWorkerCommandName(string $workerCommandName): void
+    {
+        $this->workerCommandName = $workerCommandName;
+    }
+
+    public function getWorkerCommandName(): ?string
+    {
+        return $this->workerCommandName;
     }
 
     /**
