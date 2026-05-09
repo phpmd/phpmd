@@ -18,8 +18,6 @@
 
 namespace PHPMD\Exception;
 
-use RuntimeException;
-
 /**
  * This type of exception is thrown when a not existing rule was specified.
  */

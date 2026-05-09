@@ -19,12 +19,13 @@
 namespace PHPMD;
 
 use ArrayAccess;
+use PHPMD\Exception\RuleByNameNotFoundException;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
+use PHPMD\Exception\RuntimeException;
 use PHPMD\RuleProperty\RulePropertySetter;
-use RuntimeException;
 use SimpleXMLElement;
 use Stringable;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -96,6 +97,7 @@ class RuleSetFactory
      * @param list<string> $ruleSetFileNames Rule-set filenames or identifier.
      * @return list<RuleSet>
      * @throws RuntimeException
+     * @throws ParseException
      */
     public function createRuleSets(array $ruleSetFileNames): array
     {
@@ -114,6 +116,7 @@ class RuleSetFactory
      * @param string $ruleSetOrFileName The rule-set filename or identifier.
      * @throws RuleSetNotFoundException
      * @throws RuntimeException
+     * @throws ParseException
      */
     public function createSingleRuleSet(string $ruleSetOrFileName): RuleSet
     {
@@ -185,6 +188,7 @@ class RuleSetFactory
      * This method parses the rule-set definition in the given file.
      *
      * @throws RuntimeException When loading the XML file fails.
+     * @throws ParseException When parsing the YAML file fails.
      */
     private function parseRuleSetNode(string $fileName): RuleSet
     {
@@ -208,6 +212,7 @@ class RuleSetFactory
      * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $node
      * @throws RuleClassNotFoundException
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function parseRuleNode(RuleSet $ruleSet, array|ArrayAccess|SimpleXMLElement $node): void
     {
@@ -237,6 +242,7 @@ class RuleSetFactory
      *
      * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleSetNode
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function parseRuleSetReferenceNode(
         RuleSet $ruleSet,
@@ -254,6 +260,7 @@ class RuleSetFactory
      *
      * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleSetNode
      * @throws RuntimeException
+     * @throws ParseException
      * @since 0.2.3
      */
     private function parseRuleSetReference(array|ArrayAccess|SimpleXMLElement $ruleSetNode): RuleSet
@@ -388,6 +395,7 @@ class RuleSetFactory
      * @throws RuleSetNotFoundException
      * @throws RuleByNameNotFoundException
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function parseRuleReferenceNode(
         RuleSet $ruleSet,
@@ -638,6 +646,7 @@ class RuleSetFactory
      * Load rule-set config from a .php file.
      *
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function getConfigFromPhpFile(string $fileName): RuleSet
     {
@@ -669,6 +678,7 @@ class RuleSetFactory
      * Load rule-set config from a .json file.
      *
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function getConfigFromJsonFile(string $fileName): RuleSet
     {
@@ -685,6 +695,7 @@ class RuleSetFactory
      *
      * @param array<mixed> $config
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function getConfigFromArray(string $fileName, array $config): RuleSet
     {
@@ -702,6 +713,7 @@ class RuleSetFactory
      * Load rule-set config from a .xml file.
      *
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function getConfigFromXmlFile(string $fileName): RuleSet
     {
@@ -743,6 +755,7 @@ class RuleSetFactory
      *
      * @param array<mixed> $config
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function configRuleSetWith(RuleSet $ruleSet, array $config): void
     {
@@ -804,6 +817,7 @@ class RuleSetFactory
      * @throws RuleNotFoundException
      * @throws RuleSetNotFoundException
      * @throws RuntimeException
+     * @throws ParseException
      */
     private function findFileForRule(string $ruleName): RuleSet
     {

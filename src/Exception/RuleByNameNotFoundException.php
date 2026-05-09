@@ -18,15 +18,18 @@
 
 namespace PHPMD\Exception;
 
-use Throwable;
-
 /**
- * This type of exception is thrown when a rule property has an invalid type.
+ * When a configured rule was not found by name
  */
-class InvalidRulePropertyTypeException extends RuntimeException
+final class RuleByNameNotFoundException extends RuntimeException
 {
-    public function __construct(string $class, string $key, string $message, int $code = 0, ?Throwable $previous = null)
+    /**
+     * Constructs a new RuleByNameNotFoundException.
+     *
+     * @param string $ruleName The name of the rule that was not found.
+     */
+    public function __construct(string $ruleName)
     {
-        parent::__construct("Invalid type for $class::\$$key: $message", $code, $previous);
+        parent::__construct('Cannot find rule by name: ' . $ruleName);
     }
 }

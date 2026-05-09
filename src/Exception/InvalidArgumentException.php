@@ -18,15 +18,9 @@
 
 namespace PHPMD\Exception;
 
-use Throwable;
-
 /**
- * This type of exception is thrown when a rule property has an invalid type.
+ * PHPMD-specific InvalidArgumentException.
  */
-class InvalidRulePropertyTypeException extends RuntimeException
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
-    public function __construct(string $class, string $key, string $message, int $code = 0, ?Throwable $previous = null)
-    {
-        parent::__construct("Invalid type for $class::\$$key: $message", $code, $previous);
-    }
 }

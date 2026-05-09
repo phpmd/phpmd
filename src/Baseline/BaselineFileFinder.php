@@ -2,8 +2,8 @@
 
 namespace PHPMD\Baseline;
 
+use PHPMD\Exception\RuntimeException;
 use PHPMD\TextUI\CommandLineOptions;
-use RuntimeException;
 
 final class BaselineFileFinder
 {

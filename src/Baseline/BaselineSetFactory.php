@@ -2,7 +2,7 @@
 
 namespace PHPMD\Baseline;
 
-use RuntimeException;
+use PHPMD\Exception\RuntimeException;
 
 final class BaselineSetFactory
 {

@@ -18,7 +18,7 @@
 
 namespace PHPMD\RuleProperty;
 
-use InvalidArgumentException;
+use PHPMD\Exception\InvalidArgumentException;
 
 final class Matcher implements RulePropertyType
 {

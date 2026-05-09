@@ -18,8 +18,6 @@
 
 namespace PHPMD\Exception;
 
-use RuntimeException;
-
 /**
  * This type of exception is thrown when the class file for a configured rule
  * does not exist within php's include path.

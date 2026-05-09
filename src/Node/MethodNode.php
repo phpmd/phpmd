@@ -25,8 +25,8 @@ use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTTrait;
+use PHPMD\Exception\RuntimeException;
 use PHPMD\Rule;
-use RuntimeException;
 
 /**
  * Wrapper around a PHP_Depend method node.

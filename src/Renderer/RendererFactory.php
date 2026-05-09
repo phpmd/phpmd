@@ -2,7 +2,7 @@
 
 namespace PHPMD\Renderer;
 
-use InvalidArgumentException;
+use PHPMD\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class RendererFactory

@@ -24,6 +24,7 @@ use IteratorAggregate;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PHPMD\Exception\RuleByNameNotFoundException;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;

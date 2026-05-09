@@ -16,22 +16,11 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
-
-use RuntimeException;
+namespace PHPMD\Exception;
 
 /**
- * When a configured rule was not found by name
+ * PHPMD-specific RuntimeException.
  */
-final class RuleByNameNotFoundException extends RuntimeException
+class RuntimeException extends \RuntimeException implements Exception
 {
-    /**
-     * Constructs a new RuleByNameNotFoundException.
-     *
-     * @param string $ruleName The name of the rule that was not found.
-     */
-    public function __construct(string $ruleName)
-    {
-        parent::__construct('Cannot find rule by name: ' . $ruleName);
-    }
 }

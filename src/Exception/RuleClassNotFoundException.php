@@ -18,8 +18,6 @@
 
 namespace PHPMD\Exception;
 
-use RuntimeException;
-
 /**
  * When a configured rule class does not exist.
  */
