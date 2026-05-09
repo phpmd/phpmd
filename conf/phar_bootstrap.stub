@@ -29,20 +29,18 @@ Phar::mapPhar('${archive.alias}');
 // Configure include path to use this phar
 set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . get_include_path());
 
-if (isset($argv) && realpath($argv[0]) === __FILE__) {
-    // Load command line utility
-    include_once 'phar://${archive.alias}/vendor/autoload.php';
+// Load command line utility
+include_once 'phar://${archive.alias}/vendor/autoload.php';
 
-    $application = new \Symfony\Component\Console\Application('PHPMD', \PHPMD\TextUI\Command::getVersion());
-    $command = new \PHPMD\TextUI\Command();
-    if (method_exists($application, 'addCommand')) {
-        $application->addCommand($command);
-    } else {
-        $application->add($command);
-    }
-    $application->setDefaultCommand($command->getName());
-    // Run command line interface
-    $application->run();
+$application = new \Symfony\Component\Console\Application('PHPMD', \PHPMD\TextUI\Command::getVersion());
+$command = new \PHPMD\TextUI\Command();
+if (method_exists($application, 'addCommand')) {
+    $application->addCommand($command);
+} else {
+    $application->add($command);
 }
+$application->setDefaultCommand($command->getName());
+// Run command line interface
+$application->run();
 
 __HALT_COMPILER();
