@@ -4,8 +4,12 @@
 .project
 .buildpath
 .settings
+.phpmd.result-cache.php
 *.phar
 /*.xml
+/*.yml
 composer.lock
 vendor
 dist
+.php-cs-fixer.cache
+.phpunit.cache

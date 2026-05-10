@@ -1,0 +1,6 @@
+pdepend:
+  image-convert:
+    font-family: Arial
+    font-size: 12
+  cache:
+    driver: memory

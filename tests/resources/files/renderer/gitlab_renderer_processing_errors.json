@@ -1,0 +1,46 @@
+[
+  {
+    "description": "Failed for file \u0022\/tmp\/foo.php\u0022.",
+    "fingerprint": "\/tmp\/foo.php:0:MajorErrorInFile",
+    "severity": "major",
+    "location": {
+      "path": "\/tmp\/foo.php",
+      "lines": {
+        "begin": 0
+      }
+    }
+  },
+  {
+    "description": "Failed for file \u0022\/tmp\/bar.php\u0022.",
+    "fingerprint": "\/tmp\/bar.php:0:MajorErrorInFile",
+    "severity": "major",
+    "location": {
+      "path": "\/tmp\/bar.php",
+      "lines": {
+        "begin": 0
+      }
+    }
+  },
+  {
+    "description": "Failed for file \u0022\/tmp\/baz.php\u0022.",
+    "fingerprint": "\/tmp\/baz.php:0:MajorErrorInFile",
+    "severity": "major",
+    "location": {
+      "path": "\/tmp\/baz.php",
+      "lines": {
+        "begin": 0
+      }
+    }
+  },
+  {
+    "description": "Cannot read file \u0022\/tmp\/foo.php\u0022. Permission denied.",
+    "fingerprint": "\/tmp\/foo.php:0:MajorErrorInFile",
+    "severity": "major",
+    "location": {
+      "path": "\/tmp\/foo.php",
+      "lines": {
+        "begin": 0
+      }
+    }
+  }
+]

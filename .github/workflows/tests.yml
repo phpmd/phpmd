@@ -1,0 +1,58 @@
+name: Tests
+
+# Ensure tests pass whatever is the minor PHP version currently supported (see strategy.matrix.php)
+# crossed with "lowest" setup (install the lowest possible dependency versions allowed by the range)
+# and with "stable" setup (install the highest possible dependency stable versions allowed by the range)
+
+on:
+  push:
+    branches: [ 'master', '2.x', '3.x' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  php-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    strategy:
+      matrix:
+        php: [ 8.1, 8.2, 8.3, 8.4, 8.5 ]
+        setup: [ lowest, stable ]
+
+    name: PHP ${{ matrix.php }} - prefer-${{ matrix.setup }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php != '8.5'
+        run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
+
+      # For now we need to overwrite the PHP version check on the 8.5 beta as paratest has not been releasd for it yet
+      - name: Install dependencies (PHP 8.5 beta)
+        if: steps.composer-cache.outputs.cache-hit != 'true' && matrix.php == '8.5'
+        run: composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }} --ignore-platform-req=php
+
+      - name: Execute Unit Tests
+        run: composer test
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan

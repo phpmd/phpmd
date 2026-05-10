@@ -1,0 +1,16 @@
+parameters:
+    paths:
+        - src/
+        - tests/php/
+    rememberPossiblyImpureFunctionValues: false
+    level: max
+    exceptions:
+        reportUncheckedExceptionDeadCatch: true
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+    ignoreErrors:
+        -
+            identifier: missingType.checkedException
+            path: tests/*
