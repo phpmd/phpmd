@@ -1,3 +1,63 @@
+phpmd-3.0.0 (unreleased)
+========================
+
+See UPGRADING.md for a detailed migration guide from PHPMD 2 to PHPMD 3.
+
+Breaking changes:
+
+- Changed minimum PHP version from 5.3.9 to 8.1.
+- Changed CLI from positional arguments to Symfony Console with named options.
+  The command signature is now `phpmd analyze [options] [--] [<paths>...]`.
+- Removed `--ignore` option, use `--exclude` instead.
+- Removed `--reportfile` option, use `--reportfile-text`, `--reportfile-xml`, etc.
+- Removed `--minimumpriority` and `--maximumpriority` aliases, use `--minimum-priority` and `--maximum-priority`.
+- Removed `PHPMD\PHPMD::getIgnorePatterns()` and `setIgnorePatterns()`, use `getExcludePatterns()` and `addExcludePatterns()`.
+- Removed deprecated `PHP_PMD_*` class aliases.
+- Require pdepend/pdepend 3.x.
+- Changed exit code for processing errors from 1 to 3.
+- Introduced PHPMD-specific exception hierarchy under `PHPMD\Exception\`.
+
+New features:
+
+- Added YAML, JSON, and PHP as configuration formats in addition to XML.
+- Added configuration file auto-detection for phpmd.yml, phpmd.yaml, phpmd.json, phpmd.xml, and phpmd.php.
+- Added `exclude-pattern` support in YAML, JSON, and PHP configuration files (#909).
+- Added `#[SuppressWarnings]` PHP attribute as the preferred way to suppress warnings.
+- Added progress bar during analysis, use `--no-progress` option to hide it.
+- Added `--threads` option for parallel file parsing.
+- Added `--xdebug` option to enable Xdebug during analysis.
+- Added `--bootstrap` option to load a PHP script before analysis.
+- Added `--input-file` option to read source paths from a file.
+- Added `EnumAware` and `TraitAware` rule marker interfaces.
+- Added #1276: `exceptions` parameter support for UnusedPrivateField.
+- Added #1277: `exceptions` parameter support for UnusedFormalParameter.
+- Added #1076: Option to force camelCase abbreviations in class names.
+- Added #1078: Option to force camelCase abbreviations in variable, property, and parameter names.
+- Added #1196: Support for custom renderers via RendererFactory.
+- Added: `BooleanGetMethodName` rule can now infer return type from type declarations.
+- Added: `UnusedFormalParameter` rule now omits parameters when the method uses the `#[Override]` attribute.
+- Added: `StaticAccess` rule ignores predefined enum static methods.
+- Added: Wildcard option for StaticAccess exceptions.
+- Added #965: GitHub Check Runs renderer.
+- Added #706: Relative path support in report output.
+- Added #664: Rule properties can now be overridden in a custom ruleset without excluding the rule.
+- Added #1069: `UnusedPrivateMethod` rule now recognises calls on cloned objects and `new self`/`new static`/`new ClassName`.
+- Added: `IfStatementWithoutLogic` rule (CleanCode) — flags conditional statements that contain only literals.
+- Added: `LongMethodName` rule (Naming) — flags method and function names that exceed a configurable length threshold.
+
+Fixed:
+
+- Fixed #814: Correctly attribute argument to variadic parameter.
+- Fixed #1016: Crash when isPassedByReference checks a parent that does not exist.
+- Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.
+
+Internal:
+
+- Migrated to Symfony Console for the CLI implementation.
+- Upgraded to PHPUnit 10/11 and PHPStan 2.
+- Applied PER CS v2 code style throughout.
+- Modernized codebase to PHP 8.1+ syntax (enums, readonly, named args, constructor promotion, etc.).
+
 phpmd-2.15.0 (2023/12/11)
 ========================
 
