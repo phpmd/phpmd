@@ -97,6 +97,7 @@ A new exit code `3` has been added, which indicates that one or more files could
 
 These changes only affect you if you have written custom rules or extended PHPMD classes.
 
+- The `PHP_PMD_*` class aliases from PHPMD 1.x were already removed in 2.9. If you still use them, update to the `PHPMD\*` namespace.
 - `PHPMD\PHPMD::getIgnorePatterns()` and `setIgnorePatterns()` have been removed. Use `getExcludePatterns()` and `addExcludePatterns()` instead.
 - All PHPMD exceptions now use a dedicated exception hierarchy under `PHPMD\Exception\`.
 - Rule marker interfaces now include `EnumAware` and `TraitAware` in addition to the existing `ClassAware`, `FunctionAware`, `InterfaceAware`, and `MethodAware`.
