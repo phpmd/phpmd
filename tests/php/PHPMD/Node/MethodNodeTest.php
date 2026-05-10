@@ -21,6 +21,10 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\Language\PHP\PHPBuilder;
+use PDepend\Source\Language\PHP\PHPParserGeneric;
+use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\AbstractTestCase;
 use PHPMD\Test\Inheritance\Bar;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -206,16 +210,45 @@ class MethodNodeTest extends AbstractTestCase
      */
     public function testIsDeclarationReturnsFalseForInheritedDeclaration(): void
     {
-        $method = $this->getNodeForTestFile(__DIR__ . '/../../../resources/files/classes/inheritance/Baz.php');
+        $dir = __DIR__ . '/../../../resources/files/classes/inheritance';
+        $builder = new PHPBuilder();
+
+        foreach (['Foo.php', 'Bar.php', 'Baz.php'] as $file) {
+            $tokenizer = new PHPTokenizerInternal();
+            $tokenizer->setSourceFile($dir . '/' . $file);
+            $parser = new PHPParserGeneric($tokenizer, $builder, new MemoryCacheDriver());
+            $parser->parse();
+        }
+
+        $namespace = $builder->getNamespaces()->current();
+        static::assertNotFalse($namespace);
+
+        $bazClass = null;
+        foreach ($namespace->getTypes() as $type) {
+            if ($type instanceof ASTClass && $type->getImage() === 'Baz') {
+                $bazClass = $type;
+            }
+        }
+        static::assertNotNull($bazClass);
+
+        $bazMethod = null;
+        foreach ($bazClass->getMethods() as $m) {
+            if (strtolower($m->getImage()) === 'baz') {
+                $bazMethod = $m;
+            }
+        }
+        static::assertNotNull($bazMethod);
+
+        $method = new MethodNode($bazMethod);
 
         $class = $method->getParent();
-        $parentClass = $class->getParentClass();
-        $parentClassName = $parentClass->getNamespacedName();
+        static::assertNotNull($class);
+        $parentClass = $class->getParentClass(); // @phpstan-ignore method.notFound
+        static::assertNotNull($parentClass);
+        $parentClassName = $parentClass->getNamespacedName(); // @phpstan-ignore method.nonObject
 
         static::assertSame(Bar::class, $parentClassName);
-        // These assertions are commented because they are also failing (I guess they shouldn't).
-        // static::assertTrue($parentClass->isAbstract());
-        // static::assertCount(1, $parentClass->getInterfaces());
+        static::assertTrue($parentClass->isAbstract()); // @phpstan-ignore method.nonObject
         static::assertFalse($method->isDeclaration());
     }
 }
