@@ -148,7 +148,7 @@ class ShortMethod {
     </rule>
 
     <rule name="LongMethodName"
-          since="2.15.0"
+          since="3.0.0"
           message="Avoid using long method names like {0}::{1}(). The configured maximum method name length is {2}."
           class="PHPMD\Rule\Naming\LongMethodName"
           externalInfoUrl="https://phpmd.org/rules/naming.html#longmethodname">
@@ -157,7 +157,7 @@ class ShortMethod {
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maximum" description="Maximum length for a method or function name" value="20"/>
+            <property name="maximum" description="Maximum length for a method or function name" value="40"/>
             <property name="exceptions" description="Comma-separated list of exceptions" value=""/>
         </properties>
         <example>

@@ -39,8 +39,8 @@ final class LongMethodName extends AbstractRule implements FunctionAware, Method
 
     /**
      * Extracts all method and function nodes from the given node
-     * and checks the variable name length against the configured maximum
-     * length.
+     * and checks the method or function name length against the configured
+     * maximum length.
      */
     public function apply(AbstractNode $node): void
     {
