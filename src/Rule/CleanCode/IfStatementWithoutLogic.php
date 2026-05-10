@@ -31,12 +31,16 @@ use PHPMD\Rule\MethodAware;
  * If Statement Without Logic Rule
  *
  * This rule checks if conditional statements
- * contains any logic. Statements that always
+ * contain any logic. Statements that always
  * resolve with same value trigger violations
  */
 class IfStatementWithoutLogic extends AbstractRule implements FunctionAware, MethodAware
 {
-    /** @var list<string> */
+    /**
+     * List of AST node class names that indicate non-logic expressions.
+     *
+     * @var list<string>
+     */
     private array $positives = [
         'PDepend\Source\AST\ASTLiteral',
         'PDepend\Source\AST\ASTComment',
@@ -49,8 +53,8 @@ class IfStatementWithoutLogic extends AbstractRule implements FunctionAware, Met
     ];
 
     /**
-     * This method checks if method/function has if clauses
-     * that use assignment instead of comparison.
+     * This method checks if a given method/function has if clauses
+     * that contain statements without logic.
      *
      * @param AbstractNode<PDependNode> $node An instance of MethodNode or FunctionNode class
      */

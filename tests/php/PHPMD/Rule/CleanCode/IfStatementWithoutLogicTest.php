@@ -21,14 +21,12 @@ namespace PHPMD\Rule\CleanCode;
 use PHPMD\AbstractTestCase;
 
 /**
- * Class IfStatementWithoutLogicTest
+ * If Statement Without Logic Test
  */
 class IfStatementWithoutLogicTest extends AbstractTestCase
 {
     /**
      * All conditions should trigger violation
-     *
-     * @return void
      */
     public function testRuleAppliesToIfsWithLiteralsOnly(): void
     {
@@ -39,8 +37,6 @@ class IfStatementWithoutLogicTest extends AbstractTestCase
 
     /**
      * All conditions are valid for this test
-     *
-     * @return void
      */
     public function testRuleNotAppliesToValidIfs(): void
     {
@@ -51,8 +47,6 @@ class IfStatementWithoutLogicTest extends AbstractTestCase
 
     /**
      * All conditions are valid for this test
-     *
-     * @return void
      */
     public function testRuleNotAppliesToClasses(): void
     {
@@ -62,10 +56,7 @@ class IfStatementWithoutLogicTest extends AbstractTestCase
     }
 
     /**
-     * 8 conditions should trigger violation
-     * 8 conditions are valid
-     *
-     * @return void
+     * 8 conditions should trigger violation, 8 conditions are valid
      */
     public function testRuleNotAppliesToElseIfCases(): void
     {
@@ -75,10 +66,7 @@ class IfStatementWithoutLogicTest extends AbstractTestCase
     }
 
     /**
-     * 11 conditions should trigger violation
-     * 14 conditions are valid
-     *
-     * @return void
+     * 11 conditions should trigger violation, 14 conditions are valid
      */
     public function testRuleNotAppliesToNestedIfs(): void
     {

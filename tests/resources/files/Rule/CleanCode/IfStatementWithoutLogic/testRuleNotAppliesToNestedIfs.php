@@ -27,7 +27,7 @@ class TestRuleNotAppliesToNestedIfs
     {
         $arr = array(1, 2, 3, 4, 5);
 
-        // trigger violation
+        /** trigger violation */
         if ('foo') {
             if (/** foo */ 8 > 0) {
                 if ('8') {
@@ -56,7 +56,7 @@ class TestRuleNotAppliesToNestedIfs
             }
         }
 
-        // don't trigger
+        /** don't trigger */
         if (800000 < time()) {
             if (true === round(80.333, 0)) {
                 if (__FUNCTION__ . 'foo' == 'bar') {

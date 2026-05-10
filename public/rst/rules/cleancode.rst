@@ -153,7 +153,7 @@ This rule has the following properties:
 IfStatementWithoutLogic
 =======================
 
-Since: PHPMD 2.7.0
+Since: PHPMD 3.0.0
 
 Having if conditions without any logic should be avoided. It usually tells us, that we are dealing with development code fragment, debug data, etc.
 

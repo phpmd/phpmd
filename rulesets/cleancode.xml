@@ -136,8 +136,8 @@ class Foo
     </rule>
 
     <rule name="IfStatementWithoutLogic"
-          since="2.9.0"
-          message="Unneeded if statement on line '{0}' in method '{1}'."
+          since="3.0.0"
+          message="Avoid if statement without logic on line '{0}' in method '{1}'."
           class="PHPMD\Rule\CleanCode\IfStatementWithoutLogic"
           externalInfoUrl="https://phpmd.org/rules/cleancode.html#ifstatementwithoutlogic">
         <description>

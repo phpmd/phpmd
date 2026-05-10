@@ -21,7 +21,7 @@ class TestRuleNotAppliesToElseIfCases
 {
     public function testRuleNotAppliesToElseIfCases()
     {
-        // trigger violation
+        /** trigger violation */
         if ('foo') {
             // ...
         } elseif ('bar') {
@@ -42,7 +42,7 @@ class TestRuleNotAppliesToElseIfCases
             // ...
         }
 
-        // don't trigger
+        /** don't trigger */
         if (rand()) {
             // ...
         } elseif (round(1.00, 1)) {
