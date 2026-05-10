@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="PHPMD">
     <description>The coding standard for PHPMD.</description>
-<file>./src/main/php</file>
-<file>./src/test/php</file>
+    <file>./src</file>
+    <file>./tests/php/PHPMD</file>
     <!-- Include Slevomat standard -->
 
 <!--    <config name="installed_paths" value="../../slevomat/coding-standard,../../../slevomat/coding-standard,../vendor/slevomat/coding-standard"/>-->
@@ -10,7 +10,6 @@
     <arg name="extensions" value="php"/>
 
     <!-- General sniffs -->
-    <rule ref="Generic.Files.LineLength"/>
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
     <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
     <rule ref="Squiz.Classes.LowercaseClassKeywords"/>
@@ -20,7 +19,6 @@
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
-    <rule ref="Generic.Formatting.NoSpaceAfterCast"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>
@@ -34,16 +32,20 @@
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
-    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
-        <properties>
-            <property name="equalsSpacing" value="1"/>
-        </properties>
-    </rule>
 
     <!-- PSR-2 base standard -->
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
+
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.ClassDeclaration.OpenBraceNewLine"/>
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace"/>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Commenting.FunctionCommentThrowTag.WrongNumber">
+        <severity>0</severity>
+    </rule>
 
     <!-- Sniffs from Slevomat standard -->
 
