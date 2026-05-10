@@ -1,0 +1,7 @@
+name: Test Exclude Pattern
+description: Test exclude-pattern in YAML
+exclude-pattern:
+  - "*sourceExcluded/*.php"
+  - "*sourceExcluded\\*.php"
+rules:
+  - ref: CyclomaticComplexity
