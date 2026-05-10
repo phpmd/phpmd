@@ -23,13 +23,18 @@ an implementation of all required infrastructure methods and application logic,
 so that the only task which is left to you is the implementation of the
 concrete validation code of your rule. To implement this validation-code the
 PHPMD rule interface declares the ``apply()`` method which will be invoked by
-the application during the source analysis phase. ::
+the application during the source analysis phase.
 
-  require_once 'PHPMD/AbstractRule.php';
+.. code-block:: php
 
-  class Com_Example_Rule_NoFunctions extends \PHPMD\AbstractRule
+  namespace Example\Rule;
+
+  use PHPMD\AbstractNode;
+  use PHPMD\AbstractRule;
+
+  class NoFunctions extends AbstractRule
   {
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -47,18 +52,26 @@ of type class and interface, or I am interested in function artifacts. The
 following list shows the available marker interfaces:
 
 - `\\PHPMD\\Rule\\ClassAware`__
+- `\\PHPMD\\Rule\\EnumAware`__
 - `\\PHPMD\\Rule\\FunctionAware`__
 - `\\PHPMD\\Rule\\InterfaceAware`__
 - `\\PHPMD\\Rule\\MethodAware`__
+- `\\PHPMD\\Rule\\TraitAware`__
 
 With this marker interfaces we can now extend the previous example, so that
-the rule will be called for functions found in the analyzed source code. ::
+the rule will be called for functions found in the analyzed source code.
 
-  class Com_Example_Rule_NoFunctions
-         extends \PHPMD\AbstractRule
-      implements \PHPMD\Rule\FunctionAware
+.. code-block:: php
+
+  namespace Example\Rule;
+
+  use PHPMD\AbstractNode;
+  use PHPMD\AbstractRule;
+  use PHPMD\Rule\FunctionAware;
+
+  class NoFunctions extends AbstractRule implements FunctionAware
   {
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -67,11 +80,13 @@ the rule will be called for functions found in the analyzed source code. ::
 And because our coding guideline forbids functions every call to the ``apply()``
 method will result in a rule violation. Such a violation can be reported to
 PHPMD through the ``addViolation()`` method. The rule inherits this helper
-method from it's parent class `\\PHPMD\\AbstractRule`__. ::
+method from it's parent class `\\PHPMD\\AbstractRule`__.
 
-  class Com_Example_Rule_NoFunctions // ...
+.. code-block:: php
+
+  class NoFunctions // ...
   {
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           $this->addViolation($node);
       }
@@ -92,7 +107,7 @@ rule. The most important elements of a rule configuration are:
 - *priority*: The priority for the rule. This can be a value in the range 1-5,
   where 1 is the highest priority and 5 the lowest priority.
 
-::
+.. code-block:: xml
 
   <ruleset name="example.com rules"
          xmlns="https://phpmd.org/xml/ruleset/1.0.0"
@@ -102,7 +117,7 @@ rule. The most important elements of a rule configuration are:
 
       <rule name="FunctionRule"
             message = "Please do not use functions."
-            class="Com_Example_Rule_NoFunctions"
+            class="Example\Rule\NoFunctions"
             externalInfoUrl="http://example.com/phpmd/rules.html#functionrule">
 
           <priority>1</priority>
@@ -114,12 +129,13 @@ settings for the created example rule. For more details on PHPMD's rule set
 file format you should take a look a the `Create a custom rule set`__ tutorial.
 
 Finally the real world test. Let's assume we have saved the rule class in a
-file ``Com/Example/Rule/NoFunction.php`` that is somewhere in the PHP
-``include_path`` and we have saved the rule set in a file named
-``example-rule.xml``. No we can test the rule from the command line with the
-following command: ::
+file ``src/Example/Rule/NoFunctions.php`` that is autoloaded via Composer
+and we have saved the rule set in a file named ``example-rule.xml``. Now we
+can test the rule from the command line with the following command.
 
-  ~ $ phpmd /my/source/example.com text /my/rules/example-rule.xml
+.. code-block:: bash
+
+  ~ $ phpmd analyze --ruleset /my/rules/example-rule.xml /my/source/example.com
 
   /my/source/example.com/functions.php:2    Please do not use functions.
 
@@ -151,16 +167,22 @@ surrounding application.
 
 The following code listing shows the entire rule class skeleton. As you can
 see, this class implements the `\\PHPMD\\Rule\\ClassAware`__ interface, so that
-PHPMD knows that this rule will only be called for classes. ::
+PHPMD knows that this rule will only be called for classes.
 
-  class Com_Example_Rule_NumberOfPublicMethods
-         extends \PHPMD\AbstractRule
-      implements \PHPMD\Rule\ClassAware
+.. code-block:: php
+
+  namespace Example\Rule;
+
+  use PHPMD\AbstractNode;
+  use PHPMD\AbstractRule;
+  use PHPMD\Rule\ClassAware;
+
+  class NumberOfPublicMethods extends AbstractRule implements ClassAware
   {
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           // Check constraints against the given node instance
       }
@@ -170,16 +192,16 @@ Now that we have the rule skeleton we must access the ``npm`` metric which
 is associated with the given node instance. All software metrics calculated for
 a node object can directly be accessed through the ``getMetric()`` method of the
 node instance. This method takes a single parameter, the abbreviation/acronym
-of the metric as documented in PHP_Depends `metric catalog`__. ::
+of the metric as documented in PHP_Depends `metric catalog`__.
 
-  class Com_Example_Rule_NumberOfPublicMethods
-         extends \PHPMD\AbstractRule
-      implements \PHPMD\Rule\ClassAware
+.. code-block:: php
+
+  class NumberOfPublicMethods extends AbstractRule implements ClassAware
   {
       const MINIMUM = 1,
             MAXIMUM = 10;
 
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           $npm = $node->getMetric('npm');
           if ($npm < self::MINIMUM || $npm > self::MAXIMUM) {
@@ -191,7 +213,7 @@ of the metric as documented in PHP_Depends `metric catalog`__. ::
 That's the coding part for the metric based rule. Now we must add this class
 to a rule set file.
 
-::
+.. code-block:: xml
 
   <ruleset name="example.com rules"
          xmlns="https://phpmd.org/xml/ruleset/1.0.0"
@@ -203,7 +225,7 @@ to a rule set file.
 
       <rule name="NumberOfPublics"
             message = "The context class violates the NPM metric."
-            class="Com_Example_Rule_NumberOfPublicMethods"
+            class="Example\Rule\NumberOfPublicMethods"
             externalInfoUrl="http://example.com/phpmd/rules.html#numberofpublics">
 
           <priority>3</priority>
@@ -215,7 +237,9 @@ that do not fulfill our requirement for the NPM metric. But as promised, we
 will make this rule more customizable, so that it can be adjusted for different
 project requirements. Therefore we will replace the two constants ``MINIMUM``
 and ``MAXIMUM`` with properties that can be configured in the rule set file.
-So let us start with the modified rule set file. ::
+So let us start with the modified rule set file.
+
+.. code-block:: xml
 
   <ruleset name="example.com rules"
          xmlns="https://phpmd.org/xml/ruleset/1.0.0"
@@ -227,7 +251,7 @@ So let us start with the modified rule set file. ::
 
       <rule name="NumberOfPublics"
             message = "The context class violates the NPM metric."
-            class="Com_Example_Rule_NumberOfPublicMethods"
+            class="Example\Rule\NumberOfPublicMethods"
             externalInfoUrl="http://example.com/phpmd/rules.html#numberofpublics">
 
           <priority>3</priority>
@@ -249,15 +273,16 @@ methods. Currently PHPMD supports the following getter methods.
 
 - ``getBooleanProperty()``
 - ``getIntProperty()``
+- ``getStringProperty()``
 
 So now let's modify the rule class and replace the hard coded constants with
-the configurable properties. ::
+the configurable properties.
 
-  class Com_Example_Rule_NumberOfPublicMethods
-         extends \PHPMD\AbstractRule
-      implements \PHPMD\Rule\ClassAware
+.. code-block:: php
+
+  class NumberOfPublicMethods extends AbstractRule implements ClassAware
   {
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           $npm = $node->getMetric('npm');
           if ($npm < $this->getIntProperty('minimum') ||
@@ -275,7 +300,9 @@ upper or lower threshold was exceeded and what the actual thresholds are. To
 provide more information about a rule violation you can use PHPMD's minimalistic
 template/placeholder engine for violation messages. With this engine you can
 define violation messages with placeholders, that will be replaced with actual
-values. The format for such placeholders is ``'{' + \d+ '}'``. ::
+The format for such placeholders is ``'{' + \d+ '}'``.
+
+.. code-block:: xml
 
   <ruleset name="example.com rules"
          xmlns="https://phpmd.org/xml/ruleset/1.0.0"
@@ -287,7 +314,7 @@ values. The format for such placeholders is ``'{' + \d+ '}'``. ::
 
       <rule name="NumberOfPublics"
             message = "The class {0} has {1} public method, the threshold is {2}."
-            class="Com_Example_Rule_NumberOfPublicMethods"
+            class="Example\Rule\NumberOfPublicMethods"
             externalInfoUrl="http://example.com/phpmd/rules.html#numberofpublics">
 
           <priority>3</priority>
@@ -303,28 +330,30 @@ values. The format for such placeholders is ``'{' + \d+ '}'``. ::
   </ruleset>
 
 Now we can adjust the rule class in such a manner, that it will set the correct
-values for the placeholders ``{0}``, ``{1}`` and ``{2}`` ::
+values for the placeholders ``{0}``, ``{1}`` and ``{2}``.
 
-  class Com_Example_Rule_NumberOfPublicMethods
-         extends \PHPMD\AbstractRule
-      implements \PHPMD\Rule\ClassAware
+.. code-block:: php
+
+  class NumberOfPublicMethods extends AbstractRule implements ClassAware
   {
-      public function apply(\PHPMD\AbstractNode $node): void
+      public function apply(AbstractNode $node): void
       {
           $min = $this->getIntProperty('minimum');
           $max = $this->getIntProperty('maximum');
           $npm = $node->getMetric('npm');
 
           if ($npm < $min) {
-              $this->addViolation($node, array(get_class($node), $npm, $min));
-          } else if ($npm > $max) {
-              $this->addViolation($node, array(get_class($node), $npm, $max));
+              $this->addViolation($node, [$node->getName(), $npm, $min]);
+          } elseif ($npm > $max) {
+              $this->addViolation($node, [$node->getName(), $npm, $max]);
           }
       }
   }
 
 If we run this version of the rule we will get an error message like the one
-shown in the following figure. ::
+shown in the following figure.
+
+.. code-block:: text
 
   The class FooBar has 42 public method, the threshold is 10.
 
@@ -349,7 +378,7 @@ Because the ``goto`` statement cannot be found in classes and interfaces, but
 in methods and functions, the new rule class must implement the two marker
 interfaces `\\PHPMD\\Rule\\FunctionAware`__ and `\\PHPMD\\Rule\\MethodAware`__.
 
-::
+.. code-block:: php
 
   namespace PHPMD\Rule\Design;
 
@@ -371,11 +400,15 @@ interfaces `\\PHPMD\\Rule\\FunctionAware`__ and `\\PHPMD\\Rule\\MethodAware`__.
 As you can see, we are searching for the string ``GotoStatement`` in the
 previous example. This is a shortcut notation used by PHPMD to address concrete
 PHP_Depend syntax tree nodes. All abstract syntax tree classes in PDepend
-have the following format: ::
+have the following format.
+
+.. code-block:: text
 
   \PDepend\Source\AST\ASTGotoStatement
 
-where ::
+where
+
+.. code-block:: text
 
   \PDepend\Source\AST\AST
 
@@ -404,12 +437,12 @@ __ https://pmd.github.io/
 __ https://github.com/phpmd/phpmd/tree/master/rulesets
 __ https://phpmd.org/documentation/creating-a-ruleset.html
 
-__ http://pdepend.org
+__ https://pdepend.org
 __ https://github.com/phpmd/phpmd/blob/master/src/AbstractNode.php
-__ http://pdepend.org/documentation/software-metrics.html
-__ http://pdepend.org/documentation/software-metrics/number-of-public-methods.html
-__ https://github.com/phpmd/phpmd/blob/master/src/Rule/IClassAware.php
-__ http://pdepend.org/documentation/software-metrics.html
+__ https://pdepend.org/documentation/software-metrics.html
+__ https://pdepend.org/documentation/software-metrics/number-of-public-methods.html
+__ https://github.com/phpmd/phpmd/blob/master/src/Rule/ClassAware.php
+__ https://pdepend.org/documentation/software-metrics.html
 
 __ https://github.com/phpmd/phpmd/blob/master/src/AbstractNode.php
 __ https://github.com/phpmd/phpmd/blob/master/src/Rule/FunctionAware.php
