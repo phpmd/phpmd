@@ -261,6 +261,48 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame($expected, $excludes);
     }
 
+    public function testGetExcludePatternsFromYamlFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $excludes = $factory->getExcludePatterns([__DIR__ . '/../../resources/files/rulesets/exclude-pattern.yml']);
+
+        $expected = [
+            '*sourceExcluded/*.php',
+            '*sourceExcluded\*.php',
+        ];
+
+        static::assertEquals($expected, $excludes);
+    }
+
+    public function testGetExcludePatternsFromJsonFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $excludes = $factory->getExcludePatterns([__DIR__ . '/../../resources/files/rulesets/exclude-pattern.json']);
+
+        $expected = [
+            '*sourceExcluded/*.php',
+            '*sourceExcluded\*.php',
+        ];
+
+        static::assertEquals($expected, $excludes);
+    }
+
+    public function testGetExcludePatternsFromPhpFile(): void
+    {
+        $factory = new RuleSetFactory();
+        $excludes = $factory->getExcludePatterns([__DIR__ . '/../../resources/files/rulesets/exclude-pattern.php']);
+
+        $expected = [
+            '*sourceExcluded/*.php',
+            '*sourceExcluded\*.php',
+        ];
+
+        static::assertEquals($expected, $excludes);
+    }
+
+    /**
+     * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
+     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting(): void
     {
         self::changeWorkingDirectory();

@@ -604,6 +604,7 @@ class RuleSetFactory
      * @param list<string> $fileName The filename of a rule-set definition.
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
      */
     public function getExcludePatterns(array $fileName): array
     {
@@ -614,32 +615,89 @@ class RuleSetFactory
         foreach ($files as $ruleSetFileName) {
             $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
 
-            // Hide error messages
-            $libxml = libxml_use_internal_errors(true);
-            $fileContent = file_get_contents($ruleSetFileName);
-            if ($fileContent === false) {
-                throw new RuntimeException('Unable to load ' . $ruleSetFileName);
-            }
+            $format = preg_match('/\.(?<format>php|json|ya?ml)(?:\.dist)?$/i', $ruleSetFileName, $match)
+                ? strtolower($match['format'])
+                : 'xml';
 
-            $xml = simplexml_load_string($fileContent);
-            if (!$xml) {
-                // Reset error handling to previous setting
-                libxml_use_internal_errors($libxml);
-                $error = libxml_get_last_error();
-
-                throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
-            }
-
-            foreach ($xml->children() as $node) {
-                if ($node->getName() === 'exclude-pattern') {
-                    $excludes[] = '' . $node;
-                }
-            }
-
-            return $excludes;
+            $excludes = [...$excludes, ...$this->getExcludePatternsFromFile($ruleSetFileName, $format)];
         }
 
-        return [];
+        return $excludes;
+    }
+
+    /**
+     * Extract exclude patterns from a single ruleset file.
+     *
+     * @return list<string>
+     * @throws RuntimeException
+     * @throws ParseException
+     */
+    private function getExcludePatternsFromFile(string $fileName, string $format): array
+    {
+        if ($format !== 'xml') {
+            return $this->getExcludePatternsFromArrayConfig($fileName, $format);
+        }
+
+        // Hide error messages
+        $libxml = libxml_use_internal_errors(true);
+        $fileContent = file_get_contents($fileName);
+        if ($fileContent === false) {
+            throw new RuntimeException('Unable to load ' . $fileName);
+        }
+
+        $xml = simplexml_load_string($fileContent);
+        if (!$xml) {
+            // Reset error handling to previous setting
+            libxml_use_internal_errors($libxml);
+            $error = libxml_get_last_error();
+
+            throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
+        }
+
+        $excludes = [];
+        foreach ($xml->children() as $node) {
+            if ($node->getName() === 'exclude-pattern') {
+                $excludes[] = '' . $node;
+            }
+        }
+
+        return $excludes;
+    }
+
+    /**
+     * Extract exclude patterns from an array-based config file (php, yml, yaml, json).
+     *
+     * @return list<string>
+     * @throws RuntimeException
+     * @throws ParseException
+     */
+    private function getExcludePatternsFromArrayConfig(string $fileName, string $format): array
+    {
+        $config = match ($format) {
+            'php' => include $fileName,
+            'yml', 'yaml' => Yaml::parseFile($fileName),
+            'json' => json_decode(file_get_contents($fileName) ?: '', true),
+            default => throw new RuntimeException('Unsupported format: ' . $format),
+        };
+
+        if (!is_array($config)) {
+            throw new RuntimeException('Invalid config');
+        }
+
+        $patterns = $config['exclude-pattern'] ?? [];
+        if (!is_array($patterns)) {
+            throw new RuntimeException('Invalid exclude-pattern');
+        }
+
+        $excludes = [];
+        foreach ($patterns as $pattern) {
+            if (!is_string($pattern)) {
+                throw new RuntimeException('Invalid exclude-pattern entry');
+            }
+            $excludes[] = $pattern;
+        }
+
+        return $excludes;
     }
 
     /**

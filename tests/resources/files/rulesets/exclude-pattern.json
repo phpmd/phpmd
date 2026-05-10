@@ -1,0 +1,11 @@
+{
+    "name": "Test Exclude Pattern",
+    "description": "Test exclude-pattern in JSON",
+    "exclude-pattern": [
+        "*sourceExcluded/*.php",
+        "*sourceExcluded\\*.php"
+    ],
+    "rules": [
+        {"ref": "CyclomaticComplexity"}
+    ]
+}
