@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,25 +18,35 @@
 
 namespace PHPMD\Utility;
 
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTType;
-use PHPMD\Node\ASTNode;
+use PHPMD\AbstractNode;
 
 /**
  * Utility class to find the last time a variable was written before an occurrence of it.
  */
 final class LastVariableWriting
 {
+    /** @var AbstractNode<PDependNode> */
     private $variable;
 
-    public function __construct(ASTNode $variable)
+    /**
+     * @param AbstractNode<PDependNode> $variable
+     */
+    public function __construct(AbstractNode $variable)
     {
         $this->variable = $variable;
     }
 
-    /** @return ASTNode|null */
-    public function findInScope(ASTNode $scope)
+    /**
+     * @param AbstractNode<PDependNode> $scope
+     * @return AbstractNode<PDependNode>|null
+     */
+    public function findInScope(AbstractNode $scope)
     {
         $lastWriting = null;
         $name = $this->variable->getImage();
@@ -53,7 +64,7 @@ final class LastVariableWriting
 
             $parent = $occurrence->getParent();
 
-            if ($parent->isInstanceOf('AssignmentExpression')) {
+            if ($parent !== null && $parent->isInstanceOf(ASTAssignmentExpression::class)) {
                 $assigned = Seeker::fromNode($parent)->getChildIfExist(0);
 
                 if ($assigned && $assigned->getImage() === $name) {
@@ -65,7 +76,10 @@ final class LastVariableWriting
         return $lastWriting;
     }
 
-    /** @return ASTType */
+    /**
+     * @return ASTType|null
+     * @throws OutOfBoundsException
+     */
     public function findInParameters(ASTFormalParameters $parameters)
     {
         $name = $this->variable->getImage();

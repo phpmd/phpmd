@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,27 +18,38 @@
 
 namespace PHPMD\Utility;
 
-use PHPMD\Node\ASTNode;
+use OutOfBoundsException;
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PHPMD\AbstractNode;
 
 /**
  * Utility class to check and read array possibly representing callable method.
  */
 final class CallableArray
 {
-    /** @var ASTNode|null */
+    /** @var AbstractNode<PDependNode>|null */
     private $array;
 
-    // TODO: should be (?ASTNode $array) when dropping PHP < 7.1
-    private function __construct(ASTNode $array = null)
+    /**
+     * @param AbstractNode<PDependNode>|null $array
+     */
+    private function __construct(?AbstractNode $array = null)
     {
         $this->array = $array;
     }
 
-    /** @return self */
+    /**
+     * @param AbstractNode<PDependNode>|mixed $array
+     * @return self
+     */
     public static function fromArray($array)
     {
-        if ($array instanceof ASTNode
-            && $array->isInstanceOf('Array')
+        if (
+            $array instanceof AbstractNode
+            && $array->isInstanceOf(ASTArray::class)
             && count($array->getChildren()) === 2
         ) {
             return new self($array);
@@ -46,10 +58,12 @@ final class CallableArray
         return new self(null);
     }
 
-    /** @return self */
-    public static function fromFirstArrayElement($firstArrayElement)
+    /**
+     * @param AbstractNode<PDependNode>|null $firstArrayElement
+     */
+    public static function fromFirstArrayElement(?AbstractNode $firstArrayElement = null): self
     {
-        if ($firstArrayElement instanceof ASTNode && $firstArrayElement->isInstanceOf('ArrayElement')) {
+        if ($firstArrayElement instanceof AbstractNode && $firstArrayElement->isInstanceOf(ASTArrayElement::class)) {
             return self::fromArray($firstArrayElement->getParent());
         }
 
@@ -60,9 +74,9 @@ final class CallableArray
      * Return represented method name if the given element is a 2-items array
      * and that the second one is a literal static string.
      *
-     * @return string|null
+     * @throws OutOfBoundsException
      */
-    public function getMethodNameFromArraySecondElement()
+    public function getMethodNameFromArraySecondElement(): ?string
     {
         if ($this->array === null) {
             return null;
@@ -70,7 +84,7 @@ final class CallableArray
 
         $secondElement = $this->array->getChild(1)->getChild(0);
 
-        if ($secondElement->isInstanceOf('Literal')) {
+        if ($secondElement->isInstanceOf(ASTLiteral::class)) {
             return substr($secondElement->getImage(), 1, -1);
         }
 

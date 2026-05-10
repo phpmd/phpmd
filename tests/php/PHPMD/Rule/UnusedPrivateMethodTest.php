@@ -218,30 +218,21 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyToSelfType()
+    public function testRuleDoesNotApplyToSelfType(): void
     {
         $rule = new UnusedPrivateMethod();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyToStaticType()
+    public function testRuleDoesNotApplyToStaticType(): void
     {
         $rule = new UnusedPrivateMethod();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
 
-    /**
-     * @return void
-     */
-    public function testRuleDoesNotApplyToClone()
+    public function testRuleDoesNotApplyToClone(): void
     {
         $rule = new UnusedPrivateMethod();
         $rule->setReport($this->getReportWithNoViolation());

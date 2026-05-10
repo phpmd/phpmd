@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHP Mess Detector.
  *
@@ -17,46 +18,55 @@
 
 namespace PHPMD\Utility;
 
-use InvalidArgumentException;
 use OutOfBoundsException;
-use PDepend\Source\AST\ASTFormalParameter;
-use PDepend\Source\AST\ASTFormalParameters;
-use PDepend\Source\AST\ASTType;
-use PHPMD\Node\ASTNode;
+use PDepend\Source\AST\ASTNode as PDependNode;
+use PHPMD\AbstractNode;
 
 /**
  * Utility class to do some more advanced searches from an ASTNode.
  */
 final class Seeker
 {
-    /** @var ASTNode */
+    /** @var AbstractNode<PDependNode> */
     private $node;
 
-    private function __construct(ASTNode $node)
+    /**
+     * @param AbstractNode<PDependNode> $node
+     */
+    private function __construct(AbstractNode $node)
     {
         $this->node = $node;
     }
 
-    /** @return self */
-    public static function fromNode(ASTNode $node)
+    /**
+     * @param AbstractNode<PDependNode> $node
+     */
+    public static function fromNode(AbstractNode $node): self
     {
         return new self($node);
     }
 
-    /** @return ASTNode|null */
-    public function getParentOfType($type)
+    /**
+     * @param class-string<PDependNode> $type
+     * @return AbstractNode<PDependNode>|null
+     */
+    public function getParentOfType($type): ?AbstractNode
     {
+        /** @var AbstractNode<PDependNode>|null $scope */
         $scope = $this->node->getParent();
 
-        while ($scope && !$scope->isInstanceOf($type)) {
+        while ($scope !== null && !$scope->isInstanceOf($type)) {
+            /** @var AbstractNode<PDependNode>|null $scope */
             $scope = $scope->getParent();
         }
 
         return $scope;
     }
 
-    /** @return ASTNode|null */
-    public function getChildIfExist($index)
+    /**
+     * @return AbstractNode<PDependNode>|null
+     */
+    public function getChildIfExist(int $index): ?AbstractNode
     {
         try {
             return $this->node->getChild($index);

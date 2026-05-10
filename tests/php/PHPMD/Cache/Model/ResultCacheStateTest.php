@@ -18,7 +18,7 @@ class ResultCacheStateTest extends TestCase
 
     private ResultCacheState $state;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->key = new ResultCacheKey(true, 'baseline', [], [], 123);
         $this->state = new ResultCacheState($this->key, []);

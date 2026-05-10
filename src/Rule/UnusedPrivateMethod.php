@@ -18,20 +18,22 @@
 
 namespace PHPMD\Rule;
 
+use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTCombinationType;
-use PDepend\Source\AST\ASTArray;
-use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTCloneExpression;
 use PDepend\Source\AST\ASTExpression;
-use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTScope;
 use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Utility\CallableArray;
@@ -46,10 +48,10 @@ use SplObjectStorage;
  */
 final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
-    /** @var SplObjectStorage */
+    /** @var SplObjectStorage<AbstractNode<PDependNode>, bool> */
     private $selfVariableCache;
 
-    /** @var SplObjectStorage */
+    /** @var SplObjectStorage<PDependNode, ASTFormalParameters> */
     private $parametersForScope;
 
     /**
@@ -136,7 +138,11 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         $this->parametersForScope = new SplObjectStorage();
 
         foreach ($class->getMethods() as $method) {
-            list($parameters, $scope) = $method->getNode()->getChildren();
+            $children = $method->getNode()->getChildren();
+
+            /** @var ASTFormalParameters $parameters */
+            $parameters = $children[0];
+            $scope = $children[1];
             $this->parametersForScope->offsetSet($scope, $parameters);
         }
 
@@ -207,18 +213,19 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         return (
             $owner->isInstanceOf(ASTMethodPostfix::class) ||
             $owner->isInstanceOf(ASTSelfReference::class) ||
-            $owner->isInstanceOf('StaticReference') ||
+            $owner->isInstanceOf(ASTStaticReference::class) ||
             strcasecmp($owner->getImage(), $class->getImage()) === 0
         );
     }
 
     /**
      * @param AbstractNode<PDependNode> $variable
+     * @throws OutOfBoundsException
      */
     protected function isInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
     {
         if ($this->selfVariableCache->offsetExists($variable)) {
-            return $this->selfVariableCache->offsetGet($variable);
+            return (bool) $this->selfVariableCache->offsetGet($variable);
         }
 
         $result = $this->calculateInstanceOfTheCurrentClass($class, $variable);
@@ -229,6 +236,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 
     /**
      * @param AbstractNode<PDependNode> $variable
+     * @throws OutOfBoundsException
      */
     protected function calculateInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
     {
@@ -238,7 +246,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return true;
         }
 
-        $scope = Seeker::fromNode($variable)->getParentOfType('Scope');
+        $scope = Seeker::fromNode($variable)->getParentOfType(ASTScope::class);
 
         if (!$scope) {
             return false;
@@ -251,7 +259,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             $scopeNode = $scope->getNode();
 
             if ($this->parametersForScope->offsetExists($scopeNode)) {
-                $lastWriting = $lastWritingFinder->findInParameters($this->parametersForScope->offsetGet($scopeNode));
+                /** @var ASTFormalParameters $parameters */
+                $parameters = $this->parametersForScope->offsetGet($scopeNode);
+                $lastWriting = $lastWritingFinder->findInParameters($parameters);
             }
         }
 
@@ -259,18 +269,17 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return $this->canBeCurrentClassInstance($class, $lastWriting);
         }
 
-        return ($lastWriting instanceof ASTNode)
+        return ($lastWriting instanceof AbstractNode)
             && $this->isWritingOfSelfType($class, $name, $lastWriting);
     }
 
     /**
-     * @param string $name
-     *
-     * @return bool
+     * @param AbstractNode<PDependNode> $lastWriting
+     * @throws OutOfBoundsException
      */
-    protected function isWritingOfSelfType(ClassNode $class, $name, ASTNode $lastWriting)
+    protected function isWritingOfSelfType(ClassNode $class, string $name, AbstractNode $lastWriting): bool
     {
-        if ($lastWriting->isInstanceOf('CloneExpression')) {
+        if ($lastWriting->isInstanceOf(ASTCloneExpression::class)) {
             $cloned = Seeker::fromNode($lastWriting)->getChildIfExist(0);
 
             return $cloned
@@ -278,14 +287,14 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
                 && $this->isInstanceOfTheCurrentClass($class, $cloned);
         }
 
-        if ($lastWriting->isInstanceOf('AllocationExpression')) {
+        if ($lastWriting->isInstanceOf(ASTAllocationExpression::class)) {
             $value = Seeker::fromNode($lastWriting)->getChildIfExist(0);
 
             return $value
-                && ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf('StaticReference'));
+                && ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf(ASTStaticReference::class));
         }
 
-        if ($lastWriting->isInstanceOf('Variable') && $lastWriting->getImage() !== $name) {
+        if ($lastWriting->isInstanceOf(ASTVariable::class) && $lastWriting->getImage() !== $name) {
             return $this->isInstanceOfTheCurrentClass($class, $lastWriting);
         }
 
@@ -314,10 +323,10 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 
     protected function representCurrentClassName(ClassNode $class, string $name): bool
     {
-        return in_array($name, array(
+        return in_array($name, [
             'self',
             'static',
             $class->getFullQualifiedName(),
-        ), true);
+        ], true);
     }
 }
