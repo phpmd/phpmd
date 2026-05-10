@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <phpunit
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  bootstrap="src/test/php/bootstrap.php"
+  bootstrap="tests/php/bootstrap.php"
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
   cacheDirectory=".phpunit.cache"
 >
   <coverage/>
   <testsuites>
     <testsuite name="PHPMD AllTests">
-      <directory>src/test/php</directory>
+      <directory>tests/php</directory>
     </testsuite>
   </testsuites>
   <source>
     <include>
-      <directory>src/main/php</directory>
+      <directory>src</directory>
     </include>
   </source>
 </phpunit>

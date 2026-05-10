@@ -13,7 +13,7 @@ checks:
         duplication: true
 
 filter:
-    paths: [ "src/main/php/*" ]
+    paths: [ "src/*" ]
 
 tools:
     external_code_coverage: true

@@ -59,12 +59,12 @@ While the ``rulesets.xml`` ruleset file could look like this:
 
   <?xml version="1.0"?>
   <ruleset name="My first PHPMD rule set"
-           xmlns="http://pmd.sf.net/ruleset/1.0.0"
+           xmlns="https://phpmd.org/xml/ruleset/1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
-                         http://pmd.sf.net/ruleset_xml_schema.xsd"
+           xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0
+                         http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
            xsi:noNamespaceSchemaLocation="
-                         http://pmd.sf.net/ruleset_xml_schema.xsd">
+                         http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
     <description>
       My custom rule set that checks my code...
     </description>
@@ -167,6 +167,8 @@ Command line options
     will show rule name in yellow and error description in red.
   - ``--extra-line-in-excerpt`` - specify how many extra lines are added to a code snippet in html format
 
+  - ``--threads`` - the number of threads to use to parse the files.
+
   An example command line: ::
 
     phpmd PHP/Depend/DbusUI xml codesize --reportfile "phpmd.xml" --suffixes "php,phtml"
@@ -216,7 +218,7 @@ to create one output for certain parts of your code ::
 
 Or use glob pattern: ::
 
-  ~ $ phpmd src/main/php/*/*/*{Renderer,Node}.php text my/rules.xml
+  ~ $ phpmd src/*/*{Renderer,Node}.php text my/rules.xml
 
 Scan input
 ``````````

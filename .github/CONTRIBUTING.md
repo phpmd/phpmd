@@ -28,14 +28,14 @@ Coding Standard
 ---------------
 
 Make sure your code changes comply with the [coding standard](https://github.com/phpmd/phpmd/blob/master/phpcs.xml.dist) by
-using [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+using [PHP Codesniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer)
 from within your PHPMD folder:
 
     vendor/bin/phpcs -p --extensions=php src > phpcs.txt
 
 Linux / OS X users may extend this command to exclude files, that are not part of a commit:
 
-    vendor/bin/phpcs -p --extensions=php --ignore=src/tests/resources $(git ls-files -om --exclude-standard | grep '\.php$') > phpcs.txt
+    vendor/bin/phpcs -p --extensions=php --ignore=tests/resources $(git ls-files -om --exclude-standard | grep '\.php$') > phpcs.txt
 
 Check the ``phpcs.txt`` once it finished.
 

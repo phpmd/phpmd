@@ -1,0 +1,3 @@
+pdepend:
+  cache:
+    driver: memory

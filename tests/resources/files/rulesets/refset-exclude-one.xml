@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="Fourth Test RuleSet"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
+
+    <description>First description...</description>
+
+    <rule name="Exclude one rule"
+          message="Exclude one rule"
+          externalInfoUrl="http://example.com/exclude-one-rule"
+          ref="rulesets/set1.xml">
+        <exclude name="RuleTwoInFirstRuleSet" />
+    </rule>
+</ruleset>

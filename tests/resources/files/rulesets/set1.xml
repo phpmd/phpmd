@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ruleset name="First Test RuleSet"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
+
+    <description>First description...</description>
+    <rule name="RuleOneInFirstRuleSet"
+          since="0.1"
+          message="Test message"
+          class="PHPMD\Stubs\RuleStub"
+          externalInfoUrl="https://phpmd.org/">
+        <description>...</description>
+        <priority>3</priority>
+        <properties />
+        <example>testCreateRuleWithExpectedExample</example>
+    </rule>
+    <rule name="RuleTwoInFirstRuleSet"
+          since="0.1"
+          message="Test message"
+          class="PHPMD\Stubs\RuleStub"
+          externalInfoUrl="https://phpmd.org/">
+        <description>...</description>
+        <priority>1</priority>
+        <properties />
+    </rule>
+</ruleset>
