@@ -33,7 +33,7 @@ After `installing PHIVE`__,**PHPMD** can be installed using the following comman
           Created: 2023-09-15
 
   Import this key? [y|N] y
-    Linking Y:\\.phive\phars/phpmd-2.14.1.phar to /path/to/your/project/tools/phpmd.bat
+    Linking Y:\\.phive\phars/phpmd-3.0.0.phar to /path/to/your/project/tools/phpmd.bat
 
 There are alternative `commands for PHIVE`__.
 
@@ -83,11 +83,10 @@ And finally let Composer install the project dependencies: ::
 Requirements
 ============
 
-PHPMD itself is considered as an early development version at its
-current state. It relies on the following software products:
+PHPMD relies on the following software products:
 
-- `PHP_Depend >= 2.16.1 (>= 2.0.0 using PHPMD v2)`__
-- `PHP >= 8.0.0 (>= 5.3.9 using PHPMD v2)`__
+- `PDepend >= 3.0.0`__
+- `PHP >= 8.1`__
 
 __ https://keys.openpgp.org/search?q=pgp%40phpmd.org
 __ https://keys.openpgp.org/

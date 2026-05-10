@@ -21,7 +21,7 @@ A simple GitHub Actions workflow could look like this: ::
       runs-on: ubuntu-latest
       steps:
         - name: Checkout
-          uses: actions/checkout@v2
+          uses: actions/checkout@v4
 
         - name: Setup PHP environment
           uses: shivammathur/setup-php@v2
@@ -30,9 +30,9 @@ A simple GitHub Actions workflow could look like this: ::
             tools: phpmd
 
         - name: Run PHPMD
-          run: phpmd . github phpmd.ruleset.xml --exclude 'tests/*,vendor/*'
+          run: phpmd analyze --format github .
 
-This assumes that you have a `custom rule set </documentation/creating-a-ruleset.html>`_ in the file ``phpmd.ruleset.xml``. Alternatively, you can of course list the rule sets manually.
+This assumes that you have a `custom rule set </documentation/creating-a-ruleset.html>`_ such as ``phpmd.yml`` in the root of your repository. PHPMD will detect it automatically. Exclude patterns (e.g. for ``vendor/``) can be configured directly in the rule set file.
 
 Auto-detection
 --------------
@@ -42,7 +42,7 @@ When PHPMD detects it is running inside GitHub Actions (via the ``GITHUB_ACTIONS
 For example, this workflow uses ``text`` as the primary format but still gets GitHub annotations automatically: ::
 
   - name: Run PHPMD
-    run: phpmd . text phpmd.ruleset.xml --exclude 'tests/*,vendor/*'
+    run: phpmd analyze --format text .
 
 GitHub Check Runs
 -----------------
@@ -51,7 +51,7 @@ For richer integration with the GitHub Checks API, PHPMD provides the ``githubch
 
 Usage: ::
 
-  phpmd . githubcheckruns phpmd.ruleset.xml --exclude 'tests/*,vendor/*' > checkrun.json
+  phpmd analyze --format githubcheckruns . > checkrun.json
 
 The JSON output includes:
 
@@ -73,7 +73,7 @@ A simple GitLab Code Quality report workflow could look like this: ::
       image: ubuntu-latest
       stage: quality
       script:
-        - phpmd . gitlab phpmd.ruleset.xml > phpmd-report.json
+        - phpmd analyze --format gitlab . > phpmd-report.json
       artifacts:
         reports:
           codequality: phpmd-report.json

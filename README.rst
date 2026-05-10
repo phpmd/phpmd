@@ -13,10 +13,6 @@ https://phpmd.org
    :target: https://packagist.org/packages/phpmd/phpmd
    :alt: License
 
-.. image:: https://ci.appveyor.com/api/projects/status/pc08owbun2y00kwk?svg=true
-   :target: https://ci.appveyor.com/project/phpmd/phpmd
-   :alt: AppVeyor Build Status
-
 .. image:: https://codecov.io/gh/phpmd/phpmd/branch/master/graph/badge.svg?token=XrBrvTLJeE
    :target: https://codecov.io/gh/phpmd/phpmd
    :alt: Codecov Status
@@ -49,51 +45,35 @@ See https://phpmd.org/download/index.html
 Command line usage
 ------------------
 
-Type ``phpmd [filename|directory[,filename|directory[,...]]] [report format] [ruleset file]``, i.e: ::
+Type ``phpmd analyze [options] [--] [<paths>...]``, i.e: ::
 
-  mapi@arwen ~ $ phpmd php/PDepend/DbusUI/ xml rulesets.xml
+  ~ $ phpmd analyze src/
 
-While the ``rulesets.xml`` ruleset file could look like this:
+If no ruleset is specified, PHPMD will look for a configuration file in the
+current directory. The following file names are detected automatically (in
+order of priority): ``phpmd.yml``, ``phpmd.yaml``, ``phpmd.json``,
+``phpmd.xml``, ``phpmd.php``, as well as their ``.``-prefixed and
+``.dist``-suffixed variants (e.g. ``.phpmd.yml`` or ``phpmd.yml.dist``).
 
-.. code:: xml
+A ``phpmd.yml`` rule set file could look like this:
 
-  <?xml version="1.0"?>
-  <ruleset name="My first PHPMD rule set"
-           xmlns="https://phpmd.org/xml/ruleset/1.0.0"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0
-                         http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
-           xsi:noNamespaceSchemaLocation="
-                         http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
-    <description>
-      My custom rule set that checks my code...
-    </description>
+.. code:: yaml
 
-    <rule ref="rulesets/codesize.xml" />
-    <rule ref="rulesets/cleancode.xml" />
-    <rule ref="rulesets/controversial.xml" />
-    <rule ref="rulesets/design.xml" />
-    <rule ref="rulesets/naming.xml" />
-    <rule ref="rulesets/unusedcode.xml" />
-  </ruleset>
+  name: My first PHPMD rule set
+  description: My custom rule set that checks my code...
+  exclude-pattern:
+    - "*/vendor/*"
+  rules:
+    - ref: rulesets/codesize.xml
+    - ref: rulesets/cleancode.xml
+    - ref: rulesets/controversial.xml
+    - ref: rulesets/design.xml
+    - ref: rulesets/naming.xml
+    - ref: rulesets/unusedcode.xml
 
-The xml report would like like this:
-
-.. code:: xml
-
-  <?xml version="1.0" encoding="UTF-8" ?>
-  <pmd version="0.0.1" timestamp="2009-12-19T22:17:18+01:00">
-    <file name="/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php">
-      <violation beginline="81"
-                 endline="81"
-                 rule="UnusedFormalParameter"
-                 ruleset="Unused Code Rules"
-                 externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedformalparameter"
-                 priority="3">
-        Avoid unused parameters such as '$builder'.
-      </violation>
-    </file>
-  </pmd>
+Rule sets can also be written in XML, JSON, or PHP. See the
+`creating a custom rule set </documentation/creating-a-ruleset.html>`_
+documentation for details on all supported formats.
 
 You can pass a comma-separated string with list of file names
 or a directory names, containing PHP source code to PHPMD.
@@ -107,13 +87,12 @@ __ https://phpmd.org/download/index.html
 Command line options
 --------------------
 
-- Notice that the default output is in XML, so you can redirect it to
-  a file and XSLT it or whatever
+- The default output format is ``text``. You can change it with the ``--format`` option.
 
 - You can also use shortened names to refer to the built-in rule sets,
   like this: ::
 
-    phpmd PHP/Depend/DbusUI/ xml codesize
+    phpmd analyze --ruleset codesize src/
 
 - The command line interface also accepts the following optional arguments:
 
@@ -124,19 +103,25 @@ Command line options
     IDEs will convert into a link to open the file at the line of the error
     when clicked.
 
-  - ``--minimumpriority`` - The rule priority threshold; rules with lower
-    priority than they will not be used.
+  - ``--minimum-priority`` - The rule priority threshold; rules with lower
+    priority than this will not be used.
 
-  - ``--reportfile`` - Sends the report output to the specified file,
-    instead of the default output target ``STDOUT``.
+  - ``--maximum-priority`` - The rule priority threshold; rules with higher
+    priority than this will not be used.
+
+  - ``--reportfile-text``, ``--reportfile-xml``, ``--reportfile-html``, etc. - Sends the report output
+    to the specified file. Multiple report files in different formats can be written simultaneously.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
     extensions, e.g. php,phtml.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
-    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``
+    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``.
+    Exclude patterns can also be configured via ``exclude-pattern`` in your rule sets.
 
-  - ``--strict`` - Also report those nodes with a @SuppressWarnings annotation.
+  - ``--strict`` - Also report those nodes with a ``#[SuppressWarnings]`` attribute.
+
+  - ``--not-strict`` - Does not report those nodes with a ``#[SuppressWarnings]`` attribute (default).
 
   - ``--ignore-errors-on-exit`` - will exit with a zero code, even on error.
 
@@ -163,45 +148,52 @@ Command line options
   - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
 
+  - ``--bootstrap`` - an optional PHP script to load before running the analysis.
+
+  - ``--input-file`` - a file containing a list of source paths to analyze (one per line).
+
+  - ``--no-progress`` - do not show the progress bar, only the results.
+
+  - ``--coverage`` - Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover
+    option.
+
   - ``--color`` - enable color in output, for instance text renderer
     will show rule name in yellow and error description in red.
   - ``--extra-line-in-excerpt`` - specify how many extra lines are added to a code snippet in html format
 
   - ``--threads`` - the number of threads to use to parse the files.
 
+  - ``--xdebug`` - will enable Xdebug for debugging PHP Mess Detector.
+
   An example command line: ::
 
-    phpmd PHP/Depend/DbusUI xml codesize --reportfile "phpmd.xml" --suffixes "php,phtml"
+    phpmd analyze --reportfile-text report.txt --suffixes php,phtml src/
 
-  Options can be before or after arguments. They can be separated from their value either with a space or an equal (``=``) sign.
-  Thus, the following syntax is equivalent to the previous one: ::
+  Options can be placed before or after arguments, and can be separated from
+  their value with a space or an equal (``=``) sign. If you have paths starting
+  with ``-``, place options first, then use ``--`` to mark the start of the
+  arguments list: ::
 
-    phpmd --reportfile="phpmd.xml" --suffixes="php,phtml" PHP/Depend/DbusUI xml codesize
-
-  Strings starting with ``-`` will be recognized as option names. If you have arguments starting with ``-``, set options
-  first, then use ``--`` to mark the explicit start or the arguments list: ::
-
-    phpmd --reportfile "phpmd.xml" --suffixes "php,phtml" -- -foo/Folder xml codesize
+    phpmd analyze --reportfile-text report.txt -- -foo/Folder
 
 Using multiple rule sets
 ````````````````````````
 
 PHPMD uses so called rule sets that configure/define a set of rules which will
-be applied against the source under test. The default distribution of PHPMD is
-already shipped with a few default sets, that can be used out-of-box. You can
-call PHPMD's cli tool with a set's name to apply this configuration: ::
+be applied against the source under test. If you have a ``phpmd.yml`` in your
+project root, it will be used automatically. You can also select a built-in
+rule set explicitly: ::
 
-  ~ $ phpmd /path/to/source text codesize
+  ~ $ phpmd analyze --ruleset codesize /path/to/source
 
-But what if you would like to apply more than one rule set against your source?
-You can also pass a list of rule set names, separated by comma to PHPMD's cli
-tool: ::
+If you would like to apply more than one rule set against your source, you can
+pass the ``--ruleset`` option multiple times: ::
 
-  ~ $ phpmd /path/to/source text codesize,unusedcode,naming
+  ~ $ phpmd analyze --ruleset codesize --ruleset unusedcode --ruleset naming /path/to/source
 
-You can also mix custom `rule set files`__ with build-in rule sets: ::
+You can also mix custom `rule set files`__ with built-in rule sets: ::
 
-  ~ $ phpmd /path/to/source text codesize,/my/rules.xml
+  ~ $ phpmd analyze --ruleset codesize --ruleset /my/rules.xml /path/to/source
 
 __ https://phpmd.org/documentation/creating-a-ruleset.html
 
@@ -214,18 +206,18 @@ Using multiple source files and folders
 PHPMD also allows you to specify multiple source directories in case you want
 to create one output for certain parts of your code ::
 
- ~ $ phpmd /path/to/code,index.php,/another/place/with/code text codesize
+ ~ $ phpmd analyze /path/to/code index.php /another/place/with/code
 
-Or use glob pattern: ::
+Or use a glob pattern: ::
 
-  ~ $ phpmd src/*/*{Renderer,Node}.php text my/rules.xml
+  ~ $ phpmd analyze src/*/*{Renderer,Node}.php
 
 Scan input
 ``````````
 
 PHPMD can also read the standard input `stdin`: ::
 
-  ~ $ cat src/MyService.php | phpmd - text my/rules.xml
+  ~ $ cat src/MyService.php | phpmd analyze -
 
 So the PHP code to be scanned may be generated by an other program
 not necessarily to be store in file.
@@ -256,35 +248,35 @@ At the moment PHPMD comes with the following renderers:
 
 - *xml*, which formats the report as XML.
 - *text*, simple textual format.
+- *ansi*, colorful, formatted text for the command line.
 - *html*, single HTML file with possible problems.
 - *json*, formats JSON report.
-- *ansi*, a command line friendly format.
 - *github*, a format that GitHub Actions understands.
 - *githubcheckruns*, JSON format for the GitHub Check Runs API.
 - *gitlab*, a format that GitLab CI understands.
 - *sarif*, the Static Analysis Results Interchange Format.
-- *checkstyle*, language and tool agnostic XML format
+- *checkstyle*, language and tool agnostic XML format.
 
 Baseline
 --------
 
 For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.
 
-The recommended approach would be a ``phpmd.xml`` in the root of the project. To generate the ``phpmd.baseline.xml`` next to it::
+The recommended approach would be a rule set file (e.g. ``phpmd.yml`` or ``phpmd.xml``) in the root of the project. To generate the ``phpmd.baseline.xml`` next to it::
 
-  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
+  ~ $ phpmd analyze --generate-baseline /path/to/source
 
 To specify a custom baseline filepath for export::
 
-  ~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
+  ~ $ phpmd analyze --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 
-By default PHPMD will look next to ``phpmd.xml`` for ``phpmd.baseline.xml``. To overwrite this behaviour::
+By default PHPMD will look next to your rule set file for ``phpmd.baseline.xml``. To overwrite this behaviour::
 
-  ~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+  ~ $ phpmd analyze --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 
 To clean up an existing baseline file and *only remove* no longer existing violations::
 
-  ~ $ phpmd /path/to/source text phpmd.xml --update-baseline
+  ~ $ phpmd analyze --update-baseline /path/to/source
 
 PHPMD for enterprise
 --------------------
