@@ -22,7 +22,7 @@ use PHPMD\PHPMD;
 use PHPMD\Renderer\XMLRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
-use PHPMD\Stubs\WriterStub;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * Regression test for issue 001.
@@ -37,21 +37,21 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $ruleSetFactory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
         $inputPath = self::createFileUri('001/source');
         $phpmd->processFiles(
-            $inputPath,
-            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [$inputPath],
+            $ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $ruleSetFactory->createRuleSets('pmd-refset1'),
+            $ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
-        static::assertSame($inputPath, $phpmd->getInput());
+        static::assertSame([$inputPath], $phpmd->getInput());
     }
 
     /**
@@ -62,20 +62,20 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $ruleSetFactory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
         $inputPath = self::createFileUri('001/source/FooBar.php');
         $phpmd->processFiles(
-            $inputPath,
-            $ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [$inputPath],
+            $ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $ruleSetFactory->createRuleSets('pmd-refset1'),
+            $ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
-        static::assertSame($inputPath, $phpmd->getInput());
+        static::assertSame([$inputPath], $phpmd->getInput());
     }
 }

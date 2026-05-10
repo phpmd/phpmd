@@ -54,7 +54,7 @@ final class BaselineFileFinder
         }
 
         // find baseline file next to the (first) ruleset
-        $ruleSets = explode(',', $this->options->getRuleSets());
+        $ruleSets = $this->options->getRuleSets();
         $rulePath = realpath($ruleSets[0]);
         if (!$rulePath) {
             return $this->nullOrThrow(

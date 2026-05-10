@@ -1,5 +1,3 @@
-includes:
-	- phpstan-baseline.neon.php
 parameters:
     paths:
         - src/

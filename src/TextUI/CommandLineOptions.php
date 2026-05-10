@@ -22,14 +22,15 @@ use InvalidArgumentException;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Baseline\BaselineMode;
 use PHPMD\Cache\Model\ResultCacheStrategy;
-use PHPMD\Console\OutputInterface;
 use PHPMD\Renderer\Option\Color;
 use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Renderer\RendererInterface;
 use PHPMD\Rule;
 use PHPMD\Rule\Naming\LongVariable;
-use PHPMD\Utility\ArgumentsValidator;
+use Symfony\Component\Console\Exception\InvalidArgumentException as InvalidSymfonyArgumentException;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use TypeError;
 use ValueError;
 
@@ -40,17 +41,18 @@ use ValueError;
 #[SuppressWarnings(LongVariable::class)]
 class CommandLineOptions
 {
-    /** Error code for invalid input */
-    private const INPUT_ERROR = 23;
-
     /** The minimum rule priority. */
     private int $minimumPriority = Rule::LOWEST_PRIORITY;
 
     /** The maximum rule priority. */
     private int $maximumPriority = Rule::HIGHEST_PRIORITY;
 
-    /** A php source code filename or directory. */
-    private string $inputPath;
+    /**
+     * A php source code filename or directory.
+     *
+     * @var list<string>
+     */
+    private array $inputPaths;
 
     /**
      * The specified report format.
@@ -59,14 +61,8 @@ class CommandLineOptions
      */
     private $reportFormat;
 
-    /** An optional filename for the generated report. */
-    private ?string $reportFile = null;
-
     /** An optional script to load before running analysis */
     private ?string $bootstrap = null;
-
-    /** An optional filename to collect errors. */
-    private ?string $errorFile = null;
 
     /**
      * Additional report files.
@@ -76,39 +72,37 @@ class CommandLineOptions
     private array $reportFiles = [];
 
     /**
-     * List of deprecations.
+     * Ruleset filenames.
      *
      * @var list<string>
      */
-    private array $deprecations = [];
-
-    /** A ruleset filename or a comma-separated string of ruleset filenames. */
-    private string $ruleSets;
+    private array $ruleSets;
 
     /** File name of a PHPUnit code coverage report. */
     private ?string $coverageReport = null;
 
-    /** A string of comma-separated extensions for valid php source code filenames. */
-    private ?string $extensions = null;
+    /**
+     * An array of extensions for valid php source code filenames.
+     *
+     * @var list<string>
+     */
+    private array $extensions;
 
     /**
-     * A string of comma-separated pattern that is used to exclude directories.
+     * Patterns that are used to exclude directories.
      *
      * Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*
+     *
+     * @var list<string>
      */
-    private ?string $ignore = null;
-
-    /** Should the shell show the current phpmd version? */
-    private bool $version = false;
+    private array $ignore = [];
 
     /**
      * Should PHPMD run in strict mode?
      *
      * @since 1.2.0
      */
-    private bool $strict = false;
-
-    private int $verbosity = OutputInterface::VERBOSITY_NORMAL;
+    private bool $strict;
 
     /**
      * Should PHPMD exit without error code even if error is found?
@@ -133,269 +127,90 @@ class CommandLineOptions
     private bool $cacheEnabled = false;
 
     /** If set the path to read and write the result cache state from and to. */
-    private ?string $cacheFile;
+    private string $cacheFile;
 
     /** Determine the cache strategy. */
     private ResultCacheStrategy $cacheStrategy = ResultCacheStrategy::Content;
 
-    /** Either the output should be colored. */
-    private bool $colored = false;
-
     /** Specify how many extra lines are added to a code snippet */
-    private ?int $extraLineInExcerpt = null;
+    private int $extraLineInExcerpt;
+
+    /** number of cores to use for parsing */
+    private ?int $threads = null;
 
     /**
      * Constructs a new command line options instance.
      *
-     * @param string[] $args
-     * @param array<int, string> $availableRuleSets List of available rule-sets.
      * @throws InvalidArgumentException
+     * @throws InvalidSymfonyArgumentException
      * @throws ValueError
      * @throws TypeError
      */
-    public function __construct(
-        array $args,
-        private readonly array $availableRuleSets = [],
-    ) {
-        // Remove current file name
-        array_shift($args);
-
-        $originalArguments = $args;
-
-        $arguments = [];
-        $listenOptions = true;
-        $hasImplicitArguments = false;
-
-        while (($arg = array_shift($args)) !== null) {
-            if (!$listenOptions) {
-                $arguments[] = $arg;
-
-                continue;
-            }
-
-            $equalChunk = explode('=', $arg, 2);
-
-            switch ($equalChunk[0]) {
-                case '--':
-                    $this->refuseValue($equalChunk);
-                    $listenOptions = false;
-
-                    break;
-
-                case '--verbose':
-                case '-v':
-                    $this->refuseValue($equalChunk);
-                    $this->verbosity = OutputInterface::VERBOSITY_VERBOSE;
-
-                    break;
-
-                case '-vv':
-                    $this->refuseValue($equalChunk);
-                    $this->verbosity = OutputInterface::VERBOSITY_VERY_VERBOSE;
-
-                    break;
-
-                case '-vvv':
-                    $this->refuseValue($equalChunk);
-                    $this->verbosity = OutputInterface::VERBOSITY_DEBUG;
-
-                    break;
-
-                case '--min-priority':
-                case '--minimum-priority':
-                case '--minimumpriority':
-                    $this->minimumPriority = (int) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--max-priority':
-                case '--maximum-priority':
-                case '--maximumpriority':
-                    $this->maximumPriority = (int) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--report-file':
-                case '--reportfile':
-                    $this->reportFile = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--bootstrap':
-                    $this->bootstrap = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--error-file':
-                case '--errorfile':
-                    $this->errorFile = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--input-file':
-                case '--inputfile':
-                    array_unshift($arguments, $this->readInputFile((string) $this->readValue($equalChunk, $args)));
-
-                    break;
-
-                case '--coverage':
-                    $this->coverageReport = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--extensions':
-                    $this->logDeprecated('extensions', 'suffixes');
-                    // Deprecated: We use the suffixes option now
-                    $this->extensions = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--suffixes':
-                    $this->extensions = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--ignore':
-                    $this->logDeprecated('ignore', 'exclude');
-                    // Deprecated: We use the exclude option now
-                    $this->ignore = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--exclude':
-                    $this->ignore = (string) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--color':
-                    $this->refuseValue($equalChunk);
-                    $this->colored = true;
-
-                    break;
-
-                case '--version':
-                    $this->refuseValue($equalChunk);
-                    $this->version = true;
-
-                    return;
-
-                case '--strict':
-                    $this->refuseValue($equalChunk);
-                    $this->strict = true;
-
-                    break;
-
-                case '--not-strict':
-                    $this->refuseValue($equalChunk);
-                    $this->strict = false;
-
-                    break;
-
-                case '--generate-baseline':
-                    $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::Generate;
-
-                    break;
-
-                case '--update-baseline':
-                    $this->refuseValue($equalChunk);
-                    $this->generateBaseline = BaselineMode::Update;
-
-                    break;
-
-                case '--baseline-file':
-                    $this->baselineFile = $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--cache':
-                    $this->refuseValue($equalChunk);
-                    $this->cacheEnabled = true;
-
-                    break;
-
-                case '--cache-file':
-                    $this->cacheFile = $this->readValue($equalChunk, $args);
-
-                    break;
-
-                case '--cache-strategy':
-                    $strategy = (string) $this->readValue($equalChunk, $args);
-                    $this->cacheStrategy = ResultCacheStrategy::from($strategy);
-
-                    break;
-
-                case '--ignore-errors-on-exit':
-                    $this->refuseValue($equalChunk);
-                    $this->ignoreErrorsOnExit = true;
-
-                    break;
-
-                case '--ignore-violations-on-exit':
-                    $this->refuseValue($equalChunk);
-                    $this->ignoreViolationsOnExit = true;
-
-                    break;
-
-                case '--reportfile-checkstyle':
-                case '--reportfile-github':
-                case '--reportfile-gitlab':
-                case '--reportfile-html':
-                case '--reportfile-json':
-                case '--reportfile-sarif':
-                case '--reportfile-text':
-                case '--reportfile-xml':
-                    preg_match('(^\-\-reportfile\-(checkstyle|github|gitlab|html|json|sarif|text|xml)$)', $arg, $match);
-                    if (isset($match[1])) {
-                        $this->reportFiles[$match[1]] = (string) $this->readValue($equalChunk, $args);
-                    }
-
-                    break;
-
-                case '--extra-line-in-excerpt':
-                    $this->extraLineInExcerpt = (int) $this->readValue($equalChunk, $args);
-
-                    break;
-
-                default:
-                    $hasImplicitArguments = true;
-                    $arguments[] = $arg;
-
-                    break;
+    public function __construct(InputInterface $input)
+    {
+        $this->minimumPriority = (int) $this->readInt($input, 'minimum-priority');
+        $this->maximumPriority = (int) $this->readInt($input, 'maximum-priority');
+        $this->bootstrap = $this->readString($input, 'bootstrap');
+        $this->coverageReport = $this->readString($input, 'coverage');
+
+        /** @var list<string> */
+        $extensions = $input->getOption('suffixes');
+        $this->extensions = $extensions;
+
+        /** @var list<string> */
+        $ignore = $input->getOption('exclude');
+        $this->ignore = $ignore;
+        $this->strict = (bool) $input->getOption('strict');
+        $this->generateBaseline = $input->getOption('update-baseline') ? BaselineMode::Update : BaselineMode::None;
+        if ($input->getOption('generate-baseline')) {
+            $this->generateBaseline = BaselineMode::Generate;
+        }
+        $this->baselineFile = $this->readString($input, 'baseline-file');
+        $this->cacheEnabled = (bool) $input->getOption('cache');
+        $this->cacheFile = (string) $this->readString($input, 'cache-file');
+        $this->cacheStrategy = ResultCacheStrategy::from($this->readString($input, 'cache-strategy') ?? 'content');
+        $this->ignoreErrorsOnExit = (bool) $input->getOption('ignore-errors-on-exit');
+        $this->ignoreViolationsOnExit = (bool) $input->getOption('ignore-violations-on-exit');
+        foreach (['checkstyle', 'github', 'gitlab', 'html', 'json', 'sarif', 'text', 'xml'] as $type) {
+            $value = $this->readString($input, 'reportfile-' . $type);
+            if ($value) {
+                $this->reportFiles[$type] = $value;
             }
         }
+        $this->extraLineInExcerpt = (int) $this->readInt($input, 'extra-line-in-excerpt');
 
-        if (count($arguments) < 3) {
-            throw new InvalidArgumentException($this->usage(), self::INPUT_ERROR);
+        /** @var list<string> */
+        $rulesets = $input->getOption('ruleset');
+        $this->ruleSets = $rulesets;
+        $this->reportFormat = (string) $this->readString($input, 'format');
+
+        /** @var list<string> */
+        $paths = $input->getArgument('paths');
+        $inputFile = $this->readString($input, 'input-file');
+        if ($inputFile) {
+            $paths = [...$paths, ...$this->readInputFile($inputFile)];
+        }
+        if (!$paths) {
+            throw new InvalidArgumentException('At least one path must be specified to analyse.');
         }
 
-        $validator = new ArgumentsValidator($hasImplicitArguments, $originalArguments, $arguments);
+        $this->inputPaths = $paths;
 
-        $this->ruleSets = (string) array_pop($arguments);
-        $validator->validate('ruleset', $this->ruleSets);
-
-        $this->reportFormat = array_pop($arguments);
-        $validator->validate('report format', $this->reportFormat ?? '');
-
-        $this->inputPath = implode(',', $arguments);
-
-        if ($this->inputPath === '-') {
-            $this->inputPath = 'php://stdin';
-
-            return;
+        if ($this->inputPaths === ['-']) {
+            $this->inputPaths = ['php://stdin'];
         }
 
-        foreach ($arguments as $arg) {
-            $validator->validate('input path', $arg);
-        }
+        $this->threads = $this->readInt($input, 'threads');
     }
 
     /**
      * Returns a php source code filename or directory.
+     *
+     * @return list<string>
      */
-    public function getInputPath(): string
+    public function getInputPaths(): array
     {
-        return $this->inputPath;
+        return $this->inputPaths;
     }
 
     /**
@@ -409,39 +224,11 @@ class CommandLineOptions
     }
 
     /**
-     * Returns the output filename for a generated report or <b>null</b> when
-     * the report should be displayed in STDOUT.
-     */
-    public function getReportFile(): ?string
-    {
-        return $this->reportFile;
-    }
-
-    /**
      * Returns the current bootstrap file (if available) to load extra resources before analysis.
      */
     public function getBootstrapFile(): ?string
     {
         return $this->bootstrap;
-    }
-
-    /**
-     * Returns the output filename for the errors or <b>null</b> when
-     * the report should be displayed in STDERR.
-     */
-    public function getErrorFile(): ?string
-    {
-        return $this->errorFile;
-    }
-
-    /**
-     * Return the list of deprecations raised when parsing options.
-     *
-     * @return list<string>
-     */
-    public function getDeprecations(): array
-    {
-        return $this->deprecations;
     }
 
     /**
@@ -456,9 +243,11 @@ class CommandLineOptions
     }
 
     /**
-     * Returns a ruleset filename or a comma-separated string of ruleset
+     * Returns an array of ruleset filename or rulesets
+     *
+     * @return list<string>
      */
-    public function getRuleSets(): string
+    public function getRuleSets(): array
     {
         return $this->ruleSets;
     }
@@ -489,29 +278,28 @@ class CommandLineOptions
     }
 
     /**
-     * Returns a string of comma-separated extensions for valid php source code
-     * filenames or <b>null</b> when this argument was not set.
+     * Returns extensions for valid php source code filenames.
+     *
+     * @return list<string>
      */
-    public function getExtensions(): ?string
+    public function getExtensions(): array
     {
         return $this->extensions;
     }
 
     /**
-     * Returns string of comma-separated pattern that is used to exclude
-     * directories or <b>null</b> when this argument was not set.
+     * Returns patterns that are used to exclude directories.
+     *
+     * @return list<string>
      */
-    public function getIgnore(): ?string
+    public function getIgnore(): array
     {
         return $this->ignore;
     }
 
-    /**
-     * Was the <b>--version</b> passed to PHPMD's command line interface?
-     */
-    public function hasVersion(): bool
+    public function getThreads(): ?int
     {
-        return $this->version;
+        return $this->threads;
     }
 
     /**
@@ -522,11 +310,6 @@ class CommandLineOptions
     public function hasStrict(): bool
     {
         return $this->strict;
-    }
-
-    public function getVerbosity(): int
-    {
-        return $this->verbosity;
     }
 
     /**
@@ -555,7 +338,7 @@ class CommandLineOptions
      */
     public function cacheFile(): string
     {
-        return $this->cacheFile ?? '.phpmd.result-cache.php';
+        return $this->cacheFile;
     }
 
     /**
@@ -587,7 +370,7 @@ class CommandLineOptions
     /**
      * Specify how many extra lines are added to a code snippet
      */
-    public function extraLineInExcerpt(): ?int
+    public function extraLineInExcerpt(): int
     {
         return $this->extraLineInExcerpt;
     }
@@ -598,16 +381,16 @@ class CommandLineOptions
      *
      * @throws InvalidArgumentException When the specified renderer does not exist.
      */
-    public function createRenderer(?string $reportFormat = null): RendererInterface
+    public function createRenderer(OutputInterface $output, ?string $reportFormat = null): RendererInterface
     {
         $renderer = $this->createRendererWithoutOptions($reportFormat);
 
         if ($renderer instanceof Verbose) {
-            $renderer->setVerbosityLevel($this->verbosity);
+            $renderer->setVerbosityLevel($output->getVerbosity());
         }
 
         if ($renderer instanceof Color) {
-            $renderer->setColored($this->colored);
+            $renderer->setColored($output->isDecorated());
         }
 
         return $renderer;
@@ -624,150 +407,59 @@ class CommandLineOptions
     }
 
     /**
-     * Returns usage information for the PHPMD command line interface.
-     *
-     * @throws InvalidArgumentException
-     */
-    public function usage(): string
-    {
-        $availableRenderers = $this->getListOfAvailableRenderers();
-        $noRenderers = ($availableRenderers === null);
-
-        return 'Mandatory arguments:' . \PHP_EOL .
-            '1) A php source code filename or directory. Can be a comma-' .
-            'separated string, glob pattern, or "-" to scan stdin' . \PHP_EOL .
-            '2) A report format' . \PHP_EOL .
-            '3) A ruleset filename or a comma-separated string of ruleset' .
-            'filenames' . \PHP_EOL . \PHP_EOL .
-            'Example: phpmd /path/to/source format ruleset' . \PHP_EOL . \PHP_EOL .
-            ($noRenderers ? 'No available formats' : 'Available formats: ' . $availableRenderers) . '.' . \PHP_EOL .
-            'Available rulesets: ' . implode(', ', $this->availableRuleSets) . '.' . \PHP_EOL . \PHP_EOL .
-            'Optional arguments that may be put after the mandatory arguments:' .
-            \PHP_EOL .
-            '--verbose, -v, -vv, -vvv: Show debug information.' . \PHP_EOL .
-            '--minimum-priority: rule priority threshold; rules with lower ' .
-            'priority than this will not be used' . \PHP_EOL .
-            '--report-file: send report output to a file; default to STDOUT' .
-            \PHP_EOL .
-            '--error-file: send errors (other than reported violations) ' .
-            'output to a file; default to STDERR' .
-            \PHP_EOL .
-            '--suffixes: comma-separated string of valid source code ' .
-            'filename extensions, e.g. php,phtml' . \PHP_EOL .
-            '--exclude: comma-separated string of patterns that are used to ' .
-            'ignore directories. Use asterisks to exclude by pattern. ' .
-            'For example *src/foo/*.php or *src/foo/*' . \PHP_EOL .
-            '--strict: also report those nodes with a SuppressWarnings ' .
-            'attribute' . \PHP_EOL .
-            '--ignore-errors-on-exit: will exit with a zero code, ' .
-            'even on error' . \PHP_EOL .
-            '--ignore-violations-on-exit: will exit with a zero code, ' .
-            'even if any violations are found' . \PHP_EOL .
-            '--cache: will enable the result cache.' . \PHP_EOL .
-            '--cache-file: instead of the default .phpmd.result-cache.php' .
-            ' will use this file as result cache file path.' . \PHP_EOL .
-            '--cache-strategy: sets the caching strategy to determine if' .
-            ' a file is still fresh. Either `content` to base it on the ' .
-            'file contents, or `timestamp` to base it on the file modified ' .
-            'timestamp' . \PHP_EOL .
-            '--generate-baseline: will generate a phpmd.baseline.xml next ' .
-            'to the first ruleset file location' . \PHP_EOL .
-            '--update-baseline: will remove any non-existing violations from the phpmd.baseline.xml' . \PHP_EOL .
-            '--baseline-file: a custom location of the baseline file' . \PHP_EOL .
-            '--color: enable color in output' . \PHP_EOL .
-            '--extra-line-in-excerpt: Specify how many extra lines are added ' .
-            'to a code snippet in html format' . \PHP_EOL .
-            '--xdebug: Enable Xdebug for debugging' . \PHP_EOL .
-            '--: Explicit argument separator: Anything after "--" will be read as an argument even if ' .
-            'it starts with "-" or matches the name of an option' . \PHP_EOL;
-    }
-
-    /**
-     * Get a list of available renderers
-     *
-     * @return string|null The list of renderers found separated by comma, or null if none.
-     * @throws InvalidArgumentException
-     */
-    private function getListOfAvailableRenderers(): ?string
-    {
-        $renderersDirPathName = __DIR__ . '/../Renderer';
-        $renderers = [];
-
-        $filesPaths = scandir($renderersDirPathName);
-        if ($filesPaths === false) {
-            throw new InvalidArgumentException("Unable to access directory: '{$renderersDirPathName}'.");
-        }
-
-        foreach ($filesPaths as $rendererFileName) {
-            $rendererName = [];
-            if (preg_match('/^(\w+)Renderer.php$/i', $rendererFileName, $rendererName)) {
-                $renderers[] = strtolower($rendererName[1]);
-            }
-        }
-
-        sort($renderers);
-
-        return implode(', ', $renderers) ?: null;
-    }
-
-    /**
-     * Logs a deprecated option to the current user interface.
-     */
-    private function logDeprecated(string $deprecatedName, string $newName): void
-    {
-        $this->deprecations[] = sprintf(
-            'The --%s option is deprecated, please use --%s instead.',
-            $deprecatedName,
-            $newName
-        );
-    }
-
-    /**
      * This method takes the given input file, reads the newline separated paths
      * from that file and creates a comma separated string of the file paths. If
      * the given <b>$inputFile</b> not exists, this method will throw an
      * exception.
      *
      * @param string $inputFile Specified input file name.
+     *
+     * @return list<string>
      * @throws InvalidArgumentException If the specified input file does not exist.
      * @since 1.1.0
      */
-    private function readInputFile(string $inputFile): string
+    private function readInputFile(string $inputFile): array
     {
         $content = @file($inputFile);
+
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
         }
 
-        return implode(',', array_map(trim(...), $content));
+        return array_map(trim(...), $content);
     }
 
     /**
-     * Throw an exception if a boolean option has a value (is followed by equal).
-     *
-     * @param string[] $equalChunk The CLI parameter split in 2 by "=" sign
-     *
-     * @throws InvalidArgumentException if a boolean option has a value (is followed by equal)
+     * @throws InvalidArgumentException
+     * @throws InvalidSymfonyArgumentException
      */
-    private function refuseValue(array $equalChunk): void
+    private function readString(InputInterface $input, string $name): ?string
     {
-        if (count($equalChunk) > 1) {
-            throw new InvalidArgumentException($equalChunk[0] . ' option does not accept a value');
+        $valiue = $input->getOption($name);
+        if ($valiue === null) {
+            return null;
         }
+        if (!is_string($valiue)) {
+            throw new InvalidArgumentException("Invalid argument type for '{$name}'.");
+        }
+
+        return (string) $valiue;
     }
 
     /**
-     * Return value for an option either what is after "=" sign if present, else take the next CLI parameter.
-     *
-     * @param list<string> $equalChunk The CLI parameter split in 2 by "=" sign
-     * @param string[] &$args      The remaining CLI parameters not yet parsed
+     * @throws InvalidArgumentException
+     * @throws InvalidSymfonyArgumentException
      */
-    private function readValue(array $equalChunk, array &$args): ?string
+    private function readInt(InputInterface $input, string $name): ?int
     {
-        if (count($equalChunk) > 1) {
-            return $equalChunk[1];
+        $valiue = $input->getOption($name);
+        if ($valiue === null) {
+            return null;
+        }
+        if (!is_int($valiue) && (!is_string($valiue) || !ctype_digit($valiue))) {
+            throw new InvalidArgumentException("Invalid argument type for '{$name}'.");
         }
 
-        return array_shift($args);
+        return (int) $valiue;
     }
 }

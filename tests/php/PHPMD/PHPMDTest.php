@@ -22,8 +22,9 @@ use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * Test case for the main PHPMD class.
@@ -45,7 +46,7 @@ class PHPMDTest extends AbstractTestCase
     {
         self::changeWorkingDirectory();
 
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);
@@ -53,14 +54,14 @@ class PHPMDTest extends AbstractTestCase
         $phpmd = new PHPMD();
 
         $phpmd->processFiles(
-            self::createFileUri('source/ccn_function.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/ccn_function.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
-        $this->assertXmlEquals($writer->getData(), 'pmd/default-xml.xml');
+        $this->assertXmlEquals($writer->fetch(), 'pmd/default-xml.xml');
     }
 
     /**
@@ -70,21 +71,21 @@ class PHPMDTest extends AbstractTestCase
     {
         self::changeWorkingDirectory();
 
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
-        $this->assertXmlEquals($writer->getData(), 'pmd/single-directory.xml');
+        $this->assertXmlEquals($writer->fetch(), 'pmd/single-directory.xml');
     }
 
     /**
@@ -94,21 +95,21 @@ class PHPMDTest extends AbstractTestCase
     {
         self::changeWorkingDirectory();
 
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $renderer = new XMLRenderer();
         $renderer->setWriter($writer);
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/ccn_function.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/ccn_function.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
-        $this->assertXmlEquals($writer->getData(), 'pmd/single-file.xml');
+        $this->assertXmlEquals($writer->fetch(), 'pmd/single-file.xml');
     }
 
     /**
@@ -137,14 +138,14 @@ class PHPMDTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/source_without_violations.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/source_without_violations.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
@@ -160,14 +161,14 @@ class PHPMDTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/source_with_npath_violation.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/source_with_npath_violation.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
@@ -183,14 +184,14 @@ class PHPMDTest extends AbstractTestCase
         $baselineSet->expects(static::exactly(2))->method('contains')->willReturn(true);
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/source_with_npath_violation.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/source_with_npath_violation.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report(new BaselineValidator($baselineSet, BaselineMode::None))
         );
 
@@ -205,14 +206,14 @@ class PHPMDTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $renderer = new XMLRenderer();
-        $renderer->setWriter(new WriterStub());
+        $renderer->setWriter(new NullOutput());
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            self::createFileUri('source/source_with_parse_error.php'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('source/source_with_parse_error.php')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [$renderer],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
@@ -231,10 +232,10 @@ class PHPMDTest extends AbstractTestCase
 
         // Process without exclusions, should result in violations.
         $phpmd->processFiles(
-            self::createFileUri('sourceExcluded/'),
-            $this->ruleSetFactory->getIgnorePattern('pmd-refset1'),
+            [self::createFileUri('sourceExcluded/')],
+            $this->ruleSetFactory->getIgnorePattern(['pmd-refset1']),
             [],
-            $this->ruleSetFactory->createRuleSets('pmd-refset1'),
+            $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
             new Report()
         );
 
@@ -243,10 +244,10 @@ class PHPMDTest extends AbstractTestCase
 
         // Process with exclusions, should result in no violations.
         $phpmd->processFiles(
-            self::createFileUri('sourceExcluded/'),
-            $this->ruleSetFactory->getIgnorePattern('exclude-pattern'),
+            [self::createFileUri('sourceExcluded/')],
+            $this->ruleSetFactory->getIgnorePattern(['exclude-pattern']),
             [],
-            $this->ruleSetFactory->createRuleSets('exclude-pattern'),
+            $this->ruleSetFactory->createRuleSets(['exclude-pattern']),
             new Report()
         );
 

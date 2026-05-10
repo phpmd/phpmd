@@ -20,6 +20,7 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Test case for the goto statement GotoStatementIntegrationTest.
@@ -37,16 +38,13 @@ class GotoStatementIntegrationTest extends AbstractTestCase
     {
         $file = self::createTempFileUri();
 
-        Command::main(
-            [
-                __FILE__,
-                $this->createCodeResourceUriForTest(),
-                'text',
-                'design',
-                '--reportfile',
-                $file,
-            ]
-        );
+        $tester = new CommandTester(new Command());
+        $tester->execute([
+            'paths' => [$this->createCodeResourceUriForTest()],
+            '--format' => 'text',
+            '--ruleset' => ['design'],
+            '--reportfile-text' => $file,
+        ]);
         $content = file_get_contents($file);
 
         static::assertNotFalse($content);

@@ -22,13 +22,12 @@
  */
 class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
 {
-
     /**
      * A method that returns foo, bar and baz.
-     *
-     * @return string
+     * 
+     * @return list<string>
      */
-    public function getFooBarBaz()
+    public function getFooBarBaz(): array
     {
         return ['foo', 'bar', 'baz'];
     }
@@ -37,5 +36,4 @@ class some_class_that_does_not_follow_psr0 extends \PHPMD\AbstractRule
     {
 
     }
-
 }

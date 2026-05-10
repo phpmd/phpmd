@@ -20,8 +20,8 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the html renderer implementation.
@@ -35,7 +35,7 @@ class HTMLRendererTest extends AbstractTestCase
     public function testRendererCreatesExpectedHtmlTableRow(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
@@ -58,7 +58,7 @@ class HTMLRendererTest extends AbstractTestCase
 
         static::assertMatchesRegularExpression(
             "~.*<section class='prb' id='p-(\d+)'> <header> <h3> <a href='#p-\d+' class='indx'>.*~",
-            $writer->getData()
+            $writer->fetch()
         );
     }
 }

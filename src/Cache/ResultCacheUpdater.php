@@ -4,10 +4,10 @@ namespace PHPMD\Cache;
 
 use OutOfBoundsException;
 use PHPMD\Cache\Model\ResultCacheState;
-use PHPMD\Console\OutputInterface;
 use PHPMD\Report;
 use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ResultCacheUpdater
 {

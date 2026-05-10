@@ -21,8 +21,8 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the xml renderer implementation.
@@ -36,7 +36,7 @@ class CheckStyleRendererTest extends AbstractTestCase
     public function testRendererCreatesExpectedNumberOfXmlElements(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $violations = [
             $this->getRuleViolationMock('/bar.php'),
@@ -60,7 +60,7 @@ class CheckStyleRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/xml_renderer_expected1.xml'
         );
     }
@@ -73,7 +73,7 @@ class CheckStyleRendererTest extends AbstractTestCase
     public function testRendererAddsProcessingErrorsToXmlReport(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
@@ -97,7 +97,7 @@ class CheckStyleRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/xml_renderer_processing_errors.xml'
         );
     }

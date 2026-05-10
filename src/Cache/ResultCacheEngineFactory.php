@@ -2,9 +2,9 @@
 
 namespace PHPMD\Cache;
 
-use PHPMD\Console\OutputInterface;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class ResultCacheEngineFactory
 {

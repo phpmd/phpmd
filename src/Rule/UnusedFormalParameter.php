@@ -18,9 +18,12 @@
 
 namespace PHPMD\Rule;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
 use Override;
 use PDepend\Source\AST\AbstractASTCallable;
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTExpression;
@@ -35,7 +38,7 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
-use ReflectionMethod;
+use PHPMD\Utility\ExceptionsList;
 use RuntimeException;
 
 /**
@@ -52,11 +55,15 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      */
     private array $nodes = [];
 
+    /** Temporary cache of configured exceptions. */
+    private ExceptionsList $exceptions;
+
     /**
      * This method checks that all parameters of a given function or method are
      * used at least one time within the artifacts body.
      *
      * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public function apply(AbstractNode $node): void
     {
@@ -87,7 +94,10 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
         $this->removeUsedParameters($node);
 
         foreach ($this->nodes as $node) {
-            $this->addViolation($node, [$node->getImage()]);
+            $parameterName = $node->getImage();
+            if (!$this->getExceptionsList()->contains($parameterName)) {
+                $this->addViolation($node, [$parameterName]);
+            }
         }
     }
 
@@ -121,7 +131,6 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
      * \Override attribute or the {@inheritDoc} annotation.
      *
      * @param AbstractCallableNode<AbstractASTCallable> $node
-     * @throws RuntimeException
      */
     private function isInheritedSignature(AbstractCallableNode $node): bool
     {
@@ -135,21 +144,23 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
             return true;
         }
 
-        if (\PHP_VERSION_ID < 80300 || !class_exists($node->getParentType()->getFullQualifiedName())) {
-            return false;
-        }
+        return $this->hasOverrideAttribute($node);
+    }
 
-        // Remove the "()" at the end of method's name.
-        $methodName = substr($node->getFullQualifiedName(), 0, -2);
-
-        /**
-         * @var ReflectionMethod
-         */
-        $reflectionMethod = ReflectionMethod::createFromMethodName($methodName);
-
-        foreach ($reflectionMethod->getAttributes() as $reflectionAttribute) {
-            if ($reflectionAttribute->getName() === Override::class) {
-                return true;
+    private function hasOverrideAttribute(MethodNode $node): bool
+    {
+        foreach ($node->getChildren() as $attributes) {
+            if (!$attributes instanceof ASTAttribute) {
+                continue;
+            }
+            foreach ($attributes->getChildren() as $attribute) {
+                if (!$attribute instanceof ASTAllocationExpression) {
+                    continue;
+                }
+                $class = $attribute->getChildren()[0] ?? null;
+                if ($class && trim($class->getImage(), '\\') === Override::class) {
+                    return true;
+                }
             }
         }
 
@@ -339,5 +350,15 @@ final class UnusedFormalParameter extends AbstractLocalVariable implements Funct
                 }
             }
         }
+    }
+
+    /**
+     * Gets array of exceptions from property
+     */
+    private function getExceptionsList(): ExceptionsList
+    {
+        $this->exceptions ??= new ExceptionsList($this, '$');
+
+        return $this->exceptions;
     }
 }

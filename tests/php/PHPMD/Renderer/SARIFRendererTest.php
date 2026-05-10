@@ -22,8 +22,8 @@ use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the SARIF renderer implementation.
@@ -36,7 +36,7 @@ class SARIFRendererTest extends AbstractTestCase
      */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $rule = new RuleStub('AnotherRuleStub');
         $rule->addExample("   class Example\n{\n}\n   ");
@@ -68,7 +68,7 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->start();
         $renderer->renderReport($report);
         $renderer->end();
-        $actual = json_decode($writer->getData(), true);
+        $actual = json_decode($writer->fetch(), true);
         static::assertIsArray($actual);
         static::assertIsArray($actual['runs']);
         static::assertIsArray($actual['runs'][0]);
@@ -93,7 +93,7 @@ class SARIFRendererTest extends AbstractTestCase
      */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
@@ -118,7 +118,7 @@ class SARIFRendererTest extends AbstractTestCase
         $renderer->end();
 
         $key = substr(json_encode(realpath(__DIR__ . '/../../../resources/files'), JSON_THROW_ON_ERROR), 1, -1);
-        $data = strtr($writer->getData(), [
+        $data = strtr($writer->fetch(), [
             $key => '#{rootDirectory}',
             'tests\\\\resources\\\\files' => 'tests/resources/files',
         ]);

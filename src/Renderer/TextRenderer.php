@@ -19,10 +19,10 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
-use PHPMD\Console\OutputInterface;
 use PHPMD\Renderer\Option\Color;
 use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Report;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * This renderer output a textual log with all found violations and suspect

@@ -38,6 +38,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethods(): array
     {
         $methods = [];
+
         foreach ($this->getNode()->getMethods() as $method) {
             $methods[] = new MethodNode($method);
         }
@@ -54,6 +55,7 @@ abstract class AbstractTypeNode extends AbstractNode
     public function getMethodNames(): array
     {
         $names = [];
+
         foreach ($this->getNode()->getMethods() as $method) {
             $names[] = $method->getImage();
         }

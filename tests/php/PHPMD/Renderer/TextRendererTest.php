@@ -20,11 +20,11 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\Console\OutputInterface;
 use PHPMD\ProcessingError;
 use PHPMD\Stubs\RuleStub;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Test case for the text renderer implementation.
@@ -38,7 +38,7 @@ class TextRendererTest extends AbstractTestCase
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $rule = new RuleStub();
         $rule->setName('LongerNamedRule');
         $rule->setDescription('An other description for this rule');
@@ -68,14 +68,14 @@ class TextRendererTest extends AbstractTestCase
             '/bar.php:1      LongerNamedRule  An other description for this rule' . PHP_EOL .
             '/foo-biz.php:2  RuleStub         Test description' . PHP_EOL .
             '/foo.php:34     RuleStub         Test description' . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 
     public function testRendererSupportVerbose(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $rule = new RuleStub();
         $rule->setName('LongerNamedRule');
         $rule->setDescription('An other description for this rule');
@@ -104,14 +104,14 @@ class TextRendererTest extends AbstractTestCase
             'LongerNamedRule  An other description for this rule' . PHP_EOL .
             '📁 in /bar.php on line 1' . PHP_EOL .
             '🔗 testruleset.xml https://phpmd.org/rules/testruleset.html#longernamedrule' . PHP_EOL . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 
     public function testRendererSupportColor(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $rule = new RuleStub();
         $rule->setName('LongerNamedRule');
         $rule->setDescription('An other description for this rule');
@@ -138,7 +138,7 @@ class TextRendererTest extends AbstractTestCase
 
         static::assertEquals(
             "/bar.php:1  \033[33mLongerNamedRule\033[0m  \033[31mAn other description for this rule\033[0m" . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 
@@ -148,7 +148,7 @@ class TextRendererTest extends AbstractTestCase
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $errors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
@@ -175,7 +175,7 @@ class TextRendererTest extends AbstractTestCase
             "/tmp/foo.php\t-\tFailed for file \"/tmp/foo.php\"." . PHP_EOL .
             "/tmp/bar.php\t-\tFailed for file \"/tmp/bar.php\"." . PHP_EOL .
             "/tmp/baz.php\t-\tFailed for file \"/tmp/baz.php\"." . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 }

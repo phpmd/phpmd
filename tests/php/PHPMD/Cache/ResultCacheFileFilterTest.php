@@ -6,8 +6,8 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy as Strategy;
-use PHPMD\Console\NullOutput;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheFileFilter

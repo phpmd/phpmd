@@ -22,6 +22,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Paths;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Test case for the {@link \PHPMD\TextUI\Command} class.
@@ -29,41 +30,24 @@ use PHPUnit\Framework\Attributes\DataProvider;
 #[CoversClass(Command::class)]
 class CommandTest extends AbstractTestCase
 {
-    /** @var ?resource */
-    private $stderrStreamFilter;
-
-    protected function tearDown(): void
-    {
-        if (is_resource($this->stderrStreamFilter)) {
-            stream_filter_remove($this->stderrStreamFilter);
-        }
-        $this->stderrStreamFilter = null;
-
-        parent::tearDown();
-    }
-
     /**
      * @param ?array<string> $options
      */
     #[DataProvider('dataProviderTestMainWithOption')]
     public function testMainStrictOptionIsOfByDefault(
         string $sourceFile,
-        ExitCode $expectedExitCode,
-        ?array $options = null
+        int $expectedExitCode,
+        ?array $options = []
     ): void {
-        $args = array_filter(
-            [
-                __FILE__,
-                self::createFileUri($sourceFile),
-                'html',
-                'codesize',
-                '--reportfile',
-                self::createTempFileUri(),
-                ...($options ?? []),
-            ]
-        );
+        $args = [
+            'paths' => [self::createFileUri($sourceFile)],
+            '--format' => 'html',
+            '--ruleset' => ['codesize'],
+            '--reportfile-html' => self::createTempFileUri(),
+        ] + $options;
 
-        $exitCode = Command::main($args);
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute($args);
         static::assertEquals($expectedExitCode, $exitCode);
     }
 
@@ -75,91 +59,90 @@ class CommandTest extends AbstractTestCase
         return [
             [
                 'source/source_without_violations.php',
-                ExitCode::Success,
+                Command::SUCCESS,
             ],
             [
                 'source/source_with_npath_violation.php',
-                ExitCode::Violation,
+                Command::INVALID,
             ],
             [
                 'source/source_with_npath_violation.php',
-                ExitCode::Success,
-                ['--ignore-violations-on-exit'],
+                Command::SUCCESS,
+                ['--ignore-violations-on-exit' => true],
             ],
             [
                 'source/source_with_npath_violation.php',
-                ExitCode::Violation,
-                ['--ignore-errors-on-exit'],
+                Command::INVALID,
+                ['--ignore-errors-on-exit' => true],
             ],
             [
                 'source/source_with_parse_error.php',
-                ExitCode::Error,
+                Command::ERROR,
             ],
             [
                 'source/source_with_parse_error.php',
-                ExitCode::Error,
-                ['--ignore-violations-on-exit'],
+                Command::ERROR,
+                ['--ignore-violations-on-exit' => true],
             ],
             [
                 'source/source_with_parse_error.php',
-                ExitCode::Success,
-                ['--ignore-errors-on-exit'],
+                Command::SUCCESS,
+                ['--ignore-errors-on-exit' => true],
             ],
             [
                 'source',
-                ExitCode::Error,
+                Command::ERROR,
             ],
             [
                 'source',
-                ExitCode::Error,
-                ['--ignore-violations-on-exit'],
+                Command::ERROR,
+                ['--ignore-violations-on-exit' => true],
             ],
             [
                 'source',
-                ExitCode::Violation,
-                ['--ignore-errors-on-exit'],
+                Command::INVALID,
+                ['--ignore-errors-on-exit' => true],
             ],
             [
                 'source',
-                ExitCode::Success,
-                ['--ignore-errors-on-exit', '--ignore-violations-on-exit'],
+                Command::SUCCESS,
+                ['--ignore-errors-on-exit' => true, '--ignore-violations-on-exit' => true],
             ],
             [
                 'source/ccn_suppress_function.php',
-                ExitCode::Violation,
-                ['--strict'],
+                Command::INVALID,
+                ['--strict' => true],
             ],
             [
                 'source/ccn_suppress_function.php',
-                ExitCode::Success,
+                Command::SUCCESS,
             ],
         ];
     }
 
     public function testWithMultipleReportFiles(): void
     {
+        $xml = self::createTempFileUri();
+        $html = self::createTempFileUri();
+        $text = self::createTempFileUri();
+        $json = self::createTempFileUri();
+        $checkstyle = self::createTempFileUri();
+        $sarif = self::createTempFileUri();
+
         $args = [
-            __FILE__,
-            self::createFileUri('source/source_with_npath_violation.php'),
-            'xml',
-            'design',
-            '--reportfile',
-            self::createTempFileUri(),
-            '--reportfile-xml',
-            $xml = self::createTempFileUri(),
-            '--reportfile-html',
-            $html = self::createTempFileUri(),
-            '--reportfile-text',
-            $text = self::createTempFileUri(),
-            '--reportfile-json',
-            $json = self::createTempFileUri(),
-            '--reportfile-checkstyle',
-            $checkstyle = self::createTempFileUri(),
-            '--reportfile-sarif',
-            $sarif = self::createTempFileUri(),
+            'paths' => [self::createFileUri('source/source_with_npath_violation.php')],
+            '--format' => 'xml',
+            '--ruleset' => ['design'],
+            '--reportfile-xml' => $xml,
+            '--reportfile-html' => $html,
+            '--reportfile-text' => $text,
+            '--reportfile-json' => $json,
+            '--reportfile-checkstyle' => $checkstyle,
+            '--reportfile-sarif' => $sarif,
         ];
 
-        Command::main($args);
+        $tester = new CommandTester(new Command());
+        $tester->execute($args);
 
         static::assertFileExists($xml);
         static::assertFileExists($html);
@@ -174,16 +157,15 @@ class CommandTest extends AbstractTestCase
         $uri = realpath(self::createFileUri('source/source_with_anonymous_class.php'));
         static::assertIsString($uri);
         $temp = self::createTempFileUri();
-        $exitCode = Command::main([
-            __FILE__,
-            $uri,
-            'text',
-            'naming',
-            '--reportfile',
-            $temp,
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute([
+            'paths' => [$uri],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+            '--reportfile-text' => $temp,
         ]);
 
-        static::assertSame(ExitCode::Violation, $exitCode);
+        static::assertSame(Command::INVALID, $exitCode);
         static::assertSame(
             "$uri:8  ShortVariable  Avoid variables with short names like \$a. " .
             'Configured minimum length is 3.' . PHP_EOL,
@@ -191,32 +173,33 @@ class CommandTest extends AbstractTestCase
         );
     }
 
+    /**
+     * @param list<string> $value
+     */
     #[DataProvider('dataProviderWithFilter')]
-    public function testWithFilter(string $option, string $value): void
+    public function testWithFilter(string $option, array $value): void
     {
         $args = [
-            __FILE__,
-            self::createFileUri('source/'),
-            'text',
-            'codesize',
-            '--reportfile',
-            self::createTempFileUri(),
-            $option,
-            $value,
+            'paths' => [self::createFileUri('source/')],
+            '--format' => 'text',
+            '--ruleset' => ['codesize'],
+            '--reportfile-text' => self::createTempFileUri(),
+            $option => $value,
         ];
 
-        $exitCode = Command::main($args);
-        static::assertEquals(ExitCode::Success, $exitCode);
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute($args);
+        static::assertEquals(Command::SUCCESS, $exitCode);
     }
 
     /**
-     * @return list<list<string>>
+     * @return list<list<list<string>|string>>
      */
     public static function dataProviderWithFilter(): array
     {
         return [
-            ['--suffixes', '.class.php'],
-            ['--exclude', 'ccn_,*npath_,*parse_error'],
+            ['--suffixes', ['.class.php']],
+            ['--exclude', ['ccn_', '*npath_', '*parse_error']],
         ];
     }
 
@@ -226,17 +209,16 @@ class CommandTest extends AbstractTestCase
         static::assertIsString($path);
         $uri = str_replace('\\', '/', $path);
         $temp = self::createTempFileUri();
-        $exitCode = Command::main([
-            __FILE__,
-            $uri,
-            'text',
-            'naming',
-            '--generate-baseline',
-            '--baseline-file',
-            $temp,
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute([
+            'paths' => [$uri],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+            '--generate-baseline' => true,
+            '--baseline-file' => $temp,
         ]);
 
-        static::assertSame(ExitCode::Success, $exitCode);
+        static::assertSame(Command::SUCCESS, $exitCode);
         static::assertFileExists($temp);
         $cwd = getcwd();
         static::assertIsString($cwd);
@@ -264,17 +246,16 @@ class CommandTest extends AbstractTestCase
         copy(static::createResourceUriForTest('UpdateBaseline/ClassWithMultipleViolations.php'), $sourceTemp);
         copy(static::createResourceUriForTest('UpdateBaseline/phpmd.baseline.xml'), $baselineTemp);
 
-        $exitCode = Command::main([
-            __FILE__,
-            $sourceTemp,
-            'text',
-            'naming',
-            '--update-baseline',
-            '--baseline-file',
-            $baselineTemp,
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute([
+            'paths' => [$sourceTemp],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+            '--update-baseline' => true,
+            '--baseline-file' => $baselineTemp,
         ]);
 
-        static::assertSame(ExitCode::Success, $exitCode);
+        static::assertSame(Command::SUCCESS, $exitCode);
         $expectedXml = file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml'));
         static::assertIsString($expectedXml);
         $actualXml = file_get_contents($baselineTemp);
@@ -288,130 +269,22 @@ class CommandTest extends AbstractTestCase
         static::assertIsString($sourceFile);
         $baselineFile = realpath(static::createResourceUriForTest('Baseline/phpmd.baseline.xml'));
         static::assertIsString($baselineFile);
-        $exitCode = Command::main([
-            __FILE__,
-            $sourceFile,
-            'text',
-            'naming',
-            '--baseline-file',
-            $baselineFile,
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute([
+            'paths' => [$sourceFile],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+            '--baseline-file' => $baselineFile,
         ]);
 
-        static::assertSame(ExitCode::Success, $exitCode);
-    }
-
-    public function testMainWritesExceptionMessageToStderr(): void
-    {
-        stream_filter_register('stderr_stream', StreamFilter::class);
-
-        $stream = stream_filter_prepend(STDERR, 'stderr_stream');
-        static::assertIsResource($stream);
-        $this->stderrStreamFilter = $stream;
-
-        $format = 'FORMAT';
-        Command::main(
-            [
-                __FILE__,
-                self::createFileUri('source/source_with_npath_violation.php'),
-                $format,
-                'naming',
-            ]
-        );
-
-        static::assertStringContainsString(
-            sprintf('No renderer supports the format "%s"', $format),
-            StreamFilter::$streamHandle
-        );
-    }
-
-    public function testMainWritesExceptionMessageToErrorFileIfSpecified(): void
-    {
-        $file = tempnam(sys_get_temp_dir(), 'err');
-        static::assertIsString($file);
-
-        $format = 'FORMAT';
-        Command::main(
-            [
-                __FILE__,
-                self::createFileUri('source/source_with_npath_violation.php'),
-                $format,
-                'naming',
-                '--error-file',
-                $file,
-            ]
-        );
-
-        $errors = (string) file_get_contents($file);
-        unlink($file);
-
-        static::assertSame(sprintf('No renderer supports the format "%s".' . PHP_EOL, $format), $errors);
-
-        $file = tempnam(sys_get_temp_dir(), 'err');
-        static::assertIsString($file);
-
-        Command::main(
-            [
-                __FILE__,
-                self::createFileUri('source/source_with_npath_violation.php'),
-                $format,
-                'naming',
-                '--error-file',
-                $file,
-                '-vvv',
-            ]
-        );
-
-        $errors = (string) file_get_contents($file);
-        unlink($file);
-
-        static::assertStringStartsWith(sprintf('No renderer supports the format "%s"', $format), $errors);
-    }
-
-    public function testOutputDeprecation(): void
-    {
-        $file = tempnam(sys_get_temp_dir(), 'err');
-        static::assertIsString($file);
-
-        Command::main(
-            [
-                __FILE__,
-                __FILE__,
-                'text',
-                'naming',
-                '--ignore',
-                'foobar',
-                '--error-file',
-                $file,
-            ]
-        );
-
-        $errors = (string) file_get_contents($file);
-        unlink($file);
-
-        static::assertSame(
-            'The --ignore option is deprecated, please use --exclude instead.' . PHP_EOL . PHP_EOL,
-            $errors
-        );
+        static::assertSame(Command::SUCCESS, $exitCode);
     }
 
     public function testMainPrintsVersionToStdout(): void
     {
-        stream_filter_register('stderr_stream', StreamFilter::class);
-
-        $stream = stream_filter_prepend(STDOUT, 'stderr_stream');
-        static::assertIsResource($stream);
-        $this->stderrStreamFilter = $stream;
-
-        Command::main(
-            [
-                __FILE__,
-                '--version',
-            ]
-        );
-
         $changelog = file_get_contents(__DIR__ . '/../../../../CHANGELOG', false, null, 0, 1024) ?: '';
         $version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : '@package_version@';
 
-        static::assertEquals('PHPMD ' . $version, trim(StreamFilter::$streamHandle));
+        static::assertEquals($version, Command::getVersion());
     }
 }

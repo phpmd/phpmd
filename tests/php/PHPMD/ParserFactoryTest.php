@@ -39,7 +39,7 @@ class ParserFactoryTest extends AbstractTestCase
         $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri);
+            ->willReturn([$uri]);
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class);
 
@@ -60,7 +60,7 @@ class ParserFactoryTest extends AbstractTestCase
         $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri);
+            ->willReturn([$uri]);
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class);
 
@@ -82,7 +82,7 @@ class ParserFactoryTest extends AbstractTestCase
         $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri1 . ',' . $uri2);
+            ->willReturn([$uri1, $uri2]);
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class, 2);
 
@@ -104,7 +104,7 @@ class ParserFactoryTest extends AbstractTestCase
         $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri1 . ',' . $uri2);
+            ->willReturn([$uri1, $uri2]);
 
         $ruleSet = $this->getRuleSetMock(ClassNode::class, 2);
 
@@ -128,7 +128,7 @@ class ParserFactoryTest extends AbstractTestCase
             ->willReturn(['Test']);
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri);
+            ->willReturn([$uri]);
 
         $factory->create($phpmd);
     }
@@ -148,7 +148,7 @@ class ParserFactoryTest extends AbstractTestCase
             ->willReturn(['.php']);
         $phpmd->expects(static::once())
             ->method('getInput')
-            ->willReturn($uri);
+            ->willReturn([$uri]);
 
         $factory->create($phpmd);
     }

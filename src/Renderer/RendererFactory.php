@@ -3,11 +3,11 @@
 namespace PHPMD\Renderer;
 
 use InvalidArgumentException;
-use PHPMD\AbstractWriter;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class RendererFactory
 {
-    public static function createBaselineRenderer(AbstractWriter $writer): BaselineRenderer
+    public static function createBaselineRenderer(OutputInterface $writer): BaselineRenderer
     {
         // set base path to current working directory
         $renderer = new BaselineRenderer(getcwd() ?: '');
@@ -26,7 +26,7 @@ final class RendererFactory
             'checkstyle' => new CheckStyleRenderer(),
             'github' => new GitHubRenderer(),
             'gitlab' => new GitLabRenderer(),
-            'html' => new HTMLRenderer(),
+            'html' => new HTMLRenderer(2),
             'json' => new JSONRenderer(),
             'sarif' => new SARIFRenderer(),
             'text' => new TextRenderer(),

@@ -22,7 +22,7 @@ use PHPMD\PHPMD;
 use PHPMD\Renderer\TextRenderer;
 use PHPMD\Report;
 use PHPMD\RuleSetFactory;
-use PHPMD\Writer\StreamWriter;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * Regression test for issue 14990109.
@@ -40,16 +40,16 @@ class MaximumNestingLevelTicket24975295RegressionTest extends AbstractRegression
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $renderer = new TextRenderer();
-        $renderer->setWriter(new StreamWriter(self::createTempFileUri()));
+        $renderer->setWriter(new NullOutput());
 
         $inputs = self::createCodeResourceUriForTest();
-        $rules = 'unusedcode';
+        $rules = ['unusedcode'];
         $renderers = [$renderer];
         $factory = new RuleSetFactory();
 
         $phpmd = new PHPMD();
         $phpmd->processFiles(
-            $inputs,
+            [$inputs],
             $factory->getIgnorePattern($rules),
             $renderers,
             $factory->createRuleSets($rules),

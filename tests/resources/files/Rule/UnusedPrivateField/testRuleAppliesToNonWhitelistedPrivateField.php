@@ -16,15 +16,7 @@
  * @link http://phpmd.org/
  */
 
-namespace PHPMD;
-
-/**
- * This is abstract base class for an output writer.
- */
-abstract class AbstractWriter
+class testRuleAppliesToNonWhitelistedPrivateField
 {
-    /**
-     * Writes a data string to the concrete output.
-     */
-    abstract public function write(string $data): void;
+    private $notInExceptionsList = 42; // This should trigger a violation
 }

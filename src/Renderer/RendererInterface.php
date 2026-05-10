@@ -2,14 +2,14 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\AbstractWriter;
 use PHPMD\Report;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface RendererInterface
 {
     public const INPUT_ERROR = 23;
 
-    public function setWriter(AbstractWriter $writer): void;
+    public function setWriter(OutputInterface $writer): void;
 
     public function start(): void;
 

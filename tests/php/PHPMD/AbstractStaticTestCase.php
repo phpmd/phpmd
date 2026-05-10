@@ -18,7 +18,6 @@
 
 namespace PHPMD;
 
-use Closure;
 use ErrorException;
 use PHPUnit\Framework\TestCase;
 

@@ -20,6 +20,7 @@ namespace PHPMD;
 
 use Exception;
 use PHPMD\Renderer\RendererInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Abstract base class for PHPMD rendering engines.
@@ -27,12 +28,12 @@ use PHPMD\Renderer\RendererInterface;
 abstract class AbstractRenderer implements RendererInterface
 {
     /** The associated output writer instance. */
-    private AbstractWriter $writer;
+    private OutputInterface $writer;
 
     /**
      * Returns the associated output writer instance.
      */
-    public function getWriter(): AbstractWriter
+    public function getWriter(): OutputInterface
     {
         return $this->writer;
     }
@@ -40,7 +41,7 @@ abstract class AbstractRenderer implements RendererInterface
     /**
      * Returns the associated output writer instance.
      */
-    public function setWriter(AbstractWriter $writer): void
+    public function setWriter(OutputInterface $writer): void
     {
         $this->writer = $writer;
     }

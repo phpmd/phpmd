@@ -20,8 +20,8 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the ansi renderer implementation.
@@ -34,7 +34,7 @@ class AnsiRendererTest extends AbstractTestCase
      */
     public function testRendererOutputsForReportWithContents(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
@@ -70,25 +70,18 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $expectedChunks = [
-            PHP_EOL . 'FILE: /bar.php' . PHP_EOL . '--------------' . PHP_EOL,
-            " 1 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
-            PHP_EOL,
-            PHP_EOL . 'FILE: /foo.php' . PHP_EOL . '--------------' . PHP_EOL,
-            " 2 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
-            " 3 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL,
-            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . '--------------------------------' . PHP_EOL,
-            'Error in file "/foo/baz.php"' . PHP_EOL,
-            PHP_EOL . 'Found 3 violations and 1 error in 200ms' . PHP_EOL,
-        ];
+        $expected =
+            PHP_EOL . 'FILE: /bar.php' . PHP_EOL . '--------------' . PHP_EOL .
+            " 1 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL .
+            PHP_EOL .
+            PHP_EOL . 'FILE: /foo.php' . PHP_EOL . '--------------' . PHP_EOL .
+            " 2 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL .
+            " 3 | \e[31mVIOLATION\e[0m | Test description" . PHP_EOL .
+            PHP_EOL . "\e[33mERROR\e[0m while parsing /foo/baz.php" . PHP_EOL . '--------------------------------' . PHP_EOL .
+            'Error in file "/foo/baz.php"' . PHP_EOL .
+            PHP_EOL . 'Found 3 violations and 1 error in 200ms' . PHP_EOL;
 
-        foreach ($writer->getChunks() as $i => $chunk) {
-            static::assertEquals(
-                $expectedChunks[$i],
-                $chunk,
-                sprintf('Chunk %s did not match expected string', $i)
-            );
-        }
+        static::assertEquals($expected, $writer->fetch());
     }
 
     /**
@@ -96,7 +89,7 @@ class AnsiRendererTest extends AbstractTestCase
      */
     public function testRendererOutputsForReportWithoutContents(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $report = $this->getReportWithNoViolation();
         $report->expects(static::atLeastOnce())
@@ -122,17 +115,8 @@ class AnsiRendererTest extends AbstractTestCase
         $renderer->renderReport($report);
         $renderer->end();
 
-        $expectedChunks = [
-            PHP_EOL . 'Found 0 violations and 0 errors in 200ms' . PHP_EOL,
-            PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL,
-        ];
+        $expected = PHP_EOL . 'Found 0 violations and 0 errors in 200ms' . PHP_EOL . PHP_EOL . "\e[32mNo mess detected\e[0m" . PHP_EOL;
 
-        foreach ($writer->getChunks() as $i => $chunk) {
-            static::assertEquals(
-                $expectedChunks[$i],
-                $chunk,
-                sprintf('Chunk %s did not match expected string', $i)
-            );
-        }
+        static::assertSame($expected, $writer->fetch());
     }
 }

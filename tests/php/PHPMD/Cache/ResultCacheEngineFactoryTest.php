@@ -6,11 +6,11 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy;
-use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionProperty;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheEngineFactory

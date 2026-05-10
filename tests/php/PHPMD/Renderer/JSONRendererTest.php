@@ -21,8 +21,8 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the JSON renderer implementation.
@@ -35,7 +35,7 @@ class JSONRendererTest extends AbstractTestCase
      */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $violations = [
             $this->getRuleViolationMock('/bar.php'),
@@ -59,7 +59,7 @@ class JSONRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertJsonEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/json_renderer_expected.json'
         );
     }
@@ -69,7 +69,7 @@ class JSONRendererTest extends AbstractTestCase
      */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $processingErrors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
@@ -94,7 +94,7 @@ class JSONRendererTest extends AbstractTestCase
         $renderer->end();
 
         $this->assertJsonEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/json_renderer_processing_errors.json'
         );
     }

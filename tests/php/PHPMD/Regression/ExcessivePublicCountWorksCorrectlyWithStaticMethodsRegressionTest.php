@@ -82,10 +82,10 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
             );
 
         $phpmd->processFiles(
-            __DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php',
-            $ruleSetFactory->getIgnorePattern('codesize'),
+            [__DIR__ . '/Sources/ExcessivePublicCountWorksForPublicStaticMethods.php'],
+            $ruleSetFactory->getIgnorePattern(['codesize']),
             [$this->renderer],
-            $ruleSetFactory->createRuleSets('codesize'),
+            $ruleSetFactory->createRuleSets(['codesize']),
             new Report()
         );
     }
@@ -122,10 +122,10 @@ class ExcessivePublicCountWorksCorrectlyWithStaticMethodsRegressionTest extends 
                 }
             );
         $phpmd->processFiles(
-            __DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php',
-            $ruleSetFactory->getIgnorePattern('codesize'),
+            [__DIR__ . '/Sources/ExcessivePublicCountSuppressionWorksForPublicStaticMethods.php'],
+            $ruleSetFactory->getIgnorePattern(['codesize']),
             [$this->renderer],
-            $ruleSetFactory->createRuleSets('codesize'),
+            $ruleSetFactory->createRuleSets(['codesize']),
             new Report()
         );
     }

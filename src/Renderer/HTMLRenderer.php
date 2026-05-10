@@ -73,17 +73,10 @@ final class HTMLRenderer extends AbstractRenderer
 
     private static ?string $compiledHighlightRegex = null;
 
-    /**
-     * Specify how many extra lines are added to a code snippet
-     * By default 2
-     */
-    private int $extraLineInExcerpt = 2;
-
-    public function __construct(?int $extraLineInExcerpt = null)
-    {
-        if ($extraLineInExcerpt) {
-            $this->extraLineInExcerpt = $extraLineInExcerpt;
-        }
+    public function __construct(
+        /** Specify how many extra lines are added to a code snippet By default 2 */
+        private int $extraLineInExcerpt,
+    ) {
     }
 
     /**

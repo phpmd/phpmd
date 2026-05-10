@@ -21,8 +21,8 @@ namespace PHPMD\Renderer;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\ProcessingError;
-use PHPMD\Stubs\WriterStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * Test case for the GitHub renderer implementation.
@@ -36,7 +36,7 @@ class GitHubRendererTest extends AbstractTestCase
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $violations = [
             $this->getRuleViolationMock('/bar.php', 1),
@@ -63,7 +63,7 @@ class GitHubRendererTest extends AbstractTestCase
             '::warning file=/bar.php,line=1::Test description' . PHP_EOL .
             '::warning file=/foo.php,line=2::Test description' . PHP_EOL .
             '::warning file=/foo.php,line=3::Test description' . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 
@@ -73,7 +73,7 @@ class GitHubRendererTest extends AbstractTestCase
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
 
         $errors = [
             new ProcessingError('Failed for file "/tmp/foo.php".'),
@@ -100,7 +100,7 @@ class GitHubRendererTest extends AbstractTestCase
             '::error file=/tmp/foo.php::Failed for file "/tmp/foo.php".' . PHP_EOL .
             '::error file=/tmp/bar.php::Failed for file "/tmp/bar.php".' . PHP_EOL .
             '::error file=/tmp/baz.php::Failed for file "/tmp/baz.php".' . PHP_EOL,
-            $writer->getData()
+            $writer->fetch()
         );
     }
 }

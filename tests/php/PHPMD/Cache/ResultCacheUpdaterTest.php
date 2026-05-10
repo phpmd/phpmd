@@ -5,9 +5,9 @@ namespace PHPMD\Cache;
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
 use PHPMD\Cache\Model\ResultCacheState;
-use PHPMD\Console\NullOutput;
 use PHPMD\RuleSet;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @coversDefaultClass \PHPMD\Cache\ResultCacheUpdater

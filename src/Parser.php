@@ -24,6 +24,7 @@ use OutOfBoundsException;
 use PDepend\Engine;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
+use PDepend\ProcessListener;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
@@ -89,11 +90,14 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      *
      * @throws InvalidArgumentException
      */
-    public function parse(Report $report): void
+    public function parse(Report $report, ?ProcessListener $progressListener = null): void
     {
         $this->setReport($report);
 
         $this->pdepend->addReportGenerator($this);
+        if ($progressListener) {
+            $this->pdepend->addProcessListener($progressListener);
+        }
         $this->pdepend->analyze();
 
         foreach ($this->pdepend->getExceptions() as $exception) {

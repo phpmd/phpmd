@@ -15,15 +15,19 @@ final class BaselineSetFactory
     public static function fromFile(string $fileName): BaselineSet
     {
         $content = @file_get_contents($fileName);
+
         if ($content === false) {
             throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
         }
+
         $xml = @simplexml_load_string($content);
+
         if (!$xml) {
             throw new RuntimeException('Unable to read xml from: ' . $fileName);
         }
 
         $baselineSet = new BaselineSet();
+
         foreach ($xml->children() as $node) {
             if ($node->getName() !== 'violation') {
                 continue;
@@ -38,6 +42,7 @@ final class BaselineSetFactory
             }
 
             $methodName = null;
+
             if (isset($node['method']) && ((string) $node['method']) !== '') {
                 $methodName = (string) $node['method'];
             }

@@ -33,8 +33,16 @@ if (isset($argv) && realpath($argv[0]) === __FILE__) {
     // Load command line utility
     include_once 'phar://${archive.alias}/vendor/autoload.php';
 
+    $application = new \Symfony\Component\Console\Application('PHPMD', \PHPMD\TextUI\Command::getVersion());
+    $command = new \PHPMD\TextUI\Command();
+    if (method_exists($application, 'addCommand')) {
+        $application->addCommand($command);
+    } else {
+        $application->add($command);
+    }
+    $application->setDefaultCommand($command->getName());
     // Run command line interface
-    exit(\PHPMD\TextUI\Command::main($argv)->value);
+    $application->run();
 }
 
 __HALT_COMPILER();

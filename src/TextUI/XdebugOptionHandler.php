@@ -46,7 +46,7 @@ class XdebugOptionHandler extends XdebugHandler
         }
 
         if ($command) {
-            parent::restart(array_values($command));
+            parent::restart($command);
         }
     }
 }

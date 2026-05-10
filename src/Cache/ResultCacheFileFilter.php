@@ -6,8 +6,8 @@ use PDepend\Input\Filter;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 use PHPMD\Cache\Model\ResultCacheStrategy;
-use PHPMD\Console\OutputInterface;
 use PHPMD\Utility\Paths;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ResultCacheFileFilter implements Filter
 {

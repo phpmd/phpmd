@@ -20,9 +20,10 @@ namespace PHPMD\Integration;
 
 use PHPMD\AbstractTestCase;
 use PHPMD\TextUI\Command;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Integration tests for the command line option <em>--inputfile</em>.
+ * Integration tests for the command line option <em>--input-file</em>.
  *
  * @since 1.1.0
  */
@@ -64,17 +65,13 @@ class CommandLineInputFileOptionTest extends AbstractTestCase
 
         self::changeWorkingDirectory(dirname($inputfile));
 
-        Command::main(
-            [
-                __FILE__,
-                'text',
-                'unusedcode',
-                '--reportfile',
-                $reportfile,
-                '--inputfile',
-                $inputfile,
-            ]
-        );
+        $tester = new CommandTester(new Command());
+        $tester->execute([
+            '--format' => 'text',
+            '--ruleset' => ['unusedcode'],
+            '--reportfile-text' => $reportfile,
+            '--input-file' => $inputfile,
+        ]);
 
         $content = file_get_contents($reportfile);
         static::assertNotFalse($content);

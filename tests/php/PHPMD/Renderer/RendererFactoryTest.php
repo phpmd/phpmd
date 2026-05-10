@@ -3,7 +3,7 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractTestCase;
-use PHPMD\Writer\StreamWriter;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\RendererFactory
@@ -15,9 +15,7 @@ class RendererFactoryTest extends AbstractTestCase
      */
     public function testCreateBaselineRendererSuccessfully(): void
     {
-        $path = tmpfile();
-        static::assertIsResource($path);
-        $writer = new StreamWriter($path);
+        $writer = new BufferedOutput();
         $renderer = RendererFactory::createBaselineRenderer($writer);
 
         static::assertSame($writer, $renderer->getWriter());

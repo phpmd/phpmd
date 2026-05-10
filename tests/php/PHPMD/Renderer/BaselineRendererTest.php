@@ -4,7 +4,7 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\Stubs\WriterStub;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @coversDefaultClass \PHPMD\Renderer\BaselineRenderer
@@ -17,7 +17,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReport(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $violations = [
             $this->getRuleViolationMock('/src/php/bar.php'),
             $this->getRuleViolationMock('/src/php/foo.php'),
@@ -35,7 +35,7 @@ class BaselineRendererTest extends AbstractTestCase
         $renderer->end();
 
         static::assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/baseline_renderer_expected1.xml'
         );
     }
@@ -45,7 +45,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReportShouldWriteMethodName(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::once())->method('getMethodName')->willReturn('foo');
 
@@ -61,7 +61,7 @@ class BaselineRendererTest extends AbstractTestCase
         $renderer->end();
 
         static::assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/baseline_renderer_expected2.xml'
         );
     }
@@ -71,7 +71,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderReportShouldDeduplicateSimilarViolations(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $violationMock = $this->getRuleViolationMock('/src/php/bar.php');
         $violationMock->expects(static::exactly(2))->method('getMethodName')->willReturn('foo');
 
@@ -88,7 +88,7 @@ class BaselineRendererTest extends AbstractTestCase
         $renderer->end();
 
         static::assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/baseline_renderer_expected2.xml'
         );
     }
@@ -98,7 +98,7 @@ class BaselineRendererTest extends AbstractTestCase
      */
     public function testRenderEmptyReport(): void
     {
-        $writer = new WriterStub();
+        $writer = new BufferedOutput();
         $report = $this->getReportWithNoViolation();
         $report->expects(static::once())
             ->method('getRuleViolations')
@@ -111,7 +111,7 @@ class BaselineRendererTest extends AbstractTestCase
         $renderer->end();
 
         static::assertXmlEquals(
-            $writer->getData(),
+            $writer->fetch(),
             'renderer/baseline_renderer_expected3.xml'
         );
     }

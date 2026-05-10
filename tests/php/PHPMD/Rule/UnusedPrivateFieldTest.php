@@ -246,4 +246,26 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
+
+    /**
+     * testRuleDoesNotApplyToWhitelistedPrivateField
+     */
+    public function testRuleDoesNotApplyToWhitelistedPrivateField(): void
+    {
+        $rule = new UnusedPrivateField();
+        $rule->addProperty('exceptions', 'unused');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    /**
+     * testRuleAppliesToNonWhitelistedPrivateField
+     */
+    public function testRuleAppliesToNonWhitelistedPrivateField(): void
+    {
+        $rule = new UnusedPrivateField();
+        $rule->addProperty('exceptions', 'someOtherField');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
 }

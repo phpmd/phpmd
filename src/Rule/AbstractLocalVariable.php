@@ -25,7 +25,6 @@ use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
-use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -146,8 +145,7 @@ abstract class AbstractLocalVariable extends AbstractRule
             return false;
         }
 
-        return $parent->isInstanceOf(ASTArrayIndexExpression::class)
-            || $parent->isInstanceOf(ASTStringIndexExpression::class);
+        return $parent->isInstanceOf(ASTArrayIndexExpression::class);
     }
 
     /**
