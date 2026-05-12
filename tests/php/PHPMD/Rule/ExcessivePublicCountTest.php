@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ExcessivePublicCount::class)]
 class ExcessivePublicCountTest extends AbstractTestCase
 {
-    /**
-     * testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold
-     */
     public function testRuleDoesNotApplyToClassesWithLessPublicMembersThanThreshold(): void
     {
         $rule = new ExcessivePublicCount();
@@ -38,9 +35,6 @@ class ExcessivePublicCountTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cis', 23));
     }
 
-    /**
-     * testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold
-     */
     public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold(): void
     {
         $rule = new ExcessivePublicCount();
@@ -49,9 +43,6 @@ class ExcessivePublicCountTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cis', 42));
     }
 
-    /**
-     * testRuleAppliesToClassesWithMorePublicMembersThanThreshold
-     */
     public function testRuleAppliesToClassesWithMorePublicMembersThanThreshold(): void
     {
         $rule = new ExcessivePublicCount();

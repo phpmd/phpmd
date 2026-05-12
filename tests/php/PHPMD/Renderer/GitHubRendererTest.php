@@ -30,9 +30,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(GitHubRenderer::class)]
 class GitHubRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfTextEntries
-     */
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
@@ -67,9 +64,6 @@ class GitHubRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testRendererAddsProcessingErrorsToTextReport
-     */
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.

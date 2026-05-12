@@ -28,9 +28,6 @@ use PHPMD\AbstractTestCase;
  */
 class EmptyCatchBlockTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutTryCatchBlock
-     */
     public function testRuleNotAppliesToMethodWithoutTryCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
@@ -38,9 +35,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithEmptyCatchBlock
-     */
     public function testRuleAppliesToFunctionWithEmptyCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
@@ -48,9 +42,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNonEmptyCatchBlock
-     */
     public function testRuleNotAppliesToFunctionWithNonEmptyCatchBlock(): void
     {
         $rule = new EmptyCatchBlock();
@@ -58,9 +49,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToCatchBlockWithComments
-     */
     public function testRuleNotAppliesToCatchBlockWithComments(): void
     {
         $rule = new EmptyCatchBlock();
@@ -68,9 +56,6 @@ class EmptyCatchBlockTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions
-     */
     public function testRuleWorksWithNestedTryCatchBlocksAndNonSPLExceptions(): void
     {
         $rule = new EmptyCatchBlock();

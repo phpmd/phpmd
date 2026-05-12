@@ -30,9 +30,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(InterfaceNode::class)]
 class InterfaceNodeTest extends AbstractTestCase
 {
-    /**
-     * testGetFullQualifiedNameReturnsExpectedValue
-     */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $interface = new ASTInterface('MyInterface');

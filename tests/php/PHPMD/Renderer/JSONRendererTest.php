@@ -30,9 +30,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(JSONRenderer::class)]
 class JSONRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfJsonElements
-     */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
         $writer = new BufferedOutput();
@@ -64,9 +61,6 @@ class JSONRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testRendererAddsProcessingErrorsToJsonReport
-     */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
         $writer = new BufferedOutput();

@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\RequiresPhp;
 #[CoversClass(BooleanGetMethodName::class)]
 class BooleanGetMethodNameTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToMethodStartingWithGetAndReturningBoolean
-     */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBoolean(): void
     {
         $rule = new BooleanGetMethodName();
@@ -40,9 +37,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodStartingWithGetAndReturningBool
-     */
     public function testRuleAppliesToMethodStartingWithGetAndReturningBool(): void
     {
         $rule = new BooleanGetMethodName();
@@ -51,9 +45,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean
-     */
     public function testRuleAppliesToPearPrivateMethodStartingWithGetAndReturningBoolean(): void
     {
         $rule = new BooleanGetMethodName();
@@ -62,9 +53,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleIgnoresParametersWhenNotExplicitConfigured
-     */
     public function testRuleIgnoresParametersWhenNotExplicitConfigured(): void
     {
         $rule = new BooleanGetMethodName();
@@ -73,9 +61,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesWhenParametersAreExplicitEnabled
-     */
     public function testRuleNotAppliesWhenParametersAreExplicitEnabled(): void
     {
         $rule = new BooleanGetMethodName();
@@ -85,9 +70,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodStartingWithIs
-     */
     public function testRuleNotAppliesToMethodStartingWithIs(): void
     {
         $rule = new BooleanGetMethodName();
@@ -97,9 +79,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodStartingWithHas
-     */
     public function testRuleNotAppliesToMethodStartingWithHas(): void
     {
         $rule = new BooleanGetMethodName();
@@ -109,9 +88,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithReturnTypeNotBoolean
-     */
     public function testRuleNotAppliesToMethodWithReturnTypeNotBoolean(): void
     {
         $rule = new BooleanGetMethodName();
@@ -121,9 +97,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToReturnDeclarationBool
-     */
     public function testRuleAppliesToReturnDeclarationBool(): void
     {
         $rule = new BooleanGetMethodName();
@@ -132,9 +105,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToReturnDeclarationTrue
-     */
     #[RequiresPhp('>= 8.2.0')]
     public function testRuleAppliesToReturnDeclarationTrue(): void
     {
@@ -144,9 +114,6 @@ class BooleanGetMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToReturnDeclarationFalse
-     */
     #[RequiresPhp('>= 8.2.0')]
     public function testRuleAppliesToReturnDeclarationFalse(): void
     {

@@ -14,3 +14,7 @@ parameters:
         -
             identifier: missingType.checkedException
             path: tests/*
+        -
+            identifier: method.impossibleType
+            path: src/Rule/UnusedPrivateMethod.php
+            count: 2

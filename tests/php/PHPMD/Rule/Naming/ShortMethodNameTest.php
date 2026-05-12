@@ -28,9 +28,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ShortMethodName::class)]
 class ShortMethodNameTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     */
     public function testRuleAppliesToFunctionWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -40,9 +37,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameEqualToThreshold
-     */
     public function testRuleNotAppliesToFunctionWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -52,9 +46,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNameLongerThanThreshold
-     */
     public function testRuleNotAppliesToFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -64,9 +55,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithNameShorterThanThreshold
-     */
     public function testRuleAppliesToMethodWithNameShorterThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -76,9 +64,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameEqualToThreshold
-     */
     public function testRuleNotAppliesToMethodWithNameEqualToThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -88,9 +73,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     */
     public function testRuleNotAppliesToMethodWithNameLongerThanThreshold(): void
     {
         $rule = new ShortMethodName();
@@ -100,9 +82,6 @@ class ShortMethodNameTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNameLongerThanThreshold
-     */
     public function testRuleNotAppliesToMethodWithShortNameWhenException(): void
     {
         $rule = new ShortMethodName();

@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(UnusedPrivateMethod::class)]
 class UnusedPrivateMethodTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToUnusedPrivateMethod
-     */
     public function testRuleAppliesToUnusedPrivateMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -37,9 +34,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToUnusedStaticPrivateMethod
-     */
     public function testRuleAppliesToUnusedStaticPrivateMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -47,9 +41,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToParentReferencedUnusedPrivateMethod
-     */
     public function testRuleAppliesToParentReferencedUnusedPrivateMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -57,9 +48,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesWhenMethodIsReferencedOnDifferentObject
-     */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentObject(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -67,9 +55,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesWhenMethodIsReferencedOnDifferentClass
-     */
     public function testRuleAppliesWhenMethodIsReferencedOnDifferentClass(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -77,9 +62,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesWhenPropertyWithSimilarNameIsReferenced
-     */
     public function testRuleAppliesWhenPropertyWithSimilarNameIsReferenced(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -88,8 +70,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
     }
 
     /**
-     * testRuleAppliesWhenMethodWithSimilarNameIsInInvocationChain
-     *
      * <code>
      * class Foo {
      *     protected $bar;
@@ -107,9 +87,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToMethodUsedViaCallable
-     */
     public function testRuleDoesNotApplyToMethodUsedViaCallable(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -117,9 +94,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToPrivateConstructor
-     */
     public function testRuleDoesNotApplyToPrivateConstructor(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -127,9 +101,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToPrivatePhp4Constructor
-     */
     public function testRuleDoesNotApplyToPrivatePhp4Constructor(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -137,9 +108,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToPrivateCloneMethod
-     */
     public function testRuleDoesNotApplyToPrivateCloneMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -147,9 +115,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToThisReferencedMethod
-     */
     public function testRuleDoesNotApplyToThisReferencedMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -157,9 +122,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToSelfReferencedMethod
-     */
     public function testRuleDoesNotApplyToSelfReferencedMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -167,9 +129,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToStaticReferencedMethod
-     */
     public function testRuleDoesNotApplyToStaticReferencedMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -177,9 +136,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToClassNameReferencedMethod
-     */
     public function testRuleDoesNotApplyToClassNameReferencedMethod(): void
     {
         $rule = new UnusedPrivateMethod();
@@ -188,8 +144,6 @@ class UnusedPrivateMethodTest extends AbstractTestCase
     }
 
     /**
-     * testRuleDoesNotApplyToPrivateMethodInChainedMethodCall
-     *
      * <code>
      * class Foo {
      *     private function bar() {
@@ -208,10 +162,35 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo
-     */
     public function testRuleDoesNotApplyToPrivateMethodInChainedMethodCallInNumberBiggerThanTwo(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    public function testRuleDoesNotApplyToSelfType(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    public function testRuleDoesNotApplyToStaticType(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    public function testRuleDoesNotApplyToClone(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    public function testRuleDoesNotApplyToNewClassName(): void
     {
         $rule = new UnusedPrivateMethod();
         $rule->setReport($this->getReportWithNoViolation());

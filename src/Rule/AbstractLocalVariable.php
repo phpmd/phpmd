@@ -21,6 +21,7 @@ namespace PHPMD\Rule;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
@@ -309,7 +310,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         $node = $memberPrefix;
         $classNode = null;
         while ($node = $node->getParent()) {
-            if ($node instanceof \PDepend\Source\AST\ASTClass) {
+            if ($node instanceof ASTClass) {
                 $classNode = $node;
 
                 break;

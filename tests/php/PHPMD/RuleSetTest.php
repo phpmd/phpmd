@@ -37,9 +37,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(RuleSet::class)]
 class RuleSetTest extends AbstractTestCase
 {
-    /**
-     * testGetRuleByNameReturnsNullWhenNoMatchingRuleExists
-     */
     public function testGetRuleByNameThrowsExceptionWhenNoMatchingRuleExists(): void
     {
         self::expectException(RuleByNameNotFoundException::class);
@@ -48,9 +45,6 @@ class RuleSetTest extends AbstractTestCase
         static::assertNull($ruleSet->getRuleByName(__FUNCTION__));
     }
 
-    /**
-     * testGetRuleByNameReturnsMatchingRuleInstance
-     */
     public function testGetRuleByNameReturnsMatchingRuleInstance(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__, __CLASS__, __METHOD__);
@@ -59,9 +53,6 @@ class RuleSetTest extends AbstractTestCase
         static::assertEquals(__CLASS__, $rule->getName());
     }
 
-    /**
-     * testApplyNotInvokesRuleWhenSuppressAnnotationExists
-     */
     public function testApplyNotInvokesRuleWhenSuppressAnnotationExists(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
@@ -84,9 +75,6 @@ class RuleSetTest extends AbstractTestCase
         static::assertNull($rule->node);
     }
 
-    /**
-     * testApplyInvokesRuleWhenStrictModeIsSet
-     */
     public function testApplyInvokesRuleWhenStrictModeIsSet(): void
     {
         $ruleSet = $this->createRuleSetFixture(__FUNCTION__);

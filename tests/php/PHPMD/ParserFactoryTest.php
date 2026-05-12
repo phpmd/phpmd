@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ParserFactory::class)]
 class ParserFactoryTest extends AbstractTestCase
 {
-    /**
-     * testFactoryConfiguresInputDirectory
-     */
     public function testFactoryConfiguresInputDirectory(): void
     {
         $factory = new ParserFactory();
@@ -48,9 +45,6 @@ class ParserFactoryTest extends AbstractTestCase
         $parser->parse($this->getReportWithNoViolation());
     }
 
-    /**
-     * testFactoryConfiguresInputFile
-     */
     public function testFactoryConfiguresInputFile(): void
     {
         $factory = new ParserFactory();
@@ -69,9 +63,6 @@ class ParserFactoryTest extends AbstractTestCase
         $parser->parse($this->getReportWithNoViolation());
     }
 
-    /**
-     * testFactoryConfiguresMultipleInputDirectories
-     */
     public function testFactoryConfiguresMultipleInputDirectories(): void
     {
         $factory = new ParserFactory();
@@ -91,9 +82,6 @@ class ParserFactoryTest extends AbstractTestCase
         $parser->parse($this->getReportWithNoViolation());
     }
 
-    /**
-     * testFactoryConfiguresMultipleInputFilesAndDirectories
-     */
     public function testFactoryConfiguresMultipleInputFilesAndDirectories(): void
     {
         $factory = new ParserFactory();
@@ -113,9 +101,6 @@ class ParserFactoryTest extends AbstractTestCase
         $parser->parse($this->getReportWithNoViolation());
     }
 
-    /**
-     * testFactoryConfiguresIgnorePattern
-     */
     public function testFactoryConfiguresIgnorePattern(): void
     {
         $factory = new ParserFactory();
@@ -133,9 +118,6 @@ class ParserFactoryTest extends AbstractTestCase
         $factory->create($phpmd);
     }
 
-    /**
-     * testFactoryConfiguresFileExtensions
-     */
     public function testFactoryConfiguresFileExtensions(): void
     {
         $factory = new ParserFactory();

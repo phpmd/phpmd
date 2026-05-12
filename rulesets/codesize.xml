@@ -79,7 +79,7 @@ class Foo {
     <rule name="NPathComplexity"
           since="0.1"
           message="The {0} {1}() has an NPath complexity of {2}. The configured NPath complexity threshold is {3}."
-          class="PHPMD\Rule\Design\NpathComplexity"
+          class="PHPMD\Rule\Design\NPathComplexity"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#npathcomplexity">
         <description>
 The NPath complexity of a method is the number of acyclic execution paths through that method.
@@ -103,7 +103,7 @@ class Foo {
     <rule name="ExcessiveMethodLength"
           since="0.1"
           message="The {0} {1}() has {2} lines of code. Current threshold is set to {3}. Avoid really long methods."
-          class="PHPMD\Rule\Design\LongMethod"
+          class="PHPMD\Rule\Design\ExcessiveMethodLength"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessivemethodlength">
         <description>
 Violations of this rule usually indicate that the method is doing
@@ -130,7 +130,7 @@ class Foo {
     <rule name="ExcessiveClassLength"
  	  since="0.1"
           message="The class {0} has {1} lines of code. Current threshold is {2}. Avoid really long classes."
-          class="PHPMD\Rule\Design\LongClass"
+          class="PHPMD\Rule\Design\ExcessiveClassLength"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveclasslength">
         <description>
 Long Class files are indications that the class may be trying to
@@ -156,7 +156,7 @@ class Foo {
     <rule name="ExcessiveParameterList"
           since="0.1"
           message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to less than {3}."
-          class="PHPMD\Rule\Design\LongParameterList"
+          class="PHPMD\Rule\Design\ExcessiveParameterList"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
 Long parameter lists can indicate that a new object should be created to
@@ -374,7 +374,7 @@ By default it ignores methods starting with 'get' or 'set'.
 
     <rule name="ExcessiveClassComplexity"
           since="0.2.5"
-          class="PHPMD\Rule\Design\WeightedMethodCount"
+          class="PHPMD\Rule\Design\ExcessiveClassComplexity"
           message="The class {0} has an overall complexity of {1} which is very high. The configured complexity threshold is {2}."
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveclasscomplexity">
         <description>

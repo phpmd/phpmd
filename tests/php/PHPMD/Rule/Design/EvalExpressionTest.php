@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(EvalExpression::class)]
 class EvalExpressionTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutEvalExpression
-     */
     public function testRuleNotAppliesToMethodWithoutEvalExpression(): void
     {
         $rule = new EvalExpression();
@@ -37,9 +34,6 @@ class EvalExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithEvalExpression
-     */
     public function testRuleAppliesToMethodWithEvalExpression(): void
     {
         $rule = new EvalExpression();
@@ -47,9 +41,6 @@ class EvalExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToMethodWithEvalExpression
-     */
     public function testRuleAppliesMultipleTimesToMethodWithEvalExpression(): void
     {
         $rule = new EvalExpression();
@@ -57,9 +48,6 @@ class EvalExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithoutEvalExpression
-     */
     public function testRuleNotAppliesToFunctionWithoutEvalExpression(): void
     {
         $rule = new EvalExpression();
@@ -67,9 +55,6 @@ class EvalExpressionTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithEvalExpression
-     */
     public function testRuleAppliesToFunctionWithEvalExpression(): void
     {
         $rule = new EvalExpression();
@@ -77,9 +62,6 @@ class EvalExpressionTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToFunctionWithEvalExpression
-     */
     public function testRuleAppliesMultipleTimesToFunctionWithEvalExpression(): void
     {
         $rule = new EvalExpression();

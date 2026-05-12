@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DepthOfInheritance::class)]
 class DepthOfInheritanceTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold
-     */
     public function testRuleNotAppliesToClassWithNumberOfParentLessThanThreshold(): void
     {
         $rule = new DepthOfInheritance();
@@ -38,9 +35,6 @@ class DepthOfInheritanceTest extends AbstractTestCase
         $rule->apply($this->getClassMock('dit', 41));
     }
 
-    /**
-     * testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold
-     */
     public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold(): void
     {
         $rule = new DepthOfInheritance();
@@ -49,9 +43,6 @@ class DepthOfInheritanceTest extends AbstractTestCase
         $rule->apply($this->getClassMock('dit', 42));
     }
 
-    /**
-     * testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold
-     */
     public function testRuleAppliesToClassWithNumberOfParentGreaterThanThreshold(): void
     {
         $rule = new DepthOfInheritance();

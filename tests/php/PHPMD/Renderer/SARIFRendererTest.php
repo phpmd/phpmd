@@ -31,9 +31,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(SARIFRenderer::class)]
 class SARIFRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfJsonElements
-     */
     public function testRendererCreatesExpectedNumberOfJsonElements(): void
     {
         $writer = new BufferedOutput();
@@ -88,9 +85,6 @@ class SARIFRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testRendererAddsProcessingErrorsToJsonReport
-     */
     public function testRendererAddsProcessingErrorsToJsonReport(): void
     {
         $writer = new BufferedOutput();

@@ -27,18 +27,12 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(Annotations::class)]
 class AnnotationsTest extends AbstractTestCase
 {
-    /**
-     * testCollectionReturnsFalseWhenNoAnnotationExists
-     */
     public function testCollectionReturnsFalseWhenNoAnnotationExists(): void
     {
         $annotations = new Annotations($this->getClassMock());
         static::assertFalse($annotations->suppresses($this->getRuleMock()));
     }
 
-    /**
-     * testCollectionReturnsFalseWhenNoMatchingAnnotationExists
-     */
     public function testCollectionReturnsFalseWhenNoMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
@@ -57,9 +51,6 @@ class AnnotationsTest extends AbstractTestCase
         static::assertFalse($annotations->suppresses($this->getRuleMock()));
     }
 
-    /**
-     * testCollectionReturnsTrueWhenMatchingAnnotationExists
-     */
     public function testCollectionReturnsTrueWhenMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();
@@ -72,9 +63,6 @@ class AnnotationsTest extends AbstractTestCase
         static::assertTrue($annotations->suppresses($this->getRuleMock()));
     }
 
-    /**
-     * testCollectionReturnsTrueWhenOneMatchingAnnotationExists
-     */
     public function testCollectionReturnsTrueWhenOneMatchingAnnotationExists(): void
     {
         $class = $this->getClassMock();

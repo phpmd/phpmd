@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 #[CoversClass(ProcessingError::class)]
 class ProcessingErrorTest extends AbstractTestCase
 {
-    /**
-     * testGetMessageReturnsTheExpectedValue
-     */
     public function testGetMessageReturnsTheExpectedValue(): void
     {
         $processingError = new ProcessingError('Hello World.');
