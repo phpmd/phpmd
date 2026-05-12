@@ -20,21 +20,45 @@ namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedPrivateMethod;
 use PHPMD\RuleSet;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * Regression test for issue 937.
+ * Regression test for issues 252, 558, and 937.
+ * https://github.com/phpmd/phpmd/issues/252
+ * https://github.com/phpmd/phpmd/issues/558
  * https://github.com/phpmd/phpmd/issues/937
- *
- * @covers \stdClass
  */
+#[CoversClass(UnusedPrivateMethod::class)]
 class UnusedPrivateMethodFalsePositiveTicket937Test extends AbstractRegressionTestCase
 {
     /**
-     * testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
-     *
-     * @return void
+     * Private method called on clone of $this should not be flagged as unused.
      */
-    public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation(): void
+    public function testRuleDoesNotApplyToPrivateMethodCalledOnClone(): void
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule(new UnusedPrivateMethod());
+        $ruleSet->setReport($this->getReportWithNoViolation());
+
+        $ruleSet->apply($this->getClass());
+    }
+
+    /**
+     * Private method called on new self should not be flagged as unused.
+     */
+    public function testRuleDoesNotApplyToPrivateMethodCalledOnNewSelf(): void
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule(new UnusedPrivateMethod());
+        $ruleSet->setReport($this->getReportWithNoViolation());
+
+        $ruleSet->apply($this->getClass());
+    }
+
+    /**
+     * Private method called on new static should not be flagged as unused.
+     */
+    public function testRuleDoesNotApplyToPrivateMethodCalledOnNewStatic(): void
     {
         $ruleSet = new RuleSet();
         $ruleSet->addRule(new UnusedPrivateMethod());

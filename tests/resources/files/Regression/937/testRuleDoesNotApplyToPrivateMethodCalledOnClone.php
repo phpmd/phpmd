@@ -1,6 +1,6 @@
 <?php
 
-class testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation
+class testRuleDoesNotApplyToPrivateMethodCalledOnClone
 {
 
     private $keywords = [];
