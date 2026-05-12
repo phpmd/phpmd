@@ -14,3 +14,6 @@ parameters:
         -
             identifier: missingType.checkedException
             path: tests/*
+        -
+            identifier: phpDoc.parseError
+            path: tests/php/PHPMD/Regression/Sources/UnusedSuppressWarningsAnnotationOnMethod.php

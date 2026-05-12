@@ -51,4 +51,24 @@ abstract class AbstractNode extends BaseNode
 
         return $this->annotations->suppresses($rule);
     }
+
+    /**
+     * Returns the list of suppress-warnings identifiers that were never matched.
+     *
+     * @return list<string>
+     */
+    public function getUnusedSuppressions(): array
+    {
+        $unused = [];
+
+        if (isset($this->attributes)) {
+            $unused = $this->attributes->getUnusedSuppressions();
+        }
+
+        if (isset($this->annotations)) {
+            $unused = [...$unused, ...$this->annotations->getUnusedSuppressions()];
+        }
+
+        return $unused;
+    }
 }

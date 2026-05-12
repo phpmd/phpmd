@@ -31,6 +31,9 @@ final class Annotation
     /** The annotation value. */
     private readonly string $value;
 
+    /** Whether this annotation was matched against any rule. */
+    private bool $matched = false;
+
     /**
      * Constructs a new annotation instance.
      *
@@ -49,10 +52,39 @@ final class Annotation
     public function suppresses(Rule $rule): bool
     {
         if (lcfirst($this->name) === self::SUPPRESS_ANNOTATION) {
-            return $this->isSuppressed($rule);
+            $suppressed = $this->isSuppressed($rule);
+            if ($suppressed) {
+                $this->matched = true;
+            }
+
+            return $suppressed;
         }
 
         return false;
+    }
+
+    /**
+     * Returns whether this is a suppress-warnings annotation.
+     */
+    public function isSuppressWarnings(): bool
+    {
+        return lcfirst($this->name) === self::SUPPRESS_ANNOTATION;
+    }
+
+    /**
+     * Returns whether this annotation was matched against any rule.
+     */
+    public function isMatched(): bool
+    {
+        return $this->matched;
+    }
+
+    /**
+     * Returns the annotation value.
+     */
+    public function getValue(): string
+    {
+        return $this->value;
     }
 
     /**

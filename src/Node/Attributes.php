@@ -33,6 +33,9 @@ final class Attributes
     /** @var array<string, true> */
     private array $suppressed = [];
 
+    /** @var array<string, true> Tracks which suppressions were actually used */
+    private array $matched = [];
+
     /**
      * @param AbstractNode<AbstractASTArtifact> $node
      */
@@ -89,6 +92,35 @@ final class Attributes
      */
     public function suppresses(Rule $rule): bool
     {
-        return $this->suppressed['+all'] ?? $this->suppressed[$rule::class] ?? false;
+        if ($this->suppressed['+all'] ?? false) {
+            $this->matched['+all'] = true;
+
+            return true;
+        }
+
+        if ($this->suppressed[$rule::class] ?? false) {
+            $this->matched[$rule::class] = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns the list of suppressed rule identifiers that were never matched.
+     *
+     * @return list<string>
+     */
+    public function getUnusedSuppressions(): array
+    {
+        $unused = [];
+        foreach ($this->suppressed as $key => $_) {
+            if (!isset($this->matched[$key])) {
+                $unused[] = $key;
+            }
+        }
+
+        return $unused;
     }
 }

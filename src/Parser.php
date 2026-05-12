@@ -44,7 +44,9 @@ use PHPMD\Node\EnumNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Node\TraitNode;
+use PHPMD\Rule\UnusedSuppressWarnings;
 
 /**
  * Simple wrapper around the php depend engine.
@@ -306,6 +308,40 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
         foreach ($this->ruleSets as $ruleSet) {
             $ruleSet->setReport($this->report);
             $ruleSet->apply($node);
+        }
+
+        $this->reportUnusedSuppressions($node);
+    }
+
+    /**
+     * Reports any suppress-warnings annotations/attributes that didn't match any rule.
+     *
+     * @param AbstractNode<ASTArtifact> $node
+     */
+    private function reportUnusedSuppressions(AbstractNode $node): void
+    {
+        $unusedSuppressions = $node->getUnusedSuppressions();
+
+        if (!$unusedSuppressions) {
+            return;
+        }
+
+        $rule = new UnusedSuppressWarnings();
+        $rule->setName('UnusedSuppressWarnings');
+        $rule->setMessage('Unused @SuppressWarnings for rule "{0}". This rule was not triggered or does not exist.');
+        $rule->setPriority(Rule::LOWEST_PRIORITY);
+        $rule->setReport($this->report);
+
+        $nodeInfo = NodeInfoFactory::fromNode($node);
+
+        foreach ($unusedSuppressions as $suppression) {
+            $this->report->addRuleViolation(
+                new RuleViolation(
+                    $rule,
+                    $nodeInfo,
+                    ['args' => [$suppression], 'message' => $rule->getMessage()],
+                ),
+            );
         }
     }
 

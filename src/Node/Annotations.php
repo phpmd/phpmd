@@ -71,4 +71,21 @@ final class Annotations
 
         return false;
     }
+
+    /**
+     * Returns the list of suppress-warnings annotation values that were never matched.
+     *
+     * @return list<string>
+     */
+    public function getUnusedSuppressions(): array
+    {
+        $unused = [];
+        foreach ($this->annotations as $annotation) {
+            if ($annotation->isSuppressWarnings() && !$annotation->isMatched()) {
+                $unused[] = $annotation->getValue();
+            }
+        }
+
+        return $unused;
+    }
 }
