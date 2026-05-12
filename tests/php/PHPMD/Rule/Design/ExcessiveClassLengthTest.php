@@ -22,10 +22,10 @@ use PHPMD\AbstractTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * This is a test case for the NPath complexity rule.
+ * Test case for the excessive long class rule.
  */
-#[CoversClass(NpathComplexity::class)]
-class NpathComplexityTest extends AbstractTestCase
+#[CoversClass(ExcessiveClassLength::class)]
+class ExcessiveClassLengthTest extends AbstractTestCase
 {
     /**
      * Tests that the rule applies for a value greater than the configured
@@ -33,13 +33,14 @@ class NpathComplexityTest extends AbstractTestCase
      */
     public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
-        $method = $this->getMethodMock('npath', 42);
+        $class = $this->getClassMock('loc', 42);
         $report = $this->getReportWithOneViolation();
 
-        $rule = new NpathComplexity();
+        $rule = new ExcessiveClassLength();
         $rule->setReport($report);
         $rule->addProperty('minimum', '41');
-        $rule->apply($method);
+        $rule->addProperty('ignore-whitespace', '0');
+        $rule->apply($class);
     }
 
     /**
@@ -48,13 +49,14 @@ class NpathComplexityTest extends AbstractTestCase
      */
     public function testRuleAppliesForValueEqualToThreshold(): void
     {
-        $method = $this->getMethodMock('npath', 42);
+        $class = $this->getClassMock('loc', 42);
         $report = $this->getReportWithOneViolation();
 
-        $rule = new NpathComplexity();
+        $rule = new ExcessiveClassLength();
         $rule->setReport($report);
         $rule->addProperty('minimum', '42');
-        $rule->apply($method);
+        $rule->addProperty('ignore-whitespace', '0');
+        $rule->apply($class);
     }
 
     /**
@@ -63,12 +65,28 @@ class NpathComplexityTest extends AbstractTestCase
      */
     public function testRuleDoesNotApplyForValueLowerThanThreshold(): void
     {
-        $method = $this->getMethodMock('npath', 22);
+        $class = $this->getClassMock('loc', 22);
         $report = $this->getReportWithNoViolation();
 
-        $rule = new NpathComplexity();
+        $rule = new ExcessiveClassLength();
         $rule->setReport($report);
         $rule->addProperty('minimum', '23');
-        $rule->apply($method);
+        $rule->addProperty('ignore-whitespace', '0');
+        $rule->apply($class);
+    }
+
+    /**
+     * Tests that the rule uses eloc when ignore whitespace is set
+     */
+    public function testRuleUsesElocWhenIgnoreWhitespaceSet(): void
+    {
+        $class = $this->getClassMock('eloc', 22);
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new ExcessiveClassLength();
+        $rule->setReport($report);
+        $rule->addProperty('minimum', '23');
+        $rule->addProperty('ignore-whitespace', '1');
+        $rule->apply($class);
     }
 }

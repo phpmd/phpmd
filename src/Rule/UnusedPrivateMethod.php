@@ -19,13 +19,17 @@
 namespace PHPMD\Rule;
 
 use OutOfBoundsException;
+use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTCloneExpression;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
@@ -209,7 +213,90 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             $owner->isInstanceOf(ASTMethodPostfix::class) ||
             $owner->isInstanceOf(ASTSelfReference::class) ||
             strcasecmp($owner->getImage(), '$this') === 0 ||
-            strcasecmp($owner->getImage(), $class->getImage()) === 0
+            strcasecmp($owner->getImage(), $class->getImage()) === 0 ||
+            $this->isVariableOfSelfType($class, $owner)
+        );
+    }
+
+    /**
+     * Checks if the given variable is assigned from a construction of the current class
+     * (e.g. clone $this, new self, new static, new ClassName).
+     *
+     * @param AbstractNode<PDependNode> $owner
+     * @throws OutOfBoundsException
+     */
+    private function isVariableOfSelfType(ClassNode $class, AbstractNode $owner): bool
+    {
+        if (!$owner->isInstanceOf(ASTVariable::class)) {
+            return false;
+        }
+
+        $variableName = $owner->getImage();
+
+        foreach ($class->findChildrenOfType(ASTAssignmentExpression::class) as $assignment) {
+            $leftSide = $assignment->getChild(0);
+            if ($leftSide->getImage() !== $variableName) {
+                continue;
+            }
+
+            if ($this->isCloneOfSelf($class, $assignment) || $this->isNewSelf($class, $assignment)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the assignment contains a clone of $this or self.
+     *
+     * @param AbstractNode<PDependNode> $assignment
+     * @throws OutOfBoundsException
+     */
+    private function isCloneOfSelf(ClassNode $class, AbstractNode $assignment): bool
+    {
+        foreach ($assignment->findChildrenOfType(ASTCloneExpression::class) as $clone) {
+            $clonedObject = $clone->getChild(0);
+
+            if ($this->isSelfReference($class, $clonedObject)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the assignment contains a new self/static/ClassName construction.
+     *
+     * @param AbstractNode<PDependNode> $assignment
+     * @throws OutOfBoundsException
+     */
+    private function isNewSelf(ClassNode $class, AbstractNode $assignment): bool
+    {
+        foreach ($assignment->findChildrenOfType(ASTAllocationExpression::class) as $allocation) {
+            $classReference = $allocation->getChild(0);
+
+            if ($this->isSelfReference($class, $classReference)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the given node refers to the current class ($this, self, static, or class name).
+     *
+     * @param AbstractNode<PDependNode> $node
+     */
+    private function isSelfReference(ClassNode $class, AbstractNode $node): bool
+    {
+        return (
+            strcasecmp($node->getImage(), '$this') === 0 ||
+            $node->isInstanceOf(ASTStaticReference::class) ||
+            $node->isInstanceOf(ASTSelfReference::class) ||
+            strcasecmp($node->getImage(), $class->getImage()) === 0
         );
     }
 }

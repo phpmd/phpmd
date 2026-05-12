@@ -26,8 +26,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
  *
  * @since 0.2.5
  */
-#[CoversClass(WeightedMethodCount::class)]
-class WeightedMethodCountTest extends AbstractTestCase
+#[CoversClass(ExcessiveClassComplexity::class)]
+class ExcessiveClassComplexityTest extends AbstractTestCase
 {
     /**
      * testRuleAppliesForValueGreaterThanThreshold
@@ -37,7 +37,7 @@ class WeightedMethodCountTest extends AbstractTestCase
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithOneViolation();
 
-        $rule = new WeightedMethodCount();
+        $rule = new ExcessiveClassComplexity();
         $rule->setReport($report);
         $rule->addProperty('maximum', '10');
         $rule->apply($class);
@@ -51,7 +51,7 @@ class WeightedMethodCountTest extends AbstractTestCase
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithOneViolation();
 
-        $rule = new WeightedMethodCount();
+        $rule = new ExcessiveClassComplexity();
         $rule->setReport($report);
         $rule->addProperty('maximum', '42');
         $rule->apply($class);
@@ -65,7 +65,7 @@ class WeightedMethodCountTest extends AbstractTestCase
         $class = $this->getClassMock('wmc', 42);
         $report = $this->getReportWithNoViolation();
 
-        $rule = new WeightedMethodCount();
+        $rule = new ExcessiveClassComplexity();
         $rule->setReport($report);
         $rule->addProperty('maximum', '43');
         $rule->apply($class);

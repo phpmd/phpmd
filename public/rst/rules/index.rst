@@ -59,6 +59,7 @@ Design Rules
 - `CouplingBetweenObjects <design.html#couplingbetweenobjects>`_: A class with too many dependencies has negative impacts on several quality aspects of a class. This includes quality criteria like stability, maintainability and understandability
 - `DevelopmentCodeFragment <design.html#developmentcodefragment>`_: Functions like var_dump(), print_r() etc. are normally only used during development and therefore such calls in production code are a good indicator that they were just forgotten.
 - `EmptyCatchBlock <design.html#emptycatchblock>`_: Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.
+- `IfStatementWithoutLogic <design.html#ifstatementwithoutlogic>`_: Assignments in if clauses and the like are considered a code smell. Assignments in PHP return the right operand as their result. In many cases, this is an expected behavior, but can lead to many difficult to spot bugs, especially when the right operand could result in zero, null or an empty string.
 - `CountInLoopExpression <design.html#countinloopexpression>`_: Using count/sizeof in loops expressions is considered bad practice and is a potential source of
 many bugs, especially when the loop manipulates an array, as count happens on each iteration.
 
@@ -70,6 +71,7 @@ Naming Rules
 - `ShortVariable <naming.html#shortvariable>`_: Detects when a field, local, or parameter has a very short name.
 - `LongVariable <naming.html#longvariable>`_: Detects when a field, formal or local variable is declared with a long name.
 - `ShortMethodName <naming.html#shortmethodname>`_: Detects when very short method names are used.
+- `LongMethodName <naming.html#longmethodname>`_: Detects when very long method names are used.
 - `ConstructorWithNameAsEnclosingClass <naming.html#constructorwithnameasenclosingclass>`_: A constructor method should not have the same name as the enclosing class, consider to use the PHP 5 __construct method.
 - `ConstantNamingConventions <naming.html#constantnamingconventions>`_: Class/Interface constant names should always be defined in uppercase.
 - `BooleanGetMethodName <naming.html#booleangetmethodname>`_: Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.
