@@ -32,9 +32,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[CoversClass(TextRenderer::class)]
 class TextRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfTextEntries
-     */
     public function testRendererCreatesExpectedNumberOfTextEntries(): void
     {
         // Create a writer instance.
@@ -142,9 +139,6 @@ class TextRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testRendererAddsProcessingErrorsToTextReport
-     */
     public function testRendererAddsProcessingErrorsToTextReport(): void
     {
         // Create a writer instance.

@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ExcessiveClassComplexity::class)]
 class ExcessiveClassComplexityTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesForValueGreaterThanThreshold
-     */
     public function testRuleAppliesForValueGreaterThanThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
@@ -43,9 +40,6 @@ class ExcessiveClassComplexityTest extends AbstractTestCase
         $rule->apply($class);
     }
 
-    /**
-     * testRuleAppliesForValueEqualToThreshold
-     */
     public function testRuleAppliesForValueEqualToThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
@@ -57,9 +51,6 @@ class ExcessiveClassComplexityTest extends AbstractTestCase
         $rule->apply($class);
     }
 
-    /**
-     * testRuleNotAppliesForValueLowerThanThreshold
-     */
     public function testRuleNotAppliesForValueLowerThanThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);

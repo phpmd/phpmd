@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TooManyFields::class)]
 class TooManyFieldsTest extends AbstractTestCase
 {
-    /**
-     * testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold
-     */
     public function testRuleDoesNotApplyToClassesWithLessFieldsThanThreshold(): void
     {
         $rule = new TooManyFields();
@@ -38,9 +35,6 @@ class TooManyFieldsTest extends AbstractTestCase
         $rule->apply($this->getClassMock('vars', 23));
     }
 
-    /**
-     * testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold
-     */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfFieldsAsThreshold(): void
     {
         $rule = new TooManyFields();
@@ -49,9 +43,6 @@ class TooManyFieldsTest extends AbstractTestCase
         $rule->apply($this->getClassMock('vars', 42));
     }
 
-    /**
-     * testRuleAppliesToClassesWithMoreFieldsThanThreshold
-     */
     public function testRuleAppliesToClassesWithMoreFieldsThanThreshold(): void
     {
         $rule = new TooManyFields();

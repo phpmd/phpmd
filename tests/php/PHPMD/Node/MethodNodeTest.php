@@ -31,9 +31,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(MethodNode::class)]
 class MethodNodeTest extends AbstractTestCase
 {
-    /**
-     * testMagicCallDelegatesToWrappedPHPDependMethod
-     */
     public function testMagicCallDelegatesToWrappedPHPDependMethod(): void
     {
         $method = $this->getMockBuilder(ASTMethod::class)->setConstructorArgs([null])->getMock();
@@ -44,9 +41,6 @@ class MethodNodeTest extends AbstractTestCase
         $node->getStartLine();
     }
 
-    /**
-     * testGetParentTypeReturnsInterfaceForInterfaceMethod
-     */
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod(): void
     {
         static::assertInstanceOf(
@@ -55,9 +49,6 @@ class MethodNodeTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testGetParentTypeReturnsClassForClassMethod
-     */
     public function testGetParentTypeReturnsClassForClassMethod(): void
     {
         static::assertInstanceOf(
@@ -74,9 +65,6 @@ class MethodNodeTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testHasSuppressWarningsExecutesDefaultImplementation
-     */
     public function testHasSuppressWarningsExecutesDefaultImplementation(): void
     {
         $rule = $this->getRuleMock();
@@ -86,9 +74,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsDelegatesToParentClassMethod
-     */
     public function testHasSuppressWarningsDelegatesToParentClassMethod(): void
     {
         $rule = $this->getRuleMock();
@@ -98,9 +83,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsDelegatesToParentInterfaceMethod
-     */
     public function testHasSuppressWarningsDelegatesToParentInterfaceMethod(): void
     {
         $rule = $this->getRuleMock();
@@ -110,9 +92,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsIgnoresCaseFirstLetter
-     */
     public function testHasSuppressWarningsIgnoresCaseFirstLetter(): void
     {
         $rule = $this->getRuleMock();
@@ -183,9 +162,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->isDeclaration());
     }
 
-    /**
-     * testGetFullQualifiedNameReturnsExpectedValue
-     */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');

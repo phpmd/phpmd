@@ -30,9 +30,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 #[CoversClass(ExcessiveParameterList::class)]
 class ExcessiveParameterListTest extends AbstractTestCase
 {
-    /**
-     * testApplyIgnoresMethodsWithLessParametersThanMinimum
-     */
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
     {
         $rule = new ExcessiveParameterList();
@@ -41,9 +38,6 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createMethod(3));
     }
 
-    /**
-     * testApplyReportsMethodsWithIdenticalParametersAndMinimum
-     */
     public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
     {
         $rule = new ExcessiveParameterList();
@@ -52,9 +46,6 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createMethod(3));
     }
 
-    /**
-     * testApplyReportsMethodsWithMoreParametersThanMinimum
-     */
     public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
     {
         $rule = new ExcessiveParameterList();
@@ -63,9 +54,6 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createMethod(42));
     }
 
-    /**
-     * testApplyIgnoresFunctionsWithLessParametersThanMinimum
-     */
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
     {
         $rule = new ExcessiveParameterList();
@@ -74,9 +62,6 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createFunction(3));
     }
 
-    /**
-     * testApplyReportsFunctionsWithIdenticalParametersAndMinimum
-     */
     public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
     {
         $rule = new ExcessiveParameterList();
@@ -85,9 +70,6 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createFunction(3));
     }
 
-    /**
-     * testApplyReportsFunctionsWithMoreParametersThanMinimum
-     */
     public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
     {
         $rule = new ExcessiveParameterList();

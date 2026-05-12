@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(UnusedPrivateField::class)]
 class UnusedPrivateFieldTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToUnusedPrivateField
-     */
     public function testRuleAppliesToUnusedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -37,9 +34,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToUnusedPrivateStaticField
-     */
     public function testRuleAppliesWhenFieldWithSameNameIsAccessedOnDifferentObject(): void
     {
         $rule = new UnusedPrivateField();
@@ -47,9 +41,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToUnusedPrivateStaticField
-     */
     public function testRuleAppliesToUnusedPrivateStaticField(): void
     {
         $rule = new UnusedPrivateField();
@@ -57,9 +48,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass
-     */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnDifferentClass(): void
     {
         $rule = new UnusedPrivateField();
@@ -67,9 +55,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent
-     */
     public function testRuleAppliesWhenStaticFieldWithSameNameIsAccessedOnParent(): void
     {
         $rule = new UnusedPrivateField();
@@ -117,9 +102,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToUnusedPublicField
-     */
     public function testRuleDoesNotApplyToUnusedPublicField(): void
     {
         $rule = new UnusedPrivateField();
@@ -127,9 +109,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToUnusedProtectedField
-     */
     public function testRuleDoesNotApplyToUnusedProtectedField(): void
     {
         $rule = new UnusedPrivateField();
@@ -137,9 +116,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToThisAccessedPrivateField
-     */
     public function testRuleDoesNotApplyToThisAccessedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -147,9 +123,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToSelfAccessedPrivateField
-     */
     public function testRuleDoesNotApplyToSelfAccessedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -157,9 +130,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToStaticAccessedPrivateField
-     */
     public function testRuleDoesNotApplyToStaticAccessedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -167,9 +137,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToClassNameAccessedPrivateField
-     */
     public function testRuleDoesNotApplyToClassNameAccessedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -237,9 +204,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToFieldWithMethodsThatReturnArray
-     */
     public function testRuleDoesNotApplyToFieldWithMethodsThatReturnArray(): void
     {
         $rule = new UnusedPrivateField();
@@ -247,9 +211,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleDoesNotApplyToWhitelistedPrivateField
-     */
     public function testRuleDoesNotApplyToWhitelistedPrivateField(): void
     {
         $rule = new UnusedPrivateField();
@@ -258,9 +219,6 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToNonWhitelistedPrivateField
-     */
     public function testRuleAppliesToNonWhitelistedPrivateField(): void
     {
         $rule = new UnusedPrivateField();

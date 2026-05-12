@@ -30,9 +30,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(GitLabRenderer::class)]
 class GitLabRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfGitLabElements
-     */
     public function testRendererCreatesExpectedNumberOfGitLabElements(): void
     {
         $writer = new BufferedOutput();
@@ -64,9 +61,6 @@ class GitLabRendererTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testRendererAddsProcessingErrorsToGitLabReport
-     */
     public function testRendererAddsProcessingErrorsToGitLabReport(): void
     {
         $writer = new BufferedOutput();

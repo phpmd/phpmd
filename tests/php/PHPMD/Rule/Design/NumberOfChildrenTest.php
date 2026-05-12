@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(NumberOfChildren::class)]
 class NumberOfChildrenTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToClassWithChildrenLessThanThreshold
-     */
     public function testRuleNotAppliesToClassWithChildrenLessThanThreshold(): void
     {
         $rule = new NumberOfChildren();
@@ -38,9 +35,6 @@ class NumberOfChildrenTest extends AbstractTestCase
         $rule->apply($this->getClassMock('nocc', 41));
     }
 
-    /**
-     * testRuleAppliesToClassWithChildrenIdenticalToThreshold
-     */
     public function testRuleAppliesToClassWithChildrenIdenticalToThreshold(): void
     {
         $rule = new NumberOfChildren();
@@ -49,9 +43,6 @@ class NumberOfChildrenTest extends AbstractTestCase
         $rule->apply($this->getClassMock('nocc', 42));
     }
 
-    /**
-     * testRuleAppliesToClassWithChildrenGreaterThanThreshold
-     */
     public function testRuleAppliesToClassWithChildrenGreaterThanThreshold(): void
     {
         $rule = new NumberOfChildren();

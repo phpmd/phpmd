@@ -29,9 +29,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(AnsiRendererTest::class)]
 class AnsiRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererOutputsForReportWithContents
-     */
     public function testRendererOutputsForReportWithContents(): void
     {
         $writer = new BufferedOutput();
@@ -84,9 +81,6 @@ class AnsiRendererTest extends AbstractTestCase
         static::assertEquals($expected, $writer->fetch());
     }
 
-    /**
-     * testRendererOutputsForReportWithoutContents
-     */
     public function testRendererOutputsForReportWithoutContents(): void
     {
         $writer = new BufferedOutput();

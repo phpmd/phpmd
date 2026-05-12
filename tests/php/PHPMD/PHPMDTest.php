@@ -64,9 +64,6 @@ class PHPMDTest extends AbstractTestCase
         $this->assertXmlEquals($writer->fetch(), 'pmd/default-xml.xml');
     }
 
-    /**
-     * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
-     */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstDirectory(): void
     {
         self::changeWorkingDirectory();
@@ -88,9 +85,6 @@ class PHPMDTest extends AbstractTestCase
         $this->assertXmlEquals($writer->fetch(), 'pmd/single-directory.xml');
     }
 
-    /**
-     * testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile
-     */
     public function testRunWithDefaultSettingsAndXmlRendererAgainstSingleFile(): void
     {
         self::changeWorkingDirectory();
@@ -112,27 +106,18 @@ class PHPMDTest extends AbstractTestCase
         $this->assertXmlEquals($writer->fetch(), 'pmd/single-file.xml');
     }
 
-    /**
-     * testHasErrorsReturnsFalseByDefault
-     */
     public function testHasErrorsReturnsFalseByDefault(): void
     {
         $phpmd = new PHPMD();
         static::assertFalse($phpmd->hasErrors());
     }
 
-    /**
-     * testHasViolationsReturnsFalseByDefault
-     */
     public function testHasViolationsReturnsFalseByDefault(): void
     {
         $phpmd = new PHPMD();
         static::assertFalse($phpmd->hasViolations());
     }
 
-    /**
-     * testHasViolationsReturnsFalseForSourceWithoutViolations
-     */
     public function testHasViolationsReturnsFalseForSourceWithoutViolations(): void
     {
         self::changeWorkingDirectory();
@@ -153,9 +138,6 @@ class PHPMDTest extends AbstractTestCase
         static::assertFalse($phpmd->hasViolations());
     }
 
-    /**
-     * testHasViolationsReturnsTrueForSourceWithViolation
-     */
     public function testHasViolationsReturnsTrueForSourceWithViolation(): void
     {
         self::changeWorkingDirectory();
@@ -198,9 +180,6 @@ class PHPMDTest extends AbstractTestCase
         static::assertFalse($phpmd->hasViolations());
     }
 
-    /**
-     * testHasErrorsReturnsTrueForSourceWithError
-     */
     public function testHasErrorsReturnsTrueForSourceWithError(): void
     {
         self::changeWorkingDirectory();
@@ -221,9 +200,6 @@ class PHPMDTest extends AbstractTestCase
         static::assertFalse($phpmd->hasViolations());
     }
 
-    /**
-     * testIgnorePattern
-     */
     public function testIgnorePattern(): void
     {
         self::changeWorkingDirectory();

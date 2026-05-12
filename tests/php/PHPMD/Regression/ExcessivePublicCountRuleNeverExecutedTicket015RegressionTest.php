@@ -26,9 +26,6 @@ use PHPMD\RuleSet;
  */
 class ExcessivePublicCountRuleNeverExecutedTicket015RegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * testRuleSetInvokesRuleForClassInstance
-     */
     public function testRuleSetInvokesRuleForClassInstance(): void
     {
         $rule = new ExcessivePublicCount();

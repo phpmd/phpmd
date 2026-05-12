@@ -29,9 +29,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(HTMLRenderer::class)]
 class HTMLRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfTextEntries
-     */
     public function testRendererCreatesExpectedHtmlTableRow(): void
     {
         // Create a writer instance.

@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ExitExpression::class)]
 class ExitExpressionTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutExitExpression
-     */
     public function testRuleNotAppliesToMethodWithoutExitExpression(): void
     {
         $rule = new ExitExpression();
@@ -37,9 +34,6 @@ class ExitExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithExitExpression
-     */
     public function testRuleAppliesToMethodWithExitExpression(): void
     {
         $rule = new ExitExpression();
@@ -47,9 +41,6 @@ class ExitExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToMethodWithExitExpression
-     */
     public function testRuleAppliesMultipleTimesToMethodWithExitExpression(): void
     {
         $rule = new ExitExpression();
@@ -57,9 +48,6 @@ class ExitExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithoutExitExpression
-     */
     public function testRuleNotAppliesToFunctionWithoutExitExpression(): void
     {
         $rule = new ExitExpression();
@@ -67,9 +55,6 @@ class ExitExpressionTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithExitExpression
-     */
     public function testRuleAppliesToFunctionWithExitExpression(): void
     {
         $rule = new ExitExpression();
@@ -77,9 +62,6 @@ class ExitExpressionTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToFunctionWithExitExpression
-     */
     public function testRuleAppliesMultipleTimesToFunctionWithExitExpression(): void
     {
         $rule = new ExitExpression();

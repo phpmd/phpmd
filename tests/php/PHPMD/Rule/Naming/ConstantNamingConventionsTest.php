@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ConstantNamingConventions::class)]
 class ConstantNamingConventionsTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToClassConstantWithLowerCaseCharacters
-     */
     public function testRuleAppliesToClassConstantWithLowerCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
@@ -37,9 +34,6 @@ class ConstantNamingConventionsTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToInterfaceConstantWithLowerCaseCharacters
-     */
     public function testRuleAppliesToInterfaceConstantWithLowerCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
@@ -47,9 +41,6 @@ class ConstantNamingConventionsTest extends AbstractTestCase
         $rule->apply($this->getInterface());
     }
 
-    /**
-     * testRuleNotAppliesToClassConstantWithUpperCaseCharacters
-     */
     public function testRuleNotAppliesToClassConstantWithUpperCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
@@ -57,9 +48,6 @@ class ConstantNamingConventionsTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters
-     */
     public function testRuleNotAppliesToInterfaceConstantWithUpperCaseCharacters(): void
     {
         $rule = new ConstantNamingConventions();
