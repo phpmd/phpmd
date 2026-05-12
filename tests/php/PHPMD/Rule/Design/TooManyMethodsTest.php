@@ -28,9 +28,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TooManyMethods::class)]
 class TooManyMethodsTest extends AbstractTestCase
 {
-    /**
-     * testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold
-     */
     public function testRuleDoesNotApplyToClassesWithLessMethodsThanThreshold(): void
     {
         $rule = new TooManyMethods();
@@ -40,9 +37,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(23));
     }
 
-    /**
-     * testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold
-     */
     public function testRuleDoesNotApplyToClassesWithSameNumberOfMethodsAsThreshold(): void
     {
         $rule = new TooManyMethods();
@@ -52,9 +46,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42));
     }
 
-    /**
-     * testRuleAppliesToClassesWithMoreMethodsThanThreshold
-     */
     public function testRuleAppliesToClassesWithMoreMethodsThanThreshold(): void
     {
         $rule = new TooManyMethods();
@@ -64,9 +55,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
 
-    /**
-     * testRuleIgnoresGetterMethodsInTest
-     */
     public function testRuleIgnoresGetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();
@@ -76,9 +64,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
 
-    /**
-     * testRuleIgnoresSetterMethodsInTest
-     */
     public function testRuleIgnoresSetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();
@@ -88,9 +73,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
 
-    /**
-     * testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven
-     */
     public function testRuleIgnoresCustomMethodsWhenRegexPropertyIsGiven(): void
     {
         $rule = new TooManyMethods();
@@ -100,9 +82,6 @@ class TooManyMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
 
-    /**
-     * testRuleIgnoresGetterAndSetterMethodsInTest
-     */
     public function testRuleIgnoresGetterAndSetterMethodsInTest(): void
     {
         $rule = new TooManyMethods();

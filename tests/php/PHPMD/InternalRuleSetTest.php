@@ -25,9 +25,6 @@ namespace PHPMD;
  */
 class InternalRuleSetTest extends AbstractTestCase
 {
-    /**
-     * testFactoryConfiguresInputDirectory
-     */
     public function testGetNames(): void
     {
         static::assertSame([
@@ -40,9 +37,6 @@ class InternalRuleSetTest extends AbstractTestCase
         ], InternalRuleSet::getNames());
     }
 
-    /**
-     * testFactoryConfiguresInputFile
-     */
     public function testFactoryConfiguresInputFile(): void
     {
         static::assertSame(

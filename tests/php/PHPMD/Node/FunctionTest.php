@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(FunctionNode::class)]
 class FunctionTest extends AbstractTestCase
 {
-    /**
-     * testMagicCallDelegatesToWrappedPHPDependFunction
-     */
     public function testMagicCallDelegatesToWrappedPHPDependFunction(): void
     {
         $function = $this->getMockBuilder(ASTFunction::class)->setConstructorArgs([null])->getMock();

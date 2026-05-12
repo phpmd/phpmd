@@ -30,9 +30,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(TraitNode::class)]
 class TraitNodeTest extends AbstractTestCase
 {
-    /**
-     * testGetFullQualifiedNameReturnsExpectedValue
-     */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $trait = new ASTTrait('MyTrait');

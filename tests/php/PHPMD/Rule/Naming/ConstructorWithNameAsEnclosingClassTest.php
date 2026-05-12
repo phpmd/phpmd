@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ConstructorWithNameAsEnclosingClass::class)]
 class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToConstructorMethodNamedAsEnclosingClass
-     */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClass(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
@@ -37,9 +34,6 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive
-     */
     public function testRuleAppliesToConstructorMethodNamedAsEnclosingClassCaseInsensitive(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();
@@ -47,9 +41,6 @@ class ConstructorWithNameAsEnclosingClassTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodNamedSimilarToEnclosingClass
-     */
     public function testRuleNotAppliesToMethodNamedSimilarToEnclosingClass(): void
     {
         $rule = new ConstructorWithNameAsEnclosingClass();

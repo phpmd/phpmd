@@ -29,9 +29,6 @@ use PHPMD\RuleSet;
  */
 class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * testRuleDoesNotApplyToFunctionParameterNamedArgv
-     */
     public function testRuleDoesNotApplyToFunctionParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();
@@ -41,9 +38,6 @@ class UnusedParameterArgvTicket14990109RegressionTest extends AbstractRegression
         $ruleSet->apply($this->getFunction());
     }
 
-    /**
-     * testRuleDoesNotApplyToMethodParameterNamedArgv
-     */
     public function testRuleDoesNotApplyToMethodParameterNamedArgv(): void
     {
         $ruleSet = new RuleSet();

@@ -25,9 +25,6 @@ use PHPMD\Rule\UnusedLocalVariable;
  */
 class StaticVariablesFlaggedAsUnusedTicket020RegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * testRuleDoesNotApplyToAnySuperGlobalVariable
-     */
     public function testRuleDoesNotApplyToAnyStaticLocalVariable(): void
     {
         $rule = new UnusedLocalVariable();

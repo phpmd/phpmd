@@ -17,7 +17,7 @@
 
 class testRuleDoesNotApplyToVariableInVariadicFunctions
 {
-    function testRuleDoesNotApplyToVariableInVariadicFunctions($text)
+    function testRuleDoesNotApplyToVariableInVariadicFunctions()
     {
         $variadic1 = 1;
         $variadic2 = 2;

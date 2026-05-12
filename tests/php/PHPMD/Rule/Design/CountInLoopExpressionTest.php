@@ -27,9 +27,6 @@ use PHPMD\AbstractTestCase;
  */
 class CountInLoopExpressionTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToAllTypesOfLoops
-     */
     public function testRuleAppliesToAllTypesOfLoops(): void
     {
         $rule = new CountInLoopExpression();
@@ -37,9 +34,6 @@ class CountInLoopExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotApplyToExpressionElsewhere
-     */
     public function testRuleNotApplyToExpressionElsewhere(): void
     {
         $rule = new CountInLoopExpression();
@@ -47,9 +41,6 @@ class CountInLoopExpressionTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleApplyToNestedLoops
-     */
     public function testRuleApplyToNestedLoops(): void
     {
         $rule = new CountInLoopExpression();
@@ -57,9 +48,6 @@ class CountInLoopExpressionTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testMutedRuleAtClassLevel
-     */
     public function testMutedRuleAtClassLevel(): void
     {
         $rule = new CountInLoopExpression();
@@ -67,9 +55,6 @@ class CountInLoopExpressionTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testMutedRuleAtMethodLevel
-     */
     public function testMutedRuleAtMethodLevel(): void
     {
         $rule = new CountInLoopExpression();

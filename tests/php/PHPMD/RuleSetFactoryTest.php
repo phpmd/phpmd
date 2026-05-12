@@ -43,9 +43,6 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     private const DIR_UNDER_TESTS = 'designăôü0汉字';
 
-    /**
-     * testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets
-     */
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets(): void
     {
         $factory = new RuleSetFactory();
@@ -54,9 +51,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertStringContainsString('The Code Size Ruleset', $ruleSet->getDescription());
     }
 
-    /**
-     * testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory
-     */
     public function testCreateRuleSetFileNameFindsXmlFileInCurrentWorkingDirectory(): void
     {
         self::changeWorkingDirectory('rulesets');
@@ -67,53 +61,35 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('First description...', $ruleSet->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsReturnsArray
-     */
     public function testCreateRuleSetsReturnsArray(): void
     {
         $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
     }
 
-    /**
-     * testCreateRuleSetsForSingleFileReturnsArrayWithOneElement
-     */
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         static::assertCount(1, $ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance
-     */
     public function testCreateRuleSetsForSingleFileReturnsOneRuleSetInstance(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         static::assertInstanceOf(RuleSet::class, $ruleSets[0]);
     }
 
-    /**
-     * testCreateRuleSetsConfiguresExpectedRuleSetName
-     */
     public function testCreateRuleSetsConfiguresExpectedRuleSetName(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsConfiguresExpectedRuleSetName
-     */
     public function testCreateRuleSetsConfiguresExpectedRuleSetDescription(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
         static::assertSame('First description...', $ruleSets[0]->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements
-     */
     public function testCreateRuleSetsForTwoFilesReturnsArrayWithTwoElements(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
@@ -133,9 +109,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertInstanceOf(RuleSet::class, $ruleSets[1]);
     }
 
-    /**
-     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames
-     */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetNames(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
@@ -146,9 +119,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('Second Test RuleSet', $ruleSets[1]->getName());
     }
 
-    /**
-     * testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions
-     */
     public function testCreateRuleSetsForTwoConfiguresExpectedRuleSetDescriptions(): void
     {
         $ruleSets = $this->createRuleSetsFromAbsoluteFiles(
@@ -159,9 +129,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('Second description...', $ruleSets[1]->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameReturnsArray
-     */
     public function testCreateRuleSetsForLocalFileNameReturnsArray(): void
     {
         self::changeWorkingDirectory();
@@ -169,9 +136,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameReturnsArrayWithOneElement
-     */
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void
     {
         self::changeWorkingDirectory();
@@ -180,9 +144,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertCount(1, $ruleSets);
     }
 
-    /**
-     * testCreateRuleSetsForSingleLocalFileNameConfiguresExpectedRuleSetName
-     */
     public function testCreateRuleSetsForLocalFileNameConfiguresExpectedRuleSetName(): void
     {
         self::changeWorkingDirectory();
@@ -191,9 +152,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedRuleSet
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedRuleSet(): void
     {
         self::changeWorkingDirectory();
@@ -202,9 +160,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('First Test RuleSet', $ruleSets[0]->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedNumberOfRules(): void
     {
         self::changeWorkingDirectory();
@@ -213,9 +168,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertCount(4, $ruleSets[0]);
     }
 
-    /**
-     * testCreateRuleSetsForLocalFileWithRuleSetReferenceNodes
-     */
     public function testCreateRuleSetsWithReferenceContainsRuleInstances(): void
     {
         self::changeWorkingDirectory();
@@ -224,9 +176,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertInstanceOf(AbstractRule::class, $ruleSets[0]->getRules()->current());
     }
 
-    /**
-     * testCreateRuleSetsWithReferenceContainsExpectedRules
-     */
     public function testCreateRuleSetsWithReferenceContainsExpectedRules(): void
     {
         self::changeWorkingDirectory();
@@ -243,9 +192,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame($expected, $actual);
     }
 
-    /**
-     * testCreateSingleRuleSetReturnsRuleSetInstance
-     */
     public function testCreateSingleRuleSetReturnsRuleSetInstance(): void
     {
         self::changeWorkingDirectory();
@@ -299,9 +245,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertCount(0, $ruleSet->getRules());
     }
 
-    /**
-     * testCreateRuleWithExcludePattern
-     */
     public function testCreateRuleWithExcludePattern(): void
     {
         self::changeWorkingDirectory();
@@ -317,9 +260,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame($expected, $excludes);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPrioritySetting(): void
     {
         self::changeWorkingDirectory();
@@ -331,9 +271,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame(4, $rule->getPriority());
     }
 
-    /**
-     * testCreateRuleWithExpectedExample
-     */
     public function testCreateRuleWithExpectedExample(): void
     {
         self::changeWorkingDirectory();
@@ -345,9 +282,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame([__FUNCTION__], $rule->getExamples());
     }
 
-    /**
-     * testCreateRuleWithExpectedMultipleExamples
-     */
     public function testCreateRuleWithExpectedMultipleExamples(): void
     {
         self::changeWorkingDirectory();
@@ -359,9 +293,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting(): void
     {
         self::changeWorkingDirectory();
@@ -373,9 +304,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('description 42', $rule->getDescription());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesPropertySetting(): void
     {
         self::changeWorkingDirectory();
@@ -387,9 +315,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame(42, $rule->getIntProperty('foo'));
     }
 
-    /**
-     * testFactorySupportsAlternativeSyntaxForPropertyValue
-     */
     public function testFactorySupportsAlternativeSyntaxForPropertyValue(): void
     {
         self::changeWorkingDirectory();
@@ -401,9 +326,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame(42, $rule->getIntProperty('foo'));
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting(): void
     {
         self::changeWorkingDirectory();
@@ -417,9 +339,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('foreach ($foo as $bar) { echo $bar; }', $examples[0]);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExamplesSetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesNameSetting(): void
     {
         self::changeWorkingDirectory();
@@ -431,9 +350,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('Name overwritten', $rule->getName());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesMessageSetting(): void
     {
         self::changeWorkingDirectory();
@@ -445,9 +361,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('Message overwritten', $rule->getMessage());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting
-     */
     public function testCreateRuleSetsWithRuleReferenceThatOverwritesExtInfoUrlSetting(): void
     {
         self::changeWorkingDirectory();
@@ -459,9 +372,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame('http://example.com/overwritten', $rule->getExternalInfoUrl());
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule
-     */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRule(): void
     {
         self::changeWorkingDirectory();
@@ -473,9 +383,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertCount(1, $rules);
     }
 
-    /**
-     * testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules
-     */
     public function testCreateRuleSetsWithRuleReferenceNotContainsExcludedRules(): void
     {
         self::changeWorkingDirectory();
@@ -553,9 +460,6 @@ class RuleSetFactoryTest extends AbstractTestCase
         $factory->createRuleSets([$fileName]);
     }
 
-    /**
-     * testCreateRuleSetsActivatesStrictModeOnRuleSet
-     */
     public function testCreateRuleSetsActivatesStrictModeOnRuleSet(): void
     {
         $fileName = self::createFileUri('rulesets/set1.xml');

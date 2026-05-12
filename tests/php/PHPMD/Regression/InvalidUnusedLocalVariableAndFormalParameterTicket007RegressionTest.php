@@ -26,9 +26,6 @@ use PHPMD\Rule\UnusedLocalVariable;
  */
 class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * testLocalVariableUsedInDoubleQuoteStringGetsNotReported
-     */
     public function testLocalVariableUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedLocalVariable();
@@ -36,9 +33,6 @@ class InvalidUnusedLocalVariableAndFormalParameterTicket007RegressionTest extend
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testFormalParameterUsedInDoubleQuoteStringGetsNotReported
-     */
     public function testFormalParameterUsedInDoubleQuoteStringGetsNotReported(): void
     {
         $rule = new UnusedFormalParameter();

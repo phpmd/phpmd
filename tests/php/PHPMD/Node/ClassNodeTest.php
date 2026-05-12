@@ -33,9 +33,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(ClassNode::class)]
 class ClassNodeTest extends AbstractTestCase
 {
-    /**
-     * testGetMethodNamesReturnsExpectedResult
-     */
     public function testGetMethodNamesReturnsExpectedResult(): void
     {
         $class = new ASTClass(null);
@@ -46,9 +43,6 @@ class ClassNodeTest extends AbstractTestCase
         static::assertEquals([__CLASS__, __FUNCTION__], $node->getMethodNames());
     }
 
-    /**
-     * testHasSuppressWarningsAnnotationForReturnsTrue
-     */
     public function testHasSuppressWarningsAnnotationForReturnsTrue(): void
     {
         $class = new ASTClass(null);
@@ -61,9 +55,6 @@ class ClassNodeTest extends AbstractTestCase
         static::assertTrue($node->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsWithRuleNameContainingSlashes
-     */
     public function testHasSuppressWarningsWithRuleNameContainingSlashes(): void
     {
         $class = new ASTClass(null);
@@ -87,9 +78,6 @@ class ClassNodeTest extends AbstractTestCase
         static::assertFalse($node->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testGetFullQualifiedNameReturnsExpectedValue
-     */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');

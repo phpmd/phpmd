@@ -110,18 +110,12 @@ class ReportTest extends AbstractTestCase
         static::assertLessThanOrEqual($time, $report->getElapsedTimeInMillis());
     }
 
-    /**
-     * testIsEmptyReturnsTrueByDefault
-     */
     public function testIsEmptyReturnsTrueByDefault(): void
     {
         $report = new Report();
         static::assertTrue($report->isEmpty());
     }
 
-    /**
-     * testIsEmptyReturnsFalseWhenAtLeastOneViolationExists
-     */
     public function testIsEmptyReturnsFalseWhenAtLeastOneViolationExists(): void
     {
         $report = new Report();

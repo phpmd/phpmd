@@ -21,8 +21,12 @@ namespace PHPMD\Rule;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTVariable;
@@ -254,8 +258,7 @@ abstract class AbstractLocalVariable extends AbstractRule
         $functionName = $function->getImage();
 
         if ($functionParent instanceof ASTMemberPrimaryPrefix) {
-            // @TODO: Find a way to handle methods
-            return false;
+            return $this->isMethodParameterPassedByReference($functionParent, $argumentPosition);
         }
 
         $reflectionFunction = $this->getReflectionFunctionByName($functionName);
@@ -271,6 +274,85 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference();
+    }
+
+    /**
+     * Check if a method parameter at the given position is passed by reference.
+     *
+     * Resolves the called method from the AST (e.g. $this->foo()) and checks
+     * its formal parameter definitions.
+     */
+    private function isMethodParameterPassedByReference(
+        ASTMemberPrimaryPrefix $memberPrefix,
+        false|int|string $argumentPosition
+    ): bool {
+        if ($argumentPosition === false) {
+            return false;
+        }
+
+        // Find the method postfix node (contains the method name)
+        $methodPostfix = null;
+        foreach ($memberPrefix->getChildren() as $child) {
+            if ($child instanceof ASTMethodPostfix) {
+                $methodPostfix = $child;
+
+                break;
+            }
+        }
+
+        if ($methodPostfix === null) {
+            return false;
+        }
+
+        $methodName = $methodPostfix->getImage();
+
+        // Walk up the AST to find the containing class
+        $node = $memberPrefix;
+        $classNode = null;
+        while ($node = $node->getParent()) {
+            if ($node instanceof ASTClass) {
+                $classNode = $node;
+
+                break;
+            }
+        }
+
+        if ($classNode === null) {
+            return false;
+        }
+
+        // Find the method in the class
+        foreach ($classNode->getMethods() as $method) {
+            if (strcasecmp($method->getImage(), $methodName) !== 0) {
+                continue;
+            }
+
+            $formalParameters = $method->getFirstChildOfType(ASTFormalParameters::class);
+            if ($formalParameters === null) {
+                return false;
+            }
+
+            $params = $formalParameters->getChildren();
+            $paramCount = count($params);
+
+            // Handle variadic: clamp position to last parameter
+            if ($paramCount > 0) {
+                $lastParam = $params[$paramCount - 1];
+                if ($lastParam instanceof ASTFormalParameter && $lastParam->isVariableArgList()) {
+                    $argumentPosition = min($argumentPosition, $paramCount - 1);
+                }
+            }
+
+            if (!isset($params[$argumentPosition])) {
+                return false;
+            }
+
+            $param = $params[$argumentPosition];
+
+            return $param instanceof ASTFormalParameter && $param->isPassedByReference();
+        }
+
+        return false;
     }
 
     /**

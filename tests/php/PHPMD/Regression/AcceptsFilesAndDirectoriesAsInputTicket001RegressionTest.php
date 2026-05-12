@@ -29,9 +29,6 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractRegressionTestCase
 {
-    /**
-     * testCliAcceptsDirectoryAsInput
-     */
     public function testCliAcceptsDirectoryAsInput(): void
     {
         self::changeWorkingDirectory();
@@ -54,9 +51,6 @@ class AcceptsFilesAndDirectoriesAsInputTicket001RegressionTest extends AbstractR
         static::assertSame([$inputPath], $phpmd->getInput());
     }
 
-    /**
-     * testCliAcceptsSingleFileAsInput
-     */
     public function testCliAcceptsSingleFileAsInput(): void
     {
         self::changeWorkingDirectory();

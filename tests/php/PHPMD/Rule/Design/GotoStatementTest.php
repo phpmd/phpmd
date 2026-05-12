@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(GotoStatement::class)]
 class GotoStatementTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutGotoStatement
-     */
     public function testRuleNotAppliesToMethodWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
@@ -39,9 +36,6 @@ class GotoStatementTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithGotoStatement
-     */
     public function testRuleAppliesToMethodWithGotoStatement(): void
     {
         $rule = new GotoStatement();
@@ -49,9 +43,6 @@ class GotoStatementTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithoutGotoStatement
-     */
     public function testRuleNotAppliesToFunctionWithoutGotoStatement(): void
     {
         $rule = new GotoStatement();
@@ -59,9 +50,6 @@ class GotoStatementTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithGotoStatement
-     */
     public function testRuleAppliesToFunctionWithGotoStatement(): void
     {
         $rule = new GotoStatement();

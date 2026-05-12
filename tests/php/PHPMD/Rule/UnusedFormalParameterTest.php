@@ -28,9 +28,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(UnusedFormalParameter::class)]
 class UnusedFormalParameterTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToFunctionUnusedFormalParameter
-     */
     public function testRuleAppliesToFunctionUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -38,9 +35,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToMultipleFunctionUnusedFormalParameter
-     */
     public function testRuleAppliesToMultipleFunctionUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -48,9 +42,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToMethodUnusedFormalParameter
-     */
     public function testRuleAppliesToMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -58,9 +49,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToEnumMethodUnusedFormalParameter
-     */
     public function testRuleAppliesToEnumMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -68,9 +56,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToClosureUnusedFormalParameter
-     */
     public function testRuleAppliesToClosureUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -78,9 +63,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMultipleMethodUnusedFormalParameter
-     */
     public function testRuleAppliesToMultipleMethodUnusedFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -143,9 +125,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToAbstractMethodFormalParameter
-     */
     public function testRuleDoesNotApplyToAbstractMethodFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -153,9 +132,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToInterfaceMethodFormalParameter
-     */
     public function testRuleDoesNotApplyToInterfaceMethodFormalParameter(): void
     {
         $rule = new UnusedFormalParameter();
@@ -163,9 +139,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToInnerFunctionDeclaration
-     */
     public function testRuleDoesNotApplyToInnerFunctionDeclaration(): void
     {
         $rule = new UnusedFormalParameter();
@@ -210,9 +183,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex
-     */
     public function testRuleDoesNotApplyToMethodArgumentUsedAsArrayIndex(): void
     {
         $rule = new UnusedFormalParameter();
@@ -324,9 +294,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToMagicMethod
-     */
     public function testRuleDoesNotApplyToMagicMethod(): void
     {
         $methods = array_filter(
@@ -341,9 +308,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($method);
     }
 
-    /**
-     * testRuleDoesNotApplyToMethodWithInheritdocAnnotation
-     */
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotation(): void
     {
         $rule = new UnusedFormalParameter();
@@ -351,9 +315,6 @@ class UnusedFormalParameterTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase
-     */
     public function testRuleDoesNotApplyToMethodWithInheritdocAnnotationCamelCase(): void
     {
         $rule = new UnusedFormalParameter();

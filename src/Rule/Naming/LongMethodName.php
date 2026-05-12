@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * This file is part of PHP Mess Detector.
+ *
+ * Copyright (c) Manuel Pichler <mapi@phpmd.org>.
+ * All rights reserved.
+ *
+ * Licensed under BSD License
+ * For full copyright and license information, please see the LICENSE file.
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @author Manuel Pichler <mapi@phpmd.org>
+ * @copyright Manuel Pichler. All rights reserved.
+ * @license https://opensource.org/licenses/bsd-license.php BSD License
+ * @link http://phpmd.org/
+ */
+
+namespace PHPMD\Rule\Naming;
+
+use PHPMD\AbstractNode;
+use PHPMD\AbstractRule;
+use PHPMD\Rule\FunctionAware;
+use PHPMD\Rule\MethodAware;
+use PHPMD\RuleProperty\Matcher;
+use PHPMD\RuleProperty\MatchList;
+use PHPMD\RuleProperty\Threshold;
+
+/**
+ * This rule class will detect methods and functions with very long names.
+ */
+final class LongMethodName extends AbstractRule implements FunctionAware, MethodAware
+{
+    #[Threshold(['threshold', 'maximum'])]
+    public int $threshold;
+
+    #[MatchList]
+    public ?Matcher $exceptions = null;
+
+    /**
+     * Extracts all method and function nodes from the given node
+     * and checks the method or function name length against the configured
+     * maximum length.
+     */
+    public function apply(AbstractNode $node): void
+    {
+        $name = (string) $node->getName();
+
+        if (\strlen($name) <= $this->threshold || $this->exceptions?->contains($name)) {
+            return;
+        }
+
+        $this->addViolation(
+            $node,
+            [
+                (string) $node->getParentName(),
+                $name,
+                (string) $this->threshold,
+            ],
+        );
+    }
+}

@@ -30,9 +30,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(DevelopmentCodeFragment::class)]
 class DevelopmentCodeFragmentTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutSuspectFunctionCall
-     */
     public function testRuleNotAppliesToMethodWithoutSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -40,9 +37,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithSuspectFunctionCall
-     */
     public function testRuleAppliesToMethodWithSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -50,9 +44,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithMultipleSuspectFunctionCall
-     */
     public function testRuleAppliesToMethodWithMultipleSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -60,9 +51,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall
-     */
     public function testRuleAppliesToMethodWithSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -70,9 +58,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall
-     */
     public function testRuleAppliesToMethodWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -80,9 +65,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithoutSuspectFunctionCall
-     */
     public function testRuleNotAppliesToFunctionWithoutSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -90,9 +72,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithSuspectFunctionCall
-     */
     public function testRuleAppliesToFunctionWithSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -100,9 +79,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithMultipleSuspectFunctionCall
-     */
     public function testRuleAppliesToFunctionWithMultipleSuspectFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -110,9 +86,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall
-     */
     public function testRuleAppliesToFunctionWithSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -120,9 +93,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall
-     */
     public function testRuleAppliesToFunctionWithMultipleSuspectFullyQualifiedFunctionCall(): void
     {
         $rule = $this->getRule();
@@ -130,9 +100,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToMethodWithinNamespace
-     */
     public function testRuleAppliesToMethodWithinNamespace(): void
     {
         $rule = $this->getRule();
@@ -141,9 +108,6 @@ class DevelopmentCodeFragmentTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithinNamespaceByDefault
-     */
     public function testRuleNotAppliesToMethodWithinNamespaceByDefault(): void
     {
         $rule = $this->getRule();

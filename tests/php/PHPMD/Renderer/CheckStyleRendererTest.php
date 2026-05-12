@@ -30,9 +30,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 #[CoversClass(XMLRenderer::class)]
 class CheckStyleRendererTest extends AbstractTestCase
 {
-    /**
-     * testRendererCreatesExpectedNumberOfXmlElements
-     */
     public function testRendererCreatesExpectedNumberOfXmlElements(): void
     {
         // Create a writer instance.

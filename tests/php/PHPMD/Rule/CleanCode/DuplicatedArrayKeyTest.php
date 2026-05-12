@@ -28,9 +28,6 @@ use PHPMD\AbstractTestCase;
  */
 class DuplicatedArrayKeyTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToMethodWithoutArrayDefinition
-     */
     public function testRuleNotAppliesToMethodWithoutArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -38,9 +35,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition
-     */
     public function testRuleNotAppliesToMethodWithNonAssotiativeArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -48,9 +42,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
-     */
     public function testRuleNotAppliesToMethodWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -58,9 +49,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -68,9 +56,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
-     */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -78,9 +63,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
-     */
     public function testRuleAppliesToMethodWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -88,9 +70,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     */
     public function testRuleAppliesMultipleTimesToMethodWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -98,9 +77,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithoutArrayDefinition
-     */
     public function testRuleNotAppliesToFunctionWithoutArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -108,9 +84,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition
-     */
     public function testRuleNotAppliesToFunctionWithNonAssotiativeArrayDefinition(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -118,9 +91,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys
-     */
     public function testRuleNotAppliesToFunctionWithAssotiativeArrayDefinitionWithoutDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -128,9 +98,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -138,9 +105,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys
-     */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedTypeKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -148,9 +112,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys
-     */
     public function testRuleAppliesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedMixedQuotedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -158,9 +119,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys
-     */
     public function testRuleAppliesMultipleTimesToFunctionWithAssotiativeArrayDefinitionWithDuplicatedKeys(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -168,9 +126,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesWhenKeyIsDeclaredInNonStandardWay
-     */
     public function testRuleAppliesWhenKeyIsDeclaredInNonStandardWay(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -178,9 +133,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesCorrectlyWithNestedArrays
-     */
     public function testRuleAppliesCorrectlyWithNestedArrays(): void
     {
         $rule = new DuplicatedArrayKey();
@@ -188,9 +140,6 @@ class DuplicatedArrayKeyTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesCorrectlyToMultipleArrays
-     */
     public function testRuleAppliesCorrectlyToMultipleArrays(): void
     {
         $rule = new DuplicatedArrayKey();

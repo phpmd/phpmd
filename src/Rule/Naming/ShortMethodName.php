@@ -38,9 +38,9 @@ final class ShortMethodName extends AbstractRule implements FunctionAware, Metho
     public ?Matcher $exceptions = null;
 
     /**
-     * Extracts all variable and variable declarator nodes from the given node
-     * and checks the variable name length against the configured minimum
-     * length.
+     * Extracts all method and function nodes from the given node
+     * and checks the method or function name length against the configured
+     * minimum length.
      */
     public function apply(AbstractNode $node): void
     {

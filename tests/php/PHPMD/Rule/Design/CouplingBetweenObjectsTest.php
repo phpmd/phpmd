@@ -29,9 +29,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(CouplingBetweenObjects::class)]
 class CouplingBetweenObjectsTest extends AbstractTestCase
 {
-    /**
-     * testRuleNotAppliesToClassWithCboLessThanThreshold
-     */
     public function testRuleNotAppliesToClassWithCboLessThanThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
@@ -40,9 +37,6 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cbo', 41));
     }
 
-    /**
-     * testRuleAppliesToClassWithCboEqualToThreshold
-     */
     public function testRuleAppliesToClassWithCboEqualToThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
@@ -51,9 +45,6 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cbo', 42));
     }
 
-    /**
-     * testRuleAppliesToClassWithCboGreaterThanThreshold
-     */
     public function testRuleAppliesToClassWithCboGreaterThanThreshold(): void
     {
         $rule = new CouplingBetweenObjects();

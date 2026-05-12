@@ -27,9 +27,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(LongVariable::class)]
 class LongVariableTest extends AbstractTestCase
 {
-    /**
-     * testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToLocalVariableInFunctionWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -38,9 +35,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold
-     */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -49,9 +43,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold
-     */
     public function testRuleNotAppliesToLocalVariableInFunctionWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
@@ -60,9 +51,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToFunctionParameterWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToFunctionParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -71,9 +59,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold
-     */
     public function testRuleNotAppliesToFunctionParameterWithNameSmallerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -82,9 +67,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getFunction());
     }
 
-    /**
-     * testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToLocalVariableInMethodWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -99,9 +81,6 @@ class LongVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold
-     */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
@@ -110,9 +89,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold
-     */
     public function testRuleNotAppliesToLocalVariableInMethodWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -121,9 +97,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToMethodParameterWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToMethodParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -138,9 +111,6 @@ class LongVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold
-     */
     public function testRuleNotAppliesToMethodParameterWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -149,9 +119,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToFieldWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToFieldWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -160,9 +127,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToFieldWithNameEqualToThreshold
-     */
     public function testRuleNotAppliesToFieldWithNameEqualToThreshold(): void
     {
         $rule = new LongVariable();
@@ -171,9 +135,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToFieldWithNameShorterThanThreshold
-     */
     public function testRuleNotAppliesToFieldWithNameShorterThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -182,9 +143,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold
-     */
     public function testRuleAppliesToFieldAndParameterWithNameLongerThanThreshold(): void
     {
         $rule = new LongVariable();
@@ -199,9 +157,6 @@ class LongVariableTest extends AbstractTestCase
         }
     }
 
-    /**
-     * testRuleNotAppliesToStaticMembersAccessedInMethod
-     */
     public function testRuleNotAppliesToStaticMembersAccessedInMethod(): void
     {
         $rule = new LongVariable();
@@ -210,9 +165,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToIdenticalVariableOnlyOneTime
-     */
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
         $rule = new LongVariable();
@@ -221,9 +173,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
-    /**
-     * testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes
-     */
     public function testRuleAppliesToIdenticalVariablesInDifferentContextsSeveralTimes(): void
     {
         $rule = new LongVariable();
@@ -264,9 +213,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted
-     */
     public function testRuleNotAppliesToVariableNameSmallerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
@@ -276,9 +222,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted
-     */
     public function testRuleAppliesToVariableNameLongerThanThresholdWithSuffixSubtracted(): void
     {
         $rule = new LongVariable();
@@ -288,9 +231,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined
-     */
     public function testRuleAppliesToVariableNameLongerThanThresholdWithMultipleSuffixesDefined(): void
     {
         $rule = new LongVariable();
@@ -300,9 +240,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix
-     */
     public function testRuleAppliesToVariableNameSuffixIsNotSubtractedWhenNotASuffix(): void
     {
         $rule = new LongVariable();
@@ -312,9 +249,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariableNameWithEmptySubtractSuffixes
-     */
     public function testRuleAppliesToVariableNameWithEmptySubtractSuffixes(): void
     {
         $rule = new LongVariable();
@@ -324,9 +258,6 @@ class LongVariableTest extends AbstractTestCase
         $rule->apply($this->getClass());
     }
 
-    /**
-     * testRuleAppliesToVariableNameFollowingHungarianNotation
-     */
     public function testRuleAppliesToVariableNameFollowingHungarianNotation(): void
     {
         $rule = new LongVariable();

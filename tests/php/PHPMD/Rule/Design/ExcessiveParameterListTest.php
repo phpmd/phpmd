@@ -27,70 +27,52 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Test case for the excessive long parameter list rule.
  */
-#[CoversClass(LongParameterList::class)]
-class LongParameterListTest extends AbstractTestCase
+#[CoversClass(ExcessiveParameterList::class)]
+class ExcessiveParameterListTest extends AbstractTestCase
 {
-    /**
-     * testApplyIgnoresMethodsWithLessParametersThanMinimum
-     */
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createMethod(3));
     }
 
-    /**
-     * testApplyReportsMethodsWithIdenticalParametersAndMinimum
-     */
     public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createMethod(3));
     }
 
-    /**
-     * testApplyReportsMethodsWithMoreParametersThanMinimum
-     */
     public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createMethod(42));
     }
 
-    /**
-     * testApplyIgnoresFunctionsWithLessParametersThanMinimum
-     */
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createFunction(3));
     }
 
-    /**
-     * testApplyReportsFunctionsWithIdenticalParametersAndMinimum
-     */
     public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createFunction(3));
     }
 
-    /**
-     * testApplyReportsFunctionsWithMoreParametersThanMinimum
-     */
     public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createFunction(42));
