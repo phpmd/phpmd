@@ -222,7 +222,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param AbstractNode<PDependNode> $variable
      * @throws OutOfBoundsException
      */
-    protected function isInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
+    private function isInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
     {
         if ($this->selfVariableCache->offsetExists($variable)) {
             return (bool) $this->selfVariableCache->offsetGet($variable);
@@ -238,7 +238,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param AbstractNode<PDependNode> $variable
      * @throws OutOfBoundsException
      */
-    protected function calculateInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
+    private function calculateInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
     {
         $name = $variable->getImage();
 
@@ -277,7 +277,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * @param AbstractNode<PDependNode> $lastWriting
      * @throws OutOfBoundsException
      */
-    protected function isWritingOfSelfType(ClassNode $class, string $name, AbstractNode $lastWriting): bool
+    private function isWritingOfSelfType(ClassNode $class, string $name, AbstractNode $lastWriting): bool
     {
         if ($lastWriting->isInstanceOf(ASTCloneExpression::class)) {
             $cloned = Seeker::fromNode($lastWriting)->getChildIfExist(0);
@@ -290,8 +290,16 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         if ($lastWriting->isInstanceOf(ASTAllocationExpression::class)) {
             $value = Seeker::fromNode($lastWriting)->getChildIfExist(0);
 
-            return $value
-                && ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf(ASTStaticReference::class));
+            if (!$value) {
+                return false;
+            }
+
+            if ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf(ASTStaticReference::class)) {
+                return true;
+            }
+
+            return $value->isInstanceOf(ASTClassOrInterfaceReference::class)
+                && $this->representCurrentClassName($class, $value->getImage());
         }
 
         if ($lastWriting->isInstanceOf(ASTVariable::class) && $lastWriting->getImage() !== $name) {
@@ -301,7 +309,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         return false;
     }
 
-    protected function canBeCurrentClassInstance(ClassNode $class, ASTType $type): bool
+    private function canBeCurrentClassInstance(ClassNode $class, ASTType $type): bool
     {
         // canBeCurrentClassInstance
         if ($type instanceof AbstractASTCombinationType) {
@@ -321,11 +329,12 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         return false;
     }
 
-    protected function representCurrentClassName(ClassNode $class, string $name): bool
+    private function representCurrentClassName(ClassNode $class, string $name): bool
     {
         return in_array($name, [
             'self',
             'static',
+            $class->getImage(),
             $class->getFullQualifiedName(),
         ], true);
     }
