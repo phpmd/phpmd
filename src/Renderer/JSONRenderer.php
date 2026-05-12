@@ -23,6 +23,7 @@ use PHPMD\AbstractRenderer;
 use PHPMD\PHPMD;
 use PHPMD\ProcessingError;
 use PHPMD\Report;
+use PHPMD\Utility\Paths;
 
 /**
  * This class will render a JSON report.
@@ -69,8 +70,10 @@ class JSONRenderer extends AbstractRenderer
         $filesList = [];
         foreach ($report->getRuleViolations() as $violation) {
             $fileName = $violation->getFileName();
+            $relativePath = Paths::getRelativePath(getcwd() ?: '', (string) $fileName);
             $rule = $violation->getRule();
             $filesList[$fileName ?? '']['file'] = $fileName;
+            $filesList[$fileName ?? '']['relativePath'] = $relativePath;
             $filesList[$fileName ?? '']['violations'][] = [
                 'beginLine' => $violation->getBeginLine(),
                 'endLine' => $violation->getEndLine(),
