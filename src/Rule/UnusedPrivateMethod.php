@@ -311,7 +311,6 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 
     private function canBeCurrentClassInstance(ClassNode $class, ASTType $type): bool
     {
-        // canBeCurrentClassInstance
         if ($type instanceof AbstractASTCombinationType) {
             foreach ($type->getChildren() as $child) {
                 if ($child instanceof ASTType && $this->canBeCurrentClassInstance($class, $child)) {
