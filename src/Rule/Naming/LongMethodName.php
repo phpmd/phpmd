@@ -27,11 +27,11 @@ use PHPMD\RuleProperty\MatchList;
 use PHPMD\RuleProperty\Threshold;
 
 /**
- * This rule class will detect methods and functions with very short names.
+ * This rule class will detect methods and functions with very long names.
  */
-final class ShortMethodName extends AbstractRule implements FunctionAware, MethodAware
+final class LongMethodName extends AbstractRule implements FunctionAware, MethodAware
 {
-    #[Threshold(['threshold', 'minimum'])]
+    #[Threshold(['threshold', 'maximum'])]
     public int $threshold;
 
     #[MatchList]
@@ -40,13 +40,13 @@ final class ShortMethodName extends AbstractRule implements FunctionAware, Metho
     /**
      * Extracts all method and function nodes from the given node
      * and checks the method or function name length against the configured
-     * minimum length.
+     * maximum length.
      */
     public function apply(AbstractNode $node): void
     {
         $name = (string) $node->getName();
 
-        if (\strlen($name) >= $this->threshold || $this->exceptions?->contains($name)) {
+        if (\strlen($name) <= $this->threshold || $this->exceptions?->contains($name)) {
             return;
         }
 

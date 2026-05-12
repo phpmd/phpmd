@@ -28,7 +28,7 @@ use PHPMD\Rule\ClassAware;
  *
  * @since 0.2.5
  */
-final class WeightedMethodCount extends AbstractRule implements ClassAware
+final class ExcessiveClassComplexity extends AbstractRule implements ClassAware
 {
     /**
      * This method checks the weighted method count for the given class against

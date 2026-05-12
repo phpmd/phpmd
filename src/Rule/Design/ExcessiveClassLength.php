@@ -20,35 +20,33 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Rule\FunctionAware;
-use PHPMD\Rule\MethodAware;
+use PHPMD\Rule\ClassAware;
 
 /**
- * This rule will check the NPath-complexity of a method or function against the
- * configured threshold.
+ * This rule class will detect excessive long classes.
  */
-final class NpathComplexity extends AbstractRule implements FunctionAware, MethodAware
+final class ExcessiveClassLength extends AbstractRule implements ClassAware
 {
     /**
-     * This method checks the acyclic complexity for the given node against a
-     * configured threshold.
+     * This method checks the length of the given class node against a configured
+     * threshold.
      */
     public function apply(AbstractNode $node): void
     {
         $threshold = $this->getIntProperty('minimum');
-        $npath = $node->getMetric('npath');
-        if ($npath < $threshold) {
+
+        $loc = -1;
+        if ($this->getBooleanProperty('ignore-whitespace')) {
+            $loc = $node->getMetric('eloc');
+        }
+        if (-1 === $loc) {
+            $loc = $node->getMetric('loc');
+        }
+
+        if ($loc < $threshold) {
             return;
         }
 
-        $this->addViolation(
-            $node,
-            [
-                $node->getType(),
-                $node->getName(),
-                (string) $npath,
-                (string) $threshold,
-            ]
-        );
+        $this->addViolation($node, [$node->getName(), (string) $loc, (string) $threshold]);
     }
 }

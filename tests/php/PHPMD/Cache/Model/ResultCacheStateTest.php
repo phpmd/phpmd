@@ -156,6 +156,33 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
+     * @covers ::findRuleIn
+     * @covers ::getRuleViolations
+     */
+    public function testGetRuleViolationsWithNullMetric(): void
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule(new BooleanArgumentFlag());
+        $rule = new BooleanArgumentFlag();
+        $nodeInfo = new NodeInfo(
+            '/file/path',
+            'namespace',
+            'className',
+            'methodName',
+            'functionName',
+            123,
+            456
+        );
+
+        $ruleViolation = new RuleViolation($rule, $nodeInfo, 'violation', null);
+
+        $this->state->addRuleViolation('/file/path', $ruleViolation);
+        $violations = $this->state->getRuleViolations('', [$ruleSet]);
+        static::assertCount(1, $violations);
+        static::assertEquals($ruleViolation, $violations[0]);
+    }
+
+    /**
      * @covers ::isFileModified
      * @covers ::setFileState
      */

@@ -20,28 +20,24 @@ namespace PHPMD\Rule\Design;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 
 /**
- * This rule class checks for excessive long function and method parameter lists.
+ * This rule will check the NPath-complexity of a method or function against the
+ * configured threshold.
  */
-final class LongParameterList extends AbstractRule implements FunctionAware, MethodAware
+final class NPathComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
     /**
-     * This method checks the number of arguments for the given function or method
-     * node against a configured threshold.
+     * This method checks the acyclic complexity for the given node against a
+     * configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        if (!$node instanceof AbstractCallableNode) {
-            return;
-        }
-
         $threshold = $this->getIntProperty('minimum');
-        $count = $node->getParameterCount();
-        if ($count < $threshold) {
+        $npath = $node->getMetric('npath');
+        if ($npath < $threshold) {
             return;
         }
 
@@ -50,7 +46,7 @@ final class LongParameterList extends AbstractRule implements FunctionAware, Met
             [
                 $node->getType(),
                 $node->getName(),
-                (string) $count,
+                (string) $npath,
                 (string) $threshold,
             ]
         );

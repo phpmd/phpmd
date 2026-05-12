@@ -27,15 +27,15 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * Test case for the excessive long parameter list rule.
  */
-#[CoversClass(LongParameterList::class)]
-class LongParameterListTest extends AbstractTestCase
+#[CoversClass(ExcessiveParameterList::class)]
+class ExcessiveParameterListTest extends AbstractTestCase
 {
     /**
      * testApplyIgnoresMethodsWithLessParametersThanMinimum
      */
     public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createMethod(3));
@@ -46,7 +46,7 @@ class LongParameterListTest extends AbstractTestCase
      */
     public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createMethod(3));
@@ -57,7 +57,7 @@ class LongParameterListTest extends AbstractTestCase
      */
     public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createMethod(42));
@@ -68,7 +68,7 @@ class LongParameterListTest extends AbstractTestCase
      */
     public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('minimum', '4');
         $rule->apply($this->createFunction(3));
@@ -79,7 +79,7 @@ class LongParameterListTest extends AbstractTestCase
      */
     public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createFunction(3));
@@ -90,7 +90,7 @@ class LongParameterListTest extends AbstractTestCase
      */
     public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
     {
-        $rule = new LongParameterList();
+        $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
         $rule->addProperty('minimum', '3');
         $rule->apply($this->createFunction(42));
