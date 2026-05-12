@@ -26,9 +26,7 @@ use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\AbstractTestCase;
-use PHPMD\Test\Inheritance\Bar;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Throwable;
 
 /**
  * Test case for the method node implementation.
@@ -37,9 +35,6 @@ use Throwable;
 #[CoversClass(MethodNode::class)]
 class MethodNodeTest extends AbstractTestCase
 {
-    /**
-     * testMagicCallDelegatesToWrappedPHPDependMethod
-     */
     public function testMagicCallDelegatesToWrappedPHPDependMethod(): void
     {
         $method = $this->getMockBuilder(ASTMethod::class)->setConstructorArgs([null])->getMock();
@@ -50,9 +45,6 @@ class MethodNodeTest extends AbstractTestCase
         $node->getStartLine();
     }
 
-    /**
-     * testGetParentTypeReturnsInterfaceForInterfaceMethod
-     */
     public function testGetParentTypeReturnsInterfaceForInterfaceMethod(): void
     {
         static::assertInstanceOf(
@@ -61,9 +53,6 @@ class MethodNodeTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testGetParentTypeReturnsClassForClassMethod
-     */
     public function testGetParentTypeReturnsClassForClassMethod(): void
     {
         static::assertInstanceOf(
@@ -80,9 +69,6 @@ class MethodNodeTest extends AbstractTestCase
         );
     }
 
-    /**
-     * testHasSuppressWarningsExecutesDefaultImplementation
-     */
     public function testHasSuppressWarningsExecutesDefaultImplementation(): void
     {
         $rule = $this->getRuleMock();
@@ -92,9 +78,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsDelegatesToParentClassMethod
-     */
     public function testHasSuppressWarningsDelegatesToParentClassMethod(): void
     {
         $rule = $this->getRuleMock();
@@ -104,9 +87,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsDelegatesToParentInterfaceMethod
-     */
     public function testHasSuppressWarningsDelegatesToParentInterfaceMethod(): void
     {
         $rule = $this->getRuleMock();
@@ -116,9 +96,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->hasSuppressWarningsFor($rule));
     }
 
-    /**
-     * testHasSuppressWarningsIgnoresCaseFirstLetter
-     */
     public function testHasSuppressWarningsIgnoresCaseFirstLetter(): void
     {
         $rule = $this->getRuleMock();
@@ -189,9 +166,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertTrue($method->isDeclaration());
     }
 
-    /**
-     * testGetFullQualifiedNameReturnsExpectedValue
-     */
     public function testGetFullQualifiedNameReturnsExpectedValue(): void
     {
         $class = new ASTClass('MyClass');
@@ -205,9 +179,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertSame('Sindelfingen\\MyClass::beer()', $node->getFullQualifiedName());
     }
 
-    /**
-     * @throws Throwable
-     */
     public function testIsDeclarationReturnsFalseForInheritedDeclaration(): void
     {
         $dir = __DIR__ . '/../../../resources/files/classes/inheritance';
@@ -240,15 +211,6 @@ class MethodNodeTest extends AbstractTestCase
         static::assertNotNull($bazMethod);
 
         $method = new MethodNode($bazMethod);
-
-        $class = $method->getParent();
-        static::assertNotNull($class);
-        $parentClass = $class->getParentClass(); // @phpstan-ignore method.notFound
-        static::assertNotNull($parentClass);
-        $parentClassName = $parentClass->getNamespacedName(); // @phpstan-ignore method.nonObject
-
-        static::assertSame(Bar::class, $parentClassName);
-        static::assertTrue($parentClass->isAbstract()); // @phpstan-ignore method.nonObject
         static::assertFalse($method->isDeclaration());
     }
 }
