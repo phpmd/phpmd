@@ -196,4 +196,18 @@ class UnusedPrivateMethodTest extends AbstractTestCase
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
+
+    public function testRuleDoesNotCrashOnCompoundAssignmentOperators(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
+
+    public function testRuleDoesNotCrashOnAbstractMethods(): void
+    {
+        $rule = new UnusedPrivateMethod();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getClass());
+    }
 }
