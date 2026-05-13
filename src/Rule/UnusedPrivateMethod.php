@@ -48,7 +48,7 @@ use SplObjectStorage;
  */
 final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
-    /** @var SplObjectStorage<AbstractNode<PDependNode>, bool> */
+    /** @var SplObjectStorage<PDependNode, bool> */
     private $selfVariableCache;
 
     /** @var SplObjectStorage<PDependNode, ASTFormalParameters> */
@@ -140,6 +140,10 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         foreach ($class->getMethods() as $method) {
             $children = $method->getNode()->getChildren();
 
+            if (!isset($children[0], $children[1]) || !$children[1] instanceof ASTScope) {
+                continue;
+            }
+
             /** @var ASTFormalParameters $parameters */
             $parameters = $children[0];
             $scope = $children[1];
@@ -224,12 +228,16 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      */
     private function isInstanceOfTheCurrentClass(ClassNode $class, AbstractNode $variable): bool
     {
-        if ($this->selfVariableCache->offsetExists($variable)) {
-            return (bool) $this->selfVariableCache->offsetGet($variable);
+        $node = $variable->getNode();
+
+        if ($this->selfVariableCache->offsetExists($node)) {
+            return (bool) $this->selfVariableCache->offsetGet($node);
         }
 
+        // Temporarily cache false to break potential circular references between variables
+        $this->selfVariableCache->offsetSet($node, false);
         $result = $this->calculateInstanceOfTheCurrentClass($class, $variable);
-        $this->selfVariableCache->offsetSet($variable, $result);
+        $this->selfVariableCache->offsetSet($node, $result);
 
         return $result;
     }
