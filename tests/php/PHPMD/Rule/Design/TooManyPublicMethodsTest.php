@@ -131,6 +131,15 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
 
+    public function testRuleIgnoresTestMethodsInTestClasses(): void
+    {
+        $rule = new TooManyPublicMethods();
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('ignorepattern', '(^(set|get|is|has|with|test))i');
+        $rule->apply($this->createClassMock(2, ['invoke', 'testMyFeature']));
+    }
+
     public function testRuleApplyToBasicClass(): void
     {
         $class = $this->getClass();
