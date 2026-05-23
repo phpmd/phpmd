@@ -44,6 +44,7 @@ New features:
 - Added #1069: `UnusedPrivateMethod` rule now recognises calls on cloned objects and `new self`/`new static`/`new ClassName`.
 - Added: `IfStatementWithoutLogic` rule (CleanCode) — flags conditional statements that contain only literals.
 - Added: `LongMethodName` rule (Naming) — flags method and function names that exceed a configurable length threshold.
+- Added: `exceptions` parameter support for `ExcessiveParameterList` (LongParameterList) rule to ignore listed methods.
 
 Fixed:
 
