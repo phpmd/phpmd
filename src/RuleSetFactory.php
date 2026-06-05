@@ -824,6 +824,7 @@ class RuleSetFactory
             throw new RuntimeException(trim($error?->message ?: ''));
         }
 
+        $name = isset($xml['name']) ? (string) $xml['name'] : null;
         $ruleSet = $this->initRuleSet($fileName, $xml['name'] ?? null);
 
         foreach ($xml->children() as $node) {
