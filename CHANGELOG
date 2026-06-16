@@ -48,6 +48,7 @@ New features:
 
 Fixed:
 
+- Fixed false positive in `UnusedLocalVariable` for variables used with coalescing assignment.
 - Fixed #814: Correctly attribute argument to variadic parameter.
 - Fixed #1016: Crash when isPassedByReference checks a parent that does not exist.
 - Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.

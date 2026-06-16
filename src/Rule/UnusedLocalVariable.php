@@ -123,6 +123,10 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
                 return true;
             }
 
+            if ($parent->getImage() !== '=') {
+                return true;
+            }
+
             if (in_array($node->getNode(), array_slice($parent->getChildren(), 1), true)) {
                 return true;
             }
