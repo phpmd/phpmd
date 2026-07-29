@@ -217,6 +217,33 @@ class ShortVariableTest extends AbstractTestCase
         $rule->apply($this->getMethod());
     }
 
+    public function testRuleAppliesToClosureParameterPassedAsMethodArgument(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleAppliesToArrowFunctionParameterPassedAsMethodArgument(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getMethod());
+    }
+
+    public function testRuleNotAppliesToStaticMemberAccessedInClosurePassedAsMethodArgument(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->apply($this->getMethod());
+    }
+
     public function testRuleAppliesToIdenticalVariableOnlyOneTime(): void
     {
         $rule = new ShortVariable();

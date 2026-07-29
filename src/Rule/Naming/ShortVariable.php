@@ -19,6 +19,7 @@
 namespace PHPMD\Rule\Naming;
 
 use PDepend\Source\AST\ASTCatchStatement;
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTForeachStatement;
 use PDepend\Source\AST\ASTForInit;
@@ -174,7 +175,35 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
 
         return $this->isChildOf($node, ASTCatchStatement::class)
             || $this->isChildOf($node, ASTForInit::class)
-            || $this->isChildOf($node, ASTMemberPrimaryPrefix::class);
+            || $this->isPartOfMemberPrimaryPrefix($node);
+    }
+
+    /**
+     * Checks if the given node is part of a member access chain, like the
+     * property name in a static property access. Nodes inside a closure or
+     * arrow function that is itself passed as an argument within such a
+     * chain are not part of it, so their parameters and local variables
+     * are still checked.
+     *
+     * @param AbstractNode<ASTNode> $node
+     */
+    private function isPartOfMemberPrimaryPrefix(AbstractNode $node): bool
+    {
+        $parent = $node->getParent();
+
+        while ($parent) {
+            if ($parent->isInstanceOf(ASTMemberPrimaryPrefix::class)) {
+                return true;
+            }
+
+            if ($parent->isInstanceOf(ASTClosure::class)) {
+                return false;
+            }
+
+            $parent = $parent->getParent();
+        }
+
+        return false;
     }
 
     /**
