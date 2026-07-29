@@ -4,6 +4,7 @@ namespace PHPMD\Cache\Model;
 
 use OutOfBoundsException;
 use PHPMD\Node\NodeInfo;
+use PHPMD\ProcessingError;
 use PHPMD\Rule;
 use PHPMD\RuleSet;
 use PHPMD\RuleViolation;
@@ -12,7 +13,7 @@ use PHPMD\Utility\Paths;
 class ResultCacheState
 {
     /**
-     * @param array{files?: array<string, array{hash: string, violations?: list<array{
+     * @param array{files?: array<string, array{hash: string, errors?: list<string>, violations?: list<array{
      *  metric: mixed,
      *  namespaceName: ?string,
      *  className: ?string,
@@ -76,6 +77,47 @@ class ResultCacheState
     public function setViolations(string $filePath, array $violations): void
     {
         $this->state['files'][$filePath]['violations'] = $violations;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getErrors(string $filePath): array
+    {
+        return $this->state['files'][$filePath]['errors'] ?? [];
+    }
+
+    /**
+     * @param list<string> $errors
+     */
+    public function setErrors(string $filePath, array $errors): void
+    {
+        if ($errors === []) {
+            return;
+        }
+
+        $this->state['files'][$filePath]['errors'] = $errors;
+    }
+
+    public function addError(string $filePath, ProcessingError $error): void
+    {
+        $this->state['files'][$filePath]['errors'][] = $error->getMessage();
+    }
+
+    /**
+     * @return list<ProcessingError>
+     */
+    public function getProcessingErrors(): array
+    {
+        $errors = [];
+
+        foreach ($this->state['files'] ?? [] as $file) {
+            foreach ($file['errors'] ?? [] as $message) {
+                $errors[] = new ProcessingError($message);
+            }
+        }
+
+        return $errors;
     }
 
     public function addRuleViolation(string $filePath, RuleViolation $violation): void
