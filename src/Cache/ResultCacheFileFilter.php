@@ -53,8 +53,9 @@ class ResultCacheFileFilter implements Filter
             $this->newState->setFileState($filePath, $hash);
         }
         if (!$isModified && $this->state) {
-            // File was not modified, transfer previous violations
+            // File was not modified, transfer previous violations and processing errors
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
+            $this->newState->setErrors($filePath, $this->state->getErrors($filePath));
         }
 
         if ($isModified) {

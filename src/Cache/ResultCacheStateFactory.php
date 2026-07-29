@@ -30,7 +30,7 @@ class ResultCacheStateFactory
             return null;
         }
 
-        /** @var array{files?: array<string, array{hash: string, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} */
+        /** @var array{files?: array<string, array{hash: string, errors?: list<string>, violations?: list<array{metric: mixed, namespaceName: ?string, className: ?string, methodName: ?string, functionName: ?string, description: string, beginLine: int, endLine: int, rule: string, args: ?array<int, string>}>}>} */
         $state = $resultCache['state'];
 
         return new ResultCacheState($cacheKey, $state);
