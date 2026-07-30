@@ -17,6 +17,7 @@
  */
 
 use PHPMD\TextUI\Command;
+use PHPMD\TextUI\LegacyArguments;
 use PHPMD\TextUI\XdebugOptionHandler;
 use PHPMD\TextUI\PdependWorkerCommand;
 use Symfony\Component\Console\Application;
@@ -47,21 +48,11 @@ if (!ini_get('date.timezone')) {
 
 ini_set('memory_limit', -1);
 
-// Compatibility shim for PhpStorm and other tools that use the old CLI interface:
-// phpmd <file> xml <ruleset>
-if (
-    isset($argv[1], $argv[2], $argv[3])
-    && $argv[2] === 'xml'
-    && $argv[1] !== 'analyze'
-    && !str_starts_with($argv[1], '-')
-) {
-    fwrite(STDERR, 'Deprecated: positional arguments are deprecated, use "phpmd analyze <file> --format xml --ruleset <ruleset>" instead.' . PHP_EOL);
-    $rulesets = [];
-    foreach (explode(',', $argv[3]) as $ruleset) {
-        $rulesets[] = '--ruleset';
-        $rulesets[] = $ruleset;
-    }
-    $argv = [$argv[0], 'analyze', $argv[1], '--format', 'xml', '--no-progress', ...$rulesets];
+// Compatibility shim for GrumPHP, PhpStorm and other tools that use the old CLI interface:
+// phpmd <file>,... <format> <ruleset>,... [--exclude <patterns>] [--suffixes <suffixes>] [...]
+if (LegacyArguments::isLegacyInvocation($argv)) {
+    fwrite(STDERR, LegacyArguments::deprecationMessage($argv));
+    $argv = LegacyArguments::transform($argv);
     $_SERVER['argv'] = $argv;
 }
 $application = new Application('PHPMD', Command::getVersion());
