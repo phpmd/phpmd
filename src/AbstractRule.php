@@ -334,6 +334,15 @@ abstract class AbstractRule implements Rule
     }
 
     /**
+     * Whether this rule should ignore SuppressWarnings suppressions and
+     * report on nodes that would otherwise be skipped.
+     */
+    protected function isStrict(): bool
+    {
+        return $this->strict;
+    }
+
+    /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
      *

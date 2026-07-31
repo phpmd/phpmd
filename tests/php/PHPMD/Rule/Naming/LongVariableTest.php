@@ -266,4 +266,13 @@ class LongVariableTest extends AbstractTestCase
         $rule->setReport($this->getReportWithNoViolation());
         $rule->apply($this->getClass());
     }
+
+    public function testStrictModeReportsSuppressedFieldViolation(): void
+    {
+        $rule = new LongVariable();
+        $rule->addProperty('maximum', '17');
+        $rule->setStrict(true);
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->apply($this->getClass());
+    }
 }
