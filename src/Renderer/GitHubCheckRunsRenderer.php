@@ -20,8 +20,8 @@ namespace PHPMD\Renderer;
 
 use JsonException;
 use PHPMD\AbstractRenderer;
-use PHPMD\PHPMD;
 use PHPMD\Report;
+use PHPMD\TextUI\Command;
 
 /**
  * This class will render a report for GitHub Check Runs.
@@ -46,7 +46,7 @@ final class GitHubCheckRunsRenderer extends AbstractRenderer
     private function initReportData(Report $report): array
     {
         return [
-            'title' => sprintf('%s %s', 'phpmd', PHPMD::VERSION),
+            'title' => sprintf('%s %s', 'phpmd', Command::getVersion()),
             'summary' => $this->getReportSummary($report),
         ];
     }

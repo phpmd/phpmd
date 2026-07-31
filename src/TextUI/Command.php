@@ -480,7 +480,7 @@ final class Command extends SymfonyCommand
         $build = __DIR__ . '/../../CHANGELOG';
 
         $version = '@package_version@';
-        if (file_exists($build)) {
+        if (preg_match('/\d+\.\d+\.\d+/', $version) !== 1 && file_exists($build)) {
             $changelog = file_get_contents($build, false, null, 0, 1024) ?: '';
             $version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : $version;
         }
