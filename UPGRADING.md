@@ -52,7 +52,7 @@ Run `phpmd analyze --help` to see all available options.
 
 In addition to XML, PHPMD 3 supports rule set configuration in YAML, JSON, and PHP. YAML is the recommended format for new projects. See the [creating a custom rule set](https://phpmd.org/documentation/creating-a-ruleset.html) documentation for details.
 
-Exclude patterns can now also be configured directly in the rule set file using the `exclude-pattern` key, instead of relying on the `--exclude` CLI option.
+Common options can now be configured directly in the rule set file using the `exclude-pattern`, `format`, `cache-file`, `cache-strateg`, `baseline-file`, `bootstrap`, `cache`, `minimum-priority`, `maximum-priority`, `threads`, `paths`, and `suffixes` keys, instead of relying on the CLI option.
 
 ### Configuration file auto-detection
 

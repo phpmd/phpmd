@@ -61,6 +61,8 @@ A ``phpmd.yml`` rule set file could look like this:
 
   name: My first PHPMD rule set
   description: My custom rule set that checks my code...
+  path:
+    - "src/"
   exclude-pattern:
     - "*/vendor/*"
   rules:

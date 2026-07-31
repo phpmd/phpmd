@@ -601,15 +601,201 @@ class RuleSetFactory
      *
      * http://pmd.sourceforge.net/pmd-5.0.4/howtomakearuleset.html#Excluding_files_from_a_ruleset
      *
-     * @param list<string> $fileName The filename of a rule-set definition.
+     * @param list<string> $fileNames The filename of a rule-set definition.
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
      */
-    public function getExcludePatterns(array $fileName): array
+    public function getExcludePatterns(array $fileNames): array
     {
-        $excludes = [];
-        $files = array_map(trim(...), $fileName);
+        return $this->getArrayPropertyFromFile($fileNames, 'exclude-pattern');
+    }
+
+    /**
+     * Returns an array of paths
+     *
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @return list<string>
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getPaths(array $fileNames): array
+    {
+        return $this->getArrayPropertyFromFile($fileNames, 'paths');
+    }
+
+    /**
+     * Returns an array of suffixes
+     *
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @return list<string>
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getSuffixes(array $fileNames): array
+    {
+        return $this->getArrayPropertyFromFile($fileNames, 'suffixes');
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getFormat(array $fileNames): ?string
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'format');
+        if (!is_string($value) && $value !== null) {
+            throw new RuntimeException('Invalid format must be a string');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getCacheFile(array $fileNames): ?string
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'cache-file');
+        if (!is_string($value) && $value !== null) {
+            throw new RuntimeException('Invalid cache-file must be a string');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getCacheStrategy(array $fileNames): ?string
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'cache-strategy');
+        if (!is_string($value) && $value !== null) {
+            throw new RuntimeException('Invalid cache-strategy must be a string');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getBaseLineFile(array $fileNames): ?string
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'baseline-file');
+        if (!is_string($value) && $value !== null) {
+            throw new RuntimeException('Invalid baseline-file must be a string');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getBoostrap(array $fileNames): ?string
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'bootstrap');
+        if (!is_string($value) && $value !== null) {
+            throw new RuntimeException('Invalid bootstrap must be a string');
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getMinimumPriority(array $fileNames): ?int
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'minimum-priority');
+        if ($value === null) {
+            return null;
+        }
+        if (!is_int($value) && !ctype_digit($value)) {
+            throw new RuntimeException('Invalid minimum-priority must be a integer');
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getMaximumPriority(array $fileNames): ?int
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'maximum-priority');
+        if ($value === null) {
+            return null;
+        }
+        if (!is_int($value) && !ctype_digit($value)) {
+            throw new RuntimeException('Invalid maximum-priority must be a integer');
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getThreads(array $fileNames): ?int
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'threads');
+        if ($value === null) {
+            return null;
+        }
+        if (!is_int($value) && !ctype_digit($value)) {
+            throw new RuntimeException('Invalid threads must be a integer');
+        }
+
+        return (int) $value;
+    }
+
+    /**
+     * @param list<string> $fileNames The filename of a rule-set definition.
+     * @throws RuntimeException Thrown if file is not proper xml
+     * @throws ParseException
+     */
+    public function getCache(array $fileNames): bool
+    {
+        $value = $this->getPropertyFromFile($fileNames, 'cache') ?? false;
+        if (is_string($value)) {
+            $value = filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+        }
+        if (!is_bool($value)) {
+            throw new RuntimeException('Invalid cache must be a boolean');
+        }
+
+        return $value;
+    }
+
+    /**
+     * Extract array property from a single ruleset file.
+     *
+     * @param list<string> $fileNames
+     * @return list<string>
+     * @throws RuntimeException
+     * @throws ParseException
+     */
+    private function getArrayPropertyFromFile(array $fileNames, string $property): array
+    {
+        $result = [];
+        $files = array_map(trim(...), $fileNames);
         $files = array_filter($files);
 
         foreach ($files as $ruleSetFileName) {
@@ -619,25 +805,64 @@ class RuleSetFactory
                 ? strtolower($match['format'])
                 : 'xml';
 
-            $excludes = [...$excludes, ...$this->getExcludePatternsFromFile($ruleSetFileName, $format)];
+            if ($format !== 'xml') {
+                $values = $this->getArrayPropertyFromArrayConfig($ruleSetFileName, $format, $property);
+                $result = [...$result, ...$values];
+
+                continue;
+            }
+
+            $values = $this->getArrayPropertyFromXmlConfig($ruleSetFileName, $property);
+            $result = [...$result, ...$values];
         }
 
-        return $excludes;
+        return $result;
     }
 
     /**
-     * Extract exclude patterns from a single ruleset file.
+     * Extract array property from an array-based config file (php, yml, yaml, json).
      *
      * @return list<string>
      * @throws RuntimeException
      * @throws ParseException
      */
-    private function getExcludePatternsFromFile(string $fileName, string $format): array
+    private function getArrayPropertyFromArrayConfig(string $fileName, string $format, string $property): array
     {
-        if ($format !== 'xml') {
-            return $this->getExcludePatternsFromArrayConfig($fileName, $format);
+        $config = match ($format) {
+            'php' => include $fileName,
+            'yml', 'yaml' => Yaml::parseFile($fileName),
+            'json' => json_decode(file_get_contents($fileName) ?: '', true),
+            default => throw new RuntimeException('Unsupported format: ' . $format),
+        };
+
+        if (!is_array($config)) {
+            throw new RuntimeException('Invalid config');
         }
 
+        $patterns = $config[$property] ?? [];
+        if (!is_array($patterns)) {
+            throw new RuntimeException("Invalid {$property} must be an array");
+        }
+
+        $values = [];
+        foreach ($patterns as $pattern) {
+            if (!is_string($pattern)) {
+                throw new RuntimeException("Invalid {$property} entry");
+            }
+            $values[] = $pattern;
+        }
+
+        return $values;
+    }
+
+    /**
+     * Extract array property from an xml-based config file.
+     *
+     * @return list<string>
+     * @throws RuntimeException
+     */
+    private function getArrayPropertyFromXmlConfig(string $fileName, string $property): array
+    {
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
         $fileContent = file_get_contents($fileName);
@@ -654,24 +879,56 @@ class RuleSetFactory
             throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
         }
 
-        $excludes = [];
+        $values = [];
         foreach ($xml->children() as $node) {
-            if ($node->getName() === 'exclude-pattern') {
-                $excludes[] = '' . $node;
+            if ($node->getName() === $property) {
+                $values[] = '' . $node;
             }
         }
 
-        return $excludes;
+        return $values;
     }
 
     /**
-     * Extract exclude patterns from an array-based config file (php, yml, yaml, json).
-     *
-     * @return list<string>
+     * @param list<string> $fileNames
      * @throws RuntimeException
      * @throws ParseException
      */
-    private function getExcludePatternsFromArrayConfig(string $fileName, string $format): array
+    private function getPropertyFromFile(array $fileNames, string $property): mixed
+    {
+        $files = array_map(trim(...), $fileNames);
+        $files = array_filter($files);
+
+        foreach ($files as $ruleSetFileName) {
+            $ruleSetFileName = $this->createRuleSetFileName($ruleSetFileName);
+
+            $format = preg_match('/\.(?<format>php|json|ya?ml)(?:\.dist)?$/i', $ruleSetFileName, $match)
+                ? strtolower($match['format'])
+                : 'xml';
+
+            if ($format !== 'xml') {
+                $value = $this->getPropertyFromArrayConfig($ruleSetFileName, $format, $property);
+                if ($value !== null) {
+                    return $value;
+                }
+
+                continue;
+            }
+
+            $value = $this->getPropertyFromXmlConfig($ruleSetFileName, $property);
+            if ($value !== null) {
+                return $value;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @throws RuntimeException
+     * @throws ParseException
+     */
+    private function getPropertyFromArrayConfig(string $fileName, string $format, string $property): mixed
     {
         $config = match ($format) {
             'php' => include $fileName,
@@ -684,20 +941,37 @@ class RuleSetFactory
             throw new RuntimeException('Invalid config');
         }
 
-        $patterns = $config['exclude-pattern'] ?? [];
-        if (!is_array($patterns)) {
-            throw new RuntimeException('Invalid exclude-pattern');
+        return $config[$property] ?? null;
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    private function getPropertyFromXmlConfig(string $fileName, string $property): ?string
+    {
+        // Hide error messages
+        $libxml = libxml_use_internal_errors(true);
+        $fileContent = file_get_contents($fileName);
+        if ($fileContent === false) {
+            throw new RuntimeException('Unable to load ' . $fileName);
         }
 
-        $excludes = [];
-        foreach ($patterns as $pattern) {
-            if (!is_string($pattern)) {
-                throw new RuntimeException('Invalid exclude-pattern entry');
+        $xml = simplexml_load_string($fileContent);
+        if (!$xml) {
+            // Reset error handling to previous setting
+            libxml_use_internal_errors($libxml);
+            $error = libxml_get_last_error();
+
+            throw new RuntimeException($error ? trim($error->message) : 'Unknown error');
+        }
+
+        foreach ($xml->children() as $node) {
+            if ($node->getName() === $property) {
+                return '' . $node;
             }
-            $excludes[] = $pattern;
         }
 
-        return $excludes;
+        return null;
     }
 
     /**
