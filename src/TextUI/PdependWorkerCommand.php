@@ -40,8 +40,29 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 final class PdependWorkerCommand extends SymfonyCommand
 {
+    /**
+     * PDepend::main() re-parses $_SERVER['argv'] itself and doesn't know
+     * about Symfony option definitions (e.g. --worker), so Symfony's own
+     * input binding must not reject them before execute() runs.
+     */
+    protected function configure(): void
+    {
+        $this->ignoreValidationErrors();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // PDependCommand::main() re-parses $_SERVER['argv'] itself and has no
+        // notion of Symfony sub-commands, so it treats this command's own name
+        // as an unrecognized option and aborts before ever reading a file from
+        // stdin. Strip it so pdepend sees only the arguments it understands.
+        /** @var list<string> $argv */
+        $argv = $_SERVER['argv'] ?? [];
+        $_SERVER['argv'] = array_values(array_filter(
+            $argv,
+            fn(string $arg): bool => $arg !== $this->getName(),
+        ));
+
         return PdependCommand::main();
     }
 }
