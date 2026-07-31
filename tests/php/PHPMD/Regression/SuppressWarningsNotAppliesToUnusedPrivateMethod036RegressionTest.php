@@ -34,4 +34,14 @@ class SuppressWarningsNotAppliesToUnusedPrivateMethod036RegressionTest extends A
 
         $ruleSet->apply($this->getClass());
     }
+
+    public function testStrictModeReportsSuppressedPrivateMethodViolation(): void
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule(new UnusedPrivateMethod());
+        $ruleSet->setStrict();
+        $ruleSet->setReport($this->getReportWithOneViolation());
+
+        $ruleSet->apply($this->getClass());
+    }
 }

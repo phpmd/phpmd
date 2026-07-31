@@ -74,7 +74,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
             $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
 
             foreach ($fields as $field) {
-                if ($field->hasSuppressWarningsFor($this)) {
+                if (!$this->isStrict() && $field->hasSuppressWarningsFor($this)) {
                     continue;
                 }
 
@@ -125,7 +125,7 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
     #[SuppressWarnings(self::class)]
     private function checkMaximumLength(AbstractNode $node): void
     {
-        if ($node->hasSuppressWarningsFor($this)) {
+        if (!$this->isStrict() && $node->hasSuppressWarningsFor($this)) {
             return;
         }
 
