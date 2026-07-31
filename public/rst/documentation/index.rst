@@ -43,20 +43,22 @@ Command line options
 
   - ``--minimum-priority`` - The rule priority threshold; rules with lower
     priority than this will not be used.
+    Can also be configured via ``<minimum-priority>`` in the rule sets.
 
   - ``--maximum-priority`` - The rule priority threshold; rules with higher
     priority than this will not be used.
+    Can also be configured via ``<maximum-priority>`` in the rule sets.
 
   - ``--reportfile-text``, ``--reportfile-xml``, ``--reportfile-html``, etc. - Sends the report output
     to the specified file. Multiple report files in different formats can be written simultaneously.
 
   - ``--suffixes`` - Comma-separated string of valid source code filename
     extensions, e.g. php, phtml.
+    Can also be configured via ``<suffixes>`` in the rule sets.
 
   - ``--exclude`` - Comma-separated string of patterns that are used to ignore
     directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``.
-    Exclude patterns can also be configured via ``<exclude-pattern>`` in XML rule sets,
-    or ``exclude-pattern`` in YAML, JSON, and PHP rule sets.
+    Can also be configured via ``<exclude-pattern>`` in the rule sets.
 
   - ``--strict`` - Also report those nodes with a ``#[SuppressWarnings]`` attribute.
 
@@ -69,12 +71,15 @@ Command line options
 
   - ``--cache`` - will enable the result cache. Will default to ``.phpmd.result-cache.php`` in the
     current working directory.
+    Can also be configured via ``<cache>`` in the rule sets.
 
   - ``--cache-file`` - in cooperation with ``--cache`` will override the default result cache file path of
     ``.phpmd.result-cache.php`` to the given file path.
+    Can also be configured via ``<cache-file>`` in the rule sets.
 
   - ``--cache-strategy`` - sets the caching strategy to determine if a file is still fresh. Either
     `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+    Can also be configured via ``<cache-strategy>`` in the rule sets.
 
   - ``--generate-baseline`` - will generate a ``phpmd.baseline.xml`` for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
@@ -86,6 +91,7 @@ Command line options
 
   -  ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
+    Can also be configured via ``<baseline-file>`` in the rule sets.
 
   - ``--color`` - enable color in output, for instance text renderer
     will show rule name in yellow and error description in red.
@@ -93,12 +99,14 @@ Command line options
   - ``--xdebug`` - will enable Xdebug for debugging PHP Mess Detector.
 
   - ``--bootstrap`` - an optional PHP script to load before running the analysis.
+    Can also be configured via ``<bootstrap>`` in the rule sets.
 
   - ``--input-file`` - a file containing a list of source paths to analyze (one per line).
 
   - ``--no-progress`` - do not show the progress bar, only the results.
 
   - ``--threads`` - the number of threads to use to parse the files.
+    Can also be configured via ``<threads>`` in the rule sets.
 
   - ``--coverage`` - Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover
     option.

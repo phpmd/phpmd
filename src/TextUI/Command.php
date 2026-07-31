@@ -44,6 +44,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
+use Symfony\Component\Yaml\Exception\ParseException;
 use TypeError;
 use ValueError;
 
@@ -101,20 +102,36 @@ final class Command extends SymfonyCommand
 
     /**
      * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws ParseException
      */
     protected function configure(): void
     {
         $ruleSetFactory = new RuleSetFactory();
         $availableRuleSets = $ruleSetFactory->listAvailableRuleSets();
         $renderers = $this->getListOfAvailableRenderers();
+        $defaultConfig = $this->getDefaultConfig();
 
+        /** @var list<string> */
+        $argv = $_SERVER['argv'];
+        $rules = [];
+        foreach ($argv as $arg) {
+            if (str_starts_with($arg, '--ruleset=')) {
+                $rules[] = substr($arg, 10);
+            }
+        }
+        $defaultConfig = $rules ?: $defaultConfig;
+
+        $paths = $defaultConfig ? $ruleSetFactory->getPaths($defaultConfig) : [];
         $this->addArgument(
             'paths',
             InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-            'A php source code filename or directory, or "-" to scan stdin'
+            'A php source code filename or directory, or "-" to scan stdin',
+            $paths
         );
-        $defaultRenderer = 'text';
-        if (!in_array('text', $renderers, true)) {
+        $format = $defaultConfig ? $ruleSetFactory->getFormat($defaultConfig) : null;
+        $defaultRenderer = $format ?? 'text';
+        if (!in_array($defaultRenderer, $renderers, true)) {
             $defaultRenderer = reset($renderers);
         }
         $this->addOption(
@@ -130,29 +147,32 @@ final class Command extends SymfonyCommand
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
             'A ruleset filename or a comma-separated string of rulesetfilenames.',
-            $this->getDefaultConfig() ?? $availableRuleSets,
+            $defaultConfig ?? $availableRuleSets,
             $availableRuleSets
         );
+        $minimumPriority = $defaultConfig ? $ruleSetFactory->getMinimumPriority($defaultConfig) : null;
         $this->addOption(
             'minimum-priority',
             null,
             InputOption::VALUE_REQUIRED,
             'Rule priority threshold; rules with lower priority than this will not be used',
-            Rule::LOWEST_PRIORITY
+            $minimumPriority ?? Rule::LOWEST_PRIORITY
         );
+        $maximumPriority = $defaultConfig ? $ruleSetFactory->getMaximumPriority($defaultConfig) : null;
         $this->addOption(
             'maximum-priority',
             null,
             InputOption::VALUE_REQUIRED,
             'Rule priority threshold; rules with higher priority than this will not be used',
-            Rule::HIGHEST_PRIORITY
+            $maximumPriority ?? Rule::HIGHEST_PRIORITY
         );
+        $suffixes = $defaultConfig ? $ruleSetFactory->getSuffixes($defaultConfig) : [];
         $this->addOption(
             'suffixes',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
             'Source code filename extensions',
-            ['php', 'php3', 'php4', 'php5', 'inc']
+            $suffixes ?: ['php', 'php3', 'php4', 'php5', 'inc']
         );
         $this->addOption(
             'exclude',
@@ -179,21 +199,28 @@ final class Command extends SymfonyCommand
             InputOption::VALUE_NONE,
             'Will exit with a zero code, even if any violations are found'
         );
-        $this->addOption('cache', null, InputOption::VALUE_NONE, 'Will enable the result cache.');
+        $cache = $defaultConfig ? $ruleSetFactory->getCache($defaultConfig) : false;
+        $this->addOption('cache', null, InputOption::VALUE_NEGATABLE, 'Will enable the result cache.', $cache);
+        $cacheFile = $defaultConfig ? $ruleSetFactory->getCacheFile($defaultConfig) : null;
         $this->addOption(
             'cache-file',
             null,
             InputOption::VALUE_REQUIRED,
             'Result cache file to use.',
-            '.phpmd.result-cache.php'
+            $cacheFile ?? '.phpmd.result-cache.php'
         );
+        $cacheStrategy = $defaultConfig ? $ruleSetFactory->getCacheStrategy($defaultConfig) : null;
+        $cacheStrategies = [ResultCacheStrategy::Content->value, ResultCacheStrategy::Timestamp->value];
+        if (!in_array($cacheStrategy, $cacheStrategies, true)) {
+            $cacheStrategy = reset($cacheStrategies);
+        }
         $this->addOption(
             'cache-strategy',
             null,
             InputOption::VALUE_REQUIRED,
             'Sets the caching strategy to determine if a file is still fresh. Either `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp',
-            ResultCacheStrategy::Content->value,
-            [ResultCacheStrategy::Content->value, ResultCacheStrategy::Timestamp->value]
+            $cacheStrategy,
+            $cacheStrategies
         );
         $this->addOption(
             'generate-baseline',
@@ -207,7 +234,14 @@ final class Command extends SymfonyCommand
             InputOption::VALUE_NONE,
             'Will remove any non-existing violations from the phpmd.baseline.xml'
         );
-        $this->addOption('baseline-file', null, InputOption::VALUE_REQUIRED, 'A custom location of the baseline file');
+        $baselineFile = $defaultConfig ? $ruleSetFactory->getBaseLineFile($defaultConfig) : null;
+        $this->addOption(
+            'baseline-file',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'A custom location of the baseline file',
+            $baselineFile
+        );
         $this->addOption(
             'extra-line-in-excerpt',
             null,
@@ -240,15 +274,24 @@ final class Command extends SymfonyCommand
         $this->addOption('reportfile-sarif', null, InputOption::VALUE_REQUIRED, 'Write report to a sarif file');
         $this->addOption('reportfile-text', null, InputOption::VALUE_REQUIRED, 'Write report to a text file');
         $this->addOption('reportfile-xml', null, InputOption::VALUE_REQUIRED, 'Write report to an xml file');
+        $bootstrap = $defaultConfig ? $ruleSetFactory->getBoostrap($defaultConfig) : null;
         $this->addOption(
             'bootstrap',
             null,
             InputOption::VALUE_REQUIRED,
-            'An optional script to load before running analysis'
+            'An optional script to load before running analysis',
+            $bootstrap
         );
         $this->addOption('input-file', null, InputOption::VALUE_REQUIRED, 'A file containing paths to analyze');
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar, only results');
-        $this->addOption('threads', null, InputOption::VALUE_REQUIRED, 'Number of threads to use for parsing');
+        $threads = $defaultConfig ? $ruleSetFactory->getThreads($defaultConfig) : null;
+        $this->addOption(
+            'threads',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Number of threads to use for parsing',
+            $threads
+        );
     }
 
     /**

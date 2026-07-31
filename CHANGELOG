@@ -22,6 +22,7 @@ New features:
 - Added YAML, JSON, and PHP as configuration formats in addition to XML.
 - Added configuration file auto-detection for phpmd.yml, phpmd.yaml, phpmd.json, phpmd.xml, and phpmd.php.
 - Added `exclude-pattern` support in YAML, JSON, and PHP configuration files (#909).
+- Added `format`, `cache-file`, `cache-strateg`, `baseline-file`, `bootstrap`, `cache`, `minimum-priority`, `maximum-priority`, `threads`, `paths`, and `suffixes` to the configuration files.
 - Added `#[SuppressWarnings]` PHP attribute as the preferred way to suppress warnings.
 - Added progress bar during analysis, use `--no-progress` option to hide it.
 - Added `--threads` option for parallel file parsing.
@@ -1014,4 +1015,3 @@ phpmd-0.1.0 (2009/12/20)
 ========================
 
 Initial release
-
