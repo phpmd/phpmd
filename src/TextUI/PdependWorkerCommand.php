@@ -58,10 +58,12 @@ final class PdependWorkerCommand extends SymfonyCommand
         // stdin. Strip it so pdepend sees only the arguments it understands.
         /** @var list<string> $argv */
         $argv = $_SERVER['argv'] ?? [];
-        $_SERVER['argv'] = array_values(array_filter(
-            $argv,
-            fn(string $arg): bool => $arg !== $this->getName(),
-        ));
+        $index = array_search($this->getName(), $argv, true);
+        if ($index !== false) {
+            unset($argv[$index]);
+        }
+
+        $_SERVER['argv'] = array_values($argv);
 
         return PdependCommand::main();
     }

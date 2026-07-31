@@ -280,6 +280,34 @@ class CommandTest extends AbstractTestCase
         static::assertSame(Command::SUCCESS, $exitCode);
     }
 
+    /**
+     * @param list<string> $argv
+     */
+    #[DataProvider('dataProviderRulesetArgvSyntax')]
+    public function testConfigureReadsRulesetFromArgv(array $argv): void
+    {
+        $originalArgv = $_SERVER['argv'];
+        $_SERVER['argv'] = $argv;
+
+        try {
+            $ruleset = (new Command())->getDefinition()->getOption('ruleset');
+            static::assertSame(['design'], $ruleset->getDefault());
+        } finally {
+            $_SERVER['argv'] = $originalArgv;
+        }
+    }
+
+    /**
+     * @return list<list<list<string>>>
+     */
+    public static function dataProviderRulesetArgvSyntax(): array
+    {
+        return [
+            [['bin/phpmd', '--ruleset=design']],
+            [['bin/phpmd', '--ruleset', 'design']],
+        ];
+    }
+
     public function testMainPrintsVersionToStdout(): void
     {
         $changelog = file_get_contents(__DIR__ . '/../../../../CHANGELOG', false, null, 0, 1024) ?: '';
