@@ -23,7 +23,9 @@ use ArrayIterator;
 use InvalidArgumentException;
 use IteratorAggregate;
 use OutOfBoundsException;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule;
+use PHPMD\Rule\UnusedFormalParameter;
 use RuntimeException;
 
 /**
@@ -122,6 +124,7 @@ final class ExceptionsList implements ArrayAccess, IteratorAggregate
     /**
      * @throws RuntimeException
      */
+    #[SuppressWarnings(UnusedFormalParameter::class)]
     public function offsetSet($offset, $value): void
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');
@@ -130,6 +133,7 @@ final class ExceptionsList implements ArrayAccess, IteratorAggregate
     /**
      * @throws RuntimeException
      */
+    #[SuppressWarnings(UnusedFormalParameter::class)]
     public function offsetUnset($offset): void
     {
         throw new RuntimeException(__CLASS__ . ' is read-only');

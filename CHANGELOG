@@ -16,6 +16,8 @@ Breaking changes:
 - Require pdepend/pdepend 3.x.
 - Changed exit code for processing errors from 1 to 3.
 - Introduced PHPMD-specific exception hierarchy under `PHPMD\Exception\`.
+- Renamed `Rule::getBooleanProperty()` to `isTruthyProperty()`.
+- Renamed `RuleSetFactory::getCache()` to `isCacheEnabled()`.
 
 New features:
 
@@ -54,6 +56,7 @@ Fixed:
 - Fixed #1016: Crash when isPassedByReference checks a parent that does not exist.
 - Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.
 - Fixed: `--strict` did not reveal `LongVariable` suppressions on fields/variables/parameters, nor `UnusedPrivateMethod` suppressions on private methods.
+- Fixed: `--xdebug` could emit an undefined variable warning on the first restart.
 
 Internal:
 
@@ -61,6 +64,7 @@ Internal:
 - Upgraded to PHPUnit 10/11 and PHPStan 2.
 - Applied PER CS v2 code style throughout.
 - Modernized codebase to PHP 8.1+ syntax (enums, readonly, named args, constructor promotion, etc.).
+- Added `phpmd.project.yml`, PHPMD's own self-analysis configuration, and made the codebase pass it cleanly (supressing allowable violations).
 
 phpmd-2.15.0 (2023/12/11)
 ========================

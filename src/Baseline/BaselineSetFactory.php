@@ -3,6 +3,7 @@
 namespace PHPMD\Baseline;
 
 use PHPMD\Exception\RuntimeException;
+use SimpleXMLElement;
 
 final class BaselineSetFactory
 {
@@ -14,18 +15,7 @@ final class BaselineSetFactory
      */
     public static function fromFile(string $fileName): BaselineSet
     {
-        $content = @file_get_contents($fileName);
-
-        if ($content === false) {
-            throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
-        }
-
-        $xml = @simplexml_load_string($content);
-
-        if (!$xml) {
-            throw new RuntimeException('Unable to read xml from: ' . $fileName);
-        }
-
+        $xml = self::loadXml($fileName);
         $baselineSet = new BaselineSet();
 
         foreach ($xml->children() as $node) {
@@ -51,5 +41,27 @@ final class BaselineSetFactory
         }
 
         return $baselineSet;
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    private static function loadXml(string $fileName): SimpleXMLElement
+    {
+        if (!is_readable($fileName)) {
+            throw new RuntimeException('Unable to load the baseline file at: ' . $fileName);
+        }
+
+        $content = file_get_contents($fileName);
+
+        $libxml = libxml_use_internal_errors(true);
+        $xml = $content ? simplexml_load_string($content) : false;
+        libxml_use_internal_errors($libxml);
+
+        if (!$xml) {
+            throw new RuntimeException('Unable to read xml from: ' . $fileName);
+        }
+
+        return $xml;
     }
 }

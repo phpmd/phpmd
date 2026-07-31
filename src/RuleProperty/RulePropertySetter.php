@@ -52,7 +52,7 @@ final class RulePropertySetter
      */
     public static function setDefaultValues(Rule $rule): void
     {
-        foreach (get_class_vars($rule::class) as $key => $value) {
+        foreach (array_keys(get_class_vars($rule::class)) as $key) {
             if (!isset($rule->{$key})) {
                 $parameters = self::forClass($rule::class)->getRulePropertyForKey($key);
 

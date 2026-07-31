@@ -41,7 +41,7 @@ final class MissingImport extends AbstractRule implements FunctionAware, MethodA
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreGlobal = $this->getBooleanProperty('ignore-global');
+        $ignoreGlobal = $this->isTruthyProperty('ignore-global');
 
         foreach ($node->findChildrenOfType(ASTAllocationExpression::class) as $allocationNode) {
             $classNode = $allocationNode->getChild(0);

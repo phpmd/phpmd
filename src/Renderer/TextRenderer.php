@@ -43,8 +43,8 @@ class TextRenderer extends AbstractRenderer implements Color, Verbose
     public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
-        $longestLocationLength = 0;
-        $longestRuleNameLength = 0;
+        $maxLocationLength = 0;
+        $maxRuleNameLength = 0;
         $violations = [];
 
         foreach ($report->getRuleViolations() as $violation) {
@@ -54,8 +54,8 @@ class TextRenderer extends AbstractRenderer implements Color, Verbose
             $ruleSet = $rule->getRuleSetName();
             $locationLength = mb_strlen($location);
             $ruleNameLength = mb_strlen($ruleName);
-            $longestLocationLength = max($longestLocationLength, $locationLength);
-            $longestRuleNameLength = max($longestRuleNameLength, $ruleNameLength);
+            $maxLocationLength = max($maxLocationLength, $locationLength);
+            $maxRuleNameLength = max($maxRuleNameLength, $ruleNameLength);
             $violations[] = [$violation, $location, $ruleName, $ruleSet, $locationLength, $ruleNameLength];
         }
 
@@ -64,11 +64,11 @@ class TextRenderer extends AbstractRenderer implements Color, Verbose
 
             if ($this->verbosityLevel < OutputInterface::VERBOSITY_VERBOSE) {
                 $writer->write($location);
-                $writer->write(str_repeat(' ', $longestLocationLength + $this->columnSpacing - $locationLength));
+                $writer->write(str_repeat(' ', $maxLocationLength + $this->columnSpacing - $locationLength));
             }
 
             $writer->write($this->applyColor($ruleName, 'yellow'));
-            $writer->write(str_repeat(' ', $longestRuleNameLength + $this->columnSpacing - $ruleNameLength));
+            $writer->write(str_repeat(' ', $maxRuleNameLength + $this->columnSpacing - $ruleNameLength));
             $writer->write($this->applyColor($violation->getDescription(), 'red'));
 
             if ($this->verbosityLevel >= OutputInterface::VERBOSITY_VERBOSE) {

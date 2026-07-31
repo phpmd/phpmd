@@ -41,7 +41,7 @@ final class DevelopmentCodeFragment extends AbstractRule implements FunctionAwar
      */
     public function apply(AbstractNode $node): void
     {
-        $ignoreNS = $this->getBooleanProperty('ignore-namespaces');
+        $ignoreNS = $this->isTruthyProperty('ignore-namespaces');
         $namespace = $node->getNamespaceName();
         foreach ($node->findChildrenOfType(ASTFunctionPostfix::class) as $postfix) {
             $fragment = $postfix->getImage();

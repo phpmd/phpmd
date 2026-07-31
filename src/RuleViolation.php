@@ -51,19 +51,21 @@ class RuleViolation
         array|string $violationMessage,
         private readonly mixed $metric = null,
     ) {
-        if (is_array($violationMessage)) {
-            $search = [];
-            $replace = [];
-            foreach ($violationMessage['args'] as $index => $value) {
-                $search[] = '{' . $index . '}';
-                $replace[] = $value;
-            }
-
-            $this->args = $violationMessage['args'];
-            $this->description = str_replace($search, $replace, $violationMessage['message']);
-        } else {
+        if (!is_array($violationMessage)) {
             $this->description = $violationMessage;
+
+            return;
         }
+
+        $search = [];
+        $replace = [];
+        foreach ($violationMessage['args'] as $index => $value) {
+            $search[] = '{' . $index . '}';
+            $replace[] = $value;
+        }
+
+        $this->args = $violationMessage['args'];
+        $this->description = str_replace($search, $replace, $violationMessage['message']);
     }
 
     /**

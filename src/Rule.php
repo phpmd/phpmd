@@ -153,7 +153,7 @@ interface Rule
      *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists.
      */
-    public function getBooleanProperty(string $name): bool;
+    public function isTruthyProperty(string $name): bool;
 
     /**
      * Returns the value of a configured property as an integer or throws an

@@ -30,8 +30,8 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyReturnsTrueForStringValue1
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValue1(): void
     {
@@ -40,14 +40,14 @@ class RuleTest extends AbstractTestCase
             ->getMock();
         $rule->addProperty(__FUNCTION__, '1');
 
-        static::assertTrue($rule->getBooleanProperty(__FUNCTION__));
+        static::assertTrue($rule->isTruthyProperty(__FUNCTION__));
     }
 
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueOn
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueOn(): void
     {
@@ -56,14 +56,14 @@ class RuleTest extends AbstractTestCase
             ->getMock();
         $rule->addProperty(__FUNCTION__, 'on');
 
-        static::assertTrue($rule->getBooleanProperty(__FUNCTION__));
+        static::assertTrue($rule->isTruthyProperty(__FUNCTION__));
     }
 
     /**
      * testGetBooleanPropertyReturnsTrueForStringValueTrue
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyReturnsTrueForStringValueTrue(): void
     {
@@ -72,14 +72,14 @@ class RuleTest extends AbstractTestCase
             ->getMock();
         $rule->addProperty(__FUNCTION__, 'true');
 
-        static::assertTrue($rule->getBooleanProperty(__FUNCTION__));
+        static::assertTrue($rule->isTruthyProperty(__FUNCTION__));
     }
 
     /**
      * testGetBooleanPropertyReturnsTrueForDifferentStringValue
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyReturnsTrueForDifferentStringValue(): void
     {
@@ -88,14 +88,14 @@ class RuleTest extends AbstractTestCase
             ->getMock();
         $rule->addProperty(__FUNCTION__, 'True');
 
-        static::assertFalse($rule->getBooleanProperty(__FUNCTION__));
+        static::assertFalse($rule->isTruthyProperty(__FUNCTION__));
     }
 
     /**
-     * Tests the getBooleanProperty method with a fallback value
+     * Tests the isTruthyProperty method with a fallback value
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyReturnsFallbackString(): void
     {
@@ -103,7 +103,7 @@ class RuleTest extends AbstractTestCase
             ->onlyMethods(['apply'])
             ->getMock();
 
-        static::assertTrue($rule->getBooleanProperty(__FUNCTION__, true));
+        static::assertTrue($rule->isTruthyProperty(__FUNCTION__, true));
     }
 
     /**
@@ -156,8 +156,8 @@ class RuleTest extends AbstractTestCase
     /**
      * testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists
      *
-     * @covers ::getBooleanProperty
      * @covers ::getProperty
+     * @covers ::isTruthyProperty
      */
     public function testGetBooleanPropertyThrowsExceptionWhenNoPropertyForNameExists(): void
     {
@@ -166,7 +166,7 @@ class RuleTest extends AbstractTestCase
         $rule = $this->getMockBuilder(AbstractRule::class)
             ->onlyMethods(['apply'])
             ->getMock();
-        $rule->getBooleanProperty(__FUNCTION__);
+        $rule->isTruthyProperty(__FUNCTION__);
     }
 
     /**

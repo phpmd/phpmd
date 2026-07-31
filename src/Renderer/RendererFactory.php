@@ -2,9 +2,12 @@
 
 namespace PHPMD\Renderer;
 
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Exception\InvalidArgumentException;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class RendererFactory
 {
     public static function createBaselineRenderer(OutputInterface $writer): BaselineRenderer

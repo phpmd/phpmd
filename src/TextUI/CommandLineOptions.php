@@ -27,6 +27,7 @@ use PHPMD\Renderer\Option\Verbose;
 use PHPMD\Renderer\RendererFactory;
 use PHPMD\Renderer\RendererInterface;
 use PHPMD\Rule;
+use PHPMD\Rule\Design\TooManyFields;
 use PHPMD\Rule\Naming\LongVariable;
 use Symfony\Component\Console\Exception\InvalidArgumentException as InvalidSymfonyArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,6 +40,7 @@ use ValueError;
  * into accessible properties.
  */
 #[SuppressWarnings(LongVariable::class)]
+#[SuppressWarnings(TooManyFields::class)]
 class CommandLineOptions
 {
     /** The minimum rule priority. */
@@ -420,7 +422,11 @@ class CommandLineOptions
      */
     private function readInputFile(string $inputFile): array
     {
-        $content = @file($inputFile);
+        if (!is_readable($inputFile)) {
+            throw new InvalidArgumentException("Unable to load '{$inputFile}'.");
+        }
+
+        $content = file($inputFile);
 
         if ($content === false) {
             throw new InvalidArgumentException("Unable to load '{$inputFile}'.");

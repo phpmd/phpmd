@@ -38,6 +38,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -45,10 +46,14 @@ use PHPMD\Node\FunctionNode;
 use PHPMD\Node\InterfaceNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Rule\Design\TooManyPublicMethods;
 
 /**
  * Simple wrapper around the php depend engine.
  */
+#[SuppressWarnings(TooManyPublicMethods::class)]
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 {
     /**

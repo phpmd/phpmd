@@ -42,55 +42,8 @@ final class HTMLRenderer extends AbstractRenderer
 
     private const CATEGORY_RULE = 'category_rule';
 
-    /** @var array<int, string> */
-    private static array $priorityTitles = [
-        1 => 'Top (1)',
-        2 => 'High (2)',
-        3 => 'Moderate (3)',
-        4 => 'Low (4)',
-        5 => 'Lowest (5)',
-    ];
-
-    /**
-     * Used in self::colorize() method.
-     *
-     * @var array<string, array<string, string>>
-     */
-    private static array $descHighlightRules = [
-        'method' => [ // Method names.
-            'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
-            'css-class' => 'hlt-method',
-        ],
-        'quoted' => [ // Quoted strings.
-            'regex' => '(["\'][^\'"]+["\'])',
-            'css-class' => 'hlt-quoted',
-        ],
-        'variable' => [ // Variables.
-            'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
-            'css-class' => 'hlt-variable',
-        ],
-    ];
-
-    private static ?string $compiledHighlightRegex = null;
-
-    public function __construct(
-        /** Specify how many extra lines are added to a code snippet By default 2 */
-        private int $extraLineInExcerpt,
-    ) {
-    }
-
-    /**
-     * This method will be called on all renderers before the engine starts the
-     * real report processing.
-     */
-    public function start(): void
-    {
-        $writer = $this->getWriter();
-
-        $mainColor = '#2f838a';
-
-        // Avoid inlining styles.
-        $style = "
+    // Avoid inlining styles.
+    private const STYLE = "
             <script>
                 function toggle(id) {
                     var item = document.getElementById(id);
@@ -108,7 +61,7 @@ final class HTMLRenderer extends AbstractRenderer
                 }
 
                 a {
-                    color: $mainColor;
+                    color: #2f838a;
                 }
 
                 a:hover {
@@ -173,7 +126,7 @@ final class HTMLRenderer extends AbstractRenderer
                 .t-bar {
                     height: 0.5ex;
                     margin-top: 0.5ex;
-                    background-color: $mainColor; /* rgba(47, 131, 138, 0.2); */
+                    background-color: #2f838a; /* rgba(47, 131, 138, 0.2); */
                 }
 
                 section, table {
@@ -244,7 +197,7 @@ final class HTMLRenderer extends AbstractRenderer
                 }
 
                 .indx:hover {
-                    background-color: $mainColor;
+                    background-color: #2f838a;
                     color: #fff;
                 }
 
@@ -307,7 +260,52 @@ final class HTMLRenderer extends AbstractRenderer
 
             </style>";
 
-        $style = self::reduceWhitespace($style);
+    /** @var array<int, string> */
+    private static array $priorityTitles = [
+        1 => 'Top (1)',
+        2 => 'High (2)',
+        3 => 'Moderate (3)',
+        4 => 'Low (4)',
+        5 => 'Lowest (5)',
+    ];
+
+    /**
+     * Used in self::colorize() method.
+     *
+     * @var array<string, array<string, string>>
+     */
+    private static array $descHighlightRules = [
+        'method' => [ // Method names.
+            'regex' => 'method\s+(((["\']).*["\'])|(\S+))',
+            'css-class' => 'hlt-method',
+        ],
+        'quoted' => [ // Quoted strings.
+            'regex' => '(["\'][^\'"]+["\'])',
+            'css-class' => 'hlt-quoted',
+        ],
+        'variable' => [ // Variables.
+            'regex' => '(\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)',
+            'css-class' => 'hlt-variable',
+        ],
+    ];
+
+    private static ?string $highlightRegex = null;
+
+    public function __construct(
+        /** Specify how many extra lines are added to a code snippet By default 2 */
+        private int $extraLineInExcerpt,
+    ) {
+    }
+
+    /**
+     * This method will be called on all renderers before the engine starts the
+     * real report processing.
+     */
+    public function start(): void
+    {
+        $writer = $this->getWriter();
+
+        $style = self::reduceWhitespace(self::STYLE);
         $writer->write("<html><head>{$style}<title>PHPMD Report</title></head><body>" . PHP_EOL);
 
         $header = sprintf("
@@ -470,18 +468,18 @@ final class HTMLRenderer extends AbstractRenderer
     private static function colorize(string $message): string
     {
         // Compile final regex, if not done already.
-        if (!self::$compiledHighlightRegex) {
+        if (!self::$highlightRegex) {
             $prepared = [];
             foreach (self::$descHighlightRules as $key => $value) {
                 $prepared[] = "(?<{$key}>{$value['regex']})";
             }
 
-            self::$compiledHighlightRegex = '#(' . implode('|', $prepared) . ')#';
+            self::$highlightRegex = '#(' . implode('|', $prepared) . ')#';
         }
 
         $rules = self::$descHighlightRules;
 
-        return preg_replace_callback(self::$compiledHighlightRegex, function ($matches) use ($rules) {
+        return preg_replace_callback(self::$highlightRegex, function ($matches) use ($rules) {
             // Extract currently matched specification of highlighting (Match groups
             // are named and we can find out which is not empty.).
             $definition = array_keys(array_intersect_key($rules, array_filter($matches)));
@@ -599,8 +597,8 @@ final class HTMLRenderer extends AbstractRenderer
     /**
      * Reduces two and more whitespaces in a row to a single whitespace to conserve space.
      */
-    private static function reduceWhitespace(string $input, bool $eol = true): string
+    private static function reduceWhitespace(string $input): string
     {
-        return preg_replace("#\s+#", ' ', $input) . ($eol ? PHP_EOL : null);
+        return preg_replace("#\s+#", ' ', $input) . PHP_EOL;
     }
 }

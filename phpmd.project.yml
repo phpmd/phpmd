@@ -1,0 +1,21 @@
+name: PHPMD Self-Analysis
+description: Run PHPMD on its own source code
+paths:
+  - "src/"
+exclude-pattern:
+  - "vendor/*"
+  - "tests/resources/*"
+  - "public/*"
+  - "scripts/*"
+rules:
+  - ref: rulesets/cleancode.xml
+    exclude:
+      - StaticAccess
+  - ref: rulesets/cleancode.xml/StaticAccess
+    properties:
+      exceptions: "PHPMD\\Utility\\Paths,PHPMD\\Utility\\Strings,PHPMD\\Utility\\MethodParameterReference,PHPMD\\RuleProperty\\RulePropertySetter,PHPMD\\InternalRuleSet,PHPMD\\Renderer\\RendererFactory,PHPMD\\Baseline\\BaselineSetFactory,Symfony\\Component\\Yaml\\Yaml,PDepend\\TextUI\\Command,PHPMD\\TextUI\\Command"
+  - ref: rulesets/codesize.xml
+  - ref: rulesets/naming.xml
+  - ref: rulesets/design.xml
+  - ref: rulesets/unusedcode.xml
+  - ref: rulesets/controversial.xml

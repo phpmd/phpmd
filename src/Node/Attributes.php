@@ -43,45 +43,49 @@ final class Attributes
                 continue;
             }
             foreach ($attributes->getChildren() as $attribute) {
-                if (!$attribute instanceof ASTAllocationExpression) {
-                    continue;
+                if ($attribute instanceof ASTAllocationExpression) {
+                    $this->processAttribute($attribute);
                 }
-                $allocation = $attribute->getChildren();
-                $class = $allocation[0] ?? null;
-                if (!$class || trim($class->getImage(), '\\') !== SuppressWarnings::class) {
-                    continue;
-                }
-                $arguments = $allocation[1] ?? null;
-                if ($arguments) {
-                    // #[SuppressWarnings()]
-                    $arguments = $arguments->getChildren();
-                }
-                if (!$arguments) {
-                    // #[SuppressWarnings]
-                    $this->suppressed['+all'] = true;
-
-                    continue;
-                }
-                $argument = $arguments[0];
-
-                if ($argument instanceof ASTLiteral) {
-                    // #[SuppressWarnings('\PHPMD\Rules\UnusedLocalVariable')]
-                    $this->suppressed[trim($argument->getImage(), '\\\'""')] = true;
-
-                    continue;
-                }
-                if (!$argument instanceof ASTMemberPrimaryPrefix || !$argument->isStatic()) {
-                    continue;
-                }
-                $children = $argument->getChildren();
-                if (!$children[1] instanceof ASTClassFqnPostfix) {
-                    continue;
-                }
-                $rule = $children[0];
-                // #[SuppressWarnings(UnusedLocalVariable::class)]
-                $this->suppressed[trim($rule->getImage(), '\\')] = true;
             }
         }
+    }
+
+    private function processAttribute(ASTAllocationExpression $attribute): void
+    {
+        $allocation = $attribute->getChildren();
+        $class = $allocation[0] ?? null;
+        if (!$class || trim($class->getImage(), '\\') !== SuppressWarnings::class) {
+            return;
+        }
+        $arguments = $allocation[1] ?? null;
+        if ($arguments) {
+            // #[SuppressWarnings()]
+            $arguments = $arguments->getChildren();
+        }
+        if (!$arguments) {
+            // #[SuppressWarnings]
+            $this->suppressed['+all'] = true;
+
+            return;
+        }
+        $argument = $arguments[0];
+
+        if ($argument instanceof ASTLiteral) {
+            // #[SuppressWarnings('\PHPMD\Rules\UnusedLocalVariable')]
+            $this->suppressed[trim($argument->getImage(), '\\\'""')] = true;
+
+            return;
+        }
+        if (!$argument instanceof ASTMemberPrimaryPrefix || !$argument->isStatic()) {
+            return;
+        }
+        $children = $argument->getChildren();
+        if (!$children[1] instanceof ASTClassFqnPostfix) {
+            return;
+        }
+        $rule = $children[0];
+        // #[SuppressWarnings(UnusedLocalVariable::class)]
+        $this->suppressed[trim($rule->getImage(), '\\')] = true;
     }
 
     /**

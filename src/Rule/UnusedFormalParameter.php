@@ -38,6 +38,7 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use PHPMD\Utility\ExceptionsList;
 use RuntimeException;
 
@@ -46,6 +47,7 @@ use RuntimeException;
  * are not used in a statement of the artifact's body.
  */
 #[SuppressWarnings(CouplingBetweenObjects::class)]
+#[SuppressWarnings(ExcessiveClassComplexity::class)]
 final class UnusedFormalParameter extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**

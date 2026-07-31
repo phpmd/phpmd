@@ -57,13 +57,12 @@ final class BooleanArgumentFlag extends AbstractRule implements FunctionAware, M
         $currNode = $node->getNode();
         $parent = $currNode->getParent();
 
-        if (
-            $parent &&
-            ($parent instanceof AbstractASTClassOrInterface) &&
-            ($name = $parent->getImage()) &&
-            $this->getExceptionsList()->contains($name)
-        ) {
-            return;
+        if ($parent instanceof AbstractASTClassOrInterface) {
+            $name = $parent->getImage();
+
+            if ($name && $this->getExceptionsList()->contains($name)) {
+                return;
+            }
         }
 
         $this->scanFormalParameters($node);

@@ -132,13 +132,13 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
 
-        $lengthWithoutDollarSign = Strings::lengthWithoutPrefixesAndSuffixes(
+        $nameLength = Strings::lengthWithoutPrefixesAndSuffixes(
             \ltrim($variableName, '$'),
             $this->getSubtractPrefixList(),
             $this->getSubtractSuffixList()
         );
 
-        if ($lengthWithoutDollarSign <= $threshold) {
+        if ($nameLength <= $threshold) {
             return;
         }
 
