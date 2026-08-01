@@ -33,7 +33,7 @@ final class TooManyFields extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maxfields');
+        $threshold = $this->getIntProperty('maximum');
         $vars = $node->getMetric('vars');
         if ($vars <= $threshold) {
             return;

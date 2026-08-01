@@ -88,7 +88,7 @@ __ /rules/codesize.html#cyclomaticcomplexity
     - ref: rulesets/codesize.xml/CyclomaticComplexity
       priority: 1
       properties:
-        reportLevel: 5
+        maximum: 5
 
 PHPMD handles all custom settings additively. This means that PHPMD keeps
 the original configuration for every setting that isn't customized in a
@@ -113,7 +113,7 @@ __ /rules/naming.html
     - ref: rulesets/codesize.xml/CyclomaticComplexity
       priority: 1
       properties:
-        reportLevel: 5
+        maximum: 5
     # Import naming rules, but exclude some
     - ref: rulesets/naming.xml
       exclude:
@@ -141,7 +141,7 @@ __ /rules/cleancode.html
     - ref: rulesets/codesize.xml/CyclomaticComplexity
       priority: 1
       properties:
-        reportLevel: 5
+        maximum: 5
     - ref: rulesets/naming.xml
       exclude:
         - ShortVariable
@@ -224,7 +224,7 @@ Adding rules, customizing properties, and excluding rules:
       <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
           <priority>1</priority>
           <properties>
-              <property name="reportLevel" value="5" />
+              <property name="maximum" value="5" />
           </properties>
       </rule>
 
@@ -271,13 +271,13 @@ This avoids having to exclude and re-include each rule individually.
     # Customize properties on individual rules without excluding them first
     - name: ExcessiveParameterList
       properties:
-        minimum: 15
+        maximum: 15
     - name: TooManyFields
       properties:
-        maxfields: 35
+        maximum: 35
     - name: TooManyMethods
       properties:
-        maxmethods: 35
+        maximum: 35
 
 In XML, the equivalent uses ``<rule name="...">`` elements with only a
 ``<properties>`` child — no ``ref`` attribute:
@@ -302,19 +302,19 @@ In XML, the equivalent uses ``<rule name="...">`` elements with only a
       <!-- Customize properties on individual rules without excluding them first -->
       <rule name="ExcessiveParameterList">
           <properties>
-              <property name="minimum" value="15" />
+              <property name="maximum" value="15" />
           </properties>
       </rule>
 
       <rule name="TooManyFields">
           <properties>
-              <property name="maxfields" value="35" />
+              <property name="maximum" value="35" />
           </properties>
       </rule>
 
       <rule name="TooManyMethods">
           <properties>
-              <property name="maxmethods" value="35" />
+              <property name="maximum" value="35" />
           </properties>
       </rule>
   </ruleset>
@@ -341,7 +341,7 @@ JSON example (``phpmd.json``):
           {
               "ref": "rulesets/codesize.xml/CyclomaticComplexity",
               "priority": 1,
-              "properties": {"reportLevel": 5}
+              "properties": {"maximum": 5}
           },
           {
               "ref": "rulesets/naming.xml",
@@ -378,7 +378,7 @@ PHP example (``phpmd.php``):
           [
               'ref' => 'rulesets/codesize.xml/CyclomaticComplexity',
               'priority' => 1,
-              'properties' => ['reportLevel' => 5],
+              'properties' => ['maximum' => 5],
           ],
           [
               'ref' => 'rulesets/naming.xml',

@@ -31,15 +31,15 @@ class DepthOfInheritanceTest extends AbstractTestCase
     {
         $rule = new DepthOfInheritance();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('dit', 41));
     }
 
-    public function testRuleAppliesToClassWithNumberOfParentIdenticalToThreshold(): void
+    public function testRuleNotAppliesToClassWithNumberOfParentIdenticalToThreshold(): void
     {
         $rule = new DepthOfInheritance();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '42');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('dit', 42));
     }
 
@@ -47,7 +47,7 @@ class DepthOfInheritanceTest extends AbstractTestCase
     {
         $rule = new DepthOfInheritance();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('dit', 43));
     }
 }

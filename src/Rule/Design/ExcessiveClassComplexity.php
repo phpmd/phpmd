@@ -39,7 +39,7 @@ final class ExcessiveClassComplexity extends AbstractRule implements ClassAware
         $threshold = $this->getIntProperty('maximum');
         $actual = $node->getMetric('wmc');
 
-        if ($actual >= $threshold) {
+        if ($actual > $threshold) {
             $this->addViolation($node, [$node->getName(), (string) $actual, (string) $threshold]);
         }
     }

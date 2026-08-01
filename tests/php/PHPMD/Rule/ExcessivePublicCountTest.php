@@ -31,15 +31,15 @@ class ExcessivePublicCountTest extends AbstractTestCase
     {
         $rule = new ExcessivePublicCount();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cis', 23));
     }
 
-    public function testRuleAppliesToClassesWithSameNumberOfPublicMembersAsThreshold(): void
+    public function testRuleDoesNotApplyToClassesWithSameNumberOfPublicMembersAsThreshold(): void
     {
         $rule = new ExcessivePublicCount();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '42');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cis', 42));
     }
 
@@ -47,7 +47,7 @@ class ExcessivePublicCountTest extends AbstractTestCase
     {
         $rule = new ExcessivePublicCount();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '23');
+        $rule->addProperty('maximum', '23');
         $rule->apply($this->getClassMock('cis', 42));
     }
 }

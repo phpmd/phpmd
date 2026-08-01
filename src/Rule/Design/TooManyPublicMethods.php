@@ -43,7 +43,7 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
 
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
-        $threshold = $this->getIntProperty('maxmethods');
+        $threshold = $this->getIntProperty('maximum');
         $publicMethodsCount = $node->getMetric('npm'); // NPM stands for Number of Public Methods
 
         if ($publicMethodsCount !== null && $publicMethodsCount <= $threshold) {

@@ -56,7 +56,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-------------------------------------------------------------------+
 | Name                              | Default Value |  Description                                                      |
 +===================================+===============+===================================================================+
-| reportLevel                       | 10            | The Cyclomatic Complexity reporting threshold                     |
+| maximum                           | 10            | The Cyclomatic Complexity reporting threshold                     |
 +-----------------------------------+---------------+-------------------------------------------------------------------+
 | showClassesComplexity             | true          | Indicate if class average violation should be added to the report |
 +-----------------------------------+---------------+-------------------------------------------------------------------+
@@ -100,7 +100,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-------------------------------+
 | Name                              | Default Value | Description                   |
 +===================================+===============+===============================+
-| minimum                           | 200           | The npath reporting threshold |
+| maximum                           | 200           | The npath reporting threshold |
 +-----------------------------------+---------------+-------------------------------+
 
 ExcessiveMethodLength
@@ -125,7 +125,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| minimum                           | 100           | The method size reporting threshold     |
+| maximum                           | 100           | The method size reporting threshold     |
 +-----------------------------------+---------------+-----------------------------------------+
 | ignore-whitespace                 | false         | Count whitespace in reporting threshold |
 +-----------------------------------+---------------+-----------------------------------------+
@@ -150,7 +150,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| minimum                           | 1000          | The class size reporting threshold      |
+| maximum                           | 1000          | The class size reporting threshold      |
 +-----------------------------------+---------------+-----------------------------------------+
 | ignore-whitespace                 | false         | Count whitespace in reporting threshold |
 +-----------------------------------+---------------+-----------------------------------------+
@@ -176,7 +176,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| minimum                           | 10            | The parameter count reporting threshold |
+| maximum                           | 10            | The parameter count reporting threshold |
 +-----------------------------------+---------------+-----------------------------------------+
 
 ExcessivePublicCount
@@ -205,7 +205,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| minimum                           | 45            | The public item reporting threshold     |
+| maximum                           | 45            | The public item reporting threshold     |
 +-----------------------------------+---------------+-----------------------------------------+
 
 TooManyFields
@@ -229,7 +229,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| maxfields                         | 15            | The field count reporting threshold     |
+| maximum                           | 15            | The field count reporting threshold     |
 +-----------------------------------+---------------+-----------------------------------------+
 
 TooManyMethods
@@ -244,7 +244,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+--------------------------------------+
 | Name                              | Default Value | Description                          |
 +===================================+===============+======================================+
-| maxmethods                        | 25            | The method count reporting threshold |
+| maximum                           | 25            | The method count reporting threshold |
 +-----------------------------------+---------------+--------------------------------------+
 | ignorepattern                     | (^(set|get))i | Ignore methods matching this regex   |
 +-----------------------------------+---------------+--------------------------------------+
@@ -261,7 +261,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+-----------------------------------------+
 | Name                              | Default Value | Description                             |
 +===================================+===============+=========================================+
-| maxmethods                        | 10            | The method count reporting threshold    |
+| maximum                           | 10            | The method count reporting threshold    |
 +-----------------------------------+---------------+-----------------------------------------+
 | ignorepattern                     | (^(set|get))i | Ignore methods matching this regex      |
 +-----------------------------------+---------------+-----------------------------------------+

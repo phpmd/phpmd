@@ -32,7 +32,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '42');
+        $rule->addProperty('maximum', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(23));
     }
@@ -41,7 +41,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '42');
+        $rule->addProperty('maximum', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42));
     }
@@ -50,7 +50,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('maxmethods', '23');
+        $rule->addProperty('maximum', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
@@ -59,7 +59,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
@@ -68,7 +68,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
@@ -77,7 +77,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
@@ -86,7 +86,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(3, ['invoke', 'getClass', 'setClass']));
     }
@@ -95,7 +95,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
@@ -104,7 +104,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
@@ -113,7 +113,7 @@ class TooManyMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
