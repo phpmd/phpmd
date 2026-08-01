@@ -34,8 +34,8 @@ final class NumberOfChildren extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node): void
     {
         $nocc = $node->getMetric('nocc');
-        $threshold = $this->getIntProperty('minimum');
-        if ($nocc >= $threshold) {
+        $threshold = $this->getIntProperty('maximum');
+        if ($nocc > $threshold) {
             $this->addViolation(
                 $node,
                 [

@@ -105,7 +105,7 @@ class Foo {
 
     <rule name="NumberOfChildren"
           since="0.2"
-          message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
+          message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children at {3} or less."
           class="PHPMD\Rule\Design\NumberOfChildren"
           externalInfoUrl="https://phpmd.org/rules/design.html#numberofchildren">
         <description>
@@ -116,14 +116,14 @@ class hierarchy. You should consider to refactor this class hierarchy.
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="15" description="Maximum number of acceptable child classes." />
+            <property name="maximum" value="15" description="Maximum number of acceptable child classes." />
         </properties>
         <example />
     </rule>
 
     <rule name="DepthOfInheritance"
           since="0.2"
-          message = "The {0} {1} has {2} parents. Consider to reduce the depth of this class hierarchy to under {3}."
+          message = "The {0} {1} has {2} parents. Consider to reduce the depth of this class hierarchy to {3} or less."
           class="PHPMD\Rule\Design\DepthOfInheritance"
           externalInfoUrl="https://phpmd.org/rules/design.html#depthofinheritance">
         <description>
@@ -134,14 +134,14 @@ hierarchy. You should consider to refactor this class hierarchy.
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="6" description="Maximum number of acceptable parent classes." />
+            <property name="maximum" value="6" description="Maximum number of acceptable parent classes." />
         </properties>
         <example />
     </rule>
 
     <rule name="CouplingBetweenObjects"
           since="1.1.0"
-          message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
+          message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies to {2} or less."
           class="PHPMD\Rule\Design\CouplingBetweenObjects"
           externalInfoUrl="https://phpmd.org/rules/design.html#couplingbetweenobjects">
         <description>

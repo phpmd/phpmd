@@ -36,7 +36,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '42');
+        $rule->addProperty('maximum', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(23));
     }
@@ -45,7 +45,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '42');
+        $rule->addProperty('maximum', '42');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42));
     }
@@ -54,7 +54,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('maxmethods', '23');
+        $rule->addProperty('maximum', '23');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(42, array_fill(0, 42, __FUNCTION__)));
     }
@@ -63,7 +63,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass']));
     }
@@ -72,7 +72,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'setClass']));
     }
@@ -81,7 +81,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'injectClass']));
     }
@@ -90,7 +90,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(3, ['foo', 'bar'], ['baz', 'bah']));
     }
@@ -99,7 +99,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '2');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('ignorepattern', '(^(set|get|inject))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'getClass', 'setClass']));
     }
@@ -108,7 +108,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'hasClass']));
     }
@@ -117,7 +117,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'isClass']));
     }
@@ -126,7 +126,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'withClass']));
     }
@@ -135,7 +135,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
     {
         $rule = new TooManyPublicMethods();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxmethods', '1');
+        $rule->addProperty('maximum', '1');
         $rule->addProperty('ignorepattern', '(^(set|get|is|has|with|test))i');
         $rule->apply($this->createClassMock(2, ['invoke', 'testMyFeature']));
     }
@@ -146,7 +146,7 @@ class TooManyPublicMethodsTest extends AbstractTestCase
         $rule = new TooManyPublicMethods();
         $report = new Report();
         $rule->setReport($report);
-        $rule->addProperty('maxmethods', '5');
+        $rule->addProperty('maximum', '5');
         $rule->addProperty('ignorepattern', '');
         $rule->apply($class);
         $violations = $report->getRuleViolations();

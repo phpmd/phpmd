@@ -40,9 +40,9 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
             return;
         }
 
-        $threshold = $this->getIntProperty('minimum');
+        $threshold = $this->getIntProperty('maximum');
         $count = $node->getParameterCount();
-        if ($count < $threshold) {
+        if ($count <= $threshold) {
             return;
         }
 

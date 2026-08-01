@@ -10,7 +10,7 @@
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity" />
     <rule ref="rulesets/codesize.xml/NPathComplexity">
         <properties>
-            <property name="minimum" value="50" />
+            <property name="maximum" value="50" />
         </properties>
     </rule>
 </ruleset>

@@ -38,23 +38,23 @@ class ExcessiveClassLengthTest extends AbstractTestCase
 
         $rule = new ExcessiveClassLength();
         $rule->setReport($report);
-        $rule->addProperty('minimum', '41');
+        $rule->addProperty('maximum', '41');
         $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($class);
     }
 
     /**
-     * Test that the rule applies for a value that is equal with the configured
-     * threshold.
+     * Test that the rule does not apply for a value that is equal with the
+     * configured threshold.
      */
-    public function testRuleAppliesForValueEqualToThreshold(): void
+    public function testRuleDoesNotApplyForValueEqualToThreshold(): void
     {
         $class = $this->getClassMock('loc', 42);
-        $report = $this->getReportWithOneViolation();
+        $report = $this->getReportWithNoViolation();
 
         $rule = new ExcessiveClassLength();
         $rule->setReport($report);
-        $rule->addProperty('minimum', '42');
+        $rule->addProperty('maximum', '42');
         $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($class);
     }
@@ -70,7 +70,7 @@ class ExcessiveClassLengthTest extends AbstractTestCase
 
         $rule = new ExcessiveClassLength();
         $rule->setReport($report);
-        $rule->addProperty('minimum', '23');
+        $rule->addProperty('maximum', '23');
         $rule->addProperty('ignore-whitespace', '0');
         $rule->apply($class);
     }
@@ -85,7 +85,7 @@ class ExcessiveClassLengthTest extends AbstractTestCase
 
         $rule = new ExcessiveClassLength();
         $rule->setReport($report);
-        $rule->addProperty('minimum', '23');
+        $rule->addProperty('maximum', '23');
         $rule->addProperty('ignore-whitespace', '1');
         $rule->apply($class);
     }
