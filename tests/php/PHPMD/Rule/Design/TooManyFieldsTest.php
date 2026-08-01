@@ -31,7 +31,7 @@ class TooManyFieldsTest extends AbstractTestCase
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxfields', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('vars', 23));
     }
 
@@ -39,7 +39,7 @@ class TooManyFieldsTest extends AbstractTestCase
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('maxfields', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('vars', 42));
     }
 
@@ -47,7 +47,7 @@ class TooManyFieldsTest extends AbstractTestCase
     {
         $rule = new TooManyFields();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('maxfields', '23');
+        $rule->addProperty('maximum', '23');
         $rule->apply($this->getClassMock('vars', 42));
     }
 }

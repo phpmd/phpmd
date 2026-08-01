@@ -43,7 +43,7 @@ final class TooManyMethods extends AbstractRule implements ClassAware
 
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
-        $threshold = $this->getIntProperty('maxmethods');
+        $threshold = $this->getIntProperty('maximum');
         if ($node->getMetric('nom') <= $threshold) {
             return;
         }

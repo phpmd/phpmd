@@ -40,10 +40,10 @@ class ExcessiveClassComplexityTest extends AbstractTestCase
         $rule->apply($class);
     }
 
-    public function testRuleAppliesForValueEqualToThreshold(): void
+    public function testRuleNotAppliesForValueEqualToThreshold(): void
     {
         $class = $this->getClassMock('wmc', 42);
-        $report = $this->getReportWithOneViolation();
+        $report = $this->getReportWithNoViolation();
 
         $rule = new ExcessiveClassComplexity();
         $rule->setReport($report);

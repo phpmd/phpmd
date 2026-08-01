@@ -37,10 +37,10 @@ class CouplingBetweenObjectsTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cbo', 41));
     }
 
-    public function testRuleAppliesToClassWithCboEqualToThreshold(): void
+    public function testRuleNotAppliesToClassWithCboEqualToThreshold(): void
     {
         $rule = new CouplingBetweenObjects();
-        $rule->setReport($this->getReportWithOneViolation());
+        $rule->setReport($this->getReportWithNoViolation());
         $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('cbo', 42));
     }

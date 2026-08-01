@@ -8,6 +8,27 @@ Breaking changes:
 - Changed minimum PHP version from 5.3.9 to 8.1.
 - Changed CLI from positional arguments to Symfony Console with named options.
   The command signature is now `phpmd analyze [options] [--] [<paths>...]`.
+- Standardized rule threshold properties to `maximum` (#670). Rules now report
+  only when the measured value exceeds (`>`) the configured `maximum`. Rules
+  that check a lower bound (ShortVariable, ShortMethodName, ShortClassName)
+  keep the `minimum` property. Renamed properties:
+  - CyclomaticComplexity: `reportLevel` -> `maximum`
+  - NPathComplexity: `minimum` -> `maximum`
+  - ExcessiveMethodLength: `minimum` -> `maximum`
+  - ExcessiveClassLength: `minimum` -> `maximum`
+  - ExcessiveParameterList: `minimum` -> `maximum`
+  - ExcessivePublicCount: `minimum` -> `maximum`
+  - TooManyFields: `maxfields` -> `maximum`
+  - TooManyMethods: `maxmethods` -> `maximum`
+  - TooManyPublicMethods: `maxmethods` -> `maximum`
+  - NumberOfChildren: `minimum` -> `maximum`
+  - DepthOfInheritance: `minimum` -> `maximum`
+  Rules that previously reported when the value equaled the threshold
+  (CyclomaticComplexity, NPathComplexity, ExcessiveMethodLength,
+  ExcessiveClassLength, ExcessiveParameterList, ExcessivePublicCount,
+  NumberOfChildren, DepthOfInheritance, ExcessiveClassComplexity,
+  CouplingBetweenObjects) now only report when the value is greater than
+  the threshold, so the configured `maximum` is the highest accepted value.
 - Removed `--ignore` option, use `--exclude` instead.
 - Removed `--extensions` option, use `--suffixes` instead.
 - Removed `--reportfile` option, use `--reportfile-text`, `--reportfile-xml`, etc.

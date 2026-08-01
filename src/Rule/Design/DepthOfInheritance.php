@@ -18,7 +18,6 @@
 
 namespace PHPMD\Rule\Design;
 
-use OutOfBoundsException;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
@@ -34,19 +33,9 @@ final class DepthOfInheritance extends AbstractRule implements ClassAware
      */
     public function apply(AbstractNode $node): void
     {
-        try {
-            $threshold = $this->getIntProperty('maximum');
-            $comparison = 1;
-        } catch (OutOfBoundsException) {
-            $threshold = $this->getIntProperty('minimum');
-            $comparison = 2;
-        }
-
+        $threshold = $this->getIntProperty('maximum');
         $dit = $node->getMetric('dit');
-        if (
-            ($comparison === 1 && $dit > $threshold) ||
-            ($comparison === 2 && $dit >= $threshold)
-        ) {
+        if ($dit > $threshold) {
             $this->addViolation(
                 $node,
                 [

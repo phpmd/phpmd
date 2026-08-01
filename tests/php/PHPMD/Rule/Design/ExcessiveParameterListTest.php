@@ -30,51 +30,51 @@ use PHPUnit\Framework\MockObject\MockObject;
 #[CoversClass(ExcessiveParameterList::class)]
 class ExcessiveParameterListTest extends AbstractTestCase
 {
-    public function testApplyIgnoresMethodsWithLessParametersThanMinimum(): void
+    public function testApplyIgnoresMethodsWithLessParametersThanMaximum(): void
     {
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '4');
+        $rule->addProperty('maximum', '4');
         $rule->apply($this->createMethod(3));
     }
 
-    public function testApplyReportsMethodsWithIdenticalParametersAndMinimum(): void
+    public function testApplyIgnoresMethodsWithIdenticalParametersAndMaximum(): void
     {
         $rule = new ExcessiveParameterList();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('maximum', '3');
         $rule->apply($this->createMethod(3));
     }
 
-    public function testApplyReportsMethodsWithMoreParametersThanMinimum(): void
+    public function testApplyReportsMethodsWithMoreParametersThanMaximum(): void
     {
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '3');
         $rule->apply($this->createMethod(42));
     }
 
-    public function testApplyIgnoresFunctionsWithLessParametersThanMinimum(): void
+    public function testApplyIgnoresFunctionsWithLessParametersThanMaximum(): void
     {
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '4');
+        $rule->addProperty('maximum', '4');
         $rule->apply($this->createFunction(3));
     }
 
-    public function testApplyReportsFunctionsWithIdenticalParametersAndMinimum(): void
+    public function testApplyIgnoresFunctionsWithIdenticalParametersAndMaximum(): void
     {
         $rule = new ExcessiveParameterList();
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->setReport($this->getReportWithNoViolation());
+        $rule->addProperty('maximum', '3');
         $rule->apply($this->createFunction(3));
     }
 
-    public function testApplyReportsFunctionsWithMoreParametersThanMinimum(): void
+    public function testApplyReportsFunctionsWithMoreParametersThanMaximum(): void
     {
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '3');
         $rule->apply($this->createFunction(42));
     }
 
@@ -89,7 +89,7 @@ class ExcessiveParameterListTest extends AbstractTestCase
 
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('exceptions', 'fooBar');
         $rule->apply($method);
     }
@@ -105,7 +105,7 @@ class ExcessiveParameterListTest extends AbstractTestCase
 
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('exceptions', 'otherMethod');
         $rule->apply($method);
     }
@@ -121,7 +121,7 @@ class ExcessiveParameterListTest extends AbstractTestCase
 
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithNoViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '2');
         $rule->addProperty('exceptions', 'fooBar');
         $rule->apply($function);
     }
@@ -133,7 +133,7 @@ class ExcessiveParameterListTest extends AbstractTestCase
     {
         $rule = new ExcessiveParameterList();
         $rule->setReport($this->getReportWithOneViolation());
-        $rule->addProperty('minimum', '3');
+        $rule->addProperty('maximum', '2');
         $rule->apply($this->createMethod(3));
     }
 

@@ -38,22 +38,22 @@ class CyclomaticComplexityTest extends AbstractTestCase
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
-        $rule->addProperty('reportLevel', '10');
+        $rule->addProperty('maximum', '10');
         $rule->apply($method);
     }
 
     /**
-     * Test that the rule applies for a value that is equal with the configured
-     * threshold.
+     * Test that the rule does not apply for a value that is equal with the
+     * configured threshold.
      */
-    public function testRuleAppliesForValueEqualToThreshold(): void
+    public function testRuleDoesNotApplyForValueEqualToThreshold(): void
     {
         $method = $this->getMethodMock('ccn2', 42);
-        $report = $this->getReportWithOneViolation();
+        $report = $this->getReportWithNoViolation();
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
-        $rule->addProperty('reportLevel', '42');
+        $rule->addProperty('maximum', '42');
         $rule->apply($method);
     }
 
@@ -68,7 +68,7 @@ class CyclomaticComplexityTest extends AbstractTestCase
 
         $rule = new CyclomaticComplexity();
         $rule->setReport($report);
-        $rule->addProperty('reportLevel', '23');
+        $rule->addProperty('maximum', '23');
         $rule->apply($method);
     }
 }

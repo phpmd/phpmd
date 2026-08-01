@@ -25,7 +25,7 @@ method entry. The decision points are 'if', 'while', 'for', and 'case labels'. G
         </description>
         <priority>3</priority>
         <properties>
-            <property name="reportLevel" description="The Cyclomatic Complexity reporting threshold"  value="10"/>
+            <property name="maximum" description="The Cyclomatic Complexity reporting threshold" value="10"/>
             <property name="showClassesComplexity"
                       description="Indicate if class average violation should be added to the report"
                       value="true"/>
@@ -87,7 +87,7 @@ A threshold of 200 is generally considered the point where measures should be ta
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum" description="The npath reporting threshold" value="200"/>
+            <property name="maximum" description="The npath reporting threshold" value="200"/>
         </properties>
         <example>
             <![CDATA[
@@ -111,7 +111,7 @@ too much. Try to reduce the method size by creating helper methods and removing 
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum" description="The method size reporting threshold" value="100"/>
+            <property name="maximum" description="The method size reporting threshold" value="100"/>
             <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
         </properties>
         <example>
@@ -139,7 +139,7 @@ manageable.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum" description="The class size reporting threshold"  value="1000"/>
+            <property name="maximum" description="The class size reporting threshold" value="1000"/>
             <property name="ignore-whitespace" description="Count whitespace in reporting threshold" value="false"/>
         </properties>
         <example>
@@ -155,7 +155,7 @@ class Foo {
 
     <rule name="ExcessiveParameterList"
           since="0.1"
-          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to less than {3}."
+          message="The {0} {1} has {2} parameters. Consider reducing the number of parameters to {3} or less."
           class="PHPMD\Rule\Design\ExcessiveParameterList"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessiveparameterlist">
         <description>
@@ -164,7 +164,7 @@ wrap the numerous parameters.  Basically, try to group the parameters together.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum" description="The parameter count reporting threshold" value="10"/>
+            <property name="maximum" description="The parameter count reporting threshold" value="10"/>
             <property name="exceptions" description="Comma-separated list of method/function names to ignore" value=""/>
         </properties>
         <example>
@@ -182,7 +182,7 @@ class Foo {
 
     <rule name="ExcessivePublicCount"
           since="0.1"
-          message="The {0} {1} has {2} public methods and attributes. Consider reducing the number of public items to less than {3}."
+          message="The {0} {1} has {2} public methods and attributes. Consider reducing the number of public items to {3} or less."
           class="PHPMD\Rule\ExcessivePublicCount"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#excessivepubliccount">
         <description>
@@ -192,7 +192,7 @@ thoroughly test it.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="minimum" description="The public item reporting threshold" value="45"/>
+            <property name="maximum" description="The public item reporting threshold" value="45"/>
         </properties>
         <example>
             <![CDATA[
@@ -224,7 +224,7 @@ field.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxfields" description="The field count reporting threshold " value="15"/>
+            <property name="maximum" description="The field count reporting threshold" value="15"/>
         </properties>
         <example>
             <![CDATA[
@@ -348,7 +348,7 @@ The default was changed from 10 to 25 in PHPMD 2.3.
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxmethods" description="The method count reporting threshold" value="25"/>
+            <property name="maximum" description="The method count reporting threshold" value="25"/>
             <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get|is|has|with|test))i"/>
         </properties>
     </rule>
@@ -368,7 +368,7 @@ By default it ignores methods starting with 'get', 'set', 'is', 'has', 'with', o
         </description>
         <priority>3</priority>
         <properties>
-            <property name="maxmethods" description="The method count reporting threshold" value="10"/>
+            <property name="maximum" description="The method count reporting threshold" value="10"/>
             <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get|is|has|with|test))i"/>
         </properties>
     </rule>

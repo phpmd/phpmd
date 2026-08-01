@@ -33,9 +33,9 @@ final class ExcessivePublicCount extends AbstractRule implements ClassAware, Tra
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
+        $threshold = $this->getIntProperty('maximum');
         $cis = $node->getMetric('cis');
-        if ($cis < $threshold) {
+        if ($cis <= $threshold) {
             return;
         }
         $this->addViolation(

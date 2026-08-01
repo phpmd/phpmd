@@ -33,9 +33,9 @@ final class CyclomaticComplexity extends AbstractRule implements FunctionAware, 
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('reportLevel');
+        $threshold = $this->getIntProperty('maximum');
         $ccn = $node->getMetric('ccn2');
-        if ($ccn < $threshold) {
+        if ($ccn <= $threshold) {
             return;
         }
 

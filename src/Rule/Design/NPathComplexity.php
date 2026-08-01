@@ -35,9 +35,9 @@ final class NPathComplexity extends AbstractRule implements FunctionAware, Metho
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('minimum');
+        $threshold = $this->getIntProperty('maximum');
         $npath = $node->getMetric('npath');
-        if ($npath < $threshold) {
+        if ($npath <= $threshold) {
             return;
         }
 
