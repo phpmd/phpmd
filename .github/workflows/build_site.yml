@@ -43,7 +43,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Copy files
-        run: cp src/site/rst/* src/site/resources/web/ -r
+        run: cp public/rst/* public/resources/web/ -r
 
       - name: Build website
         run: composer build-website
