@@ -19,6 +19,9 @@
 namespace PHPMD\TextUI;
 
 use PDepend\TextUI\Command as PdependCommand;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Controversial\Superglobals;
+use PHPMD\Rule\UnusedFormalParameter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,6 +53,8 @@ final class PdependWorkerCommand extends SymfonyCommand
         $this->ignoreValidationErrors();
     }
 
+    #[SuppressWarnings(UnusedFormalParameter::class)]
+    #[SuppressWarnings(Superglobals::class)]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // PDependCommand::main() re-parses $_SERVER['argv'] itself and has no

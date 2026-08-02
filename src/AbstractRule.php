@@ -289,7 +289,7 @@ abstract class AbstractRule implements Rule
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
      */
-    public function getBooleanProperty(string $name, ?bool $default = null): bool
+    public function isTruthyProperty(string $name, ?bool $default = null): bool
     {
         return in_array($this->getProperty($name, $default), ['true', 'on', 1], false);
     }

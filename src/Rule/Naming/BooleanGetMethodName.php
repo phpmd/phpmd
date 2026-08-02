@@ -98,7 +98,7 @@ final class BooleanGetMethodName extends AbstractRule implements MethodAware
      */
     private function isParameterizedOrIgnored(MethodNode $node): bool
     {
-        if ($this->getBooleanProperty('checkParameterizedMethods')) {
+        if ($this->isTruthyProperty('checkParameterizedMethods')) {
             return $node->getParameterCount() === 0;
         }
 

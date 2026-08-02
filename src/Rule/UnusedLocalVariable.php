@@ -319,7 +319,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
             return false;
         }
 
-        return $this->getBooleanProperty('allow-unused-foreach-variables');
+        return $this->isTruthyProperty('allow-unused-foreach-variables');
     }
 
     /**

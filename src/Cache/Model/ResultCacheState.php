@@ -165,11 +165,9 @@ class ResultCacheState
                     $violation['endLine']
                 );
 
-                if ($violation['args'] === null) {
-                    $violationMessage = $violation['description'];
-                } else {
-                    $violationMessage = ['args' => $violation['args'], 'message' => $violation['description']];
-                }
+                $violationMessage = $violation['args'] === null
+                    ? $violation['description']
+                    : ['args' => $violation['args'], 'message' => $violation['description']];
                 assert($violation['metric'] === null || is_numeric($violation['metric']));
                 $ruleViolations[] = new RuleViolation($rule, $nodeInfo, $violationMessage, $violation['metric']);
             }

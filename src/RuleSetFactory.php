@@ -19,12 +19,17 @@
 namespace PHPMD;
 
 use ArrayAccess;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Exception\RuleByNameNotFoundException;
 use PHPMD\Exception\RuleClassFileNotFoundException;
 use PHPMD\Exception\RuleClassNotFoundException;
 use PHPMD\Exception\RuleNotFoundException;
 use PHPMD\Exception\RuleSetNotFoundException;
 use PHPMD\Exception\RuntimeException;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
+use PHPMD\Rule\Design\ExcessiveClassLength;
+use PHPMD\Rule\Design\TooManyMethods;
 use PHPMD\RuleProperty\RulePropertySetter;
 use SimpleXMLElement;
 use Stringable;
@@ -34,7 +39,15 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * This factory class is used to create the {@link \PHPMD\RuleSet} instance
  * that PHPMD will use to analyze the source code.
+ *
+ * Handles XML/YAML/JSON/PHP config parsing, rule and property resolution,
+ * and include-path management in one place; splitting it into per-format
+ * parsers is tracked as future work rather than done piecemeal here.
  */
+#[SuppressWarnings(ExcessiveClassLength::class)]
+#[SuppressWarnings(ExcessiveClassComplexity::class)]
+#[SuppressWarnings(CouplingBetweenObjects::class)]
+#[SuppressWarnings(TooManyMethods::class)]
 class RuleSetFactory
 {
     /**
@@ -324,13 +337,7 @@ class RuleSetFactory
      */
     private function parseSingleRuleNode(RuleSet $ruleSet, array|ArrayAccess|SimpleXMLElement $ruleNode): void
     {
-        $className = '';
-        if (isset($ruleNode['class'])) {
-            $value = $ruleNode['class'];
-            if (is_string($value) || $value instanceof Stringable) {
-                $className = (string) $value;
-            }
-        }
+        $className = $this->resolveRuleClassNameAttribute($ruleNode);
 
         if ($className === '' && !isset($ruleNode['file'])) {
             $this->modifyExistingRuleset($ruleSet, $ruleNode);
@@ -338,22 +345,7 @@ class RuleSetFactory
             return;
         }
 
-        $fileName = '';
-
-        $ruleSetFolderPath = dirname($ruleSet->getFileName());
-
-        if (isset($ruleNode['file'])) {
-            if ((!$ruleNode['file'] instanceof Stringable) && !is_string($ruleNode['file'])) {
-                throw new RuntimeException('Invalid file');
-            }
-            $ruleNodeFile = (string) $ruleNode['file'];
-
-            if (is_readable($ruleNodeFile)) {
-                $fileName = $ruleNodeFile;
-            } elseif (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNodeFile)) {
-                $fileName = $ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNodeFile;
-            }
-        }
+        $fileName = $this->resolveRuleFileName($ruleNode, $ruleSet);
 
         if ($className === '') {
             $className = $ruleNode['class'] ?? ($fileName === '' ? '' : pathinfo($fileName, PATHINFO_FILENAME));
@@ -365,6 +357,59 @@ class RuleSetFactory
         /** @var class-string<Rule> */
         $className = (string) $className;
 
+        $fileName = $this->resolveRuleClassFileName($className, $fileName);
+        $this->ensureRuleClassLoaded($className, $fileName);
+
+        $rule = $this->createConfiguredRule($className, $ruleSet, $ruleNode);
+
+        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
+            $ruleSet->addRule($rule);
+        }
+    }
+
+    /**
+     * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     */
+    private function resolveRuleClassNameAttribute(array|ArrayAccess|SimpleXMLElement $ruleNode): string
+    {
+        if (!isset($ruleNode['class'])) {
+            return '';
+        }
+
+        $value = $ruleNode['class'];
+
+        return is_string($value) || $value instanceof Stringable ? (string) $value : '';
+    }
+
+    /**
+     * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     * @throws RuntimeException
+     */
+    private function resolveRuleFileName(array|ArrayAccess|SimpleXMLElement $ruleNode, RuleSet $ruleSet): string
+    {
+        if (!isset($ruleNode['file'])) {
+            return '';
+        }
+
+        if ((!$ruleNode['file'] instanceof Stringable) && !is_string($ruleNode['file'])) {
+            throw new RuntimeException('Invalid file');
+        }
+        $ruleNodeFile = (string) $ruleNode['file'];
+
+        if (is_readable($ruleNodeFile)) {
+            return $ruleNodeFile;
+        }
+
+        $ruleSetFolderPath = dirname($ruleSet->getFileName());
+        if (is_readable($ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNodeFile)) {
+            return $ruleSetFolderPath . DIRECTORY_SEPARATOR . $ruleNodeFile;
+        }
+
+        return '';
+    }
+
+    private function resolveRuleClassFileName(string $className, string $fileName): string
+    {
         if (!is_readable($fileName)) {
             $fileName = strtr($className, '\\', '/') . '.php';
         }
@@ -373,20 +418,41 @@ class RuleSetFactory
             $fileName = str_replace(['\\', '_'], '/', $className) . '.php';
         }
 
-        if (!class_exists($className)) {
-            $handle = @fopen($fileName, 'rb', true);
-            if (!$handle) {
-                throw new RuleClassFileNotFoundException($className);
-            }
-            fclose($handle);
+        return $fileName;
+    }
 
-            include_once $fileName;
-
-            if (!class_exists($className)) {
-                throw new RuleClassNotFoundException($className);
-            }
+    /**
+     * @param class-string<Rule> $className
+     * @throws RuleClassFileNotFoundException
+     * @throws RuleClassNotFoundException
+     */
+    private function ensureRuleClassLoaded(string $className, string $fileName): void
+    {
+        if (class_exists($className)) {
+            return;
         }
 
+        if (!stream_resolve_include_path($fileName)) {
+            throw new RuleClassFileNotFoundException($className);
+        }
+
+        include_once $fileName;
+
+        if (!class_exists($className)) {
+            throw new RuleClassNotFoundException($className);
+        }
+    }
+
+    /**
+     * @param class-string<Rule> $className
+     * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     * @throws RuntimeException
+     */
+    private function createConfiguredRule(
+        string $className,
+        RuleSet $ruleSet,
+        array|ArrayAccess|SimpleXMLElement $ruleNode,
+    ): Rule {
         $rule = new $className();
         $this->withNonEmptyStringAtKey($ruleNode, 'name', $rule->setName(...));
         $this->withNonEmptyStringAtKey($ruleNode, 'message', $rule->setMessage(...));
@@ -398,9 +464,7 @@ class RuleSetFactory
 
         $this->parseRuleProperties($rule, $ruleNode);
 
-        if ($rule->getPriority() <= $this->minimumPriority && $rule->getPriority() >= $this->maximumPriority) {
-            $ruleSet->addRule($rule);
-        }
+        return $rule;
     }
 
     /**
@@ -471,33 +535,62 @@ class RuleSetFactory
         $this->withNonEmptyStringAtKey($ruleNode, 'description', [$rule, 'setDescription']);
         $this->withNonEmptyStringAtKey($ruleNode, 'example', [$rule, 'addExample']);
 
-        if (isset($ruleNode['priority'])) {
-            $priority = $ruleNode['priority'];
-            if (!is_int($priority) && (!is_string($priority) || !ctype_digit($priority))) {
-                throw new RuntimeException('Invalid priority');
-            }
-            $rule->setPriority((int) $priority);
-        }
-
-        if (isset($ruleNode['properties'])) {
-            $properties = $ruleNode['properties'];
-            if (!is_iterable($properties)) {
-                throw new RuntimeException('Invalid properties');
-            }
-            $this->parsePropertiesNode($rule, $properties);
-        }
+        $this->applyPriorityAttribute($rule, $ruleNode);
+        $this->applyPropertiesAttribute($rule, $ruleNode);
 
         if ($ruleNode instanceof SimpleXMLElement) {
-            foreach ($ruleNode->children() as $node) {
-                if ($node->getName() === 'description') {
-                    $rule->setDescription((string) $node);
-                } elseif ($node->getName() === 'example') {
-                    $rule->addExample((string) $node);
-                } elseif ($node->getName() === 'priority') {
-                    $rule->setPriority((int) $node);
-                } elseif ($node->getName() === 'properties') {
-                    $this->parsePropertiesNode($rule, $node);
-                }
+            $this->applyXmlChildNodes($rule, $ruleNode);
+        }
+    }
+
+    /**
+     * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     * @throws RuntimeException
+     */
+    private function applyPriorityAttribute(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleNode): void
+    {
+        if (!isset($ruleNode['priority'])) {
+            return;
+        }
+
+        $priority = $ruleNode['priority'];
+        if (!is_int($priority) && (!is_string($priority) || !ctype_digit($priority))) {
+            throw new RuntimeException('Invalid priority');
+        }
+        $rule->setPriority((int) $priority);
+    }
+
+    /**
+     * @param array<mixed>|ArrayAccess<string, mixed>|SimpleXMLElement $ruleNode
+     * @throws RuntimeException
+     */
+    private function applyPropertiesAttribute(Rule $rule, array|ArrayAccess|SimpleXMLElement $ruleNode): void
+    {
+        if (!isset($ruleNode['properties'])) {
+            return;
+        }
+
+        $properties = $ruleNode['properties'];
+        if (!is_iterable($properties)) {
+            throw new RuntimeException('Invalid properties');
+        }
+        $this->parsePropertiesNode($rule, $properties);
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    private function applyXmlChildNodes(Rule $rule, SimpleXMLElement $ruleNode): void
+    {
+        foreach ($ruleNode->children() as $node) {
+            if ($node->getName() === 'description') {
+                $rule->setDescription((string) $node);
+            } elseif ($node->getName() === 'example') {
+                $rule->addExample((string) $node);
+            } elseif ($node->getName() === 'priority') {
+                $rule->setPriority((int) $node);
+            } elseif ($node->getName() === 'properties') {
+                $this->parsePropertiesNode($rule, $node);
             }
         }
     }
@@ -771,7 +864,7 @@ class RuleSetFactory
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
      */
-    public function getCache(array $fileNames): bool
+    public function isCacheEnabled(array $fileNames): bool
     {
         $value = $this->getPropertyFromFile($fileNames, 'cache') ?? false;
         if (is_string($value)) {
@@ -1084,6 +1177,22 @@ class RuleSetFactory
      */
     private function getConfigFromXmlFile(string $fileName): RuleSet
     {
+        $xml = $this->loadXmlFile($fileName);
+
+        $name = isset($xml['name']) ? (string) $xml['name'] : null;
+        $ruleSet = $this->initRuleSet($fileName, $name);
+
+        $this->applyXmlIncludePaths($fileName, $xml);
+        $this->applyXmlRuleSetChildren($ruleSet, $xml);
+
+        return $ruleSet;
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    private function loadXmlFile(string $fileName): SimpleXMLElement
+    {
         // Hide error messages
         $libxml = libxml_use_internal_errors(true);
 
@@ -1098,15 +1207,24 @@ class RuleSetFactory
             throw new RuntimeException(trim($error?->message ?: ''));
         }
 
-        $name = isset($xml['name']) ? (string) $xml['name'] : null;
-        $ruleSet = $this->initRuleSet($fileName, $name);
+        return $xml;
+    }
 
+    private function applyXmlIncludePaths(string $fileName, SimpleXMLElement $xml): void
+    {
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'php-includepath') {
                 $this->addIncludePath($fileName, (string) $node);
             }
         }
+    }
 
+    /**
+     * @throws RuntimeException
+     * @throws ParseException
+     */
+    private function applyXmlRuleSetChildren(RuleSet $ruleSet, SimpleXMLElement $xml): void
+    {
         foreach ($xml->children() as $node) {
             if ($node->getName() === 'description') {
                 $ruleSet->setDescription((string) $node);
@@ -1114,8 +1232,6 @@ class RuleSetFactory
                 $this->parseRuleNode($ruleSet, $node);
             }
         }
-
-        return $ruleSet;
     }
 
     /**

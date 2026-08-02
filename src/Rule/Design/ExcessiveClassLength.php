@@ -36,7 +36,7 @@ final class ExcessiveClassLength extends AbstractRule implements ClassAware
         $threshold = $this->getIntProperty('minimum');
 
         $loc = -1;
-        if ($this->getBooleanProperty('ignore-whitespace')) {
+        if ($this->isTruthyProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
         }
         if (-1 === $loc) {

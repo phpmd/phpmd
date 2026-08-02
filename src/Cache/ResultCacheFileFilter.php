@@ -40,11 +40,9 @@ class ResultCacheFileFilter implements Filter
             return $this->fileIsModified[$filePath];
         }
 
-        if ($this->strategy === ResultCacheStrategy::Timestamp) {
-            $hash = (string) filemtime($absolute);
-        } else {
-            $hash = sha1_file($absolute);
-        }
+        $hash = $this->strategy === ResultCacheStrategy::Timestamp
+            ? (string) filemtime($absolute)
+            : sha1_file($absolute);
 
         // Determine if file was modified since last analyse
         $isModified = $hash === false || ($this->state?->isFileModified($filePath, $hash) ?? true);
@@ -58,17 +56,10 @@ class ResultCacheFileFilter implements Filter
             $this->newState->setErrors($filePath, $this->state->getErrors($filePath));
         }
 
-        if ($isModified) {
-            $this->output->writeln(
-                'Cache: MISS for file ' . $filePath . '.',
-                OutputInterface::VERBOSITY_DEBUG
-            );
-        } else {
-            $this->output->writeln(
-                'Cache: HIT for file ' . $filePath . '.',
-                OutputInterface::VERBOSITY_DEBUG
-            );
-        }
+        $this->output->writeln(
+            'Cache: ' . ($isModified ? 'MISS' : 'HIT') . ' for file ' . $filePath . '.',
+            OutputInterface::VERBOSITY_DEBUG
+        );
 
         return $this->fileIsModified[$filePath] = $isModified;
     }

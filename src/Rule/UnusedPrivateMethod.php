@@ -34,8 +34,11 @@ use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\MethodNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use PHPMD\Utility\CallableArray;
 use PHPMD\Utility\LastVariableWriting;
 use PHPMD\Utility\Seeker;
@@ -46,6 +49,8 @@ use SplObjectStorage;
  * This rule collects all private methods in a class that aren't used in any
  * method of the analyzed class.
  */
+#[SuppressWarnings(ExcessiveClassComplexity::class)]
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedPrivateMethod extends AbstractRule implements ClassAware
 {
     /** @var SplObjectStorage<PDependNode, bool> */
@@ -288,33 +293,48 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     private function isWritingOfSelfType(ClassNode $class, string $name, AbstractNode $lastWriting): bool
     {
         if ($lastWriting->isInstanceOf(ASTCloneExpression::class)) {
-            $cloned = Seeker::fromNode($lastWriting)->getChildIfExist(0);
-
-            return $cloned
-                && $cloned->isInstanceOf(ASTVariable::class)
-                && $this->isInstanceOfTheCurrentClass($class, $cloned);
+            return $this->isCloneOfCurrentClassInstance($class, $lastWriting);
         }
 
         if ($lastWriting->isInstanceOf(ASTAllocationExpression::class)) {
-            $value = Seeker::fromNode($lastWriting)->getChildIfExist(0);
-
-            if (!$value) {
-                return false;
-            }
-
-            if ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf(ASTStaticReference::class)) {
-                return true;
-            }
-
-            return $value->isInstanceOf(ASTClassOrInterfaceReference::class)
-                && $this->representCurrentClassName($class, $value->getImage());
+            return $this->isAllocationOfCurrentClassInstance($class, $lastWriting);
         }
 
-        if ($lastWriting->isInstanceOf(ASTVariable::class) && $lastWriting->getImage() !== $name) {
-            return $this->isInstanceOfTheCurrentClass($class, $lastWriting);
+        return $lastWriting->isInstanceOf(ASTVariable::class)
+            && $lastWriting->getImage() !== $name
+            && $this->isInstanceOfTheCurrentClass($class, $lastWriting);
+    }
+
+    /**
+     * @param AbstractNode<PDependNode> $lastWriting
+     * @throws OutOfBoundsException
+     */
+    private function isCloneOfCurrentClassInstance(ClassNode $class, AbstractNode $lastWriting): bool
+    {
+        $cloned = Seeker::fromNode($lastWriting)->getChildIfExist(0);
+
+        return $cloned
+            && $cloned->isInstanceOf(ASTVariable::class)
+            && $this->isInstanceOfTheCurrentClass($class, $cloned);
+    }
+
+    /**
+     * @param AbstractNode<PDependNode> $lastWriting
+     */
+    private function isAllocationOfCurrentClassInstance(ClassNode $class, AbstractNode $lastWriting): bool
+    {
+        $value = Seeker::fromNode($lastWriting)->getChildIfExist(0);
+
+        if (!$value) {
+            return false;
         }
 
-        return false;
+        if ($value->isInstanceOf(ASTSelfReference::class) || $value->isInstanceOf(ASTStaticReference::class)) {
+            return true;
+        }
+
+        return $value->isInstanceOf(ASTClassOrInterfaceReference::class)
+            && $this->representCurrentClassName($class, $value->getImage());
     }
 
     private function canBeCurrentClassInstance(ClassNode $class, ASTType $type): bool

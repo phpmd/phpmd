@@ -40,7 +40,7 @@ final class CamelCaseClassName extends AbstractRule implements ClassAware, EnumA
     public function apply(AbstractNode $node): void
     {
         $pattern = '/^[A-Z][a-zA-Z0-9]*$/';
-        if ($this->getBooleanProperty('camelcase-abbreviations')) {
+        if ($this->isTruthyProperty('camelcase-abbreviations')) {
             // disallow any consecutive uppercase letters
             $pattern = '/^([A-Z][a-z0-9]+)*$/';
         }

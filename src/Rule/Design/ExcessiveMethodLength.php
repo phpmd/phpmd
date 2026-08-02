@@ -38,7 +38,7 @@ final class ExcessiveMethodLength extends AbstractRule implements FunctionAware,
         $threshold = $this->getIntProperty('minimum');
 
         $loc = -1;
-        if ($this->getBooleanProperty('ignore-whitespace')) {
+        if ($this->isTruthyProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
         }
         if (-1 === $loc) {

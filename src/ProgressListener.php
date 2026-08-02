@@ -21,9 +21,13 @@ namespace PHPMD;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\TooManyPublicMethods;
+use PHPMD\Rule\UnusedFormalParameter;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[SuppressWarnings(TooManyPublicMethods::class)]
 class ProgressListener extends AbstractASTVisitListener implements ProcessListener
 {
     private ProgressBar $progressBar;
@@ -73,10 +77,12 @@ class ProgressListener extends AbstractASTVisitListener implements ProcessListen
     {
     }
 
+    #[SuppressWarnings(UnusedFormalParameter::class)]
     public function startAnalyzer(Analyzer $analyzer): void
     {
     }
 
+    #[SuppressWarnings(UnusedFormalParameter::class)]
     public function endAnalyzer(Analyzer $analyzer): void
     {
     }

@@ -39,13 +39,17 @@ final class ResultCacheEngineFactory
         }
 
         // the cache key doesn't match the stored cache key. Invalidate cache
-        if ($state && !$state->getCacheKey()->isEqualTo($cacheKey)) {
+        $cacheKeyMismatch = $state && !$state->getCacheKey()->isEqualTo($cacheKey);
+
+        if ($cacheKeyMismatch) {
             $this->output->writeln(
                 'ResultCache is enabled, but the cache metadata doesn\'t match.',
                 OutputInterface::VERBOSITY_VERY_VERBOSE
             );
             $state = null;
-        } else {
+        }
+
+        if (!$cacheKeyMismatch) {
             $this->output->writeln(
                 'ResultCache is enabled, and read from ' . $options->cacheFile(),
                 OutputInterface::VERBOSITY_VERY_VERBOSE

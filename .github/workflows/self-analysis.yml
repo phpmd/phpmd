@@ -1,0 +1,65 @@
+name: Self-analysis
+
+# Runs PHPMD on its own source code, using its own dogfooding ruleset
+# (phpmd.project.yml). This doubles as a reference for any project that
+# wants to run PHPMD in CI: install dependencies, then invoke the `analyze`
+# command with `--format=github` so violations show up as GitHub's
+# `::warning file=...,line=...::` workflow commands, which GitHub turns into
+# inline PR annotations. The exit code still fails the build on any
+# violation.
+#
+# For local runs, use `composer self-analysis` instead, which keeps the
+# default text output and progress bar.
+
+on:
+  push:
+    branches: [ 'master', '2.x', '3.x' ]
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpmd.project.yml'
+      - 'rulesets/**'
+      - '.github/workflows/self-analysis.yml'
+  pull_request:
+    branches: [ '*' ]
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'phpmd.project.yml'
+      - 'rulesets/**'
+      - '.github/workflows/self-analysis.yml'
+
+jobs:
+  self-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      COMPOSER_NO_INTERACTION: 1
+
+    name: PHPMD self-analysis
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-self-analysis-${{ hashFiles('composer.json') }}
+
+      - name: Install dependencies
+        if: steps.composer-cache.outputs.cache-hit != 'true'
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPMD on itself
+        run: >
+          bin/phpmd analyze --ruleset phpmd.project.yml --no-progress --format=github
