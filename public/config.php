@@ -13,17 +13,26 @@ class PhpMdEnvironment extends Environment
      */
     protected $baseHref;
 
-    public $websiteDirectory = __DIR__.'/../../dist/website';
+    public $websiteDirectory = __DIR__.'/../dist/website';
 
     public function getBaseHref()
     {
         return $this->baseHref;
     }
 
+    /**
+     * Prevent Gregwar\RST\Span from resets the anonymous link stack so that
+     * `__ url` targets at the end of the document can consume them.
+     */
+    public function resetAnonymousStack(): void
+    {
+    }
+
     public function reset(): void
     {
         parent::reset();
 
+        $this->anonymous = [];
         $this->baseHref = ltrim(EnvVar::toString('BASE_HREF') ?: '', ':');
         $this->titleLetters = [
             2 => '=',
