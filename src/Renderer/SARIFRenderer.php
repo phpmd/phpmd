@@ -18,8 +18,8 @@
 
 namespace PHPMD\Renderer;
 
-use PHPMD\PHPMD;
 use PHPMD\Report;
+use PHPMD\TextUI\Command;
 
 /**
  * This class will render a SARIF (Static Analysis
@@ -44,7 +44,7 @@ final class SARIFRenderer extends JSONRenderer
                         'driver' => [
                             'name' => 'PHPMD',
                             'informationUri' => 'https://phpmd.org',
-                            'version' => PHPMD::VERSION,
+                            'version' => Command::getVersion(),
                             'rules' => [],
                         ],
                     ],

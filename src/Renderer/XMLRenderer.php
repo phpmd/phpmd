@@ -19,8 +19,8 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\AbstractRenderer;
-use PHPMD\PHPMD;
 use PHPMD\Report;
+use PHPMD\TextUI\Command;
 
 /**
  * This class will render a Java-PMD compatible xml-report.
@@ -50,7 +50,7 @@ class XMLRenderer extends AbstractRenderer
     public function renderReport(Report $report): void
     {
         $writer = $this->getWriter();
-        $writer->write('<pmd version="' . PHPMD::VERSION . '" ');
+        $writer->write('<pmd version="' . Command::getVersion() . '" ');
         $writer->write('tool="phpmd" ');
         $writer->write('timestamp="' . date('c') . '">');
         $writer->write(PHP_EOL);

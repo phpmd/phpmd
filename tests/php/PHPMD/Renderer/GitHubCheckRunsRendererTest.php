@@ -20,8 +20,8 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
-use PHPMD\PHPMD;
 use PHPMD\Stubs\RuleStub;
+use PHPMD\TextUI\Command;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -83,7 +83,7 @@ class GitHubCheckRunsRendererTest extends AbstractTestCase
         /** @var array{title: string, summary: string, annotations: list<array{path: string, violations: list<array{start_line: int, end_line: int, annotation_level: string, message: string, title: string, raw_details: array<string, mixed>}>}>} $data */
         $data = json_decode($output, true);
 
-        static::assertSame(sprintf('phpmd %s', PHPMD::VERSION), $data['title']);
+        static::assertSame(sprintf('phpmd %s', Command::getVersion()), $data['title']);
         static::assertCount(2, $data['annotations']);
 
         $firstAnnotation = $data['annotations'][0];

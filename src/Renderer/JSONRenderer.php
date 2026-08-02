@@ -20,9 +20,9 @@ namespace PHPMD\Renderer;
 
 use JsonException;
 use PHPMD\AbstractRenderer;
-use PHPMD\PHPMD;
 use PHPMD\ProcessingError;
 use PHPMD\Report;
+use PHPMD\TextUI\Command;
 use PHPMD\Utility\Paths;
 
 /**
@@ -52,7 +52,7 @@ class JSONRenderer extends AbstractRenderer
     protected function initReportData(): array
     {
         return [
-            'version' => PHPMD::VERSION,
+            'version' => Command::getVersion(),
             'package' => 'phpmd',
             'timestamp' => date('c'),
         ];
