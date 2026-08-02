@@ -115,9 +115,11 @@ final class Command extends SymfonyCommand
         /** @var list<string> */
         $argv = $_SERVER['argv'];
         $rules = [];
-        foreach ($argv as $arg) {
+        foreach ($argv as $index => $arg) {
             if (str_starts_with($arg, '--ruleset=')) {
                 $rules[] = substr($arg, 10);
+            } elseif ($arg === '--ruleset' && isset($argv[$index + 1])) {
+                $rules[] = $argv[$index + 1];
             }
         }
         $defaultConfig = $rules ?: $defaultConfig;
