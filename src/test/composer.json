@@ -6,5 +6,17 @@
   "require": {
     "php": ">=5.3.9",
     "phpunit/phpunit": "^4.8.36 || ^5.7.27"
+  },
+  "config": {
+    "policy": {
+      "advisories": {
+        "ignore": {
+          "PKSA-z3gr-8qht-p93v": "PHPUnit 5.x is EOL with no upstream fix, only used for testing",
+          "PKSA-v5yj-8nmz-sk2q": "symfony/yaml 4.x is EOL, transitive dep of PHPUnit 5.x, only used for testing",
+          "PKSA-ft77-7h5f-p3r6": "symfony/yaml 4.x is EOL, transitive dep of PHPUnit 5.x, only used for testing",
+          "PKSA-b14r-zh1d-vdrc": "symfony/yaml 4.x is EOL, transitive dep of PHPUnit 5.x, only used for testing"
+        }
+      }
+    }
   }
 }
