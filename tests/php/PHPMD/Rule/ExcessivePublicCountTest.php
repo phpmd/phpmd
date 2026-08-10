@@ -35,6 +35,14 @@ class ExcessivePublicCountTest extends AbstractTestCase
         $rule->apply($this->getClassMock('cis', 23));
     }
 
+    public function testRuleAcceptsLegacyMinimumProperty(): void
+    {
+        $rule = new ExcessivePublicCount();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '23');
+        $rule->apply($this->getClassMock('cis', 42));
+    }
+
     public function testRuleDoesNotApplyToClassesWithSameNumberOfPublicMembersAsThreshold(): void
     {
         $rule = new ExcessivePublicCount();

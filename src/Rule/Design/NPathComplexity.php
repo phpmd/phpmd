@@ -22,6 +22,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule will check the NPath-complexity of a method or function against the
@@ -29,15 +30,17 @@ use PHPMD\Rule\MethodAware;
  */
 final class NPathComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the acyclic complexity for the given node against a
      * configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
         $npath = $node->getMetric('npath');
-        if ($npath <= $threshold) {
+        if ($npath <= $this->maximum) {
             return;
         }
 
@@ -47,7 +50,7 @@ final class NPathComplexity extends AbstractRule implements FunctionAware, Metho
                 $node->getType(),
                 $node->getName(),
                 (string) $npath,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

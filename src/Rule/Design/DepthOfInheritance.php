@@ -21,28 +21,31 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule will detect classes that are too deep in the inheritance tree.
  */
 final class DepthOfInheritance extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the number of parents for the given class
      * node.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
         $dit = $node->getMetric('dit');
-        if ($dit > $threshold) {
+        if ($dit > $this->maximum) {
             $this->addViolation(
                 $node,
                 [
                     $node->getType(),
                     $node->getName(),
                     (string) $dit,
-                    (string) $threshold,
+                    (string) $this->maximum,
                 ]
             );
         }
