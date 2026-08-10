@@ -21,21 +21,24 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class will detect all classes with too much fields.
  */
 final class TooManyFields extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'maxfields'])]
+    public int $maximum;
+
     /**
      * This method checks the number of methods with in a given class and checks
      * this number against a configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
         $vars = $node->getMetric('vars');
-        if ($vars <= $threshold) {
+        if ($vars <= $this->maximum) {
             return;
         }
         $this->addViolation(
@@ -44,7 +47,7 @@ final class TooManyFields extends AbstractRule implements ClassAware
                 $node->getType(),
                 $node->getName(),
                 (string) $vars,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

@@ -22,12 +22,16 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class will detect all classes with too many methods.
  */
 final class TooManyMethods extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'maxmethods'])]
+    public int $maximum;
+
     /** Regular expression that filters all methods that are ignored by this rule. */
     private string $ignoreRegexp;
 
@@ -43,12 +47,11 @@ final class TooManyMethods extends AbstractRule implements ClassAware
 
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
-        $threshold = $this->getIntProperty('maximum');
-        if ($node->getMetric('nom') <= $threshold) {
+        if ($node->getMetric('nom') <= $this->maximum) {
             return;
         }
         $nom = $this->countMethods($node);
-        if ($nom <= $threshold) {
+        if ($nom <= $this->maximum) {
             return;
         }
         $this->addViolation(
@@ -57,7 +60,7 @@ final class TooManyMethods extends AbstractRule implements ClassAware
                 $node->getType(),
                 $node->getName(),
                 (string) $nom,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

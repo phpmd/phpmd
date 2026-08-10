@@ -21,20 +21,22 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class will detect excessive long classes.
  */
 final class ExcessiveClassLength extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the length of the given class node against a configured
      * threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
-
         $loc = -1;
         if ($this->isTruthyProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
@@ -43,10 +45,10 @@ final class ExcessiveClassLength extends AbstractRule implements ClassAware
             $loc = $node->getMetric('loc');
         }
 
-        if ($loc <= $threshold) {
+        if ($loc <= $this->maximum) {
             return;
         }
 
-        $this->addViolation($node, [$node->getName(), (string) $loc, (string) $threshold]);
+        $this->addViolation($node, [$node->getName(), (string) $loc, (string) $this->maximum]);
     }
 }

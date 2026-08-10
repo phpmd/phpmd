@@ -22,6 +22,7 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule will detect to long methods, those methods are unreadable and in
@@ -29,14 +30,15 @@ use PHPMD\Rule\MethodAware;
  */
 final class ExcessiveMethodLength extends AbstractRule implements FunctionAware, MethodAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the lines of code length for the given function or
      * method node against a configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
-
         $loc = -1;
         if ($this->isTruthyProperty('ignore-whitespace')) {
             $loc = $node->getMetric('eloc');
@@ -45,7 +47,7 @@ final class ExcessiveMethodLength extends AbstractRule implements FunctionAware,
             $loc = $node->getMetric('loc');
         }
 
-        if ($loc <= $threshold) {
+        if ($loc <= $this->maximum) {
             return;
         }
 
@@ -55,7 +57,7 @@ final class ExcessiveMethodLength extends AbstractRule implements FunctionAware,
                 $node->getType(),
                 $node->getName(),
                 (string) $loc,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

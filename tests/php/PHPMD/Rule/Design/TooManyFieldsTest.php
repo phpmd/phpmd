@@ -50,4 +50,12 @@ class TooManyFieldsTest extends AbstractTestCase
         $rule->addProperty('maximum', '23');
         $rule->apply($this->getClassMock('vars', 42));
     }
+
+    public function testRuleAcceptsLegacyMaxfieldsProperty(): void
+    {
+        $rule = new TooManyFields();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('maxfields', '23');
+        $rule->apply($this->getClassMock('vars', 42));
+    }
 }

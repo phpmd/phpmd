@@ -20,6 +20,7 @@ namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule checks a given method or function against the configured cyclomatic
@@ -27,15 +28,17 @@ use PHPMD\AbstractRule;
  */
 final class CyclomaticComplexity extends AbstractRule implements FunctionAware, MethodAware
 {
+    #[Threshold(['maximum', 'reportLevel'])]
+    public int $maximum;
+
     /**
      * This method checks the cyclomatic complexity for the given node against
      * a configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
         $ccn = $node->getMetric('ccn2');
-        if ($ccn <= $threshold) {
+        if ($ccn <= $this->maximum) {
             return;
         }
 
@@ -45,7 +48,7 @@ final class CyclomaticComplexity extends AbstractRule implements FunctionAware, 
                 $node->getType(),
                 $node->getName(),
                 (string) $ccn,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

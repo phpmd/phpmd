@@ -43,6 +43,21 @@ class CyclomaticComplexityTest extends AbstractTestCase
     }
 
     /**
+     * Tests that the legacy `reportLevel` property name is still accepted as
+     * an alias for `maximum`.
+     */
+    public function testRuleAcceptsLegacyReportLevelProperty(): void
+    {
+        $method = $this->getMethodMock('ccn2', 42);
+        $report = $this->getReportWithOneViolation();
+
+        $rule = new CyclomaticComplexity();
+        $rule->setReport($report);
+        $rule->addProperty('reportLevel', '10');
+        $rule->apply($method);
+    }
+
+    /**
      * Test that the rule does not apply for a value that is equal with the
      * configured threshold.
      */
