@@ -98,7 +98,7 @@ A new exit code `3` has been added, which indicates that one or more files could
 
 Rules that check an upper bound now consistently use a property named `maximum`, and only report a violation when the measured value *exceeds* the configured value (`value > maximum`). Previously, several rules used `minimum`, `maxfields`, `maxmethods`, or `reportLevel` for what was semantically a maximum, and some reported already when the value *equaled* the threshold.
 
-If your custom rule set configures one of the following rules, rename the property:
+If your custom rule set configures one of the following rules, rename the property. The old names remain accepted as aliases, so an existing rule set keeps its configured thresholds, but the names in the right column are the documented ones going forward:
 
 | Rule                     | PHPMD 2       | PHPMD 3   |
 |--------------------------|---------------|-----------|
@@ -115,6 +115,8 @@ If your custom rule set configures one of the following rules, rename the proper
 | DepthOfInheritance       | `minimum`     | `maximum` |
 
 The comparison is now inclusive for all of these rules: the configured `maximum` is the highest still-accepted value, and only values above it are reported. Rules that previously reported when the value equaled the threshold (all of the above plus ExcessiveClassComplexity and CouplingBetweenObjects) accept one more unit than before. If you want to keep the exact same behavior as PHPMD 2 for a rule that used `value >= threshold`, configure `maximum` to the old value minus one.
+
+This also shifts the shipped defaults: on the default rule sets, values that sat exactly on a threshold (for example a class with a WMC of exactly 50 for ExcessiveClassComplexity, or a CBO of exactly 13 for CouplingBetweenObjects) are no longer reported. Baseline entries recorded for such violations will no longer match and can be removed from your baseline file.
 
 Rules that check a lower bound — ShortVariable, ShortMethodName, and ShortClassName — keep the `minimum` property (a name length *below* the configured minimum is reported).
 

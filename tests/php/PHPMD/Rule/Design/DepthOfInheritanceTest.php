@@ -50,4 +50,12 @@ class DepthOfInheritanceTest extends AbstractTestCase
         $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('dit', 43));
     }
+
+    public function testRuleAcceptsLegacyMinimumProperty(): void
+    {
+        $rule = new DepthOfInheritance();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('dit', 43));
+    }
 }

@@ -11,7 +11,8 @@ Breaking changes:
 - Standardized rule threshold properties to `maximum` (#670). Rules now report
   only when the measured value exceeds (`>`) the configured `maximum`. Rules
   that check a lower bound (ShortVariable, ShortMethodName, ShortClassName)
-  keep the `minimum` property. Renamed properties:
+  keep the `minimum` property. Renamed properties (the old names remain
+  accepted as aliases):
   - CyclomaticComplexity: `reportLevel` -> `maximum`
   - NPathComplexity: `minimum` -> `maximum`
   - ExcessiveMethodLength: `minimum` -> `maximum`
@@ -23,6 +24,7 @@ Breaking changes:
   - TooManyPublicMethods: `maxmethods` -> `maximum`
   - NumberOfChildren: `minimum` -> `maximum`
   - DepthOfInheritance: `minimum` -> `maximum`
+
   Rules that previously reported when the value equaled the threshold
   (CyclomaticComplexity, NPathComplexity, ExcessiveMethodLength,
   ExcessiveClassLength, ExcessiveParameterList, ExcessivePublicCount,

@@ -22,12 +22,16 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class will detect all classes with too much public methods.
  */
 final class TooManyPublicMethods extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'maxmethods'])]
+    public int $maximum;
+
     /** Regular expression that filters all methods that are ignored by this rule. */
     private string $ignoreRegexp;
 
@@ -43,16 +47,15 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
 
         $this->ignoreRegexp = $this->getStringProperty('ignorepattern');
 
-        $threshold = $this->getIntProperty('maximum');
         $publicMethodsCount = $node->getMetric('npm'); // NPM stands for Number of Public Methods
 
-        if ($publicMethodsCount !== null && $publicMethodsCount <= $threshold) {
+        if ($publicMethodsCount !== null && $publicMethodsCount <= $this->maximum) {
             return;
         }
 
         $nom = $this->countMethods($node);
 
-        if ($nom <= $threshold) {
+        if ($nom <= $this->maximum) {
             return;
         }
 
@@ -62,7 +65,7 @@ final class TooManyPublicMethods extends AbstractRule implements ClassAware
                 $node->getType(),
                 $node->getName(),
                 (string) $nom,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

@@ -54,6 +54,14 @@ class ExcessiveParameterListTest extends AbstractTestCase
         $rule->apply($this->createMethod(42));
     }
 
+    public function testRuleAcceptsLegacyMinimumProperty(): void
+    {
+        $rule = new ExcessiveParameterList();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '3');
+        $rule->apply($this->createMethod(42));
+    }
+
     public function testApplyIgnoresFunctionsWithLessParametersThanMaximum(): void
     {
         $rule = new ExcessiveParameterList();

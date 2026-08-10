@@ -24,12 +24,16 @@ use PHPMD\AbstractRule;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule class checks for excessive long function and method parameter lists.
  */
 final class ExcessiveParameterList extends AbstractRule implements FunctionAware, MethodAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the number of arguments for the given function or method
      * node against a configured threshold.
@@ -40,9 +44,8 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
             return;
         }
 
-        $threshold = $this->getIntProperty('maximum');
         $count = $node->getParameterCount();
-        if ($count <= $threshold) {
+        if ($count <= $this->maximum) {
             return;
         }
 
@@ -57,7 +60,7 @@ final class ExcessiveParameterList extends AbstractRule implements FunctionAware
                 $node->getType(),
                 $node->getName(),
                 (string) $count,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

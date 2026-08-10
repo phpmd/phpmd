@@ -50,4 +50,12 @@ class NumberOfChildrenTest extends AbstractTestCase
         $rule->addProperty('maximum', '42');
         $rule->apply($this->getClassMock('nocc', 43));
     }
+
+    public function testRuleAcceptsLegacyMinimumProperty(): void
+    {
+        $rule = new NumberOfChildren();
+        $rule->setReport($this->getReportWithOneViolation());
+        $rule->addProperty('minimum', '42');
+        $rule->apply($this->getClassMock('nocc', 43));
+    }
 }

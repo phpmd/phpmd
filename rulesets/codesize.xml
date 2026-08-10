@@ -213,7 +213,7 @@ public class Foo {
 
     <rule name="TooManyFields"
           since="0.1"
-          message="The {0} {1} has {2} fields. Consider redesigning {1} to keep the number of fields under {3}."
+          message="The {0} {1} has {2} fields. Consider redesigning {1} to keep the number of fields at {3} or less."
           class="PHPMD\Rule\Design\TooManyFields"
           externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanyfields">
         <description>
@@ -334,7 +334,7 @@ public class Foo extends Bar {
     <rule name="TooManyMethods"
           since="0.1"
           class="PHPMD\Rule\Design\TooManyMethods"
-          message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
+          message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods at {3} or less."
           externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanymethods">
         <description>
             <![CDATA[
@@ -356,7 +356,7 @@ The default was changed from 10 to 25 in PHPMD 2.3.
     <rule name="TooManyPublicMethods"
           since="0.1"
           class="PHPMD\Rule\Design\TooManyPublicMethods"
-          message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
+          message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods at {3} or less."
           externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanypublicmethods">
         <description>
             <![CDATA[

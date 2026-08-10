@@ -20,6 +20,7 @@ namespace PHPMD\Rule;
 
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule checks the number of public methods and fields in a given class.
@@ -27,15 +28,17 @@ use PHPMD\AbstractRule;
  */
 final class ExcessivePublicCount extends AbstractRule implements ClassAware, TraitAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the number of public fields and methods in the given
      * class and checks that value against a configured threshold.
      */
     public function apply(AbstractNode $node): void
     {
-        $threshold = $this->getIntProperty('maximum');
         $cis = $node->getMetric('cis');
-        if ($cis <= $threshold) {
+        if ($cis <= $this->maximum) {
             return;
         }
         $this->addViolation(
@@ -44,7 +47,7 @@ final class ExcessivePublicCount extends AbstractRule implements ClassAware, Tra
                 $node->getType(),
                 $node->getName(),
                 (string) $cis,
-                (string) $threshold,
+                (string) $this->maximum,
             ]
         );
     }

@@ -21,12 +21,16 @@ namespace PHPMD\Rule\Design;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Rule\ClassAware;
+use PHPMD\RuleProperty\Threshold;
 
 /**
  * This rule will detect class that have to much direct child classes.
  */
 final class NumberOfChildren extends AbstractRule implements ClassAware
 {
+    #[Threshold(['maximum', 'minimum'])]
+    public int $maximum;
+
     /**
      * This method checks the number of classes derived from the given class
      * node.
@@ -34,15 +38,14 @@ final class NumberOfChildren extends AbstractRule implements ClassAware
     public function apply(AbstractNode $node): void
     {
         $nocc = $node->getMetric('nocc');
-        $threshold = $this->getIntProperty('maximum');
-        if ($nocc > $threshold) {
+        if ($nocc > $this->maximum) {
             $this->addViolation(
                 $node,
                 [
                     $node->getType(),
                     $node->getName(),
                     (string) $nocc,
-                    (string) $threshold,
+                    (string) $this->maximum,
                 ]
             );
         }
