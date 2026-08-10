@@ -19,8 +19,10 @@
 namespace PHPMD\Rule;
 
 use OutOfBoundsException;
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArrayIndexExpression;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNode as PDependNode;
@@ -274,6 +276,21 @@ abstract class AbstractLocalVariable extends AbstractRule
         }
 
         return isset($parameters[$argumentPosition]) && $parameters[$argumentPosition]->isPassedByReference();
+    }
+
+    /**
+     * Checks if the given assignment binds the target variable by reference,
+     * like <b>$variable = &$other</b>.
+     *
+     * @param AbstractNode<AbstractASTNode> $assignment
+     */
+    protected function isReferenceAssignment(AbstractNode $assignment): bool
+    {
+        $value = $assignment->getChildren()[1] ?? null;
+        $children = $value instanceof ASTExpression ? $value->getChildren() : [];
+
+        return ($children[0] ?? null) instanceof ASTExpression
+            && $children[0]->getImage() === '&';
     }
 
     /**
