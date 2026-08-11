@@ -38,6 +38,7 @@ use PHPMD\AbstractNode;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use PHPMD\Utility\ExceptionsList;
 
 /**
@@ -45,6 +46,7 @@ use PHPMD\Utility\ExceptionsList;
  * that are not used by any code in the analyzed source artifact.
  */
 #[SuppressWarnings(CouplingBetweenObjects::class)]
+#[SuppressWarnings(ExcessiveClassComplexity::class)]
 final class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
     /**
@@ -116,6 +118,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
             return false;
         }
 
+        $boundByReference = false;
+
         foreach ($nodes as $node) {
             $parent = $node->getParent();
 
@@ -130,9 +134,36 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
             if (in_array($node->getNode(), array_slice($parent->getChildren(), 1), true)) {
                 return true;
             }
+
+            if ($this->isReferenceAssignment($parent)) {
+                $boundByReference = true;
+
+                continue;
+            }
+
+            // Assigning to a variable that was bound by reference writes to
+            // the referenced value, so the assignment itself is a usage.
+            if ($boundByReference) {
+                return true;
+            }
         }
 
         return false;
+    }
+
+    /**
+     * Checks if the given assignment binds the target variable by reference,
+     * like <b>$variable = &$other</b>.
+     *
+     * @param AbstractNode<AbstractASTNode> $assignment
+     */
+    private function isReferenceAssignment(AbstractNode $assignment): bool
+    {
+        $value = $assignment->getChildren()[1] ?? null;
+        $children = $value instanceof ASTExpression ? $value->getChildren() : [];
+
+        return ($children[0] ?? null) instanceof ASTExpression
+            && $children[0]->getImage() === '&';
     }
 
     /**
