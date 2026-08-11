@@ -70,10 +70,12 @@ class PhpMdPharPublish extends PharPublish
         }
 
         $fileName = $fileName ?: 'phpmd.phar';
+        // The releases endpoint returns 30 items per page by default; request
+        // more so the last 2.x release stays visible once 3.x releases pile up.
         $versions = array_map(
             static fn ($release) => $release->tag_name,
             array_filter(
-                $this->json('releases'),
+                $this->json('releases?per_page=100'),
                 static fn ($release) => empty($release->draft)
                     && empty($release->prerelease)
                     && preg_match('/^2\./', $release->tag_name),
@@ -91,7 +93,7 @@ class PhpMdPharPublish extends PharPublish
         $filePath = $directory.'/'.$fileName;
         $this->download($filePath, 'releases/download/'.$latestV2.'/'.$fileName);
 
-        if (filesize($filePath) < $this->getPharMinimumSize()) {
+        if (!is_file($filePath) || filesize($filePath) < $this->getPharMinimumSize()) {
             @unlink($filePath);
             @rmdir($directory);
 
