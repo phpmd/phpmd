@@ -39,7 +39,7 @@
     "php": "^8.1",
     "ext-xml": "*",
     "composer/xdebug-handler": "^3.0",
-    "pdepend/pdepend": "3.x-dev#890e776347668899812d02c0653a2431e4866f15",
+    "pdepend/pdepend": "3.x-dev",
     "symfony/console": "^6.4|^7.0|^8.0",
     "symfony/yaml": "^5.4.31 || ^6.0 || ^7.0 || ^8.0"
   },
@@ -76,7 +76,7 @@
     "cs-fixer": "php-cs-fixer fix",
     "cs-fix": "phpcbf -p --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
     "self-analysis": "bin/phpmd analyze --ruleset phpmd.project.yml",
-    "build-website": "easy-doc build src/site/config.php --verbose"
+    "build-website": "easy-doc build public/config.php --verbose"
   },
   "config": {
     "sort-packages": true

@@ -42,6 +42,7 @@ The following CLI options have been removed or renamed:
 | PHPMD 2               | PHPMD 3             |
 |-----------------------|---------------------|
 | `--ignore`            | `--exclude`         |
+| `--extensions`        | `--suffixes`        |
 | `--reportfile`        | `--reportfile-text`, `--reportfile-xml`, etc. |
 | `--minimumpriority`   | `--minimum-priority` |
 | `--maximumpriority`   | `--maximum-priority` |
@@ -99,6 +100,9 @@ These changes only affect you if you have written custom rules or extended PHPMD
 
 - The `PHP_PMD_*` class aliases from PHPMD 1.x were already removed in 2.9. If you still use them, update to the `PHPMD\*` namespace.
 - `PHPMD\PHPMD::getIgnorePatterns()` and `setIgnorePatterns()` have been removed. Use `getExcludePatterns()` and `addExcludePatterns()` instead.
+- `PHPMD\RuleSetFactory::getIgnorePattern()` has been removed. Use `getExcludePatterns()` instead.
+- `PHPMD\Rule::getBooleanProperty()` has been renamed to `isTruthyProperty()`.
+- `PHPMD\RuleSetFactory::getCache()` has been renamed to `isCacheEnabled()`.
 - All PHPMD exceptions now use a dedicated exception hierarchy under `PHPMD\Exception\`.
 - Rule marker interfaces now include `EnumAware` and `TraitAware` in addition to the existing `ClassAware`, `FunctionAware`, `InterfaceAware`, and `MethodAware`.
 - PDepend 3.x is now required.

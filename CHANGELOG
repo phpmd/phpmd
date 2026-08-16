@@ -9,6 +9,7 @@ Breaking changes:
 - Changed CLI from positional arguments to Symfony Console with named options.
   The command signature is now `phpmd analyze [options] [--] [<paths>...]`.
 - Removed `--ignore` option, use `--exclude` instead.
+- Removed `--extensions` option, use `--suffixes` instead.
 - Removed `--reportfile` option, use `--reportfile-text`, `--reportfile-xml`, etc.
 - Removed `--minimumpriority` and `--maximumpriority` aliases, use `--minimum-priority` and `--maximum-priority`.
 - Removed `PHPMD\PHPMD::getIgnorePatterns()` and `setIgnorePatterns()`, use `getExcludePatterns()` and `addExcludePatterns()`.
@@ -16,6 +17,7 @@ Breaking changes:
 - Require pdepend/pdepend 3.x.
 - Changed exit code for processing errors from 1 to 3.
 - Introduced PHPMD-specific exception hierarchy under `PHPMD\Exception\`.
+- Removed `PHPMD\RuleSetFactory::getIgnorePattern()`, use `getExcludePatterns()` instead.
 - Renamed `Rule::getBooleanProperty()` to `isTruthyProperty()`.
 - Renamed `RuleSetFactory::getCache()` to `isCacheEnabled()`.
 
@@ -56,6 +58,7 @@ Fixed:
 - Fixed #927: False positive in `UnusedLocalVariable` when a variable bound by reference is written to.
 - Fixed #1016: Crash when isPassedByReference checks a parent that does not exist.
 - Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.
+- Fixed #1239: `ShortVariable` rule now detects short parameter names in closures and arrow functions passed directly as arguments.
 - Fixed: `--strict` did not reveal `LongVariable` suppressions on fields/variables/parameters, nor `UnusedPrivateMethod` suppressions on private methods.
 - Fixed: `--xdebug` could emit an undefined variable warning on the first restart.
 

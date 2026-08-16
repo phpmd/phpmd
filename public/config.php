@@ -1,8 +1,10 @@
 <?php
 
 use EasyDoc\Util\EnvVar;
+use EasyDoc\Util\PharPublish;
 use Gregwar\RST\Environment;
 use Gregwar\RST\Parser;
+use SimpleCli\Writer;
 
 class PhpMdEnvironment extends Environment
 {
@@ -53,6 +55,55 @@ class PhpMdEnvironment extends Environment
     }
 }
 
+class PhpMdPharPublish extends PharPublish
+{
+    /**
+     * Also publish the latest 2.x phar to static/latest-v2/ so users who
+     * cannot upgrade yet keep a version agnostic download link.
+     */
+    public function publishPhar(?Writer $output = null, ?string $fileName = null): void
+    {
+        parent::publishPhar($output, $fileName);
+
+        if (!EnvVar::toString('GITHUB_TOKEN')) {
+            return;
+        }
+
+        $fileName = $fileName ?: 'phpmd.phar';
+        // The releases endpoint returns 30 items per page by default; request
+        // more so the last 2.x release stays visible once 3.x releases pile up.
+        $versions = array_map(
+            static fn ($release) => $release->tag_name,
+            array_filter(
+                $this->json('releases?per_page=100'),
+                static fn ($release) => empty($release->draft)
+                    && empty($release->prerelease)
+                    && preg_match('/^2\./', $release->tag_name),
+            ),
+        );
+        usort($versions, 'version_compare');
+        $latestV2 = end($versions);
+
+        if (!$latestV2) {
+            return;
+        }
+
+        $directory = $this->downloadDirectory.'latest-v2';
+        @mkdir($directory, 0777, true);
+        $filePath = $directory.'/'.$fileName;
+        $this->download($filePath, 'releases/download/'.$latestV2.'/'.$fileName);
+
+        if (!is_file($filePath) || filesize($filePath) < $this->getPharMinimumSize()) {
+            @unlink($filePath);
+            @rmdir($directory);
+
+            return;
+        }
+
+        $this->write("$filePath downloaded (latest-v2: $latestV2)\n", $output, 'light_green');
+    }
+}
+
 $env = new PhpMdEnvironment;
 $parser = new Parser($env);
 
@@ -64,7 +115,10 @@ return [
     'sourceDirectory' => __DIR__.'/rst',
     'assetsDirectory' => __DIR__.'/resources/web',
     'layout' => __DIR__.'/resources/layout.php',
-    'publishPhar' => 'phpmd/phpmd',
+    'publishPhar' => [
+        'repository' => 'phpmd/phpmd',
+        'publisher' => PhpMdPharPublish::class,
+    ],
     'extensions' => [
         'rst' => function ($file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));

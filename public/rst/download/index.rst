@@ -10,14 +10,19 @@ the following version agnostic link: ::
 
   ~ $ wget -c https://phpmd.org/static/latest/phpmd.phar
 
-The Phar files of *PHPMD* are signed with a public key associated to ``pgp@phpmd.org.``.
+If you are not ready to upgrade to PHPMD 3 yet (see the `upgrade guide`__),
+the latest PHPMD 2 release is available through a similar link: ::
+
+  ~ $ wget -c https://phpmd.org/static/latest-v2/phpmd.phar
+
+The Phar files of *PHPMD* are signed with a public key associated to ``pgp@phpmd.org``.
 The `key(s) associated with this E-Mail address`__ can be queried at `keys.openpgp.org`__.
 
 Installing using PHIVE
 ======================
 
 Alternatively, **PHPMD** can be installed through `PHAR Installation and Verification Environment (PHIVE)`__.
-After `installing PHIVE`__,**PHPMD** can be installed using the following command: ::
+After `installing PHIVE`__, **PHPMD** can be installed using the following command: ::
 
   php phive.phar install phpmd
   Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
@@ -88,6 +93,7 @@ PHPMD relies on the following software products:
 - `PDepend >= 3.0.0`__
 - `PHP >= 8.1`__
 
+__ https://github.com/phpmd/phpmd/blob/master/UPGRADING.md
 __ https://keys.openpgp.org/search?q=pgp%40phpmd.org
 __ https://keys.openpgp.org/
 __ https://phar.io
