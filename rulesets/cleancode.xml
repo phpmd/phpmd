@@ -236,6 +236,27 @@ function make() {
         </example>
     </rule>
 
+    <rule name="ShortOpenTag"
+          message="Avoid using short open tags '&lt;?'; use '&lt;?php' instead (line '{0}')."
+          class="PHPMD\Rule\CleanCode\ShortOpenTag"
+          externalInfoUrl="https://phpmd.org/rules/cleancode.html#shortopentag">
+        <description>
+            <![CDATA[
+The short open tag '<?' requires the "short_open_tag" ini setting to be
+enabled to work reliably, which is not guaranteed across environments and is
+disabled by default in most modern setups. Use the full '<?php' open tag
+instead, or the always-available '<?=' short echo tag when only echoing a
+single expression.
+            ]]>
+        </description>
+        <priority>2</priority>
+        <example>
+            <![CDATA[
+<? echo "Hello"; ?>
+            ]]>
+        </example>
+    </rule>
+
     <rule name="UndefinedVariable"
           since="2.8.0"
           message="Avoid using undefined variables such as '{0}' which will lead to PHP notices."
