@@ -171,6 +171,17 @@ Example: ::
           }
       }
 
+ShortOpenTag
+============
+
+Since: PHPMD 3.0.0
+
+Avoid using short open tags '<?'; use '<?php' instead. Short tags require the "short_open_tag" ini setting to be enabled to work reliably, which is not guaranteed across environments and is disabled by default in most modern setups.
+
+Example: ::
+
+  <? echo "Hello"; ?>
+
 UndefinedVariable
 =================
 
