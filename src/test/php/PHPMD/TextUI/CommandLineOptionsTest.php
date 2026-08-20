@@ -833,6 +833,43 @@ class CommandLineOptionsTest extends AbstractTest
         static::assertSame(5, $opts->extraLineInExcerpt());
     }
 
+    /**
+     * @return void
+     */
+    public function testJetbrainsDefaultsToNull()
+    {
+        $args = array(__FILE__, __FILE__, 'text', 'codesize');
+        $opts = new CommandLineOptions($args);
+        static::assertNull($opts->jetbrains());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionJetbrains()
+    {
+        $args = array(__FILE__, __FILE__, 'html', 'codesize', '--jetbrains', 'my-project');
+        $opts = new CommandLineOptions($args);
+        static::assertSame('my-project', $opts->jetbrains());
+
+        $renderer = $opts->createRenderer();
+
+        $jetbrainsExtractor = new ReflectionProperty('PHPMD\\Renderer\\HTMLRenderer', 'jetbrains');
+        $jetbrainsExtractor->setAccessible(true);
+
+        static::assertSame('my-project', $jetbrainsExtractor->getValue($renderer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCliOptionJetbrainsWithEqualSign()
+    {
+        $args = array(__FILE__, __FILE__, 'html', 'codesize', '--jetbrains=my-project');
+        $opts = new CommandLineOptions($args);
+        static::assertSame('my-project', $opts->jetbrains());
+    }
+
     public function dataProviderGetReportFiles()
     {
         return array(

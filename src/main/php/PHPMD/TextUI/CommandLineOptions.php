@@ -219,6 +219,13 @@ class CommandLineOptions
     protected $extraLineInExcerpt;
 
     /**
+     * If set, file links in the html report use the jetbrains:// protocol
+     * and reference this project name.
+     * @var string|null
+     */
+    protected $jetbrains;
+
+    /**
      * Constructs a new command line options instance.
      *
      * @param string[] $args
@@ -364,6 +371,9 @@ class CommandLineOptions
                     break;
                 case '--extra-line-in-excerpt':
                     $this->extraLineInExcerpt = (int)$this->readValue($equalChunk, $args);
+                    break;
+                case '--jetbrains':
+                    $this->jetbrains = $this->readValue($equalChunk, $args);
                     break;
                 default:
                     $hasImplicitArguments = true;
@@ -637,6 +647,18 @@ class CommandLineOptions
     {
         return $this->extraLineInExcerpt;
     }
+
+    /**
+     * If set, file links in the html report use the jetbrains:// protocol
+     * and reference this project name.
+     *
+     * @return string|null
+     */
+    public function jetbrains()
+    {
+        return $this->jetbrains;
+    }
+
     /**
      * Creates a report renderer instance based on the user's command line
      * argument.
@@ -746,7 +768,7 @@ class CommandLineOptions
      */
     protected function createHtmlRenderer()
     {
-        return new HTMLRenderer($this->extraLineInExcerpt);
+        return new HTMLRenderer($this->extraLineInExcerpt, $this->jetbrains);
     }
 
     /**
@@ -864,6 +886,8 @@ class CommandLineOptions
             '--color: enable color in output' . \PHP_EOL .
             '--extra-line-in-excerpt: Specify how many extra lines are added ' .
             'to a code snippet in html format' . \PHP_EOL .
+            '--jetbrains=PROJECT_NAME: use jetbrains:// links referencing PROJECT_NAME to open files ' .
+            'from the html report in a JetBrains IDE' . \PHP_EOL .
             '--: Explicit argument separator: Anything after "--" will be read as an argument even if ' .
             'it starts with "-" or matches the name of an option' . \PHP_EOL;
     }

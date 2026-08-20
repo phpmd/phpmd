@@ -62,4 +62,55 @@ class HTMLRendererTest extends AbstractTest
             $writer->getData()
         );
     }
+
+    /**
+     * @return void
+     */
+    public function testRendererUsesFileLinkByDefault()
+    {
+        $writer = new WriterStub();
+
+        $violations = array($this->getRuleViolationMock('/bar.php', 1));
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new \ArrayIterator($violations)));
+
+        $renderer = new HTMLRenderer();
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertContains("href='file:///bar.php'", $writer->getData());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRendererUsesJetbrainsLinkWhenEnabled()
+    {
+        $writer = new WriterStub();
+
+        $violations = array($this->getRuleViolationMock('/bar.php', 1));
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects($this->once())
+            ->method('getRuleViolations')
+            ->will($this->returnValue(new \ArrayIterator($violations)));
+
+        $renderer = new HTMLRenderer(null, 'my-project');
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        $this->assertContains(
+            "href='jetbrains://phpstorm/navigate/reference?project=my-project&path=/bar.php:1'",
+            $writer->getData()
+        );
+    }
 }

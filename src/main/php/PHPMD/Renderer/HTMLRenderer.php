@@ -71,11 +71,20 @@ class HTMLRenderer extends AbstractRenderer
      */
     protected $extraLineInExcerpt = 2;
 
-    public function __construct($extraLineInExcerpt = null)
+    /**
+     * If set, file links use the jetbrains:// protocol referencing this project name
+     * to open in a JetBrains IDE.
+     * @var string|null
+     */
+    protected $jetbrains;
+
+    public function __construct($extraLineInExcerpt = null, $jetbrains = null)
     {
         if ($extraLineInExcerpt && is_int($extraLineInExcerpt)) {
             $this->extraLineInExcerpt = $extraLineInExcerpt;
         }
+
+        $this->jetbrains = $jetbrains ?: null;
     }
 
     /**
@@ -387,7 +396,10 @@ class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='jetbrains://phpstorm/navigate/reference?project=vndash-backend&path=$filePath:{$violation->getBeginLine()}' target='_blank'>" . self::highlightFile($filePath) . "</a>";
+            $fileHref = $this->jetbrains
+                ? "jetbrains://phpstorm/navigate/reference?project={$this->jetbrains}&path=$filePath:{$violation->getBeginLine()}"
+                : "file://$filePath";
+            $fileHtml = "<a href='$fileHref' target='_blank'>" . self::highlightFile($filePath) . "</a>";
 
             // Create an external link to rule's help, if there's any provided.
             $linkHtml = null;
