@@ -294,6 +294,8 @@ final class HTMLRenderer extends AbstractRenderer
     public function __construct(
         /** Specify how many extra lines are added to a code snippet By default 2 */
         private int $extraLineInExcerpt,
+        /** If set, file links use the jetbrains:// protocol referencing this project name */
+        private ?string $jetbrains = null,
     ) {
     }
 
@@ -381,7 +383,11 @@ final class HTMLRenderer extends AbstractRenderer
 
             $descHtml = self::colorize(htmlentities($violation->getDescription()));
             $filePath = $violation->getFileName();
-            $fileHtml = "<a href='file://$filePath' target='_blank'>"
+            $fileHref = $this->jetbrains
+                ? 'jetbrains://phpstorm/navigate/reference?project=' . $this->jetbrains
+                    . "&path=$filePath:{$violation->getBeginLine()}"
+                : "file://$filePath";
+            $fileHtml = "<a href='$fileHref' target='_blank'>"
                 . self::highlightFile((string) $filePath) . '</a>';
 
             // Create an external link to rule's help, if there's any provided.

@@ -582,4 +582,30 @@ class CommandLineOptionsTest extends AbstractTestCase
         $opts = new CommandLineOptions($args);
         static::assertSame(5, $opts->extraLineInExcerpt());
     }
+
+    public function testJetbrainsDefaultsToNull(): void
+    {
+        $args = $this->createInput(['paths' => [__FILE__], '--format' => 'text', '--ruleset' => ['codesize']]);
+        $opts = new CommandLineOptions($args);
+        static::assertNull($opts->jetbrains());
+    }
+
+    public function testCliOptionJetbrains(): void
+    {
+        $args = $this->createInput([
+            'paths' => [__FILE__],
+            '--format' => 'html',
+            '--ruleset' => ['codesize'],
+            '--jetbrains' => 'my-project',
+        ]);
+        $opts = new CommandLineOptions($args);
+        static::assertSame('my-project', $opts->jetbrains());
+
+        $renderer = $opts->createRenderer(new NullOutput());
+
+        $jetbrainsExtractor = new ReflectionProperty(HTMLRenderer::class, 'jetbrains');
+        $jetbrainsExtractor->setAccessible(true);
+
+        static::assertSame('my-project', $jetbrainsExtractor->getValue($renderer));
+    }
 }

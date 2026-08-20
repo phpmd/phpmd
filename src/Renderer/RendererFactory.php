@@ -22,7 +22,7 @@ final class RendererFactory
     /**
      * @throws InvalidArgumentException
      */
-    public function getRenderer(string $format): RendererInterface
+    public function getRenderer(string $format, ?string $jetbrains = null): RendererInterface
     {
         return match ($format) {
             'ansi' => new AnsiRenderer(),
@@ -30,7 +30,7 @@ final class RendererFactory
             'github' => new GitHubRenderer(),
             'githubcheckruns' => new GitHubCheckRunsRenderer(),
             'gitlab' => new GitLabRenderer(),
-            'html' => new HTMLRenderer(2),
+            'html' => new HTMLRenderer(2, $jetbrains),
             'json' => new JSONRenderer(),
             'sarif' => new SARIFRenderer(),
             'text' => new TextRenderer(),

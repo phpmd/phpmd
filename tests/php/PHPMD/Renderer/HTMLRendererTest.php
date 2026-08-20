@@ -58,4 +58,49 @@ class HTMLRendererTest extends AbstractTestCase
             $writer->fetch()
         );
     }
+
+    public function testRendererUsesFileLinkByDefault(): void
+    {
+        $writer = new BufferedOutput();
+
+        $violations = [$this->getRuleViolationMock('/bar.php', 1)];
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator($violations));
+
+        $renderer = new HTMLRenderer(2);
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertStringContainsString("href='file:///bar.php'", $writer->fetch());
+    }
+
+    public function testRendererUsesJetbrainsLinkWhenEnabled(): void
+    {
+        $writer = new BufferedOutput();
+
+        $violations = [$this->getRuleViolationMock('/bar.php', 1)];
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::once())
+            ->method('getRuleViolations')
+            ->willReturn(new ArrayIterator($violations));
+
+        $renderer = new HTMLRenderer(2, 'my-project');
+        $renderer->setWriter($writer);
+
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertStringContainsString(
+            "href='jetbrains://phpstorm/navigate/reference?project=my-project&path=/bar.php:1'",
+            $writer->fetch()
+        );
+    }
 }
