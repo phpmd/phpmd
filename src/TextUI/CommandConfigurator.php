@@ -302,6 +302,12 @@ final class CommandConfigurator
             2
         );
         $command->addOption(
+            'jetbrains',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Use jetbrains:// links referencing PROJECT_NAME to open files from the html report in a JetBrains IDE'
+        );
+        $command->addOption(
             'coverage',
             null,
             InputOption::VALUE_REQUIRED,

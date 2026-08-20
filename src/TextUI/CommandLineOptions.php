@@ -137,6 +137,9 @@ class CommandLineOptions
     /** Specify how many extra lines are added to a code snippet */
     private int $extraLineInExcerpt;
 
+    /** If set, file links in the html report use the jetbrains:// protocol and reference this project name. */
+    private ?string $jetbrains = null;
+
     /** number of cores to use for parsing */
     private ?int $threads = null;
 
@@ -180,6 +183,7 @@ class CommandLineOptions
             }
         }
         $this->extraLineInExcerpt = (int) $this->readInt($input, 'extra-line-in-excerpt');
+        $this->jetbrains = $this->readString($input, 'jetbrains');
 
         /** @var list<string> */
         $rulesets = $input->getOption('ruleset');
@@ -378,6 +382,15 @@ class CommandLineOptions
     }
 
     /**
+     * If set, file links in the html report use the jetbrains:// protocol
+     * and reference this project name.
+     */
+    public function jetbrains(): ?string
+    {
+        return $this->jetbrains;
+    }
+
+    /**
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
@@ -405,7 +418,7 @@ class CommandLineOptions
     {
         $reportFormat = $reportFormat ?: $this->reportFormat ?: '';
 
-        return (new RendererFactory())->getRenderer($reportFormat);
+        return (new RendererFactory())->getRenderer($reportFormat, $this->jetbrains);
     }
 
     /**
