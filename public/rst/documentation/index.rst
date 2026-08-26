@@ -89,7 +89,7 @@ Command line options
     that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
     to the current working directory.
 
-  -  ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
+  - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
     Can also be configured via ``<baseline-file>`` in the rule sets.
 
@@ -193,6 +193,29 @@ At the moment PHPMD comes with the following renderers:
 - *githubcheckruns*, JSON format for the `GitHub Check Runs API <https://docs.github.com/en/rest/checks/runs#create-a-check-run>`_.
 - *sarif*, the Static Analysis Results Interchange Format.
 - *checkstyle*, language and tool agnostic XML format.
+
+The ``xml`` renderer writes a Java-PMD compatible report. Running it against
+the built-in ``codesize`` rule set::
+
+  ~ $ phpmd analyze --format xml --ruleset codesize src/
+
+prints a report similar to this::
+
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <pmd version="3.0.0" tool="phpmd" timestamp="2026-08-26T12:23:29+02:00">
+    <file name="/projects/example/src/DbusUI/ResultPrinter.php">
+      <violation beginline="67"
+                 endline="224"
+                 rule="TooManyMethods"
+                 ruleset="Code Size Rules"
+                 package="Example\DbusUI"
+                 externalInfoUrl="https://phpmd.org/rules/codesize.html#toomanymethods"
+                 class="ResultPrinter"
+                 priority="3">
+        The class ResultPrinter has 31 non-getter- and setter-methods. Consider refactoring ResultPrinter to keep number of methods under 25.
+      </violation>
+    </file>
+  </pmd>
 
 Some more formats can be obtained by conversion such as:
 
