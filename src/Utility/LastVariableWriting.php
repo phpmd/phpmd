@@ -58,7 +58,7 @@ final class LastVariableWriting
             }
 
             // Only check occurrences before, stop when found current node
-            if ($occurrence === $this->variable) {
+            if ($occurrence->getNode() === $this->variable->getNode()) {
                 break;
             }
 
