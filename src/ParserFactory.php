@@ -19,6 +19,7 @@
 namespace PHPMD;
 
 use Exception;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
 use InvalidArgumentException;
 use PDepend\Application;
 use PDepend\Engine;
@@ -55,7 +56,10 @@ final class ParserFactory
         $pdepend = $this->createInstance();
         $pdepend = $this->init($pdepend, $phpmd);
 
-        return new Parser($pdepend);
+        $parser = new Parser($pdepend);
+        $parser->setWorkers($phpmd->getThreads() ?? (new CpuCoreCounter())->getCountWithFallback(1));
+
+        return $parser;
     }
 
     /**

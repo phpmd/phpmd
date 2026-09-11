@@ -70,7 +70,8 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput', 'getThreads'])->getMock();
+        $phpmd->method('getThreads')->willReturn(1);
         $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn([$uri1, $uri2]);
@@ -89,7 +90,9 @@ class ParserFactoryTest extends AbstractTestCase
         $uri1 = $this->createFileUri('ParserFactory/File/Test.php');
         $uri2 = $this->createFileUri('ParserFactory/Directory');
 
-        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput'])->getMock();
+        // See testFactoryConfiguresMultipleInputDirectories.
+        $phpmd = $this->getMockBuilder(PHPMD::class)->onlyMethods(['getInput', 'getThreads'])->getMock();
+        $phpmd->method('getThreads')->willReturn(1);
         $phpmd->expects(static::once())
             ->method('getInput')
             ->willReturn([$uri1, $uri2]);
