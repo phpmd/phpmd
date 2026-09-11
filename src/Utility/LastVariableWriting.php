@@ -25,6 +25,7 @@ use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTType;
 use PHPMD\AbstractNode;
+use SplObjectStorage;
 
 /**
  * Utility class to find the last time a variable was written before an occurrence of it.
@@ -34,12 +35,17 @@ final class LastVariableWriting
     /** @var AbstractNode<PDependNode> */
     private $variable;
 
+    /** @var SplObjectStorage<PDependNode, list<AbstractNode<PDependNode>>>|null */
+    private $variablesForScope;
+
     /**
      * @param AbstractNode<PDependNode> $variable
+     * @param SplObjectStorage<PDependNode, list<AbstractNode<PDependNode>>>|null $variablesForScope
      */
-    public function __construct(AbstractNode $variable)
+    public function __construct(AbstractNode $variable, ?SplObjectStorage $variablesForScope = null)
     {
         $this->variable = $variable;
+        $this->variablesForScope = $variablesForScope;
     }
 
     /**
@@ -51,7 +57,7 @@ final class LastVariableWriting
         $lastWriting = null;
         $name = $this->variable->getImage();
 
-        foreach ($scope->findChildrenOfTypeVariable() as $occurrence) {
+        foreach ($this->occurrencesInScope($scope) as $occurrence) {
             // Only care about occurrences of the same variable
             if ($occurrence->getImage() !== $name) {
                 continue;
@@ -74,6 +80,27 @@ final class LastVariableWriting
         }
 
         return $lastWriting;
+    }
+
+    /**
+     * Every variable occurrence of the given scope, in source order.
+     *
+     * @param AbstractNode<PDependNode> $scope
+     * @return list<AbstractNode<PDependNode>>
+     */
+    private function occurrencesInScope(AbstractNode $scope): array
+    {
+        if ($this->variablesForScope === null) {
+            return $scope->findChildrenOfTypeVariable();
+        }
+
+        $node = $scope->getNode();
+
+        if (!$this->variablesForScope->offsetExists($node)) {
+            $this->variablesForScope->offsetSet($node, $scope->findChildrenOfTypeVariable());
+        }
+
+        return $this->variablesForScope->offsetGet($node);
     }
 
     /**
