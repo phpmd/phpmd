@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="Thread parity"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Reports the rules that read a metric derived from the token stream, at
+        thresholds the fixtures actually reach, so that a worker handing back
+        artifacts without their tokens changes the result.
+    </description>
+
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="ExcessiveMethodLength"/>
+        <exclude name="ExcessiveClassLength"/>
+    </rule>
+    <rule ref="rulesets/naming.xml"/>
+    <rule ref="rulesets/unusedcode.xml"/>
+
+    <!-- Reads the "loc" metric. -->
+    <rule ref="rulesets/codesize.xml/ExcessiveMethodLength">
+        <properties>
+            <property name="maximum" value="8"/>
+            <property name="ignore-whitespace" value="false"/>
+        </properties>
+    </rule>
+
+    <!-- Reads the "eloc" metric. -->
+    <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+        <properties>
+            <property name="maximum" value="12"/>
+            <property name="ignore-whitespace" value="true"/>
+        </properties>
+    </rule>
+</ruleset>
