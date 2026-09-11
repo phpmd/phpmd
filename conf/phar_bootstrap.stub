@@ -34,10 +34,19 @@ include_once 'phar://${archive.alias}/vendor/autoload.php';
 
 $application = new \Symfony\Component\Console\Application('PHPMD', \PHPMD\TextUI\Command::getVersion());
 $command = new \PHPMD\TextUI\Command();
+
+if (isset($_SERVER['argv'][0]) && is_file($_SERVER['argv'][0])) {
+    $command->setMainScript($_SERVER['argv'][0]);
+    $command->setWorkerCommandName('pdepend:worker');
+}
+
+$workerCommand = new \PHPMD\TextUI\PdependWorkerCommand();
 if (method_exists($application, 'addCommand')) {
     $application->addCommand($command);
+    $application->addCommand($workerCommand);
 } else {
     $application->add($command);
+    $application->add($workerCommand);
 }
 $application->setDefaultCommand($command->getName());
 // Run command line interface
