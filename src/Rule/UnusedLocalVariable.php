@@ -42,6 +42,7 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Utility\ExceptionsList;
+use PHPMD\Utility\Seeker;
 
 /**
  * This rule collects all local variables within a given function or method
@@ -206,9 +207,10 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isLocal($variable)) {
-                $parent = $variable->getParentOfType(AbstractASTCallable::class);
-                if ($parent?->getNode() === $node->getNode()) {
-                    $this->storeImage($this->getVariableImage($variable->getNode()), $variable);
+                $image = $this->getVariableImage($variable->getNode());
+                $scope = Seeker::fromNode($variable)->getOwningCallable($image);
+                if ($scope?->getNode() === $node->getNode()) {
+                    $this->storeImage($image, $variable);
                 }
             }
         }
@@ -218,9 +220,10 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
         }
 
         foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $variable) {
-            $parent = $variable->getParentOfType(AbstractASTCallable::class);
-            if ($parent?->getNode() === $node->getNode()) {
-                $this->storeImage($this->getVariableImage($variable->getNode()), $variable);
+            $image = $this->getVariableImage($variable->getNode());
+            $scope = Seeker::fromNode($variable)->getOwningCallable($image);
+            if ($scope?->getNode() === $node->getNode()) {
+                $this->storeImage($image, $variable);
             }
         }
 
