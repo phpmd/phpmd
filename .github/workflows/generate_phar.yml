@@ -12,6 +12,8 @@ jobs:
   php-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
     env:
       COMPOSER_NO_INTERACTION: 1
 
@@ -82,10 +84,12 @@ jobs:
 
       - name: Release phpmd.phar
         if: github.event_name == 'release'
-        uses: skx/github-action-publish-binaries@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: |
-            phpmd.phar
-            phpmd.phar.asc
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          assets=(phpmd.phar)
+          if [ -f phpmd.phar.asc ]; then
+            assets+=(phpmd.phar.asc)
+          fi
+          gh release upload "$TAG_NAME" "${assets[@]}" --clobber
