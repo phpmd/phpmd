@@ -30,7 +30,10 @@ use PDepend\Source\AST\ASTForeachStatement;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTListExpression;
 use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTString;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -47,6 +50,18 @@ use PHPMD\Utility\ExceptionsList;
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedLocalVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {
+    /**
+     * Parent node types whose direct children are binding sites (catch
+     * variable, list() targets, a bare no-op statement) rather than usages.
+     *
+     * @var list<class-string<AbstractASTNode>>
+     */
+    private const NON_USAGE_PARENT_TYPES = [
+        ASTCatchStatement::class,
+        ASTListExpression::class,
+        ASTStatement::class,
+    ];
+
     /**
      * Found variable images within a single method or function.
      *
@@ -89,20 +104,9 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
     private function isLocal(AbstractNode $variable): bool
     {
         return (!$variable->isThis()
-            && $this->isNotSuperGlobal($variable)
+            && !$this->isSuperGlobal($variable)
             && $this->isRegularVariable($variable)
         );
-    }
-
-    /**
-     * Tests if the given variable does not represent one of the PHP super globals
-     * that are available in scopes.
-     *
-     * @param AbstractNode<ASTVariable> $variable
-     */
-    private function isNotSuperGlobal(AbstractNode $variable): bool
-    {
-        return !$this->isSuperGlobal($variable);
     }
 
     /**
@@ -112,14 +116,14 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      */
     private function containsUsages(array $nodes): bool
     {
-        if (count($nodes) === 1) {
-            return false;
-        }
-
         $boundByReference = false;
 
         foreach ($nodes as $node) {
             $parent = $node->getParent();
+
+            if ($this->isBindingSite($node, $parent)) {
+                continue;
+            }
 
             if (!$parent?->isInstanceOf(ASTAssignmentExpression::class)) {
                 return true;
@@ -147,6 +151,26 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
         }
 
         return false;
+    }
+
+    /**
+     * Tests if the given occurrence is a mere binding site (a declaration
+     * target that isn't itself a read of the variable's value) rather than a
+     * genuine usage: a foreach key/value binding, a catch variable, a list()
+     * target, or a bare no-op statement.
+     *
+     * @param AbstractNode<AbstractASTNode> $node
+     * @param AbstractNode<ASTNode>|null $parent
+     */
+    private function isBindingSite(AbstractNode $node, ?AbstractNode $parent): bool
+    {
+        if ($parent?->isInstanceOf(ASTForeachStatement::class)) {
+            // The iterated-over expression (first child) is a real usage;
+            // only the key/value bindings are declarations, not usages.
+            return in_array($node->getNode(), array_slice($parent->getChildren(), 1), true);
+        }
+
+        return $parent !== null && in_array($parent->getNode()::class, self::NON_USAGE_PARENT_TYPES, true);
     }
 
     /**
@@ -182,7 +206,10 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
     {
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isLocal($variable)) {
-                $this->collectVariable($variable);
+                $parent = $variable->getParentOfType(AbstractASTCallable::class);
+                if ($parent?->getNode() === $node->getNode()) {
+                    $this->storeImage($this->getVariableImage($variable->getNode()), $variable);
+                }
             }
         }
 
@@ -193,7 +220,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
         foreach ($node->findChildrenOfType(ASTVariableDeclarator::class) as $variable) {
             $parent = $variable->getParentOfType(AbstractASTCallable::class);
             if ($parent?->getNode() === $node->getNode()) {
-                $this->collectVariable($variable);
+                $this->storeImage($this->getVariableImage($variable->getNode()), $variable);
             }
         }
 
@@ -227,17 +254,6 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
                 $this->storeImage($variableImage, $node);
             }
         }
-    }
-
-    /**
-     * Stores the given variable node in an internal list of found variables.
-     *
-     * @param AbstractNode<ASTExpression> $node
-     * @throws OutOfBoundsException
-     */
-    private function collectVariable(AbstractNode $node): void
-    {
-        $this->storeImage($this->getVariableImage($node->getNode()), $node);
     }
 
     /**
@@ -294,10 +310,8 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
             return;
         }
 
-        $parent = $node->getParent();
-
         // ASTFormalParameter should be handled by the UnusedFormalParameter rule
-        if ($parent && $parent->isInstanceOf(ASTFormalParameter::class)) {
+        if ($node->getParent()?->isInstanceOf(ASTFormalParameter::class)) {
             return;
         }
 
@@ -345,9 +359,7 @@ final class UnusedLocalVariable extends AbstractLocalVariable implements Functio
      */
     private function isChildOf(AbstractNode $node, $type): bool
     {
-        $parent = $node->getParent();
-
-        return $parent && $parent->isInstanceOf($type);
+        return (bool) $node->getParent()?->isInstanceOf($type);
     }
 
     /**
