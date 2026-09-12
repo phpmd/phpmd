@@ -59,6 +59,9 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /** @var SplObjectStorage<PDependNode, ASTFormalParameters> */
     private $parametersForScope;
 
+    /** @var SplObjectStorage<PDependNode, list<AbstractNode<PDependNode>>> */
+    private $variablesForScope;
+
     /**
      * This method checks that all private class methods are at least accessed
      * by one method.
@@ -73,6 +76,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
         }
 
         $this->selfVariableCache = new SplObjectStorage();
+        $this->variablesForScope = new SplObjectStorage();
 
         foreach ($this->collectUnusedPrivateMethods($class) as $node) {
             $this->addViolation($node, [$node->getImage()]);
@@ -265,7 +269,7 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
             return false;
         }
 
-        $lastWritingFinder = new LastVariableWriting($variable);
+        $lastWritingFinder = new LastVariableWriting($variable, $this->variablesForScope);
         $lastWriting = $lastWritingFinder->findInScope($scope);
 
         if (!$lastWriting) {
