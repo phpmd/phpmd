@@ -25,6 +25,7 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule\Design\TooManyPublicMethods;
 use PHPMD\Rule\UnusedFormalParameter;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[SuppressWarnings(TooManyPublicMethods::class)]
@@ -50,6 +51,12 @@ class ProgressListener extends AbstractASTVisitListener implements ProcessListen
     {
         $this->progressBar->finish();
         $this->progressBar->clear();
+
+        $output = $this->getProgressOutput();
+
+        if (!$output->isDecorated()) {
+            $output->writeln('');
+        }
     }
 
     public function startFileParsing(): void
@@ -85,5 +92,14 @@ class ProgressListener extends AbstractASTVisitListener implements ProcessListen
     #[SuppressWarnings(UnusedFormalParameter::class)]
     public function endAnalyzer(Analyzer $analyzer): void
     {
+    }
+
+    private function getProgressOutput(): OutputInterface
+    {
+        if ($this->output instanceof ConsoleOutputInterface) {
+            return $this->output->getErrorOutput();
+        }
+
+        return $this->output;
     }
 }
