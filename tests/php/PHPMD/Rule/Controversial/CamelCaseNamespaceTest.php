@@ -40,6 +40,18 @@ class CamelCaseNamespaceTest extends AbstractTestCase
     }
 
     /**
+     * Rule does not apply for a file without a namespace declaration.
+     */
+    public function testRuleDoesNotApplyForNonNamespacedFile(): void
+    {
+        $report = $this->getReportWithNoViolation();
+
+        $rule = new CamelCaseNamespace();
+        $rule->setReport($report);
+        $rule->apply($this->getClass());
+    }
+
+    /**
      * Rule does apply for incorrect namespace.
      */
     public function testRuleDoesApplyForIncorrectNamespace(): void
