@@ -170,7 +170,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = $this->createInput(['paths' => ['app']]);
         $options = new CommandLineOptions($args);
 
-        static::assertSame(['cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode', 'cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode'], $options->getRuleSets());
+        static::assertSame(['cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode'], $options->getRuleSets());
         static::assertSame('text', $options->getReportFormat());
         static::assertSame(['app'], $options->getInputPaths());
     }

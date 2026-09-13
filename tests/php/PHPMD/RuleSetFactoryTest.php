@@ -44,6 +44,32 @@ class RuleSetFactoryTest extends AbstractTestCase
      */
     private const DIR_UNDER_TESTS = 'designăôü0汉字';
 
+    public function testListAvailableRuleSetsDoesNotRepeatBundledRuleSetsWhenRunFromThePackageRoot(): void
+    {
+        // The package root is its own working directory, so its rulesets/ directory is
+        // both the bundled and the working directory one and must be listed only once.
+        self::changeWorkingDirectory((string) realpath(__DIR__ . '/../../..'));
+
+        $factory = new RuleSetFactory();
+
+        static::assertSame(
+            ['cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode'],
+            $factory->listAvailableRuleSets()
+        );
+    }
+
+    public function testListAvailableRuleSetsAppendsWorkingDirectoryRuleSetsWithoutDuplicates(): void
+    {
+        self::changeWorkingDirectory();
+
+        $factory = new RuleSetFactory();
+        $ruleSets = $factory->listAvailableRuleSets();
+
+        static::assertContains('codesize', $ruleSets);
+        static::assertContains('set1', $ruleSets);
+        static::assertSame(array_values(array_unique($ruleSets)), $ruleSets);
+    }
+
     public function testCreateRuleSetFileNameFindsXmlFileInBundledRuleSets(): void
     {
         $factory = new RuleSetFactory();
