@@ -181,6 +181,21 @@ class ShortVariableTest extends AbstractTestCase
         }
     }
 
+    public function testRuleAppliesToVariablesInTraitOnlyOnce(): void
+    {
+        $rule = new ShortVariable();
+        $rule->addProperty('minimum', '3');
+        $rule->addProperty('exceptions', '');
+        $rule->setReport($this->getReportMock(3));
+
+        $trait = $this->getTrait();
+        $rule->apply($trait);
+
+        foreach ($trait->getMethods() as $method) {
+            $rule->apply($method);
+        }
+    }
+
     public function testRuleNotAppliesToShortVariableNameAsForLoopIndex(): void
     {
         $rule = new ShortVariable();
