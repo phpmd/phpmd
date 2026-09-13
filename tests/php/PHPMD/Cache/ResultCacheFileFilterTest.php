@@ -41,6 +41,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
         $this->state->expects(static::once())->method('isFileModified')->willReturn(true);
 
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
+        static::assertTrue($filter->isFileModified(__FILE__));
         $state = $filter->getState()->toArray();
         static::assertIsArray($state['state']['files']);
         static::assertCount(1, $state['state']['files']);
@@ -49,6 +50,7 @@ class ResultCacheFileFilterTest extends AbstractTestCase
     /**
      * @covers ::accept
      * @covers ::getState
+     * @covers ::isFileModified
      */
     public function testAcceptStrategyContentUnmodified(): void
     {
@@ -56,18 +58,17 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         $this->state->expects(static::once())->method('isFileModified')->willReturn(false);
         $this->state->expects(static::once())->method('getViolations')->willReturn(['violations']);
-        $this->state->expects(static::once())->method('getErrors')->willReturn(['error message']);
+        $this->state->expects(static::never())->method('getErrors');
 
-        static::assertFalse($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
+        // An unmodified file is still handed to pdepend, so the types it declares stay resolvable.
+        static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));
+        static::assertFalse($filter->isFileModified(__FILE__));
         $state = $filter->getState()->toArray();
         static::assertIsArray($state['state']['files']);
         static::assertIsArray($state['state']['files']['ResultCacheFileFilterTest.php']);
         static::assertIsArray($state['state']['files']['ResultCacheFileFilterTest.php']['violations']);
         static::assertCount(1, $state['state']['files']['ResultCacheFileFilterTest.php']['violations']);
-        static::assertSame(
-            ['error message'],
-            $state['state']['files']['ResultCacheFileFilterTest.php']['errors']
-        );
+        static::assertArrayNotHasKey('errors', $state['state']['files']['ResultCacheFileFilterTest.php']);
     }
 
     /**

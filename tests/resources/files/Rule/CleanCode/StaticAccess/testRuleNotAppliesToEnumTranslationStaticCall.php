@@ -17,12 +17,18 @@
 
 namespace tests\resources\files\Rule\CleanCode\StaticAccess;
 
-use files\classes\SuitEnum;
-
 final class Foo
 {
     static public function testRuleNotAppliesToEnumTranslationStaticCall(): void
     {
         SuitEnum::cases();
+        SuitEnum::from('Clubs');
+        SuitEnum::tryFrom('Clubs');
     }
+}
+
+enum SuitEnum: string
+{
+    case Clubs = 'Clubs';
+    case Diamonds = 'Diamonds';
 }
