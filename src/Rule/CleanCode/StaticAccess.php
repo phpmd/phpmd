@@ -21,6 +21,7 @@ namespace PHPMD\Rule\CleanCode;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTParentReference;
@@ -30,6 +31,7 @@ use PHPMD\AbstractRule;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Utility\ExceptionsList;
+use RuntimeException;
 
 /**
  * Check if static access is used in a method.
@@ -44,6 +46,10 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
 
     /**
      * Method checks for use of static access and warns about it.
+     *
+     * @throws InvalidArgumentException
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
     public function apply(AbstractNode $node): void
     {
@@ -95,6 +101,7 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
     /**
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
     private function isStaticMethodCall(AbstractNode $methodCall): bool
     {
@@ -126,12 +133,13 @@ final class StaticAccess extends AbstractRule implements FunctionAware, MethodAw
     /**
      * @param AbstractNode<ASTMemberPrimaryPrefix> $methodCall
      * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
     private function isCallingEnumTranslator(AbstractNode $methodCall): bool
     {
-        $enumName = $methodCall->getChild(0)->getName();
+        $reference = $methodCall->getChild(0)->getNode();
 
-        if (!enum_exists($enumName)) {
+        if (!$reference instanceof ASTClassOrInterfaceReference || !$reference->getType() instanceof ASTEnum) {
             return false;
         }
 

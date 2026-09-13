@@ -134,7 +134,7 @@ class StaticAccessTest extends AbstractTestCase
     public function testRuleAppliesToEnumMethodsFromOtherClasses(): void
     {
         $rule = new StaticAccess();
-        $rule->setReport($this->getReportWithNoViolation());
+        $rule->setReport($this->getReportWithOneViolation());
         $rule->apply($this->getMethod());
     }
 

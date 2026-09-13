@@ -62,8 +62,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "PHPMD\\": "tests/php/PHPMD/",
-      "": "tests/resources/"
+      "PHPMD\\": "tests/php/PHPMD/"
     }
   },
   "bin": [
