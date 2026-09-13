@@ -71,24 +71,25 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
     {
         $this->resetProcessed();
 
-        if ($node->getType() === 'class') {
-            $this->applyClass($node);
+        if (in_array($node->getType(), ['class', 'trait'], true)) {
+            $this->applyType($node);
 
             return;
         }
 
-        $this->applyNonClass($node);
+        $this->applyCallable($node);
     }
 
     /**
-     * Extracts all variable and variable declarator nodes from the given class node
+     * Extracts the property declarator nodes from the given class or trait node
      *
      * Checks the variable name length against the configured minimum
-     * length.
+     * length. Method bodies are deliberately left out, they are visited
+     * separately through the MethodAware interface.
      *
      * @param AbstractNode<ASTNode> $node
      */
-    private function applyClass(AbstractNode $node): void
+    private function applyType(AbstractNode $node): void
     {
         $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
         foreach ($fields as $field) {
@@ -101,14 +102,15 @@ final class ShortVariable extends AbstractRule implements ClassAware, FunctionAw
     }
 
     /**
-     * Extracts all variable and variable declarator nodes from the given non-class node
+     * Extracts all variable and variable declarator nodes from the given
+     * function or method node
      *
      * Checks the variable name length against the configured minimum
      * length.
      *
      * @param AbstractNode<ASTNode> $node
      */
-    private function applyNonClass(AbstractNode $node): void
+    private function applyCallable(AbstractNode $node): void
     {
         $declarators = $node->findChildrenOfType(ASTVariableDeclarator::class);
         foreach ($declarators as $declarator) {
