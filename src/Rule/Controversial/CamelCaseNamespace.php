@@ -43,7 +43,7 @@ final class CamelCaseNamespace extends AbstractRule implements ClassAware, EnumA
 
         $exceptions = $this->getExceptionsList();
         $fullNamespace = $node->getNamespaceName();
-        if (!$fullNamespace) {
+        if (!$fullNamespace || $fullNamespace === '+global') {
             return;
         }
         $namespaceNames = explode('\\', $fullNamespace);
