@@ -277,7 +277,8 @@ final class CommandConfigurator
             'update-baseline',
             null,
             InputOption::VALUE_NONE,
-            'Will remove any non-existing violations from the phpmd.baseline.xml'
+            'Will remove any non-existing violations from the phpmd.baseline.xml. '
+            . 'Violations not in the baseline are reported as usual and are not added'
         );
         $baselineFile = $defaultConfig ? $ruleSetFactory->getBaseLineFile($defaultConfig) : null;
         $command->addOption(

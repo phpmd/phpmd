@@ -94,6 +94,12 @@ However, PHP attributes are recommended going forward, as they are type-safe and
 
 A new exit code `3` has been added, which indicates that one or more files could not be processed because of an error. Previously this would have been exit code `1`.
 
+### Baseline update
+
+`--update-baseline` now reports violations that are not in the baseline. They are rendered with the configured format and make the command exit with code `2`, as a run without the option would. They are still not added to the baseline file. In PHPMD 2 these violations were silently dropped. Run `--generate-baseline` to add them to the baseline instead.
+
+`PHPMD\Baseline\BaselineValidator` no longer takes a `BaselineMode`, the constructor only accepts the `BaselineSet`.
+
 ### Standardized rule threshold properties
 
 Rules that check an upper bound now consistently use a property named `maximum`, and only report a violation when the measured value *exceeds* the configured value (`value > maximum`). Previously, several rules used `minimum`, `maxfields`, `maxmethods`, or `reportLevel` for what was semantically a maximum, and some reported already when the value *equaled* the threshold.

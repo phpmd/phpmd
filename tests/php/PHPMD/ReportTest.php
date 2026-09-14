@@ -18,7 +18,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Baseline\ViolationBaseline;
@@ -184,7 +183,7 @@ class ReportTest extends AbstractTestCase
         $baseline->addEntry($violation);
 
         // setup report
-        $report = new Report(new BaselineValidator($baseline, BaselineMode::None));
+        $report = new Report(new BaselineValidator($baseline));
         $report->addRuleViolation($ruleA);
         $report->addRuleViolation($ruleB);
 
@@ -194,7 +193,7 @@ class ReportTest extends AbstractTestCase
         static::assertSame($ruleB, $violations[0]);
     }
 
-    public function testReportShouldIgnoreNewViolationsOnBaselineUpdate(): void
+    public function testReportShouldKeepBaselinedViolationsApart(): void
     {
         $ruleA = $this->getRuleViolationMock('foo.txt');
 
@@ -206,13 +205,22 @@ class ReportTest extends AbstractTestCase
         $baseline->addEntry($violation);
 
         // setup report
-        $report = new Report(new BaselineValidator($baseline, BaselineMode::Update));
+        $report = new Report(new BaselineValidator($baseline));
         $report->addRuleViolation($ruleA);
         $report->addRuleViolation($ruleB);
 
-        // only expect ruleA, as ruleB is new and should not be in the report.
-        $violations = $report->getRuleViolations();
-        static::assertCount(1, $violations);
-        static::assertSame($ruleA, $violations[0]);
+        // ruleA is baselined, ruleB is reported
+        $baselined = $report->getBaselinedRuleViolations();
+        static::assertCount(1, $baselined);
+        static::assertSame($ruleA, $baselined[0]);
+        static::assertFalse($report->isEmpty());
+    }
+
+    public function testReportWithoutBaselineHasNoBaselinedViolations(): void
+    {
+        $report = new Report();
+        $report->addRuleViolation($this->getRuleViolationMock('foo.txt'));
+
+        static::assertCount(0, $report->getBaselinedRuleViolations());
     }
 }

@@ -4,6 +4,7 @@ namespace PHPMD\Renderer;
 
 use ArrayIterator;
 use PHPMD\AbstractTestCase;
+use PHPMD\Baseline\BaselineMode;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
@@ -29,6 +30,35 @@ class BaselineRendererTest extends AbstractTestCase
             ->willReturn(new ArrayIterator($violations));
 
         $renderer = new BaselineRenderer('/src');
+        $renderer->setWriter($writer);
+        $renderer->start();
+        $renderer->renderReport($report);
+        $renderer->end();
+
+        static::assertXmlEquals(
+            $writer->fetch(),
+            'renderer/baseline_renderer_expected1.xml'
+        );
+    }
+
+    /**
+     * @covers ::renderReport
+     */
+    public function testRenderReportInUpdateModeWritesOnlyBaselinedViolations(): void
+    {
+        $writer = new BufferedOutput();
+        $baselined = [
+            $this->getRuleViolationMock('/src/php/bar.php'),
+            $this->getRuleViolationMock('/src/php/foo.php'),
+        ];
+
+        $report = $this->getReportWithNoViolation();
+        $report->expects(static::never())->method('getRuleViolations');
+        $report->expects(static::once())
+            ->method('getBaselinedRuleViolations')
+            ->willReturn(new ArrayIterator($baselined));
+
+        $renderer = new BaselineRenderer('/src', BaselineMode::Update);
         $renderer->setWriter($writer);
         $renderer->start();
         $renderer->renderReport($report);

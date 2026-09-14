@@ -18,7 +18,6 @@
 
 namespace PHPMD;
 
-use PHPMD\Baseline\BaselineMode;
 use PHPMD\Baseline\BaselineSet;
 use PHPMD\Baseline\BaselineValidator;
 use PHPMD\Renderer\XMLRenderer;
@@ -174,7 +173,7 @@ class PHPMDTest extends AbstractTestCase
             $this->ruleSetFactory->getExcludePatterns(['pmd-refset1']),
             [$renderer],
             $this->ruleSetFactory->createRuleSets(['pmd-refset1']),
-            new Report(new BaselineValidator($baselineSet, BaselineMode::None))
+            new Report(new BaselineValidator($baselineSet))
         );
 
         static::assertFalse($phpmd->hasViolations());

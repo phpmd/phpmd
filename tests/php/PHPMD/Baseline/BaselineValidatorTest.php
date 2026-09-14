@@ -35,11 +35,11 @@ class BaselineValidatorTest extends AbstractTestCase
      * @covers ::isBaselined
      */
     #[DataProvider('dataProvider')]
-    public function testIsBaselined(bool $contains, BaselineMode $baselineMode, bool $isBaselined): void
+    public function testIsBaselined(bool $contains): void
     {
         $this->baselineSet->method('contains')->willReturn($contains);
-        $validator = new BaselineValidator($this->baselineSet, $baselineMode);
-        static::assertSame($isBaselined, $validator->isBaselined($this->violation));
+        $validator = new BaselineValidator($this->baselineSet);
+        static::assertSame($contains, $validator->isBaselined($this->violation));
     }
 
     /**
@@ -48,12 +48,8 @@ class BaselineValidatorTest extends AbstractTestCase
     public static function dataProvider(): array
     {
         return [
-            'contains: true, mode: none' => [true, BaselineMode::None, true],
-            'contains: false, mode: none' => [false, BaselineMode::None, false],
-            'contains: true, mode: update' => [true, BaselineMode::Update, false],
-            'contains: false, mode: update' => [false, BaselineMode::Update, true],
-            'contains: true, mode: generate' => [true, BaselineMode::Generate, false],
-            'contains: false, mode: generate' => [false, BaselineMode::Generate, false],
+            'contains: true' => [true],
+            'contains: false' => [false],
         ];
     }
 }

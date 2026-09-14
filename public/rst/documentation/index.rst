@@ -86,8 +86,8 @@ Command line options
     working directory.
 
   - ``--update-baseline`` - will remove all violations from an existing ``phpmd.baseline.xml``
-    that no longer exist. New violations will _not_ be added. The file path of the violations will be relative
-    to the current working directory.
+    that no longer exist. Violations that are not in the baseline are reported as usual and will
+    _not_ be added. The file path of the violations will be relative to the current working directory.
 
   - ``--baseline-file`` - the filepath to a custom baseline xml file. If absent will
     default to ``phpmd.baseline.xml``
@@ -240,6 +240,7 @@ By default PHPMD will look next to your rule set file for ``phpmd.baseline.xml``
 
   ~ $ phpmd analyze --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 
-To clean up an existing baseline file and *only remove* no longer existing violations::
+To clean up an existing baseline file and *only remove* no longer existing violations. Violations
+that are not in the baseline are still reported and make the command exit with a non-zero code::
 
   ~ $ phpmd analyze --update-baseline /path/to/source

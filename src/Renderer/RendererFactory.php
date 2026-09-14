@@ -3,6 +3,7 @@
 namespace PHPMD\Renderer;
 
 use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Baseline\BaselineMode;
 use PHPMD\Exception\InvalidArgumentException;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -10,10 +11,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class RendererFactory
 {
-    public static function createBaselineRenderer(OutputInterface $writer): BaselineRenderer
-    {
+    public static function createBaselineRenderer(
+        OutputInterface $writer,
+        BaselineMode $mode = BaselineMode::Generate,
+    ): BaselineRenderer {
         // set base path to current working directory
-        $renderer = new BaselineRenderer(getcwd() ?: '');
+        $renderer = new BaselineRenderer(getcwd() ?: '', $mode);
         $renderer->setWriter($writer);
 
         return $renderer;
