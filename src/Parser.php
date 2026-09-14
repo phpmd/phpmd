@@ -48,6 +48,7 @@ use PHPMD\Node\MethodNode;
 use PHPMD\Node\TraitNode;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Rule\Design\TooManyPublicMethods;
+use RuntimeException;
 
 /**
  * Simple wrapper around the php depend engine.
@@ -79,6 +80,8 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     /** The violation report used by this PDepend adapter. */
     private Report $report;
+
+    private int $workers = 1;
 
     /**
      * Constructs a new parser adapter instance.
@@ -144,12 +147,30 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     }
 
     /**
+     * Sets how many processes the rules may be applied with.
+     */
+    public function setWorkers(?int $workers): void
+    {
+        $this->workers = max(1, $workers ?? 1);
+    }
+
+    /**
      * Closes the logger process and writes the output file.
+     *
+     * @throws RuntimeException
      */
     public function close(): void
     {
         // Set max nesting level, because we may get really deep data structures
         ini_set('xdebug.max_nesting_level', 8192);
+
+        if ($this->workers > 1) {
+            $runner = new ForkedRuleRunner($this->workers, $this->report, $this->ruleSets);
+
+            if ($runner->run($this->collectFiles(), $this->dispatch(...))) {
+                return;
+            }
+        }
 
         foreach ($this->artifacts as $node) {
             $this->dispatch($node);
@@ -294,6 +315,37 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->artifacts = $artifacts;
+    }
+
+    /**
+     * Groups every artifact the rules are applied to by the file it was
+     * declared in, in the order a single process would reach them.
+     *
+     * @return list<list<ASTArtifact>>
+     */
+    private function collectFiles(): array
+    {
+        $files = [];
+
+        foreach ($this->artifacts as $namespace) {
+            $lists = [
+                $namespace->getClasses(),
+                $namespace->getInterfaces(),
+                $namespace->getTraits(),
+                $namespace->getEnums(),
+                $namespace->getFunctions(),
+            ];
+
+            foreach ($lists as $list) {
+                foreach ($list as $artifact) {
+                    $files[$artifact->getCompilationUnit()?->getFileName() ?? ''][] = $artifact;
+                }
+            }
+        }
+
+        ksort($files);
+
+        return array_values($files);
     }
 
     /**

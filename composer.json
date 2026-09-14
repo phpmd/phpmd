@@ -39,6 +39,7 @@
     "php": "^8.1",
     "ext-xml": "*",
     "composer/xdebug-handler": "^3.0",
+    "fidry/cpu-core-counter": "^1.2",
     "pdepend/pdepend": "3.x-dev",
     "symfony/console": "^6.4|^7.0|^8.0",
     "symfony/yaml": "^5.4.31 || ^6.0 || ^7.0 || ^8.0"
