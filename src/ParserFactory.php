@@ -55,7 +55,7 @@ final class ParserFactory
         $pdepend = $this->createInstance();
         $pdepend = $this->init($pdepend, $phpmd);
 
-        return new Parser($pdepend);
+        return new Parser($pdepend, $phpmd->getResultCache()?->getFileFilter());
     }
 
     /**

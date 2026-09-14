@@ -15,14 +15,21 @@
  * @link http://phpmd.org/
  */
 
-namespace test\resources\files\Rule\CleanCode\StaticAccess;
-
-use files\classes\SuitEnum;
+namespace tests\resources\files\Rule\CleanCode\StaticAccess;
 
 final class Foo
 {
     static public function testRuleAppliesToEnumStaticCall(): void
     {
         SuitEnum::bar();
+    }
+}
+
+enum SuitEnum: string
+{
+    case Clubs = 'Clubs';
+
+    public static function bar(): void
+    {
     }
 }

@@ -28,11 +28,16 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
+use PHPMD\Cache\Model\ResultCacheKey;
+use PHPMD\Cache\Model\ResultCacheState;
+use PHPMD\Cache\Model\ResultCacheStrategy;
+use PHPMD\Cache\ResultCacheFileFilter;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\FunctionNode;
 use PHPMD\Node\MethodNode;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -143,6 +148,59 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
+     * A file whose violations are still in the result cache is parsed, so the types it declares stay
+     * resolvable for other files, but its rules must not run again.
+     */
+    public function testAdapterDoesNotDelegateClassNodeFromResultCacheToRuleSet(): void
+    {
+        $mock = $this->getPHPDependClassMock(__FILE__);
+        $mock->expects(static::any())
+            ->method('isUserDefined')
+            ->willReturn(true);
+
+        $adapter = new Parser($this->getPHPDependMock(), $this->getResultCacheFileFilter(false));
+        $adapter->addRuleSet($this->getRuleSetMock());
+        $adapter->setReport($this->getReportWithNoViolation());
+        $adapter->visitClass($mock);
+    }
+
+    public function testAdapterDoesNotDelegateMethodNodeFromResultCacheToRuleSet(): void
+    {
+        $adapter = new Parser($this->getPHPDependMock(), $this->getResultCacheFileFilter(false));
+        $adapter->addRuleSet($this->getRuleSetMock());
+        $adapter->setReport($this->getReportWithNoViolation());
+        $adapter->visitMethod($this->getPHPDependMethodMock(__FILE__));
+    }
+
+    public function testAdapterDoesNotDelegateFunctionNodeFromResultCacheToRuleSet(): void
+    {
+        $adapter = new Parser($this->getPHPDependMock(), $this->getResultCacheFileFilter(false));
+        $adapter->addRuleSet($this->getRuleSetMock());
+        $adapter->setReport($this->getReportWithNoViolation());
+        $adapter->visitFunction($this->getPHPDependFunctionMock(__FILE__));
+    }
+
+    public function testAdapterDelegatesModifiedFileNodesToRuleSet(): void
+    {
+        $adapter = new Parser($this->getPHPDependMock(), $this->getResultCacheFileFilter(true));
+        $adapter->addRuleSet($this->getRuleSetMock(MethodNode::class));
+        $adapter->setReport($this->getReportWithNoViolation());
+        $adapter->visitMethod($this->getPHPDependMethodMock(__FILE__));
+    }
+
+    /**
+     * Creates a result cache file filter whose state reports every file as modified or as unmodified.
+     */
+    private function getResultCacheFileFilter(bool $modified): ResultCacheFileFilter
+    {
+        $key = $this->getMockBuilder(ResultCacheKey::class)->disableOriginalConstructor()->getMock();
+        $state = $this->getMockBuilder(ResultCacheState::class)->disableOriginalConstructor()->getMock();
+        $state->method('isFileModified')->willReturn($modified);
+
+        return new ResultCacheFileFilter(new NullOutput(), __DIR__, ResultCacheStrategy::Timestamp, $key, $state);
+    }
+
+    /**
      * Creates a mocked PDepend instance.
      *
      * @return Engine&MockObject
@@ -165,14 +223,14 @@ class ParserTest extends AbstractTestCase
      *
      * @return ASTClass&MockObject
      */
-    protected function getPHPDependClassMock()
+    protected function getPHPDependClassMock(string $fileName = 'foo.php')
     {
         $class = $this->getMockBuilder(ASTClass::class)
             ->setConstructorArgs([null])
             ->getMock();
         $class->expects(static::any())
             ->method('getCompilationUnit')
-            ->willReturn($this->getPHPDependFileMock('foo.php'));
+            ->willReturn($this->getPHPDependFileMock($fileName));
         $class->expects(static::any())
             ->method('getConstants')
             ->willReturn([]);

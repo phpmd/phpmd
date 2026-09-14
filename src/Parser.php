@@ -26,6 +26,7 @@ use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\ProcessListener;
 use PDepend\Report\CodeAwareGenerator;
+use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
@@ -39,6 +40,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Cache\ResultCacheFileFilter;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Node\EnumNode;
@@ -84,9 +86,11 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      * Constructs a new parser adapter instance.
      *
      * @param Engine $pdepend The wrapped PDepend Engine instance.
+     * @param ?ResultCacheFileFilter $fileFilter Knows which files still have their violations in the result cache.
      */
     public function __construct(
         private readonly Engine $pdepend,
+        private readonly ?ResultCacheFileFilter $fileFilter = null,
     ) {
     }
 
@@ -189,7 +193,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitClass(ASTClass $node): void
     {
-        if (!$node->isUserDefined()) {
+        if (!$node->isUserDefined() || $this->isResultCached($node)) {
             return;
         }
 
@@ -207,7 +211,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitTrait(ASTTrait $node): void
     {
-        if (!$node->isUserDefined()) {
+        if (!$node->isUserDefined() || $this->isResultCached($node)) {
             return;
         }
 
@@ -225,7 +229,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitEnum(ASTEnum $node): void
     {
-        if (!$node->isUserDefined()) {
+        if (!$node->isUserDefined() || $this->isResultCached($node)) {
             return;
         }
 
@@ -243,7 +247,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitFunction(ASTFunction $node): void
     {
-        if ($node->getCompilationUnit()?->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null || $this->isResultCached($node)) {
             return;
         }
 
@@ -260,7 +264,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitInterface(ASTInterface $node): void
     {
-        if (!$node->isUserDefined()) {
+        if (!$node->isUserDefined() || $this->isResultCached($node)) {
             return;
         }
 
@@ -279,7 +283,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
      */
     public function visitMethod(ASTMethod $node): void
     {
-        if ($node->getCompilationUnit()?->getFileName() === null) {
+        if ($node->getCompilationUnit()?->getFileName() === null || $this->isResultCached($node)) {
             return;
         }
 
@@ -294,6 +298,16 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->artifacts = $artifacts;
+    }
+
+    /**
+     * Lets us know if a files violations are in the the result cache.
+     */
+    private function isResultCached(AbstractASTArtifact $node): bool
+    {
+        $fileName = $node->getCompilationUnit()?->getFileName();
+
+        return $fileName !== null && $this->fileFilter?->isFileModified($fileName) === false;
     }
 
     /**

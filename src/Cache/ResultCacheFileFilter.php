@@ -27,11 +27,21 @@ class ResultCacheFileFilter implements Filter
     }
 
     /**
-     * Stage 1: A hook to allow filtering out certain files from inspection by pdepend.
+     * Stage 1: Accepted all files so that the declared types stay resolvable for the rules.
+     * This leaves Pdepend to handle caching for file parsing.
      * @inheritDoc
-     * @return bool `true` will inspect the file, when `false` the file will be filtered out.
      */
     public function accept($relative, $absolute): bool
+    {
+        $this->isFileModified($absolute);
+
+        return true;
+    }
+
+    /**
+     * Whether the file changed since the last analysis.
+     */
+    public function isFileModified(string $absolute): bool
     {
         $filePath = Paths::getRelativePath($this->basePath, $absolute);
 
@@ -51,9 +61,9 @@ class ResultCacheFileFilter implements Filter
             $this->newState->setFileState($filePath, $hash);
         }
         if (!$isModified && $this->state) {
-            // File was not modified, transfer previous violations and processing errors
+            // File was not modified, transfer previous violations.
+            // Files that failed to parse are never cached, so that it reports them afresh on each run.
             $this->newState->setViolations($filePath, $this->state->getViolations($filePath));
-            $this->newState->setErrors($filePath, $this->state->getErrors($filePath));
         }
 
         $this->output->writeln(

@@ -15,12 +15,20 @@
  * @link http://phpmd.org/
  */
 
-namespace test\resources\files\Rule\CleanCode\StaticAccess;
+namespace tests\resources\files\Rule\CleanCode\StaticAccess;
 
 final class Foo
 {
     static public function testRuleAppliesToEnumMethodsFromOtherClasses(): void
     {
-        self::from();
+        Bar::from('Clubs');
+    }
+}
+
+final class Bar
+{
+    public static function from(string $value): self
+    {
+        return new self();
     }
 }
