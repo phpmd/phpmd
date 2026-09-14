@@ -22,6 +22,7 @@ use PHPMD\AbstractTestCase;
 use PHPMD\Utility\Paths;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -320,5 +321,117 @@ class CommandTest extends AbstractTestCase
         $version = preg_match('/phpmd-([\S]+)/', $changelog, $match) ? $match[1] : '@package_version@';
 
         static::assertEquals($version, Command::getVersion());
+    }
+
+    public function testExcludeOptionHasNoDefaultAndDocumentsTheVersionControlExcludes(): void
+    {
+        $exclude = (new Command())->getDefinition()->getOption('exclude');
+
+        static::assertSame([], $exclude->getDefault());
+        static::assertStringContainsString('.git, .svn, CVS, .bzr, .hg, SCCS', $exclude->getDescription());
+    }
+
+    public function testHelpStatesDefaults(): void
+    {
+        $definition = (new Command())->getDefinition();
+
+        static::assertStringContainsString('[default: disabled]', $definition->getOption('strict')->getDescription());
+        static::assertStringContainsString('[default: disabled]', $definition->getOption('cache')->getDescription());
+        static::assertStringContainsString(
+            '[default: number of CPU cores]',
+            $definition->getOption('threads')->getDescription()
+        );
+        static::assertStringContainsString(
+            'phpmd.baseline.xml',
+            $definition->getOption('baseline-file')->getDescription()
+        );
+        static::assertStringContainsString('separated by spaces', $definition->getArgument('paths')->getDescription());
+        static::assertTrue($definition->getOption('progress')->isNegatable());
+    }
+
+    public function testVeryVerboseOutputReportsConfigurationAndExitCode(): void
+    {
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute(
+            [
+                'paths' => [self::createFileUri('source/source_without_violations.php')],
+                '--format' => 'text',
+                '--ruleset' => ['naming'],
+                '--exclude' => ['*Test.php'],
+                '--no-progress' => true,
+            ],
+            ['verbosity' => OutputInterface::VERBOSITY_VERY_VERBOSE]
+        );
+        $display = $tester->getDisplay();
+
+        static::assertSame(Command::SUCCESS, $exitCode);
+        static::assertStringContainsString('Exclude patterns: .git, .svn, CVS, .bzr, .hg, SCCS, *Test.php', $display);
+        static::assertStringContainsString('Threads: auto (number of CPU cores)', $display);
+        static::assertStringContainsString('Strict mode: disabled', $display);
+        static::assertStringContainsString('Baseline file: none', $display);
+        static::assertStringContainsString('naming.xml', $display);
+        static::assertStringContainsString('ResultCache is not enabled.', $display);
+        static::assertStringContainsString('Exit code: 0', $display);
+        static::assertStringNotContainsString('ShortVariable (priority', $display);
+        static::assertStringNotContainsString('--format: text', $display);
+    }
+
+    public function testDebugOutputListsInputAndRules(): void
+    {
+        $tester = new CommandTester(new Command());
+        $exitCode = $tester->execute(
+            [
+                'paths' => [self::createFileUri('source/source_with_anonymous_class.php')],
+                '--format' => 'text',
+                '--ruleset' => ['naming'],
+                '--no-progress' => true,
+            ],
+            ['verbosity' => OutputInterface::VERBOSITY_DEBUG]
+        );
+        $display = $tester->getDisplay();
+
+        static::assertSame(Command::INVALID, $exitCode);
+        static::assertStringContainsString('--format: text', $display);
+        static::assertStringContainsString('--ruleset: [naming]', $display);
+        static::assertStringContainsString('--progress: false', $display);
+        static::assertStringContainsString('ShortVariable (priority 3)', $display);
+        static::assertStringContainsString('Exit code: 2', $display);
+    }
+
+    public function testProgressBarIsShownByDefaultAndHiddenWithNoProgress(): void
+    {
+        $args = [
+            'paths' => [self::createFileUri('source/source_without_violations.php')],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+        ];
+
+        $tester = new CommandTester(new Command());
+        $tester->execute($args, ['decorated' => false]);
+        static::assertStringContainsString('1/1', $tester->getDisplay());
+
+        $tester = new CommandTester(new Command());
+        $tester->execute($args + ['--no-progress' => true], ['decorated' => false]);
+        static::assertStringNotContainsString('1/1', $tester->getDisplay());
+    }
+
+    public function testProgressOptionForcesTheBarUnderQuietOutput(): void
+    {
+        $args = [
+            'paths' => [self::createFileUri('source/source_without_violations.php')],
+            '--format' => 'text',
+            '--ruleset' => ['naming'],
+        ];
+
+        $tester = new CommandTester(new Command());
+        $tester->execute($args, ['verbosity' => OutputInterface::VERBOSITY_QUIET, 'decorated' => false]);
+        static::assertSame('', $tester->getDisplay());
+
+        $tester = new CommandTester(new Command());
+        $tester->execute(
+            $args + ['--progress' => true],
+            ['verbosity' => OutputInterface::VERBOSITY_QUIET, 'decorated' => false]
+        );
+        static::assertStringContainsString('1/1', $tester->getDisplay());
     }
 }

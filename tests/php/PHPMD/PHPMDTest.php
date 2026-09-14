@@ -229,4 +229,13 @@ class PHPMDTest extends AbstractTestCase
         static::assertFalse($phpmd->hasErrors());
         static::assertFalse($phpmd->hasViolations());
     }
+
+    public function testExcludePatternsAreAddedToTheVersionControlDefaults(): void
+    {
+        $phpmd = new PHPMD();
+        static::assertSame(PHPMD::DEFAULT_EXCLUDE_PATTERNS, $phpmd->getExcludePatterns());
+
+        $phpmd->addExcludePatterns(['*Test.php', '.git']);
+        static::assertSame([...PHPMD::DEFAULT_EXCLUDE_PATTERNS, '*Test.php'], $phpmd->getExcludePatterns());
+    }
 }

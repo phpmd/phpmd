@@ -41,7 +41,9 @@ use PHPMD\Utility\Paths;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Exception\InvalidArgumentException as InvalidSymfonyArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -53,7 +55,7 @@ use ValueError;
  */
 #[AsCommand(
     name: 'analyze',
-    description: 'Analyzes source code',
+    description: 'Analyzes source code for possible bugs, suboptimal code, overcomplicated expressions, unused parameters, methods & properties etc.',
 )]
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class Command extends SymfonyCommand
@@ -93,6 +95,9 @@ final class Command extends SymfonyCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $diagnostics = new DiagnosticsPrinter($this->getErrorOutput($output));
+        $diagnostics->printInput($input);
+
         $options = new CommandLineOptions($input);
         $this->loadBootstrap($options);
 
@@ -108,9 +113,14 @@ final class Command extends SymfonyCommand
         $excludePatterns = $ruleSetFactory->getExcludePatterns($options->getRuleSets());
         $ruleSetList = $ruleSetFactory->createRuleSets($options->getRuleSets());
 
-        $this->configureResultCache($phpmd, $output, $options, $ruleSetList, $baselineFile);
+        $diagnostics->printConfiguration(
+            $options,
+            $ruleSetList,
+            [...$phpmd->getExcludePatterns(), ...$excludePatterns],
+            $baselineFile
+        );
 
-        $progressListener = $input->getOption('no-progress') ? null : new ProgressListener($output);
+        $this->configureResultCache($phpmd, $this->getErrorOutput($output), $options, $ruleSetList, $baselineFile);
 
         $phpmd->processFiles(
             $options->getInputPaths(),
@@ -118,10 +128,41 @@ final class Command extends SymfonyCommand
             $renderers,
             $ruleSetList,
             $report ?? new Report(),
-            $progressListener
+            $this->createProgressListener($input, $output)
         );
 
-        return $this->resolveExitCode($phpmd, $options);
+        $exitCode = $this->resolveExitCode($phpmd, $options);
+        $diagnostics->printExitCode($exitCode);
+
+        return $exitCode;
+    }
+
+    private function getErrorOutput(OutputInterface $output): OutputInterface
+    {
+        return $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output;
+    }
+
+    /**
+     * The progress bar is shown unless --no-progress is given or the output is
+     * quiet. --progress forces it even under --quiet and --silent.
+     *
+     * @throws InvalidSymfonyArgumentException
+     */
+    private function createProgressListener(InputInterface $input, OutputInterface $output): ?ProgressListener
+    {
+        /** @var ?bool $progress */
+        $progress = $input->getOption('progress');
+        if ($progress === false) {
+            return null;
+        }
+
+        $progressOutput = $this->getErrorOutput($output);
+        if ($progress === true && $progressOutput->getVerbosity() < OutputInterface::VERBOSITY_NORMAL) {
+            $progressOutput = clone $progressOutput;
+            $progressOutput->setVerbosity(OutputInterface::VERBOSITY_NORMAL);
+        }
+
+        return new ProgressListener($progressOutput);
     }
 
     private function loadBootstrap(CommandLineOptions $options): void

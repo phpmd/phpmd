@@ -15,8 +15,8 @@ order of priority): ``phpmd.yml``, ``phpmd.yaml``, ``phpmd.json``,
 See the `creating a custom rule set </documentation/creating-a-ruleset.html>`_
 documentation for details on all supported configuration formats.
 
-You can pass a comma-separated string with list of file names
-or a directory names, containing PHP source code to PHPMD.
+You can pass file or directory names, separated by spaces, containing PHP
+source code to PHPMD.
 
 The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the "rulesets/codesize.xml" parameter above looks
@@ -34,12 +34,22 @@ Command line options
 
 - The command line interface also accepts the following optional arguments:
 
-  - ``--verbose, -v, -vv, -vvv`` - The output verbosity level. Will print more information
-    what is being processed or cached. Will be send to ``STDERR`` to not interfere
-    with report output. ``text`` output will also have under each error a link
-    to the documentation of the rule and format the location in a way that most
-    IDEs will convert into a link to open the file at the line of the error
-    when clicked.
+  - ``--verbose, -v, -vv, -vvv`` - The output verbosity level. Everything
+    printed in addition to the report is sent to ``STDERR`` so that it does not
+    interfere with the report output.
+
+    - ``-v`` makes the ``text`` output show under each error a link to the
+      documentation of the rule and format the location in a way that most
+      IDEs will convert into a link to open the file at the line of the error
+      when clicked.
+    - ``-vv`` also prints the effective configuration before the analysis
+      starts: the scanned paths, the exclude patterns, the file suffixes, the
+      thread count, the strict mode, the baseline file, the loaded rule sets
+      with their rule counts and the result cache status. The exit code is
+      printed at the end.
+    - ``-vvv`` additionally lists every argument and option the command
+      received, every loaded rule with its priority, and the result cache
+      decision for every file.
 
   - ``--minimum-priority`` - The rule priority threshold; rules with lower
     priority than this will not be used.
@@ -52,17 +62,19 @@ Command line options
   - ``--reportfile-text``, ``--reportfile-xml``, ``--reportfile-html``, etc. - Sends the report output
     to the specified file. Multiple report files in different formats can be written simultaneously.
 
-  - ``--suffixes`` - Comma-separated string of valid source code filename
-    extensions, e.g. php, phtml.
+  - ``--suffixes`` - A valid source code filename extension, e.g. php or phtml.
+    Repeat the option for several extensions: ``--suffixes php --suffixes phtml``.
     Can also be configured via ``<suffixes>`` in the rule sets.
 
-  - ``--exclude`` - Comma-separated string of patterns that are used to ignore
-    directories. Use asterisks to exclude by pattern. For example ``*src/foo/*.php`` or ``*src/foo/*``.
-    Can also be configured via ``<exclude-pattern>`` in the rule sets.
+  - ``--exclude`` - A pattern that is used to ignore files and directories. Use asterisks to
+    exclude by pattern, for example ``*src/foo/*.php`` or ``*src/foo/*``. Repeat the option for
+    several patterns: ``--exclude vendor --exclude '*Test.php'``. The patterns are added to the
+    ``<exclude-pattern>`` entries of the rule sets and to the version control directories
+    (``.git``, ``.svn``, ``CVS``, ``.bzr``, ``.hg``, ``SCCS``) which are always excluded.
 
   - ``--strict`` - Also report those nodes with a ``#[SuppressWarnings]`` attribute.
 
-  - ``--not-strict`` - Does not report those nodes with a ``#[SuppressWarnings]`` attribute (default).
+  - ``--no-strict`` - Does not report those nodes with a ``#[SuppressWarnings]`` attribute (default).
 
   - ``--ignore-errors-on-exit`` - will exit with a zero code, even on error.
 
@@ -93,8 +105,9 @@ Command line options
     default to ``phpmd.baseline.xml``
     Can also be configured via ``<baseline-file>`` in the rule sets.
 
-  - ``--color`` - enable color in output, for instance text renderer
-    will show rule name in yellow and error description in red.
+  - ``--ansi`` / ``--no-ansi`` - force or disable color in output, for instance the text renderer
+    will show rule name in yellow and error description in red. By default color is used when
+    the output is a terminal.
 
   - ``--xdebug`` - will enable Xdebug for debugging PHP Mess Detector.
 
@@ -103,9 +116,13 @@ Command line options
 
   - ``--input-file`` - a file containing a list of source paths to analyze (one per line).
 
-  - ``--no-progress`` - do not show the progress bar, only the results.
+  - ``--progress`` / ``--no-progress`` - show or hide the progress bar. The bar is written to
+    ``STDERR`` and shown by default unless the output is quiet. ``--progress`` forces it even
+    together with ``--quiet`` or ``--silent``, so a script can hide the report and still watch
+    the analysis advance.
 
-  - ``--threads`` - the number of threads to use to parse the files.
+  - ``--threads`` - the number of threads to use to parse the files. Defaults to the
+    number of CPU cores.
     Can also be configured via ``<threads>`` in the rule sets.
 
   - ``--coverage`` - Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover
@@ -113,7 +130,7 @@ Command line options
 
   An example command line: ::
 
-    phpmd analyze --reportfile-text report.txt --suffixes php,phtml src/
+    phpmd analyze --reportfile-text report.txt --suffixes php --suffixes phtml src/
 
 Using multiple rule sets
 ````````````````````````
