@@ -120,6 +120,29 @@ This also shifts the shipped defaults: on the default rule sets, values that sat
 
 Rules that check a lower bound — ShortVariable, ShortMethodName, and ShortClassName — keep the `minimum` property (a name length *below* the configured minimum is reported).
 
+### Changed rule behaviour
+
+Besides the threshold changes described above, the detection logic of the following rules
+has changed, so a rule set that reported cleanly under PHPMD 2 may report new violations.
+
+#### `ShortVariable` now reports inside closures passed as arguments
+
+`ShortVariable` ignores names that are part of a member access chain, so that the `x` in
+`$foo->x` or `Foo::$x` is not judged by the same length rule as a local variable. In
+PHPMD 2 that check walked the whole ancestor chain, which meant a closure or arrow
+function passed as an argument *within* such a chain inherited the exemption, and its
+parameters and local variables were silently skipped:
+
+```php
+$this->acceptsCallback(function ($fo) {  // not reported by PHPMD 2, reported by PHPMD 3
+    return $fo;
+});
+```
+
+PHPMD 3 stops the walk at the closure boundary, so the closure body is checked like any
+other scope. These are new true positives, and the change is deliberate. Names in a real
+member access chain, including one inside the closure, are still exempt.
+
 ### Internal API changes
 
 These changes only affect you if you have written custom rules or extended PHPMD classes.
