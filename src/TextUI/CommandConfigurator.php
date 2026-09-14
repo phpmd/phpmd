@@ -21,6 +21,7 @@ namespace PHPMD\TextUI;
 use InvalidArgumentException;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Cache\Model\ResultCacheStrategy;
+use PHPMD\PHPMD;
 use PHPMD\Rule;
 use PHPMD\Rule\Controversial\Superglobals;
 use PHPMD\RuleSetFactory;
@@ -122,7 +123,7 @@ final class CommandConfigurator
         $command->addArgument(
             'paths',
             InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-            'A php source code filename or directory, or "-" to scan stdin',
+            'PHP source code files or directories to analyze, separated by spaces, or "-" to scan stdin',
             $paths
         );
         $format = $defaultConfig ? $ruleSetFactory->getFormat($defaultConfig) : null;
@@ -142,7 +143,7 @@ final class CommandConfigurator
             'ruleset',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'A ruleset filename or a comma-separated string of rulesetfilenames.',
+            'A ruleset name or filename. Repeat the option to combine several rulesets',
             $defaultConfig ?? $availableRuleSets,
             $availableRuleSets
         );
@@ -174,8 +175,9 @@ final class CommandConfigurator
             'exclude',
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-            'Pattern that are used to ignore directories. Use asterisks to exclude by pattern. For example *src/foo/*.php or *src/foo/*',
-            ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS']
+            'Pattern that are used to ignore directories. Use asterisks to exclude by pattern. '
+            . 'For example *src/foo/*.php or *src/foo/*. Repeat the option for several patterns. '
+            . 'Added to the build in exclude patterns (' . implode(', ', PHPMD::DEFAULT_EXCLUDE_PATTERNS) . ')'
         );
     }
 
@@ -194,7 +196,7 @@ final class CommandConfigurator
             'strict',
             null,
             InputOption::VALUE_NONE | InputOption::VALUE_NEGATABLE,
-            'Also report those nodes with a SuppressWarnings attribute'
+            'Also report those nodes with a SuppressWarnings attribute [default: disabled]'
         );
         $command->addOption(
             'ignore-errors-on-exit',
@@ -209,13 +211,20 @@ final class CommandConfigurator
             'Will exit with a zero code, even if any violations are found'
         );
         $command->addOption('input-file', null, InputOption::VALUE_REQUIRED, 'A file containing paths to analyze');
-        $command->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar, only results');
+        $command->addOption(
+            'progress',
+            null,
+            InputOption::VALUE_NONE | InputOption::VALUE_NEGATABLE,
+            'Show (or hide with --no-progress) the progress bar on stderr while parsing. '
+            . '--progress forces the bar even with --quiet or --silent '
+            . '[default: shown unless the output is quiet]'
+        );
         $threads = $defaultConfig ? $ruleSetFactory->getThreads($defaultConfig) : null;
         $command->addOption(
             'threads',
             null,
             InputOption::VALUE_REQUIRED,
-            'Number of threads to use for parsing',
+            'Number of threads to use for parsing' . ($threads === null ? ' [default: number of CPU cores]' : ''),
             $threads
         );
     }
@@ -232,7 +241,13 @@ final class CommandConfigurator
         ?array $defaultConfig,
     ): void {
         $cache = $defaultConfig ? $ruleSetFactory->isCacheEnabled($defaultConfig) : false;
-        $command->addOption('cache', null, InputOption::VALUE_NEGATABLE, 'Will enable the result cache.', $cache);
+        $command->addOption(
+            'cache',
+            null,
+            InputOption::VALUE_NEGATABLE,
+            'Will enable the result cache [default: ' . ($cache ? 'enabled' : 'disabled') . ']',
+            $cache
+        );
         $cacheFile = $defaultConfig ? $ruleSetFactory->getCacheFile($defaultConfig) : null;
         $command->addOption(
             'cache-file',
@@ -285,7 +300,8 @@ final class CommandConfigurator
             'baseline-file',
             null,
             InputOption::VALUE_REQUIRED,
-            'A custom location of the baseline file',
+            'A custom location of the baseline file'
+            . ($baselineFile === null ? ' [default: phpmd.baseline.xml next to the first ruleset file]' : ''),
             $baselineFile
         );
     }

@@ -27,6 +27,8 @@ use PHPMD\Renderer\RendererInterface;
  */
 class PHPMD
 {
+    public const DEFAULT_EXCLUDE_PATTERNS = ['.git', '.svn', 'CVS', '.bzr', '.hg', 'SCCS'];
+
     /**
      * This property will be set to <b>true</b> when an error
      * was found in the processed source code.
@@ -47,7 +49,7 @@ class PHPMD
      *
      * @var list<string>
      */
-    private array $excludePatterns = [];
+    private array $excludePatterns = self::DEFAULT_EXCLUDE_PATTERNS;
 
     /**
      * The input source file or directory.
@@ -137,7 +139,7 @@ class PHPMD
     /**
      * Returns an array with string patterns that mark a file path invalid.
      *
-     * @return string[]
+     * @return list<string>
      * @since 2.9.0
      */
     public function getExcludePatterns(): array
@@ -154,10 +156,10 @@ class PHPMD
      */
     public function addExcludePatterns(array $excludePatterns): void
     {
-        $this->excludePatterns = [
+        $this->excludePatterns = array_values(array_unique([
             ...$this->excludePatterns,
             ...$excludePatterns,
-        ];
+        ]));
     }
 
     public function getResultCache(): ?ResultCacheEngine

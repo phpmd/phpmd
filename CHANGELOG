@@ -54,11 +54,14 @@ New features:
 - Added `exclude-pattern` support in YAML, JSON, and PHP configuration files (#909).
 - Added `format`, `cache-file`, `cache-strateg`, `baseline-file`, `bootstrap`, `cache`, `minimum-priority`, `maximum-priority`, `threads`, `paths`, and `suffixes` to the configuration files.
 - Added `#[SuppressWarnings]` PHP attribute as the preferred way to suppress warnings.
-- Added progress bar during analysis, use `--no-progress` option to hide it.
+- Added progress bar during analysis on stderr, use `--no-progress` option to hide it
+  or `--progress` to force it together with `--quiet` or `--silent`.
+- Added `-vv` output of the effective configuration (paths, exclude patterns, suffixes, threads,
+  strict mode, baseline file, loaded rule sets, cache status) and the exit code, and `-vvv` output
+  of every argument and option and every loaded rule. Both are written to stderr.
 - Added `--threads` option for parallel file parsing.
 - Added `--xdebug` option to enable Xdebug during analysis.
 - Added `--bootstrap` option to load a PHP script before analysis.
-- Added `--input-file` option to read source paths from a file.
 - Added `EnumAware` and `TraitAware` rule marker interfaces.
 - Added #1276: `exceptions` parameter support for UnusedPrivateField.
 - Added #1277: `exceptions` parameter support for UnusedFormalParameter.
@@ -86,7 +89,6 @@ Fixed:
 - Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.
 - Fixed #1239: `ShortVariable` rule now detects short parameter names in closures and arrow functions passed directly as arguments.
 - Fixed: `--strict` did not reveal `LongVariable` suppressions on fields/variables/parameters, nor `UnusedPrivateMethod` suppressions on private methods.
-- Fixed: `--xdebug` could emit an undefined variable warning on the first restart.
 
 Internal:
 
