@@ -145,15 +145,20 @@ class RuleSetFactory
      */
     public function listAvailableRuleSets(): array
     {
-        $rulesets = self::listRuleSetsInDirectory($this->location . '/rulesets/');
-        if ($this->location !== getcwd()) {
-            $rulesets = [
-                ...$rulesets,
-                ...self::listRuleSetsInDirectory(getcwd() . '/rulesets/'),
-            ];
+        $bundledDirectory = $this->location . '/rulesets/';
+        $workingDirectory = getcwd() . '/rulesets/';
+
+        $ruleSets = self::listRuleSetsInDirectory($bundledDirectory);
+        if (realpath($workingDirectory) !== realpath($bundledDirectory)) {
+            $ruleSets = array_values(
+                array_unique([
+                    ...$ruleSets,
+                    ...self::listRuleSetsInDirectory($workingDirectory),
+                ])
+            );
         }
 
-        return $rulesets;
+        return $ruleSets;
     }
 
     /**
