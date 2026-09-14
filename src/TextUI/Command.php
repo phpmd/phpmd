@@ -99,7 +99,7 @@ final class Command extends SymfonyCommand
         $renderers = $this->createRenderers($options, $output);
 
         $finder = new BaselineFileFinder($options);
-        [$report, $baselineFile, $baselineRenderers] = $this->configureBaselineMode($options, $finder);
+        [$report, $baselineFile, $baselineRenderers] = $this->configureBaselineMode($options, $finder, $renderers);
         $renderers = $baselineRenderers ?? $renderers;
 
         $ruleSetFactory = $this->createRuleSetFactory($options);
@@ -166,12 +166,16 @@ final class Command extends SymfonyCommand
     }
 
     /**
+     * @param list<RendererInterface> $renderers
      * @return array{0: ?Report, 1: ?string, 2: ?list<RendererInterface>}
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    private function configureBaselineMode(CommandLineOptions $options, BaselineFileFinder $finder): array
-    {
+    private function configureBaselineMode(
+        CommandLineOptions $options,
+        BaselineFileFinder $finder,
+        array $renderers,
+    ): array {
         if ($options->generateBaseline() === BaselineMode::Generate) {
             // overwrite any renderer with the baseline renderer
             $baselineFile = (string) $finder->notNull()->find();
@@ -187,14 +191,16 @@ final class Command extends SymfonyCommand
         }
 
         if ($options->generateBaseline() === BaselineMode::Update) {
+            // keep the regular renderers so violations missing from the baseline are still reported,
+            // and add the baseline renderer to rewrite the baseline with the entries that still exist
             $baselineFile = (string) $finder->notNull()->existingFile()->find();
             $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
             $stream = fopen($baselineFile, 'wb');
             if (!$stream) {
                 throw new InvalidArgumentException("Unable to write to: '{$baselineFile}'.");
             }
-            $renderers = [RendererFactory::createBaselineRenderer(new StreamOutput($stream))];
-            $report = new Report(new BaselineValidator($baseline, BaselineMode::Update));
+            $renderers[] = RendererFactory::createBaselineRenderer(new StreamOutput($stream), BaselineMode::Update);
+            $report = new Report(new BaselineValidator($baseline));
 
             return [$report, $baselineFile, $renderers];
         }
@@ -204,7 +210,7 @@ final class Command extends SymfonyCommand
         $report = null;
         if ($baselineFile !== null) {
             $baseline = BaselineSetFactory::fromFile(Paths::getRealPath($baselineFile));
-            $report = new Report(new BaselineValidator($baseline, BaselineMode::None));
+            $report = new Report(new BaselineValidator($baseline));
         }
 
         return [$report, $baselineFile, null];
@@ -282,7 +288,7 @@ final class Command extends SymfonyCommand
         if (
             $phpmd->hasViolations()
             && !$options->ignoreViolationsOnExit()
-            && $options->generateBaseline() === BaselineMode::None
+            && $options->generateBaseline() !== BaselineMode::Generate
         ) {
             return self::INVALID;
         }

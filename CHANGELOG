@@ -43,6 +43,9 @@ Breaking changes:
 - Removed `PHPMD\RuleSetFactory::getIgnorePattern()`, use `getExcludePatterns()` instead.
 - Renamed `Rule::getBooleanProperty()` to `isTruthyProperty()`.
 - Renamed `RuleSetFactory::getCache()` to `isCacheEnabled()`.
+- Changed `--update-baseline` to report violations that are not in the baseline (#1344). They are
+  rendered with the configured format, make the command exit with code 2 and are not added to the
+  baseline file. `PHPMD\Baseline\BaselineValidator` no longer takes a `BaselineMode`.
 
 New features:
 

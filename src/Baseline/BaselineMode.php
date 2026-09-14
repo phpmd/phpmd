@@ -15,7 +15,8 @@ enum BaselineMode
     case Generate;
 
     /**
-     * Remove any non existing violations from the baseline file. Do not baseline any new violations.
+     * Rewrite the baseline file with only the baselined violations that still exist.
+     * Violations that are not in the baseline are reported as usual and are not added to the baseline.
      */
     case Update;
 }

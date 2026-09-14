@@ -235,6 +235,8 @@ class CommandTest extends AbstractTestCase
      * - LongClassName violation should be removed
      * - ShortVariable violation should still exist
      * - BooleanGetMethodName shouldn't be added
+     * Expect in output:
+     * - BooleanGetMethodName violation is reported and the exit code is INVALID
      */
     public function testMainUpdateBaseline(): void
     {
@@ -255,7 +257,11 @@ class CommandTest extends AbstractTestCase
             '--baseline-file' => $baselineTemp,
         ]);
 
-        static::assertSame(Command::SUCCESS, $exitCode);
+        static::assertSame(Command::INVALID, $exitCode);
+        $display = $tester->getDisplay();
+        static::assertStringContainsString('BooleanGetMethodName', $display);
+        static::assertStringNotContainsString('ShortVariable', $display);
+        static::assertStringNotContainsString('LongClassName', $display);
         $expectedXml = file_get_contents(static::createResourceUriForTest('UpdateBaseline/expected.baseline.xml'));
         static::assertIsString($expectedXml);
         $actualXml = file_get_contents($baselineTemp);

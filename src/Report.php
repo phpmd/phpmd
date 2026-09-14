@@ -34,6 +34,13 @@ class Report
      */
     private array $ruleViolations = [];
 
+    /**
+     * Rule violations that were suppressed because they match an entry in the baseline.
+     *
+     * @var list<RuleViolation>
+     */
+    private array $baselinedViolations = [];
+
     /** The start time for this report. */
     private float $startTime = 0.0;
 
@@ -55,10 +62,15 @@ class Report
 
     /**
      * Adds a rule violation to this report.
+     *
+     * Violations matching the baseline are kept apart from the regular violations, so they
+     * neither show up in the rendered report nor count towards the exit code.
      */
     public function addRuleViolation(RuleViolation $violation): void
     {
         if ($this->baselineValidator !== null && $this->baselineValidator->isBaselined($violation)) {
+            $this->baselinedViolations[] = $violation;
+
             return;
         }
 
@@ -106,6 +118,16 @@ class Report
         }
 
         return new ArrayIterator($violations);
+    }
+
+    /**
+     * Returns an iterator with all violations that were suppressed by the baseline.
+     *
+     * @return ArrayIterator<int, RuleViolation>
+     */
+    public function getBaselinedRuleViolations(): ArrayIterator
+    {
+        return new ArrayIterator($this->baselinedViolations);
     }
 
     /**
