@@ -50,15 +50,11 @@ class CountInLoopExpressionTest extends AbstractTestCase
 
     public function testMutedRuleAtClassLevel(): void
     {
-        $rule = new CountInLoopExpression();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getClass());
+        static::assertCount(0, $this->analyseCodeResourceForTest(new CountInLoopExpression())->getRuleViolations());
     }
 
     public function testMutedRuleAtMethodLevel(): void
     {
-        $rule = new CountInLoopExpression();
-        $rule->setReport($this->getReportWithNoViolation());
-        $rule->apply($this->getClass());
+        static::assertCount(0, $this->analyseCodeResourceForTest(new CountInLoopExpression())->getRuleViolations());
     }
 }

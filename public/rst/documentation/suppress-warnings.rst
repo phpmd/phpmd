@@ -51,8 +51,33 @@ element.
       }
   }
 
+Unused suppressions
+===================
+
+A suppression is easily forgotten once the code it was added for has been
+fixed. The `UnusedSuppression`__ rule reports every ``#[SuppressWarnings]``
+attribute that no longer suppresses anything, including suppressions of rules
+that are not part of the analysis. So run it with your full rule set.
+
+__ ../rules/unusedcode.html#unusedsuppression
+
+To keep a suppression that you know is unused, suppress the rule for it.
+
+.. code-block:: php
+
+  use PHPMD\Attribute\SuppressWarnings;
+  use PHPMD\Rule\UnusedLocalVariable;
+  use PHPMD\Rule\UnusedSuppression;
+
+  class Bar {
+      #[SuppressWarnings(UnusedLocalVariable::class)]
+      #[SuppressWarnings(UnusedSuppression::class)]
+      public function foo() {
+      }
+  }
+
 .. note::
 
    The older ``@SuppressWarnings`` doc comment annotations from PHPMD 2.x are
-   still supported for backward compatibility. However, PHP attributes are the
-   preferred approach going forward.
+   deprecated, but still supported for backward compatibility. They are not
+   reported by the ``UnusedSuppression`` rule.

@@ -102,7 +102,6 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
      * Collects all private methods declared in the given class node.
      *
      * @return array<string, MethodNode>
-     * @throws RuntimeException
      */
     private function collectPrivateMethods(ClassNode $class): array
     {
@@ -120,14 +119,11 @@ final class UnusedPrivateMethod extends AbstractRule implements ClassAware
     /**
      * Returns <b>true</b> when the given method should be used for this rule's
      * analysis.
-     *
-     * @throws RuntimeException
      */
     private function acceptMethod(ClassNode $class, MethodNode $method): bool
     {
         return (
             $method->isPrivate() &&
-            ($this->isStrict() || !$method->hasSuppressWarningsFor($this)) &&
             strcasecmp($method->getImage(), $class->getImage()) !== 0 &&
             strcasecmp($method->getImage(), '__construct') !== 0 &&
             strcasecmp($method->getImage(), '__destruct') !== 0 &&
