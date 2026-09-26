@@ -406,6 +406,26 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
+     * Applies the rule to the code resource of the calling test the way PHPMD
+     * does, which unlike applying the rule directly honours suppressions.
+     */
+    protected function analyseCodeResourceForTest(Rule $rule, bool $strict = false): Report
+    {
+        $ruleSet = new RuleSet();
+        $ruleSet->addRule($rule);
+        if ($strict) {
+            $ruleSet->setStrict();
+        }
+
+        $report = new Report();
+        $phpmd = new PHPMD();
+        $phpmd->setThreads(1);
+        $phpmd->processFiles([self::createCodeResourceUriForTest()], [], [], [$ruleSet], $report);
+
+        return $report;
+    }
+
+    /**
      * Get a mocked report with at least one violation
      */
     public function getReportWithAtLeastOneViolation(): Report

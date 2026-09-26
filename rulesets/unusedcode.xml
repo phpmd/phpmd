@@ -112,4 +112,33 @@ class Foo
         </example>
     </rule>
 
+    <rule name="UnusedSuppression"
+          since="3.0.0"
+          message="Avoid unused suppressions such as '{0}'."
+          class="PHPMD\Rule\UnusedSuppression"
+          externalInfoUrl="https://phpmd.org/rules/unusedcode.html#unusedsuppression">
+        <description>
+Detects SuppressWarnings attributes that no longer suppress any warning, for
+example because the code was fixed, or the rule is not part of the analysis.
+Suppress this rule to keep a suppression that is knowingly unused. Doc comment
+annotations are not reported.
+        </description>
+        <priority>3</priority>
+        <example>
+<![CDATA[
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\UnusedLocalVariable;
+
+class Foo
+{
+    #[SuppressWarnings(UnusedLocalVariable::class)] // unused
+    public function bar()
+    {
+        return 42;
+    }
+}
+]]>
+        </example>
+    </rule>
+
 </ruleset>

@@ -19,7 +19,6 @@
 namespace PHPMD\Regression;
 
 use PHPMD\Rule\UnusedPrivateMethod;
-use PHPMD\RuleSet;
 
 /**
  * Regression test for issue 036.
@@ -28,20 +27,11 @@ class SuppressWarningsNotAppliesToUnusedPrivateMethod036RegressionTest extends A
 {
     public function testRuleDoesNotApplyToPrivateMethodWithSuppressWarningsAnnotation(): void
     {
-        $ruleSet = new RuleSet();
-        $ruleSet->addRule(new UnusedPrivateMethod());
-        $ruleSet->setReport($this->getReportWithNoViolation());
-
-        $ruleSet->apply($this->getClass());
+        static::assertCount(0, $this->analyseCodeResourceForTest(new UnusedPrivateMethod())->getRuleViolations());
     }
 
     public function testStrictModeReportsSuppressedPrivateMethodViolation(): void
     {
-        $ruleSet = new RuleSet();
-        $ruleSet->addRule(new UnusedPrivateMethod());
-        $ruleSet->setStrict();
-        $ruleSet->setReport($this->getReportWithOneViolation());
-
-        $ruleSet->apply($this->getClass());
+        static::assertCount(1, $this->analyseCodeResourceForTest(new UnusedPrivateMethod(), true)->getRuleViolations());
     }
 }

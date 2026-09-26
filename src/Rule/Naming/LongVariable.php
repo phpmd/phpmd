@@ -26,7 +26,6 @@ use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
-use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
@@ -74,10 +73,6 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
             $fields = $node->findChildrenOfType(ASTFieldDeclaration::class);
 
             foreach ($fields as $field) {
-                if (!$this->isStrict() && $field->hasSuppressWarningsFor($this)) {
-                    continue;
-                }
-
                 foreach ($field->findChildrenOfType(ASTVariableDeclarator::class) as $declarator) {
                     $this->checkNodeImage($declarator);
                 }
@@ -122,13 +117,8 @@ final class LongVariable extends AbstractRule implements ClassAware, FunctionAwa
      * @throws InvalidArgumentException
      * @throws OutOfBoundsException
      */
-    #[SuppressWarnings(self::class)]
     private function checkMaximumLength(AbstractNode $node): void
     {
-        if (!$this->isStrict() && $node->hasSuppressWarningsFor($this)) {
-            return;
-        }
-
         $threshold = $this->getIntProperty('maximum');
         $variableName = $node->getImage();
 

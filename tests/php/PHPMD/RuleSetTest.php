@@ -53,42 +53,6 @@ class RuleSetTest extends AbstractTestCase
         static::assertEquals(__CLASS__, $rule->getName());
     }
 
-    public function testApplyNotInvokesRuleWhenSuppressAnnotationExists(): void
-    {
-        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
-        $ruleSet->setReport($this->getReportWithNoViolation());
-        $ruleSet->apply($this->getClass());
-        $rule = $ruleSet->getRuleByName(__FUNCTION__);
-
-        static::assertInstanceOf(RuleStub::class, $rule);
-        static::assertNull($rule->node);
-    }
-
-    public function testApplyNotInvokesRuleWhenSuppressAttributeExists(): void
-    {
-        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
-        $ruleSet->setReport($this->getReportWithNoViolation());
-        $ruleSet->apply($this->getClass());
-        $rule = $ruleSet->getRuleByName(__FUNCTION__);
-
-        static::assertInstanceOf(RuleStub::class, $rule);
-        static::assertNull($rule->node);
-    }
-
-    public function testApplyInvokesRuleWhenStrictModeIsSet(): void
-    {
-        $ruleSet = $this->createRuleSetFixture(__FUNCTION__);
-        $ruleSet->setReport($this->getReportWithNoViolation());
-        $ruleSet->setStrict();
-
-        $class = $this->getClass();
-        $ruleSet->apply($class);
-        $rule = $ruleSet->getRuleByName(__FUNCTION__);
-
-        static::assertInstanceOf(RuleStub::class, $rule);
-        static::assertSame($class, $rule->node);
-    }
-
     public function testDescriptionCanBeChanged(): void
     {
         $ruleSet = new RuleSet();

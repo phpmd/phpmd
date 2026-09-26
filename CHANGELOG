@@ -49,6 +49,9 @@ Breaking changes:
 - Renamed the rule classes `PHPMD\Rule\Design\LongClass` to `ExcessiveClassLength`, `LongMethod` to
   `ExcessiveMethodLength`, `LongParameterList` to `ExcessiveParameterList`, `NpathComplexity` to
   `NPathComplexity` and `WeightedMethodCount` to `ExcessiveClassComplexity`. The rule names are unchanged.
+- Changed suppressions to be applied by filtering the violations after the rules have run, instead of
+  skipping suppressed code. `RuleSet::apply()` no longer skips suppressed nodes, and
+  `AbstractRule::setStrict()` has been removed. Custom rules no longer need to check for suppressions.
 
 New features:
 
@@ -59,6 +62,7 @@ New features:
 - Added `exclude-pattern` support in YAML, JSON, and PHP configuration files (#909).
 - Added `format`, `cache-file`, `cache-strateg`, `baseline-file`, `bootstrap`, `cache`, `minimum-priority`, `maximum-priority`, `threads`, `paths`, and `suffixes` to the configuration files.
 - Added `#[SuppressWarnings]` PHP attribute as the preferred way to suppress warnings.
+- Added #1230: `UnusedSuppression` rule (UnusedCode) that reports `#[SuppressWarnings]` attributes that no longer suppress anything.
 - Added progress bar during analysis on stderr, use `--no-progress` option to hide it
   or `--progress` to force it together with `--quiet` or `--silent`.
 - Added `-vv` output of the effective configuration (paths, exclude patterns, suffixes, threads,
@@ -94,7 +98,13 @@ Fixed:
 - Fixed #1016: Crash when isPassedByReference checks a parent that does not exist.
 - Fixed #1236: PHP 8.4 deprecation for ReflectionMethod::__construct() with 1 argument.
 - Fixed #1239: `ShortVariable` rule now detects short parameter names in closures and arrow functions passed directly as arguments.
+- Fixed: `#[SuppressWarnings(self::class)]` never suppressed anything.
 - Fixed: `--strict` did not reveal `LongVariable` suppressions on fields/variables/parameters, nor `UnusedPrivateMethod` suppressions on private methods.
+
+Deprecated:
+
+- The `@SuppressWarnings` doc comment annotations, use the `#[SuppressWarnings]` attribute instead.
+  The annotations still suppress warnings, but are not reported by the `UnusedSuppression` rule.
 
 Internal:
 
