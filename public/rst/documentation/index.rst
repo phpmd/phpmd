@@ -15,6 +15,44 @@ order of priority): ``phpmd.yml``, ``phpmd.yaml``, ``phpmd.json``,
 See the `creating a custom rule set </documentation/creating-a-ruleset.html>`_
 documentation for details on all supported configuration formats.
 
+Creating a configuration file
+-----------------------------
+
+``phpmd init`` asks a few questions about your project (paths to analyze,
+paths to exclude, whether to enable the result cache and which rule sets to
+use) and writes the answers to a ``phpmd.yml``: ::
+
+  ~ $ phpmd init
+
+Run it with ``--no-interaction`` to accept the suggested settings, and pass
+``--output`` to write the file somewhere else.
+
+Migrating a configuration file
+------------------------------
+
+``phpmd migrate`` upgrades a configuration file written for PHPMD 2. It
+replaces renamed rule classes and threshold properties by their current names
+and converts the file to YAML: ::
+
+  ~ $ phpmd migrate phpmd.xml
+
+Without a file argument the auto-detected configuration file is migrated. The
+original file is kept, so remove it once you have reviewed the result. The
+command supports these options:
+
+- ``--format`` - ``yml`` (the default) or ``json``.
+- ``--output`` - where to write the migrated file, by default next to the
+  original file with the extension of the chosen format.
+- ``--preserve-behavior`` - lower the configured thresholds of rules that
+  reported values equal to the threshold in PHPMD 2 by one, so the same values
+  are still reported. See the
+  `upgrade guide <https://github.com/phpmd/phpmd/blob/master/UPGRADING.md>`_.
+- ``--dry-run`` - print the migrated configuration instead of writing it.
+- ``--force`` - overwrite the output file if it already exists.
+
+If the output path is the original file itself, the original is first backed
+up with a ``.bak`` extension.
+
 You can pass file or directory names, separated by spaces, containing PHP
 source code to PHPMD.
 

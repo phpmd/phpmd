@@ -17,7 +17,9 @@
  */
 
 use PHPMD\TextUI\Command;
+use PHPMD\TextUI\InitCommand;
 use PHPMD\TextUI\LegacyArguments;
+use PHPMD\TextUI\MigrateCommand;
 use PHPMD\TextUI\XdebugOptionHandler;
 use PHPMD\TextUI\PdependWorkerCommand;
 use Symfony\Component\Console\Application;
@@ -61,13 +63,12 @@ if (isset($_SERVER['argv'][0]) && is_file($_SERVER['argv'][0])) {
     $command->setMainScript($_SERVER['argv'][0]);
     $command->setWorkerCommandName('pdepend:worker');
 }
-$workerCommand = new PdependWorkerCommand();
-if (method_exists($application, 'addCommand')) {
-    $application->addCommand($command);
-    $application->addCommand($workerCommand);
-} else {
-    $application->add($command);
-    $application->add($workerCommand);
+foreach ([$command, new InitCommand(), new MigrateCommand(), new PdependWorkerCommand()] as $applicationCommand) {
+    if (method_exists($application, 'addCommand')) {
+        $application->addCommand($applicationCommand);
+    } else {
+        $application->add($applicationCommand);
+    }
 }
 $application->setDefaultCommand($command->getName());
 // Run command line interface

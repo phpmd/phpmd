@@ -1,0 +1,13 @@
+rules:
+  - ref: CyclomaticComplexity
+    properties:
+      reportLevel: 12
+      maximum: 15
+  - ref: custom/other.xml
+  - ref: rulesets/design.xml
+  - name: DepthOfInheritance
+    properties:
+      minimum: 6
+  - ref: rulesets/design.xml/CouplingBetweenObjects
+    properties:
+      maximum: 13

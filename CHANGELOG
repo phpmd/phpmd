@@ -46,9 +46,14 @@ Breaking changes:
 - Changed `--update-baseline` to report violations that are not in the baseline (#1344). They are
   rendered with the configured format, make the command exit with code 2 and are not added to the
   baseline file. `PHPMD\Baseline\BaselineValidator` no longer takes a `BaselineMode`.
+- Renamed the rule classes `PHPMD\Rule\Design\LongClass` to `ExcessiveClassLength`, `LongMethod` to
+  `ExcessiveMethodLength`, `LongParameterList` to `ExcessiveParameterList`, `NpathComplexity` to
+  `NPathComplexity` and `WeightedMethodCount` to `ExcessiveClassComplexity`. The rule names are unchanged.
 
 New features:
 
+- Added `phpmd init` command that generates a `phpmd.yml` through an interactive wizard.
+- Added `phpmd migrate` command that upgrades a PHPMD 2 configuration file and converts it to YAML.
 - Added YAML, JSON, and PHP as configuration formats in addition to XML.
 - Added configuration file auto-detection for phpmd.yml, phpmd.yaml, phpmd.json, phpmd.xml, and phpmd.php.
 - Added `exclude-pattern` support in YAML, JSON, and PHP configuration files (#909).
