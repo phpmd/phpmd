@@ -42,7 +42,6 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
 use PHPMD\Node\MethodNode;
 use PHPMD\Rule\AbstractLocalVariable;
-use PHPMD\Rule\CyclomaticComplexity;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
@@ -51,7 +50,6 @@ use PHPMD\Rule\MethodAware;
  * This rule collects all undefined variables within a given function or method
  * that are used by any code in the analyzed source artifact.
  */
-#[SuppressWarnings(CyclomaticComplexity::class)]
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UndefinedVariable extends AbstractLocalVariable implements FunctionAware, MethodAware
 {

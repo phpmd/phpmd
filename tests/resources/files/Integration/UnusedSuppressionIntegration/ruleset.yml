@@ -1,0 +1,4 @@
+name: UnusedSuppression integration
+rules:
+  - ref: rulesets/unusedcode.xml
+  - ref: rulesets/naming.xml/LongVariable

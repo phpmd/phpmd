@@ -93,7 +93,7 @@ public function example() {
 }
 ```
 
-The older `@SuppressWarnings` doc comment annotations from PHPMD 2 are still supported for backward compatibility:
+The older `@SuppressWarnings` doc comment annotations from PHPMD 2 are deprecated, but still supported for backward compatibility:
 
 ```php
 /** @SuppressWarnings(PHPMD.UnusedLocalVariable) */
@@ -103,6 +103,10 @@ public function example() {
 ```
 
 However, PHP attributes are recommended going forward, as they are type-safe and supported by IDE autocompletion.
+
+The new `UnusedSuppression` rule, part of the unused code rule set, reports `#[SuppressWarnings]` attributes that
+no longer suppress any warning. Doc comment annotations are not reported, which is one more reason to switch to
+attributes. To adopt the rule gradually, add the existing reports to a baseline with `--generate-baseline`.
 
 ### Exit codes
 
@@ -192,3 +196,4 @@ These changes only affect you if you have written custom rules or extended PHPMD
 - All PHPMD exceptions now use a dedicated exception hierarchy under `PHPMD\Exception\`.
 - Rule marker interfaces now include `EnumAware` and `TraitAware` in addition to the existing `ClassAware`, `FunctionAware`, `InterfaceAware`, and `MethodAware`.
 - PDepend 3.x is now required.
+- Suppressions are applied by filtering the violations after the rules have run, instead of skipping suppressed code, so `RuleSet::apply()` no longer skips suppressed nodes and `AbstractRule::setStrict()` has been removed. Custom rules no longer need to check `hasSuppressWarningsFor()` themselves, and should stop doing so: a rule that skips suppressed code never reports the violations its suppressions are there for, so the `UnusedSuppression` rule reports those suppressions as unused.

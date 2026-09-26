@@ -18,15 +18,17 @@
 
 namespace PHPMD\Node;
 
-use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTSelfReference;
 use PHPMD\AbstractNode;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule;
+use RuntimeException;
 
 final class Attributes
 {
@@ -34,7 +36,14 @@ final class Attributes
     private array $suppressed = [];
 
     /**
-     * @param AbstractNode<AbstractASTArtifact> $node
+     * Every suppression, in the order written. A null rule suppresses all rules.
+     *
+     * @var list<array{rule: ?string, beginLine: int, endLine: int}>
+     */
+    private array $suppressions = [];
+
+    /**
+     * @param AbstractNode<ASTNode> $node
      */
     public function __construct(AbstractNode $node)
     {
@@ -44,19 +53,45 @@ final class Attributes
             }
             foreach ($attributes->getChildren() as $attribute) {
                 if ($attribute instanceof ASTAllocationExpression) {
-                    $this->processAttribute($attribute);
+                    $this->processAttribute($attribute, $attributes);
                 }
             }
         }
     }
 
-    private function processAttribute(ASTAllocationExpression $attribute): void
+    /**
+     * @param ASTAttribute $group The #[...] the attribute is written in, which
+     *                            unlike the attribute itself knows its lines.
+     */
+    private function processAttribute(ASTAllocationExpression $attribute, ASTAttribute $group): void
     {
         $allocation = $attribute->getChildren();
         $class = $allocation[0] ?? null;
-        if (!$class || trim($class->getImage(), '\\') !== SuppressWarnings::class) {
+        $className = $class ? trim($class->getImage(), '\\') : null;
+        if ($className !== SuppressWarnings::class) {
             return;
         }
+        $rule = $this->getRuleArgument($allocation);
+        if ($rule === null) {
+            return;
+        }
+
+        $this->suppressed[$rule] = true;
+        $this->suppressions[] = [
+            'rule' => $rule === '+all' ? null : $rule,
+            'beginLine' => $group->getStartLine(),
+            'endLine' => $group->getEndLine(),
+        ];
+    }
+
+    /**
+     * Returns the rule class the attribute was given, '+all' when it was
+     * given none, or null when it could not be read.
+     *
+     * @param array<ASTNode> $allocation
+     */
+    private function getRuleArgument(array $allocation): ?string
+    {
         $arguments = $allocation[1] ?? null;
         if ($arguments) {
             // #[SuppressWarnings()]
@@ -64,28 +99,32 @@ final class Attributes
         }
         if (!$arguments) {
             // #[SuppressWarnings]
-            $this->suppressed['+all'] = true;
-
-            return;
+            return '+all';
         }
         $argument = $arguments[0];
 
         if ($argument instanceof ASTLiteral) {
             // #[SuppressWarnings('\PHPMD\Rules\UnusedLocalVariable')]
-            $this->suppressed[trim($argument->getImage(), '\\\'""')] = true;
-
-            return;
+            return trim($argument->getImage(), '\\\'""');
         }
         if (!$argument instanceof ASTMemberPrimaryPrefix || !$argument->isStatic()) {
-            return;
+            return null;
         }
         $children = $argument->getChildren();
         if (!$children[1] instanceof ASTClassFqnPostfix) {
-            return;
+            return null;
         }
-        $rule = $children[0];
+        if ($children[0] instanceof ASTSelfReference) {
+            // #[SuppressWarnings(self::class)]
+            try {
+                return $children[0]->getType()->getNamespacedName();
+            } catch (RuntimeException) {
+                return null;
+            }
+        }
+
         // #[SuppressWarnings(UnusedLocalVariable::class)]
-        $this->suppressed[trim($rule->getImage(), '\\')] = true;
+        return trim($children[0]->getImage(), '\\');
     }
 
     /**
@@ -94,5 +133,16 @@ final class Attributes
     public function suppresses(Rule $rule): bool
     {
         return $this->suppressed['+all'] ?? $this->suppressed[$rule::class] ?? false;
+    }
+
+    /**
+     * Returns every suppression, in the order written. A null rule suppresses
+     * all rules.
+     *
+     * @return list<array{rule: ?string, beginLine: int, endLine: int}>
+     */
+    public function getSuppressions(): array
+    {
+        return $this->suppressions;
     }
 }

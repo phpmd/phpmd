@@ -97,6 +97,27 @@ This rule has the following properties:
 | exceptions                        |               | Comma-separated list of exceptions    |
 +-----------------------------------+---------------+---------------------------------------+
 
+UnusedSuppression
+=================
+
+Since: PHPMD 3.0.0
+
+Detects SuppressWarnings attributes that no longer suppress any warning, for example because the code was fixed, or the rule is not part of the analysis. Suppress this rule to keep a suppression that is knowingly unused. Doc comment annotations are not reported.
+
+Example: ::
+
+  use PHPMD\Attribute\SuppressWarnings;
+  use PHPMD\Rule\UnusedLocalVariable;
+
+  class Foo
+  {
+      #[SuppressWarnings(UnusedLocalVariable::class)] // unused
+      public function bar()
+      {
+          return 42;
+      }
+  }
+
 Remark
 ======
 

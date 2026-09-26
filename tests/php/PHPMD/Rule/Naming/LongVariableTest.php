@@ -271,8 +271,8 @@ class LongVariableTest extends AbstractTestCase
     {
         $rule = new LongVariable();
         $rule->addProperty('maximum', '17');
-        $rule->setStrict(true);
-        $rule->setReport($this->getReportWithOneViolation());
-        $rule->apply($this->getClass());
+
+        static::assertCount(0, $this->analyseCodeResourceForTest($rule)->getRuleViolations());
+        static::assertCount(1, $this->analyseCodeResourceForTest($rule, true)->getRuleViolations());
     }
 }

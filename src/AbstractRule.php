@@ -77,8 +77,6 @@ abstract class AbstractRule implements Rule
     /** The report for object for this rule. */
     private Report $report;
 
-    /** Should this rule force the strict mode. */
-    private bool $strict = false;
 
     /**
      * Returns the name for this rule instance.
@@ -328,20 +326,6 @@ abstract class AbstractRule implements Rule
         return (string) $this->getProperty($name, $default);
     }
 
-    public function setStrict(bool $strict): void
-    {
-        $this->strict = $strict;
-    }
-
-    /**
-     * Whether this rule should ignore SuppressWarnings suppressions and
-     * report on nodes that would otherwise be skipped.
-     */
-    protected function isStrict(): bool
-    {
-        return $this->strict;
-    }
-
     /**
      * This method adds a violation to all reports for this violation type and
      * for the given <b>$node</b> instance.
@@ -376,10 +360,6 @@ abstract class AbstractRule implements Rule
     protected function applyOnClassMethods(AbstractTypeNode $node): void
     {
         foreach ($node->getMethods() as $method) {
-            if (!$this->strict && $method->hasSuppressWarningsFor($this)) {
-                continue;
-            }
-
             $this->apply($method);
         }
     }

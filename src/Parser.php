@@ -85,6 +85,9 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
 
     private int $workers = 1;
 
+    /** Filters out the violations of suppressed code. */
+    private readonly Suppressions $suppressions;
+
     /**
      * Constructs a new parser adapter instance.
      *
@@ -95,6 +98,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
         private readonly Engine $pdepend,
         private readonly ?ResultCacheFileFilter $fileFilter = null,
     ) {
+        $this->suppressions = new Suppressions();
     }
 
     /**
@@ -168,16 +172,18 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
         // Set max nesting level, because we may get really deep data structures
         ini_set('xdebug.max_nesting_level', 8192);
 
+        $this->suppressions->configure($this->ruleSets);
+
         if ($this->workers > 1) {
             $runner = new ForkedRuleRunner($this->workers, $this->report, $this->ruleSets);
 
-            if ($runner->run($this->collectFiles(), $this->dispatch(...))) {
+            if ($runner->run($this->collectFiles(), $this->applyToArtifact(...))) {
                 return;
             }
         }
 
         foreach ($this->artifacts as $node) {
-            $this->dispatch($node);
+            $this->applyToArtifact($node);
         }
     }
 
@@ -363,6 +369,26 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     }
 
     /**
+     * Applies the rules to the artifact and everything declared in it.
+     */
+    private function applyToArtifact(ASTArtifact $artifact): void
+    {
+        $report = $this->report;
+        $this->report = new Report();
+
+        try {
+            $this->dispatch($artifact);
+            $violations = $this->suppressions->resolve($this->report->getRuleViolations());
+        } finally {
+            $this->report = $report;
+        }
+
+        foreach ($violations as $violation) {
+            $report->addRuleViolation($violation);
+        }
+    }
+
+    /**
      * Applies all rule-sets to the given <b>$node</b> instance.
      *
      * @param AbstractNode<ASTArtifact> $node
@@ -374,6 +400,7 @@ final class Parser extends AbstractASTVisitor implements CodeAwareGenerator
     private function apply(AbstractNode $node): void
     {
         $this->collectMetrics($node);
+        $this->suppressions->collect($node);
         foreach ($this->ruleSets as $ruleSet) {
             $ruleSet->setReport($this->report);
             $ruleSet->apply($node);

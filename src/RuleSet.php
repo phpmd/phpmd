@@ -47,7 +47,8 @@ use PHPMD\Rule\TraitAware;
 class RuleSet implements IteratorAggregate
 {
     /**
-     * Should this rule set force the strict mode.
+     * Should this rule set force the strict mode, which reports the violations
+     * of suppressed code too.
      *
      * @since 1.2.0
      */
@@ -248,15 +249,9 @@ class RuleSet implements IteratorAggregate
             return;
         }
 
-        // Apply all rules to this node
+        // Apply all rules to this node, the Parser filters out the suppressed violations
         foreach ($this->rules[$className] as $rule) {
-            if ($node->hasSuppressWarningsFor($rule) && !$this->strict) {
-                continue;
-            }
             $rule->setReport($this->report);
-            if (method_exists($rule, 'setStrict')) {
-                $rule->setStrict($this->strict);
-            }
             $rule->apply($node);
         }
     }
