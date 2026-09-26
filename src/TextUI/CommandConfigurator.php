@@ -21,6 +21,7 @@ namespace PHPMD\TextUI;
 use InvalidArgumentException;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Cache\Model\ResultCacheStrategy;
+use PHPMD\Config\ConfigFileFinder;
 use PHPMD\PHPMD;
 use PHPMD\Rule;
 use PHPMD\Rule\Controversial\Superglobals;
@@ -58,37 +59,11 @@ final class CommandConfigurator
     /**
      * @return ?list<string>
      */
-    private function getDefaultConfig(): ?array
-    {
-        // Files to be used as config automatically
-        // Ordered by priority
-        $files = [
-            'phpmd.yml',
-            'phpmd.yaml',
-            'phpmd.json',
-            'phpmd.xml',
-            'phpmd.php',
-        ];
-
-        foreach ($files as $file) {
-            // Search for phpmd.yml, .phpmd.yml and phpmd.yml.dist
-            foreach ([$file, ".$file", "$file.dist"] as $path) {
-                if (file_exists($path)) {
-                    return [$path];
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @return ?list<string>
-     */
     #[SuppressWarnings(Superglobals::class)]
     private function resolveDefaultConfig(): ?array
     {
-        $defaultConfig = $this->getDefaultConfig();
+        $configFile = (new ConfigFileFinder())->find();
+        $defaultConfig = $configFile === null ? null : [$configFile];
 
         /** @var list<string> */
         $argv = $_SERVER['argv'];

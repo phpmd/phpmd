@@ -13,7 +13,7 @@ rules:
       - StaticAccess
   - ref: rulesets/cleancode.xml/StaticAccess
     properties:
-      exceptions: "PHPMD\\Utility\\Paths,PHPMD\\Utility\\Strings,PHPMD\\Utility\\MethodParameterReference,PHPMD\\RuleProperty\\RulePropertySetter,PHPMD\\InternalRuleSet,PHPMD\\Renderer\\RendererFactory,PHPMD\\Baseline\\BaselineSetFactory,Symfony\\Component\\Yaml\\Yaml,PDepend\\TextUI\\Command,PHPMD\\TextUI\\Command"
+      exceptions: "PHPMD\\Utility\\Paths,PHPMD\\Utility\\Strings,PHPMD\\Utility\\MethodParameterReference,PHPMD\\RuleProperty\\RulePropertySetter,PHPMD\\InternalRuleSet,PHPMD\\Renderer\\RendererFactory,PHPMD\\Baseline\\BaselineSetFactory,PHPMD\\Config\\ConfigFormat,Symfony\\Component\\Yaml\\Yaml,PDepend\\TextUI\\Command,PHPMD\\TextUI\\Command"
   - ref: rulesets/codesize.xml
   - ref: rulesets/naming.xml
   - ref: rulesets/design.xml

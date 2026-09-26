@@ -5,6 +5,20 @@
 
 Here we try to provide the needed changes to upgrade from version 2 to version 3. These are the breaking changes.
 
+### Migrating your configuration
+
+Run `phpmd migrate` to upgrade your configuration file automatically:
+
+```
+phpmd migrate phpmd.xml
+```
+
+It renames the rule classes and threshold properties described below, converts the file to YAML (the recommended format) and lists every change it made. The original file is kept, so remove it once you have reviewed the result. Add `--preserve-behavior` to also lower the thresholds of rules that now accept one more unit (see [Standardized rule threshold properties](#standardized-rule-threshold-properties)), or `--dry-run` to only print the result. Without an argument, the auto-detected configuration file is migrated.
+
+Rule sets referenced from your configuration are not followed, run the command on each of them.
+
+If you don't have a configuration file yet, `phpmd init` generates one through an interactive wizard.
+
 ### PHP version
 
 The minimum PHP version is changed from 5.3.9 to 8.1.
@@ -126,6 +140,22 @@ This also shifts the shipped defaults: on the default rule sets, values that sat
 
 Rules that check a lower bound — ShortVariable, ShortMethodName, and ShortClassName — keep the `minimum` property (a name length *below* the configured minimum is reported).
 
+`phpmd migrate --preserve-behavior` lowers the configured values for you. It only adjusts values set in your configuration: rules left at their shipped defaults still use the new defaults.
+
+### Renamed rule classes
+
+The rule names are unchanged, but the classes of the following rules were renamed. This only matters if your rule set refers to a rule by its `class`:
+
+| PHPMD 2                                 | PHPMD 3                                      |
+|-----------------------------------------|----------------------------------------------|
+| `PHPMD\Rule\Design\LongClass`           | `PHPMD\Rule\Design\ExcessiveClassLength`     |
+| `PHPMD\Rule\Design\LongMethod`          | `PHPMD\Rule\Design\ExcessiveMethodLength`    |
+| `PHPMD\Rule\Design\LongParameterList`   | `PHPMD\Rule\Design\ExcessiveParameterList`   |
+| `PHPMD\Rule\Design\NpathComplexity`     | `PHPMD\Rule\Design\NPathComplexity`          |
+| `PHPMD\Rule\Design\WeightedMethodCount` | `PHPMD\Rule\Design\ExcessiveClassComplexity` |
+
+`phpmd migrate` replaces these class names in your rule set. Custom rules that extend one of these classes have to be updated by hand.
+
 ### Changed rule behaviour
 
 Besides the threshold changes described above, the detection logic of the following rules
@@ -158,6 +188,7 @@ These changes only affect you if you have written custom rules or extended PHPMD
 - `PHPMD\RuleSetFactory::getIgnorePattern()` has been removed. Use `getExcludePatterns()` instead.
 - `PHPMD\Rule::getBooleanProperty()` has been renamed to `isTruthyProperty()`.
 - `PHPMD\RuleSetFactory::getCache()` has been renamed to `isCacheEnabled()`.
+- The rule classes `LongClass`, `LongMethod`, `LongParameterList`, `NpathComplexity` and `WeightedMethodCount` in `PHPMD\Rule\Design` have been renamed, see [Renamed rule classes](#renamed-rule-classes).
 - All PHPMD exceptions now use a dedicated exception hierarchy under `PHPMD\Exception\`.
 - Rule marker interfaces now include `EnumAware` and `TraitAware` in addition to the existing `ClassAware`, `FunctionAware`, `InterfaceAware`, and `MethodAware`.
 - PDepend 3.x is now required.

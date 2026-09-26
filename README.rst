@@ -77,6 +77,9 @@ Rule sets can also be written in XML, JSON, or PHP. See the
 `creating a custom rule set </documentation/creating-a-ruleset.html>`_
 documentation for details on all supported formats.
 
+Run ``phpmd init`` to generate a ``phpmd.yml`` through an interactive wizard,
+or ``phpmd migrate`` to upgrade a configuration file written for PHPMD 2.
+
 You can pass a comma-separated string with list of file names
 or a directory names, containing PHP source code to PHPMD.
 

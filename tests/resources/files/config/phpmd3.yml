@@ -1,0 +1,4 @@
+rules:
+  - ref: rulesets/codesize.xml/NPathComplexity
+    properties:
+      maximum: 200
