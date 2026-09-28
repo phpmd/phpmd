@@ -24,6 +24,7 @@ use Attribute;
  * Generic option with no specific meaning.
  *
  * @psalm-immutable
+ * @internal
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Option extends AbstractRuleProperty

@@ -2,6 +2,9 @@
 
 namespace PHPMD\Cache\Model;
 
+/**
+ * @internal
+ */
 enum ResultCacheStrategy: string
 {
     /**

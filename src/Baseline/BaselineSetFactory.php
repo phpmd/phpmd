@@ -5,6 +5,9 @@ namespace PHPMD\Baseline;
 use PHPMD\Exception\RuntimeException;
 use SimpleXMLElement;
 
+/**
+ * @internal
+ */
 final class BaselineSetFactory
 {
     /**

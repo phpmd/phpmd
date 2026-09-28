@@ -28,6 +28,9 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 #[SuppressWarnings(TooManyPublicMethods::class)]
 class ProgressListener extends AbstractASTVisitListener implements ProcessListener
 {

@@ -29,6 +29,8 @@ use Throwable;
 /**
  * Forking is the imple way to thread rule processing since the only thing that
  * changes at this point is the reported violations.
+ *
+ * @internal
  */
 final class ForkedRuleRunner
 {

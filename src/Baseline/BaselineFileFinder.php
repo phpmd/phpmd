@@ -5,6 +5,9 @@ namespace PHPMD\Baseline;
 use PHPMD\Exception\RuntimeException;
 use PHPMD\TextUI\CommandLineOptions;
 
+/**
+ * @internal
+ */
 final class BaselineFileFinder
 {
     private const DEFAULT_FILENAME = 'phpmd.baseline.xml';

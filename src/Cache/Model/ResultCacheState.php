@@ -10,6 +10,9 @@ use PHPMD\RuleSet;
 use PHPMD\RuleViolation;
 use PHPMD\Utility\Paths;
 
+/**
+ * @internal
+ */
 class ResultCacheState
 {
     /**

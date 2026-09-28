@@ -28,6 +28,8 @@ use PHPMD\AbstractNode;
 
 /**
  * Utility class to do some more advanced searches from an ASTNode.
+ *
+ * @internal
  */
 final class Seeker
 {

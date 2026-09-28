@@ -18,6 +18,9 @@
 
 namespace PHPMD;
 
+/**
+ * @internal
+ */
 final class InternalRuleSet
 {
     /** @var list<string>|null */

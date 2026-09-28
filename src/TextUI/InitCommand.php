@@ -38,6 +38,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'init',
     description: 'Generates a configuration file with suggested settings through an interactive wizard',
 )]
+/**
+ * @internal
+ */
 final class InitCommand extends SymfonyCommand
 {
     /**

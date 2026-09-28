@@ -23,6 +23,8 @@ use RuntimeException;
 
 /**
  * Carries the violations a forked process found back to the process that started it.
+ *
+ * @internal
  */
 final class ViolationTransfer
 {

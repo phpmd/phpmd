@@ -52,6 +52,9 @@ Breaking changes:
 - Changed suppressions to be applied by filtering the violations after the rules have run, instead of
   skipping suppressed code. `RuleSet::apply()` no longer skips suppressed nodes, and
   `AbstractRule::setStrict()` has been removed. Custom rules no longer need to check for suppressions.
+- Marked the parallel rule runner, the PDepend integration, the suppression handling and the
+  `Baseline`, `Cache`, `Config`, `RuleProperty`, `TextUI` and `Utility` namespaces `@internal`.
+  They are not covered by the 3.x compatibility promise.
 
 New features:
 

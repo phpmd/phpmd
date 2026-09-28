@@ -9,6 +9,9 @@ use PHPMD\Cache\Model\ResultCacheStrategy;
 use PHPMD\Utility\Paths;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 class ResultCacheFileFilter implements Filter
 {
     private readonly ResultCacheState $newState;

@@ -6,6 +6,9 @@ use PHPMD\RuleSet;
 use PHPMD\TextUI\CommandLineOptions;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 final class ResultCacheEngineFactory
 {
     public function __construct(

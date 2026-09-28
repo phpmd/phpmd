@@ -2,6 +2,9 @@
 
 namespace PHPMD\Baseline;
 
+/**
+ * @internal
+ */
 enum BaselineMode
 {
     /**

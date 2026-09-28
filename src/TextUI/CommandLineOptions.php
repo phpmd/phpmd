@@ -38,6 +38,8 @@ use ValueError;
 /**
  * This is a helper class that collects the specified cli arguments and puts them
  * into accessible properties.
+ *
+ * @internal
  */
 #[SuppressWarnings(LongVariable::class)]
 #[SuppressWarnings(TooManyFields::class)]

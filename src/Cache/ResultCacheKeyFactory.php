@@ -6,6 +6,9 @@ use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
 
+/**
+ * @internal
+ */
 class ResultCacheKeyFactory
 {
     public function __construct(

@@ -28,6 +28,8 @@ use PDepend\Input\ExtensionFilter;
 
 /**
  * Simple factory that is used to return a ready to use PDepend instance.
+ *
+ * @internal
  */
 final class ParserFactory
 {

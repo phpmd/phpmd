@@ -24,6 +24,8 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Serializes a configuration array into one of the array based file formats.
+ *
+ * @internal
  */
 final class ConfigDumper
 {

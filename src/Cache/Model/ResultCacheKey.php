@@ -2,6 +2,9 @@
 
 namespace PHPMD\Cache\Model;
 
+/**
+ * @internal
+ */
 class ResultCacheKey
 {
     /**

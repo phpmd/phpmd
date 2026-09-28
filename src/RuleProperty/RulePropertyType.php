@@ -20,6 +20,9 @@ namespace PHPMD\RuleProperty;
 
 use PHPMD\Rule;
 
+/**
+ * @internal
+ */
 interface RulePropertyType
 {
     /**

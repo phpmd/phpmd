@@ -8,6 +8,9 @@ use PHPMD\Exception\InvalidArgumentException;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class RendererFactory
 {

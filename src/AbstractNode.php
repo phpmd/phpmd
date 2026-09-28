@@ -292,6 +292,7 @@ abstract class AbstractNode
      *
      * @param array<string, numeric> $metrics The collected node metrics.
      * @throws LogicException
+     * @internal
      */
     public function setMetrics(array $metrics): void
     {

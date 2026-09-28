@@ -2,6 +2,9 @@
 
 namespace PHPMD\Node;
 
+/**
+ * @internal
+ */
 class NodeInfo
 {
     /**

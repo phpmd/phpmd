@@ -20,6 +20,9 @@ namespace PHPMD\RuleProperty;
 
 use PHPMD\Exception\InvalidArgumentException;
 
+/**
+ * @internal
+ */
 final class Matcher implements RulePropertyType
 {
     /** @var ?list<string> */

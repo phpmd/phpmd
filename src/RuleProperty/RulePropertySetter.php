@@ -25,6 +25,9 @@ use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionProperty;
 
+/**
+ * @internal
+ */
 final class RulePropertySetter
 {
     /** @var array<string, self> */

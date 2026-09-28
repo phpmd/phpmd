@@ -703,6 +703,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getExcludePatterns(array $fileNames): array
     {
@@ -716,6 +717,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getPaths(array $fileNames): array
     {
@@ -729,6 +731,7 @@ class RuleSetFactory
      * @return list<string>
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getSuffixes(array $fileNames): array
     {
@@ -739,6 +742,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getFormat(array $fileNames): ?string
     {
@@ -754,6 +758,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getCacheFile(array $fileNames): ?string
     {
@@ -769,6 +774,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getCacheStrategy(array $fileNames): ?string
     {
@@ -784,6 +790,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getBaseLineFile(array $fileNames): ?string
     {
@@ -799,6 +806,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getBoostrap(array $fileNames): ?string
     {
@@ -814,6 +822,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getMinimumPriority(array $fileNames): ?int
     {
@@ -832,6 +841,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getMaximumPriority(array $fileNames): ?int
     {
@@ -850,6 +860,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function getThreads(array $fileNames): ?int
     {
@@ -868,6 +879,7 @@ class RuleSetFactory
      * @param list<string> $fileNames The filename of a rule-set definition.
      * @throws RuntimeException Thrown if file is not proper xml
      * @throws ParseException
+     * @internal
      */
     public function isCacheEnabled(array $fileNames): bool
     {

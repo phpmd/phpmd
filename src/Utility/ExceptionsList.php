@@ -31,6 +31,7 @@ use RuntimeException;
 /**
  * @implements IteratorAggregate<string, string>
  * @implements ArrayAccess<string, string>
+ * @internal
  */
 final class ExceptionsList implements ArrayAccess, IteratorAggregate
 {

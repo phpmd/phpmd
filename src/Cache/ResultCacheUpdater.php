@@ -9,6 +9,9 @@ use PHPMD\RuleSet;
 use PHPMD\Utility\Paths;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @internal
+ */
 class ResultCacheUpdater
 {
     public function __construct(

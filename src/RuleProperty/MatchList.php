@@ -24,6 +24,7 @@ use Attribute;
  * Option set by a list of patterns (as array or comma-separator string).
  *
  * @psalm-immutable
+ * @internal
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class MatchList extends AbstractRuleProperty

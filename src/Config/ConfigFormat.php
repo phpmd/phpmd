@@ -18,6 +18,9 @@
 
 namespace PHPMD\Config;
 
+/**
+ * @internal
+ */
 enum ConfigFormat: string
 {
     case Yaml = 'yml';
