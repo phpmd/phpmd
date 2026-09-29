@@ -2,6 +2,9 @@
 
 namespace PHPMD\Baseline;
 
+/**
+ * @internal
+ */
 class ViolationBaseline
 {
     private readonly int $fileNameLength;

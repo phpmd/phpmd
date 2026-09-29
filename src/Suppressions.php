@@ -37,6 +37,8 @@ use PHPMD\Rule\UnusedSuppression;
  * The rules are applied to suppressed code like any other, and the violations
  * are matched to the suppressions by the lines they are reported on, which
  * works no matter which node a rule was applied to when it found them.
+ *
+ * @internal
  */
 final class Suppressions
 {

@@ -24,6 +24,7 @@ use Attribute;
  * Option to represent a threshold/limit/minimum/maximum.
  *
  * @psalm-immutable
+ * @internal
  */
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final class Threshold extends AbstractRuleProperty

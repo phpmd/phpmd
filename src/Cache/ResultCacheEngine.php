@@ -2,6 +2,9 @@
 
 namespace PHPMD\Cache;
 
+/**
+ * @internal
+ */
 class ResultCacheEngine
 {
     public function __construct(

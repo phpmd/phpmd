@@ -4,6 +4,9 @@ namespace PHPMD\Baseline;
 
 use PHPMD\RuleViolation;
 
+/**
+ * @internal
+ */
 class BaselineValidator
 {
     public function __construct(

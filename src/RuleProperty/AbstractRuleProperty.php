@@ -18,6 +18,9 @@
 
 namespace PHPMD\RuleProperty;
 
+/**
+ * @internal
+ */
 abstract class AbstractRuleProperty implements RuleProperty
 {
     /** @var list<string>|string */

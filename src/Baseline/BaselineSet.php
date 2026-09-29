@@ -2,6 +2,9 @@
 
 namespace PHPMD\Baseline;
 
+/**
+ * @internal
+ */
 class BaselineSet
 {
     /** @var array<string, list<ViolationBaseline>> */

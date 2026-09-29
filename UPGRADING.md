@@ -197,3 +197,14 @@ These changes only affect you if you have written custom rules or extended PHPMD
 - Rule marker interfaces now include `EnumAware` and `TraitAware` in addition to the existing `ClassAware`, `FunctionAware`, `InterfaceAware`, and `MethodAware`.
 - PDepend 3.x is now required.
 - Suppressions are applied by filtering the violations after the rules have run, instead of skipping suppressed code, so `RuleSet::apply()` no longer skips suppressed nodes and `AbstractRule::setStrict()` has been removed. Custom rules no longer need to check `hasSuppressWarningsFor()` themselves, and should stop doing so: a rule that skips suppressed code never reports the violations its suppressions are there for, so the `UnusedSuppression` rule reports those suppressions as unused.
+
+### Backward compatibility within 3.x
+
+Everything public is covered by the compatibility promise for the lifetime of 3.x, except code marked `@internal`, which can change in any minor release. PHPStan and Psalm report its use from outside PHPMD.
+
+- The parallel rule runner: `ForkedRuleRunner`, `ViolationTransfer`, `TextUI\PdependWorkerCommand` and the thread, main script and worker command methods of `PHPMD`.
+- The PDepend integration: `Parser`, `ParserFactory`, `ProgressListener` and `AbstractNode::setMetrics()`.
+- The suppression handling: `Suppressions`, `Node\Annotation`, `Node\Annotations`, `Node\Attributes` and `Node\NodeInfo`.
+- The `Baseline`, `Cache`, `Config`, `RuleProperty`, `TextUI` and `Utility` namespaces, `RendererFactory`, `InternalRuleSet` and the `RuleSetFactory` methods that read a single option from a rule set file.
+
+The command line and the configuration and baseline file formats are covered.

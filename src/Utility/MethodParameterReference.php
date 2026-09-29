@@ -27,6 +27,8 @@ use PDepend\Source\AST\ASTMethodPostfix;
 
 /**
  * Resolves whether a called method's formal parameter at a given position is passed by reference.
+ *
+ * @internal
  */
 final class MethodParameterReference
 {

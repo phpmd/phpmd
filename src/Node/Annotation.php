@@ -22,6 +22,8 @@ use PHPMD\Rule;
 
 /**
  * Simple code annotation class.
+ *
+ * @internal
  */
 final class Annotation
 {

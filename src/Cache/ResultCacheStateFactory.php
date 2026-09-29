@@ -5,6 +5,9 @@ namespace PHPMD\Cache;
 use PHPMD\Cache\Model\ResultCacheKey;
 use PHPMD\Cache\Model\ResultCacheState;
 
+/**
+ * @internal
+ */
 class ResultCacheStateFactory
 {
     public function fromFile(string $filePath): ?ResultCacheState

@@ -34,6 +34,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
  * Declares all CLI arguments and options for the {@link Command} class.
+ *
+ * @internal
  */
 final class CommandConfigurator
 {

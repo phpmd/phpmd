@@ -57,6 +57,9 @@ use ValueError;
     name: 'analyze',
     description: 'Analyzes source code for possible bugs, suboptimal code, overcomplicated expressions, unused parameters, methods & properties etc.',
 )]
+/**
+ * @internal
+ */
 #[SuppressWarnings(CouplingBetweenObjects::class)]
 final class Command extends SymfonyCommand
 {

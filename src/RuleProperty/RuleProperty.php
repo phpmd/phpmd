@@ -18,6 +18,9 @@
 
 namespace PHPMD\RuleProperty;
 
+/**
+ * @internal
+ */
 interface RuleProperty
 {
     /**

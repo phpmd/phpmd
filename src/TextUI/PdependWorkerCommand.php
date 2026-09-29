@@ -41,6 +41,9 @@ use Symfony\Component\Console\Output\OutputInterface;
     description: 'Internal command used by pdepend for parallel processing',
     hidden: true,
 )]
+/**
+ * @internal
+ */
 final class PdependWorkerCommand extends SymfonyCommand
 {
     /**

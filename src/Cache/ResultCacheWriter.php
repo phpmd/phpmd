@@ -4,6 +4,9 @@ namespace PHPMD\Cache;
 
 use PHPMD\Cache\Model\ResultCacheState;
 
+/**
+ * @internal
+ */
 class ResultCacheWriter
 {
     public function __construct(

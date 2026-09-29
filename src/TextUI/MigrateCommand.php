@@ -41,6 +41,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'migrate',
     description: 'Migrates a configuration file to the current format, converting it to YAML by default',
 )]
+/**
+ * @internal
+ */
 final class MigrateCommand extends SymfonyCommand
 {
     /** Formats the migrated configuration can be written in. */

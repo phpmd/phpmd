@@ -22,6 +22,8 @@ use InvalidArgumentException;
 
 /**
  * Utility class to provide string checks and manipulations
+ *
+ * @internal
  */
 final class Strings
 {

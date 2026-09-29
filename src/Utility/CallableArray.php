@@ -27,6 +27,8 @@ use PHPMD\AbstractNode;
 
 /**
  * Utility class to check and read array possibly representing callable method.
+ *
+ * @internal
  */
 final class CallableArray
 {

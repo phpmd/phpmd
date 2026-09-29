@@ -162,41 +162,65 @@ class PHPMD
         ]));
     }
 
+    /**
+     * @internal
+     */
     public function getResultCache(): ?ResultCacheEngine
     {
         return $this->resultCache;
     }
 
+    /**
+     * @internal
+     */
     public function setResultCache(ResultCacheEngine $resultCache): void
     {
         $this->resultCache = $resultCache;
     }
 
+    /**
+     * @internal
+     */
     public function setThreads(?int $threads): void
     {
         $this->threads = $threads;
     }
 
+    /**
+     * @internal
+     */
     public function getThreads(): ?int
     {
         return $this->threads;
     }
 
+    /**
+     * @internal
+     */
     public function setMainScript(string $mainScript): void
     {
         $this->mainScript = $mainScript;
     }
 
+    /**
+     * @internal
+     */
     public function getMainScript(): ?string
     {
         return $this->mainScript;
     }
 
+    /**
+     * @internal
+     */
     public function setWorkerCommandName(string $workerCommandName): void
     {
         $this->workerCommandName = $workerCommandName;
     }
 
+    /**
+     * @internal
+     */
     public function getWorkerCommandName(): ?string
     {
         return $this->workerCommandName;

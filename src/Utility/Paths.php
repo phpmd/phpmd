@@ -4,6 +4,9 @@ namespace PHPMD\Utility;
 
 use RuntimeException;
 
+/**
+ * @internal
+ */
 final class Paths
 {
     /**

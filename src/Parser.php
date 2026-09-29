@@ -54,6 +54,8 @@ use RuntimeException;
 
 /**
  * Simple wrapper around the php depend engine.
+ *
+ * @internal
  */
 #[SuppressWarnings(TooManyPublicMethods::class)]
 #[SuppressWarnings(CouplingBetweenObjects::class)]

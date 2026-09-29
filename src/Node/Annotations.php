@@ -24,6 +24,8 @@ use PHPMD\Rule;
 
 /**
  * Collection of code annotations.
+ *
+ * @internal
  */
 final class Annotations
 {

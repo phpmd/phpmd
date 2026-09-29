@@ -22,6 +22,8 @@ use PHPMD\Exception\RuntimeException;
 
 /**
  * Upgrades a PHPMD 2 configuration file to the current format.
+ *
+ * @internal
  */
 final class ConfigMigrator
 {

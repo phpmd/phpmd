@@ -30,6 +30,9 @@ use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Rule;
 use RuntimeException;
 
+/**
+ * @internal
+ */
 final class Attributes
 {
     /** @var array<string, true> */

@@ -8,6 +8,8 @@ use Composer\XdebugHandler\XdebugHandler;
  * Xdebug CLI Option Handler
  *
  * Enables instead of disables Xdebug, if called with "--xdebug" CLI option.
+ *
+ * @internal
  */
 class XdebugOptionHandler extends XdebugHandler
 {

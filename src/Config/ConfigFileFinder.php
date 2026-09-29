@@ -18,6 +18,9 @@
 
 namespace PHPMD\Config;
 
+/**
+ * @internal
+ */
 final class ConfigFileFinder
 {
     /** @var list<string> */

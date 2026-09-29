@@ -28,6 +28,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Nothing is written below `-vv`. At `-vv` the effective configuration and
  * the exit code are reported, at `-vvv` additionally every loaded rule and the
  * full list of arguments and options as the command received them.
+ *
+ * @internal
  */
 final class DiagnosticsPrinter
 {

@@ -22,6 +22,9 @@ use PHPMD\Exception\RuntimeException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @internal
+ */
 final class ConfigLoader
 {
     /**

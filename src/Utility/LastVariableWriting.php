@@ -29,6 +29,8 @@ use SplObjectStorage;
 
 /**
  * Utility class to find the last time a variable was written before an occurrence of it.
+ *
+ * @internal
  */
 final class LastVariableWriting
 {

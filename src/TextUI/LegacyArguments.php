@@ -25,6 +25,8 @@ namespace PHPMD\TextUI;
  * phpmd <file>,... <format> <ruleset>,... [--exclude <patterns>] [--suffixes <suffixes>] [...]
  *
  * The arguments are rewritten into the current "analyze" sub-command invocation.
+ *
+ * @internal
  */
 final class LegacyArguments
 {

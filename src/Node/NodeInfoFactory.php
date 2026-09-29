@@ -5,6 +5,9 @@ namespace PHPMD\Node;
 use PDepend\Source\AST\ASTNode;
 use PHPMD\AbstractNode as PHPMDAbstractNode;
 
+/**
+ * @internal
+ */
 final class NodeInfoFactory
 {
     /**

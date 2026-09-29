@@ -21,6 +21,9 @@ namespace PHPMD\Config;
 use PHPMD\Exception\RuntimeException;
 use SimpleXMLElement;
 
+/**
+ * @internal
+ */
 final class XmlConfigConverter
 {
     /**
