@@ -36,7 +36,6 @@ use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTUnaryExpression;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
-use PDepend\Source\AST\State;
 use PHPMD\AbstractNode;
 use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\AbstractCallableNode;
@@ -45,6 +44,7 @@ use PHPMD\Rule\AbstractLocalVariable;
 use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
+use PHPMD\Utility\Seeker;
 
 /**
  * This rule collects all undefined variables within a given function or method
@@ -92,7 +92,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if ($this->isSuperGlobal($variable) || $this->isPassedByReference($variable->getNode())) {
                 $this->addVariableDefinition($variable->getNode());
-            } elseif (!$this->checkVariableDefined($variable, $node)) {
+            } elseif (!$this->checkVariableDefined($variable)) {
                 $this->addViolation($variable, [$this->getVariableImage($variable)]);
             }
         }
@@ -214,14 +214,13 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
      * Check if the given variable was defined in the current context before usage.
      *
      * @param AbstractNode<ASTVariable> $variable
-     * @param AbstractCallableNode<AbstractASTCallable> $parentNode
      * @throws OutOfBoundsException
      */
-    private function checkVariableDefined(AbstractNode $variable, AbstractCallableNode $parentNode): bool
+    private function checkVariableDefined(AbstractNode $variable): bool
     {
         $image = $this->getVariableImage($variable);
 
-        return isset($this->images[$image]) || $this->isNameAllowedInContext($parentNode, $variable);
+        return isset($this->images[$image]) || $this->isNameAllowedInContext($variable);
     }
 
     /**
@@ -303,15 +302,10 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
     /**
      * Checks if a short name is acceptable in the current context.
      *
-     * @param AbstractCallableNode<AbstractASTCallable> $node
      * @param AbstractNode<ASTVariable> $variable
      */
-    private function isNameAllowedInContext(AbstractCallableNode $node, AbstractNode $variable): bool
+    private function isNameAllowedInContext(AbstractNode $variable): bool
     {
-        return (
-            $node instanceof MethodNode &&
-            $variable->getImage() === '$this' &&
-            ($node->getModifiers() & State::IS_STATIC) === 0
-        );
+        return $variable->getImage() === '$this' && Seeker::fromNode($variable)->isInObjectContext();
     }
 }

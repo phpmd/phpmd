@@ -22,7 +22,9 @@ use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode as PDependNode;
+use PDepend\Source\AST\ASTPropertyHook;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 
@@ -102,6 +104,29 @@ final class Seeker
         }
 
         return null;
+    }
+
+    /**
+     * Whether `$this` is available at the node: the nearest enclosing method (that of
+     * the anonymous class when the node is inside one) or property hook must be
+     * non-static, and no static closure may sit between them.
+     */
+    public function isInObjectContext(): bool
+    {
+        for ($scope = $this->node->getParent(); $scope !== null; $scope = $scope->getParent()) {
+            $scopeNode = $scope->getNode();
+
+            if ($scopeNode instanceof ASTClosure && $scopeNode->isStatic()) {
+                return false;
+            }
+
+            if ($scopeNode instanceof AbstractASTCallable) {
+                return $scopeNode instanceof ASTPropertyHook
+                    || ($scopeNode instanceof ASTMethod && !$scopeNode->isStatic());
+            }
+        }
+
+        return false;
     }
 
     /**
