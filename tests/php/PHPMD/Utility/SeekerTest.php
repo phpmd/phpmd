@@ -44,6 +44,14 @@ class SeekerTest extends AbstractTestCase
         static::assertNull(Seeker::fromNode($variable)->getOwningCallable('$a'));
     }
 
+    public function testIsInObjectContextReturnsFalseWhenNoEnclosingCallable(): void
+    {
+        $mock = $this->getMockBuilder(PDependNode::class)->getMock();
+        $variable = new ASTNode($mock, __FILE__);
+
+        static::assertFalse(Seeker::fromNode($variable)->isInObjectContext());
+    }
+
     /**
      * Finds the variable with the given image that is nested inside a
      * closure/arrow function, as opposed to its outer declaration.
