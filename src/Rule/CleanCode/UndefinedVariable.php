@@ -25,6 +25,7 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTForeachStatement;
 use PDepend\Source\AST\ASTFormalParameters;
@@ -45,6 +46,8 @@ use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
 use PHPMD\Utility\Seeker;
+use PHPMD\Utility\StaticPropertyScope;
+use RuntimeException;
 
 /**
  * This rule collects all undefined variables within a given function or method
@@ -61,8 +64,18 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
     private array $images = [];
 
     /**
+     * True when a static property may be declared by a type outside the
+     * analyzed sources, so a `self::$name[...]` access cannot be judged.
+     */
+    private bool $staticsUnknown = false;
+
+    /**
      * This method checks that all local variables within the given function or
      * method are used at least one time.
+     *
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws OutOfBoundsException
+     * @throws RuntimeException
      */
     public function apply(AbstractNode $node): void
     {
@@ -71,6 +84,7 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         }
 
         $this->images = [];
+        $this->staticsUnknown = false;
 
         if ($node instanceof MethodNode) {
             $parent = $node->getNode()->getParent();
@@ -116,16 +130,25 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
         $this->collectGlobalStatements($node);
     }
 
+    /**
+     * @throws ASTClassOrInterfaceRecursiveInheritanceException
+     * @throws RuntimeException
+     */
     private function collectProperties(AbstractASTClassOrInterface $node): void
     {
+        // ASTTrait extends ASTClass.
         if (!($node instanceof ASTClass)) {
             return;
         }
 
-        foreach ($node->getProperties() as $property) {
-            if ($property->isStatic()) {
-                $this->images['::' . $property->getImage()] = $property;
-            }
+        $scope = new StaticPropertyScope($node);
+
+        if (!$scope->isComplete()) {
+            $this->staticsUnknown = true;
+        }
+
+        foreach ($scope->getDeclarators() as $image => $declarator) {
+            $this->images["::$image"] = $declarator;
         }
     }
 
@@ -220,7 +243,9 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
     {
         $image = $this->getVariableImage($variable);
 
-        return isset($this->images[$image]) || $this->isNameAllowedInContext($variable);
+        return isset($this->images[$image])
+            || ($this->staticsUnknown && str_starts_with($image, '::'))
+            || $this->isNameAllowedInContext($variable);
     }
 
     /**
