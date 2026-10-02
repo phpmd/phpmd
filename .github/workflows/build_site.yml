@@ -3,7 +3,7 @@ name: Build website
 on:
   push:
     branches:
-      - "master"
+      - "3.x"
 
 jobs:
   php-tests:
