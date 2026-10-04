@@ -103,6 +103,7 @@ Fixed:
 - Fixed #1239: `ShortVariable` rule now detects short parameter names in closures and arrow functions passed directly as arguments.
 - Fixed: `#[SuppressWarnings(self::class)]` never suppressed anything.
 - Fixed: `--strict` did not reveal `LongVariable` suppressions on fields/variables/parameters, nor `UnusedPrivateMethod` suppressions on private methods.
+- Fixed #991: False positive in `UndefinedVariable` for `self::$name[...]` and `static::$name[...]` when the static property is declared in a used trait or a parent class.
 
 Deprecated:
 
