@@ -78,7 +78,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+---------------------------------------------+
 | Name                              | Default Value | Description                                 |
 +===================================+===============+=============================================+
-| minimum                           | 15            | Maximum number of acceptable child classes. |
+| maximum                           | 15            | Maximum number of acceptable child classes. |
 +-----------------------------------+---------------+---------------------------------------------+
 
 DepthOfInheritance
@@ -93,7 +93,7 @@ This rule has the following properties:
 +-----------------------------------+---------------+----------------------------------------------+
 | Name                              | Default Value | Description                                  |
 +===================================+===============+==============================================+
-| minimum                           | 6             | Maximum number of acceptable parent classes. |
+| maximum                           | 6             | Maximum number of acceptable parent classes. |
 +-----------------------------------+---------------+----------------------------------------------+
 
 CouplingBetweenObjects

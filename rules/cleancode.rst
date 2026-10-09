@@ -150,6 +150,38 @@ This rule has the following properties:
 | ignore-global                     | false         | Ignore classes, interfaces and traits in the global namespace |
 +-----------------------------------+---------------+---------------------------------------------------------------+
 
+IfStatementWithoutLogic
+=======================
+
+Since: PHPMD 3.0.0
+
+Having if conditions without any logic should be avoided. It usually tells us, that we are dealing with development code fragment, debug data, etc.
+
+Example: ::
+
+  class Foo
+  {
+      public function bar()
+      {
+          if (true) { // always true
+              // ...
+          }
+          if (1 !== 1) { // always false
+              // ...
+          }
+      }
+
+ShortOpenTag
+============
+
+Since: PHPMD 3.0.0
+
+Avoid using short open tags '<?'; use '<?php' instead. Short tags require the "short_open_tag" ini setting to be enabled to work reliably, which is not guaranteed across environments and is disabled by default in most modern setups.
+
+Example: ::
+
+  <? echo "Hello"; ?>
+
 UndefinedVariable
 =================
 

@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -51,6 +51,8 @@
     }
 }
 </code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>exceptions</td><td></td><td>Comma-separated list of exceptions</td></tr></table>
 <a id="unusedlocalvariable"></a>
 <h2>UnusedLocalVariable</h2>
 <p>Since: PHPMD 0.2</p>
@@ -88,6 +90,25 @@
     }
 }
 </code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>exceptions</td><td></td><td>Comma-separated list of exceptions</td></tr></table>
+<a id="unusedsuppression"></a>
+<h2>UnusedSuppression</h2>
+<p>Since: PHPMD 3.0.0</p>
+<p>Detects SuppressWarnings attributes that no longer suppress any warning, for example because the code was fixed, or the rule is not part of the analysis. Suppress this rule to keep a suppression that is knowingly unused. Doc comment annotations are not reported.</p>
+<p>Example: :</p>
+<pre><code class="">use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\UnusedLocalVariable;
+
+class Foo
+{
+    #[SuppressWarnings(UnusedLocalVariable::class)] // unused
+    public function bar()
+    {
+        return 42;
+    }
+}
+</code></pre>
 <a id="remark"></a>
 <h2>Remark</h2>
 <blockquote><p>This document is based on a ruleset xml-file, that was taken from the original source of the <a href="http://pmd.sourceforge.net/">PMD</a> project. This means that most parts of the content on this page are the intellectual work of the PMD community and its contributors and not of the PHPMD project.</p>
@@ -115,9 +136,9 @@
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/rules/unusedcode.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/rules/unusedcode.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/rules/unusedcode.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/rules/unusedcode.rst">Edit</a>
 </div>
 
 <script>

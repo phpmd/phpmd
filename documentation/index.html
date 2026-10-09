@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -34,118 +34,174 @@
     <hr />
 <a id="command-line-usage"></a>
 <h2>Command line usage</h2>
-<p>Type phpmd [filenamedirectory[,...]]] [report format] [ruleset file], i.e: :</p>
-<pre><code class="">mapi@arwen ~ $ phpmd PHP/Depend/DbusUI/ xml rulesets/codesize.xml
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;pmd version=&quot;0.0.1&quot; timestamp=&quot;2009-12-19T22:17:18+01:00&quot;&gt;
-  &lt;file name=&quot;/projects/pdepend/PHP/Depend/DbusUI/ResultPrinter.php&quot;&gt;
-    &lt;violation beginline=&quot;67&quot;
-               endline=&quot;224&quot;
-               rule=&quot;TooManyMethods&quot;
-               ruleset=&quot;Code Size Rules&quot;
-               package=&quot;PHP_Depend\DbusUI&quot;
-               class=&quot;PHP_Depend_DbusUI_ResultPrinter&quot;
-               priority=&quot;3&quot;&gt;
-      This class has too many methods, consider refactoring it.
-    &lt;/violation&gt;
-  &lt;/file&gt;
-&lt;/pmd&gt;
+<p>Type phpmd analyze [options] [--] [&lt;paths&gt;...], i.e: :</p>
+<pre><code class="">~ $ phpmd analyze src/
 </code></pre>
-<p>You can pass a comma-separated string with list of file names
-or a directory names, containing PHP source code to PHPMD.</p>
+<p>If no ruleset is specified, PHPMD will look for a configuration file in the
+current directory. The following file names are detected automatically (in
+order of priority): <code>phpmd.yml</code>, <code>phpmd.yaml</code>, <code>phpmd.json</code>,
+<code>phpmd.xml</code>, <code>phpmd.php</code>, as well as their <code>.</code>-prefixed and
+<code>.dist</code>-suffixed variants (e.g. <code>.phpmd.yml</code> or <code>phpmd.yml.dist</code>).</p>
+<p>See the <a href="/documentation/creating-a-ruleset.html">creating a custom rule set</a>
+documentation for details on all supported configuration formats.</p>
+<a id="creating-a-configuration-file"></a>
+<h3>Creating a configuration file</h3>
+<p><code>phpmd init</code> asks a few questions about your project (paths to analyze,
+paths to exclude, whether to enable the result cache and which rule sets to
+use) and writes the answers to a <code>phpmd.yml</code>: :</p>
+<pre><code class="">~ $ phpmd init
+</code></pre>
+<p>Run it with <code>--no-interaction</code> to accept the suggested settings, and pass
+<code>--output</code> to write the file somewhere else.</p>
+<a id="migrating-a-configuration-file"></a>
+<h3>Migrating a configuration file</h3>
+<p><code>phpmd migrate</code> upgrades a configuration file written for PHPMD 2. It
+replaces renamed rule classes and threshold properties by their current names
+and converts the file to YAML: :</p>
+<pre><code class="">~ $ phpmd migrate phpmd.xml
+</code></pre>
+<p>Without a file argument the auto-detected configuration file is migrated. The
+original file is kept, so remove it once you have reviewed the result. The
+command supports these options:</p>
+<ul><li class="dash"><code>--format</code> - <code>yml</code> (the default) or <code>json</code>.</li>
+<li class="dash"><code>--output</code> - where to write the migrated file, by default next to the
+  original file with the extension of the chosen format.</li>
+<li class="dash"><code>--preserve-behavior</code> - lower the configured thresholds of rules that
+  reported values equal to the threshold in PHPMD 2 by one, so the same values
+  are still reported. See the
+  <a href="https://github.com/phpmd/phpmd/blob/master/UPGRADING.md">upgrade guide</a>.</li>
+<li class="dash"><code>--dry-run</code> - print the migrated configuration instead of writing it.</li>
+<li class="dash"><code>--force</code> - overwrite the output file if it already exists.</li>
+</ul>
+
+<p>If the output path is the original file itself, the original is first backed
+up with a <code>.bak</code> extension.</p>
+<p>You can pass file or directory names, separated by spaces, containing PHP
+source code to PHPMD.</p>
 <p>The PHPMD Phar distribution includes the rule set files inside
 its archive, even if the &quot;rulesets/codesize.xml&quot; parameter above looks
 like a filesystem reference.</p>
 <a id="command-line-options"></a>
 <h2>Command line options</h2>
-<ul><li class="dash">Notice that the default output is in XML, so you can redirect it to
-  a file and XSLT it or whatever</li>
+<ul><li class="dash">The default output format is <code>text</code>. You can change it with the <code>--format</code> option.</li>
 <li class="dash">You can also use shortened names to refer to the built-in rule sets,
   like this: ::
-    phpmd PHP/Depend/DbusUI/ xml codesize</li>
+    phpmd analyze --ruleset codesize src/</li>
 <li class="dash">The command line interface also accepts the following optional arguments:</li>
-<ul><li class="dash"><code>--verbose, -v, -vv, -vvv</code> - The output verbosity level. Will print more information
-    what is being processed or cached. Will be send to <code>STDERR</code> to not interfere
-    with report output. <code>text</code> output will also have under each error a link
-    to the documentation of the rule and format the location in a way that most
-    IDEs will convert into a link to open the file at the line of the error
-    when clicked.</li>
-<li class="dash"><code>--minimumpriority</code> <code>--min-priority</code> <code>--minimum-priority</code> - The rule priority threshold; rules with lower
-    priority than they will not be used.</li>
-<li class="dash"><code>--maximumpriority</code> <code>--max-priority</code> <code>--maximum-priority</code> - The rule priority threshold; rules with higher
-    priority than this will not be used.</li>
-<li class="dash"><code>--reportfile</code> <code>--report-file</code> - Sends the report output to the specified file,
-    instead of the default output target <code>STDOUT</code>.</li>
-<li class="dash"><code>--error-file</code> - Sends errors (other than reported violations) output to a file; defaults to STDERR,</li>
-<li class="dash"><code>--suffixes</code> - Comma-separated string of valid source code filename
-    extensions, e.g. php, phtml.</li>
-<li class="dash"><code>--exclude</code> - Comma-separated string of patterns that are used to ignore
-    directories. Use asterisks to exclude by pattern. For example <code>*src/foo/*.php</code> or <code>*src/foo/*</code></li>
-<li class="dash"><code>--strict</code> - Also report those nodes with a @SuppressWarnings annotation.</li>
-<li class="dash"><code>--not-strict</code> - Does not report those nodes with a @SuppressWarnings annotation.</li>
+<ul><li class="dash"><code>--verbose, -v, -vv, -vvv</code> - The output verbosity level. Everything
+    printed in addition to the report is sent to <code>STDERR</code> so that it does not
+    interfere with the report output.</li>
+<ul><li class="dash"><code>-v</code> makes the <code>text</code> output show under each error a link to the
+      documentation of the rule and format the location in a way that most
+      IDEs will convert into a link to open the file at the line of the error
+      when clicked.</li>
+<li class="dash"><code>-vv</code> also prints the effective configuration before the analysis
+      starts: the scanned paths, the exclude patterns, the file suffixes, the
+      thread count, the strict mode, the baseline file, the loaded rule sets
+      with their rule counts and the result cache status. The exit code is
+      printed at the end.</li>
+<li class="dash"><code>-vvv</code> additionally lists every argument and option the command
+      received, every loaded rule with its priority, and the result cache
+      decision for every file.</li>
+</ul>
+<li class="dash"><code>--minimum-priority</code> - The rule priority threshold; rules with lower
+    priority than this will not be used.
+    Can also be configured via <code>&lt;minimum-priority&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--maximum-priority</code> - The rule priority threshold; rules with higher
+    priority than this will not be used.
+    Can also be configured via <code>&lt;maximum-priority&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--reportfile-text</code>, <code>--reportfile-xml</code>, <code>--reportfile-html</code>, etc. - Sends the report output
+    to the specified file. Multiple report files in different formats can be written simultaneously.</li>
+<li class="dash"><code>--suffixes</code> - A valid source code filename extension, e.g. php or phtml.
+    Repeat the option for several extensions: <code>--suffixes php --suffixes phtml</code>.
+    Can also be configured via <code>&lt;suffixes&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--exclude</code> - A pattern that is used to ignore files and directories. Use asterisks to
+    exclude by pattern, for example <code>*src/foo/*.php</code> or <code>*src/foo/*</code>. Repeat the option for
+    several patterns: <code>--exclude vendor --exclude &#039;*Test.php&#039;</code>. The patterns are added to the
+    <code>&lt;exclude-pattern&gt;</code> entries of the rule sets and to the version control directories
+    (<code>.git</code>, <code>.svn</code>, <code>CVS</code>, <code>.bzr</code>, <code>.hg</code>, <code>SCCS</code>) which are always excluded.</li>
+<li class="dash"><code>--strict</code> - Also report those nodes with a <code>#[SuppressWarnings]</code> attribute.</li>
+<li class="dash"><code>--no-strict</code> - Does not report those nodes with a <code>#[SuppressWarnings]</code> attribute (default).</li>
 <li class="dash"><code>--ignore-errors-on-exit</code> - will exit with a zero code, even on error.</li>
 <li class="dash"><code>--ignore-violations-on-exit</code> - will exit with a zero code, even if any
     violations are found.</li>
 <li class="dash"><code>--cache</code> - will enable the result cache. Will default to <code>.phpmd.result-cache.php</code> in the
-    current working directory.</li>
+    current working directory.
+    Can also be configured via <code>&lt;cache&gt;</code> in the rule sets.</li>
 <li class="dash"><code>--cache-file</code> - in cooperation with <code>--cache</code> will override the default result cache file path of
-    <code>.phpmd.result-cache.php</code> to the given file path.</li>
+    <code>.phpmd.result-cache.php</code> to the given file path.
+    Can also be configured via <code>&lt;cache-file&gt;</code> in the rule sets.</li>
 <li class="dash"><code>--cache-strategy</code> - sets the caching strategy to determine if a file is still fresh. Either
-    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.</li>
+    `content` to base it on the file contents, or `timestamp` to base it on the file modified timestamp.
+    Can also be configured via <code>&lt;cache-strategy&gt;</code> in the rule sets.</li>
 <li class="dash"><code>--generate-baseline</code> - will generate a <code>phpmd.baseline.xml</code> for existing violations
     next to the ruleset definition file. The file paths of the violations will be relative to the current
     working directory.</li>
 <li class="dash"><code>--update-baseline</code> - will remove all violations from an existing <code>phpmd.baseline.xml</code>
-    that no longer exist. New violations will _<a href="">not</a> be added. The file path of the violations will be relative
-    to the current working directory.</li>
-<li class="dash"> <code>--baseline-file</code> - the filepath to a custom baseline xml file. If absent will
-    default to <code>phpmd.baseline.xml</code></li>
-<li class="dash"><code>--color</code> - enable color in output, for instance text renderer
-    will show rule name in yellow and error description in red.
+    that no longer exist. Violations that are not in the baseline are reported as usual and will
+    _<a href="">not</a> be added. The file path of the violations will be relative to the current working directory.</li>
+<li class="dash"><code>--baseline-file</code> - the filepath to a custom baseline xml file. If absent will
+    default to <code>phpmd.baseline.xml</code>
+    Can also be configured via <code>&lt;baseline-file&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--ansi</code> / <code>--no-ansi</code> - force or disable color in output, for instance the text renderer
+    will show rule name in yellow and error description in red. By default color is used when
+    the output is a terminal.</li>
+<li class="dash"><code>--xdebug</code> - will enable Xdebug for debugging PHP Mess Detector.</li>
+<li class="dash"><code>--bootstrap</code> - an optional PHP script to load before running the analysis.
+    Can also be configured via <code>&lt;bootstrap&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--input-file</code> - a file containing a list of source paths to analyze (one per line).</li>
+<li class="dash"><code>--progress</code> / <code>--no-progress</code> - show or hide the progress bar. The bar is written to
+    <code>STDERR</code> and shown by default unless the output is quiet. <code>--progress</code> forces it even
+    together with <code>--quiet</code> or <code>--silent</code>, so a script can hide the report and still watch
+    the analysis advance.</li>
+<li class="dash"><code>--threads</code> - the number of threads to use to parse the files. Defaults to the
+    number of CPU cores.
+    Can also be configured via <code>&lt;threads&gt;</code> in the rule sets.</li>
+<li class="dash"><code>--coverage</code> - Clover style CodeCoverage report, as produced by PHPUnit&#039;s --coverage-clover
+    option.
   An example command line: ::
-    phpmd PHP/Depend/DbusUI xml codesize --reportfile phpmd.xml --suffixes php,phtml</li>
+    phpmd analyze --reportfile-text report.txt --suffixes php --suffixes phtml src/</li>
 </ul>
 </ul>
 
 <a id="using-multiple-rule-sets"></a>
 <h4>Using multiple rule sets</h4>
 <p>PHPMD uses so called rule sets that configure/define a set of rules which will
-be applied against the source under test. The default distribution of PHPMD is
-already shipped with a few default sets, that can be used out-of-box. You can
-call PHPMD's cli tool with a set's name to apply this configuration: :</p>
-<pre><code class="">~ $ phpmd /path/to/source text codesize
+be applied against the source under test. If you have a <code>phpmd.yml</code> in your
+project root, it will be used automatically. You can also select a built-in
+rule set explicitly: :</p>
+<pre><code class="">~ $ phpmd analyze --ruleset codesize /path/to/source
 </code></pre>
-<p>But what if you would like to apply more than one rule set against your source?
-You can also pass a list of rule set names, separated by comma to PHPMD's cli
-tool: :</p>
-<pre><code class="">~ $ phpmd /path/to/source text codesize,unusedcode,naming
+<p>If you would like to apply more than one rule set against your source, you can
+pass the <code>--ruleset</code> option multiple times: :</p>
+<pre><code class="">~ $ phpmd analyze --ruleset codesize --ruleset unusedcode --ruleset naming /path/to/source
 </code></pre>
-<p>You can also mix custom <a href="/documentation/creating-a-ruleset.html">rule set files</a> with build-in rule sets: :</p>
-<pre><code class="">~ $ phpmd /path/to/source text codesize,/my/rules.xml
+<p>You can also mix custom <a href="/documentation/creating-a-ruleset.html">rule set files</a> with built-in rule sets: :</p>
+<pre><code class="">~ $ phpmd analyze --ruleset codesize --ruleset /my/rules.xml /path/to/source
 </code></pre>
-<p>That's it. With this behavior you can specify you own combination of rule sets
+<p>That&#039;s it. With this behavior you can specify you own combination of rule sets
 that will check the source code.</p>
 <a id="using-multiple-source-files-and-folders"></a>
 <h4>Using multiple source files and folders</h4>
 <p>PHPMD also allows you to specify multiple source directories in case you want
 to create one output for certain parts of your code :</p>
-<pre><code class="">~ $ phpmd /path/to/code,index.php,/another/place/with/code text codesize
+<pre><code class="">~ $ phpmd analyze /path/to/code index.php /another/place/with/code
 </code></pre>
-<p>Or use glob pattern: :</p>
-<pre><code class="">~ $ phpmd src/main/php/*/*/*{Renderer,Node}.php text my/rules.xml
+<p>Or use a glob pattern: :</p>
+<pre><code class="">~ $ phpmd analyze src/*/*{Renderer,Node}.php
 </code></pre>
 <a id="scan-input"></a>
 <h4>Scan input</h4>
 <p>PHPMD can also read the standard input `stdin`: :</p>
-<pre><code class="">~ $ cat src/MyService.php | phpmd - text my/rules.xml
+<pre><code class="">~ $ cat src/MyService.php | phpmd analyze -
 </code></pre>
 <p>So the PHP code to be scanned may be generated by an other program
 not necessarily to be store in file.</p>
 <a id="exit-codes"></a>
 <h2>Exit codes</h2>
-<p>PHPMD's command line tool currently defines four different exit codes.</p>
+<p>PHPMD&#039;s command line tool currently defines four different exit codes.</p>
 <ul><li class="dash"><em>0</em>, This exit code indicates that everything worked as expected. This means
-  there was no error/exception and PHPMD hasn't detected any rule violation
+  there was no error/exception and PHPMD hasn&#039;t detected any rule violation
   in the code under test.</li>
 <li class="dash"><em>1</em>, This exit code indicates that an exception occurred which has
   interrupted PHPMD during execution.</li>
@@ -169,26 +225,51 @@ not necessarily to be store in file.</p>
 <li class="dash"><em>json</em>, formats JSON report.</li>
 <li class="dash"><em>gitlab</em>, a format that GitLab CI understands.</li>
 <li class="dash"><em>github</em>, a format that GitHub Actions understands (see <a href="/documentation/ci-integration.html#github-actions">CI Integration</a>).</li>
+<li class="dash"><em>githubcheckruns</em>, JSON format for the <a href="https://docs.github.com/en/rest/checks/runs#create-a-check-run">GitHub Check Runs API</a>.</li>
+<li class="dash"><em>sarif</em>, the Static Analysis Results Interchange Format.</li>
+<li class="dash"><em>checkstyle</em>, language and tool agnostic XML format.</li>
 </ul>
 
+<p>The <code>xml</code> renderer writes a Java-PMD compatible report. Running it against
+the built-in <code>codesize</code> rule set:</p>
+<pre><code class="">~ $ phpmd analyze --format xml --ruleset codesize src/
+</code></pre>
+<p>prints a report similar to this:</p>
+<pre><code class="">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;pmd version=&quot;3.0.0&quot; tool=&quot;phpmd&quot; timestamp=&quot;2026-08-26T12:23:29+02:00&quot;&gt;
+  &lt;file name=&quot;/projects/example/src/DbusUI/ResultPrinter.php&quot;&gt;
+    &lt;violation beginline=&quot;67&quot;
+               endline=&quot;224&quot;
+               rule=&quot;TooManyMethods&quot;
+               ruleset=&quot;Code Size Rules&quot;
+               package=&quot;Example\DbusUI&quot;
+               externalInfoUrl=&quot;https://phpmd.org/rules/codesize.html#toomanymethods&quot;
+               class=&quot;ResultPrinter&quot;
+               priority=&quot;3&quot;&gt;
+      The class ResultPrinter has 31 non-getter- and setter-methods. Consider refactoring ResultPrinter to keep number of methods under 25.
+    &lt;/violation&gt;
+  &lt;/file&gt;
+&lt;/pmd&gt;
+</code></pre>
 <p>Some more formats can be obtained by conversion such as:</p>
 <p><em>junit</em> can be obtained using <a href="https://phpmd.org/junit.xslt">xsltproc` package on the Debian-based systems or `libxslt` on Alpine and CentOS. with this given `junit.xslt config file</a>:</p>
-<pre><code class="">~ $ phpmd src xml cleancode | xsltproc junit.xslt -
+<pre><code class="">~ $ phpmd analyze --format xml --ruleset cleancode src | xsltproc junit.xslt -
 </code></pre>
 <a id="baseline"></a>
 <h2>Baseline</h2>
 <p>For existing projects a violation baseline can be generated. All violations in this baseline will be ignored in further inspections.</p>
-<p>The recommended approach would be a <code>phpmd.xml</code> in the root of the project. To generate the phpmd.baseline.xml next to it:</p>
-<pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --generate-baseline
+<p>The recommended approach would be a rule set file (e.g. <code>phpmd.yml</code> or <code>phpmd.xml</code>) in the root of the project. To generate the phpmd.baseline.xml next to it:</p>
+<pre><code class="">~ $ phpmd analyze --generate-baseline /path/to/source
 </code></pre>
 <p>To specify a custom baseline filepath for export:</p>
-<pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml
+<pre><code class="">~ $ phpmd analyze --generate-baseline --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 </code></pre>
-<p>By default PHPMD will look next to <code>phpmd.xml</code> for <code>phpmd.baseline.xml</code>. To overwrite this behaviour:</p>
-<pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --baseline-file /path/to/source/phpmd.baseline.xml
+<p>By default PHPMD will look next to your rule set file for <code>phpmd.baseline.xml</code>. To overwrite this behaviour:</p>
+<pre><code class="">~ $ phpmd analyze --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 </code></pre>
-<p>To clean up an existing baseline file and <em>only remove</em> no longer existing violations:</p>
-<pre><code class="">~ $ phpmd /path/to/source text phpmd.xml --update-baseline
+<p>To clean up an existing baseline file and <em>only remove</em> no longer existing violations. Violations
+that are not in the baseline are still reported and make the command exit with a non-zero code:</p>
+<pre><code class="">~ $ phpmd analyze --update-baseline /path/to/source
 </code></pre>
 </div>
 
@@ -213,9 +294,9 @@ not necessarily to be store in file.</p>
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/index.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/documentation/index.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/index.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/documentation/index.rst">Edit</a>
 </div>
 
 <script>

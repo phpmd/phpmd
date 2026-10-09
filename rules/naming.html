@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -117,6 +117,18 @@ interface Fo {
 </code></pre>
 <p>This rule has the following properties:</p>
 <table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>minimum</td><td>3</td><td>Minimum length for a method or function name</td></tr><tr><td>exceptions</td><td></td><td>Comma-separated list of exceptions</td></tr></table>
+<a id="longmethodname"></a>
+<h2>LongMethodName</h2>
+<p>Since: PHPMD 3.0.0</p>
+<p>Detects when very long method names are used.</p>
+<p>Example: :</p>
+<pre><code class="">class LongMethod {
+    public function iAmWayTooLongNotToMixWithSomethingElse() { // Violation
+    }
+}
+</code></pre>
+<p>This rule has the following properties:</p>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>40</td><td>Maximum length for a method or function name</td></tr><tr><td>exceptions</td><td></td><td>Comma-separated list of exceptions</td></tr></table>
 <a id="constructorwithnameasenclosingclass"></a>
 <h2>ConstructorWithNameAsEnclosingClass</h2>
 <p>Since: PHPMD 0.2</p>
@@ -142,7 +154,7 @@ interface Fo {
 <a id="booleangetmethodname"></a>
 <h2>BooleanGetMethodName</h2>
 <p>Since: PHPMD 0.2</p>
-<p>Looks for methods named 'getX()' with 'boolean' as the return type. The convention is to name these methods 'isX()' or 'hasX()'.</p>
+<p>Looks for methods named &#039;getX()&#039; with &#039;boolean&#039; as the return type. The convention is to name these methods &#039;isX()&#039; or &#039;hasX()&#039;.</p>
 <p>Example: :</p>
 <pre><code class="">class Foo {
     /**
@@ -188,9 +200,9 @@ interface Fo {
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/rules/naming.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/rules/naming.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/rules/naming.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/rules/naming.rst">Edit</a>
 </div>
 
 <script>

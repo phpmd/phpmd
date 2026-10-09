@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -56,7 +56,7 @@
 <pre><code class="">class Foo {
     public function bar($param)  {
         if ($param === 42) {
-            eval('$param = 23;');
+            eval(&#039;$param = 23;&#039;);
         }
     }
 }
@@ -90,13 +90,13 @@
 <p>Since: PHPMD 0.2</p>
 <p>A class with an excessive number of children is an indicator for an unbalanced class hierarchy. You should consider to refactor this class hierarchy.</p>
 <p>This rule has the following properties:</p>
-<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>minimum</td><td>15</td><td>Maximum number of acceptable child classes.</td></tr></table>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>15</td><td>Maximum number of acceptable child classes.</td></tr></table>
 <a id="depthofinheritance"></a>
 <h2>DepthOfInheritance</h2>
 <p>Since: PHPMD 0.2</p>
 <p>A class with many parents is an indicator for an unbalanced and wrong class hierarchy. You should consider to refactor this class hierarchy.</p>
 <p>This rule has the following properties:</p>
-<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>minimum</td><td>6</td><td>Maximum number of acceptable parent classes.</td></tr></table>
+<table><tr><th>Name</th><th>Default Value</th><th>Description</th></tr><tr><td>maximum</td><td>6</td><td>Maximum number of acceptable parent classes.</td></tr></table>
 <a id="couplingbetweenobjects"></a>
 <h2>CouplingBetweenObjects</h2>
 <p>Since: PHPMD 1.1.0</p>
@@ -147,7 +147,7 @@
         foreach ($items as $i =&gt; $item) {
             // …
 
-            if ('qafoo' == $item) var_dump($i);
+            if (&#039;qafoo&#039; == $item) var_dump($i);
 
             // …
         }
@@ -159,7 +159,7 @@
 <a id="emptycatchblock"></a>
 <h2>EmptyCatchBlock</h2>
 <p>Since: PHPMD 2.7.0</p>
-<p>Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it's a sign that a developer saw an exception, didn't know what to do about it, and so used an empty catch to silence the problem.</p>
+<p>Usually empty try-catch is a bad idea because you are silently swallowing an error condition and then continuing execution. Occasionally this may be the right thing to do, but often it&#039;s a sign that a developer saw an exception, didn&#039;t know what to do about it, and so used an empty catch to silence the problem.</p>
 <p>Example: :</p>
 <pre><code class="">class Foo {
 
@@ -216,9 +216,9 @@ many bugs, especially when the loop manipulates an array, as count happens on ea
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/rules/design.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/rules/design.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/rules/design.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/rules/design.rst">Edit</a>
 </div>
 
 <script>

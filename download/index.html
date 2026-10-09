@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -40,12 +40,16 @@
 the following version agnostic link: :</p>
 <pre><code class="">~ $ wget -c https://phpmd.org/static/latest/phpmd.phar
 </code></pre>
-<p>The Phar files of <em>PHPMD</em> are signed with a public key associated to <code>pgp@phpmd.org.</code>.
-The <a href="">key(s) associated with this E-Mail address</a> can be queried at <a href="">keys.openpgp.org</a>.</p>
+<p>If you are not ready to upgrade to PHPMD 3 yet (see the <a href="https://github.com/phpmd/phpmd/blob/master/UPGRADING.md">upgrade guide</a>),
+the latest PHPMD 2 release is available through a similar link: :</p>
+<pre><code class="">~ $ wget -c https://phpmd.org/static/latest-v2/phpmd.phar
+</code></pre>
+<p>The Phar files of <em>PHPMD</em> are signed with a public key associated to <code>pgp@phpmd.org</code>.
+The <a href="https://keys.openpgp.org/search?q=pgp%40phpmd.org">key(s) associated with this E-Mail address</a> can be queried at <a href="https://keys.openpgp.org/">keys.openpgp.org</a>.</p>
 <a id="installing-using-phive"></a>
 <h2>Installing using PHIVE</h2>
-<p>Alternatively, <strong>PHPMD</strong> can be installed through <a href="">PHAR Installation and Verification Environment (PHIVE)</a>.
-After <a href="">installing PHIVE</a>,<strong>PHPMD</strong> can be installed using the following command: :</p>
+<p>Alternatively, <strong>PHPMD</strong> can be installed through <a href="https://phar.io">PHAR Installation and Verification Environment (PHIVE)</a>.
+After <a href="https://phar.io/#Install">installing PHIVE</a>, <strong>PHPMD</strong> can be installed using the following command: :</p>
 <pre><code class="">php phive.phar install phpmd
 Phive 0.15.2 - Copyright (C) 2015-2023 by Arne Blankerts, Sebastian Heuer and Contributors
 Fetching repository list
@@ -60,9 +64,9 @@ Successfully downloaded key.
         Created: 2023-09-15
 
 Import this key? [y|N] y
-  Linking Y:\\.phive\phars/<a href="https://github.com/phpmd/phpmd/releases/tag/2.14.1.phar" title="phpmd-2.14.1.phar release">phpmd-2.14.1.phar</a> to /path/to/your/project/tools/phpmd.bat
+  Linking Y:\\.phive\phars/<a href="https://github.com/phpmd/phpmd/releases/tag/3.0.0.phar" title="phpmd-3.0.0.phar release">phpmd-3.0.0.phar</a> to /path/to/your/project/tools/phpmd.bat
 </code></pre>
-<p>There are alternative <a href="">commands for PHIVE</a>.</p>
+<p>There are alternative <a href="https://phar.io/#Usage">commands for PHIVE</a>.</p>
 <a id="installing-via-composer"></a>
 <h2>Installing via Composer</h2>
 <p>Create a <code>composer.json</code> file in your project directory and add <em>PHPMD</em>
@@ -73,7 +77,7 @@ as a required dependency: :</p>
     }
 }
 </code></pre>
-<p>Then install Composer in your project (or <a href="">download the composer.phar</a>
+<p>Then install Composer in your project (or <a href="http://getcomposer.org/composer.phar">download the composer.phar</a>
 directly): :</p>
 <pre><code class="">~ $ curl -s http://getcomposer.org/installer | php
 </code></pre>
@@ -82,15 +86,15 @@ directly): :</p>
 </code></pre>
 <a id="from-the-github-repository"></a>
 <h2>From the github repository</h2>
-<p>If you like to participate on the social coding platform <a href="https://github.com/phpmd/phpmd/blob/master/src/main/php/PHPMD/Rule.php">GitHub</a>,
-you can use PHPMD's mirror to fork and contribute to PHPMD. :</p>
+<p>If you like to participate on the social coding platform <a href="https://github.com/phpmd/phpmd">GitHub</a>,
+you can use PHPMD&#039;s mirror to fork and contribute to PHPMD. :</p>
 <pre><code class="">~ $ git clone git://github.com/phpmd/phpmd.git
 </code></pre>
 <p>Then <code>cd</code> into the checkout directory initialize the referenced sub modules: :</p>
 <pre><code class="">~ $ cd phpmd
 ~/phpmd $ git submodule update --init
 </code></pre>
-<p>Then install Composer in your project (or <a href="">download the composer.phar</a>
+<p>Then install Composer in your project (or <a href="http://getcomposer.org/composer.phar">download the composer.phar</a>
 directly): :</p>
 <pre><code class="">~ $ curl -s http://getcomposer.org/installer | php
 </code></pre>
@@ -99,10 +103,9 @@ directly): :</p>
 </code></pre>
 <a id="requirements"></a>
 <h2>Requirements</h2>
-<p>PHPMD itself is considered as an early development version at its
-current state. It relies on the following software products:</p>
-<ul><li class="dash"><a href="">PHP_Depend &gt;= 2.0.0</a></li>
-<li class="dash"><a href="https://keys.openpgp.org/search?q=pgp%40phpmd.org">PHP &gt;= 5.3.9</a></li>
+<p>PHPMD relies on the following software products:</p>
+<ul><li class="dash"><a href="http://pdepend.org">PDepend &gt;= 3.0.0</a></li>
+<li class="dash"><a href="http://php.net/downloads.php">PHP &gt;= 8.1</a></li>
 </ul>
 
 </div>
@@ -128,9 +131,9 @@ current state. It relies on the following software products:</p>
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/download/index.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/download/index.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/download/index.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/download/index.rst">Edit</a>
 </div>
 
 <script>

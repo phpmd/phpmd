@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP environment
         uses: shivammathur/setup-php@v2
@@ -58,9 +58,30 @@ jobs:
           tools: phpmd
 
       - name: Run PHPMD
-        run: phpmd . github phpmd.ruleset.xml --exclude 'tests/*,vendor/*'
+        run: phpmd analyze --format github .
 </code></pre>
-<p>This assumes that you have a <a href="/documentation/creating-a-ruleset.html">custom rule set</a> in the file <code>phpmd.ruleset.xml</code>. Alternatively, you can of course list the rule sets manually.</p>
+<p>This assumes that you have a <a href="/documentation/creating-a-ruleset.html">custom rule set</a> such as <code>phpmd.yml</code> in the root of your repository. PHPMD will detect it automatically. Exclude patterns (e.g. for <code>vendor/</code>) can be configured directly in the rule set file.</p>
+<a id="auto-detection"></a>
+<h3>Auto-detection</h3>
+<p>When PHPMD detects it is running inside GitHub Actions (via the <code>GITHUB_ACTIONS</code> environment variable), it will automatically add the <code>github</code> renderer output to stderr. This means you get inline annotations on your pull requests without needing to specify the <code>github</code> format explicitly.</p>
+<p>For example, this workflow uses <code>text</code> as the primary format but still gets GitHub annotations automatically: :</p>
+<pre><code class="">- name: Run PHPMD
+  run: phpmd analyze --format text .
+</code></pre>
+<a id="github-check-runs"></a>
+<h3>GitHub Check Runs</h3>
+<p>For richer integration with the GitHub Checks API, PHPMD provides the <code>githubcheckruns</code> renderer. This outputs JSON structured for the <a href="https://docs.github.com/en/rest/checks/runs#create-a-check-run">Check Runs API</a>, which allows you to create proper check runs with summaries, file-level annotations, and priority-based severity levels.</p>
+<p>Usage: :</p>
+<pre><code class="">phpmd analyze --format githubcheckruns . &gt; checkrun.json
+</code></pre>
+<p>The JSON output includes:</p>
+<ul><li class="dash">A title and summary of the analysis</li>
+<li class="dash">Annotations grouped by file with start/end lines</li>
+<li class="dash">Severity levels mapped from PHPMD rule priorities (1=failure, 2-3=warning, 4-5=notice)</li>
+<li class="dash">Detailed rule metadata (rule set, external info URL, priority)</li>
+</ul>
+
+<p>This output can then be used with the GitHub API or third-party tools to create Check Runs on your repository.</p>
 <a id="gitlab-code-quality-reporting"></a>
 <h2>GitLab Code Quality Reporting</h2>
 <p>GitLab Code Quality reporting is supported out of the box with its own PHPMD renderer called <code>gitlab</code>. You can read the GitLab docs about this topic <a href="https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html">here</a>.</p>
@@ -69,7 +90,7 @@ jobs:
     image: ubuntu-latest
     stage: quality
     script:
-      - phpmd . gitlab phpmd.ruleset.xml &gt; phpmd-report.json
+      - phpmd analyze --format gitlab . &gt; phpmd-report.json
     artifacts:
       reports:
         codequality: phpmd-report.json
@@ -97,9 +118,9 @@ jobs:
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/ci-integration.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/documentation/ci-integration.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/ci-integration.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/documentation/ci-integration.rst">Edit</a>
 </div>
 
 <script>

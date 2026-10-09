@@ -10,13 +10,13 @@
     <meta name="keywords" content="PHPMD, PMD, Project Mess Detection, Design, Maintenance, Quality Assurence, Violations, Reporting" />
     <meta name="author" content="Manuel Pichler" />
     <meta name="language" content="en" />
-    <meta name="date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="robots" content="all" />
 
     <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
     <meta name="DC.title" content="About" />
     <meta name="DC.creator" content="Manuel Pichler" />
-    <meta name="DC.date" content="Sun, 02 Aug 2026 10:30:16 +0000" />
+    <meta name="DC.date" content="Fri, 09 Oct 2026 21:08:31 +0000" />
     <meta name="DC.rights" content="BSD 3-Clause" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -34,63 +34,38 @@
     <hr />
 <a id="phpmd-suppressing-warnings"></a>
 <h2>PHPMD Suppressing Warnings</h2>
-<p>You can use doc comment annotations to exclude methods or classes
-from PHPMD or to suppress special rules for some software artifacts. :</p>
-<pre><code class="">/**
- * This will suppress all the PMD warnings in
- * this class.
- *
- * @SuppressWarnings(PHPMD)
- */
+<p>You can use PHP attributes to exclude methods or classes from PHPMD or to
+suppress specific rules for certain code elements.</p>
+<p>The <code>#[SuppressWarnings]</code> attribute without arguments will suppress all
+PHPMD warnings for the annotated class, method, or function.</p>
+<pre><code class="php">use PHPMD\Attribute\SuppressWarnings;
+
+#[SuppressWarnings]
 class Bar {
-    function  foo() {
+    function foo() {
         $baz = 23;
     }
 }
 </code></pre>
-<p>Or you can suppress one rule with an annotation like this: :</p>
-<pre><code class="">/**
- *
- */
+<p>You can also suppress a single rule by passing the rule class as argument.</p>
+<pre><code class="php">use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\UnusedLocalVariable;
+
 class Bar {
-    /**
-     * This will suppress UnusedLocalVariable
-     * warnings in this method
-     *
-     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-     */
+    #[SuppressWarnings(UnusedLocalVariable::class)]
     public function foo() {
         $baz = 42;
     }
 }
 </code></pre>
-<p>The <code>@SuppressWarnings</code> annotation of PHPMD also supports some
-wildcard exclusion, so that you can suppress several warnings with
-a single annotation. :</p>
-<pre><code class="">/**
- * Suppress all rules containing &quot;unused&quot; in this
- * class
- *
- * @SuppressWarnings(&quot;unused&quot;)
- */
-class Bar {
-    private $unusedPrivateField = 42;
-    public function foo($unusedFormalParameter = 23)
-    {
-        $unusedLocalVariable = 17;
-    }
-    private function unusedPrivateMethod() {
-    }
-}
-</code></pre>
-<p>A doc comment can contain multiple <code>@SuppressWarnings</code> annotations,
-so that you can exclude multiple rules by name. :</p>
-<pre><code class="">/**
- * Suppress all warnings from these two rules.
- *
- * @SuppressWarnings(PHPMD.LongVariable)
- * @SuppressWarnings(PHPMD.UnusedLocalVariable)
- */
+<p>The attribute is repeatable, so you can suppress multiple rules on the same
+element.</p>
+<pre><code class="php">use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Naming\LongVariable;
+use PHPMD\Rule\UnusedLocalVariable;
+
+#[SuppressWarnings(LongVariable::class)]
+#[SuppressWarnings(UnusedLocalVariable::class)]
 class Bar {
     public function foo($thisIsALongAndUnusedVariable)
     {
@@ -98,6 +73,28 @@ class Bar {
     }
 }
 </code></pre>
+<a id="unused-suppressions"></a>
+<h2>Unused suppressions</h2>
+<p>A suppression is easily forgotten once the code it was added for has been
+fixed. The <a href="../rules/unusedcode.html#unusedsuppression">UnusedSuppression</a> rule reports every <code>#[SuppressWarnings]</code>
+attribute that no longer suppresses anything, including suppressions of rules
+that are not part of the analysis. So run it with your full rule set.</p>
+<p>To keep a suppression that you know is unused, suppress the rule for it.</p>
+<pre><code class="php">use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\UnusedLocalVariable;
+use PHPMD\Rule\UnusedSuppression;
+
+class Bar {
+    #[SuppressWarnings(UnusedLocalVariable::class)]
+    #[SuppressWarnings(UnusedSuppression::class)]
+    public function foo() {
+    }
+}
+</code></pre>
+<div class="note"><p>The older <code>@SuppressWarnings</code> doc comment annotations from PHPMD 2.x are
+deprecated, but still supported for backward compatibility. They are not
+reported by the <code>UnusedSuppression</code> rule.</p>
+</div>
 </div>
 
 <div id="navigation">
@@ -121,9 +118,9 @@ class Bar {
 </div>
 
 <div id="formats">
-        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/src/site/rst/documentation/suppress-warnings.rst">Source</a>
+        <a href="https://raw.githubusercontent.com/phpmd/phpmd/master/public/rst/documentation/suppress-warnings.rst">Source</a>
     |
-    <a href="https://github.com/phpmd/phpmd/edit/master/src/site/rst/documentation/suppress-warnings.rst">Edit</a>
+    <a href="https://github.com/phpmd/phpmd/edit/master/public/rst/documentation/suppress-warnings.rst">Edit</a>
 </div>
 
 <script>

@@ -2,70 +2,82 @@
 PHPMD Suppressing Warnings
 ==========================
 
-You can use doc comment annotations to exclude methods or classes
-from PHPMD or to suppress special rules for some software artifacts. ::
+You can use PHP attributes to exclude methods or classes from PHPMD or to
+suppress specific rules for certain code elements.
 
-  /**
-   * This will suppress all the PMD warnings in
-   * this class.
-   *
-   * @SuppressWarnings(PHPMD)
-   */
+The ``#[SuppressWarnings]`` attribute without arguments will suppress all
+PHPMD warnings for the annotated class, method, or function.
+
+.. code-block:: php
+
+  use PHPMD\Attribute\SuppressWarnings;
+
+  #[SuppressWarnings]
   class Bar {
-      function  foo() {
+      function foo() {
           $baz = 23;
       }
   }
 
-Or you can suppress one rule with an annotation like this: ::
+You can also suppress a single rule by passing the rule class as argument.
 
-  /**
-   *
-   */
+.. code-block:: php
+
+  use PHPMD\Attribute\SuppressWarnings;
+  use PHPMD\Rule\UnusedLocalVariable;
+
   class Bar {
-      /**
-       * This will suppress UnusedLocalVariable
-       * warnings in this method
-       *
-       * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-       */
+      #[SuppressWarnings(UnusedLocalVariable::class)]
       public function foo() {
           $baz = 42;
       }
   }
 
-The ``@SuppressWarnings`` annotation of PHPMD also supports some
-wildcard exclusion, so that you can suppress several warnings with
-a single annotation. ::
+The attribute is repeatable, so you can suppress multiple rules on the same
+element.
 
-  /**
-   * Suppress all rules containing "unused" in this
-   * class
-   *
-   * @SuppressWarnings("unused")
-   */
-  class Bar {
-      private $unusedPrivateField = 42;
-      public function foo($unusedFormalParameter = 23)
-      {
-          $unusedLocalVariable = 17;
-      }
-      private function unusedPrivateMethod() {
-      }
-  }
+.. code-block:: php
 
-A doc comment can contain multiple ``@SuppressWarnings`` annotations,
-so that you can exclude multiple rules by name. ::
+  use PHPMD\Attribute\SuppressWarnings;
+  use PHPMD\Rule\Naming\LongVariable;
+  use PHPMD\Rule\UnusedLocalVariable;
 
-  /**
-   * Suppress all warnings from these two rules.
-   *
-   * @SuppressWarnings(PHPMD.LongVariable)
-   * @SuppressWarnings(PHPMD.UnusedLocalVariable)
-   */
+  #[SuppressWarnings(LongVariable::class)]
+  #[SuppressWarnings(UnusedLocalVariable::class)]
   class Bar {
       public function foo($thisIsALongAndUnusedVariable)
       {
 
       }
   }
+
+Unused suppressions
+===================
+
+A suppression is easily forgotten once the code it was added for has been
+fixed. The `UnusedSuppression`__ rule reports every ``#[SuppressWarnings]``
+attribute that no longer suppresses anything, including suppressions of rules
+that are not part of the analysis. So run it with your full rule set.
+
+__ ../rules/unusedcode.html#unusedsuppression
+
+To keep a suppression that you know is unused, suppress the rule for it.
+
+.. code-block:: php
+
+  use PHPMD\Attribute\SuppressWarnings;
+  use PHPMD\Rule\UnusedLocalVariable;
+  use PHPMD\Rule\UnusedSuppression;
+
+  class Bar {
+      #[SuppressWarnings(UnusedLocalVariable::class)]
+      #[SuppressWarnings(UnusedSuppression::class)]
+      public function foo() {
+      }
+  }
+
+.. note::
+
+   The older ``@SuppressWarnings`` doc comment annotations from PHPMD 2.x are
+   deprecated, but still supported for backward compatibility. They are not
+   reported by the ``UnusedSuppression`` rule.

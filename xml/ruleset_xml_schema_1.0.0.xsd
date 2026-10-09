@@ -9,8 +9,19 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="description" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="format" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="cache-file" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="cache-strategy" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="baseline-file" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="bootstrap" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="cache" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="minimum-priority" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="maximum-priority" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="threads" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="paths" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element ref="exclude-pattern" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element ref="include-pattern" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="suffixes" minOccurs="0" maxOccurs="unbounded"/>
                 <xs:element ref="rule" minOccurs="1" maxOccurs="unbounded"/>
                 <xs:element ref="php-includepath" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
