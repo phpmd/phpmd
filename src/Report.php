@@ -127,14 +127,12 @@ class Report
      */
     public function getBaselinedRuleViolations(): ArrayIterator
     {
-        $violations = $this->baselinedViolations;
-        usort($violations, static function (RuleViolation $left, RuleViolation $right): int {
-            $fileOrder = ($left->getFileName() ?? '') <=> ($right->getFileName() ?? '');
+        $report = new self();
+        foreach ($this->baselinedViolations as $violation) {
+            $report->addRuleViolation($violation);
+        }
 
-            return $fileOrder ?: ($left->getBeginLine() <=> $right->getBeginLine());
-        });
-
-        return new ArrayIterator($violations);
+        return $report->getRuleViolations();
     }
 
     /**
