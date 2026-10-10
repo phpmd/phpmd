@@ -240,6 +240,39 @@ class ReportTest extends AbstractTestCase
         static::assertFalse($report->isEmpty());
     }
 
+    public function testBaselinedNumericFileNamesFollowRegularReportBuckets(): void
+    {
+        $paddedLater = $this->getRuleViolationMock('01', 10, 10);
+        $paddedEarlier = $this->getRuleViolationMock('01', 1, 1);
+        $numericEarlier = $this->getRuleViolationMock('1', 0, 0);
+        $numericLater = $this->getRuleViolationMock('1', 2, 2);
+        $baseline = new BaselineSet();
+        foreach ([$paddedLater, $numericEarlier] as $violation) {
+            $baseline->addEntry(new ViolationBaseline(
+                $violation->getRule()::class,
+                (string) $violation->getFileName(),
+                null
+            ));
+        }
+        $orders = [
+            [$paddedLater, $numericEarlier, $paddedEarlier, $numericLater],
+            [$numericLater, $paddedEarlier, $numericEarlier, $paddedLater],
+        ];
+        foreach ($orders as $order) {
+            $regular = new Report();
+            $suppressed = new Report(new BaselineValidator($baseline));
+            foreach ($order as $violation) {
+                $regular->addRuleViolation($violation);
+                $suppressed->addRuleViolation($violation);
+            }
+
+            static::assertSame(
+                iterator_to_array($regular->getRuleViolations()),
+                iterator_to_array($suppressed->getBaselinedRuleViolations())
+            );
+        }
+    }
+
     public function testBaselinedEqualLocationsKeepInsertionOrderAndDuplicates(): void
     {
         $first = $this->getRuleViolationMock('same.php', 4, 9, new Rule\Naming\ShortVariable());
