@@ -295,6 +295,9 @@ By default PHPMD will look next to your rule set file for ``phpmd.baseline.xml``
 
   ~ $ phpmd analyze --baseline-file /path/to/source/phpmd.baseline.xml /path/to/source
 
+Baseline generation and updates order violations by file path, then by source line number.
+Violations at the same location retain their report order.
+
 To clean up an existing baseline file and *only remove* no longer existing violations. Violations
 that are not in the baseline are still reported and make the command exit with a non-zero code::
 
