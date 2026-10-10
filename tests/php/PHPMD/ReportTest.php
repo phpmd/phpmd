@@ -216,6 +216,62 @@ class ReportTest extends AbstractTestCase
         static::assertFalse($report->isEmpty());
     }
 
+    public function testBaselinedViolationsFollowFileAndNumericLineOrder(): void
+    {
+        $a10 = $this->getRuleViolationMock('a.php', 10, 10);
+        $a2 = $this->getRuleViolationMock('a.php', 2, 2);
+        $b1 = $this->getRuleViolationMock('b.php', 1, 1);
+        $regular = $this->getRuleViolationMock('other.php', 1, 1);
+        $baseline = new BaselineSet();
+        foreach ([$a10, $b1] as $violation) {
+            $baseline->addEntry(new ViolationBaseline($violation->getRule()::class, (string) $violation->getFileName(), null));
+        }
+        $report = new Report(new BaselineValidator($baseline));
+        foreach ([$b1, $a10, $regular, $a2] as $violation) {
+            $report->addRuleViolation($violation);
+        }
+
+        static::assertSame([$a2, $a10, $b1], iterator_to_array($report->getBaselinedRuleViolations()));
+        static::assertSame([$regular], iterator_to_array($report->getRuleViolations()));
+        static::assertFalse($report->isEmpty());
+    }
+
+    public function testBaselinedEqualLocationsKeepInsertionOrderAndDuplicates(): void
+    {
+        $first = $this->getRuleViolationMock('same.php', 4, 9, new Rule\Naming\ShortVariable());
+        $second = $this->getRuleViolationMock('same.php', 4, 5, new Rule\Design\TooManyFields());
+        $baseline = new BaselineSet();
+        foreach ([$first, $second] as $violation) {
+            $baseline->addEntry(new ViolationBaseline($violation->getRule()::class, 'same.php', null));
+        }
+        $report = new Report(new BaselineValidator($baseline));
+        foreach ([$first, $second, $first] as $violation) {
+            $report->addRuleViolation($violation);
+        }
+
+        static::assertSame([$first, $second, $first], iterator_to_array($report->getBaselinedRuleViolations()));
+        static::assertCount(0, $report->getRuleViolations());
+        static::assertTrue($report->isEmpty());
+    }
+
+    public function testBaselinedIteratorsRemainIndependentOfLaterRetrievalAndAddition(): void
+    {
+        $later = $this->getRuleViolationMock('same.php', 10, 10);
+        $earlier = $this->getRuleViolationMock('same.php', 2, 2);
+        $baseline = new BaselineSet();
+        $baseline->addEntry(new ViolationBaseline($later->getRule()::class, 'same.php', null));
+        $report = new Report(new BaselineValidator($baseline));
+        $report->addRuleViolation($later);
+        $before = $report->getBaselinedRuleViolations();
+        $report->addRuleViolation($earlier);
+        $after = $report->getBaselinedRuleViolations();
+
+        static::assertSame([$later], iterator_to_array($before));
+        static::assertSame([$earlier, $later], iterator_to_array($after));
+        $after->offsetUnset(0);
+        static::assertSame([$earlier, $later], iterator_to_array($report->getBaselinedRuleViolations()));
+    }
+
     public function testReportWithoutBaselineHasNoBaselinedViolations(): void
     {
         $report = new Report();
