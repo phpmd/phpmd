@@ -128,8 +128,11 @@ class Report
     public function getBaselinedRuleViolations(): ArrayIterator
     {
         $violations = $this->baselinedViolations;
-        usort($violations, static fn(RuleViolation $left, RuleViolation $right): int => (($left->getFileName() ?? '') <=> ($right->getFileName() ?? ''))
-                ?: ($left->getBeginLine() <=> $right->getBeginLine()));
+        usort($violations, static function (RuleViolation $left, RuleViolation $right): int {
+            $fileOrder = ($left->getFileName() ?? '') <=> ($right->getFileName() ?? '');
+
+            return $fileOrder ?: ($left->getBeginLine() <=> $right->getBeginLine());
+        });
 
         return new ArrayIterator($violations);
     }

@@ -224,7 +224,11 @@ class ReportTest extends AbstractTestCase
         $regular = $this->getRuleViolationMock('other.php', 1, 1);
         $baseline = new BaselineSet();
         foreach ([$a10, $b1] as $violation) {
-            $baseline->addEntry(new ViolationBaseline($violation->getRule()::class, (string) $violation->getFileName(), null));
+            $baseline->addEntry(new ViolationBaseline(
+                $violation->getRule()::class,
+                (string) $violation->getFileName(),
+                null
+            ));
         }
         $report = new Report(new BaselineValidator($baseline));
         foreach ([$b1, $a10, $regular, $a2] as $violation) {
