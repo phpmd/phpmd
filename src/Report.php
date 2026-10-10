@@ -127,7 +127,12 @@ class Report
      */
     public function getBaselinedRuleViolations(): ArrayIterator
     {
-        return new ArrayIterator($this->baselinedViolations);
+        $report = new self();
+        foreach ($this->baselinedViolations as $violation) {
+            $report->addRuleViolation($violation);
+        }
+
+        return $report->getRuleViolations();
     }
 
     /**
