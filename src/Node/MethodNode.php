@@ -84,6 +84,7 @@ class MethodNode extends AbstractCallableNode
      * instance.
      *
      * @throws RuntimeException
+     * @deprecated 4.0.0 Suppressions are applied after the rules have run, rules no longer need to check them.
      */
     public function hasSuppressWarningsFor(Rule $rule): bool
     {

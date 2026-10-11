@@ -223,6 +223,8 @@ abstract class AbstractRule implements Rule
 
     /**
      * Returns the violation report for this rule.
+     *
+     * @deprecated 4.0.0 Report violations with addViolation(), or keep a reference to the report passed to setReport().
      */
     public function getReport(): Report
     {

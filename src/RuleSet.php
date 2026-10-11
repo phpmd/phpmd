@@ -132,6 +132,9 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns the description text for this rule-set instance.
+     *
+     * @api
+     * @deprecated 4.0.0 PHPMD does not use the rule-set description.
      */
     public function getDescription(): string
     {
@@ -168,6 +171,9 @@ class RuleSet implements IteratorAggregate
 
     /**
      * Returns the violation report used by the rule-set.
+     *
+     * @api
+     * @deprecated 4.0.0 Keep a reference to the report passed to setReport() instead.
      */
     public function getReport(): Report
     {

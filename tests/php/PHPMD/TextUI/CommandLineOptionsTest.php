@@ -125,7 +125,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $opts = new CommandLineOptions($args);
 
         static::assertSame(['src/FooService.php', 'src/BarService.php'], $opts->getInputPaths());
-        static::assertSame('text', $opts->getReportFormat());
+        static::assertInstanceOf(TextRenderer::class, $opts->createRenderer(new NullOutput()));
         static::assertSame(['design'], $opts->getRuleSets());
     }
 
@@ -139,7 +139,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = $this->createInput(['paths' => [__FILE__], '--format' => 'text', '--ruleset' => ['design']]);
         $opts = new CommandLineOptions($args);
 
-        static::assertSame('text', $opts->getReportFormat());
+        static::assertInstanceOf(TextRenderer::class, $opts->createRenderer(new NullOutput()));
     }
 
     /**
@@ -164,14 +164,14 @@ class CommandLineOptionsTest extends AbstractTestCase
         $options = new CommandLineOptions($args);
 
         static::assertSame(['design'], $options->getRuleSets());
-        static::assertSame('sarif', $options->getReportFormat());
+        static::assertInstanceOf(SARIFRenderer::class, $options->createRenderer(new NullOutput()));
         static::assertSame(['app'], $options->getInputPaths());
 
         $args = $this->createInput(['paths' => ['app']]);
         $options = new CommandLineOptions($args);
 
         static::assertSame(['cleancode', 'codesize', 'controversial', 'design', 'naming', 'unusedcode'], $options->getRuleSets());
-        static::assertSame('text', $options->getReportFormat());
+        static::assertInstanceOf(TextRenderer::class, $options->createRenderer(new NullOutput()));
         static::assertSame(['app'], $options->getInputPaths());
     }
 
@@ -202,7 +202,7 @@ class CommandLineOptionsTest extends AbstractTestCase
         $args = $this->createInput(['paths' => ['foo.php'], '--format' => 'text', '--ruleset' => ['design'], '--input-file' => $uri]);
         $opts = new CommandLineOptions($args);
 
-        static::assertSame('text', $opts->getReportFormat());
+        static::assertInstanceOf(TextRenderer::class, $opts->createRenderer(new NullOutput()));
     }
 
     /**
@@ -578,16 +578,26 @@ class CommandLineOptionsTest extends AbstractTestCase
 
     public function testCliOptionExtraLineInExcerptShouldBeWithNumber(): void
     {
-        $args = $this->createInput(['paths' => [__FILE__], '--format' => 'text', '--ruleset' => ['codesize'], '--extra-line-in-excerpt' => '5']);
+        $args = $this->createInput(['paths' => [__FILE__], '--format' => 'html', '--ruleset' => ['codesize'], '--extra-line-in-excerpt' => '5']);
         $opts = new CommandLineOptions($args);
-        static::assertSame(5, $opts->extraLineInExcerpt());
+
+        $renderer = $opts->createRenderer(new NullOutput());
+
+        $extraLineInExcerptExtractor = new ReflectionProperty(HTMLRenderer::class, 'extraLineInExcerpt');
+
+        static::assertSame(5, $extraLineInExcerptExtractor->getValue($renderer));
     }
 
     public function testJetbrainsDefaultsToNull(): void
     {
-        $args = $this->createInput(['paths' => [__FILE__], '--format' => 'text', '--ruleset' => ['codesize']]);
+        $args = $this->createInput(['paths' => [__FILE__], '--format' => 'html', '--ruleset' => ['codesize']]);
         $opts = new CommandLineOptions($args);
-        static::assertNull($opts->jetbrains());
+
+        $renderer = $opts->createRenderer(new NullOutput());
+
+        $jetbrainsExtractor = new ReflectionProperty(HTMLRenderer::class, 'jetbrains');
+
+        static::assertNull($jetbrainsExtractor->getValue($renderer));
     }
 
     public function testCliOptionJetbrains(): void
@@ -599,7 +609,6 @@ class CommandLineOptionsTest extends AbstractTestCase
             '--jetbrains' => 'my-project',
         ]);
         $opts = new CommandLineOptions($args);
-        static::assertSame('my-project', $opts->jetbrains());
 
         $renderer = $opts->createRenderer(new NullOutput());
 

@@ -1,3 +1,23 @@
+phpmd-3.1.0 (unreleased)
+========================
+
+Fixed:
+
+- Fixed: `--extra-line-in-excerpt` was ignored, the html report always showed 2 extra lines around a violation.
+
+Deprecated:
+
+- `PHPMD\AbstractNode::hasSuppressWarningsFor()` and its implementations. Suppressions are applied after the
+  rules have run, rules no longer need to check them.
+- `PHPMD\Rule::getReport()`, `PHPMD\AbstractRule::getReport()` and `PHPMD\RuleSet::getReport()`, keep a reference
+  to the report passed to `setReport()` instead.
+- `PHPMD\RuleSet::getDescription()`, PHPMD does not use the rule set description.
+- `PHPMD\Node\AbstractTypeNode::getConstantCount()`, use `count($node->getConstants())` instead.
+
+Internal:
+
+- Added shipmonk/dead-code-detector to the PHPStan analysis and removed the dead code it reported.
+
 phpmd-3.0.0 (2026/10/04)
 ========================
 

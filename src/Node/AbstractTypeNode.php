@@ -65,6 +65,9 @@ abstract class AbstractTypeNode extends AbstractNode
 
     /**
      * Returns the number of constants declared in this type.
+     *
+     * @api
+     * @deprecated 4.0.0 Use count($node->getConstants()) instead.
      */
     public function getConstantCount(): int
     {

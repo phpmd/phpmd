@@ -36,9 +36,4 @@ final class InternalRuleSet
             glob(__DIR__ . '/../rulesets/*.xml') ?: [],
         );
     }
-
-    public static function getNamesConcatenated(): string
-    {
-        return implode(',', self::getNames());
-    }
 }
