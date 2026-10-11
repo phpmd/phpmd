@@ -614,7 +614,7 @@ class RuleSetFactory
         try {
             $rule = $ruleSet->getRuleByName($ruleName);
             $this->parseRuleProperties($rule, $ruleNode);
-        } catch (RuleByNameNotFoundException $exception) {
+        } catch (RuleByNameNotFoundException) {
             return;
         }
     }

@@ -65,7 +65,7 @@ final class RulePropertySetter
                     if (!$property->hasDefaultValue()) {
                         $rule->{$key} = !$property->hasType() || $property->getType()->allowsNull()
                             ? null
-                            : self::castValue(null, $property, $ruleProperty, $key);
+                            : self::castValue($rule::class, null, $property, $ruleProperty, $key);
                     }
                 }
             }
@@ -81,21 +81,22 @@ final class RulePropertySetter
 
         if ($parameters) {
             [$key, $property, $ruleProperty] = $parameters;
-            $rule->{$key} = self::castValue($value, $property, $ruleProperty, $key);
+            $rule->{$key} = self::castValue($rule::class, $value, $property, $ruleProperty, $key);
         }
     }
 
     /**
+     * @param class-string<Rule> $ruleClass
      * @throws InvalidRulePropertyTypeException
      */
     private static function castValue(
+        string $ruleClass,
         null|bool|float|int|string $value,
         ReflectionProperty $property,
         RuleProperty $ruleProperty,
         string $key,
     ): mixed {
         $type = $property->getType();
-        $ruleClass = $property->getDeclaringClass()->getName();
 
         if (!$type instanceof ReflectionNamedType) {
             throw new InvalidRulePropertyTypeException(
@@ -105,12 +106,34 @@ final class RulePropertySetter
             );
         }
 
-        // class-string<RulePropertyType>
         $typeName = $type->getName();
 
-        return $type->isBuiltin()
-            ? self::getBuiltInValue($typeName, $value)
-            : $typeName::createFromRuleProperty($ruleClass, $key, $value, $ruleProperty);
+        if ($type->isBuiltin()) {
+            return self::getBuiltInValue($typeName, $value);
+        }
+
+        if (!is_a($typeName, RulePropertyType::class, true)) {
+            throw new InvalidRulePropertyTypeException(
+                $ruleClass,
+                $key,
+                "$typeName does not implement " . RulePropertyType::class,
+            );
+        }
+
+        if (!$ruleProperty instanceof MatchList) {
+            throw new InvalidRulePropertyTypeException(
+                $ruleClass,
+                $key,
+                'Use #[' . MatchList::class . '] to configure ' . $typeName,
+            );
+        }
+
+        return $typeName::createFromRuleProperty(
+            $ruleClass,
+            $key,
+            $value === null ? null : (string) $value,
+            $ruleProperty,
+        );
     }
 
     private static function getBuiltInValue(string $type, null|bool|float|int|string $value): mixed
