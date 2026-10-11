@@ -306,12 +306,17 @@ abstract class AbstractNode
     /**
      * Checks if this node has suppressed warninngs for the given rule
      * instance.
+     *
+     * @api
+     * @deprecated 4.0.0 Suppressions are applied after the rules have run, rules no longer need to check them.
      */
     abstract public function hasSuppressWarningsFor(Rule $rule): bool;
 
     /**
      * Returns the full qualified name of a class, an interface, a method or
      * a function.
+     *
+     * @api
      */
     abstract public function getFullQualifiedName(): ?string;
 

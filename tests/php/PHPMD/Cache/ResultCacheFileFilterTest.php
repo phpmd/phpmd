@@ -58,7 +58,6 @@ class ResultCacheFileFilterTest extends AbstractTestCase
 
         $this->state->expects(static::once())->method('isFileModified')->willReturn(false);
         $this->state->expects(static::once())->method('getViolations')->willReturn(['violations']);
-        $this->state->expects(static::never())->method('getErrors');
 
         // An unmodified file is still handed to pdepend, so the types it declares stay resolvable.
         static::assertTrue($filter->accept('ResultCacheFileFilterTest.php', __FILE__));

@@ -82,26 +82,6 @@ class ResultCacheState
         $this->state['files'][$filePath]['violations'] = $violations;
     }
 
-    /**
-     * @return list<string>
-     */
-    public function getErrors(string $filePath): array
-    {
-        return $this->state['files'][$filePath]['errors'] ?? [];
-    }
-
-    /**
-     * @param list<string> $errors
-     */
-    public function setErrors(string $filePath, array $errors): void
-    {
-        if ($errors === []) {
-            return;
-        }
-
-        $this->state['files'][$filePath]['errors'] = $errors;
-    }
-
     public function addError(string $filePath, ProcessingError $error): void
     {
         $this->state['files'][$filePath]['errors'][] = $error->getMessage();

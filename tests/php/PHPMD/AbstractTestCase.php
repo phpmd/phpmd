@@ -265,33 +265,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
     }
 
     /**
-     * Returns the absolute path for a test resource for the current test.
-     *
-     * @since 1.1.0
-     */
-    protected static function createCodeResourceUriForTest(): string
-    {
-        $frame = static::getCallingTestCase();
-
-        return self::createResourceUriForTest($frame['function'] . '.php');
-    }
-
-    /**
-     * Returns the absolute path for a test resource for the current test.
-     *
-     * @param string $localPath The local/relative file location
-     *
-     * @since 1.1.0
-     */
-    protected static function createResourceUriForTest(string $localPath): string
-    {
-        $class = static::getCallingTestCase()['class'] ?? null;
-        static::assertIsString($class);
-
-        return static::getResourceFilePathFromClassName($class, $localPath);
-    }
-
-    /**
      * Return URI for a given pattern with directory based on the current called class name.
      */
     protected static function createResourceUriForCalledClass(string $pattern): string
@@ -423,14 +396,6 @@ abstract class AbstractTestCase extends AbstractStaticTestCase
         $phpmd->processFiles([self::createCodeResourceUriForTest()], [], [], [$ruleSet], $report);
 
         return $report;
-    }
-
-    /**
-     * Get a mocked report with at least one violation
-     */
-    public function getReportWithAtLeastOneViolation(): Report
-    {
-        return $this->getReportMock(self::AL_LEAST_ONE_VIOLATION);
     }
 
     /**

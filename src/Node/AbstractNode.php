@@ -38,6 +38,8 @@ abstract class AbstractNode extends BaseNode
     /**
      * Checks if this node has a suppressed annotation for the given rule
      * instance.
+     *
+     * @deprecated 4.0.0 Suppressions are applied after the rules have run, rules no longer need to check them.
      */
     public function hasSuppressWarningsFor(Rule $rule): bool
     {

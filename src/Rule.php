@@ -120,6 +120,9 @@ interface Rule
 
     /**
      * Returns the violation report for this rule.
+     *
+     * @api
+     * @deprecated 4.0.0 Keep a reference to the report passed to setReport() instead.
      */
     public function getReport(): Report;
 
@@ -144,6 +147,7 @@ interface Rule
      * @return mixed The value of a configured property.
      * @throws OutOfBoundsException When no property for <b>$name</b> exists and
      * no default value to fall back was given.
+     * @api
      */
     public function getProperty(string $name, null|bool|int|string $default = null): mixed;
 
@@ -152,6 +156,7 @@ interface Rule
      * exception when no property with <b>$name</b> exists.
      *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists.
+     * @api
      */
     public function isTruthyProperty(string $name): bool;
 
@@ -160,6 +165,7 @@ interface Rule
      * exception when no property with <b>$name</b> exists.
      *
      * @throws OutOfBoundsException When no property for <b>$name</b> exists.
+     * @api
      */
     public function getIntProperty(string $name): int;
 

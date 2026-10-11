@@ -31,18 +31,6 @@ final class Strings
      * Returns the length of the given string, excluding at most one suffix
      *
      * @param string $stringName String to calculate the length for.
-     * @param array<int, string> $subtractSuffixes List of suffixes to exclude from the calculated length.
-     * @return int The length of the string, without suffix, if applicable.
-     */
-    public static function lengthWithoutSuffixes(string $stringName, array $subtractSuffixes): int
-    {
-        return self::lengthWithoutPrefixesAndSuffixes($stringName, [], $subtractSuffixes);
-    }
-
-    /**
-     * Returns the length of the given string, excluding at most one suffix
-     *
-     * @param string $stringName String to calculate the length for.
      * @param array<int, string> $subtractPrefixes List of prefixes to exclude from the calculated length.
      * @param array<int, string> $subtractSuffixes List of suffixes to exclude from the calculated length.
      * @return int The length of the string, without suffix, if applicable.

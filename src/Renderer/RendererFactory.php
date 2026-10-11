@@ -28,15 +28,18 @@ final class RendererFactory
     /**
      * @throws InvalidArgumentException
      */
-    public function getRenderer(string $format, ?string $jetbrains = null): RendererInterface
-    {
+    public function getRenderer(
+        string $format,
+        ?string $jetbrains = null,
+        int $extraLineInExcerpt = 2,
+    ): RendererInterface {
         return match ($format) {
             'ansi' => new AnsiRenderer(),
             'checkstyle' => new CheckStyleRenderer(),
             'github' => new GitHubRenderer(),
             'githubcheckruns' => new GitHubCheckRunsRenderer(),
             'gitlab' => new GitLabRenderer(),
-            'html' => new HTMLRenderer(2, $jetbrains),
+            'html' => new HTMLRenderer($extraLineInExcerpt, $jetbrains),
             'json' => new JSONRenderer(),
             'sarif' => new SARIFRenderer(),
             'text' => new TextRenderer(),
