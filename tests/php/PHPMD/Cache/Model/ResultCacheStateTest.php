@@ -61,22 +61,7 @@ class ResultCacheStateTest extends TestCase
     }
 
     /**
-     * @covers ::getErrors
-     * @covers ::setErrors
-     */
-    public function testGetSetErrors(): void
-    {
-        $errors = ['Unexpected end of token stream in file: /file/path.'];
-
-        static::assertCount(0, $this->state->getErrors('/file/path'));
-
-        $this->state->setErrors('/file/path', $errors);
-        static::assertSame($errors, $this->state->getErrors('/file/path'));
-    }
-
-    /**
      * @covers ::addError
-     * @covers ::getErrors
      * @covers ::getProcessingErrors
      */
     public function testAddErrorAndGetProcessingErrors(): void
@@ -86,7 +71,6 @@ class ResultCacheStateTest extends TestCase
         static::assertCount(0, $this->state->getProcessingErrors());
 
         $this->state->addError('/file/path', $error);
-        static::assertSame([$error->getMessage()], $this->state->getErrors('/file/path'));
 
         $errors = $this->state->getProcessingErrors();
         static::assertCount(1, $errors);

@@ -1,3 +1,6 @@
+includes:
+    - vendor/shipmonk/dead-code-detector/rules.neon
+
 parameters:
     paths:
         - src/
@@ -10,6 +13,10 @@ parameters:
         check:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
+    shipmonkDeadCode:
+        usageExcluders:
+            tests:
+                enabled: true
     ignoreErrors:
         -
             identifier: missingType.checkedException
@@ -25,3 +32,17 @@ parameters:
                 - argument.type
             path: src/Config/ConfigDumper.php
             reportUnmatched: false
+        # Called from bin/phpmd and conf/phar_bootstrap.stub, which are not analysed
+        -
+            identifier: shipmonk.deadMethod
+            messages:
+                - '#^Unused PHPMD\\TextUI\\Command::set(MainScript|WorkerCommandName)\b#'
+                - '#^Unused PHPMD\\TextUI\\LegacyArguments::(isLegacyInvocation|transform|deprecationMessage)\b#'
+        # Attribute arguments are read from the source code, the attribute is never instantiated
+        -
+            identifier: shipmonk.deadProperty.neverRead
+            path: src/Attribute/SuppressWarnings.php
+        # The rules count the methods of these fixtures, nothing calls them
+        -
+            identifier: shipmonk.deadMethod
+            path: tests/php/PHPMD/Regression/Sources/*

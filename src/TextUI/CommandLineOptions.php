@@ -222,16 +222,6 @@ class CommandLineOptions
     }
 
     /**
-     * Returns the specified report format.
-     *
-     * @return ?string
-     */
-    public function getReportFormat()
-    {
-        return $this->reportFormat;
-    }
-
-    /**
      * Returns the current bootstrap file (if available) to load extra resources before analysis.
      */
     public function getBootstrapFile(): ?string
@@ -376,23 +366,6 @@ class CommandLineOptions
     }
 
     /**
-     * Specify how many extra lines are added to a code snippet
-     */
-    public function extraLineInExcerpt(): int
-    {
-        return $this->extraLineInExcerpt;
-    }
-
-    /**
-     * If set, file links in the html report use the jetbrains:// protocol
-     * and reference this project name.
-     */
-    public function jetbrains(): ?string
-    {
-        return $this->jetbrains;
-    }
-
-    /**
      * Creates a report renderer instance based on the user's command line
      * argument.
      *
@@ -420,7 +393,7 @@ class CommandLineOptions
     {
         $reportFormat = $reportFormat ?: $this->reportFormat ?: '';
 
-        return (new RendererFactory())->getRenderer($reportFormat, $this->jetbrains);
+        return (new RendererFactory())->getRenderer($reportFormat, $this->jetbrains, $this->extraLineInExcerpt);
     }
 
     /**

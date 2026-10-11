@@ -29,60 +29,61 @@ use PHPMD\AbstractTestCase;
 class StringsTest extends AbstractTestCase
 {
     /**
-     * Tests the lengthWithoutSuffixes() method with an empty string
+     * Tests the lengthWithoutPrefixesAndSuffixes() method with an empty string
      */
     public function testLengthWithoutSuffixesEmptyString(): void
     {
-        static::assertSame(0, Strings::lengthWithoutSuffixes('', []));
+        static::assertSame(0, Strings::lengthWithoutPrefixesAndSuffixes('', [], []));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method with an empty string with list of suffixes
+     * Tests the lengthWithoutPrefixesAndSuffixes() method with an empty string with list of suffixes
      */
     public function testLengthWithoutSuffixesEmptyStringWithConfiguredSubtractSuffix(): void
     {
-        static::assertSame(0, Strings::lengthWithoutSuffixes('', ['Foo', 'Bar']));
+        static::assertSame(0, Strings::lengthWithoutPrefixesAndSuffixes('', [], ['Foo', 'Bar']));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method with a string not in the list of suffixes
+     * Tests the lengthWithoutPrefixesAndSuffixes() method with a string not in the list of suffixes
      */
     public function testLengthWithoutSuffixesStringWithoutSubtractSuffixMatch(): void
     {
-        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTest', ['Foo', 'Bar']));
+        static::assertSame(8, Strings::lengthWithoutPrefixesAndSuffixes('UnitTest', [], ['Foo', 'Bar']));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method with a string in the list of suffixes
+     * Tests the lengthWithoutPrefixesAndSuffixes() method with a string in the list of suffixes
      */
     public function testLengthWithoutSuffixesStringWithSubtractSuffixMatch(): void
     {
-        static::assertSame(4, Strings::lengthWithoutSuffixes('UnitBar', ['Foo', 'Bar']));
+        static::assertSame(4, Strings::lengthWithoutPrefixesAndSuffixes('UnitBar', [], ['Foo', 'Bar']));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method with a string that should match only once for two potential matches
+     * Tests the lengthWithoutPrefixesAndSuffixes() method with a string that should match only once for two
+     * potential matches
      */
     public function testLengthWithoutSuffixesStringWithDoubleSuffixMatchSubtractOnce(): void
     {
-        static::assertSame(7, Strings::lengthWithoutSuffixes('UnitFooBar', ['Foo', 'Bar']));
+        static::assertSame(7, Strings::lengthWithoutPrefixesAndSuffixes('UnitFooBar', [], ['Foo', 'Bar']));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method that a Prefix should not be matched
+     * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should not be matched
      */
     public function testLengthWithoutSuffixesStringWithPrefixMatchShouldNotSubtract(): void
     {
-        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
+        static::assertSame(11, Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', [], ['Foo', 'Bar']));
     }
 
     /**
-     * Tests the lengthWithoutSuffixes() method that a Prefix should be matched
+     * Tests the lengthWithoutPrefixesAndSuffixes() method that a Prefix should be matched
      */
     public function testlengthWithPrefixesAndSuffixesStringWithPrefixMatchShouldSubtract(): void
     {
-        static::assertSame(11, Strings::lengthWithoutSuffixes('FooUnitTest', ['Foo', 'Bar']));
-        static::assertSame(8, Strings::lengthWithoutSuffixes('UnitTestFoo', ['Foo', 'Bar']));
+        static::assertSame(11, Strings::lengthWithoutPrefixesAndSuffixes('FooUnitTest', [], ['Foo', 'Bar']));
+        static::assertSame(8, Strings::lengthWithoutPrefixesAndSuffixes('UnitTestFoo', [], ['Foo', 'Bar']));
     }
 
     /**

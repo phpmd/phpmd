@@ -36,12 +36,4 @@ class InternalRuleSetTest extends AbstractTestCase
             'unusedcode',
         ], InternalRuleSet::getNames());
     }
-
-    public function testFactoryConfiguresInputFile(): void
-    {
-        static::assertSame(
-            'cleancode,codesize,controversial,design,naming,unusedcode',
-            InternalRuleSet::getNamesConcatenated(),
-        );
-    }
 }
