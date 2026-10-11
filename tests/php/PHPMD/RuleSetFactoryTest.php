@@ -90,7 +90,9 @@ class RuleSetFactoryTest extends AbstractTestCase
 
     public function testCreateRuleSetsReturnsArray(): void
     {
-        $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+        $ruleSets = $this->createRuleSetsFromAbsoluteFiles('rulesets/set1.xml');
+
+        static::assertCount(1, $ruleSets);
     }
 
     public function testCreateRuleSetsForSingleFileReturnsArrayWithOneElement(): void
@@ -161,6 +163,8 @@ class RuleSetFactoryTest extends AbstractTestCase
         self::changeWorkingDirectory();
 
         $ruleSets = $this->createRuleSetsFromFiles('rulesets/set1.xml');
+
+        static::assertCount(1, $ruleSets);
     }
 
     public function testCreateRuleSetsForLocalFileNameReturnsArrayWithOneElement(): void

@@ -78,7 +78,7 @@ final class Seeker
     {
         try {
             return $this->node->getChild($index);
-        } catch (OutOfBoundsException $e) {
+        } catch (OutOfBoundsException) {
             // fallback to null
         }
 

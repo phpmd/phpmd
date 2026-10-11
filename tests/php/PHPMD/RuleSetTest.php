@@ -78,7 +78,8 @@ class RuleSetTest extends AbstractTestCase
     public function testReport(): void
     {
         $ruleSet = new RuleSet();
-        $ruleSet->setReport(new Report());
+        $report = new Report();
+        $ruleSet->setReport($report);
         $else = new ElseExpression();
         $ruleSet->addRule($else);
         $iteration = [];
@@ -91,7 +92,7 @@ class RuleSetTest extends AbstractTestCase
         // With a node ElseExpression is not aware (since its implements only MethodAware and FunctionAware)
         $ruleSet->apply(new ClassNode(new ASTClass('FooBar')));
 
-        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        static::assertCount(0, $report->getRuleViolations());
 
         // With a node not registered at all
         $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
@@ -116,7 +117,7 @@ class RuleSetTest extends AbstractTestCase
             }
         });
 
-        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        static::assertCount(0, $report->getRuleViolations());
 
         // With a node not registered at all
         $ruleSet->apply(new class (new ASTClass('FooBar')) extends AbstractNode {
@@ -141,7 +142,7 @@ class RuleSetTest extends AbstractTestCase
             }
         });
 
-        static::assertCount(0, $ruleSet->getReport()->getRuleViolations());
+        static::assertCount(0, $report->getRuleViolations());
 
         $function = new ASTFunction('fooBar');
         $statement = new ASTIfStatement('if');
@@ -153,7 +154,7 @@ class RuleSetTest extends AbstractTestCase
         // With a node ElseExpression is aware of (thanks to FunctionAware)
         $ruleSet->apply(new FunctionNode($function));
 
-        static::assertCount(1, $ruleSet->getReport()->getRuleViolations());
+        static::assertCount(1, $report->getRuleViolations());
     }
 
     /**
