@@ -4,6 +4,7 @@ phpmd-3.1.0 (unreleased)
 Fixed:
 
 - Fixed: `--extra-line-in-excerpt` was ignored, the html report always showed 2 extra lines around a violation.
+- Fixed #887: False positive in `UnusedPrivateField` for a field that is only read through simple string interpolation, such as `"$this->name"`, `"$this?->name"` or the same inside a heredoc.
 
 Deprecated:
 

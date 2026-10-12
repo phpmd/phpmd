@@ -379,7 +379,7 @@ class UnusedPrivateFieldTest extends AbstractTestCase
         $report = $this->getMockBuilder(Report::class)->getMock();
         $report->method('addRuleViolation')
             ->willReturnCallback(static function (RuleViolation $violation) use (&$reported): void {
-                $reported[] = $violation->getArgs()[0];
+                $reported = [...$reported, ...($violation->getArgs() ?? [])];
             });
 
         return $report;
