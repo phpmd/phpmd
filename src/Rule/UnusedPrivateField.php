@@ -23,22 +23,28 @@ use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTCompoundVariable;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTHeredoc;
 use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTString;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
+use PHPMD\Attribute\SuppressWarnings;
 use PHPMD\Node\ClassNode;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Utility\ExceptionsList;
 
 /**
  * This rule collects all private fields in a class that aren't used in any
  * method of the analyzed class.
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class UnusedPrivateField extends AbstractRule implements ClassAware
 {
     /**
@@ -130,6 +136,50 @@ final class UnusedPrivateField extends AbstractRule implements ClassAware
         foreach ($class->findChildrenOfType(ASTPropertyPostfix::class) as $postfix) {
             if ($this->isInScopeOfClass($class, $postfix)) {
                 $this->removeUsedField($postfix);
+            }
+        }
+
+        $this->removeFieldsReadInStrings($class);
+    }
+
+    /**
+     * This method removes the fields from the <b>$_fields</b> property that are
+     * read on <b>$this</b> with the simple string interpolation syntax, like
+     * <b>"$this->name"</b> or <b>"$this?->name"</b>.
+     *
+     * PDepend builds no property postfix for this syntax. The string holds the
+     * variable <b>$this</b> followed by the literal <b>-></b> (or <b>?-></b>)
+     * and a literal that starts with the property name.
+     */
+    private function removeFieldsReadInStrings(ClassNode $class): void
+    {
+        foreach ([ASTString::class, ASTHeredoc::class] as $type) {
+            foreach ($class->findChildrenOfType($type) as $string) {
+                $this->removeFieldsReadInString($string);
+            }
+        }
+    }
+
+    /**
+     * @param AbstractNode<ASTHeredoc|ASTString> $string
+     */
+    private function removeFieldsReadInString(AbstractNode $string): void
+    {
+        $parts = $string->getNode()->getChildren();
+
+        foreach ($parts as $index => $part) {
+            $arrow = $parts[$index + 1] ?? null;
+            $name = $parts[$index + 2] ?? null;
+
+            if (
+                $part instanceof ASTVariable &&
+                $part->getImage() === '$this' &&
+                $arrow instanceof ASTLiteral &&
+                in_array($arrow->getImage(), ['->', '?->'], true) &&
+                $name instanceof ASTLiteral &&
+                preg_match('(^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)', $name->getImage(), $match)
+            ) {
+                unset($this->fields['$' . $match[0]]);
             }
         }
     }
