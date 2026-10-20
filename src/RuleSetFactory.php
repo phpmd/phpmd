@@ -521,6 +521,11 @@ class RuleSetFactory
         callable $setter,
     ): void {
         $value = $config[$key] ?? '';
+
+        if ($value instanceof SimpleXMLElement) {
+            $value = (string) $value;
+        }
+
         if ((!$value instanceof Stringable) && !is_string($value)) {
             throw new RuntimeException('Invalid priority');
         }
