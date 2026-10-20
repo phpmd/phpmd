@@ -366,7 +366,7 @@ class RuleSetFactoryTest extends AbstractTestCase
         static::assertSame([__FUNCTION__ . 'One', __FUNCTION__ . 'Two'], $rule->getExamples());
     }
 
-    public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionSetting(): void
+    public function testCreateRuleSetsWithRuleReferenceThatOverwritesDescriptionFromXmlElement(): void
     {
         self::changeWorkingDirectory();
 

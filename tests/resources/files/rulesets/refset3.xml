@@ -9,8 +9,8 @@
     <description>First description...</description>
 
     <rule ref="rulesets/set1.xml/RuleTwoInFirstRuleSet">
-        <priority>4</priority>
         <description>description 42</description>
+        <priority>4</priority>
         <properties>
             <property name="foo" value="42" />
         </properties>
