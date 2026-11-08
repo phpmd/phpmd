@@ -52,6 +52,31 @@ class SeekerTest extends AbstractTestCase
         static::assertFalse(Seeker::fromNode($variable)->isInObjectContext());
     }
 
+    public function testIsStaticPropertyName(): void
+    {
+        $found = [];
+
+        foreach ($this->getFunction()->findChildrenOfTypeVariable() as $variable) {
+            $found[] = [$variable->getImage(), Seeker::fromNode($variable)->isStaticPropertyName()];
+        }
+
+        static::assertSame(
+            [
+                ['$plain', true],
+                ['$indexed', true],
+                ['$key', false],
+                ['$chained', true],
+                ['$object', false],
+                ['$onObject', true],
+                ['$object', false],
+                ['$dynamic', false],
+                ['$first', true],
+                ['$second', false],
+            ],
+            $found
+        );
+    }
+
     /**
      * Finds the variable with the given image that is nested inside a
      * closure/arrow function, as opposed to its outer declaration.

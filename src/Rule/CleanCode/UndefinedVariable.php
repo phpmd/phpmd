@@ -243,8 +243,13 @@ final class UndefinedVariable extends AbstractLocalVariable implements FunctionA
     {
         $image = $this->getVariableImage($variable);
 
+        if (str_starts_with($image, '::')) {
+            return isset($this->images[$image]) || $this->staticsUnknown;
+        }
+
+        // A static property of another class, such as Foo::$bar[0], is not a local variable
         return isset($this->images[$image])
-            || ($this->staticsUnknown && str_starts_with($image, '::'))
+            || Seeker::fromNode($variable)->isStaticPropertyName()
             || $this->isNameAllowedInContext($variable);
     }
 

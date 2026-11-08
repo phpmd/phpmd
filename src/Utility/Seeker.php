@@ -20,11 +20,14 @@ namespace PHPMD\Utility;
 
 use OutOfBoundsException;
 use PDepend\Source\AST\AbstractASTCallable;
+use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode as PDependNode;
 use PDepend\Source\AST\ASTPropertyHook;
+use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PHPMD\AbstractNode;
 
@@ -127,6 +130,35 @@ final class Seeker
         }
 
         return false;
+    }
+
+    /**
+     * Whether the node is the name of a static property, such as `$bar` in
+     * `Foo::$bar`, `Foo::$bar[0]` or `Foo::$bar[0]->baz()`.
+     *
+     * @throws OutOfBoundsException
+     */
+    public function isStaticPropertyName(): bool
+    {
+        $node = $this->node->getNode();
+        $parent = $node->getParent();
+
+        while ($parent instanceof ASTArrayIndexExpression && $parent->getChild(0) === $node) {
+            $node = $parent;
+            $parent = $node->getParent();
+        }
+
+        if (!$parent instanceof ASTPropertyPostfix || $parent->getChild(0) !== $node) {
+            return false;
+        }
+
+        // Skip the rest of a chain such as Foo::$bar[0]->baz()
+        do {
+            $node = $parent;
+            $parent = $node->getParent();
+        } while ($parent instanceof ASTMemberPrimaryPrefix && $parent->getChild(0) === $node);
+
+        return $parent instanceof ASTMemberPrimaryPrefix && $parent->isStatic();
     }
 
     /**
