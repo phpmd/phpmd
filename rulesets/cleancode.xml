@@ -229,6 +229,8 @@ Importing all external classes in a file through use statements makes them clear
         </properties>
         <example>
             <![CDATA[
+namespace App;
+
 function make() {
     return new \stdClass();
 }

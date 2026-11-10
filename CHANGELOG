@@ -6,6 +6,7 @@ Fixed:
 - Fixed: `--extra-line-in-excerpt` was ignored, the html report always showed 2 extra lines around a violation.
 - Fixed #887: False positive in `UnusedPrivateField` for a field that is only read through simple string interpolation, such as `"$this->name"`, `"$this?->name"` or the same inside a heredoc.
 - Fixed #714: False positive in `UndefinedVariable` for an indexed static property of another class, such as `Foo::$name[...]` or `parent::$name[...]`.
+- Fixed #910: False positive in `MissingImport` for a class of the global namespace used in code without a namespace, where a use statement has no effect.
 
 Deprecated:
 
