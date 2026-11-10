@@ -138,6 +138,8 @@ Importing all external classes in a file through use statements makes them clear
 
 Example: ::
 
+  namespace App;
+
   function make() {
       return new \stdClass();
   }
