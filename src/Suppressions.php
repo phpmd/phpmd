@@ -18,15 +18,20 @@
 
 namespace PHPMD;
 
+use PDepend\Source\AST\ASTAnonymousClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNode as PDependNode;
 use PHPMD\Attribute\SuppressWarnings;
-use PHPMD\Node\AbstractTypeNode;
 use PHPMD\Node\Annotations;
+use PHPMD\Node\ASTNode;
 use PHPMD\Node\Attributes;
+use PHPMD\Node\ClassNode;
 use PHPMD\Node\NodeInfo;
 use PHPMD\Node\NodeInfoFactory;
 use PHPMD\Rule\CleanCode\StaticAccess;
+use PHPMD\Rule\Design\CouplingBetweenObjects;
 use PHPMD\Rule\UnusedSuppression;
 
 /**
@@ -40,13 +45,14 @@ use PHPMD\Rule\UnusedSuppression;
  *
  * @internal
  */
+#[SuppressWarnings(CouplingBetweenObjects::class)]
 final class Suppressions
 {
     /**
      * The suppressing nodes, with their suppressions.
      *
      * @var list<array{
-     *     node: AbstractNode<ASTNode>,
+     *     node: AbstractNode<PDependNode>,
      *     annotations: Annotations,
      *     attributes: list<array{rule: ?string, beginLine: int, endLine: int}>,
      * }>
@@ -86,21 +92,41 @@ final class Suppressions
     }
 
     /**
-     * Collects the suppressions of the given node, and of the properties
-     * declared in it.
+     * Collects the suppressions of the given node, and of the properties and
+     * anonymous classes declared in it.
      *
-     * @param AbstractNode<ASTNode> $node
+     * @param AbstractNode<PDependNode> $node
      */
     public function collect(AbstractNode $node): void
     {
         $this->addScope($node);
+        $this->collectChildren($node->getNode(), $node->getFileName());
+    }
 
-        if (!$node instanceof AbstractTypeNode) {
-            return;
-        }
+    /**
+     * Recursively collects suppressions of properties and anonymous classes
+     * without crossing into functions or methods visited separately.
+     */
+    private function collectChildren(PDependNode $parent, ?string $fileName): void
+    {
+        foreach ($parent->getChildren() as $child) {
+            if ($child instanceof ASTFunction || $child instanceof ASTMethod) {
+                continue;
+            }
+            if ($child instanceof ASTFieldDeclaration) {
+                $this->addScope(new ASTNode($child, $fileName));
+            }
+            if ($child instanceof ASTAnonymousClass) {
+                $anonymousClass = new ClassNode($child);
+                $this->collect($anonymousClass);
+                foreach ($anonymousClass->getMethods() as $method) {
+                    $this->collect($method);
+                }
 
-        foreach ($node->findChildrenOfType(ASTFieldDeclaration::class) as $field) {
-            $this->addScope($field);
+                continue;
+            }
+
+            $this->collectChildren($child, $fileName);
         }
     }
 
@@ -145,7 +171,7 @@ final class Suppressions
     }
 
     /**
-     * @param AbstractNode<ASTNode> $node
+     * @param AbstractNode<PDependNode> $node
      */
     private function addScope(AbstractNode $node): void
     {

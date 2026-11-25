@@ -84,10 +84,54 @@ class UnusedSuppressionIntegrationTest extends AbstractTestCase
         );
     }
 
+    #[TestWith([1])]
+    #[TestWith([2])]
+    public function testAnonymousClassSuppressions(int $threads): void
+    {
+        static::assertSame(
+            [
+                'AnonymousClasses.php:48 LongVariable $unsuppressedVariableNameIsFarTooLong',
+                'AnonymousClasses.php:53 UnusedSuppression #[SuppressWarnings(LongVariable::class)]',
+                'AnonymousClasses.php:77 UnusedSuppression #[SuppressWarnings]',
+                'AnonymousClasses.php:101 LongVariable $afterAssignedNameIsFarTooLong',
+                'AnonymousClasses.php:107 LongVariable $nonDocVariableNameIsFarTooLong',
+                'AnonymousClasses.php:135 UnusedSuppression #[SuppressWarnings(LongVariable::class)]',
+            ],
+            $this->analyse('ruleset.yml', $threads, false, 'anonymous')
+        );
+    }
+
+    public function testAnonymousClassSuppressionsInStrictMode(): void
+    {
+        static::assertSame(
+            [
+                'AnonymousClasses.php:18 UnusedPrivateField $suppressedLongPrivateField',
+                'AnonymousClasses.php:18 LongVariable $suppressedLongPrivateField',
+                'AnonymousClasses.php:18 LongVariable $suppressedLongPrivateField',
+                'AnonymousClasses.php:25 LongVariable $docblockVariableNameIsFarTooLong',
+                'AnonymousClasses.php:33 LongVariable $attributeVariableNameIsFarTooLong',
+                'AnonymousClasses.php:41 LongVariable $wildcardVariableNameIsFarTooLong',
+                'AnonymousClasses.php:48 LongVariable $unsuppressedVariableNameIsFarTooLong',
+                'AnonymousClasses.php:53 UnusedSuppression #[SuppressWarnings(LongVariable::class)]',
+                'AnonymousClasses.php:59 UnusedSuppression #[SuppressWarnings(LongVariable::class)]',
+                'AnonymousClasses.php:72 LongVariable $innerVariableNameIsFarTooLong',
+                'AnonymousClasses.php:77 UnusedSuppression #[SuppressWarnings]',
+                'AnonymousClasses.php:95 LongVariable $assignedVariableNameIsFarTooLong',
+                'AnonymousClasses.php:101 LongVariable $afterAssignedNameIsFarTooLong',
+                'AnonymousClasses.php:107 LongVariable $nonDocVariableNameIsFarTooLong',
+                'AnonymousClasses.php:118 LongVariable $firstValueNameIsFarTooLong',
+                'AnonymousClasses.php:135 UnusedSuppression #[SuppressWarnings(LongVariable::class)]',
+                'AnonymousClasses.php:151 LongVariable $suppressedFieldInFunction',
+                'AnonymousClasses.php:156 LongVariable $functionMethodNameIsFarTooLong',
+            ],
+            $this->analyse('ruleset.yml', 1, true, 'anonymous')
+        );
+    }
+
     /**
      * @return list<string>
      */
-    private function analyse(string $ruleSetFile, int $threads, bool $strict): array
+    private function analyse(string $ruleSetFile, int $threads, bool $strict, string $sourceDir = 'source'): array
     {
         $ruleSetFactory = new RuleSetFactory();
         if ($strict) {
@@ -99,7 +143,7 @@ class UnusedSuppressionIntegrationTest extends AbstractTestCase
         $report = new Report();
         $phpmd = new PHPMD();
         $phpmd->setThreads($threads);
-        $phpmd->processFiles([self::createResourceUriForCalledClass('source')], [], [], $ruleSetList, $report);
+        $phpmd->processFiles([self::createResourceUriForCalledClass($sourceDir)], [], [], $ruleSetList, $report);
 
         static::assertFalse($report->hasErrors());
 
