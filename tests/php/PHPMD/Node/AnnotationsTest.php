@@ -18,6 +18,11 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTAnonymousClass;
+use PDepend\Source\AST\ASTComment;
+use PDepend\Source\AST\ASTScope;
+use PDepend\Source\AST\ASTStatement;
 use PHPMD\AbstractTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -78,5 +83,45 @@ class AnnotationsTest extends AbstractTestCase
 
         $annotations = new Annotations($class);
         static::assertTrue($annotations->suppresses($this->getRuleMock()));
+    }
+
+    public function testAnonymousClassReadsPrecedingDocCommentOnEnclosingStatement(): void
+    {
+        $anonymousClass = $this->createAnonymousClassInScope('/** @SuppressWarnings("PMD") */');
+
+        $annotations = new Annotations(new ClassNode($anonymousClass));
+        static::assertTrue($annotations->suppresses($this->getRuleMock()));
+    }
+
+    public function testAnonymousClassIgnoresPrecedingNonDocComment(): void
+    {
+        $anonymousClass = $this->createAnonymousClassInScope('// @SuppressWarnings("PMD")');
+
+        $annotations = new Annotations(new ClassNode($anonymousClass));
+        static::assertFalse($annotations->suppresses($this->getRuleMock()));
+    }
+
+    private function createAnonymousClassInScope(string $commentText): ASTAnonymousClass
+    {
+        $comment = new ASTComment($commentText);
+        $comment->configureLinesAndColumns(9, 9, 9, 40);
+
+        $anonymousClass = new ASTAnonymousClass('class@anonymous');
+        $anonymousClass->configureLinesAndColumns(10, 14, 15, 10);
+
+        $allocation = new ASTAllocationExpression('new');
+        $allocation->configureLinesAndColumns(10, 14, 9, 10);
+        $allocation->addChild($anonymousClass);
+
+        $statement = new ASTStatement();
+        $statement->configureLinesAndColumns(10, 14, 9, 11);
+        $statement->addChild($allocation);
+
+        $scope = new ASTScope();
+        $scope->configureLinesAndColumns(8, 15, 5, 5);
+        $scope->addChild($comment);
+        $scope->addChild($statement);
+
+        return $anonymousClass;
     }
 }

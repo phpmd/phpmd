@@ -18,6 +18,8 @@
 
 namespace PHPMD\Node;
 
+use PDepend\Source\AST\ASTAnonymousClass;
+use PDepend\Source\AST\ASTComment;
 use PDepend\Source\AST\ASTNode;
 use PHPMD\AbstractNode;
 use PHPMD\Rule;
@@ -47,6 +49,9 @@ final class Annotations
     public function __construct(AbstractNode $node)
     {
         $comment = $node->getComment();
+        if (!$comment && $node->isInstanceOf(ASTAnonymousClass::class)) {
+            $comment = $this->getAnonymousClassComment($node->getNode());
+        }
         if (!$comment) {
             return;
         }
@@ -72,5 +77,34 @@ final class Annotations
         }
 
         return false;
+    }
+
+    /**
+     * Finds a doc comment placed immediately before the statement declaring an
+     * anonymous class, since PDepend does not attach it to the class node.
+     */
+    private function getAnonymousClassComment(ASTAnonymousClass $node): ?string
+    {
+        $statement = $node;
+        while (
+            ($parent = $statement->getParent()) !== null &&
+            $parent->getStartLine() === $node->getStartLine()
+        ) {
+            $statement = $parent;
+        }
+
+        $previous = null;
+        foreach ($statement->getParent()?->getChildren() ?? [] as $child) {
+            if ($child === $statement) {
+                break;
+            }
+            $previous = $child;
+        }
+
+        if ($previous instanceof ASTComment && str_starts_with($previous->getImage(), '/**')) {
+            return $previous->getImage();
+        }
+
+        return null;
     }
 }
